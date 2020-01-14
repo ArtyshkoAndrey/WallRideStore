@@ -147,7 +147,7 @@ return [
     |               | sidebar-mini                            |
     |---------------------------------------------------------|
      */
-    'layout' => ['fixed'],
+    'layout' => ['fixed', 'sidebar-collapse', 'sidebar-mini'],
 
     /*
      * 登录页背景图

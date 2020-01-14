@@ -1,13 +1,13 @@
 @extends('layouts.app')
-@section('title', '商品评价')
+@section('title', 'Оценка продукта')
 
 @section('content')
 <div class="row">
 <div class="col-lg-10 offset-lg-1">
 <div class="card">
   <div class="card-header">
-    商品评价
-    <a class="float-right" href="{{ route('orders.index') }}">返回订单列表</a>
+    Оценка продукта
+    <a class="float-right" href="{{ route('orders.index') }}">Вернуться к списку заказов</a>
   </div>
   <div class="card-body">
     <form action="{{ route('orders.review.store', [$order->id]) }}" method="post">
@@ -15,9 +15,9 @@
       <table class="table">
         <tbody>
         <tr>
-          <td>商品名称</td>
-          <td>打分</td>
-          <td>评价</td>
+          <td>Название товара</td>
+          <td>Оценка</td>
+          <td>Опишите</td>
         </tr>
         @foreach($order->items as $index => $item)
           <tr>
@@ -36,7 +36,7 @@
               <input type="hidden" name="reviews[{{$index}}][id]" value="{{ $item->id }}">
             </td>
             <td class="vertical-middle">
-              <!-- 如果订单已经评价则展示评分，下同 -->
+              <!-- Если заказ был оценен, будет отображаться счет, такой же ниже -->
               @if($order->reviewed)
                 <span class="rating-star-yes">{{ str_repeat('★', $item->rating) }}</span><span class="rating-star-no">{{ str_repeat('★', 5 - $item->rating) }}</span>
               @else
@@ -68,9 +68,9 @@
         <tr>
           <td colspan="3" class="text-center">
             @if(!$order->reviewed)
-              <button type="submit" class="btn btn-primary center-block">提交</button>
+              <button type="submit" class="btn btn-primary center-block">Сохранить</button>
             @else
-              <a href="{{ route('orders.show', [$order->id]) }}" class="btn btn-primary">查看订单</a>
+              <a href="{{ route('orders.show', [$order->id]) }}" class="btn btn-primary">Посмотреть заказ</a>
             @endif
           </td>
         </tr>

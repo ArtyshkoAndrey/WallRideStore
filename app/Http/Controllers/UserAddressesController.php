@@ -25,7 +25,6 @@ class UserAddressesController extends Controller
         $request->user()->addresses()->create($request->only([
             'province',
             'city',
-            'district',
             'address',
             'zip',
             'contact_name',
@@ -47,7 +46,6 @@ class UserAddressesController extends Controller
         $user_address->update($request->only([
             'province',
             'city',
-            'district',
             'address',
             'zip',
             'contact_name',
@@ -62,7 +60,6 @@ class UserAddressesController extends Controller
         $this->authorize('own', $user_address);
         $user_address->delete();
 
-        // 把之前的 redirect 改成返回空数组
         return [];
     }
 }

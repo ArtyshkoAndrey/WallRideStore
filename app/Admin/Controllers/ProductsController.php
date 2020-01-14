@@ -68,7 +68,9 @@ class ProductsController extends Controller
         $grid->on_sale('В наличии')->display(function ($value) {
             return $value ? 'Да' : 'Нет';
         });
-        $grid->price('Цена');
+        $grid->price('Цена')->display(function($value) {
+            return $value . ' р.';
+        });
         $grid->rating('Рейтинг');
         $grid->sold_count('Продаж');
         $grid->review_count('Отзывы');

@@ -6,21 +6,21 @@ use App\Models\User;
 use Faker\Generator as Faker;
 
 $factory->define(Order::class, function (Faker $faker) {
-    // 随机取一个用户
+    // Случайно принять пользователя
     $user = User::query()->inRandomOrder()->first();
-    // 随机取一个该用户的地址
+    // Случайно взять адрес этого пользователя
     $address = $user->addresses()->inRandomOrder()->first();
-    // 10% 的概率把订单标记为退款
+    // 10% вероятности отметить заказ как возврат
     $refund = random_int(0, 10) < 1;
-    // 随机生成发货状态
+    // Случайно сгенерированный статус доставки
     $ship = $faker->randomElement(array_keys(Order::$shipStatusMap));
-    // 优惠券
+    // купон
     $coupon = null;
-    // 30% 概率该订单使用了优惠券
+    // 30% вероятность того, что заказ использовал купон
     if (random_int(0, 10) < 3) {
-        // 为了避免出现逻辑错误，我们只选择没有最低金额限制的优惠券
+        // Чтобы избежать логических ошибок, мы выбираем только купоны, которые не имеют минимального лимита суммы
         $coupon = CouponCode::query()->where('min_amount', 0)->inRandomOrder()->first();
-        // 增加优惠券的使用量
+        // Увеличить использование купонов
         $coupon->changeUsed();
     }
 
@@ -33,7 +33,7 @@ $factory->define(Order::class, function (Faker $faker) {
         ],
         'total_amount'   => 0,
         'remark'         => $faker->sentence,
-        'paid_at'        => $faker->dateTimeBetween('-30 days'), // 30天前到现在任意时间点
+        'paid_at'        => $faker->dateTimeBetween('-30 days'), // 30 дней назад в любое время
         'payment_method' => $faker->randomElement(['wechat', 'alipay']),
         'payment_no'     => $faker->uuid,
         'refund_status'  => $refund ? Order::REFUND_STATUS_SUCCESS : Order::REFUND_STATUS_PENDING,

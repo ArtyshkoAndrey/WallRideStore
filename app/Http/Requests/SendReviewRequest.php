@@ -22,8 +22,8 @@ class SendReviewRequest extends Request
     public function attributes()
     {
         return [
-            'reviews.*.rating' => '评分',
-            'reviews.*.review' => '评价',
+            'reviews.*.rating' => 'Счёт',
+            'reviews.*.review' => 'Оценка',
         ];
     }
 }

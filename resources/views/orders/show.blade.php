@@ -1,21 +1,21 @@
 @extends('layouts.app')
-@section('title', '查看订单')
+@section('title', 'Посмотреть заказ')
 
 @section('content')
 <div class="row">
 <div class="col-lg-10 offset-lg-1">
 <div class="card">
   <div class="card-header">
-    <h4>订单详情</h4>
+    <h4>Детали заказа</h4>
   </div>
   <div class="card-body">
     <table class="table">
       <thead>
       <tr>
-        <th>商品信息</th>
-        <th class="text-center">单价</th>
-        <th class="text-center">数量</th>
-        <th class="text-right item-amount">小计</th>
+        <th>Информация о продукте</th>
+        <th class="text-center">Цена за единицу</th>
+        <th class="text-center">Количество</th>
+        <th class="text-right item-amount">Адрес доставки</th>
       </tr>
       </thead>
       @foreach($order->items as $index => $item)
@@ -33,96 +33,96 @@
               <span class="sku-title">{{ $item->productSku->title }}</span>
             </div>
           </td>
-          <td class="sku-price text-center vertical-middle">￥{{ $item->price }}</td>
+          <td class="sku-price text-center vertical-middle">{{ $item->price }} р.</td>
           <td class="sku-amount text-center vertical-middle">{{ $item->amount }}</td>
-          <td class="item-amount text-right vertical-middle">￥{{ number_format($item->price * $item->amount, 2, '.', '') }}</td>
+          <td class="item-amount text-right vertical-middle">{{ number_format($item->price * $item->amount, 2, '.', '') }} р.</td>
         </tr>
       @endforeach
       <tr><td colspan="4"></td></tr>
     </table>
     <div class="order-bottom">
       <div class="order-info">
-        <div class="line"><div class="line-label">收货地址：</div><div class="line-value">{{ join(' ', $order->address) }}</div></div>
-        <div class="line"><div class="line-label">订单备注：</div><div class="line-value">{{ $order->remark ?: '-' }}</div></div>
-        <div class="line"><div class="line-label">订单编号：</div><div class="line-value">{{ $order->no }}</div></div>
+        <div class="line"><div class="line-label">Адрес доставки：</div><div class="line-value">{{ join(' ', $order->address) }}</div></div>
+        <div class="line"><div class="line-label">Комментарий：</div><div class="line-value">{{ $order->remark ?: '-' }}</div></div>
+        <div class="line"><div class="line-label">Номер заказа：</div><div class="line-value">{{ $order->no }}</div></div>
         <!-- 输出物流状态 -->
         <div class="line">
-          <div class="line-label">物流状态：</div>
+          <div class="line-label">Логистический статус：</div>
           <div class="line-value">{{ \App\Models\Order::$shipStatusMap[$order->ship_status] }}</div>
         </div>
-        <!-- 如果有物流信息则展示 -->
+        <!-- Показать, есть ли логистическая информация -->
         @if($order->ship_data)
           <div class="line">
-            <div class="line-label">物流信息：</div>
+            <div class="line-label">Логистическая информация：</div>
             <div class="line-value">{{ $order->ship_data['express_company'] }} {{ $order->ship_data['express_no'] }}</div>
           </div>
         @endif
-        <!-- 订单已支付，且退款状态不是未退款时展示退款信息 -->
+        <!-- Отображение информации о возврате, когда заказ был оплачен, и статус возврата не возвращается -->
         @if($order->paid_at && $order->refund_status !== \App\Models\Order::REFUND_STATUS_PENDING)
           <div class="line">
-            <div class="line-label">退款状态：</div>
+            <div class="line-label">Статус возврата：</div>
             <div class="line-value">{{ \App\Models\Order::$refundStatusMap[$order->refund_status] }}</div>
           </div>
           <div class="line">
-            <div class="line-label">退款理由：</div>
+            <div class="line-label">Причина возврата：</div>
             <div class="line-value">{{ $order->extra['refund_reason'] }}</div>
           </div>
         @endif
       </div>
       <div class="order-summary text-right">
-        <!-- 展示优惠信息开始 -->
+        <!-- Показать информацию о начале предложения -->
         @if($order->couponCode)
           <div class="text-primary">
-            <span>优惠信息：</span>
+            <span>Информация о предложении：</span>
             <div class="value">{{ $order->couponCode->description }}</div>
           </div>
         @endif
-        <!-- 展示优惠信息结束 -->
+        <!-- Конец показа предложений -->
         <div class="total-amount">
-          <span>订单总价：</span>
-          <div class="value">￥{{ $order->total_amount }}</div>
+          <span>Общая стоимость заказа：</span>
+          <div class="value">{{ $order->total_amount }} р.</div>
         </div>
         <div>
-          <span>订单状态：</span>
+          <span>Статус заказа：</span>
           <div class="value">
             @if($order->paid_at)
               @if($order->refund_status === \App\Models\Order::REFUND_STATUS_PENDING)
-                已支付
+                Оплаченный
               @else
                 {{ \App\Models\Order::$refundStatusMap[$order->refund_status] }}
               @endif
             @elseif($order->closed)
-              已关闭
+              Закрыто
             @else
-              未支付
+              Неоплаченный
             @endif
           </div>
           @if(isset($order->extra['refund_disagree_reason']))
             <div>
-              <span>拒绝退款理由：</span>
+              <span>Причина отказа в возврате：</span>
               <div class="value">{{ $order->extra['refund_disagree_reason'] }}</div>
             </div>
           @endif
         </div>
-        <!-- 支付按钮开始 -->
+        <!-- Запуск кнопки оплаты -->
         @if(!$order->paid_at && !$order->closed)
           <div class="payment-buttons">
-            <a class="btn btn-primary btn-sm" href="{{ route('payment.alipay', ['order' => $order->id]) }}">支付宝支付</a>
-            <!-- 把之前的微信支付按钮换成这个 -->
-            <button class="btn btn-sm btn-success" id='btn-wechat'>微信支付</button>
+            <a class="btn btn-primary btn-sm" href="{{ route('payment.alipay', ['order' => $order->id]) }}">Alipay платеж</a>
+            <!-- Замените предыдущую кнопку оплаты WeChat этим -->
+            <button class="btn btn-sm btn-success" id='btn-wechat'>WeChat оплаты</button>
           </div>
         @endif
-        <!-- 支付按钮结束 -->
-        <!-- 如果订单的发货状态为已发货则展示确认收货按钮 -->
+        <!-- Кнопка окончания платежа -->
+        <!-- Если статус доставки заказа отправлен, отображается кнопка «Подтвердить получение». -->
         @if($order->ship_status === \App\Models\Order::SHIP_STATUS_DELIVERED)
           <div class="receive-button">
-            <button type="button" id="btn-receive" class="btn btn-sm btn-success">确认收货</button>
+            <button type="button" id="btn-receive" class="btn btn-sm btn-success">Подтвердите получение</button>
           </div>
         @endif
-        <!-- 订单已支付，且退款状态是未退款时展示申请退款按钮 -->
+        <!-- Показать кнопку запроса на возврат, когда заказ оплачен и статус возврата не возвращен -->
         @if($order->paid_at && $order->refund_status === \App\Models\Order::REFUND_STATUS_PENDING)
           <div class="refund-button">
-            <button class="btn btn-sm btn-danger" id="btn-apply-refund">申请退款</button>
+            <button class="btn btn-sm btn-danger" id="btn-apply-refund">Запросить возврат</button>
           </div>
         @endif
       </div>
@@ -136,59 +136,59 @@
 @section('scriptsAfterJs')
   <script>
     $(document).ready(function() {
-      // 微信支付按钮事件
+      // WeChat кнопка оплаты вещь
       $('#btn-wechat').click(function() {
         swal({
-          // content 参数可以是一个 DOM 元素，这里我们用 jQuery 动态生成一个 img 标签，并通过 [0] 的方式获取到 DOM 元素
+          // Параметр содержимого может быть элементом DOM, здесь мы используем jQuery для динамической генерации тега img и получения элемента DOM с помощью метода [0].
           content: $('<img src="{{ route('payment.wechat', ['order' => $order->id]) }}" />')[0],
-          // buttons 参数可以设置按钮显示的文案
-          buttons: ['关闭', '已完成付款'],
+          // Параметр кнопок может установить текст, отображаемый кнопкой
+          buttons: ['близко', '\n' + 'Платеж завершен'],
         })
           .then(function(result) {
-            // 如果用户点击了 已完成付款 按钮，则重新加载页面
+            // Если пользователь нажимает кнопку «Завершенный платеж», страница перезагружается.
             if (result) {
               location.reload();
             }
           })
       });
-      // 确认收货按钮点击事件
+      // Подтвердите квитанцию ​​о нажатии кнопки
       $('#btn-receive').click(function() {
-        // 弹出确认框
+        // Всплывающее окно подтверждения
         swal({
-          title: "确认已经收到商品？",
+          title: "Подтвердить, что товар был получен?",
           icon: "warning",
           dangerMode: true,
-          buttons: ['取消', '确认收到'],
+          buttons: ['Нет', 'Да'],
         })
           .then(function(ret) {
-            // 如果点击取消按钮则不做任何操作
+            // Ничего не делать, если вы нажмете кнопку Отмена
             if (!ret) {
               return;
             }
-            // ajax 提交确认操作
+            // операция подтверждения фиксации ajax
             axios.post('{{ route('orders.received', [$order->id]) }}')
               .then(function () {
-                // 刷新页面
+                // Обновить страницу
                 location.reload();
               })
           });
       });
-      // 退款按钮点击事件
+      // Возврат нажатием кнопки
       $('#btn-apply-refund').click(function () {
         swal({
-          text: '请输入退款理由',
+          text: 'Пожалуйста, введите причину возврата',
           content: "input",
         }).then(function (input) {
-          // 当用户点击 swal 弹出框上的按钮时触发这个函数
+          // Эта функция срабатывает, когда пользователь нажимает кнопку во всплывающем окне "ласточка"
           if(!input) {
-            swal('退款理由不可空', '', 'error');
+            swal('\n' + 'Причина возврата не может быть пустой', '', 'error');
             return;
           }
           // 请求退款接口
           axios.post('{{ route('orders.apply_refund', [$order->id]) }}', {reason: input})
             .then(function () {
-              swal('申请退款成功', '', 'success').then(function () {
-                // 用户点击弹框上按钮时重新加载页面
+              swal('Успешный запрос на возврат', '', 'success').then(function () {
+                // Перезагрузите страницу, когда пользователь нажимает кнопку во всплывающем окне
                 location.reload();
               });
             });

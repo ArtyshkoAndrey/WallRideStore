@@ -9,7 +9,6 @@ class UserAddress extends Model
     protected $fillable = [
         'province',
         'city',
-        'district',
         'address',
         'zip',
         'contact_name',
@@ -25,6 +24,6 @@ class UserAddress extends Model
 
     public function getFullAddressAttribute()
     {
-        return "{$this->province}{$this->city}{$this->district}{$this->address}";
+        return "{$this->province}, {$this->city}, {$this->address}";
     }
 }

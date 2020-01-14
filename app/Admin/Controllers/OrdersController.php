@@ -11,6 +11,7 @@ use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class OrdersController extends Controller
 {
@@ -41,8 +42,14 @@ class OrdersController extends Controller
         $grid->no('Номер');
         // Использовать метод столбца при отображении связанных полей
         $grid->column('user.name', 'Покупатель');
-        $grid->total_amount('Общая сумма')->sortable();
-        $grid->paid_at('Время оплаты')->sortable();
+        $grid->total_amount('Общая сумма')->sortable()->display(function($value) {
+            return $value . ' р.';
+        });
+        $grid->paid_at('Время оплаты')->sortable()->display(function($value) {
+            $value = strtotime($value);
+            $value = date("d.m.Y H:i:s", $value);
+            return $value;
+        });
         $grid->ship_status('Статус отправки')->display(function($value) {
             return Order::$shipStatusMap[$value];
         });

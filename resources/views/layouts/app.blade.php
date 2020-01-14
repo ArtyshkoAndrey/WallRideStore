@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>@yield('title', 'Laravel Shop') - Laravel 电商教程</title>
-  <!-- 样式 -->
+  <title>@yield('title', 'WallRidestore') - WallRidestore</title>
+  <!-- стиль -->
   <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
@@ -18,7 +18,7 @@
   </div>
   @include('layouts._footer')
 </div>
-<!-- JS 脚本 -->
+<!-- JS скрипт -->
 <script src="{{ mix('js/app.js') }}"></script>
 @yield('scriptsAfterJs')
 </body>

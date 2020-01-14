@@ -23,7 +23,7 @@ class CouponCodesController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->header('优惠券列表')
+            ->header('Список купонов')
             ->body($this->grid());
     }
 
@@ -37,7 +37,7 @@ class CouponCodesController extends Controller
     public function edit($id, Content $content)
     {
         return $content
-            ->header('编辑优惠券')
+            ->header('Изменить купон')
             ->body($this->form()->edit($id));
     }
 
@@ -50,7 +50,7 @@ class CouponCodesController extends Controller
     public function create(Content $content)
     {
         return $content
-            ->header('新增优惠券')
+            ->header('Добавить купон')
             ->body($this->form());
     }
 
@@ -65,16 +65,20 @@ class CouponCodesController extends Controller
 
         $grid->model()->orderBy('created_at', 'desc');
         $grid->id('ID')->sortable();
-        $grid->name('名称');
-        $grid->code('优惠码');
-        $grid->description('描述');
-        $grid->column('usage', '用量')->display(function ($value) {
+        $grid->name('Имя');
+        $grid->code('Код');
+        $grid->description('Описание');
+        $grid->column('usage', 'Сумма')->display(function ($value) {
             return "{$this->used} / {$this->total}";
         });
-        $grid->enabled('是否启用')->display(function ($value) {
-            return $value ? '是' : '否';
+        $grid->enabled('Активно')->display(function ($value) {
+            return $value ? 'Да' : 'Нет';
         });
-        $grid->created_at('创建时间');
+        $grid->created_at('Время создания')->display(function($value) {
+            $value = strtotime($value);
+            $value = date("d.m.Y H:i:s", $value);
+            return $value;
+        });
         $grid->actions(function ($actions) {
             $actions->disableView();
         });
@@ -92,30 +96,30 @@ class CouponCodesController extends Controller
         $form = new Form(new CouponCode);
 
         $form->display('id', 'ID');
-        $form->text('name', '名称')->rules('required');
-        $form->text('code', '优惠码')->rules(function($form) {
-            // 如果 $form->model()->id 不为空，代表是编辑操作
+        $form->text('name', 'Имя')->rules('required');
+        $form->text('code', 'Код')->rules(function($form) {
+            // Если $ form-> model () -> id не пусто, это означает редактирование
             if ($id = $form->model()->id) {
                 return 'nullable|unique:coupon_codes,code,'.$id.',id';
             } else {
                 return 'nullable|unique:coupon_codes';
             }
         });
-        $form->radio('type', '类型')->options(CouponCode::$typeMap)->rules('required');
-        $form->text('value', '折扣')->rules(function ($form) {
+        $form->radio('type', 'Тип')->options(CouponCode::$typeMap)->rules('required');
+        $form->text('value', 'Скидка')->rules(function ($form) {
             if ($form->model()->type === CouponCode::TYPE_PERCENT) {
-                // 如果选择了百分比折扣类型，那么折扣范围只能是 1 ~ 99
+                // Если выбран тип процентной скидки, диапазон скидок может быть только от 1 до 99
                 return 'required|numeric|between:1,99';
             } else {
-                // 否则只要大等于 0.01 即可
+                // В противном случае, если оно по существу равно 0,01
                 return 'required|numeric|min:0.01';
             }
         });
-        $form->text('total', '总量')->rules('required|numeric|min:0');
-        $form->text('min_amount', '最低金额')->rules('required|numeric|min:0');
-        $form->datetime('not_before', '开始时间');
-        $form->datetime('not_after', '结束时间');
-        $form->radio('enabled', '启用')->options(['1' => '是', '0' => '否']);
+        $form->text('total', 'Кол-во')->rules('required|numeric|min:0');
+        $form->text('min_amount', 'Минимальная сумма')->rules('required|numeric|min:0');
+        $form->datetime('not_before', 'Время начала');
+        $form->datetime('not_after', 'Время окончания');
+        $form->radio('enabled', 'Активен')->options(['1' => 'Да', '0' => 'Нет']);
 
         $form->saving(function (Form $form) {
             if (!$form->code) {

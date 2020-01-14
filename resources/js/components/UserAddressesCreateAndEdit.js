@@ -5,16 +5,14 @@ Vue.component('user-addresses-create-and-edit', {
     return {
       province: '', // 省
       city: '', // 市
-      district: '', // 区
     }
   },
   methods: {
     // 把参数 val 中的值保存到组件的数据中
     onDistrictChanged(val) {
-      if (val.length === 3) {
+      if (val.length === 2) {
         this.province = val[0];
         this.city = val[1];
-        this.district = val[2];
       }
     }
   }

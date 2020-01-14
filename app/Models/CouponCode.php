@@ -9,13 +9,13 @@ use Illuminate\Support\Str;
 
 class CouponCode extends Model
 {
-    // 用常量的方式定义支持的优惠券类型
+    // Постоянно определяйте поддерживаемые типы купонов
     const TYPE_FIXED = 'fixed';
     const TYPE_PERCENT = 'percent';
 
     public static $typeMap = [
-        self::TYPE_FIXED   => '固定金额',
-        self::TYPE_PERCENT => '比例',
+        self::TYPE_FIXED   => 'Фиксированная сумма',
+        self::TYPE_PERCENT => 'Процентная',
     ];
 
     protected $fillable = [
@@ -33,7 +33,7 @@ class CouponCode extends Model
     protected $casts = [
         'enabled' => 'boolean',
     ];
-    // 指明这两个字段是日期类型
+    // указывает, что эти два поля являются типами даты
     protected $dates = ['not_before', 'not_after'];
 
     protected $appends = ['description'];
@@ -43,35 +43,35 @@ class CouponCode extends Model
         $str = '';
 
         if ($this->min_amount > 0) {
-            $str = '满'.str_replace('.00', '', $this->min_amount);
+            $str = 'От '.str_replace('.00', '', $this->min_amount). ' р. ';
         }
         if ($this->type === self::TYPE_PERCENT) {
-            return $str.'优惠'.str_replace('.00', '', $this->value).'%';
+            return $str.'Скидка '.str_replace('.00', '', $this->value).'%';
         }
 
-        return $str.'减'.str_replace('.00', '', $this->value);
+        return $str.'до '.str_replace('.00', '', $this->value) . ' р. скидка';
     }
 
     public function checkAvailable(User $user, $orderAmount = null)
     {
         if (!$this->enabled) {
-            throw new CouponCodeUnavailableException('优惠券不存在');
+            throw new CouponCodeUnavailableException('Купон не существует');
         }
 
         if ($this->total - $this->used <= 0) {
-            throw new CouponCodeUnavailableException('该优惠券已被兑完');
+            throw new CouponCodeUnavailableException('Купон был выкуплен');
         }
 
         if ($this->not_before && $this->not_before->gt(Carbon::now())) {
-            throw new CouponCodeUnavailableException('该优惠券现在还不能使用');
+            throw new CouponCodeUnavailableException('Купон еще не доступен');
         }
 
         if ($this->not_after && $this->not_after->lt(Carbon::now())) {
-            throw new CouponCodeUnavailableException('该优惠券已过期');
+            throw new CouponCodeUnavailableException('Срок действия этого купона истек');
         }
 
         if (!is_null($orderAmount) && $orderAmount < $this->min_amount) {
-            throw new CouponCodeUnavailableException('订单金额不满足该优惠券最低金额');
+            throw new CouponCodeUnavailableException('Сумма заказа не соответствует минимальной сумме купона');
         }
 
         $used = Order::where('user_id', $user->id)
@@ -87,15 +87,16 @@ class CouponCode extends Model
             })
             ->exists();
         if ($used) {
-            throw new CouponCodeUnavailableException('你已经使用过这张优惠券了');
+            throw new CouponCodeUnavailableException('Вы уже использовали этот купон');
         }
     }
 
     public function getAdjustedPrice($orderAmount)
     {
-        // 固定金额
+        // фиксированная сумма
         if ($this->type === self::TYPE_FIXED) {
-            // 为了保证系统健壮性，我们需要订单金额最少为 0.01 元
+
+            // Чтобы обеспечить надежность системы, нам необходимо сумма заказа не менее 0,01 юаня
             return max(0.01, $orderAmount - $this->value);
         }
 
@@ -104,9 +105,9 @@ class CouponCode extends Model
 
     public function changeUsed($increase = true)
     {
-        // 传入 true 代表新增用量，否则是减少用量
+        // Передайте в true, чтобы увеличить использование, иначе уменьшите использование
         if ($increase) {
-            // 与检查 SKU 库存类似，这里需要检查当前用量是否已经超过总量
+            // Аналогично проверке инвентаря SKU, здесь необходимо проверить, превысило ли текущее использование общее количество
             return $this->newQuery()->where('id', $this->id)->where('used', '<', $this->total)->increment('used');
         } else {
             return $this->decrement('used');
@@ -116,9 +117,9 @@ class CouponCode extends Model
     public static function findAvailableCode($length = 16)
     {
         do {
-            // 生成一个指定长度的随机字符串，并转成大写
+            // Создать случайную строку указанной длины и преобразовать ее в верхний регистр
             $code = strtoupper(Str::random($length));
-            // 如果生成的码已存在就继续循环
+            // Продолжить цикл, если сгенерированный код уже существует
         } while (self::query()->where('code', $code)->exists());
 
         return $code;

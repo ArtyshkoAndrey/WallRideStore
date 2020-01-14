@@ -1,23 +1,23 @@
 @extends('layouts.app')
-@section('title', '收货地址列表')
+@section('title', 'Список адресов доставки')
 
 @section('content')
   <div class="row">
     <div class="col-md-10 offset-md-1">
       <div class="card panel-default">
         <div class="card-header">
-          收货地址列表
-          <a href="{{ route('user_addresses.create') }}" class="float-right">新增收货地址</a>
+          Список адресов доставки
+          <a href="{{ route('user_addresses.create') }}" class="float-right">Добавить адрес доставки</a>
         </div>
         <div class="card-body">
           <table class="table table-bordered table-striped">
             <thead>
             <tr>
-              <th>收货人</th>
-              <th>地址</th>
-              <th>邮编</th>
-              <th>电话</th>
-              <th>操作</th>
+              <th>Имя</th>
+              <th>Адресс</th>
+              <th>Почтовый индекс</th>
+              <th>Телефон</th>
+              <th>Операция</th>
             </tr>
             </thead>
             <tbody>
@@ -28,9 +28,9 @@
                 <td>{{ $address->zip }}</td>
                 <td>{{ $address->contact_phone }}</td>
                 <td>
-                  <a href="{{ route('user_addresses.edit', ['user_address' => $address->id]) }}" class="btn btn-primary">修改</a>
-                  <!-- 把之前删除按钮的表单替换成这个按钮，data-id 属性保存了这个地址的 id，在 js 里会用到 -->
-                  <button class="btn btn-danger btn-del-address" type="button" data-id="{{ $address->id }}">删除</button>
+                  <a href="{{ route('user_addresses.edit', ['user_address' => $address->id]) }}" class="btn btn-primary">Изменить</a>
+                  <!-- Замените форму ранее удаленной кнопки этой кнопкой. Атрибут data-id хранит идентификатор этого адреса, который будет использоваться в js -->
+                  <button class="btn btn-danger btn-del-address" type="button" data-id="{{ $address->id }}">Удалить</button>
                 </td>
               </tr>
             @endforeach
@@ -45,27 +45,27 @@
 @section('scriptsAfterJs')
   <script>
     $(document).ready(function() {
-      // 删除按钮点击事件
+      // Удалить событие нажатия кнопки
       $('.btn-del-address').click(function() {
-        // 获取按钮上 data-id 属性的值，也就是地址 ID
+        // Получить значение атрибута data-id на кнопке, который является идентификатором адреса
         var id = $(this).data('id');
-        // 调用 sweetalert
+        // Позвони подсластителю
         swal({
-          title: "确认要删除该地址？",
+          title: "\n" + "Подтвердите удаление адреса?",
           icon: "warning",
-          buttons: ['取消', '确定'],
+          buttons: ['Нет', 'Да'],
           dangerMode: true,
         })
-          .then(function(willDelete) { // 用户点击按钮后会触发这个回调函数
-            // 用户点击确定 willDelete 值为 true， 否则为 false
-            // 用户点了取消，啥也不做
+          .then(function(willDelete) { // Эта функция обратного вызова будет запущена после того, как пользователь нажмет кнопку
+            // Пользователь нажимает кнопку ОК, и значение willDelete равно true, в противном случае - false
+            // Пользователь нажал "Отмена" и ничего не сделал
             if (!willDelete) {
               return;
             }
-            // 调用删除接口，用 id 来拼接出请求的 url
+            // Вызовите интерфейс удаления и используйте идентификатор, чтобы склеить запрошенный URL
             axios.delete('/user_addresses/' + id)
               .then(function () {
-                // 请求成功之后重新加载页面
+                // Обновить страницу после успешного запроса
                 location.reload();
               })
           });

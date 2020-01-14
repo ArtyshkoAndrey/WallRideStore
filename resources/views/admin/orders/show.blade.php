@@ -3,7 +3,7 @@
     <h3 class="box-title">Номер заказа：{{ $order->no }}</h3>
     <div class="box-tools">
       <div class="btn-group float-right" style="margin-right: 10px">
-        <a href="{{ route('admin.orders.index') }}" class="btn btn-sm btn-default"><i class="fa fa-list"></i> 列表</a>
+        <a href="{{ route('admin.orders.index') }}" class="btn btn-sm btn-default"><i class="fa fa-list"></i> Ко всем заказам</a>
       </div>
     </div>
   </div>
@@ -34,9 +34,9 @@
       </tr>
       @foreach($order->items as $item)
         <tr>
-          <td>{{ $item->product->title }} {{ $item->productSku->title }}</td>
-          <td>￥{{ $item->price }}</td>
-          <td>{{ $item->amount }}</td>
+          <td>{{ $item->product->title }}  <strong>({{ $item->productSku->title }})</strong></td>
+          <td>{{ $item->price }} р.</td>
+          <td>{{ $item->amount }} шт.</td>
         </tr>
       @endforeach
       <tr>
