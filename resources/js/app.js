@@ -1,4 +1,4 @@
-import vueCountryRegionSelect from 'vue-country-region-select'
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -8,15 +8,6 @@ import vueCountryRegionSelect from 'vue-country-region-select'
 require('./bootstrap');
 
 window.Vue = require('vue');
-
-Vue.use(vueCountryRegionSelect)
-
-export default Vue.extend({
-  data: () => ({
-    country: '',
-    region: ''
-  })
-})
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))

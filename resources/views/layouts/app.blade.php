@@ -12,14 +12,28 @@
 </head>
 <body>
 <div id="app" class="{{ route_class() }}-page">
-  @include('layouts._header')
-  <div class="container">
-    @yield('content')
+  @include('layouts.header')
+  <div id="blur-for-menu">
+    <div class="container">
+      @yield('content')
+    </div>
+    @include('layouts._footer')
   </div>
-  @include('layouts._footer')
 </div>
 <!-- JS скрипт -->
 <script src="{{ mix('js/app.js') }}"></script>
+<script>
+  /*
+  Slidemenu
+*/
+  $(document).ready(function() {
+    $('#nav-icon3').click(function(){
+      var $body = document.body;
+      $(this).toggleClass('open');
+      $body.className = ( $body.className === 'menu-active' )? '' : 'menu-active';
+    });
+  });
+</script>
 @yield('scriptsAfterJs')
 </body>
 </html>
