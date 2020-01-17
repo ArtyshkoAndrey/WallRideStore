@@ -22,17 +22,57 @@
 </div>
 <!-- JS скрипт -->
 <script src="{{ mix('js/app.js') }}"></script>
-<script>
+<script src='{{ asset('public/js/jquery-ui.min.js') }}'></script>
+<script type="text/javascript">
   /*
-  Slidemenu
-*/
-  $(document).ready(function() {
-    $('#nav-icon3').click(function(){
-      var $body = document.body;
-      $(this).toggleClass('open');
-      $body.className = ( $body.className === 'menu-active' )? '' : 'menu-active';
+   Slidemenu
+ */
+
+  window.onload = function() {
+    if(!window.matchMedia('(max-width: 768px)').matches) {
+      $("li.dropdown").hover(function () {
+        var id = $(this).attr("rel");
+        $(this).toggleClass("active");
+      }, function () {
+        $('.close-submenu').hide();
+        $(this).toggleClass("active");
+      });
+    } else {
+      $("li.dropdown").click(function () {
+        $('.close-submenu').show();
+        $(this).toggleClass("active");
+        window.setInterval(checkVisibleSubMenu, 100);
+      });
+    }
+
+    $('#nav-icon3').click(() => {
+      console.log('Меню ' + (checkToggableMenu(true) ? 'открыто' : 'закрыто'))
     });
-  });
+
+    $('#blur-for-menu').click(() => {
+      if (checkToggableMenu()) {
+        checkToggableMenu(true);
+      }
+    });
+  };
+  function closeSubMenu() {
+    $('.close-submenu').hide();
+    $('li.dropdown').filter('.active').toggleClass("active")
+  }
+
+  function checkVisibleSubMenu() {
+    if($('li.dropdown').filter('.active').length < 1) {
+      closeSubMenu()
+    }
+  }
+  function checkToggableMenu(toggle = false) {
+    let $body = document.body;
+    if (toggle) {
+      closeSubMenu()
+      $body.className = ($body.className === 'menu-active') ? '' : 'menu-active';
+    }
+    return $body.className === 'menu-active';
+  }
 </script>
 @yield('scriptsAfterJs')
 </body>

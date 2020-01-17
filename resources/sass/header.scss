@@ -1,7 +1,3 @@
-// Стили для меню/шапки
-
-$red: #F33C3C;
-
 #nav-icon3 {
   width: 30px;
   height: 30px;
@@ -33,7 +29,6 @@ $red: #F33C3C;
   -webkit-transform: rotate(0deg);
   -moz-transform: rotate(0deg);
   -o-transform: rotate(0deg);
-
   transform: rotate(0deg);
   -webkit-transition: .25s ease-in-out;
   -moz-transition: .25s ease-in-out;
@@ -81,6 +76,22 @@ $red: #F33C3C;
   left: 50%;
 }
 
+
+
+/*
+  Globals
+*/
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #556270;
+  color: #353d46;
+  font: 18px/27px 'Oxygen', sans-serif;
+}
+
+h1, h2, h3 { color: #FF6B6B; margin: 0 0 27px; }
+
 /*
   Menu
 */
@@ -88,14 +99,13 @@ nav#slide-menu {
   z-index: 100;
   background-color: black;
   position: fixed;
-  top: 50px;
-  left: -284px;
+  top: 49px;
+  left: -290px;
   bottom: 0;
   display: block;
   float: left;
-  width: 100%;
-  max-width: 284px;
-  height: calc(100vh - 50px);
+  width: 290px;
+  height: calc(100vh - 49px);
 
   -moz-transition: all 300ms;
   -webkit-transition: all 300ms;
@@ -116,16 +126,72 @@ nav#slide-menu {
       font-size: 16px;
       color: white;
       cursor: pointer;
-    }
-
-    li.sep {
-      padding-top: 10px;
-      padding-left: 10px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid white;
-      &:hover {
-        border-bottom: 3px solid #F33C3C;
-        padding-bottom: 8px;
+      &.sep {
+        padding-top: 10px;
+        padding-left: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid white;
+        &:hover {
+          border-bottom: 3px solid #F33C3C;
+          padding-bottom: 8px;
+        }
+      }
+      &.dropdown {
+        &.active{
+          ul[class*="dropdown-"] {
+            -moz-transition: all 300ms;
+            -webkit-transition: all 300ms;
+            transition: all 300ms;
+            visibility: visible;
+            opacity: 1;
+          }
+        }
+      }
+      ul.dropdown-1 {
+        width: 25vw;
+      }
+      ul.dropdown-3 {
+        width: calc(80vw - 290px);
+      }
+      ul.dropdown-1>li {
+        width: 100%;
+      }
+      ul.dropdown-3>li {
+        width: 32%;
+      }
+      >ul[class*="dropdown-"] {
+        position: absolute;
+        padding: 20px;
+        left: 270px;
+        margin-top: -39px;
+        background: white;
+        visibility: hidden;
+        float: left;
+        // width: calc(100vw - 270px);
+        opacity: 0;
+        list-style-type:none;
+        &::before, &::after {
+          content: '';
+          position: absolute;
+          left: -30px;
+          top: 10px;
+          border: 15px solid transparent;
+          border-right: 15px solid white;
+        }
+        li {
+          float: left;
+        }
+        a {
+          font-size: 14px;
+          font-weight: 500;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          color: black;
+          text-decoration: none;
+          &:hover {
+            color: red;
+          }
+        }
       }
     }
   }
@@ -148,6 +214,21 @@ body.menu-active nav#slide-menu ul {
 */
 
 div#blur-for-menu {
+  margin: 0;
+  width: 100%;
+  min-height: 100vh;
+  padding: 60px;
+  overflow-x: hidden;
+  background: #fcfeff;
+
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+
+  -moz-box-shadow: -3px 0 6px darken(#556270, 5%);
+  -webkit-box-shadow: -3px 0 6px darken(#556270, 5%);
+  box-shadow: -3px 0 6px darken(#556270, 5%);
+
   -moz-transition: all 300ms;
   -webkit-transition: all 300ms;
   transition: all 300ms;
@@ -170,4 +251,130 @@ body.menu-active div#blur-for-menu {
   -o-filter: blur(2px);
   -ms-filter: blur(2px);
   filter: blur(2px);
+  cursor: pointer;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+@media (max-width: 768px) {
+  .close-submenu {
+    display: none;
+  }
+  body.menu-active {
+    overflow: hidden;
+  }
+  nav#slide-menu {
+    z-index: 100;
+    background-color: black;
+    position: fixed;
+    top: 49px;
+    left: -100vw;
+    bottom: 0;
+    display: block;
+    float: left;
+    width: 100vw;
+    height: calc(100vh - 49px);
+    -moz-transition: all 300ms;
+    -webkit-transition: all 300ms;
+    transition: all 300ms;
+
+    > ul {
+      display: flex;
+      flex-direction: column;
+      margin-left: 20px;
+      padding: 0;
+      list-style: none;
+      opacity: 0.5;
+      -moz-transition: all 300ms;
+      -webkit-transition: all 300ms;
+      transition: all 300ms;
+      li {
+        font-size: 16px;
+        color: white;
+        cursor: pointer;
+        &.sep {
+          padding-top: 10px;
+          padding-left: 10px;
+          padding-bottom: 10px;
+          border-bottom: 1px solid white;
+          &:hover {
+            border-bottom: 3px solid #F33C3C;
+            padding-bottom: 8px;
+          }
+        }
+        &.dropdown {
+          //Include this if you want pure CSS dropdown menus
+          &.active{
+            ul[class*="dropdown-"] {
+              z-index: 103;
+              visibility: visible;
+              opacity: 1;
+            }
+          }
+        }
+        ul.dropdown-1 {
+          width: 100vw;
+        }
+        ul.dropdown-3 {
+          width: 100vw;
+        }
+        ul.dropdown-1>li {
+          width: 100%;
+        }
+        ul.dropdown-3>li {
+          width: 100%;
+        }
+        ul[class*="dropdown-"] {
+          overflow-y: scroll;
+          height: calc(100vh - 90px)!important;
+          position: fixed;
+          left: 0;
+          top: 90px;
+          margin-top: 0 !important;
+          background: white;
+          visibility: hidden;
+          float: none;
+          opacity: 0;
+          list-style-type: none;
+          -moz-transition: all 300ms;
+          -webkit-transition: all 300ms;
+          transition: all 300ms;
+          &::before, &::after {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 10px;
+            border: 15px solid transparent;
+            border-right: 15px solid white;
+          }
+          li {
+            float: left;
+            z-index: 104;
+            &.close-submenu {
+              color: red;
+              font-size: 16px;
+              margin: 10px 0;
+              -moz-transition: all 300ms;
+              -webkit-transition: all 300ms;
+              transition: all 300ms;
+            }
+            a {
+              font-size: 14px;
+              font-weight: 500;
+              padding-top: 10px;
+              padding-bottom: 10px;
+              color: black;
+              text-decoration: none;
+              &:hover {
+                color: red;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
