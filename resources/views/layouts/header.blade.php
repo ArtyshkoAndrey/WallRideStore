@@ -51,7 +51,7 @@
   </ul>
 </nav>
 <!-- Content panel -->
-<nav class="navbar navbar-expand-sm navbar-light bg-light">
+<nav class="navbar navbar-expand navbar-light bg-light">
   <div id="nav-icon3">
     <span></span>
     <span></span>
