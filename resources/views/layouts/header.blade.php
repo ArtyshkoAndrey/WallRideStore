@@ -51,11 +51,94 @@
   </ul>
 </nav>
 <!-- Content panel -->
-<div class="nav">
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
   <div id="nav-icon3">
     <span></span>
     <span></span>
     <span></span>
     <span></span>
   </div>
-</div>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav justify-content-end">
+      <li class="nav-item dropdown" rel="city">
+        <a class="nav-link d-flex align-items-center" id="city" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span>Вы находитесь в: г. Москва</span>
+          <i class="fal fa-angle-down fa-fw"></i>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="city">
+          <div class="material_input">
+            <input type="text" required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label id="mla">Начните печатать</label>
+          </div>
+          <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action">
+              Москва
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              Питер
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              Махачкала
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">Красноярск</a>
+            <a href="#" class="list-group-item list-group-item-action">Новосибирск</a>
+            <a href="#" class="list-group-item list-group-item-action">Санкт-Петербурк</a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item" rel="profile">
+        <a class="nav-link p-0" id="nav-profile" href="#">
+          <img class="img-fluid rounded-circle p-0" src="{{ asset('public/storage/inventory/t-short.png') }}" alt="">
+        </a>
+      </li>
+      <li class="nav-item dropdown" rel="cart">
+        <a class="nav-link" id="cart" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fal fa-shopping-bag fa-2x fa-fw"></i>
+          <div id="counter">
+            <span>3</span>
+          </div>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="cart">
+          <div class="row align-items-center">
+            <div class="col-md-3 h-100">
+              <img src="{{ asset('public/storage/inventory/t-short.png') }}" alt="t-short" class="img-fluid">
+            </div>
+            <div class="col-md-5 h-100">
+              <p class="p-0 m-0">Fucking Awesome – <br> Flowers Hoodie Black</p>
+            </div>
+            <div class="col-md-4 h-100">
+              <div class="row">
+                  <span class="col-md-9 p-0 cart-price">1 х 42 900 тг.</span>
+                  <button class="btn btn-default col-md-3 p-0"><i class="fal fa-times fa-fw fa-lg c-red"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="row align-items-center">
+            <div class="col-md-3 h-100">
+              <img src="{{ asset('public/storage/inventory/t-short.png') }}" alt="t-short" class="img-fluid">
+            </div>
+            <div class="col-md-5 h-100">
+              <p class="p-0 m-0">Fucking Awesome – <br> Flowers Hoodie Black</p>
+            </div>
+            <div class="col-md-4 h-100">
+              <div class="row">
+                <span class="col-md-9 p-0 cart-price">1 х 42 900 тг.</span>
+                <button class="btn btn-default col-md-3 p-0"><i class="fal fa-times fa-fw fa-lg c-red"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="row align-items-center">
+            <div class="col-md-6 h-100">
+              <a class="btn btn-dark" href="#" role="button">Перейти в корзину</a>
+            </div>
+            <div class="col-md-6 h-100"><p class="p-0 cart-price m-0">Итого: 85 800 тг.</p></div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>

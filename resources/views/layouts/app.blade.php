@@ -14,20 +14,14 @@
 <div id="app" class="{{ route_class() }}-page">
   @include('layouts.header')
   <div id="blur-for-menu">
-    <div class="container">
-      @yield('content')
-    </div>
-    @include('layouts._footer')
+    @yield('content')
+{{--    @include('layouts._footer')--}}
   </div>
 </div>
 <!-- JS скрипт -->
 <script src="{{ mix('js/app.js') }}"></script>
 <script src='{{ asset('public/js/jquery-ui.min.js') }}'></script>
 <script type="text/javascript">
-  /*
-   Slidemenu
- */
-
   window.onload = function() {
     if(!window.matchMedia('(max-width: 768px)').matches) {
       $("li.dropdown").hover(function () {
@@ -45,12 +39,14 @@
       });
     }
 
-    $('#nav-icon3').click(() => {
+    $('#nav-icon3').click(function () {
+      $(this).toggleClass('open');
       console.log('Меню ' + (checkToggableMenu(true) ? 'открыто' : 'закрыто'))
     });
 
     $('#blur-for-menu').click(() => {
       if (checkToggableMenu()) {
+        $('#nav-icon3').toggleClass('open');
         checkToggableMenu(true);
       }
     });
