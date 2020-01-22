@@ -11,7 +11,43 @@
         <h1>Polar Scate Co</h1>
         <h3>New collection</h3>
         <a href="#" class="btn">Купить сейчас <img src="{{ asset("public/images/arrow-long-right.png") }}" alt=""></a>
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-6 col-sm-8 col-12">
+              <form action="{{ route('products.index') }}" id="big-search" class="form-inline w-100">
+                <div class="form-group mb-0 mr-0">
+                  <label class="sr-only">Что-то искали?</label>
+                  <input type="text" class="form-control border-0" placeholder="Что-то искали?">
+                </div>
+                <button type="submit" class="btn btn-primary border-0 ml-0"><i class="far fa-search"></i></button>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
+  </section>
+  <section class="mt-5 pt-5 px-2 px-sm-0">
+    <div class="container">
+      <div class="row align-items-center">
+        <h2 class="font-weight-bold">Новые товары</h2>
+        <a class="ml-auto c-red" href="#">Смотреть все </a>
+      </div>
+    </div>
+    <div class="container-fluid px-sm-0 mx-sm-0">
+      <product-list></product-list>
+    </div>
+  </section>
+
+  <section class="mt-5 mb-5 px-2 px-sm-0">
+    <div class="container">
+      <div class="row align-items-center">
+        <h2 class="font-weight-bold">Худи</h2>
+        <a class="ml-auto c-red" href="#">Смотреть все </a>
+      </div>
+    </div>
+    <div class="container-fluid px-sm-0 mx-sm-0">
+      <product-list></product-list>
     </div>
   </section>
 {{--<div class="row">--}}
@@ -77,13 +113,5 @@
 
 @section('scriptsAfterJs')
 <script>
-  let filters = {!! json_encode($filters) !!};
-  $(document).ready(function () {
-    $('.search-form input[name=search]').val(filters.search);
-    $('.search-form select[name=order]').val(filters.order);
-    $('.search-form select[name=order]').on('change', function() {
-      $('.search-form').submit();
-    });
-  })
 </script>
 @endsection

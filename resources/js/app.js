@@ -9,13 +9,23 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))
+const longpress = require('vue-long-press-directive');
 
+Vue.use(longpress, { duration: 1000 });
+
+// const files = require.context('./', true, /\.vue$/i);
+// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)));
+const ComponentContext = require.context('./', true, /\.vue$/i, 'lazy');
+
+ComponentContext.keys().forEach((componentFilePath) => {
+
+  const componentName = componentFilePath.split('/').pop().split('.')[0];
+  Vue.component(componentName, () => ComponentContext(componentFilePath));
+
+});
 // 此处需在引入 Vue 之后引入
 require('./components/SelectDistrict');
 require('./components/UserAddressesCreateAndEdit');
-
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
