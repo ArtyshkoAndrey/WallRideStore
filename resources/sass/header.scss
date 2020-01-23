@@ -85,7 +85,7 @@
   nav.navbar ul.navbar-nav .dropdown-menu {
     width: 100vw!important;
     height: calc(100vh - 50px)!important;
-    right: -3em;
+    right: -1rem;
     left: auto;
     min-width: 100vw!important;
     max-width: 100vw!important;
@@ -336,9 +336,6 @@ nav.navbar {
     width: 100%;
     li[rel="city"] {
       margin-right: auto;
-    }
-    li[rel="cart"] , li[rel="profile"] {
-      margin-right: 2em;
     }
     li[rel="cart"] {
       &.show {

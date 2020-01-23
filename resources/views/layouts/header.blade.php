@@ -90,21 +90,21 @@
         </div>
       </li>
       @guest
-      <li class="nav-item" rel="profile" style="display: flex;">
+      <li class="nav-item mr-0 mr-sm-4" rel="profile" style="display: flex;">
 
         <span class="d-flex align-items-center">
           <a class="nav-link p-0 mr-2 border-bottom border-white d-flex align-items-center" href="{{ route('login') }}">Войдите</a>
           или
-          <a class="nav-link p-0 ml-2 border-bottom border-white d-flex align-items-center" href="{{ route('register') }}">Регистрация</a>
+          <a class="nav-link p-0 ml-2 border-bottom border-white d-flex align-items-center" href="{{ route('register') }}">Зарегистрируйтесь</a>
         </span>
       @else
-      <li class="nav-item" rel="profile">
+      <li class="nav-item mr-0 mr-sm-4" rel="profile">
         <a class="nav-link p-0" id="nav-profile" href="#">
           <img class="img-fluid rounded-circle p-0" src="{{ asset('public/storage/inventory/t-short.png') }}" alt="">
         </a>
       </li>
       @endguest
-      <li class="nav-item dropdown" rel="cart">
+      <li class="nav-item dropdown mr-0 mr-sm-4" rel="cart">
         <a class="nav-link" id="cart" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fal fa-shopping-bag fa-2x fa-fw"></i>
           <div id="counter">

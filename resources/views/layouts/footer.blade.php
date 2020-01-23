@@ -1,13 +1,13 @@
 <footer class="footer py-4 bg-black w-100">
   <div class="container">
     <div class="row">
-      <div class="col text-center text-white">
+      <div class="col-12 col-md text-center text-white">
         <p>+7 (777) 777 - 77 - 77</p>
       </div>
-      <div class="col text-center text-white">
+      <div class="col-12 col-md text-center text-white">
         <p>+7 (777) 777 - 77 - 77</p>
       </div>
-      <div class="col text-center text-white">
+      <div class="col-12 col-md text-center text-white">
         <a href="mailto:info@wallridestore.kz">info@wallridestore.kz</a>
       </div>
     </div>

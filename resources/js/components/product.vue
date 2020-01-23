@@ -157,7 +157,7 @@
   .carousel-cell {
     padding-top: 10px;
     padding-bottom: 10px;
-    width: 50%;
+    width: 65%;
     height: auto;
     margin-left: 10px;
     margin-right: 10px;
