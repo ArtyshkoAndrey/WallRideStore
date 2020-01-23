@@ -60,9 +60,10 @@
   </div>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav justify-content-end">
-      <li class="nav-item dropdown" rel="city">
+      <li class="nav-item dropdown d-none d-sm-block" rel="city">
         <a class="nav-link d-flex align-items-center" id="city" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <span>Вы находитесь в: г. Москва</span>
+          <span class="d-none d-md-block">Вы находитесь в: г. Москва</span>
+          <span class="d-block d-md-none">г. Москва</span>
           <i class="fal fa-angle-down fa-fw"></i>
         </a>
         <div class="dropdown-menu" aria-labelledby="city">
@@ -110,43 +111,75 @@
             <span>3</span>
           </div>
         </a>
-        <div class="dropdown-menu" aria-labelledby="cart">
-          <div class="row align-items-center">
-            <div class="col-md-3 h-100">
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="cart">
+
+          <div class="row align-items-center m-0">
+            <div class="col-md-3 col-6 h-100">
               <img src="{{ asset('public/storage/inventory/t-short.png') }}" alt="t-short" class="img-fluid">
             </div>
-            <div class="col-md-5 h-100">
+            <div class="col-md-5 col-6 h-100">
               <p class="p-0 m-0">Fucking Awesome – <br> Flowers Hoodie Black</p>
             </div>
-            <div class="col-md-4 h-100">
-              <div class="row">
-                  <span class="col-md-9 p-0 cart-price">1 х 42 900 тг.</span>
-                  <button class="btn btn-default col-md-3 p-0"><i class="fal fa-times fa-fw fa-lg c-red"></i></button>
+            <div class="col-md-4 mt-2 mt-md-0 h-100">
+              <div class="row px-3 px-md-0">
+                <span class="col-md-9 col-9 p-0 cart-price">1 х 42 900 тг.</span>
+                <button class="btn btn-default col-md-3 col-3 p-0"><i class="fal fa-times fa-fw fa-lg c-red"></i></button>
               </div>
             </div>
           </div>
 
-          <div class="row align-items-center">
-            <div class="col-md-3 h-100">
+          <div class="row align-items-center m-0">
+            <div class="col-md-3 col-6 h-100">
               <img src="{{ asset('public/storage/inventory/t-short.png') }}" alt="t-short" class="img-fluid">
             </div>
-            <div class="col-md-5 h-100">
+            <div class="col-md-5 col-6 h-100">
               <p class="p-0 m-0">Fucking Awesome – <br> Flowers Hoodie Black</p>
             </div>
-            <div class="col-md-4 h-100">
-              <div class="row">
-                <span class="col-md-9 p-0 cart-price">1 х 42 900 тг.</span>
-                <button class="btn btn-default col-md-3 p-0"><i class="fal fa-times fa-fw fa-lg c-red"></i></button>
+            <div class="col-md-4 mt-2 mt-md-0 h-100">
+              <div class="row px-3 px-md-0">
+                <span class="col-md-9 col-9 p-0 cart-price">1 х 42 900 тг.</span>
+                <button class="btn btn-default col-md-3 col-3 p-0"><i class="fal fa-times fa-fw fa-lg c-red"></i></button>
               </div>
             </div>
           </div>
 
-          <div class="row align-items-center">
-            <div class="col-md-6 h-100">
+          <div class="row align-items-center m-0">
+            <div class="col-md-3 col-6 h-100">
+              <img src="{{ asset('public/storage/inventory/t-short.png') }}" alt="t-short" class="img-fluid">
+            </div>
+            <div class="col-md-5 col-6 h-100">
+              <p class="p-0 m-0">Fucking Awesome – <br> Flowers Hoodie Black</p>
+            </div>
+            <div class="col-md-4 mt-2 mt-md-0 h-100">
+              <div class="row px-3 px-md-0">
+                <span class="col-md-9 col-9 p-0 cart-price">1 х 42 900 тг.</span>
+                <button class="btn btn-default col-md-3 col-3 p-0"><i class="fal fa-times fa-fw fa-lg c-red"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="row align-items-center m-0">
+            <div class="col-md-3 col-6 h-100">
+              <img src="{{ asset('public/storage/inventory/t-short.png') }}" alt="t-short" class="img-fluid">
+            </div>
+            <div class="col-md-5 col-6 h-100">
+              <p class="p-0 m-0">Fucking Awesome – <br> Flowers Hoodie Black</p>
+            </div>
+            <div class="col-md-4 mt-2 mt-md-0 h-100">
+              <div class="row px-3 px-md-0">
+                <span class="col-md-9 col-9 p-0 cart-price">1 х 42 900 тг.</span>
+                <button class="btn btn-default col-md-3 col-3 p-0"><i class="fal fa-times fa-fw fa-lg c-red"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="row align-items-center m-0">
+            <div class="col-md-6 col-6 h-100">
               <a class="btn btn-dark" href="#" role="button">Перейти в корзину</a>
             </div>
-            <div class="col-md-6 h-100"><p class="p-0 cart-price m-0">Итого: 85 800 тг.</p></div>
+            <div class="col-md-6 col-6 h-100"><p class="p-0 cart-price m-0">Итого: 85 800 тг.</p></div>
           </div>
+
         </div>
       </li>
     </ul>
