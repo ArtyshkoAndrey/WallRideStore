@@ -7,9 +7,9 @@
             <span class="text-uppercase font-weight-bold text-white" v-if="item.inNew">new</span>
             <span class="text-uppercase font-weight-bold text-white" v-else-if="item.inSale">sale</span>
           </div>
-          <img :src="item.img" alt="item.name" class="img-fluid w-100">
-          <p class="mt-2 pb-0 mb-0 name">{{ item.name }}</p>
-          <p class="price mt-1 pt-0">{{ item.size[0].pr }} {{ currency }}</p>
+          <img :data-flickity-lazyload="item.img" alt="item.name" class="img-fluid w-100">
+          <a href="#" class="mt-2 pb-0 mb-0 name">{{ item.name }}</a>
+          <p class="price mt-1 pt-0">{{ item.size[numberSize].pr }} 1 {{ currency }}</p>
         </div>
         <div class="row px-0 mx-0">
           <div class="col-4 px-0">
@@ -113,21 +113,36 @@
     },
     methods: {
       addCounter () {
-        this.count++;
+        this.item.size[this.numberSize].count > this.count ? this.count++ : null;
       },
       removeCounter () {
         this.count > 0 ? this.count-- : null;
       },
       addNumberSize () {
-        console.log(this.numberSize);
-        this.numberSize < this.item.size.length - 1 ? this.numberSize++ : null;
+        if ( this.numberSize < this.item.size.length - 1) {
+          this.numberSize++;
+          this.count = 0
+        }
       },
       removeNumberSize () {
-        console.log(this.numberSize);
-        this.numberSize > 0 ? this.numberSize-- : null;
+        if (this.numberSize > 0) {
+          this.numberSize--;
+          this.count = 0
+        }
       },
       addToCart () {
-        this.item.inCart = !this.item.inCart
+        if (this.count > 0 && this.item.inCart === false)
+          this.item.inCart = !this.item.inCart;
+        else if(this.item.inCart === false) {
+          swal({
+            title: "Выберите количество больше нуля",
+            text: "Данное колличество невозможно купить",
+            icon: "warning",
+            dangerMode: true,
+          })
+        } else {
+          this.item.inCart = !this.item.inCart;
+        }
       }
     }
   }
@@ -140,8 +155,8 @@
   }
 
   .carousel-cell {
-    padding-top: 50px;
-    padding-bottom: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     width: 50%;
     height: auto;
     margin-left: 10px;
@@ -157,9 +172,13 @@
       width: 16.66666667%;
     }
   }
+  .go-to-product {
+    cursor: pointer;
+  }
   .card {
+    border: 0;
     background: #FFFFFF;
-    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.09);
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.09);
     border-radius: 15px;
     .card-body {
       #event {
@@ -223,9 +242,14 @@
         }
       }
     }
-    p.name {
+    a.name {
       font-size: 16px;
       line-height: 24px;
+      color: black;
+      text-decoration: none;
+      &:hover {
+        color: #F33C3C;
+      }
     }
     p.price {
       font-weight: bold;

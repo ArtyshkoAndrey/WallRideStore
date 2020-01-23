@@ -8,7 +8,6 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>@yield('title', 'WallRidestore') - WallRidestore</title>
   <!-- стиль -->
-  <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
   <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
@@ -16,13 +15,12 @@
   @include('layouts.header')
   <div id="blur-for-menu">
     @yield('content')
-{{--    @include('layouts._footer')--}}
+    @include('layouts.footer')
   </div>
 </div>
 <!-- JS скрипт -->
 <script src="{{ mix('js/app.js') }}"></script>
 <script src='{{ asset('public/js/jquery-ui.min.js') }}'></script>
-<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
 <script type="text/javascript">
   window.onload = function() {
     if(!window.matchMedia('(max-width: 768px)').matches) {

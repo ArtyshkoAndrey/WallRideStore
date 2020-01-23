@@ -27,6 +27,10 @@
           prevNextButtons: false,
           pageDots: false,
           freeScroll: true,
+          adaptiveHeight: true,
+          percentPosition: false,
+          imagesLoaded: true,
+          lazyLoad: 10
         }
       }
     },

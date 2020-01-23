@@ -1,4 +1,4 @@
-webpackJsonp([0,1],{
+webpackJsonp([0,2],{
 
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./node_modules/vue-flickity/src/flickity.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -399,7 +399,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         initialIndex: 3,
         prevNextButtons: false,
         pageDots: false,
-        freeScroll: true
+        freeScroll: true,
+        adaptiveHeight: true,
+        percentPosition: false,
+        imagesLoaded: true,
+        lazyLoad: 10
       }
     };
   },
@@ -535,21 +539,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   methods: {
     addCounter: function addCounter() {
-      this.count++;
+      this.item.size[this.numberSize].count > this.count ? this.count++ : null;
     },
     removeCounter: function removeCounter() {
       this.count > 0 ? this.count-- : null;
     },
     addNumberSize: function addNumberSize() {
-      console.log(this.numberSize);
-      this.numberSize < this.item.size.length - 1 ? this.numberSize++ : null;
+      if (this.numberSize < this.item.size.length - 1) {
+        this.numberSize++;
+        this.count = 0;
+      }
     },
     removeNumberSize: function removeNumberSize() {
-      console.log(this.numberSize);
-      this.numberSize > 0 ? this.numberSize-- : null;
+      if (this.numberSize > 0) {
+        this.numberSize--;
+        this.count = 0;
+      }
     },
     addToCart: function addToCart() {
-      this.item.inCart = !this.item.inCart;
+      if (this.count > 0 && this.item.inCart === false) this.item.inCart = !this.item.inCart;else if (this.item.inCart === false) {
+        swal({
+          title: "Выберите количество больше нуля",
+          text: "Данное колличество невозможно купить",
+          icon: "warning",
+          dangerMode: true
+        });
+      } else {
+        this.item.inCart = !this.item.inCart;
+      }
     }
   }
 });
@@ -564,7 +581,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\nbutton[data-v-1b2b3ef4]:focus {\n  outline: none !important;\n  -webkit-box-shadow: none !important;\n          box-shadow: none !important;\n}\n.carousel-cell[data-v-1b2b3ef4] {\n  padding-top: 50px;\n  padding-bottom: 50px;\n  width: 50%;\n  height: auto;\n  margin-left: 10px;\n  margin-right: 10px;\n}\n@media (min-width: 768px) {\n.carousel-cell[data-v-1b2b3ef4] {\n    width: 25%;\n}\n}\n@media (min-width: 992px) {\n.carousel-cell[data-v-1b2b3ef4] {\n    width: 16.66666667%;\n}\n}\n.card[data-v-1b2b3ef4] {\n  background: #FFFFFF;\n  -webkit-box-shadow: 0 4px 40px rgba(0, 0, 0, 0.09);\n          box-shadow: 0 4px 40px rgba(0, 0, 0, 0.09);\n  border-radius: 15px;\n}\n.card .card-body #event[data-v-1b2b3ef4] {\n    background-color: #F33C3C;\n    -webkit-box-shadow: 0 4px 20px rgba(247, 7, 7, 0.43);\n            box-shadow: 0 4px 20px rgba(247, 7, 7, 0.43);\n    border-radius: 32px;\n    left: -15px;\n}\n.card .card-body #event span[data-v-1b2b3ef4] {\n      font-size: 18px;\n      line-height: 35px;\n}\n.card .card-body > div[data-v-1b2b3ef4] {\n    padding: 0 23px;\n}\n.card .card-body [type=\"number\"][data-v-1b2b3ef4] {\n    font-size: 14px;\n}\n.card .card-body #btn-add-to-cart[data-v-1b2b3ef4] {\n    background: #000;\n    color: white;\n    border-radius: 0 15px 0 15px;\n}\n.card .card-body #btn-add-to-cart[data-v-1b2b3ef4]:focus {\n      outline: 0 !important;\n}\n.card .card-body #btn-add-to-cart[data-v-1b2b3ef4]:active {\n      outline: 0 !important;\n}\n.card .card-body #btn-remove-in-cart[data-v-1b2b3ef4] {\n    background: #04B900;\n    color: white;\n    border-radius: 0 15px 0 15px;\n}\n.card .card-body #btn-remove-in-cart[data-v-1b2b3ef4]:focus {\n      outline: 0 !important;\n}\n.card .card-body #btn-remove-in-cart[data-v-1b2b3ef4]:active {\n      outline: 0 !important;\n}\n.card .card-body .btn-angle[data-v-1b2b3ef4] {\n    background-color: white;\n    color: #F33C3C;\n    height: 15px;\n    display: block;\n    border: none !important;\n    outline: none !important;\n}\n.card .card-body .btn-angle > i[data-v-1b2b3ef4] {\n      font-size: 16px;\n      font-weight: bold;\n}\n.card .card-body .btn-angle[data-v-1b2b3ef4]:hover {\n      color: black;\n}\n.card .card-body .btn-angle[data-v-1b2b3ef4]:focus, .card .card-body .btn-angle[data-v-1b2b3ef4]::-moz-focus-inner, .card .card-body .btn-angle[data-v-1b2b3ef4]:active {\n      outline: none !important;\n      border: 0 !important;\n      box-shadow: none !important;\n      -moz-outline-style: none !important;\n      outline: 0 !important;\n}\n.card p.name[data-v-1b2b3ef4] {\n    font-size: 16px;\n    line-height: 24px;\n}\n.card p.price[data-v-1b2b3ef4] {\n    font-weight: bold;\n    font-size: 24px;\n    line-height: 35px;\n}\n", ""]);
+exports.push([module.i, "\nbutton[data-v-1b2b3ef4]:focus {\n  outline: none !important;\n  -webkit-box-shadow: none !important;\n          box-shadow: none !important;\n}\n.carousel-cell[data-v-1b2b3ef4] {\n  padding-top: 10px;\n  padding-bottom: 10px;\n  width: 50%;\n  height: auto;\n  margin-left: 10px;\n  margin-right: 10px;\n}\n@media (min-width: 768px) {\n.carousel-cell[data-v-1b2b3ef4] {\n    width: 25%;\n}\n}\n@media (min-width: 992px) {\n.carousel-cell[data-v-1b2b3ef4] {\n    width: 16.66666667%;\n}\n}\n.go-to-product[data-v-1b2b3ef4] {\n  cursor: pointer;\n}\n.card[data-v-1b2b3ef4] {\n  border: 0;\n  background: #FFFFFF;\n  -webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, 0.09);\n          box-shadow: 0 4px 5px rgba(0, 0, 0, 0.09);\n  border-radius: 15px;\n}\n.card .card-body #event[data-v-1b2b3ef4] {\n    background-color: #F33C3C;\n    -webkit-box-shadow: 0 4px 20px rgba(247, 7, 7, 0.43);\n            box-shadow: 0 4px 20px rgba(247, 7, 7, 0.43);\n    border-radius: 32px;\n    left: -15px;\n}\n.card .card-body #event span[data-v-1b2b3ef4] {\n      font-size: 18px;\n      line-height: 35px;\n}\n.card .card-body > div[data-v-1b2b3ef4] {\n    padding: 0 23px;\n}\n.card .card-body [type=\"number\"][data-v-1b2b3ef4] {\n    font-size: 14px;\n}\n.card .card-body #btn-add-to-cart[data-v-1b2b3ef4] {\n    background: #000;\n    color: white;\n    border-radius: 0 15px 0 15px;\n}\n.card .card-body #btn-add-to-cart[data-v-1b2b3ef4]:focus {\n      outline: 0 !important;\n}\n.card .card-body #btn-add-to-cart[data-v-1b2b3ef4]:active {\n      outline: 0 !important;\n}\n.card .card-body #btn-remove-in-cart[data-v-1b2b3ef4] {\n    background: #04B900;\n    color: white;\n    border-radius: 0 15px 0 15px;\n}\n.card .card-body #btn-remove-in-cart[data-v-1b2b3ef4]:focus {\n      outline: 0 !important;\n}\n.card .card-body #btn-remove-in-cart[data-v-1b2b3ef4]:active {\n      outline: 0 !important;\n}\n.card .card-body .btn-angle[data-v-1b2b3ef4] {\n    background-color: white;\n    color: #F33C3C;\n    height: 15px;\n    display: block;\n    border: none !important;\n    outline: none !important;\n}\n.card .card-body .btn-angle > i[data-v-1b2b3ef4] {\n      font-size: 16px;\n      font-weight: bold;\n}\n.card .card-body .btn-angle[data-v-1b2b3ef4]:hover {\n      color: black;\n}\n.card .card-body .btn-angle[data-v-1b2b3ef4]:focus, .card .card-body .btn-angle[data-v-1b2b3ef4]::-moz-focus-inner, .card .card-body .btn-angle[data-v-1b2b3ef4]:active {\n      outline: none !important;\n      border: 0 !important;\n      box-shadow: none !important;\n      -moz-outline-style: none !important;\n      outline: 0 !important;\n}\n.card a.name[data-v-1b2b3ef4] {\n    font-size: 16px;\n    line-height: 24px;\n    color: black;\n    text-decoration: none;\n}\n.card a.name[data-v-1b2b3ef4]:hover {\n      color: #F33C3C;\n}\n.card p.price[data-v-1b2b3ef4] {\n    font-weight: bold;\n    font-size: 24px;\n    line-height: 35px;\n}\n", ""]);
 
 // exports
 
@@ -594,7 +611,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -4862,15 +4879,24 @@ var render = function() {
             _vm._v(" "),
             _c("img", {
               staticClass: "img-fluid w-100",
-              attrs: { src: _vm.item.img, alt: "item.name" }
+              attrs: {
+                "data-flickity-lazyload": _vm.item.img,
+                alt: "item.name"
+              }
             }),
             _vm._v(" "),
-            _c("p", { staticClass: "mt-2 pb-0 mb-0 name" }, [
-              _vm._v(_vm._s(_vm.item.name))
-            ]),
+            _c(
+              "a",
+              { staticClass: "mt-2 pb-0 mb-0 name", attrs: { href: "#" } },
+              [_vm._v(_vm._s(_vm.item.name))]
+            ),
             _vm._v(" "),
             _c("p", { staticClass: "price mt-1 pt-0" }, [
-              _vm._v(_vm._s(_vm.item.size[0].pr) + " " + _vm._s(_vm.currency))
+              _vm._v(
+                _vm._s(_vm.item.size[_vm.numberSize].pr) +
+                  " 1 " +
+                  _vm._s(_vm.currency)
+              )
             ])
           ]),
           _vm._v(" "),

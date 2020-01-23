@@ -206,7 +206,6 @@ nav.navbar {
     width: 100%;
     li[rel="city"] {
       margin-right: auto;
-
     }
     li[rel="cart"] , li[rel="profile"] {
       margin-right: 2em;
@@ -632,5 +631,20 @@ nav.navbar {
   img {
     height: 35px;
     margin-top: 5px;
+  }
+}
+.nav-link {
+  display: flex!important;
+}
+
+footer {
+  .container:first-child {
+    font-size: 18px;
+    a {
+      color: white;
+      &:hover {
+        color: #F33C3C;
+      }
+    }
   }
 }

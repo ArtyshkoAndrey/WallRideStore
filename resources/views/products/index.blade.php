@@ -27,11 +27,11 @@
       </div>
     </div>
   </section>
-  <section class="mt-5 pt-5 px-2 px-sm-0">
+  <section class="mt-5 pt-5 px-3 px-sm-0">
     <div class="container">
       <div class="row align-items-center">
         <h2 class="font-weight-bold">Новые товары</h2>
-        <a class="ml-auto c-red" href="#">Смотреть все </a>
+        <a class="ml-auto c-red" href="#">Смотреть все <img src="{{ asset('public/images/arrow-long-right-red.png') }}" width="50" alt=""></a>
       </div>
     </div>
     <div class="container-fluid px-sm-0 mx-sm-0">
@@ -39,15 +39,27 @@
     </div>
   </section>
 
-  <section class="mt-5 mb-5 px-2 px-sm-0">
+  <section class="mt-5 mb-5 px-3 px-sm-0">
     <div class="container">
       <div class="row align-items-center">
         <h2 class="font-weight-bold">Худи</h2>
-        <a class="ml-auto c-red" href="#">Смотреть все </a>
+        <a class="ml-auto c-red" href="#">Смотреть все <img src="{{ asset('public/images/arrow-long-right-red.png') }}" width="50" alt=""></a>
       </div>
     </div>
     <div class="container-fluid px-sm-0 mx-sm-0">
       <product-list></product-list>
+    </div>
+  </section>
+  <section class="mt-5 mb-5">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-12">
+          <h2 class="font-weight-bold">Новости</h2>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <news></news>
     </div>
   </section>
 {{--<div class="row">--}}

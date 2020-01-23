@@ -66,6 +66,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "product",
   props: {
+    slider: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
     item: {
       type: Object,
       required: false,
@@ -114,21 +119,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   methods: {
     addCounter: function addCounter() {
-      this.count++;
+      this.item.size[this.numberSize].count > this.count ? this.count++ : null;
     },
     removeCounter: function removeCounter() {
       this.count > 0 ? this.count-- : null;
     },
     addNumberSize: function addNumberSize() {
-      console.log(this.numberSize);
-      this.numberSize < this.item.size.length - 1 ? this.numberSize++ : null;
+      if (this.numberSize < this.item.size.length - 1) {
+        this.numberSize++;
+        this.count = 0;
+      }
     },
     removeNumberSize: function removeNumberSize() {
-      console.log(this.numberSize);
-      this.numberSize > 0 ? this.numberSize-- : null;
+      if (this.numberSize > 0) {
+        this.numberSize--;
+        this.count = 0;
+      }
     },
     addToCart: function addToCart() {
-      this.item.inCart = !this.item.inCart;
+      if (this.count > 0 && this.item.inCart === false) this.item.inCart = !this.item.inCart;else if (this.item.inCart === false) {
+        swal({
+          title: "Выберите количество больше нуля",
+          text: "Данное колличество невозможно купить",
+          icon: "warning",
+          dangerMode: true
+        });
+      } else {
+        this.item.inCart = !this.item.inCart;
+      }
     }
   }
 });
@@ -143,7 +161,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\nbutton[data-v-1b2b3ef4]:focus {\n  outline: none !important;\n  -webkit-box-shadow: none !important;\n          box-shadow: none !important;\n}\n.card[data-v-1b2b3ef4] {\n  background: #FFFFFF;\n  -webkit-box-shadow: 0 4px 40px rgba(0, 0, 0, 0.09);\n          box-shadow: 0 4px 40px rgba(0, 0, 0, 0.09);\n  border-radius: 15px;\n}\n.card .card-body #event[data-v-1b2b3ef4] {\n    background-color: #F33C3C;\n    -webkit-box-shadow: 0 4px 20px rgba(247, 7, 7, 0.43);\n            box-shadow: 0 4px 20px rgba(247, 7, 7, 0.43);\n    border-radius: 32px;\n    left: -15px;\n}\n.card .card-body #event span[data-v-1b2b3ef4] {\n      font-size: 18px;\n      line-height: 35px;\n}\n.card .card-body > div[data-v-1b2b3ef4] {\n    padding: 0 23px;\n}\n.card .card-body [type=\"number\"][data-v-1b2b3ef4] {\n    font-size: 14px;\n}\n.card .card-body #btn-add-to-cart[data-v-1b2b3ef4] {\n    background: #000;\n    color: white;\n    border-radius: 0 15px 0 15px;\n}\n.card .card-body #btn-add-to-cart[data-v-1b2b3ef4]:focus {\n      outline: 0 !important;\n}\n.card .card-body #btn-add-to-cart[data-v-1b2b3ef4]:active {\n      outline: 0 !important;\n}\n.card .card-body #btn-remove-in-cart[data-v-1b2b3ef4] {\n    background: #04B900;\n    color: white;\n    border-radius: 0 15px 0 15px;\n}\n.card .card-body #btn-remove-in-cart[data-v-1b2b3ef4]:focus {\n      outline: 0 !important;\n}\n.card .card-body #btn-remove-in-cart[data-v-1b2b3ef4]:active {\n      outline: 0 !important;\n}\n.card .card-body .btn-angle[data-v-1b2b3ef4] {\n    background-color: white;\n    color: #F33C3C;\n    height: 15px;\n    display: block;\n    border: none !important;\n    outline: none !important;\n}\n.card .card-body .btn-angle > i[data-v-1b2b3ef4] {\n      font-size: 16px;\n      font-weight: bold;\n}\n.card .card-body .btn-angle[data-v-1b2b3ef4]:hover {\n      color: black;\n}\n.card .card-body .btn-angle[data-v-1b2b3ef4]:focus, .card .card-body .btn-angle[data-v-1b2b3ef4]::-moz-focus-inner, .card .card-body .btn-angle[data-v-1b2b3ef4]:active {\n      outline: none !important;\n      border: 0 !important;\n      box-shadow: none !important;\n      -moz-outline-style: none !important;\n      outline: 0 !important;\n}\n.card p.name[data-v-1b2b3ef4] {\n    font-size: 16px;\n    line-height: 24px;\n}\n.card p.price[data-v-1b2b3ef4] {\n    font-weight: bold;\n    font-size: 24px;\n    line-height: 35px;\n}\n", ""]);
+exports.push([module.i, "\nbutton[data-v-1b2b3ef4]:focus {\n  outline: none !important;\n  -webkit-box-shadow: none !important;\n          box-shadow: none !important;\n}\n.carousel-cell[data-v-1b2b3ef4] {\n  padding-top: 10px;\n  padding-bottom: 10px;\n  width: 50%;\n  height: auto;\n  margin-left: 10px;\n  margin-right: 10px;\n}\n@media (min-width: 768px) {\n.carousel-cell[data-v-1b2b3ef4] {\n    width: 25%;\n}\n}\n@media (min-width: 992px) {\n.carousel-cell[data-v-1b2b3ef4] {\n    width: 16.66666667%;\n}\n}\n.go-to-product[data-v-1b2b3ef4] {\n  cursor: pointer;\n}\n.card[data-v-1b2b3ef4] {\n  border: 0;\n  background: #FFFFFF;\n  -webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, 0.09);\n          box-shadow: 0 4px 5px rgba(0, 0, 0, 0.09);\n  border-radius: 15px;\n}\n.card .card-body #event[data-v-1b2b3ef4] {\n    background-color: #F33C3C;\n    -webkit-box-shadow: 0 4px 20px rgba(247, 7, 7, 0.43);\n            box-shadow: 0 4px 20px rgba(247, 7, 7, 0.43);\n    border-radius: 32px;\n    left: -15px;\n}\n.card .card-body #event span[data-v-1b2b3ef4] {\n      font-size: 18px;\n      line-height: 35px;\n}\n.card .card-body > div[data-v-1b2b3ef4] {\n    padding: 0 23px;\n}\n.card .card-body [type=\"number\"][data-v-1b2b3ef4] {\n    font-size: 14px;\n}\n.card .card-body #btn-add-to-cart[data-v-1b2b3ef4] {\n    background: #000;\n    color: white;\n    border-radius: 0 15px 0 15px;\n}\n.card .card-body #btn-add-to-cart[data-v-1b2b3ef4]:focus {\n      outline: 0 !important;\n}\n.card .card-body #btn-add-to-cart[data-v-1b2b3ef4]:active {\n      outline: 0 !important;\n}\n.card .card-body #btn-remove-in-cart[data-v-1b2b3ef4] {\n    background: #04B900;\n    color: white;\n    border-radius: 0 15px 0 15px;\n}\n.card .card-body #btn-remove-in-cart[data-v-1b2b3ef4]:focus {\n      outline: 0 !important;\n}\n.card .card-body #btn-remove-in-cart[data-v-1b2b3ef4]:active {\n      outline: 0 !important;\n}\n.card .card-body .btn-angle[data-v-1b2b3ef4] {\n    background-color: white;\n    color: #F33C3C;\n    height: 15px;\n    display: block;\n    border: none !important;\n    outline: none !important;\n}\n.card .card-body .btn-angle > i[data-v-1b2b3ef4] {\n      font-size: 16px;\n      font-weight: bold;\n}\n.card .card-body .btn-angle[data-v-1b2b3ef4]:hover {\n      color: black;\n}\n.card .card-body .btn-angle[data-v-1b2b3ef4]:focus, .card .card-body .btn-angle[data-v-1b2b3ef4]::-moz-focus-inner, .card .card-body .btn-angle[data-v-1b2b3ef4]:active {\n      outline: none !important;\n      border: 0 !important;\n      box-shadow: none !important;\n      -moz-outline-style: none !important;\n      outline: 0 !important;\n}\n.card a.name[data-v-1b2b3ef4] {\n    font-size: 16px;\n    line-height: 24px;\n    color: black;\n    text-decoration: none;\n}\n.card a.name[data-v-1b2b3ef4]:hover {\n      color: #F33C3C;\n}\n.card p.price[data-v-1b2b3ef4] {\n    font-weight: bold;\n    font-size: 24px;\n    line-height: 35px;\n}\n", ""]);
 
 // exports
 
@@ -350,236 +368,249 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "col-lg-2 col-md-3 col-sm-4 col-12" }, [
-    _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-body px-0 pb-0" }, [
-        _c("div", [
-          _vm.item.inNew || _vm.item.inSale
-            ? _c(
-                "div",
-                {
-                  staticClass: "position-absolute px-4 py-1",
-                  attrs: { id: "event" }
-                },
-                [
-                  _vm.item.inNew
-                    ? _c(
-                        "span",
-                        {
-                          staticClass:
-                            "text-uppercase font-weight-bold text-white"
-                        },
-                        [_vm._v("new")]
-                      )
-                    : _vm.item.inSale
-                    ? _c(
-                        "span",
-                        {
-                          staticClass:
-                            "text-uppercase font-weight-bold text-white"
-                        },
-                        [_vm._v("sale")]
-                      )
-                    : _vm._e()
-                ]
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _c("img", {
-            staticClass: "img-fluid w-100",
-            attrs: { src: _vm.item.img, alt: "item.name" }
-          }),
-          _vm._v(" "),
-          _c("p", { staticClass: "mt-2 pb-0 mb-0 name" }, [
-            _vm._v(_vm._s(_vm.item.name))
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "price mt-1 pt-0" }, [
-            _vm._v(_vm._s(_vm.item.size[0].pr) + " " + _vm._s(_vm.currency))
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row px-0 mx-0" }, [
-          _c("div", { staticClass: "col-4 px-0" }, [
-            !_vm.item.inCart
+  return _c(
+    "div",
+    { class: _vm.slider ? "carousel-cell" : "col-md-3 col-lg-2 col-6" },
+    [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-body px-0 pb-0" }, [
+          _c("div", [
+            _vm.item.inNew || _vm.item.inSale
               ? _c(
-                  "button",
+                  "div",
                   {
-                    staticClass: "btn w-100",
-                    attrs: { id: "btn-add-to-cart" },
-                    on: {
-                      click: function($event) {
-                        return _vm.addToCart()
-                      }
-                    }
+                    staticClass: "position-absolute px-4 py-1",
+                    attrs: { id: "event" }
                   },
-                  [_c("i", { staticClass: "fal fa-shopping-bag" })]
-                )
-              : _c(
-                  "button",
-                  {
-                    staticClass: "btn w-100",
-                    attrs: { id: "btn-remove-in-cart" },
-                    on: {
-                      click: function($event) {
-                        return _vm.addToCart()
-                      }
-                    }
-                  },
-                  [_c("i", { staticClass: "fal fa-check" })]
-                )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-4 px-0" }, [
-            _c("div", { staticClass: "row m-0" }, [
-              _c("div", { staticClass: "col-8 m-0 p-0" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.count,
-                      expression: "count"
-                    }
-                  ],
-                  staticClass:
-                    "form-control w-100 bg-white border-0 pr-0 font-weight-bolder text-center",
-                  attrs: {
-                    type: "number",
-                    value: "1",
-                    readonly: "",
-                    disabled: ""
-                  },
-                  domProps: { value: _vm.count },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.count = $event.target.value
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-4 px-0" }, [
-                _c("div", { staticClass: "row p-0 m-0" }, [
-                  _c("div", { staticClass: "col-12 p-0 h-100 w-100" }, [
-                    _c(
-                      "button",
-                      {
-                        directives: [
+                  [
+                    _vm.item.inNew
+                      ? _c(
+                          "span",
                           {
-                            name: "long-press",
-                            rawName: "v-long-press",
-                            value: _vm.addCounter,
-                            expression: "addCounter"
-                          }
-                        ],
-                        staticClass: "btn p-0 m-0 btn-angle",
-                        on: { click: _vm.addCounter }
-                      },
-                      [_c("i", { staticClass: "fal fa-angle-up" })]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-12 p-0 h-100 w-100" }, [
-                    _c(
-                      "button",
-                      {
-                        directives: [
+                            staticClass:
+                              "text-uppercase font-weight-bold text-white"
+                          },
+                          [_vm._v("new")]
+                        )
+                      : _vm.item.inSale
+                      ? _c(
+                          "span",
                           {
-                            name: "long-press",
-                            rawName: "v-long-press",
-                            value: _vm.removeCounter,
-                            expression: "removeCounter"
-                          }
-                        ],
-                        staticClass: "btn p-0 m-0 btn-angle",
-                        on: { click: _vm.removeCounter }
-                      },
-                      [_c("i", { staticClass: "fal fa-angle-down" })]
-                    )
-                  ])
-                ])
-              ])
+                            staticClass:
+                              "text-uppercase font-weight-bold text-white"
+                          },
+                          [_vm._v("sale")]
+                        )
+                      : _vm._e()
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _c("img", {
+              staticClass: "img-fluid w-100",
+              attrs: {
+                "data-flickity-lazyload": _vm.item.img,
+                alt: "item.name"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "a",
+              { staticClass: "mt-2 pb-0 mb-0 name", attrs: { href: "#" } },
+              [_vm._v(_vm._s(_vm.item.name))]
+            ),
+            _vm._v(" "),
+            _c("p", { staticClass: "price mt-1 pt-0" }, [
+              _vm._v(
+                _vm._s(_vm.item.size[_vm.numberSize].pr) +
+                  " 1 " +
+                  _vm._s(_vm.currency)
+              )
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-4 pr-0 pl-1" }, [
-            _c("div", { staticClass: "row m-0" }, [
-              _c("div", { staticClass: "col-2 pl-0 pr-1" }, [
-                _c(
-                  "button",
-                  {
-                    directives: [
-                      {
-                        name: "long-press",
-                        rawName: "v-long-press",
-                        value: _vm.addNumberSize,
-                        expression: "addNumberSize"
-                      }
-                    ],
-                    staticClass: "btn p-0 m-0 bg-transparent btn-angle h-100",
-                    on: { click: _vm.addNumberSize }
-                  },
-                  [_c("i", { staticClass: "fal fa-angle-left mt-1" })]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-6 m-0 pl-1 pr-0" }, [
-                _c("input", {
-                  directives: [
+          _c("div", { staticClass: "row px-0 mx-0" }, [
+            _c("div", { staticClass: "col-4 px-0" }, [
+              !_vm.item.inCart
+                ? _c(
+                    "button",
                     {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.item.size[_vm.numberSize].name,
-                      expression: "item.size[numberSize].name"
-                    }
-                  ],
-                  staticClass:
-                    "form-control w-100 bg-white border-0 px-0 font-weight-bolder text-center",
-                  attrs: { type: "text", readonly: "", disabled: "" },
-                  domProps: { value: _vm.item.size[_vm.numberSize].name },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+                      staticClass: "btn w-100",
+                      attrs: { id: "btn-add-to-cart" },
+                      on: {
+                        click: function($event) {
+                          return _vm.addToCart()
+                        }
                       }
-                      _vm.$set(
-                        _vm.item.size[_vm.numberSize],
-                        "name",
-                        $event.target.value
-                      )
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-2 px-0" }, [
-                _c(
-                  "button",
-                  {
+                    },
+                    [_c("i", { staticClass: "fal fa-shopping-bag" })]
+                  )
+                : _c(
+                    "button",
+                    {
+                      staticClass: "btn w-100",
+                      attrs: { id: "btn-remove-in-cart" },
+                      on: {
+                        click: function($event) {
+                          return _vm.addToCart()
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fal fa-check" })]
+                  )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-4 px-0" }, [
+              _c("div", { staticClass: "row m-0" }, [
+                _c("div", { staticClass: "col-8 m-0 p-0" }, [
+                  _c("input", {
                     directives: [
                       {
-                        name: "long-press",
-                        rawName: "v-long-press",
-                        value: _vm.removeNumberSize,
-                        expression: "removeNumberSize"
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.count,
+                        expression: "count"
                       }
                     ],
-                    staticClass: "btn p-0 m-0 bg-transparent btn-angle h-100",
-                    on: { click: _vm.removeNumberSize }
-                  },
-                  [_c("i", { staticClass: "fal fa-angle-right mt-1" })]
-                )
+                    staticClass:
+                      "form-control w-100 bg-white border-0 pr-0 font-weight-bolder text-center",
+                    attrs: {
+                      type: "number",
+                      value: "1",
+                      readonly: "",
+                      disabled: ""
+                    },
+                    domProps: { value: _vm.count },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.count = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-4 px-0" }, [
+                  _c("div", { staticClass: "row p-0 m-0" }, [
+                    _c("div", { staticClass: "col-12 p-0 h-100 w-100" }, [
+                      _c(
+                        "button",
+                        {
+                          directives: [
+                            {
+                              name: "long-press",
+                              rawName: "v-long-press",
+                              value: _vm.addCounter,
+                              expression: "addCounter"
+                            }
+                          ],
+                          staticClass: "btn p-0 m-0 btn-angle",
+                          on: { click: _vm.addCounter }
+                        },
+                        [_c("i", { staticClass: "fal fa-angle-up" })]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12 p-0 h-100 w-100" }, [
+                      _c(
+                        "button",
+                        {
+                          directives: [
+                            {
+                              name: "long-press",
+                              rawName: "v-long-press",
+                              value: _vm.removeCounter,
+                              expression: "removeCounter"
+                            }
+                          ],
+                          staticClass: "btn p-0 m-0 btn-angle",
+                          on: { click: _vm.removeCounter }
+                        },
+                        [_c("i", { staticClass: "fal fa-angle-down" })]
+                      )
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-4 pr-0 pl-1" }, [
+              _c("div", { staticClass: "row m-0" }, [
+                _c("div", { staticClass: "col-2 pl-0 pr-1" }, [
+                  _c(
+                    "button",
+                    {
+                      directives: [
+                        {
+                          name: "long-press",
+                          rawName: "v-long-press",
+                          value: _vm.addNumberSize,
+                          expression: "addNumberSize"
+                        }
+                      ],
+                      staticClass: "btn p-0 m-0 bg-transparent btn-angle h-100",
+                      on: { click: _vm.addNumberSize }
+                    },
+                    [_c("i", { staticClass: "fal fa-angle-left mt-1" })]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-6 m-0 pl-1 pr-0" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.item.size[_vm.numberSize].name,
+                        expression: "item.size[numberSize].name"
+                      }
+                    ],
+                    staticClass:
+                      "form-control w-100 bg-white border-0 px-0 font-weight-bolder text-center",
+                    attrs: { type: "text", readonly: "", disabled: "" },
+                    domProps: { value: _vm.item.size[_vm.numberSize].name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.item.size[_vm.numberSize],
+                          "name",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-2 px-0" }, [
+                  _c(
+                    "button",
+                    {
+                      directives: [
+                        {
+                          name: "long-press",
+                          rawName: "v-long-press",
+                          value: _vm.removeNumberSize,
+                          expression: "removeNumberSize"
+                        }
+                      ],
+                      staticClass: "btn p-0 m-0 bg-transparent btn-angle h-100",
+                      on: { click: _vm.removeNumberSize }
+                    },
+                    [_c("i", { staticClass: "fal fa-angle-right mt-1" })]
+                  )
+                ])
               ])
             ])
           ])
         ])
       ])
-    ])
-  ])
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

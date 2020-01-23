@@ -29,7 +29,7 @@
 /******/
 /******/ 	// objects to store loaded and loading chunks
 /******/ 	var installedChunks = {
-/******/ 		2: 0
+/******/ 		4: 0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -49300,13 +49300,21 @@ module.exports = function(module) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
+	"./components/mini-news.vue": [
+		"./resources/js/components/mini-news.vue",
+		3
+	],
+	"./components/news.vue": [
+		"./resources/js/components/news.vue",
+		1
+	],
 	"./components/product-list.vue": [
 		"./resources/js/components/product-list.vue",
 		0
 	],
 	"./components/product.vue": [
 		"./resources/js/components/product.vue",
-		1
+		2
 	]
 };
 function webpackAsyncContext(req) {
