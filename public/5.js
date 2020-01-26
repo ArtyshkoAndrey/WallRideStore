@@ -1,4 +1,4 @@
-webpackJsonp([0,2],{
+webpackJsonp([5,7],{
 
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./node_modules/vue-flickity/src/flickity.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
