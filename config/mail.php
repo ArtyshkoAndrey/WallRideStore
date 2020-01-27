@@ -57,7 +57,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'notify.karies@yandex.ru'),
-        'name' => env('MAIL_FROM_NAME', 'Shop Andrey'),
+        'name' => env('MAIL_FROM_NAME', 'WallRide Notification'),
     ],
 
     /*

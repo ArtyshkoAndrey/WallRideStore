@@ -2,7 +2,8 @@
   export default {
     name: "auth-login",
     data: () =>({
-      showPass: false
+      showPass: false,
+      showPassConf: false
     }),
     mounted () {
       console.log(this.showPass)
@@ -47,24 +48,10 @@
   }
 
   #auth {
-    height: 100vh;
-    background: linear-gradient(0deg, rgba(0,0,0,0.804359243697479) 0%, rgba(0,0,0,0.7371323529411764) 50%, rgba(0,0,0,0.3617822128851541) 100%), url('https://s3-alpha-sig.figma.com/img/ee0c/009c/c5c04cbdefc09eb942679d1a8bd1e051?Expires=1580688000&Signature=eALpfOah87u8TYoC-f1evHuwUnIzleLtVl-F6KF2y6wP~~5W3MjRIxS~NnGFjsdKjjlZyIPq6WUD~eiDvoOn939hzzp3Jl6Q3ny91T72v3P2PexrVLQjeEPhcnATRw0d5E4s5iZJ89MdwL6hqSbOnqd2uUUcTVOM55Wxpscq9qUJ6qDFi8DbF5XA6gKmAlPsFKDA1vMoDotUuWbPOO-ss9jmy4IqFdmQy~MbFI4KSfCS9a0RlRgys1HnN0pnP5VFAMX~YGua-cU-BfJvIMSov68y32dBJCivR3EnHlU-znhsAbXUwgTDWoiQeN36DtDzS21bv~4XgyDjHp05e3WO9Q__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA');
+    height: calc(100vh - 47px);
     background-size: cover;
-    @import "~mdbootstrap/scss/core/bootstrap/functions";
-    @import "~mdbootstrap/scss/core/bootstrap/variables";
-    // CORE
-    @import "~mdbootstrap/scss/core/mixins";
-    // Your custom variables
-    @import "~mdbootstrap/scss/custom-variables";
-    @import "~mdbootstrap/scss/core/colors";
-    @import "~mdbootstrap/scss/core/variables";
-    @import "~mdbootstrap/scss/core/global";
-    @import "~mdbootstrap/scss/core/helpers";
-    @import "~mdbootstrap/scss/core/typography";
-    @import "~mdbootstrap/scss/core/waves";
-    @import '~mdbootstrap/scss/free/animations-basic';
-    @import '~mdbootstrap/scss/free/buttons';
-    @import '~mdbootstrap/scss/free/forms';
+    background-position: center;
+    @import '../../sass/material';
   }
 
   .auth-card {
@@ -74,9 +61,10 @@
   }
 
   a {
-    color: black;
+    color: black !important;
     &:hover {
-      color: red;
+      text-decoration: underline !important;
+      color: red !important;
     }
   }
 

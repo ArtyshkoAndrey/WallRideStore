@@ -1,10 +1,10 @@
 <nav id="slide-menu">
   <ul>
     <li class="close-submenu" style="display: none;" onclick="closeSubMenu()"> <i class="fas fa-long-arrow-alt-left"></i> Назад</li>
-    <li class="sep">Главная страница</li>
-    <li class="sep">Магазин</li>
+    <li class="sep"><a href="{{ route('root') }}">Главная</a></li>
+    <li class="sep"><a href="{{ route('root') }}">Магазин</a></li>
     <li class="sep dropdown" rel=1>
-      Бренды
+      <a>Бренды</a>
       <ul class="dropdown-3 submenu-1">
         <li><a href="#">Adidas Skateboarding</a></li>
         <li><a href="#">All timers</a></li>
@@ -38,11 +38,11 @@
         <li><a href="#">Асфальт</a></li>
       </ul>
     </li>
-    <li class="sep">Контакты</li>
-    <li class="sep">О нас</li>
-    <li class="sep c-red">Sale</li>
+    <li class="sep"><a href="{{ route('root') }}">Контакты</a></li>
+    <li class="sep"><a href="{{ route('root') }}">О нас</a></li>
+    <li class="sep c-red"><a href="{{ route('root') }}">Sale</a></li>
     <li class="sep dropdown" rel=2>
-      Избранное (3)
+      <a>Избранное (3)</a>
       <ul class="dropdown-1 submenu-2">
         <li><a href="#">Adidas Skateboarding</a></li>
         <li><a href="#">All timers</a></li>
@@ -51,7 +51,7 @@
   </ul>
 </nav>
 <!-- Content panel -->
-<nav class="navbar navbar-expand navbar-light bg-light">
+<nav class="navbar navbar-expand">
   <div id="nav-icon3">
     <span></span>
     <span></span>
@@ -98,10 +98,20 @@
           <a class="nav-link p-0 ml-2 border-bottom border-white d-flex align-items-center" href="{{ route('register') }}">Зарегистрируйтесь</a>
         </span>
       @else
-      <li class="nav-item mr-0 mr-sm-4" rel="profile">
-        <a class="nav-link p-0" id="nav-profile" href="#">
+      <li class="nav-item dropdown mr-0 mr-sm-4" rel="profile">
+        <a class="nav-link p-0" id="nav-profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <img class="img-fluid rounded-circle p-0" src="{{ asset('public/storage/inventory/t-short.png') }}" alt="">
         </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profile">
+          <a href="{{ route('user_addresses.index') }}" class="dropdown-item">Адреса доставки</a>
+          <a href="{{ route('orders.index') }}" class="dropdown-item">Мои заказы</a>
+          <a href="{{ route('products.favorites') }}" class="dropdown-item">Моя коллекция</a>
+          <a class="dropdown-item" id="logout" href="#"
+             onclick="event.preventDefault();document.getElementById('logout-form').submit();">Выйти</a>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            {{ csrf_field() }}
+          </form>
+        </div>
       </li>
       @endguest
       <li class="nav-item dropdown mr-0 mr-sm-4" rel="cart">
