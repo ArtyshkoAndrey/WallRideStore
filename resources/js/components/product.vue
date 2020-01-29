@@ -1,25 +1,27 @@
 <template>
-  <div :class="slider ? 'carousel-cell' : 'col-md-3 col-lg-2 col-6'">
+  <div :class="slider ? 'carousel-cell' : 'col-md-4 col-lg-3 col-sm-6 col-10 offset-1 offset-sm-0 my-3'">
     <div class="card">
       <div class="card-body px-0 pb-0">
         <div>
-          <div class="position-absolute px-4 py-1" id="event" v-if="item.inNew || item.inSale">
-            <span class="text-uppercase font-weight-bold text-white" v-if="item.inNew">new</span>
-            <span class="text-uppercase font-weight-bold text-white" v-else-if="item.inSale">sale</span>
+          <div class="position-absolute px-4 py-1" id="event" v-if="item.on_new || item.om_sale">
+            <span class="text-uppercase font-weight-bold text-white" v-if="item.on_new">new</span>
+            <span class="text-uppercase font-weight-bold text-white" v-else-if="item.om_sale">sale</span>
           </div>
-          <img :data-flickity-lazyload="item.img" alt="item.name" class="img-fluid w-100">
-          <a href="#" class="mt-2 pb-0 mb-0 name">{{ item.name }}</a>
-          <p class="price mt-1 pt-0">{{ item.size[numberSize].pr }} 1 {{ currency }}</p>
+          <img :data-flickity-lazyload="item.image_url" v-if="slider" alt="item.image" class="img-fluid w-100 mb-3 rounded">
+          <img :src="item.image_url" v-else alt="item.image" class="img-fluid w-100 mb-3 rounded">
+          <a href="#" class="mt-4 pb-0 mb-0 name">{{ item.title }}</a>
+          <p class="price mt-1 pt-0">{{ Math.round(item.skus[numberSize].price * currency.ratio) }} {{ currency.symbol }}</p>
         </div>
         <div class="row px-0 mx-0">
           <div class="col-4 px-0">
-            <button class="btn w-100" id="btn-add-to-cart" v-if="!item.inCart" @click="addToCart()"><i class="fal fa-shopping-bag"></i></button>
+<!--            Кнопка корзины-->
+            <button class="btn w-100" id="btn-add-to-cart" v-if="true" @click="addToCart()"><i class="fal fa-shopping-bag"></i></button>
             <button class="btn w-100" id="btn-remove-in-cart" v-else @click="addToCart()"><i class="fal fa-check"></i></button>
           </div>
           <div class="col-4 px-0">
             <div class="row m-0">
               <div class="col-8 m-0 p-0">
-                <input class="form-control w-100 bg-white border-0 pr-0 font-weight-bolder text-center" type="number" value="1" v-model="count" readonly disabled>
+                <input class="form-control w-100 bg-white border-0 pr-0 font-weight-bolder text-center" type="number" v-model="count" readonly disabled>
               </div>
               <div class="col-4 px-0">
                 <div class="row p-0 m-0">
@@ -39,7 +41,7 @@
                     <button class="btn p-0 m-0 bg-transparent btn-angle h-100" v-long-press="addNumberSize" @click="addNumberSize"><i class="fal fa-angle-left mt-1"></i></button>
               </div>
               <div class="col-6 m-0 pl-1 pr-0">
-                <input class="form-control w-100 bg-white border-0 px-0 font-weight-bolder text-center" type="text" v-model="item.size[numberSize].name" readonly disabled>
+                <input class="form-control w-100 bg-white border-0 px-0 font-weight-bolder text-center" type="text" v-model="item.skus[numberSize].title" readonly disabled>
               </div>
               <div class="col-2 px-0">
                 <button class="btn p-0 m-0 bg-transparent btn-angle h-100" v-long-press="removeNumberSize" @click="removeNumberSize"><i class="fal fa-angle-right mt-1"></i></button>
@@ -53,10 +55,12 @@
 </template>
 
 <script>
-  import _ from 'lodash';
   export default {
     name: "product",
     props: {
+      currency: {
+        required: true
+      },
       slider: {
         type: Boolean,
         required: false,
@@ -65,36 +69,7 @@
       item: {
         type: Object,
         required: false,
-        default: function () {
-          return {
-            name: 'Fucking Awesome – Angel 2 Hoodie Hunter',
-            img: "../../../public/storage/inventory/t.png",
-            size: [
-              {
-                name: 'L',
-                count: 3,
-                price: 40031,
-                pr: localStorage.currency === 'usd' ? 40031 / 377.320 : (localStorage.currency === 'ru') ? 40031 / 6 : 40031
-              },
-              {
-                name: 'M',
-                count: 10,
-                price: 40101,
-                pr: localStorage.currency === 'usd' ? 40101 / 377.320 : (localStorage.currency === 'ru') ? 40101 / 6 : 40101
-              },
-              {
-                name: 'XXL',
-                count: 0,
-                price: 40001,
-                pr: localStorage.currency === 'usd' ? 40001 / 377.320 : (localStorage.currency === 'ru') ? 40001 / 6 : 40001
-              },
-            ],
-            inCart: _.sample([true, false]),
-            inFavourite: _.sample([true, false]),
-            inSale: _.sample([true, false]),
-            inNew: _.sample([true, false])
-          }
-        }
+        default: false
       },
     },
     data() {
@@ -106,20 +81,15 @@
     mounted() {
       console.log(this.item);
     },
-    computed: {
-      currency: function () {
-        return localStorage.currency === 'usd' ? '$' : (localStorage.currency === 'ru') ? 'р.' : 'тг.';
-      }
-    },
     methods: {
       addCounter () {
-        this.item.size[this.numberSize].count > this.count ? this.count++ : null;
+        this.item.skus[this.numberSize].stock > this.count ? this.count++ : null;
       },
       removeCounter () {
         this.count > 0 ? this.count-- : null;
       },
       addNumberSize () {
-        if ( this.numberSize < this.item.size.length - 1) {
+        if ( this.numberSize < this.item.skus.length - 1) {
           this.numberSize++;
           this.count = 0
         }
@@ -131,18 +101,18 @@
         }
       },
       addToCart () {
-        if (this.count > 0 && this.item.inCart === false)
-          this.item.inCart = !this.item.inCart;
-        else if(this.item.inCart === false) {
-          swal({
-            title: "Выберите количество больше нуля",
-            text: "Данное колличество невозможно купить",
-            icon: "warning",
-            dangerMode: true,
-          })
-        } else {
-          this.item.inCart = !this.item.inCart;
-        }
+        // if (this.count > 0 && false === false)
+        //   this.item.inCart = !this.item.inCart;
+        // else if(this.item.inCart === false) {
+        //   swal({
+        //     title: "Выберите количество больше нуля",
+        //     text: "Данное колличество невозможно купить",
+        //     icon: "warning",
+        //     dangerMode: true,
+        //   })
+        // } else {
+        //   this.item.inCart = !this.item.inCart;
+        // }
       }
     }
   }
@@ -170,6 +140,11 @@
   @media (min-width: 992px) {
     .carousel-cell {
       width: 16.66666667%;
+    }
+  }
+  @media (min-width: 1200px) {
+    .carousel-cell {
+      width: 13%;
     }
   }
   .go-to-product {

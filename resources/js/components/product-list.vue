@@ -1,18 +1,3 @@
-<template>
-  <flickity ref="flickity" :options="flickityOptions">
-    <product :slider=true></product>
-    <product :slider=true></product>
-    <product :slider=true></product>
-    <product :slider=true></product>
-    <product :slider=true></product>
-    <product :slider=true></product>
-    <product :slider=true></product>
-    <product :slider=true></product>
-    <product :slider=true></product>
-    <product :slider=true></product>
-    <product :slider=true></product>
-  </flickity>
-</template>
 
 <script>
   import Flickity from 'vue-flickity';

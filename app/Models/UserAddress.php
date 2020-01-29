@@ -7,23 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 class UserAddress extends Model
 {
     protected $fillable = [
-        'province',
+        'country',
         'city',
-        'address',
-        'zip',
-        'contact_name',
+        'street',
         'contact_phone',
-        'last_used_at',
     ];
-    protected $dates = ['last_used_at'];
 
-    public function user()
-    {
+    public function user() {
         return $this->belongsTo(User::class);
     }
 
-    public function getFullAddressAttribute()
-    {
-        return "{$this->province}, {$this->city}, {$this->address}";
+    public function currency() {
+      return $this->belongsTo(Currency::class);
+    }
+
+    public function getFullAddressAttribute() {
+        return "{$this->country}, {$this->city}, {$this->street}";
     }
 }

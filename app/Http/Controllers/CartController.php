@@ -11,7 +11,6 @@ class CartController extends Controller
 {
     protected $cartService;
 
-    // 利用 Laravel 的自动解析功能注入 CartService 类
     public function __construct(CartService $cartService)
     {
         $this->cartService = $cartService;
@@ -20,9 +19,9 @@ class CartController extends Controller
     public function index(Request $request)
     {
         $cartItems = $this->cartService->get();
-        $addresses = $request->user()->addresses()->orderBy('last_used_at', 'desc')->get();
+        $address = $request->user()->address;
 
-        return view('cart.index', ['cartItems' => $cartItems, 'addresses' => $addresses]);
+        return view('cart.index', ['cartItems' => $cartItems, 'address' => $address]);
     }
 
     public function add(AddCartRequest $request)

@@ -103,7 +103,7 @@
           <img class="img-fluid rounded-circle p-0" src="{{ asset('public/storage/inventory/t-short.png') }}" alt="">
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profile">
-          <a href="{{ route('user_addresses.index') }}" class="dropdown-item">Адреса доставки</a>
+          <a href="{{ route('profile.index') }}" class="dropdown-item">Мой профиль</a>
           <a href="{{ route('orders.index') }}" class="dropdown-item">Мои заказы</a>
           <a href="{{ route('products.favorites') }}" class="dropdown-item">Моя коллекция</a>
           <a class="dropdown-item" id="logout" href="#"

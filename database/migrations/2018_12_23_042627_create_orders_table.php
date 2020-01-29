@@ -31,6 +31,7 @@ class CreateOrdersTable extends Migration
             $table->string('ship_status')->default(\App\Models\Order::SHIP_STATUS_PENDING);
             $table->text('ship_data')->nullable();
             $table->text('extra')->nullable();
+            $table->text('express_company');
             $table->timestamps();
         });
     }

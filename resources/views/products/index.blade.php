@@ -2,6 +2,7 @@
 @section('title', 'Список товаров')
 
 @section('content')
+{{--  {{ dd($productsNew[0]->skus[0]->title) }}--}}
   <section class="container-fluid p-0 text-white" id="slider">
     <div class="row p-0 m-0">
       <div class="col-12 p-0">
@@ -35,7 +36,17 @@
       </div>
     </div>
     <div class="container-fluid px-0">
-      <product-list></product-list>
+      @if(count($productsNew) > 0)
+        <product-list :currency="{{ ($currency) }}" inline-template>
+          <flickity ref="flickity" :options="flickityOptions">
+            @foreach($productsNew as $product)
+              <product :slider=true :currency="{{ $currency }}" :item="{{ $product }}"></product>
+            @endforeach
+          </flickity>
+        </product-list>
+      @else
+        <h3 class="text-center mt-5 pb-5">Нет данных товаров</h3>
+      @endif
     </div>
   </section>
 
@@ -47,7 +58,17 @@
       </div>
     </div>
     <div class="container-fluid px-0 mx-0">
-      <product-list></product-list>
+      @if(count($products) > 0)
+        <product-list :currency="{{ ($currency) }}" inline-template>
+          <flickity ref="flickity" :options="flickityOptions">
+            @foreach($products as $product)
+              <product :slider=true :currency="{{ $currency }}" :item="{{ $product }}"></product>
+            @endforeach
+          </flickity>
+        </product-list>
+      @else
+        <h3 class="text-center mt-5 pb-5">Нет данных товаров</h3>
+      @endif
     </div>
   </section>
   <section class="mt-5 mb-5">

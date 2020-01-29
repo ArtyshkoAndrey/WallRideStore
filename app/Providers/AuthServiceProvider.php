@@ -6,7 +6,6 @@ use App\Models\Order;
 use App\Models\UserAddress;
 use App\Policies\OrderPolicy;
 use App\Policies\UserAddressPolicy;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -29,7 +28,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        //
     }
 }

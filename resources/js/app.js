@@ -16,6 +16,10 @@ ComponentContext.keys().forEach((componentFilePath) => {
 });
 require('./components/SelectDistrict');
 require('./components/UserAddressesCreateAndEdit');
+import Flickity from 'vue-flickity';
 const app = new Vue({
-  el: '#app'
+  el: '#app',
+  components: {
+    Flickity
+  },
 });

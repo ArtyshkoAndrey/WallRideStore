@@ -28,9 +28,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'password', 'remember_token',
     ];
 
-    public function addresses()
+    public function address()
     {
-        return $this->hasMany(UserAddress::class);
+        return $this->hasOne(UserAddress::class);
     }
 
     public function favoriteProducts()

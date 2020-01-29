@@ -17,13 +17,12 @@ class CreateUserAddressesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('province');
+            $table->string('country');
             $table->string('city');
-            $table->string('address');
-            $table->unsignedInteger('zip');
-            $table->string('contact_name');
+            $table->string('street');
             $table->string('contact_phone');
-            $table->dateTime('last_used_at')->nullable();
+            $table->integer('currency_id');
+            $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -13,11 +13,9 @@ $factory->define(App\Models\UserAddress::class, function (Faker $faker) {
     $address   = $faker->randomElement($addresses);
 
     return [
-        'province'      => $address[0],
+        'country'      => $address[0],
         'city'          => $address[1],
-        'address'       => sprintf('Улица', $faker->randomNumber(2), $faker->randomNumber(3)),
-        'zip'           => $faker->postcode,
-        'contact_name'  => $faker->name,
+        'street'       => sprintf('Улица', $faker->randomNumber(2), $faker->randomNumber(3)),
         'contact_phone' => $faker->phoneNumber,
     ];
 });
