@@ -2,7 +2,7 @@
   <ul>
     <li class="close-submenu" style="display: none;" onclick="closeSubMenu()"> <i class="fas fa-long-arrow-alt-left"></i> Назад</li>
     <li class="sep"><a href="{{ route('root') }}">Главная</a></li>
-    <li class="sep"><a href="{{ route('root') }}">Магазин</a></li>
+    <li class="sep"><a href="{{ route('products.all') }}">Магазин</a></li>
     <li class="sep dropdown" rel=1>
       <a>Бренды</a>
       <ul class="dropdown-3 submenu-1">

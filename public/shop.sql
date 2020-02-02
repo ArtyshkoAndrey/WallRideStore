@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Янв 14 2020 г., 19:01
+-- Время создания: Фев 02 2020 г., 18:09
 -- Версия сервера: 5.7.25-log
 -- Версия PHP: 7.3.9
 
@@ -194,7 +194,62 @@ INSERT INTO `admin_operation_log` (`id`, `user_id`, `path`, `method`, `ip`, `inp
 (338, 1, 'admin/products', 'POST', '127.0.0.1', '{\"title\":\"\\u0421\\u0430\\u043c\\u043e\\u0435\\u0434\",\"description\":\"<p><strong>Lorem ipsum<\\/strong>&nbsp;&mdash; \\u043a\\u043b\\u0430\\u0441\\u0441\\u0438\\u0447\\u0435\\u0441\\u043a\\u0438\\u0439 \\u0442\\u0435\\u043a\\u0441\\u0442-&laquo;\\u0440\\u044b\\u0431\\u0430&raquo; (\\u0443\\u0441\\u043b\\u043e\\u0432\\u043d\\u044b\\u0439, \\u0437\\u0430\\u0447\\u0430\\u0441\\u0442\\u0443\\u044e \\u0431\\u0435\\u0441\\u0441\\u043c\\u044b\\u0441\\u043b\\u0435\\u043d\\u043d\\u044b\\u0439 \\u0442\\u0435\\u043a\\u0441\\u0442-\\u0437\\u0430\\u043f\\u043e\\u043b\\u043d\\u0438\\u0442\\u0435\\u043b\\u044c, \\u0432\\u0441\\u0442\\u0430\\u0432\\u043b\\u044f\\u0435\\u043c\\u044b\\u0439 \\u0432 \\u043c\\u0430\\u043a\\u0435\\u0442 \\u0441\\u0442\\u0440\\u0430\\u043d\\u0438\\u0446\\u044b). \\u042f\\u0432\\u043b\\u044f\\u0435\\u0442\\u0441\\u044f \\u0438\\u0441\\u043a\\u0430\\u0436\\u0451\\u043d\\u043d\\u044b\\u043c \\u043e\\u0442\\u0440\\u044b\\u0432\\u043a\\u043e\\u043c \\u0438\\u0437 \\u0444\\u0438\\u043b\\u043e\\u0441\\u043e\\u0444\\u0441\\u043a\\u043e\\u0433\\u043e&nbsp;<a href=\\\"https:\\/\\/ru.wikipedia.org\\/wiki\\/%D0%A2%D1%80%D0%B0%D0%BA%D1%82%D0%B0%D1%82_(%D0%BB%D0%B8%D1%82%D0%B5%D1%80%D0%B0%D1%82%D1%83%D1%80%D0%B0)\\\">\\u0442\\u0440\\u0430\\u043a\\u0442\\u0430\\u0442\\u0430<\\/a>&nbsp;<a href=\\\"https:\\/\\/ru.wikipedia.org\\/wiki\\/%D0%9C%D0%B0%D1%80%D0%BA_%D0%A2%D1%83%D0%BB%D0%BB%D0%B8%D0%B9_%D0%A6%D0%B8%D1%86%D0%B5%D1%80%D0%BE%D0%BD\\\">\\u041c\\u0430\\u0440\\u043a\\u0430 \\u0422\\u0443\\u043b\\u043b\\u0438\\u044f \\u0426\\u0438\\u0446\\u0435\\u0440\\u043e\\u043d\\u0430<\\/a>&nbsp;&laquo;\\u041e \\u043f\\u0440\\u0435\\u0434\\u0435\\u043b\\u0430\\u0445 \\u0434\\u043e\\u0431\\u0440\\u0430 \\u0438 \\u0437\\u043b\\u0430&raquo;, \\u043d\\u0430\\u043f\\u0438\\u0441\\u0430\\u043d\\u043d\\u043e\\u0433\\u043e \\u0432&nbsp;<a href=\\\"https:\\/\\/ru.wikipedia.org\\/wiki\\/45_%D0%B3%D0%BE%D0%B4_%D0%B4%D0%BE_%D0%BD._%D1%8D.\\\">45 \\u0433\\u043e\\u0434\\u0443 \\u0434\\u043e&nbsp;\\u043d.&nbsp;\\u044d.<\\/a>&nbsp;\\u043d\\u0430&nbsp;<a href=\\\"https:\\/\\/ru.wikipedia.org\\/wiki\\/%D0%9B%D0%B0%D1%82%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9_%D1%8F%D0%B7%D1%8B%D0%BA\\\">\\u043b\\u0430\\u0442\\u0438\\u043d\\u0441\\u043a\\u043e\\u043c \\u044f\\u0437\\u044b\\u043a\\u0435<\\/a>, \\u043e\\u0431\\u043d\\u0430\\u0440\\u0443\\u0436\\u0435\\u043d\\u0438\\u0435 \\u0441\\u0445\\u043e\\u0434\\u0441\\u0442\\u0432\\u0430 \\u0430\\u0442\\u0440\\u0438\\u0431\\u0443\\u0442\\u0438\\u0440\\u0443\\u0435\\u0442\\u0441\\u044f \\u0420\\u0438\\u0447\\u0430\\u0440\\u0434\\u0443 \\u041c\\u0430\\u043a\\u041a\\u043b\\u0438\\u043d\\u0442\\u043e\\u043a\\u0443<a href=\\\"https:\\/\\/ru.wikipedia.org\\/wiki\\/Lorem_ipsum#cite_note-1\\\">[1]<\\/a>. \\u0420\\u0430\\u0441\\u043f\\u0440\\u043e\\u0441\\u0442\\u0440\\u0430\\u043d\\u0438\\u043b\\u0441\\u044f \\u0432&nbsp;<a href=\\\"https:\\/\\/ru.wikipedia.org\\/wiki\\/1970-%D0%B5_%D0%B3%D0%BE%D0%B4%D1%8B\\\">1970-\\u0445 \\u0433\\u043e\\u0434\\u0430\\u0445<\\/a>&nbsp;\\u0438\\u0437-\\u0437\\u0430 \\u0442\\u0440\\u0430\\u0444\\u0430\\u0440\\u0435\\u0442\\u043e\\u0432 \\u043a\\u043e\\u043c\\u043f\\u0430\\u043d\\u0438\\u0438&nbsp;<a href=\\\"https:\\/\\/ru.wikipedia.org\\/w\\/index.php?title=Letraset&amp;action=edit&amp;redlink=1\\\">Letraset<\\/a>, a \\u0437\\u0430\\u0442\\u0435\\u043c&nbsp;&mdash; \\u0438\\u0437-\\u0437\\u0430 \\u0442\\u043e\\u0433\\u043e, \\u0447\\u0442\\u043e \\u0441\\u043b\\u0443\\u0436\\u0438\\u043b \\u0441\\u0435\\u043c\\u043f\\u043b\\u043e\\u043c \\u0432 \\u043f\\u0440\\u043e\\u0433\\u0440\\u0430\\u043c\\u043c\\u0435&nbsp;<a href=\\\"https:\\/\\/ru.wikipedia.org\\/wiki\\/PageMaker\\\">PageMaker<\\/a>. \\u0418\\u0441\\u043f\\u043e\\u0440\\u0447\\u0435\\u043d\\u043d\\u044b\\u0439 \\u0442\\u0435\\u043a\\u0441\\u0442, \\u0432\\u0435\\u0440\\u043e\\u044f\\u0442\\u043d\\u043e, \\u043f\\u0440\\u043e\\u0438\\u0441\\u0445\\u043e\\u0434\\u0438\\u0442 \\u043e\\u0442 \\u0435\\u0433\\u043e \\u0438\\u0437\\u0434\\u0430\\u043d\\u0438\\u044f \\u0432&nbsp;<a href=\\\"https:\\/\\/ru.wikipedia.org\\/wiki\\/Loeb_Classical_Library\\\">Loeb Classical Library<\\/a>&nbsp;<a href=\\\"https:\\/\\/ru.wikipedia.org\\/wiki\\/1914_%D0%B3%D0%BE%D0%B4\\\">1914 \\u0433\\u043e\\u0434\\u0430<\\/a>, \\u0432 \\u043a\\u043e\\u0442\\u043e\\u0440\\u043e\\u043c \\u0441\\u043b\\u043e\\u0432\\u043e&nbsp;<em>dolorem<\\/em>&nbsp;\\u0440\\u0430\\u0437\\u0431\\u0438\\u0442\\u043e \\u043f\\u0435\\u0440\\u0435\\u043d\\u043e\\u0441\\u043e\\u043c \\u0442\\u0430\\u043a, \\u0447\\u0442\\u043e \\u0441\\u0442\\u0440\\u0430\\u043d\\u0438\\u0446\\u0430 36 \\u043d\\u0430\\u0447\\u0438\\u043d\\u0430\\u0435\\u0442\\u0441\\u044f \\u0441&nbsp;<em>lorem ipsum&hellip;<\\/em>&nbsp;(<em>do-<\\/em>&nbsp;\\u043e\\u0441\\u0442\\u0430\\u043b\\u043e\\u0441\\u044c \\u043d\\u0430 \\u043f\\u0440\\u0435\\u0434\\u044b\\u0434\\u0443\\u0449\\u0435\\u0439)<a href=\\\"https:\\/\\/ru.wikipedia.org\\/wiki\\/Lorem_ipsum#cite_note-2\\\">[2]<\\/a>.<\\/p>\\r\\n\\r\\n<p>&nbsp;<\\/p>\\r\\n\\r\\n<blockquote>\\r\\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\\/p>\\r\\n<\\/blockquote>\\r\\n\\r\\n<p>\\u0412 \\u043e\\u0440\\u0438\\u0433\\u0438\\u043d\\u0430\\u043b\\u0435 \\u0430\\u0431\\u0437\\u0430\\u0446 \\u0432\\u044b\\u0433\\u043b\\u044f\\u0434\\u0438\\u0442 \\u0442\\u0430\\u043a:<\\/p>\\r\\n\\r\\n<blockquote>\\r\\n<p>Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo. Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui do<strong>lorem ipsum<\\/strong>, quia&nbsp;<strong>dolor sit, amet, consectetur, adipisci<\\/strong>&nbsp;v<strong>elit, sed<\\/strong>&nbsp;quia non numquam&nbsp;<strong>eius mod<\\/strong>i&nbsp;<strong>tempor<\\/strong>a&nbsp;<strong>incidunt, ut labore et dolore magna<\\/strong>m&nbsp;<strong>aliqua<\\/strong>m quaerat voluptatem.&nbsp;<strong>Ut enim ad minim<\\/strong>a&nbsp;<strong>veniam, quis nostru<\\/strong>m&nbsp;<strong>exercitation<\\/strong>em&nbsp;<strong>ullam co<\\/strong>rporis suscipit<strong>&nbsp;labori<\\/strong>o<strong>s<\\/strong>am,&nbsp;<strong>nisi ut aliquid ex ea commod<\\/strong>i&nbsp;<strong>consequat<\\/strong>ur?&nbsp;<strong>Quis aute<\\/strong>m vel eum&nbsp;<strong>iure reprehenderit,<\\/strong>&nbsp;qui&nbsp;<strong>in<\\/strong>&nbsp;ea&nbsp;<strong>voluptate velit esse<\\/strong>, quam nihil molestiae&nbsp;<strong>c<\\/strong>onsequatur, vel&nbsp;<strong>illum<\\/strong>, qui&nbsp;<strong>dolore<\\/strong>m&nbsp;<strong>eu<\\/strong>m&nbsp;<strong>fugiat<\\/strong>, quo voluptas&nbsp;<strong>nulla pariatur<\\/strong>? At vero eos et accusamus et iusto odio dignissimos ducimus, qui blanditiis praesentium voluptatum deleniti atque corrupti, quos dolores et quas molestias&nbsp;<strong>exceptur<\\/strong>i&nbsp;<strong>sint, obcaecat<\\/strong>i&nbsp;<strong>cupiditat<\\/strong>e&nbsp;<strong>non pro<\\/strong>v<strong>ident<\\/strong>, similique&nbsp;<strong>sunt in culpa<\\/strong>,&nbsp;<strong>qui officia deserunt mollit<\\/strong>ia&nbsp;<strong>anim<\\/strong>i,&nbsp;<strong>id est laborum<\\/strong>&nbsp;et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio, cumque nihil impedit, quo minus id, quod maxime placeat, facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet, ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.<\\/p>\\r\\n<\\/blockquote>\",\"on_sale\":\"1\",\"skus\":{\"new_1\":{\"title\":\"Test\",\"description\":\"test1\",\"price\":\"1000\",\"stock\":\"3\",\"id\":null,\"_remove_\":\"0\"}},\"_token\":\"yDAxfkuJPJJzRC1vuH2bwBEyWTNHfA1oDDkibEl0\",\"_previous_\":\"http:\\/\\/myshop\\/admin\\/products\"}', '2020-01-14 13:28:22', '2020-01-14 13:28:22'),
 (339, 1, 'admin/products', 'GET', '127.0.0.1', '[]', '2020-01-14 13:28:23', '2020-01-14 13:28:23'),
 (340, 1, 'admin/orders/104', 'GET', '127.0.0.1', '[]', '2020-01-14 13:45:39', '2020-01-14 13:45:39'),
-(341, 1, 'admin/products', 'GET', '127.0.0.1', '[]', '2020-01-14 13:45:39', '2020-01-14 13:45:39');
+(341, 1, 'admin/products', 'GET', '127.0.0.1', '[]', '2020-01-14 13:45:39', '2020-01-14 13:45:39'),
+(342, 1, 'admin', 'GET', '127.0.0.1', '[]', '2020-01-16 10:10:52', '2020-01-16 10:10:52'),
+(343, 1, 'admin/products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-01-16 10:10:56', '2020-01-16 10:10:56'),
+(344, 1, 'admin/products', 'GET', '127.0.0.1', '[]', '2020-01-16 10:11:20', '2020-01-16 10:11:20'),
+(345, 1, 'admin/products/32/edit', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-01-16 10:11:24', '2020-01-16 10:11:24'),
+(346, 1, 'admin/products/32', 'PUT', '127.0.0.1', '{\"key\":null,\"image\":\"_file_del_\",\"_file_del_\":null,\"_token\":\"dmgLZGle7JGmlmD7xjGchPjRn9I6ooJg0ucO4cTr\",\"_method\":\"PUT\"}', '2020-01-16 10:11:26', '2020-01-16 10:11:26'),
+(347, 1, 'admin/products/32', 'PUT', '127.0.0.1', '{\"key\":null,\"image\":\"_file_del_\",\"_file_del_\":null,\"_token\":\"dmgLZGle7JGmlmD7xjGchPjRn9I6ooJg0ucO4cTr\",\"_method\":\"PUT\"}', '2020-01-16 10:11:47', '2020-01-16 10:11:47'),
+(348, 1, 'admin/products/32', 'PUT', '127.0.0.1', '{\"key\":null,\"image\":\"_file_del_\",\"_file_del_\":null,\"_token\":\"dmgLZGle7JGmlmD7xjGchPjRn9I6ooJg0ucO4cTr\",\"_method\":\"PUT\"}', '2020-01-16 10:11:47', '2020-01-16 10:11:47'),
+(349, 1, 'admin', 'GET', '127.0.0.1', '[]', '2020-01-30 01:30:59', '2020-01-30 01:30:59'),
+(350, 1, 'admin/products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-01-30 01:31:12', '2020-01-30 01:31:12'),
+(351, 1, 'admin/products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-01-30 01:31:42', '2020-01-30 01:31:42'),
+(352, 1, 'admin/products/31/edit', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-01-30 01:32:17', '2020-01-30 01:32:17'),
+(353, 1, 'admin/products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-01-30 01:32:32', '2020-01-30 01:32:32'),
+(354, 1, 'admin', 'GET', '127.0.0.1', '[]', '2020-01-30 01:33:45', '2020-01-30 01:33:45'),
+(355, 1, 'admin', 'GET', '31.173.240.152', '[]', '2020-01-30 01:37:17', '2020-01-30 01:37:17'),
+(356, 1, 'admin/products', 'GET', '31.173.240.152', '{\"_pjax\":\"#pjax-container\"}', '2020-01-30 01:37:26', '2020-01-30 01:37:26'),
+(357, 1, 'admin/products/create', 'GET', '31.173.240.152', '{\"_pjax\":\"#pjax-container\"}', '2020-01-30 01:37:31', '2020-01-30 01:37:31'),
+(358, 1, 'admin/products', 'POST', '31.173.240.152', '{\"title\":\"BRONZE56K HIGH PERFORMANCE WINDBREAKER ORANGE\",\"description\":\"<table>\\r\\n\\t<tbody>\\r\\n\\t\\t<tr>\\r\\n\\t\\t\\t<th>\\u0412\\u0435\\u0441<\\/th>\\r\\n\\t\\t\\t<td>0.500 kg<\\/td>\\r\\n\\t\\t<\\/tr>\\r\\n\\t\\t<tr>\\r\\n\\t\\t\\t<th>\\u0420\\u0430\\u0437\\u043c\\u0435\\u0440\\u044b<\\/th>\\r\\n\\t\\t\\t<td>\\r\\n\\t\\t\\t<p>M<\\/p>\\r\\n\\t\\t\\t<\\/td>\\r\\n\\t\\t<\\/tr>\\r\\n\\t<\\/tbody>\\r\\n<\\/table>\",\"on_sale\":\"0\",\"skus\":{\"new_1\":{\"title\":\"M\",\"description\":\"\\u0420\\u0430\\u0437\\u043c\\u0435\\u0440 \\u041c\",\"price\":\"55900\",\"stock\":\"0\",\"id\":null,\"_remove_\":\"0\"}},\"_token\":\"vxFJ0UE5J0MnEATv3sonQhlvIXL0e47En2PThe6A\",\"_previous_\":\"http:\\/\\/95.188.80.41\\/admin\\/products\"}', '2020-01-30 01:54:54', '2020-01-30 01:54:54'),
+(359, 1, 'admin/products', 'GET', '31.173.240.152', '[]', '2020-01-30 01:54:55', '2020-01-30 01:54:55'),
+(360, 1, 'admin', 'GET', '31.173.240.152', '[]', '2020-01-30 02:40:36', '2020-01-30 02:40:36'),
+(361, 1, 'admin/products', 'GET', '31.173.240.152', '{\"_pjax\":\"#pjax-container\"}', '2020-01-30 02:40:43', '2020-01-30 02:40:43'),
+(362, 1, 'admin/products/create', 'GET', '31.173.240.152', '{\"_pjax\":\"#pjax-container\"}', '2020-01-30 02:41:09', '2020-01-30 02:41:09'),
+(363, 1, 'admin/products', 'POST', '31.173.240.152', '{\"title\":\"BRONZE56K HIGH PERFORMACE WINDBREAKER AIR FORCE BLUE\",\"description\":\"<table>\\r\\n\\t<tbody>\\r\\n\\t\\t<tr>\\r\\n\\t\\t\\t<th>\\u0412\\u0435\\u0441<\\/th>\\r\\n\\t\\t\\t<td>\\u041d\\/\\u0414<\\/td>\\r\\n\\t\\t<\\/tr>\\r\\n\\t\\t<tr>\\r\\n\\t\\t\\t<th>\\u0420\\u0430\\u0437\\u043c\\u0435\\u0440\\u044b<\\/th>\\r\\n\\t\\t\\t<td>\\r\\n\\t\\t\\t<p>L, M<\\/p>\\r\\n\\t\\t\\t<\\/td>\\r\\n\\t\\t<\\/tr>\\r\\n\\t<\\/tbody>\\r\\n<\\/table>\",\"on_sale\":\"1\",\"skus\":{\"new_1\":{\"title\":\"L\",\"description\":\"\\u0420\\u0430\\u0437\\u043c\\u0435\\u0440 L\",\"price\":\"55900\",\"stock\":\"2\",\"id\":null,\"_remove_\":\"0\"},\"new_2\":{\"title\":\"M\",\"description\":\"\\u0420\\u0430\\u0437\\u043c\\u0435\\u0440 M\",\"price\":\"55900\",\"stock\":\"24\",\"id\":null,\"_remove_\":\"0\"}},\"_token\":\"UrUBpvqPOpGDotDBLpacQcCIG3y43BVanQ3weaJ0\",\"_previous_\":\"http:\\/\\/95.188.80.41\\/admin\\/products\"}', '2020-01-30 02:42:36', '2020-01-30 02:42:36'),
+(364, 1, 'admin/products', 'GET', '31.173.240.152', '[]', '2020-01-30 02:42:37', '2020-01-30 02:42:37'),
+(365, 1, 'admin/products/create', 'GET', '31.173.240.152', '{\"_pjax\":\"#pjax-container\"}', '2020-01-30 02:42:42', '2020-01-30 02:42:42'),
+(366, 1, 'admin/products', 'POST', '31.173.240.152', '{\"title\":\"BRONZE56K HARD WEAR CARGO PANTS DARK NAVY\",\"description\":\"<table>\\r\\n\\t<tbody>\\r\\n\\t\\t<tr>\\r\\n\\t\\t\\t<th>\\u0412\\u0435\\u0441<\\/th>\\r\\n\\t\\t\\t<td>\\u041d\\/\\u0414<\\/td>\\r\\n\\t\\t<\\/tr>\\r\\n\\t\\t<tr>\\r\\n\\t\\t\\t<th>\\u0420\\u0430\\u0437\\u043c\\u0435\\u0440\\u044b<\\/th>\\r\\n\\t\\t\\t<td>\\r\\n\\t\\t\\t<p>L, M, S<\\/p>\\r\\n\\t\\t\\t<\\/td>\\r\\n\\t\\t<\\/tr>\\r\\n\\t<\\/tbody>\\r\\n<\\/table>\",\"on_sale\":\"1\",\"skus\":{\"new_1\":{\"title\":\"L\",\"description\":\"L\",\"price\":\"49900\",\"stock\":\"10\",\"id\":null,\"_remove_\":\"0\"},\"new_2\":{\"title\":\"M\",\"description\":\"M\",\"price\":\"49900\",\"stock\":\"5\",\"id\":null,\"_remove_\":\"0\"},\"new_3\":{\"title\":\"S\",\"description\":\"S\",\"price\":\"49900\",\"stock\":\"23\",\"id\":null,\"_remove_\":\"0\"}},\"_token\":\"UrUBpvqPOpGDotDBLpacQcCIG3y43BVanQ3weaJ0\",\"_previous_\":\"http:\\/\\/95.188.80.41\\/admin\\/products\"}', '2020-01-30 02:43:57', '2020-01-30 02:43:57'),
+(367, 1, 'admin/products', 'GET', '31.173.240.152', '[]', '2020-01-30 02:43:58', '2020-01-30 02:43:58'),
+(368, 1, 'admin/products/create', 'GET', '31.173.240.152', '{\"_pjax\":\"#pjax-container\"}', '2020-01-30 02:44:01', '2020-01-30 02:44:01'),
+(369, 1, 'admin/products', 'POST', '31.173.240.152', '{\"title\":\"POLAR PATTERNED POLO SHIRT RED\",\"description\":\"<table>\\r\\n\\t<tbody>\\r\\n\\t\\t<tr>\\r\\n\\t\\t\\t<th>\\u0412\\u0435\\u0441<\\/th>\\r\\n\\t\\t\\t<td>\\u041d\\/\\u0414<\\/td>\\r\\n\\t\\t<\\/tr>\\r\\n\\t\\t<tr>\\r\\n\\t\\t\\t<th>\\u0420\\u0430\\u0437\\u043c\\u0435\\u0440\\u044b<\\/th>\\r\\n\\t\\t\\t<td>\\r\\n\\t\\t\\t<p>L, M, S<\\/p>\\r\\n\\t\\t\\t<\\/td>\\r\\n\\t\\t<\\/tr>\\r\\n\\t<\\/tbody>\\r\\n<\\/table>\",\"on_sale\":\"1\",\"skus\":{\"new_1\":{\"title\":\"L\",\"description\":\"L\",\"price\":\"29900\",\"stock\":\"1\",\"id\":null,\"_remove_\":\"0\"},\"new_2\":{\"title\":\"S\",\"description\":\"S\",\"price\":\"29900\",\"stock\":\"3\",\"id\":null,\"_remove_\":\"0\"},\"new_3\":{\"title\":\"S\",\"description\":\"S\",\"price\":\"29900\",\"stock\":\"2\",\"id\":null,\"_remove_\":\"0\"}},\"_token\":\"UrUBpvqPOpGDotDBLpacQcCIG3y43BVanQ3weaJ0\",\"_previous_\":\"http:\\/\\/95.188.80.41\\/admin\\/products\"}', '2020-01-30 02:45:32', '2020-01-30 02:45:32'),
+(370, 1, 'admin/products', 'GET', '31.173.240.152', '[]', '2020-01-30 02:45:33', '2020-01-30 02:45:33'),
+(371, 1, 'admin/products/create', 'GET', '31.173.240.152', '{\"_pjax\":\"#pjax-container\"}', '2020-01-30 02:45:59', '2020-01-30 02:45:59'),
+(372, 1, 'admin/products', 'POST', '31.173.240.152', '{\"title\":\"DIME POLO SHIRT PURPLE\",\"description\":\"<table>\\r\\n\\t<tbody>\\r\\n\\t\\t<tr>\\r\\n\\t\\t\\t<th>\\u0412\\u0435\\u0441<\\/th>\\r\\n\\t\\t\\t<td>\\u041d\\/\\u0414<\\/td>\\r\\n\\t\\t<\\/tr>\\r\\n\\t\\t<tr>\\r\\n\\t\\t\\t<th>\\u0420\\u0430\\u0437\\u043c\\u0435\\u0440\\u044b<\\/th>\\r\\n\\t\\t\\t<td>\\r\\n\\t\\t\\t<p>L, M<\\/p>\\r\\n\\t\\t\\t<\\/td>\\r\\n\\t\\t<\\/tr>\\r\\n\\t<\\/tbody>\\r\\n<\\/table>\",\"on_sale\":\"1\",\"skus\":{\"new_1\":{\"title\":\"L\",\"description\":\"L\",\"price\":\"17940\",\"stock\":\"2\",\"id\":null,\"_remove_\":\"0\"},\"new_2\":{\"title\":\"M\",\"description\":\"M\",\"price\":\"17940\",\"stock\":\"1\",\"id\":null,\"_remove_\":\"0\"}},\"_token\":\"UrUBpvqPOpGDotDBLpacQcCIG3y43BVanQ3weaJ0\"}', '2020-01-30 02:46:55', '2020-01-30 02:46:55'),
+(373, 1, 'admin/products', 'GET', '31.173.240.152', '[]', '2020-01-30 02:46:56', '2020-01-30 02:46:56'),
+(374, 1, 'admin', 'GET', '95.188.80.41', '[]', '2020-01-30 06:07:11', '2020-01-30 06:07:11'),
+(375, 1, 'admin/products', 'GET', '95.188.80.41', '{\"_pjax\":\"#pjax-container\"}', '2020-01-30 06:07:25', '2020-01-30 06:07:25'),
+(376, 1, 'admin/products/create', 'GET', '95.188.80.41', '{\"_pjax\":\"#pjax-container\"}', '2020-01-30 06:07:43', '2020-01-30 06:07:43'),
+(377, 1, 'admin/products/create', 'GET', '95.188.80.41', '[]', '2020-01-30 06:07:55', '2020-01-30 06:07:55'),
+(378, 1, 'admin/products', 'POST', '95.188.80.41', '{\"title\":\"BRONZE56K HARDWARE TECHNOLOGY LONGSLEEVE CARDINAL\",\"description\":\"<table>\\r\\n\\t<tbody>\\r\\n\\t\\t<tr>\\r\\n\\t\\t\\t<th>\\u0412\\u0435\\u0441<\\/th>\\r\\n\\t\\t\\t<td>0.500 kg<\\/td>\\r\\n\\t\\t<\\/tr>\\r\\n\\t\\t<tr>\\r\\n\\t\\t\\t<th>\\u0420\\u0430\\u0437\\u043c\\u0435\\u0440\\u044b<\\/th>\\r\\n\\t\\t\\t<td>\\r\\n\\t\\t\\t<p>L, M, S<\\/p>\\r\\n\\t\\t\\t<\\/td>\\r\\n\\t\\t<\\/tr>\\r\\n\\t<\\/tbody>\\r\\n<\\/table>\",\"on_sale\":\"1\",\"skus\":{\"new_1\":{\"title\":\"L\",\"description\":\"L\",\"price\":\"21900\",\"stock\":\"1\",\"id\":null,\"_remove_\":\"0\"},\"new_2\":{\"title\":\"M\",\"description\":\"M\",\"price\":\"21900\",\"stock\":\"2\",\"id\":null,\"_remove_\":\"0\"}},\"_token\":\"wmoMHJCdO1okp4Btoy4qUuInCm0x0OkNMAqvzJIv\"}', '2020-01-30 06:09:49', '2020-01-30 06:09:49'),
+(379, 1, 'admin/products', 'GET', '95.188.80.41', '[]', '2020-01-30 06:09:49', '2020-01-30 06:09:49'),
+(380, 1, 'admin/products/create', 'GET', '95.188.80.41', '{\"_pjax\":\"#pjax-container\"}', '2020-01-30 06:09:54', '2020-01-30 06:09:54'),
+(381, 1, 'admin/products', 'POST', '95.188.80.41', '{\"title\":\"BRONZE56K MOUNTAIN BEANIE GREEN\",\"description\":\"<table>\\r\\n\\t<tbody>\\r\\n\\t\\t<tr>\\r\\n\\t\\t\\t<th>\\u0412\\u0435\\u0441<\\/th>\\r\\n\\t\\t\\t<td>0.200 kg<\\/td>\\r\\n\\t\\t<\\/tr>\\r\\n\\t<\\/tbody>\\r\\n<\\/table>\",\"on_sale\":\"1\",\"skus\":{\"new_1\":{\"title\":null,\"description\":null,\"price\":null,\"stock\":null,\"id\":null,\"_remove_\":\"1\"}},\"_token\":\"wmoMHJCdO1okp4Btoy4qUuInCm0x0OkNMAqvzJIv\",\"_previous_\":\"http:\\/\\/95.188.80.41\\/admin\\/products\"}', '2020-01-30 06:10:21', '2020-01-30 06:10:21'),
+(382, 1, 'admin/products/create', 'GET', '95.188.80.41', '[]', '2020-01-30 06:10:21', '2020-01-30 06:10:21'),
+(383, 1, 'admin/products', 'POST', '95.188.80.41', '{\"title\":\"BRONZE56K MOUNTAIN BEANIE GREEN\",\"description\":\"<table>\\r\\n\\t<tbody>\\r\\n\\t\\t<tr>\\r\\n\\t\\t\\t<th>\\u0412\\u0435\\u0441<\\/th>\\r\\n\\t\\t\\t<td>0.200 kg<\\/td>\\r\\n\\t\\t<\\/tr>\\r\\n\\t<\\/tbody>\\r\\n<\\/table>\",\"on_sale\":\"1\",\"skus\":{\"new_1\":{\"title\":\"BRONZE56K MOUNTAIN BEANIE GREEN\",\"description\":\"<table>\\t<tbody>\\t\\t<tr>\\t\\t\\t<th>\\u0412\\u0435\\u0441<\\/th>\\t\\t\\t<td>0.200 kg<\\/td>\\t\\t<\\/tr>\\t<\\/tbody><\\/table>\",\"price\":\"16900\",\"stock\":\"13\",\"id\":null,\"_remove_\":\"0\"}},\"_token\":\"wmoMHJCdO1okp4Btoy4qUuInCm0x0OkNMAqvzJIv\"}', '2020-01-30 06:10:59', '2020-01-30 06:10:59'),
+(384, 1, 'admin/products', 'GET', '95.188.80.41', '[]', '2020-01-30 06:10:59', '2020-01-30 06:10:59'),
+(385, 1, 'admin/products/create', 'GET', '95.188.80.41', '{\"_pjax\":\"#pjax-container\"}', '2020-01-30 06:11:03', '2020-01-30 06:11:03'),
+(386, 1, 'admin/products', 'POST', '95.188.80.41', '{\"title\":\"BRONSON BEARING RAW\",\"description\":\"<table>\\r\\n\\t<tbody>\\r\\n\\t\\t<tr>\\r\\n\\t\\t\\t<th>\\u0412\\u0435\\u0441<\\/th>\\r\\n\\t\\t\\t<td>0.110 kg<\\/td>\\r\\n\\t\\t<\\/tr>\\r\\n\\t<\\/tbody>\\r\\n<\\/table>\",\"on_sale\":\"1\",\"skus\":{\"new_1\":{\"title\":\"BRONSON BEARING RAW\",\"description\":null,\"price\":\"17900\",\"stock\":\"34\",\"id\":null,\"_remove_\":\"0\"}},\"_token\":\"wmoMHJCdO1okp4Btoy4qUuInCm0x0OkNMAqvzJIv\",\"_previous_\":\"http:\\/\\/95.188.80.41\\/admin\\/products\"}', '2020-01-30 06:12:22', '2020-01-30 06:12:22'),
+(387, 1, 'admin/products/create', 'GET', '95.188.80.41', '[]', '2020-01-30 06:12:23', '2020-01-30 06:12:23'),
+(388, 1, 'admin/products', 'POST', '95.188.80.41', '{\"title\":\"BRONSON BEARING RAW\",\"description\":\"<table>\\r\\n\\t<tbody>\\r\\n\\t\\t<tr>\\r\\n\\t\\t\\t<th>\\u0412\\u0435\\u0441<\\/th>\\r\\n\\t\\t\\t<td>0.110 kg<\\/td>\\r\\n\\t\\t<\\/tr>\\r\\n\\t<\\/tbody>\\r\\n<\\/table>\",\"on_sale\":\"1\",\"skus\":{\"new_1\":{\"title\":\"BRONSON BEARING RAW\",\"description\":\"<table>\\t<tbody>\\t\\t<tr>\\t\\t\\t<th>\\u0412\\u0435\\u0441<\\/th>\\t\\t\\t<td>0.110 kg<\\/td>\\t\\t<\\/tr>\\t<\\/tbody><\\/table>\",\"price\":\"17900\",\"stock\":\"34\",\"id\":null,\"_remove_\":\"0\"}},\"_token\":\"wmoMHJCdO1okp4Btoy4qUuInCm0x0OkNMAqvzJIv\"}', '2020-01-30 06:12:32', '2020-01-30 06:12:32'),
+(389, 1, 'admin/products', 'GET', '95.188.80.41', '[]', '2020-01-30 06:12:33', '2020-01-30 06:12:33'),
+(390, 1, 'admin/products/create', 'GET', '95.188.80.41', '{\"_pjax\":\"#pjax-container\"}', '2020-01-30 06:14:18', '2020-01-30 06:14:18'),
+(391, 1, 'admin/products', 'POST', '95.188.80.41', '{\"title\":\"BRONZE56K 2020 HAT KHAKI\\/CHARCOAL\",\"description\":\"<table>\\r\\n\\t<tbody>\\r\\n\\t\\t<tr>\\r\\n\\t\\t\\t<th>\\u0412\\u0435\\u0441<\\/th>\\r\\n\\t\\t\\t<td>0.200 kg<\\/td>\\r\\n\\t\\t<\\/tr>\\r\\n\\t<\\/tbody>\\r\\n<\\/table>\",\"on_sale\":\"0\",\"skus\":{\"new_1\":{\"title\":\"ALL\",\"description\":\"\\u041e\\u0431\\u0449\\u0438\\u0439 \\u0440\\u0430\\u0437\\u043c\\u0435\\u0440\",\"price\":\"16900\",\"stock\":\"3\",\"id\":null,\"_remove_\":\"0\"}},\"_token\":\"wmoMHJCdO1okp4Btoy4qUuInCm0x0OkNMAqvzJIv\",\"_previous_\":\"http:\\/\\/95.188.80.41\\/admin\\/products\"}', '2020-01-30 06:15:24', '2020-01-30 06:15:24'),
+(392, 1, 'admin/products', 'GET', '95.188.80.41', '[]', '2020-01-30 06:15:24', '2020-01-30 06:15:24'),
+(393, 1, 'admin/products/create', 'GET', '95.188.80.41', '{\"_pjax\":\"#pjax-container\"}', '2020-01-30 06:15:51', '2020-01-30 06:15:51'),
+(394, 1, 'admin/products', 'POST', '95.188.80.41', '{\"title\":\"BRONZE56K LOGO LEATHER BELT BLACK\",\"description\":\"<table>\\r\\n\\t<tbody>\\r\\n\\t\\t<tr>\\r\\n\\t\\t\\t<th>\\u0412\\u0435\\u0441<\\/th>\\r\\n\\t\\t\\t<td>0.800 kg<\\/td>\\r\\n\\t\\t<\\/tr>\\r\\n\\t<\\/tbody>\\r\\n<\\/table>\",\"on_sale\":\"0\",\"skus\":{\"new_1\":{\"title\":\"ALL\",\"description\":\"ALL\",\"price\":\"24900\",\"stock\":\"5\",\"id\":null,\"_remove_\":\"0\"}},\"_token\":\"wmoMHJCdO1okp4Btoy4qUuInCm0x0OkNMAqvzJIv\",\"_previous_\":\"http:\\/\\/95.188.80.41\\/admin\\/products\"}', '2020-01-30 06:16:34', '2020-01-30 06:16:34'),
+(395, 1, 'admin/products', 'GET', '95.188.80.41', '[]', '2020-01-30 06:16:34', '2020-01-30 06:16:34'),
+(396, 1, 'admin', 'GET', '95.188.80.41', '{\"_pjax\":\"#pjax-container\"}', '2020-01-30 06:22:27', '2020-01-30 06:22:27');
 
 -- --------------------------------------------------------
 
@@ -376,13 +431,6 @@ CREATE TABLE `cart_items` (
   `amount` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Дамп данных таблицы `cart_items`
---
-
-INSERT INTO `cart_items` (`id`, `user_id`, `product_sku_id`, `amount`) VALUES
-(7, 102, 93, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -416,6 +464,30 @@ INSERT INTO `coupon_codes` (`id`, `name`, `code`, `type`, `value`, `total`, `use
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `currencies`
+--
+
+CREATE TABLE `currencies` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ratio` float NOT NULL,
+  `symbol` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `currencies`
+--
+
+INSERT INTO `currencies` (`id`, `name`, `ratio`, `symbol`, `created_at`, `updated_at`) VALUES
+(1, 'Тенге', 1, 'тг.', NULL, NULL),
+(2, 'Российский рубль', 0.1638, 'р.', NULL, NULL),
+(3, 'Американский доллар', 0.0026, '$', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `migrations`
 --
 
@@ -441,7 +513,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (9, '2018_12_23_042627_create_orders_table', 1),
 (10, '2018_12_23_042632_create_order_items_table', 1),
 (11, '2018_12_23_103610_create_coupon_codes_table', 1),
-(12, '2018_12_23_103753_orders_add_coupon_code_id', 1);
+(12, '2018_12_23_103753_orders_add_coupon_code_id', 1),
+(13, '2020_01_28_234016_create_currencies_table', 2);
 
 -- --------------------------------------------------------
 
@@ -467,6 +540,7 @@ CREATE TABLE `orders` (
   `ship_status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
   `ship_data` text COLLATE utf8mb4_unicode_ci,
   `extra` text COLLATE utf8mb4_unicode_ci,
+  `express_company` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -475,12 +549,12 @@ CREATE TABLE `orders` (
 -- Дамп данных таблицы `orders`
 --
 
-INSERT INTO `orders` (`id`, `no`, `user_id`, `address`, `total_amount`, `remark`, `paid_at`, `coupon_code_id`, `payment_method`, `payment_no`, `refund_status`, `refund_no`, `closed`, `reviewed`, `ship_status`, `ship_data`, `extra`, `created_at`, `updated_at`) VALUES
-(103, '20200113161202060627', 102, '{\"address\":\"\\u5929\\u6d25\\u5e02\\u5e02\\u8f96\\u533a\\u7ea2\\u6865\\u533a\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24, 25\",\"zip\":660099,\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e\",\"contact_phone\":\"89029634366\"}', '22.00', '123123', '2020-01-13 00:00:00', NULL, NULL, NULL, 'pending', NULL, 1, 1, 'received', '{\"express_company\":\"12312\",\"express_no\":\"14315345345\"}', NULL, '2020-01-13 09:12:02', '2020-01-14 08:00:11'),
-(104, '20200114153754612193', 102, '{\"address\":\"\\u5929\\u6d25\\u5e02\\u5e02\\u8f96\\u533a\\u7ea2\\u6865\\u533a\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24, 25\",\"zip\":660099,\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e\",\"contact_phone\":\"89029634366\"}', '980.00', NULL, '2020-01-14 15:52:29', 1, 'wechat', '11233', 'pending', NULL, 1, 1, 'received', '{\"express_company\":\"test\",\"express_no\":\"1333\"}', '{\"refund_reason\":\"\\u041d\\u0435 \\u0442\\u043e\\u0442 \\u0440\\u0430\\u0437\\u043c\\u0435\\u0440\",\"refund_disagree_reason\":\"\\u041d\\u0435\\u0442\"}', '2020-01-14 08:37:54', '2020-01-14 13:26:02'),
-(105, '20200114182503983585', 102, '{\"address\":\"\\u5929\\u6d25\\u5e02\\u5e02\\u8f96\\u533a\\u7ea2\\u6865\\u533a\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24, 25\",\"zip\":660099,\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e\",\"contact_phone\":\"89029634366\"}', '1022.00', 'цукцук', NULL, NULL, NULL, NULL, 'pending', NULL, 1, 0, 'pending', NULL, NULL, '2020-01-14 11:25:03', '2020-01-14 11:25:03'),
-(106, '20200114200852301319', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24, 25\",\"zip\":660099,\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439\",\"contact_phone\":\"89029634366\"}', '11.00', 'Lorem Ipsum - это текст-\"рыба\", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной \"рыбой\" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов. Lorem Ipsum не только успешно пережил без заметных изменений пять веков, но и перешагнул в электронный дизайн. Его популяризации в новое время послужили публикация листов Letraset с образцами Lorem Ipsum в 60-х годах и, в более недавнее время, программы электронной вёрстки типа Aldus PageMaker, в шаблонах которых используется Lorem Ipsum.', NULL, NULL, NULL, NULL, 'pending', NULL, 0, 0, 'pending', NULL, NULL, '2020-01-14 13:08:52', '2020-01-14 13:08:52'),
-(107, '20200114202235030508', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24, 25\",\"zip\":660099,\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439\",\"contact_phone\":\"89029634366\"}', '2.20', 'Тест', '2020-01-14 00:00:00', 2, NULL, NULL, 'pending', NULL, 0, 0, 'received', '{\"express_company\":\"\\u041f\\u043e\\u0447\\u0442\\u0430 \\u0420\\u043e\\u0441\\u0441\\u0438\\u0438\",\"express_no\":\"202010102020\"}', NULL, '2020-01-14 13:22:35', '2020-01-14 13:29:15');
+INSERT INTO `orders` (`id`, `no`, `user_id`, `address`, `total_amount`, `remark`, `paid_at`, `coupon_code_id`, `payment_method`, `payment_no`, `refund_status`, `refund_no`, `closed`, `reviewed`, `ship_status`, `ship_data`, `extra`, `express_company`, `created_at`, `updated_at`) VALUES
+(103, '20200113161202060627', 102, '{\"address\":\"\\u5929\\u6d25\\u5e02\\u5e02\\u8f96\\u533a\\u7ea2\\u6865\\u533a\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24, 25\",\"zip\":660099,\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e\",\"contact_phone\":\"89029634366\"}', '22.00', '123123', '2020-01-13 00:00:00', NULL, 'card', NULL, 'pending', NULL, 1, 1, 'received', '{\"express_company\":\"12312\",\"express_no\":\"14315345345\", }', NULL, 'ems', '2020-01-13 09:12:02', '2020-01-14 08:00:11'),
+(104, '20200114153754612193', 102, '{\"address\":\"\\u5929\\u6d25\\u5e02\\u5e02\\u8f96\\u533a\\u7ea2\\u6865\\u533a\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24, 25\",\"zip\":660099,\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e\",\"contact_phone\":\"89029634366\"}', '980.00', NULL, '2020-01-14 15:52:29', 1, 'card', '11233', 'pending', NULL, 1, 1, 'received', '{\"express_company\":\"test\",\"express_no\":\"1333\"}', '{\"refund_reason\":\"\\u041d\\u0435 \\u0442\\u043e\\u0442 \\u0440\\u0430\\u0437\\u043c\\u0435\\u0440\",\"refund_disagree_reason\":\"\\u041d\\u0435\\u0442\"}', 'ase', '2020-01-14 08:37:54', '2020-01-14 13:26:02'),
+(105, '20200114182503983585', 102, '{\"address\":\"\\u5929\\u6d25\\u5e02\\u5e02\\u8f96\\u533a\\u7ea2\\u6865\\u533a\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24, 25\",\"zip\":660099,\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e\",\"contact_phone\":\"89029634366\"}', '1022.00', 'цукцук', NULL, NULL, 'card', NULL, 'pending', NULL, 1, 0, 'pending', NULL, NULL, 'ase', '2020-01-14 11:25:03', '2020-01-14 11:25:03'),
+(106, '20200114200852301319', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24, 25\",\"zip\":660099,\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439\",\"contact_phone\":\"89029634366\"}', '11.00', 'Lorem Ipsum - это текст-\"рыба\", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной \"рыбой\" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов. Lorem Ipsum не только успешно пережил без заметных изменений пять веков, но и перешагнул в электронный дизайн. Его популяризации в новое время послужили публикация листов Letraset с образцами Lorem Ipsum в 60-х годах и, в более недавнее время, программы электронной вёрстки типа Aldus PageMaker, в шаблонах которых используется Lorem Ipsum.', NULL, NULL, 'card', NULL, 'pending', NULL, 0, 0, 'delivered', NULL, NULL, 'ase', '2020-01-14 13:08:52', '2020-01-14 13:08:52'),
+(107, '20200114202235030508', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24, 25\",\"zip\":660099,\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439\",\"contact_phone\":\"89029634366\"}', '2.20', 'Тест', '2020-01-14 00:00:00', 2, 'cash', NULL, 'pending', NULL, 0, 0, 'received', '{\"express_company\":\"\\u041f\\u043e\\u0447\\u0442\\u0430 \\u0420\\u043e\\u0441\\u0441\\u0438\\u0438\",\"express_no\":\"202010102020\"}', NULL, 'pickup', '2020-01-14 13:22:35', '2020-01-14 13:29:15');
 
 -- --------------------------------------------------------
 
@@ -500,18 +574,6 @@ CREATE TABLE `order_items` (
   `reviewed_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Дамп данных таблицы `order_items`
---
-
-INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `product_sku_id`, `amount`, `price`, `rating`, `review`, `reviewed_at`) VALUES
-(199, 103, 31, 92, 2, '11.00', 3, 'Такое себе', '2020-01-14 08:00:11'),
-(200, 104, 31, 91, 1, '1000.00', 1, 'Тест', '2020-01-14 13:26:02'),
-(201, 105, 31, 91, 1, '1000.00', NULL, NULL, NULL),
-(202, 105, 31, 92, 2, '11.00', NULL, NULL, NULL),
-(203, 106, 31, 92, 1, '11.00', NULL, NULL, NULL),
-(204, 107, 31, 92, 2, '11.00', NULL, NULL, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -523,6 +585,13 @@ CREATE TABLE `password_resets` (
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `password_resets`
+--
+
+INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
+('adad.artyshko@mail.ru', '$2y$10$I0qrmje9ssvO4JH/YOkKROteu.76LOy.n/xVsM8.u5bnMDxKrbUAm', '2020-01-27 17:52:06');
 
 -- --------------------------------------------------------
 
@@ -536,6 +605,7 @@ CREATE TABLE `products` (
   `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `on_sale` tinyint(1) NOT NULL DEFAULT '1',
+  `on_new` tinyint(1) NOT NULL DEFAULT '1',
   `rating` double(8,2) NOT NULL DEFAULT '5.00',
   `sold_count` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `review_count` int(10) UNSIGNED NOT NULL DEFAULT '0',
@@ -548,9 +618,17 @@ CREATE TABLE `products` (
 -- Дамп данных таблицы `products`
 --
 
-INSERT INTO `products` (`id`, `title`, `description`, `image`, `on_sale`, `rating`, `sold_count`, `review_count`, `price`, `created_at`, `updated_at`) VALUES
-(31, 'Заказы', '<p>&nbsp;Описание тест</p>', 'images/57d26ad9211f2168e86dd548a689b47f.jpg', 1, 2.00, 0, 3, '11.00', '2020-01-13 09:06:25', '2020-01-14 13:26:02'),
-(32, 'Самоед', '<p><strong>Lorem ipsum</strong>&nbsp;&mdash; классический текст-&laquo;рыба&raquo; (условный, зачастую бессмысленный текст-заполнитель, вставляемый в макет страницы). Является искажённым отрывком из философского&nbsp;<a href=\"https://ru.wikipedia.org/wiki/%D0%A2%D1%80%D0%B0%D0%BA%D1%82%D0%B0%D1%82_(%D0%BB%D0%B8%D1%82%D0%B5%D1%80%D0%B0%D1%82%D1%83%D1%80%D0%B0)\">трактата</a>&nbsp;<a href=\"https://ru.wikipedia.org/wiki/%D0%9C%D0%B0%D1%80%D0%BA_%D0%A2%D1%83%D0%BB%D0%BB%D0%B8%D0%B9_%D0%A6%D0%B8%D1%86%D0%B5%D1%80%D0%BE%D0%BD\">Марка Туллия Цицерона</a>&nbsp;&laquo;О пределах добра и зла&raquo;, написанного в&nbsp;<a href=\"https://ru.wikipedia.org/wiki/45_%D0%B3%D0%BE%D0%B4_%D0%B4%D0%BE_%D0%BD._%D1%8D.\">45 году до&nbsp;н.&nbsp;э.</a>&nbsp;на&nbsp;<a href=\"https://ru.wikipedia.org/wiki/%D0%9B%D0%B0%D1%82%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9_%D1%8F%D0%B7%D1%8B%D0%BA\">латинском языке</a>, обнаружение сходства атрибутируется Ричарду МакКлинтоку<a href=\"https://ru.wikipedia.org/wiki/Lorem_ipsum#cite_note-1\">[1]</a>. Распространился в&nbsp;<a href=\"https://ru.wikipedia.org/wiki/1970-%D0%B5_%D0%B3%D0%BE%D0%B4%D1%8B\">1970-х годах</a>&nbsp;из-за трафаретов компании&nbsp;<a href=\"https://ru.wikipedia.org/w/index.php?title=Letraset&amp;action=edit&amp;redlink=1\">Letraset</a>, a затем&nbsp;&mdash; из-за того, что служил семплом в программе&nbsp;<a href=\"https://ru.wikipedia.org/wiki/PageMaker\">PageMaker</a>. Испорченный текст, вероятно, происходит от его издания в&nbsp;<a href=\"https://ru.wikipedia.org/wiki/Loeb_Classical_Library\">Loeb Classical Library</a>&nbsp;<a href=\"https://ru.wikipedia.org/wiki/1914_%D0%B3%D0%BE%D0%B4\">1914 года</a>, в котором слово&nbsp;<em>dolorem</em>&nbsp;разбито переносом так, что страница 36 начинается с&nbsp;<em>lorem ipsum&hellip;</em>&nbsp;(<em>do-</em>&nbsp;осталось на предыдущей)<a href=\"https://ru.wikipedia.org/wiki/Lorem_ipsum#cite_note-2\">[2]</a>.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<blockquote>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n</blockquote>\r\n\r\n<p>В оригинале абзац выглядит так:</p>\r\n\r\n<blockquote>\r\n<p>Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo. Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui do<strong>lorem ipsum</strong>, quia&nbsp;<strong>dolor sit, amet, consectetur, adipisci</strong>&nbsp;v<strong>elit, sed</strong>&nbsp;quia non numquam&nbsp;<strong>eius mod</strong>i&nbsp;<strong>tempor</strong>a&nbsp;<strong>incidunt, ut labore et dolore magna</strong>m&nbsp;<strong>aliqua</strong>m quaerat voluptatem.&nbsp;<strong>Ut enim ad minim</strong>a&nbsp;<strong>veniam, quis nostru</strong>m&nbsp;<strong>exercitation</strong>em&nbsp;<strong>ullam co</strong>rporis suscipit<strong>&nbsp;labori</strong>o<strong>s</strong>am,&nbsp;<strong>nisi ut aliquid ex ea commod</strong>i&nbsp;<strong>consequat</strong>ur?&nbsp;<strong>Quis aute</strong>m vel eum&nbsp;<strong>iure reprehenderit,</strong>&nbsp;qui&nbsp;<strong>in</strong>&nbsp;ea&nbsp;<strong>voluptate velit esse</strong>, quam nihil molestiae&nbsp;<strong>c</strong>onsequatur, vel&nbsp;<strong>illum</strong>, qui&nbsp;<strong>dolore</strong>m&nbsp;<strong>eu</strong>m&nbsp;<strong>fugiat</strong>, quo voluptas&nbsp;<strong>nulla pariatur</strong>? At vero eos et accusamus et iusto odio dignissimos ducimus, qui blanditiis praesentium voluptatum deleniti atque corrupti, quos dolores et quas molestias&nbsp;<strong>exceptur</strong>i&nbsp;<strong>sint, obcaecat</strong>i&nbsp;<strong>cupiditat</strong>e&nbsp;<strong>non pro</strong>v<strong>ident</strong>, similique&nbsp;<strong>sunt in culpa</strong>,&nbsp;<strong>qui officia deserunt mollit</strong>ia&nbsp;<strong>anim</strong>i,&nbsp;<strong>id est laborum</strong>&nbsp;et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio, cumque nihil impedit, quo minus id, quod maxime placeat, facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet, ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>\r\n</blockquote>', 'images/011.jpg', 1, 5.00, 0, 0, '1000.00', '2020-01-14 13:28:22', '2020-01-14 13:28:22');
+INSERT INTO `products` (`id`, `title`, `description`, `image`, `on_sale`, `on_new`, `rating`, `sold_count`, `review_count`, `price`, `created_at`, `updated_at`) VALUES
+(58, 'BRONZE56K HIGH PERFORMANCE WINDBREAKER ORANGE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.500 kg</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>M</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Windbreaker-Orange-1LOW_1800x180.jpg', 0, 1, 5.00, 0, 0, '55900.00', '2020-01-30 01:54:55', '2020-01-30 01:54:55'),
+(59, 'BRONZE56K HIGH PERFORMACE WINDBREAKER AIR FORCE BLUE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Windbreaker-Blue-1LOW_1800x1800.jpg', 1, 1, 5.00, 0, 0, '55900.00', '2020-01-30 02:42:36', '2020-01-30 02:42:36'),
+(60, 'BRONZE56K HARD WEAR CARGO PANTS DARK NAVY', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Pants-Cargo-Blue-1LOW_1800x1800-300x300.jpg', 1, 1, 5.00, 0, 0, '49900.00', '2020-01-30 02:43:57', '2020-01-30 02:43:57'),
+(61, 'POLAR PATTERNED POLO SHIRT RED', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/PATTERNED-POLO-SHIRT-RED-1.jpg', 1, 0, 5.00, 0, 0, '29900.00', '2020-01-30 02:45:32', '2020-01-30 02:45:32'),
+(62, 'DIME POLO SHIRT PURPLE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/POLO_SHIRT_PURPLE_1_1400x1400-300x300.jpg', 1, 1, 5.00, 0, 0, '17940.00', '2020-01-30 02:46:56', '2020-01-30 02:46:56'),
+(63, 'BRONZE56K HARDWARE TECHNOLOGY LONGSLEEVE CARDINAL', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.500 kg</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/LSTee-Bronze-Technology-Red-1LOW.jpg', 1, 1, 5.00, 0, 0, '21900.00', '2020-01-30 06:09:49', '2020-01-30 06:09:49'),
+(64, 'BRONZE56K MOUNTAIN BEANIE GREEN', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.200 kg</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Beanie-Green-1LOW_1800x1800.jpg', 1, 1, 5.00, 0, 0, '16900.00', '2020-01-30 06:10:59', '2020-01-30 06:10:59'),
+(65, 'BRONSON BEARING RAW', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.110 kg</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/BR_RAW_SingleCase_Angled.jpg', 0, 0, 5.00, 0, 0, '17900.00', '2020-01-30 06:12:32', '2020-01-30 06:12:32'),
+(66, 'BRONZE56K 2020 HAT KHAKI/CHARCOAL', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.200 kg</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Hat-2020-Khaki-Grey-1LOW_800x.jpg', 0, 1, 5.00, 0, 0, '16900.00', '2020-01-30 06:15:24', '2020-01-30 06:15:24'),
+(67, 'BRONZE56K LOGO LEATHER BELT BLACK', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.800 kg</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Belt-Black-4LOW_1800x1800.jpg', 0, 1, 5.00, 0, 0, '24900.00', '2020-01-30 06:16:34', '2020-01-30 06:16:34');
 
 -- --------------------------------------------------------
 
@@ -574,9 +652,23 @@ CREATE TABLE `product_skus` (
 --
 
 INSERT INTO `product_skus` (`id`, `title`, `description`, `price`, `stock`, `product_id`, `created_at`, `updated_at`) VALUES
-(91, 'Голубой', 'Голубой заказ', '1000.00', 10, 31, '2020-01-13 09:06:25', '2020-01-14 11:25:03'),
-(92, 'Синий', 'Синий заказ', '11.00', 3, 31, '2020-01-13 09:06:25', '2020-01-14 13:22:35'),
-(93, 'Test', 'test1', '1000.00', 3, 32, '2020-01-14 13:28:22', '2020-01-14 13:28:22');
+(122, 'M', 'Размер М', '55900.00', 0, 58, '2020-01-30 01:54:55', '2020-01-30 01:54:55'),
+(123, 'L', 'Размер L', '55900.00', 2, 59, '2020-01-30 02:42:37', '2020-01-30 02:42:37'),
+(124, 'M', 'Размер M', '55900.00', 24, 59, '2020-01-30 02:42:37', '2020-01-30 02:42:37'),
+(125, 'L', 'L', '49900.00', 10, 60, '2020-01-30 02:43:57', '2020-01-30 02:43:57'),
+(126, 'M', 'M', '49900.00', 5, 60, '2020-01-30 02:43:57', '2020-01-30 02:43:57'),
+(127, 'S', 'S', '49900.00', 23, 60, '2020-01-30 02:43:57', '2020-01-30 02:43:57'),
+(128, 'L', 'L', '29900.00', 1, 61, '2020-01-30 02:45:32', '2020-01-30 02:45:32'),
+(129, 'S', 'S', '29900.00', 3, 61, '2020-01-30 02:45:32', '2020-01-30 02:45:32'),
+(130, 'S', 'S', '29900.00', 2, 61, '2020-01-30 02:45:32', '2020-01-30 02:45:32'),
+(131, 'L', 'L', '17940.00', 2, 62, '2020-01-30 02:46:56', '2020-01-30 02:46:56'),
+(132, 'M', 'M', '17940.00', 1, 62, '2020-01-30 02:46:56', '2020-01-30 02:46:56'),
+(133, 'L', 'L', '21900.00', 1, 63, '2020-01-30 06:09:49', '2020-01-30 06:09:49'),
+(134, 'M', 'M', '21900.00', 2, 63, '2020-01-30 06:09:49', '2020-01-30 06:09:49'),
+(135, 'BRONZE56K MOUNTAIN BEANIE GREEN', '<table>	<tbody>		<tr>			<th>Вес</th>			<td>0.200 kg</td>		</tr>	</tbody></table>', '16900.00', 13, 64, '2020-01-30 06:10:59', '2020-01-30 06:10:59'),
+(136, 'BRONSON BEARING RAW', '<table>	<tbody>		<tr>			<th>Вес</th>			<td>0.110 kg</td>		</tr>	</tbody></table>', '17900.00', 34, 65, '2020-01-30 06:12:32', '2020-01-30 06:12:32'),
+(137, 'ALL', 'Общий размер', '16900.00', 3, 66, '2020-01-30 06:15:24', '2020-01-30 06:15:24'),
+(138, 'ALL', 'ALL', '24900.00', 5, 67, '2020-01-30 06:16:34', '2020-01-30 06:16:34');
 
 -- --------------------------------------------------------
 
@@ -600,7 +692,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(102, 'Андрей Артышко', 'artyshko.andrey@gmail.com', '2020-01-12 02:40:22', '$2y$10$eJNi1Z2UHjb96hhUqxuhWerv3jjk9Cp/YCGV7bvl4UidmP6qQXsHy', 'suDsGvhMcnJpDpeEZ04vSeCzaGoYLkRX8ro6bsp9rHNWfU0qmssaMW1oVEPj', '2020-01-12 02:39:54', '2020-01-12 02:40:22');
+(102, 'Андрей Артышко Алексеевич', 'artyshko.andrey@gmail.com', '2020-01-12 02:40:22', '$2y$10$eJNi1Z2UHjb96hhUqxuhWerv3jjk9Cp/YCGV7bvl4UidmP6qQXsHy', 'eqBEzveWfkjhhqCiOvTYhnrGlwc85nKxbtDn3JoRBJLs3AIIU7av20qoY7sG', '2020-01-12 02:39:54', '2020-01-29 14:19:56'),
+(105, 'Анжелика Дударева', 'adad.artyshko@mail.ru', NULL, '$2y$10$9NYA6fq/qW5iskFhARS5I.de0FUbgEIA.FmWu3w.yW3nSl9L/zWv6', 'F4M3XgZ0pkdJt9VUxJf3BYDznecz5wWiuWOAEsKi5Ail5TuvaoMPEw5i2vBD', '2020-01-27 15:36:48', '2020-01-29 06:11:42');
 
 -- --------------------------------------------------------
 
@@ -611,13 +704,11 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 CREATE TABLE `user_addresses` (
   `id` int(10) UNSIGNED NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
-  `province` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `country` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `city` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `zip` int(10) UNSIGNED NOT NULL,
-  `contact_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `street` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `contact_phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `last_used_at` datetime DEFAULT NULL,
+  `currency_id` int(11) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -626,8 +717,9 @@ CREATE TABLE `user_addresses` (
 -- Дамп данных таблицы `user_addresses`
 --
 
-INSERT INTO `user_addresses` (`id`, `user_id`, `province`, `city`, `address`, `zip`, `contact_name`, `contact_phone`, `last_used_at`, `created_at`, `updated_at`) VALUES
-(194, 102, 'Россия', 'Красноярск', 'Горького 24, 25', 660099, 'Андрей', '89029634366', '2020-01-14 20:22:35', '2020-01-14 13:06:53', '2020-01-14 13:22:35');
+INSERT INTO `user_addresses` (`id`, `user_id`, `country`, `city`, `street`, `contact_phone`, `currency_id`, `created_at`, `updated_at`) VALUES
+(194, 102, 'Россия', 'Красноярск', 'ул. Горького, 24 кв 25, 660099', '+79029634366', 2, '2020-01-14 13:06:53', '2020-01-29 11:52:07'),
+(195, 105, 'Россия', 'Красноярск', 'ул. Горького, 24 кв. 25, 660099', '+79029634366', 3, '2020-01-29 05:30:38', '2020-01-30 06:41:54');
 
 -- --------------------------------------------------------
 
@@ -642,14 +734,6 @@ CREATE TABLE `user_favorite_products` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Дамп данных таблицы `user_favorite_products`
---
-
-INSERT INTO `user_favorite_products` (`id`, `user_id`, `product_id`, `created_at`, `updated_at`) VALUES
-(4, 102, 31, '2020-01-14 11:11:21', '2020-01-14 11:11:21'),
-(5, 102, 32, '2020-01-14 13:28:39', '2020-01-14 13:28:39');
 
 --
 -- Индексы сохранённых таблиц
@@ -730,6 +814,12 @@ ALTER TABLE `coupon_codes`
   ADD UNIQUE KEY `coupon_codes_code_unique` (`code`);
 
 --
+-- Индексы таблицы `currencies`
+--
+ALTER TABLE `currencies`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `migrations`
 --
 ALTER TABLE `migrations`
@@ -785,7 +875,8 @@ ALTER TABLE `users`
 --
 ALTER TABLE `user_addresses`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_addresses_user_id_foreign` (`user_id`);
+  ADD KEY `user_addresses_user_id_foreign` (`user_id`),
+  ADD KEY `currency_id` (`currency_id`);
 
 --
 -- Индексы таблицы `user_favorite_products`
@@ -809,7 +900,7 @@ ALTER TABLE `admin_menu`
 -- AUTO_INCREMENT для таблицы `admin_operation_log`
 --
 ALTER TABLE `admin_operation_log`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=342;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=397;
 
 --
 -- AUTO_INCREMENT для таблицы `admin_permissions`
@@ -839,7 +930,7 @@ ALTER TABLE `admin_user_permissions`
 -- AUTO_INCREMENT для таблицы `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `coupon_codes`
@@ -848,10 +939,16 @@ ALTER TABLE `coupon_codes`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT для таблицы `currencies`
+--
+ALTER TABLE `currencies`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT для таблицы `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT для таблицы `orders`
@@ -863,25 +960,25 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT для таблицы `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=205;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT для таблицы `product_skus`
 --
 ALTER TABLE `product_skus`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
 -- AUTO_INCREMENT для таблицы `user_addresses`
@@ -893,7 +990,7 @@ ALTER TABLE `user_addresses`
 -- AUTO_INCREMENT для таблицы `user_favorite_products`
 --
 ALTER TABLE `user_favorite_products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц

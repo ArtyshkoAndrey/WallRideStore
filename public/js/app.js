@@ -54216,11 +54216,11 @@ var map = {
 	],
 	"./components/news.vue": [
 		"./resources/js/components/news.vue",
-		1
+		0
 	],
 	"./components/product-list.vue": [
 		"./resources/js/components/product-list.vue",
-		0
+		1
 	],
 	"./components/product.vue": [
 		"./resources/js/components/product.vue",

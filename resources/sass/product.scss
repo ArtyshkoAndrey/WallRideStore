@@ -1,10 +1,17 @@
 .flickity-slider {
-  height: auto;
+  display: flex !important;
+  width: auto !important;
+  position: relative!important;
 }
 .flickity-viewport {
   //margin-top: -40px;
+  //height: auto!important;
+  //display: flex;
 }
 
 .carousel { height: 100%; }
 
-.carousel-cell { height: 100% }
+.carousel-cell {
+  //height: 100% !important;
+  display: flex!important;
+}

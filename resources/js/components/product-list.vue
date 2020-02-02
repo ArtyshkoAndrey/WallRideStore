@@ -5,18 +5,26 @@
   export default {
     name: "product-list",
     components: {Flickity, product},
+    props: {
+      nameid: {
+        type: String,
+        required: true
+      }
+    },
     data() {
       return {
         flickityOptions: {
-          initialIndex: 3,
+          // initialIndex: 3,
+          wrapAround: true,
           prevNextButtons: false,
           pageDots: false,
-          freeScroll: true,
+          freeScroll: false,
           adaptiveHeight: true,
           percentPosition: false,
           imagesLoaded: true,
-          lazyLoad: 10
-        }
+          lazyLoad: 10,
+        },
+        maxHeight: null
       }
     },
     methods: {
@@ -26,6 +34,27 @@
       previous() {
         this.$refs.flickity.previous();
       }
+    },
+    updated() {
+      console.log(this.maxHeight)
+    },
+    mounted () {
+
+      let cells = $('#'+this.nameid + ' .carousel-cell');
+      let flickityViewport = $('#'+this.nameid + ' div.flickity-viewport');
+      let cards = $('#'+this.nameid + " div.carousel-cell .card");
+      $(window).resize(function() {
+        cells.height('auto')
+      });
+      setInterval(() => {
+        cells.height('auto');
+        this.maxHeight = Math.max.apply(null, cards.map(function ()
+        {
+          return ($(this).height())
+        }).get());
+        flickityViewport.height(this.maxHeight + 20);
+        cells.height(this.maxHeight);
+      }, 100);
     }
   }
 </script>

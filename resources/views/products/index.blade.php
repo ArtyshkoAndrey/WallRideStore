@@ -35,9 +35,9 @@
         <a class="ml-auto c-red" href="#">Смотреть все <img src="{{ asset('public/images/arrow-long-right-red.png') }}" width="50" alt=""></a>
       </div>
     </div>
-    <div class="container-fluid px-0">
+    <div class="container-fluid px-0" id="sliderList1">
       @if(count($productsNew) > 0)
-        <product-list :currency="{{ ($currency) }}" inline-template>
+        <product-list :nameid="'sliderList1'"  inline-template>
           <flickity ref="flickity" :options="flickityOptions">
             @foreach($productsNew as $product)
               <product :slider=true :currency="{{ $currency }}" :item="{{ $product }}"></product>
@@ -57,9 +57,9 @@
         <a class="ml-auto c-red" href="#">Смотреть все <img src="{{ asset('public/images/arrow-long-right-red.png') }}" width="50" alt=""></a>
       </div>
     </div>
-    <div class="container-fluid px-0 mx-0">
+    <div class="container-fluid px-0 mx-0" id="sliderList2">
       @if(count($products) > 0)
-        <product-list :currency="{{ ($currency) }}" inline-template>
+        <product-list :nameid="'sliderList2'" inline-template>
           <flickity ref="flickity" :options="flickityOptions">
             @foreach($products as $product)
               <product :slider=true :currency="{{ $currency }}" :item="{{ $product }}"></product>

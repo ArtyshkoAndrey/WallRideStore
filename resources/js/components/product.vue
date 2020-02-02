@@ -1,15 +1,15 @@
 <template>
   <div :class="slider ? 'carousel-cell' : 'col-md-4 col-lg-3 col-sm-6 col-10 offset-1 offset-sm-0 my-3'">
-    <div class="card">
-      <div class="card-body px-0 pb-0">
+    <div :class="slider ? 'card' : 'card h-100'">
+      <div class="card-body px-0 pb-0 justify-content-between d-flex flex-column">
         <div>
-          <div class="position-absolute px-4 py-1" id="event" v-if="item.on_new || item.om_sale">
+          <div class="position-absolute px-4 py-1" id="event" v-if="item.on_new || item.on_sale">
             <span class="text-uppercase font-weight-bold text-white" v-if="item.on_new">new</span>
-            <span class="text-uppercase font-weight-bold text-white" v-else-if="item.om_sale">sale</span>
+            <span class="text-uppercase font-weight-bold text-white" v-else-if="item.on_sale">sale</span>
           </div>
           <img :data-flickity-lazyload="item.image_url" v-if="slider" alt="item.image" class="img-fluid w-100 mb-3 rounded">
           <img :src="item.image_url" v-else alt="item.image" class="img-fluid w-100 mb-3 rounded">
-          <a href="#" class="mt-4 pb-0 mb-0 name">{{ item.title }}</a>
+          <a href="#" class="mt-4 pb-0 mb-0 name">{{ item.title.length > 30 ? item.title.slice(0, 30) + '...' : item.title }}</a>
           <p class="price mt-1 pt-0">{{ Math.round(item.skus[numberSize].price * currency.ratio) }} {{ currency.symbol }}</p>
         </div>
         <div class="row px-0 mx-0">
@@ -70,7 +70,7 @@
         type: Object,
         required: false,
         default: false
-      },
+      }
     },
     data() {
       return {
@@ -127,24 +127,34 @@
   .carousel-cell {
     padding-top: 10px;
     padding-bottom: 10px;
-    width: 65%;
+    width: 65vw;
     height: auto;
     margin-left: 10px;
     margin-right: 10px;
   }
+  @media (min-width: 600px) {
+    .carousel-cell {
+      width: 40vw;
+    }
+  }
   @media (min-width: 768px) {
     .carousel-cell {
-      width: 25%;
+      width: 25vw;
     }
   }
   @media (min-width: 992px) {
     .carousel-cell {
-      width: 16.66666667%;
+      width: 16.66666667vw;
+    }
+  }
+  @media (min-width: 1024px) {
+    .carousel-cell {
+      width: 19vw;
     }
   }
   @media (min-width: 1200px) {
     .carousel-cell {
-      width: 13%;
+      width: 13vw;
     }
   }
   .go-to-product {
@@ -218,6 +228,7 @@
       }
     }
     a.name {
+      height: 32px;
       font-size: 16px;
       line-height: 24px;
       color: black;
