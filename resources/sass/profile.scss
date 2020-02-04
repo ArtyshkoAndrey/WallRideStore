@@ -5,9 +5,6 @@
     right: 1em;
   }
   @media (min-width: 768px) {
-    .nav-pills {
-      min-height: calc(100vh - 47px - 6rem);
-    }
     #add-photo {
       bottom: 0em;
       right: -1em;
@@ -45,9 +42,6 @@
   }
   .card-body > .row > div:nth-child(2) {
     padding: 30px 50px;
-  }
-  .card {
-    min-height: calc(100vh - 47px - 6rem);
   }
   input, select {
     background-color: #F0F0F0;

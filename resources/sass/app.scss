@@ -109,3 +109,48 @@ select[name="order"], select[name="size"], select[name="brand"], select[name="ca
   border-radius: 0;
   height: 45px;
 }
+
+.breadcrumb-item::before, .breadcrumb-item.active {
+  color: black !important;
+}
+.breadcrumb-item + .breadcrumb-item::before {
+  padding: 0;
+}
+.sku-btn.active {
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+}
+.slick-dots {
+  bottom: 0!important;
+  color: #F33C3C;
+  > li {
+    background: #ffffff;
+    margin: 0!important;
+    &:last-child {
+      border-radius:0 10px 10px 0;
+    }
+    &:first-child {
+      border-radius: 10px 0 0 10px;
+    }
+  }
+}
+.slick-dots li.slick-active button:before {
+  opacity: 1!important;
+  color: #F33C3C!important;
+}
+
+.slick-dots li button {
+  border-radius: 100% !important;
+  &:before {
+    opacity: 1 !important;
+  }
+}
+
+.slider-nav .slick-track {
+  width: 70% !important;
+  transform: translate3d(0px, 0px, 0px)!important;
+}
+
+.slick-initialized .slick-slide {
+  display: block;
+  width: 33.3% !important;
+}

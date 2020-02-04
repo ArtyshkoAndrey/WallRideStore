@@ -14,7 +14,6 @@
     data() {
       return {
         flickityOptions: {
-          // initialIndex: 3,
           wrapAround: true,
           prevNextButtons: false,
           pageDots: false,

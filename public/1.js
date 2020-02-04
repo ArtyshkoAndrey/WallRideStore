@@ -1,4 +1,4 @@
-webpackJsonp([1,2],{
+webpackJsonp([1,3],{
 
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/product-list.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -25,7 +25,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       flickityOptions: {
-        // initialIndex: 3,
         wrapAround: true,
         prevNextButtons: false,
         pageDots: false,
@@ -222,7 +221,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -299,7 +298,10 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "a",
-                { staticClass: "mt-4 pb-0 mb-0 name", attrs: { href: "#" } },
+                {
+                  staticClass: "mt-4 pb-0 mb-0 name",
+                  attrs: { href: "product/" + _vm.item.id }
+                },
                 [
                   _vm._v(
                     _vm._s(

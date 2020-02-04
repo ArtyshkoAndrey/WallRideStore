@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="h-100">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,14 +10,14 @@
   <!-- стиль -->
   <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
+<body class="d-flex flex-column h-100">
 <div id="app" class="{{ route_class() }}-page">
   @include('layouts.header')
   <div id="blur-for-menu">
     @yield('content')
-    @include('layouts.footer')
   </div>
 </div>
+@include('layouts.footer')
 <!-- JS скрипт -->
 <script src="{{ mix('js/app.js') }}"></script>
 <script src='{{ asset('public/js/jquery-ui.min.js') }}'></script>
@@ -65,9 +65,9 @@
     let $body = document.body;
     if (toggle) {
       closeSubMenu()
-      $body.className = ($body.className === 'menu-active') ? '' : 'menu-active';
+      $body.className = ($body.className === 'menu-active d-flex flex-column h-100') ? 'd-flex flex-column h-100' : 'menu-active d-flex flex-column h-100';
     }
-    return $body.className === 'menu-active';
+    return $body.className === 'menu-active d-flex flex-column h-100';
   }
 </script>
 @yield('scriptsAfterJs')
