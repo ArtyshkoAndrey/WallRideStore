@@ -77,7 +77,7 @@ class ProductsController extends Controller {
 
       $favored = false;
       if($user = $request->user()) {
-          $favored = boolval($user->favoriteProducts()->find($product->id));
+          $favored = (bool) $user->favoriteProducts()->find($product->id);
       }
 
       $reviews = OrderItem::query()

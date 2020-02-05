@@ -19,7 +19,18 @@ class Controller extends BaseController
     $this->middleware(function ($request, $next) {
       if (Auth::check()) {
         $address = UserAddress::where('user_id', auth()->user()->id)->first();
-        $currencyGlobal = $address->currency;
+        if(isset($address)) {
+          if (isset($adress->currency)) {
+            $currencyGlobal = $address->currency;
+          } else {
+            $currency = Currency::find(1);
+            $address->currency()->associate($currency);
+            $address->save();
+            $currencyGlobal = $address->currency;
+          }
+        } else {
+          $currencyGlobal = Currency::find(1);
+        }
       } else {
         $currencyGlobal = Currency::find(1);
       }

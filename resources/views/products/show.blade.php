@@ -2,9 +2,8 @@
 @section('title', $product->title)
 
 @section('content')
-
 <section class="container pt-5 my-5">
-  <product-show :product="{{ $product }}" :currency="{{ $currency }}" :skus="{{$product->skus}}" inline-template>
+  <product-show :product="{{ $product }}" :currency="{{ $currency }}" :skus="{{$product->skus}}" :favor="{{ $favored ? 'true' : 'false' }}" inline-template>
     <div class="row">
       <div class="col-md-5">
         <div class="slider-for">
@@ -63,26 +62,33 @@
           <div class="col-12">
             <h4 class="font-weight-bold">Количесвто</h4>
           </div>
-          <div class="col-auto h-100 mt-1"><button class="btn btn-angle text-white" @click="addCounter"><i class="fal fa-plus mt-1"></i></button></div>
-          <div class="col-md-2 h-100 mt-1 col-sm-2 col-2 p-0">
+          <div class="col-12">
+            <p class="text-muted pb-0 mb-0">В наличии: @{{ size.stock }}</p>
+          </div>
+          <div class="col-auto h-100"><button class="btn btn-angle text-white" @click="addCounter"><i class="fal fa-plus mt-1"></i></button></div>
+          <div class="col-md-2 h-100 col-sm-2 col-2 p-0">
             <input class="form-control bg-white border-0 px-0 font-weight-bolder text-center" type="number" v-model="counter" readonly disabled>
           </div>
           <div class="col-auto h-100 mt-1"><button class="btn btn-angle text-white" @click="removeCounter"><i class="fal fa-minus mt-1"></i></button></div>
           <div class="col-md-auto col-sm-6 h-100 mt-md-1 mt-3">
-            <button class="btn btn-block py-3" id="btn-add-to-cart"><i class="fal fa-shopping-bag"></i> Добавить в корзину</button>
+            <button class="btn btn-block py-3" id="btn-add-to-cart" @click="addToCart" v-if="!cart"><i class="fal fa-shopping-bag"></i> Добавить в корзину</button>
+            <button class="btn btn-block py-3" id="btn-remove-in-cart" v-else disabled readonly><i class="fal fa-check"></i> Добавлено</button>
           </div>
-          <div class="col-md-auto col-sm-6 h-100 mt-md-1 mt-3"><button class="btn h-100 py-3 btn-block bg-transparent p-0 c-red" @click="addCounter"><i class="fal fa-heart"></i> Добавить в избранное</button></div>
+          <div class="col-md-auto col-sm-6 h-100 mt-md-1 mt-3">
+            <button class="btn h-100 py-3 btn-block bg-transparent p-0 c-red" @click="favored" v-if="!favoredData"><i class="fal fa-heart"></i> Добавить в избранное</button>
+            <button class="btn h-100 py-3 btn-block bg-transparent p-0 c-red" @click="disFavored" v-else><i class="fad fa-heart"></i> Удалить из избранных</button>
+          </div>
         </div>
       </div>
     </div>
   </product-show>
-  <div class="row mt-3">
+</section>
+<section class="container mb-5">
+  <div class="row">
     <div class="col-12">
       <h2 class="font-weight-bold">Похожие товары</h2>
     </div>
   </div>
-</section>
-<section class="container">
   <div class="row">
     @foreach($products as $prod)
       <product :slider=false :currency="{{ $currency }}" :item="{{ $prod }}"></product>

@@ -35,14 +35,14 @@
         <a class="ml-auto c-red" href="#">Смотреть все <img src="{{ asset('public/images/arrow-long-right-red.png') }}" width="50" alt=""></a>
       </div>
     </div>
-    <div class="container-fluid px-0" id="sliderList1">
+    <div class="container-fluid carousel px-0" id="sliderList1">
       @if(count($productsNew) > 0)
-        <product-list :nameid="'sliderList1'"  inline-template>
-          <flickity ref="flickity" :options="flickityOptions">
+        <product-list  inline-template>
+          <carousel :loop="true" :autoWidth="true" :nav="false" :dots="false" :responsive="{0:{items:1},600:{items:2}, 800:{items:3}, 1000:{items: 4}, 1200:{items: 4}, 1400:{items: 6}, 1600:{items: 7}}">
             @foreach($productsNew as $product)
               <product :slider=true :currency="{{ $currency }}" :item="{{ $product }}"></product>
             @endforeach
-          </flickity>
+          </carousel>
         </product-list>
       @else
         <h3 class="text-center mt-5 pb-5">Нет данных товаров</h3>
@@ -59,13 +59,12 @@
     </div>
     <div class="container-fluid px-0 mx-0" id="sliderList2">
       @if(count($products) > 0)
-        <product-list :nameid="'sliderList2'" inline-template>
-          <flickity ref="flickity" :options="flickityOptions">
+        <product-list inline-template>
+          <carousel :loop="true" :autoWidth="true" :nav="false" :dots="false" :responsive="{0:{items:1},600:{items:2}, 800:{items:3}, 1000:{items: 4}, 1200:{items: 4}, 1400:{items: 6}, 1600:{items: 7}}">
             @foreach($products as $product)
               <product :slider=true :currency="{{ $currency }}" :item="{{ $product }}"></product>
             @endforeach
-          </flickity>
-        </product-list>
+          </carousel>
       @else
         <h3 class="text-center mt-5 pb-5">Нет данных товаров</h3>
       @endif
@@ -83,65 +82,6 @@
       <news></news>
     </div>
   </section>
-{{--<div class="row">--}}
-{{--<div class="col-lg-10 offset-lg-1">--}}
-{{--<div class="card">--}}
-{{--  <div class="card-body">--}}
-{{--    <!-- Запускается компонент фильтра -->--}}
-{{--    <form action="{{ route('products.index') }}" class="search-form">--}}
-{{--      <div class="form-row">--}}
-{{--        <div class="col-md-9">--}}
-{{--          <div class="form-row">--}}
-{{--            <div class="col-auto">--}}
-{{--              <input type="text" class="form-control form-control-sm" name="search" placeholder="Поиск">--}}
-{{--            </div>--}}
-{{--            <div class="col-auto">--}}
-{{--              <button class="btn btn-primary btn-sm">Поиск</button>--}}
-{{--            </div>--}}
-{{--          </div>--}}
-{{--        </div>--}}
-{{--        <div class="col-md-3">--}}
-{{--          <select name="order" class="form-control form-control-sm float-right">--}}
-{{--            <option value="">Сортировать по</option>--}}
-{{--            <option value="price_asc">Цена по возрастанию</option>--}}
-{{--            <option value="price_desc">Цена по убыванию</option>--}}
-{{--            <option value="sold_count_desc">Продажи от высоких к низким</option>--}}
-{{--            <option value="sold_count_asc">Продажи от низких к высоким</option>--}}
-{{--            <option value="rating_desc">Оценке по убыванию</option>--}}
-{{--            <option value="rating_asc">Оценке по возрастанию</option>--}}
-{{--          </select>--}}
-{{--        </div>--}}
-{{--      </div>--}}
-{{--    </form>--}}
-{{--    <!-- Конец компонента фильтра -->--}}
-{{--    <div class="row products-list">--}}
-{{--      @foreach($products as $product)--}}
-{{--        <div class="col-3 product-item">--}}
-{{--          <div class="product-content">--}}
-{{--            <div class="top">--}}
-{{--              <div class="img">--}}
-{{--                <a href="{{ route('products.show', ['product' => $product->id]) }}">--}}
-{{--                  <img src="{{ $product->image_url }}" alt="">--}}
-{{--                </a>--}}
-{{--              </div>--}}
-{{--              <div class="price">{{ $product->price }} <b>р.</b></div>--}}
-{{--              <div class="title">--}}
-{{--                <a href="{{ route('products.show', ['product' => $product->id]) }}">{{ $product->title }}</a>--}}
-{{--              </div>--}}
-{{--            </div>--}}
-{{--            <div class="bottom">--}}
-{{--              <div class="sold_count">Продано <span>{{ $product->sold_count }} шт.</span></div>--}}
-{{--              <div class="review_count">Оценок <span>{{ $product->review_count }}</span></div>--}}
-{{--            </div>--}}
-{{--          </div>--}}
-{{--        </div>--}}
-{{--      @endforeach--}}
-{{--    </div>--}}
-{{--    <div class="float-right">{{ $products->appends($filters)->render() }}</div>  <!-- Просто добавьте эту строку -->--}}
-{{--  </div>--}}
-{{--</div>--}}
-{{--</div>--}}
-{{--</div>--}}
 @endsection
 
 @section('scriptsAfterJs')

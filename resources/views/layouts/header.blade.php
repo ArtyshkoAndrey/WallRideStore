@@ -39,15 +39,9 @@
       </ul>
     </li>
     <li class="sep"><a href="{{ route('root') }}">Контакты</a></li>
-    <li class="sep"><a href="{{ route('root') }}">О нас</a></li>
+    <li class="sep"><a href="{{ route('about') }}">О нас</a></li>
     <li class="sep c-red"><a href="{{ route('root') }}">Sale</a></li>
-    <li class="sep dropdown" rel=2>
-      <a>Избранное (3)</a>
-      <ul class="dropdown-1 submenu-2">
-        <li><a href="#">Adidas Skateboarding</a></li>
-        <li><a href="#">All timers</a></li>
-      </ul>
-    </li>
+    <li class="sep c-red"><a href="{{ route('products.favorites') }}">Избранное</a></li>
   </ul>
 </nav>
 <!-- Content panel -->
@@ -185,7 +179,7 @@
 
           <div class="row align-items-center m-0">
             <div class="col-md-6 col-6 h-100">
-              <a class="btn btn-dark" href="#" role="button">Перейти в корзину</a>
+              <a class="btn btn-dark" href="{{ route('cart.index') }}" role="button">Перейти в корзину</a>
             </div>
             <div class="col-md-6 col-6 h-100"><p class="p-0 cart-price m-0">Итого: 85 800 тг.</p></div>
           </div>

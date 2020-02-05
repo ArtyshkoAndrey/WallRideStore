@@ -2,6 +2,7 @@
 // Для всех
 // Продукты переписать под ресурс
 Route::redirect('/', '/products')->name('root'); // Главаня
+Route::get('/about', 'PagesController@about')->name('about'); // Главаня
 Route::get('products', 'ProductsController@index')->name('products.index'); // Главная с товарами
 Route::get('products/all', 'ProductsController@all')->name('products.all');
 Route::get('product/{product}', 'ProductsController@show')->name('products.show');
@@ -53,3 +54,6 @@ Route::group(['middleware' => ['auth']], function() {
 Route::post('payment/alipay/notify', 'PaymentController@alipayNotify')->name('payment.alipay.notify');
 Route::post('payment/wechat/notify', 'PaymentController@wechatNotify')->name('payment.wechat.notify');
 Route::post('payment/wechat/refund_notify', 'PaymentController@wechatRefundNotify')->name('payment.wechat.refund_notify');
+Route::resource('news', 'NewsController')->except([
+  'edit', 'create', 'destroy', 'create'
+]);

@@ -7,16 +7,16 @@
             <span class="text-uppercase font-weight-bold text-white" v-if="item.on_new">new</span>
             <span class="text-uppercase font-weight-bold text-white" v-else-if="item.on_sale">sale</span>
           </div>
-          <img :data-flickity-lazyload="item.image_url" v-if="slider" alt="item.image" class="img-fluid w-100 mb-3 rounded">
+          <img :src="item.image_url" v-if="slider" alt="item.image" class="carousel-cell-img img-fluid w-100 mb-3 rounded">
           <img :src="item.image_url" v-else alt="item.image" class="img-fluid w-100 mb-3 rounded">
-          <a :href="'product/'+item.id" class="mt-4 pb-0 mb-0 name">{{ item.title.length > 30 ? item.title.slice(0, 30) + '...' : item.title }}</a>
+          <a :href="'/product/'+item.id" class="mt-4 pb-0 mb-0 name">{{ item.title.length > 30 ? item.title.slice(0, 30) + '...' : item.title }}</a>
           <p class="price mt-1 pt-0">{{ Math.round(item.skus[numberSize].price * currency.ratio) }} {{ currency.symbol }}</p>
         </div>
         <div class="row px-0 mx-0">
           <div class="col-4 px-0">
 <!--            Кнопка корзины-->
-            <button class="btn w-100" id="btn-add-to-cart" v-if="true" @click="addToCart()"><i class="fal fa-shopping-bag"></i></button>
-            <button class="btn w-100" id="btn-remove-in-cart" v-else @click="addToCart()"><i class="fal fa-check"></i></button>
+              <button class="btn w-100" id="btn-add-to-cart" v-if="!cart" @click="addToCart()" style="transition: 1s;"><i class="fal fa-shopping-bag"></i></button>
+              <button class="btn w-100" id="btn-remove-in-cart" v-else disabled readonly style="transition: 1s;"><i class="fal fa-check"></i></button>
           </div>
           <div class="col-4 px-0">
             <div class="row m-0">
@@ -75,50 +75,86 @@
     data() {
       return {
         count: 0,
-        numberSize: 0
+        numberSize: 0,
+        cart: false
       }
     },
     mounted() {
       console.log(this.item);
     },
     methods: {
-      addCounter () {
+      addCounter() {
         this.item.skus[this.numberSize].stock > this.count ? this.count++ : null;
       },
-      removeCounter () {
+      removeCounter() {
         this.count > 0 ? this.count-- : null;
       },
-      addNumberSize () {
-        if ( this.numberSize < this.item.skus.length - 1) {
+      addNumberSize() {
+        if (this.numberSize < this.item.skus.length - 1) {
           this.numberSize++;
           this.count = 0
         }
       },
-      removeNumberSize () {
+      removeNumberSize() {
         if (this.numberSize > 0) {
           this.numberSize--;
           this.count = 0
         }
       },
-      addToCart () {
-        // if (this.count > 0 && false === false)
-        //   this.item.inCart = !this.item.inCart;
-        // else if(this.item.inCart === false) {
-        //   swal({
-        //     title: "Выберите количество больше нуля",
-        //     text: "Данное колличество невозможно купить",
-        //     icon: "warning",
-        //     dangerMode: true,
-        //   })
-        // } else {
-        //   this.item.inCart = !this.item.inCart;
-        // }
+      addToCart() {
+        if (this.count > 0) {
+          axios.post('/cart', {
+            sku_id: this.item.skus[this.numberSize].id,
+            amount: this.count,
+          })
+            .then(() => { // Запрос успешно выполнил этот обратный вызов
+              swal('Товар добавлен в корзину', '', 'success')
+                .then(() => {
+                  this.cart = true
+                  setTimeout(() => {
+                    this.cart = false
+                  }, 2000)
+                  // location.href = '/cart';
+                });
+            }, function (error) { // Запрос не смог выполнить этот обратный вызов
+              if (error.response.status === 401) {
+                // код статуса http 401, пользователь не авторизован
+                swal('Пожалуйста, войдите сначала', '', 'error');
+              } else if (error.response.status === 422) {
+                // Код состояния http: 422, что указывает на сбой проверки ввода пользователя.--}}
+                var html = '<div>';
+                _.each(error.response.data.errors, function (errors) {
+                  _.each(errors, function (error) {
+                    html += error + '<br>';
+                  })
+                });
+                html += '</div>';
+                swal({content: $(html)[0], icon: 'error'})
+              } else {
+                // В других случаях система должна зависать--}}
+                swal('Системная ошибка', '', 'error');
+              }
+            })
+        } else {
+          swal({
+            title: "Выберите количество больше нуля",
+            text: "Данное колличество невозможно купить",
+            icon: "warning",
+            dangerMode: true,
+          })
+        }
       }
     }
   }
 </script>
 
 <style scoped lang="scss">
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+    opacity: 0;
+  }
   button:focus{
     outline:none !important;
     box-shadow: none !important;
@@ -127,41 +163,48 @@
   .carousel-cell {
     padding-top: 10px;
     padding-bottom: 10px;
-    width: 65vw;
-    height: auto;
-    margin-left: 10px;
-    margin-right: 10px;
+    /*width: 65vw;*/
+    height: 100%;
+    margin-left: 15px;
+    margin-right: 15px;
   }
-  @media (min-width: 600px) {
+  /*@media (min-width: 600px) {*/
+  /*  .carousel-cell {*/
+  /*    width: 40vw;*/
+  /*  }*/
+  /*}*/
+  @media (max-width: 768px) {
     .carousel-cell {
-      width: 40vw;
+      margin-left: 30px;
+      margin-right: 30px;
     }
   }
-  @media (min-width: 768px) {
-    .carousel-cell {
-      width: 25vw;
-    }
-  }
-  @media (min-width: 992px) {
-    .carousel-cell {
-      width: 16.66666667vw;
-    }
-  }
-  @media (min-width: 1024px) {
-    .carousel-cell {
-      width: 19vw;
-    }
-  }
-  @media (min-width: 1200px) {
-    .carousel-cell {
-      width: 13vw;
-    }
-  }
+  /*@media (min-width: 992px) {*/
+  /*  .carousel-cell {*/
+  /*    width: 20vw;*/
+  /*  }*/
+  /*}*/
+  /*@media (min-width: 1024px) {*/
+  /*  .carousel-cell {*/
+  /*    width: 23vw;*/
+  /*  }*/
+  /*}*/
+  /*@media (min-width: 1200px) {*/
+  /*  .carousel-cell {*/
+  /*    width: 18vw;*/
+  /*  }*/
+  /*}*/
+  /*@media (min-width: 1400px) {*/
+  /*  .carousel-cell {*/
+  /*    width: 13vw;*/
+  /*  }*/
+  /*}*/
   .go-to-product {
     cursor: pointer;
   }
   .card {
     border: 0;
+    height: 100%;
     background: #FFFFFF;
     box-shadow: 0 4px 5px rgba(0, 0, 0, 0.09);
     border-radius: 15px;
