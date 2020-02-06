@@ -26,8 +26,16 @@
             </div>
             <div class="row mt-4">
               <div class="col-md-3">
-                <img src="{{ asset('public/images/person.png') }}" class="img-fluid w-100 px-4 px-md-0" alt="{{ auth()->user()->name }}">
-                <button class="btn btn-danger p-3 position-absolute" id="add-photo"><i class="fal fa-camera"></i></button>
+                <img src="{{ isset(auth()->user()->avatar) ? asset('storage/avatar/thumbnail/'.auth()->user()->avatar) : asset('public/images/person.png') }}" class="img-fluid w-100 px-4 px-md-0" alt="{{ auth()->user()->name }}">
+                <form action="{{ route('profile.update', auth()->user()->id) }}" method="POST" id="form-photo" enctype="multipart/form-data">
+                  @csrf
+                  @method('PUT')
+                  <input type="file" id="photo" name="photo" size="chars" accept="image/jpeg,image/png" style="visibility: hidden">
+                  <input type="hidden" value="photo" name="metadata">
+                  <button type="button" class="btn btn-danger position-absolute" id="add-photo">
+                    <i class="fal fa-camera"></i>
+                  </button>
+                </form>
               </div>
               <div class="col-md-9 pl-md-5 pl-0 px-3 mt-4 mt-md-0">
                 <h4 class="font-weight-bold">{{ auth()->user()->name }}</h4>
@@ -150,5 +158,38 @@
 @endsection
 
 @section('scriptsAfterJs')
-
+  <script>
+    $('#add-photo').click(() => {
+      $('#photo').click();
+    });
+    $("#photo").change(() => {
+      swal({
+          title: "Вы уверены?",
+          text: "Данные действие обновит фотографию профиля!",
+          icon: "warning",
+          buttons: {
+            success: "Да, обноить!",
+            cancle: {
+              text: "Нет!",
+              value: "cancle",
+              className: "btn-danger"
+            }
+          },
+          dangerMode: true,
+        })
+        .then((answer) => {
+          switch (answer) {
+            case "success":
+              swal("Фотография обновлена!", 'success');
+              $('#form-photo').submit()
+              break;
+            case "cancle":
+              swal("Действик отменено");
+              break;
+            default:
+              swal("Действик отменено");
+          }
+        })
+    });
+  </script>
 @endsection

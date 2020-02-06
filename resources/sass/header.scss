@@ -91,6 +91,19 @@
     max-width: 100vw!important;
     overflow-y: auto;
   }
+  nav.navbar ul.navbar-nav li[rel="profile"] {
+    .dropdown-menu {
+      width: unset !important;
+      height: unset!important;
+      right: auto;
+      left: 0;
+      min-width: unset !important;
+      max-width: unset !important;
+    }
+    .dropdown-item {
+      color: black!important;
+    }
+  }
   nav#slide-menu {
      > ul {
       display: flex;
@@ -494,6 +507,14 @@ nav.navbar {
     }
   }
   li[rel="profile"] {
+    .dropdown-menu {
+      width: unset !important;
+      height: unset!important;
+      right: auto;
+      left: 0;
+      min-width: unset !important;
+      max-width: unset !important;
+    }
     .dropdown-item {
       color: black!important;
     }
@@ -813,3 +834,4 @@ footer {
 .footer {
   margin-top: auto;
 }
+

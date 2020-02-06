@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Фев 02 2020 г., 18:09
+-- Время создания: Фев 06 2020 г., 19:13
 -- Версия сервера: 5.7.25-log
 -- Версия PHP: 7.3.9
 
@@ -680,6 +680,7 @@ CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `avatar` text COLLATE utf8mb4_unicode_ci,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -691,9 +692,10 @@ CREATE TABLE `users` (
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(102, 'Андрей Артышко Алексеевич', 'artyshko.andrey@gmail.com', '2020-01-12 02:40:22', '$2y$10$eJNi1Z2UHjb96hhUqxuhWerv3jjk9Cp/YCGV7bvl4UidmP6qQXsHy', 'eqBEzveWfkjhhqCiOvTYhnrGlwc85nKxbtDn3JoRBJLs3AIIU7av20qoY7sG', '2020-01-12 02:39:54', '2020-01-29 14:19:56'),
-(105, 'Анжелика Дударева', 'adad.artyshko@mail.ru', NULL, '$2y$10$9NYA6fq/qW5iskFhARS5I.de0FUbgEIA.FmWu3w.yW3nSl9L/zWv6', 'F4M3XgZ0pkdJt9VUxJf3BYDznecz5wWiuWOAEsKi5Ail5TuvaoMPEw5i2vBD', '2020-01-27 15:36:48', '2020-01-29 06:11:42');
+INSERT INTO `users` (`id`, `name`, `email`, `avatar`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(102, 'Андрей Артышко Алексеевич', 'artyshko.andrey@gmail.com', '1581004168.jpg', '2020-01-12 02:40:22', '$2y$10$eJNi1Z2UHjb96hhUqxuhWerv3jjk9Cp/YCGV7bvl4UidmP6qQXsHy', 'eqBEzveWfkjhhqCiOvTYhnrGlwc85nKxbtDn3JoRBJLs3AIIU7av20qoY7sG', '2020-01-12 02:39:54', '2020-01-29 14:19:56'),
+(105, 'Анжелика Дударева', 'adad.artyshko@mail.ru', '1581004168.jpg', '2020-02-05 17:00:00', '$2y$10$9NYA6fq/qW5iskFhARS5I.de0FUbgEIA.FmWu3w.yW3nSl9L/zWv6', 'F4M3XgZ0pkdJt9VUxJf3BYDznecz5wWiuWOAEsKi5Ail5TuvaoMPEw5i2vBD', '2020-01-27 15:36:48', '2020-02-06 15:49:28'),
+(106, 'ANZHELIKA ARTYSHKO', 'lika.dudareva@gmail.com', '1581004168.jpg', NULL, '$2y$10$l5Eisw/yfNmepnwHJd7clOeVlljchofWtjWnz3ry2uXmq9zLjrKJa', NULL, '2020-02-03 08:04:08', '2020-02-03 08:04:08');
 
 -- --------------------------------------------------------
 
@@ -718,8 +720,8 @@ CREATE TABLE `user_addresses` (
 --
 
 INSERT INTO `user_addresses` (`id`, `user_id`, `country`, `city`, `street`, `contact_phone`, `currency_id`, `created_at`, `updated_at`) VALUES
-(194, 102, 'Россия', 'Красноярск', 'ул. Горького, 24 кв 25, 660099', '+79029634366', 2, '2020-01-14 13:06:53', '2020-01-29 11:52:07'),
-(195, 105, 'Россия', 'Красноярск', 'ул. Горького, 24 кв. 25, 660099', '+79029634366', 3, '2020-01-29 05:30:38', '2020-01-30 06:41:54');
+(194, 102, 'Россия', 'Красноярск', 'ул. Горького, 24 кв 25, 660099', '+79029634366', 3, '2020-01-14 13:06:53', '2020-02-04 09:36:43'),
+(195, 105, 'Россия', 'Красноярск', 'ул. Горького, 24 кв. 25, 660099', '+79029634366', 1, '2020-01-29 05:30:38', '2020-02-06 13:21:52');
 
 -- --------------------------------------------------------
 
@@ -978,7 +980,7 @@ ALTER TABLE `product_skus`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- AUTO_INCREMENT для таблицы `user_addresses`

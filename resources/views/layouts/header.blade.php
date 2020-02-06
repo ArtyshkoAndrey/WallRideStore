@@ -96,8 +96,9 @@
         </span>
       @else
       <li class="nav-item dropdown mr-0 mr-sm-4" rel="profile">
-        <a class="nav-link p-0" id="nav-profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <img class="img-fluid rounded-circle p-0" src="{{ asset('public/storage/inventory/t-short.png') }}" alt="">
+        <a class="nav-link p-0 align-items-center" id="nav-profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img class="img-fluid rounded-circle p-0" src="{{ isset(auth()->user()->avatar) ? asset('storage/avatar/thumbnail/'.auth()->user()->avatar) : asset('public/images/person.png') }}" alt="">
+          <span class="d-block ml-2">{{ auth()->user()->name }}</span>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profile">
           <a href="{{ route('profile.index') }}" class="dropdown-item">Мой профиль</a>

@@ -12,6 +12,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class ProfileController extends Controller
 {
@@ -77,7 +78,8 @@ class ProfileController extends Controller
    * @param  int  $id
    * @return RedirectResponse|Redirector
    */
-  public function update(Request $request, $id) {
+  public function update(Request $request, $id)
+  {
     $user = User::find($id);
     if ($request->metadata === 'address') {
       if ($user->email != $request->email) {
@@ -102,9 +104,9 @@ class ProfileController extends Controller
       }
       if ($user->address == null) {
         $address = new UserAddress();
-        $address['country']       = $request->country;
-        $address['city']          = $request->city;
-        $address['street']        = $request->street;
+        $address['country'] = $request->country;
+        $address['city'] = $request->city;
+        $address['street'] = $request->street;
         $address['contact_phone'] = $request->contact_phone;
         $currency = Currency::find($request->currency);
         $address->currency()->associate($currency);
@@ -114,9 +116,9 @@ class ProfileController extends Controller
         $user->save();
       } else {
         $user->address->update([
-          'country'       => $request->country,
-          'city'          => $request->city,
-          'street'        => $request->street,
+          'country' => $request->country,
+          'city' => $request->city,
+          'street' => $request->street,
           'contact_phone' => $request->contact_phone
         ]);
         $currency = Currency::find($request->currency);
@@ -134,6 +136,28 @@ class ProfileController extends Controller
       $user->password = Hash::make($request->password);
       $user->save();
       return redirect()->route('profile.index')->with('status', 'Пароль изменён');
+    } else if ($request->metadata === 'photo') {
+      $image = $request->file('photo');
+
+      $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
+
+      $destinationPath = public_path('storage/avatar/thumbnail');
+
+      $img = Image::make($image->getRealPath());
+      $image = $img;
+      $img->resize(200, 200, function ($constraint) {
+
+        $constraint->aspectRatio();
+
+      })->save($destinationPath.'/'.$input['imagename']);
+
+      /*After Resize Add this Code to Upload Image*/
+//      $destinationPath = public_path('storeage/avatar');
+//      $image->save($destinationPath.'/'.$input['imagename']);
+//      $image->move($destinationPath, $input['imagename']);
+      $user->avatar = $input['imagename'];
+      $user->save();
+      return redirect()->route('profile.index')->with('status', 'Фотография обновлена');
     } else {
       return redirect()->route('root');
     }
