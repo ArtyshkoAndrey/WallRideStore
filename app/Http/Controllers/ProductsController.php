@@ -6,8 +6,16 @@ use App\Exceptions\InvalidRequestException;
 use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 class ProductsController extends Controller {
+
+  public function search () {
+    $name = Input::get('name', '');
+    $products = Product::with('skus')->where('title','LIKE','%'.$name.'%')->paginate(16);
+    $products->appends(['name' => $name]);
+    return view('products.search', compact('products', 'name'));
+  }
 
   public function all (Request $request) {
     if ($order = $request->input('order', '')) {
@@ -119,7 +127,7 @@ class ProductsController extends Controller {
     public function favorites(Request $request)
     {
         $products = $request->user()->favoriteProducts()->paginate(16);
-
+        return $products;
         return view('products.favorites', ['products' => $products]);
     }
 }

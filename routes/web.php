@@ -3,8 +3,10 @@
 // Продукты переписать под ресурс
 Route::redirect('/', '/products')->name('root'); // Главаня
 Route::get('/about', 'PagesController@about')->name('about'); // Главаня
+Route::get('/contact', 'PagesController@contact')->name('contact'); // Главаня
 Route::get('products', 'ProductsController@index')->name('products.index'); // Главная с товарами
 Route::get('products/all', 'ProductsController@all')->name('products.all');
+Route::get('products/search', 'ProductsController@search')->name('products.search'); // Главная с товарами
 Route::get('product/{product}', 'ProductsController@show')->name('products.show');
 
 

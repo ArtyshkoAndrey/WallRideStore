@@ -20,8 +20,8 @@ class CartController extends Controller
     {
         $cartItems = $this->cartService->get();
         $address = $request->user()->address;
-
-        return view('cart.index', ['cartItems' => $cartItems, 'address' => $address]);
+        return $address;
+//        return view('cart.index', ['cartItems' => $cartItems, 'address' => $address]);
     }
 
     public function add(AddCartRequest $request)

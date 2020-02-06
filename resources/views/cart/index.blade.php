@@ -18,7 +18,9 @@
       </tr>
       </thead>
       <tbody class="product_list">
+      <?php $sale = 0 ?>
       @foreach($cartItems as $item)
+        <?php $sale += ($item->amount * $item->productSku->price) ?>
         <tr data-id="{{ $item->productSku->id }}">
           <td>
             <input type="checkbox" name="select" value="{{ $item->productSku->id }}" {{ $item->productSku->product->on_sale ? 'checked' : 'disabled' }}>

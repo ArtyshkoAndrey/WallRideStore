@@ -1,3 +1,6 @@
+{{--@foreach($cartItems as $item)--}}
+{{--  {{dd($item->productSku->product->image_url)}}--}}
+{{--@endforeach--}}
 <nav id="slide-menu">
   <ul>
     <li class="close-submenu" style="display: none;" onclick="closeSubMenu()"> <i class="fas fa-long-arrow-alt-left"></i> Назад</li>
@@ -38,10 +41,10 @@
         <li><a href="#">Асфальт</a></li>
       </ul>
     </li>
-    <li class="sep"><a href="{{ route('root') }}">Контакты</a></li>
+    <li class="sep"><a href="{{ route('contact') }}">Контакты</a></li>
     <li class="sep"><a href="{{ route('about') }}">О нас</a></li>
-    <li class="sep c-red"><a href="{{ route('root') }}">Sale</a></li>
-    <li class="sep c-red"><a href="{{ route('products.favorites') }}">Избранное</a></li>
+    <li class="sep c-red"><a style="color: #F33C3C!important;" href="{{ route('root') }}">Sale</a></li>
+    <li class="sep"><a href="{{ route('products.favorites') }}">Избранное</a></li>
   </ul>
 </nav>
 <!-- Content panel -->
@@ -112,76 +115,43 @@
         <a class="nav-link" id="cart" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fal fa-shopping-bag fa-2x fa-fw"></i>
           <div id="counter">
-            <span>3</span>
+            <span>{{ count($cartItems) }}</span>
           </div>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="cart">
-
-          <div class="row align-items-center m-0">
-            <div class="col-md-3 col-6 h-100">
-              <img src="{{ asset('public/storage/inventory/t-short.png') }}" alt="t-short" class="img-fluid">
-            </div>
-            <div class="col-md-5 col-6 h-100">
-              <p class="p-0 m-0">Fucking Awesome – <br> Flowers Hoodie Black</p>
-            </div>
-            <div class="col-md-4 mt-2 mt-md-0 h-100">
-              <div class="row px-3 px-md-0">
-                <span class="col-md-9 col-9 p-0 cart-price">1 х 42 900 тг.</span>
-                <button class="btn btn-default col-md-3 col-3 p-0"><i class="fal fa-times fa-fw fa-lg c-red"></i></button>
+          <?php $sale = 0 ?>
+          @forelse($cartItems as $item)
+            <?php $sale += ($item->amount * $item->productSku->price) ?>
+            <mini-cart-item :id="{{$item->productSku->id}}" inline-template>
+              <div class="row align-items-center m-0">
+                <div class="col-md-3 col-6 h-100">
+                  <img src="{{ $item->productSku->product->image_url }}" alt="t-short" class="img-fluid">
+                </div>
+                <div class="col-md-5 col-6 h-100">
+                  <p class="p-0 m-0">{{ $item->productSku->product->title }}</p>
+                </div>
+                <div class="col-md-4 mt-2 mt-md-0 h-100">
+                  <div class="row px-3 px-md-0">
+                    <span class="col-md-9 col-9 p-0 cart-price">{{ $item->amount }} х {{ $item->productSku->price * $currency->ratio }} {{$currency->symbol}}</span>
+                    <button class="btn btn-default col-md-3 col-3 p-0" @click="deleteItem"><i class="fal fa-times fa-fw fa-lg c-red"></i></button>
+                  </div>
+                </div>
               </div>
+            </mini-cart-item>
+          @empty
+          <div class="row">
+            <div class="col-12">
+              <div class="h5">Корзина пуста</div>
             </div>
           </div>
+          @endforelse
 
-          <div class="row align-items-center m-0">
-            <div class="col-md-3 col-6 h-100">
-              <img src="{{ asset('public/storage/inventory/t-short.png') }}" alt="t-short" class="img-fluid">
-            </div>
-            <div class="col-md-5 col-6 h-100">
-              <p class="p-0 m-0">Fucking Awesome – <br> Flowers Hoodie Black</p>
-            </div>
-            <div class="col-md-4 mt-2 mt-md-0 h-100">
-              <div class="row px-3 px-md-0">
-                <span class="col-md-9 col-9 p-0 cart-price">1 х 42 900 тг.</span>
-                <button class="btn btn-default col-md-3 col-3 p-0"><i class="fal fa-times fa-fw fa-lg c-red"></i></button>
-              </div>
-            </div>
-          </div>
-
-          <div class="row align-items-center m-0">
-            <div class="col-md-3 col-6 h-100">
-              <img src="{{ asset('public/storage/inventory/t-short.png') }}" alt="t-short" class="img-fluid">
-            </div>
-            <div class="col-md-5 col-6 h-100">
-              <p class="p-0 m-0">Fucking Awesome – <br> Flowers Hoodie Black</p>
-            </div>
-            <div class="col-md-4 mt-2 mt-md-0 h-100">
-              <div class="row px-3 px-md-0">
-                <span class="col-md-9 col-9 p-0 cart-price">1 х 42 900 тг.</span>
-                <button class="btn btn-default col-md-3 col-3 p-0"><i class="fal fa-times fa-fw fa-lg c-red"></i></button>
-              </div>
-            </div>
-          </div>
-
-          <div class="row align-items-center m-0">
-            <div class="col-md-3 col-6 h-100">
-              <img src="{{ asset('public/storage/inventory/t-short.png') }}" alt="t-short" class="img-fluid">
-            </div>
-            <div class="col-md-5 col-6 h-100">
-              <p class="p-0 m-0">Fucking Awesome – <br> Flowers Hoodie Black</p>
-            </div>
-            <div class="col-md-4 mt-2 mt-md-0 h-100">
-              <div class="row px-3 px-md-0">
-                <span class="col-md-9 col-9 p-0 cart-price">1 х 42 900 тг.</span>
-                <button class="btn btn-default col-md-3 col-3 p-0"><i class="fal fa-times fa-fw fa-lg c-red"></i></button>
-              </div>
-            </div>
-          </div>
 
           <div class="row align-items-center m-0">
             <div class="col-md-6 col-6 h-100">
               <a class="btn btn-dark" href="{{ route('cart.index') }}" role="button">Перейти в корзину</a>
             </div>
-            <div class="col-md-6 col-6 h-100"><p class="p-0 cart-price m-0">Итого: 85 800 тг.</p></div>
+            <div class="col-md-6 col-6 h-100"><p class="p-0 cart-price m-0">Итого: {{ $sale * $currency->ratio }} {{$currency->symbol}}</p></div>
           </div>
 
         </div>
