@@ -21,6 +21,7 @@ class CartController extends Controller
         $cartItems = $this->cartService->get();
         $address = $request->user()->address;
         return $address;
+//        TODO Серствать страницу корзины
 //        return view('cart.index', ['cartItems' => $cartItems, 'address' => $address]);
     }
 

@@ -31,6 +31,7 @@
                     </div>
                   </div>
                   <a href="{{ route('password.request') }}" class="c-red">Забыли пароль?</a>
+{{--                  TODO баг с галочкой --}}
                   <div class="checkbox">
                     <label>
                       <input type="checkbox" data-ng-model="example.check" name="remember" id="remember">
