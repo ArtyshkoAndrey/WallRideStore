@@ -70,7 +70,7 @@
             sku_id: this.size.id,
             amount: this.counter,
           })
-            .then(() => { // Запрос успешно выполнил этот обратный вызов
+            .then((response) => { // Запрос успешно выполнил этот обратный вызов
               swal('Товар добавлен в корзину', '', 'success')
                 .then(() => {
                   this.cart = true
@@ -79,6 +79,11 @@
                   }, 2000)
                   // location.href = '/cart';
                 });
+              let data = response.data
+              console.log(data)
+              this.$parent.cartItems = data.cartItems
+              this.$parent.priceAmount = data.priceAmount
+              this.$parent.amount = data.amount
             }, function (error) { // Запрос не смог выполнить этот обратный вызов
               if (error.response.status === 401) {
                 // код статуса http 401, пользователь не авторизован

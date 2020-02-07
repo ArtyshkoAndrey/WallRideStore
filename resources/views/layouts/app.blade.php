@@ -11,7 +11,7 @@
   <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <body class="d-flex flex-column h-100">
-<div id="app" class="{{ route_class() }}-page">
+<div id="app" amount="{{ $amount }}" class="{{ route_class() }}-page">
   @include('layouts.header')
   <div id="blur-for-menu">
     @yield('content')

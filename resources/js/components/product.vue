@@ -10,7 +10,7 @@
           <img :src="item.image_url" v-if="slider" alt="item.image" class="carousel-cell-img img-fluid w-100 mb-3 rounded">
           <img :src="item.image_url" v-else alt="item.image" class="img-fluid w-100 mb-3 rounded">
           <a :href="'/product/'+item.id" class="mt-4 pb-0 mb-0 name">{{ item.title.length > 30 ? item.title.slice(0, 30) + '...' : item.title }}</a>
-          <p class="price mt-1 pt-0">{{ Math.round(item.skus[numberSize].price * currency.ratio) }} {{ currency.symbol }}</p>
+          <p class="price mt-1 pt-0">{{ (item.skus[numberSize].price * currency.ratio).toFixed(0) }} {{ currency.symbol }}</p>
         </div>
         <div class="row px-0 mx-0">
           <div class="col-4 px-0">
@@ -107,7 +107,7 @@
             sku_id: this.item.skus[this.numberSize].id,
             amount: this.count,
           })
-            .then(() => { // Запрос успешно выполнил этот обратный вызов
+            .then((response) => { // Запрос успешно выполнил этот обратный вызов
               swal('Товар добавлен в корзину', '', 'success')
                 .then(() => {
                   this.cart = true
@@ -116,6 +116,16 @@
                   }, 2000)
                   // location.href = '/cart';
                 });
+              let data = response.data
+              if (this.slider) {
+                this.$parent.$parent.$parent.cartItems = data.cartItems
+                this.$parent.$parent.$parent.priceAmount = data.priceAmount
+                this.$parent.$parent.$parent.amount = data.amount
+              } else {
+                this.$parent.cartItems = data.cartItems
+                this.$parent.priceAmount = data.priceAmount
+                this.$parent.amount = data.amount
+              }
             }, function (error) { // Запрос не смог выполнить этот обратный вызов
               if (error.response.status === 401) {
                 // код статуса http 401, пользователь не авторизован

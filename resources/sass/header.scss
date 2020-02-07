@@ -813,6 +813,8 @@ nav.navbar {
 #nav-profile {
   img {
     height: 35px;
+    width: 35px;
+    object-fit: cover;
     margin-top: 5px;
   }
 }

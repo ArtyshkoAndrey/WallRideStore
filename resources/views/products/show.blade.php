@@ -49,7 +49,7 @@
             <li class="breadcrumb-item active px-0" aria-current="page">{{ ucwords(strtolower($product->title)) }}</li>
           </ol>
         </div>
-        <h1 class="font-weight-bold text-uppercase">@{{  Math.round(Number(size.price) * currency.ratio) }} @{{ currency.symbol }}</h1>
+        <h1 class="font-weight-bold text-uppercase">@{{  (Number(size.price) * currency.ratio).toFixed(0) }} @{{ currency.symbol }}</h1>
         <h4 class="font-weight-bold mt-4">Размер</h4>
         <div class="btn-group btn-group-toggle">
           <label v-for="(sku, index) in skus" :key="sku.id" :class="(index===0 ? 'mr-2' : 'mx-2') + ' btn sku-btn' + (idSku === sku.id ? ' active' : '')">

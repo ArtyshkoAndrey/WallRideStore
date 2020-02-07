@@ -22,11 +22,15 @@ class Controller extends BaseController
     $this->cartService = $cartService;
     $this->middleware(function ($request, $next) {
       $cartItems = [];
+      $priceAmount = 0;
+      $amount = 0;
       if (Auth::check()) {
         $cartItems = $this->cartService->get();
+        $priceAmount = $this->cartService->priceAmount();
+        $amount = $this->cartService->amount();
         $address = UserAddress::where('user_id', auth()->user()->id)->first();
         if(isset($address)) {
-          if (isset($adress->currency)) {
+          if ($address->currency_id !== null) {
             $currencyGlobal = $address->currency;
           } else {
             $currency = Currency::find(1);
@@ -42,6 +46,8 @@ class Controller extends BaseController
       }
       View::share('currency', $currencyGlobal);
       View::share('cartItems', $cartItems);
+      View::share('priceAmount', $priceAmount);
+      View::share('amount', $amount);
       return $next($request);
     });
   }

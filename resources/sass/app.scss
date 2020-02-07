@@ -165,3 +165,61 @@ select[name="order"], select[name="size"], select[name="brand"], select[name="ca
     width: 80%;
   }
 }
+
+#cart {
+  #offer-payment {
+    font-size: 16px;
+    > * {
+      background: transparent!important;
+    }
+  }
+  h1 {
+    font-family: 'Circe', serif;
+    font-style: normal;
+    font-weight: 800;
+  }
+  .card {
+    border: 0;
+    border-radius: 0;
+    background: #FFFFFF;
+    box-shadow: 0 4px 50px rgba(0, 0, 0, 0.13);
+  }
+  input {
+    background: #F0F0F0;
+    border: 0;
+    border-radius: 0;
+  }
+  .font-small {
+    font-size: 12px;
+  }
+  .btn-angle {
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    border-radius: 0.25rem;
+    background-color: white;
+    color: #F33C3C;
+    height: 15px;
+    display: block;
+    border: none !important;
+    outline: none !important;
+    > i {
+      font-size: 16px;
+      font-weight: bold;
+    }
+    &:hover {
+      color: black;
+    }
+    &:focus, &::-moz-focus-inner, &:active {
+      outline: none !important;
+      border: 0 !important;
+      box-shadow: none !important;
+      -moz-outline-style: none !important;
+      outline:0 !important;
+    }
+  }
+}
