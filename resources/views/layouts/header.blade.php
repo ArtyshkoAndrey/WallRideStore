@@ -1,6 +1,3 @@
-{{--@foreach($cartItems as $item)--}}
-{{--  {{dd($item->productSku->product->image_url)}}--}}
-{{--@endforeach--}}
 <nav id="slide-menu">
   <ul>
     <li class="close-submenu" style="display: none;" onclick="closeSubMenu()"> <i class="fas fa-long-arrow-alt-left"></i> Назад</li>
@@ -119,7 +116,7 @@
             <span>@{{ amount }}</span>
           </div>
         </a>
-        <header-cart :cartitems="{{ $cartItems }}" :currency="{{ $currency }}" :priceamount="{{ $priceAmount }}" inline-template>
+        <header-cart :cartitems="{{ json_encode($cartItems) }}" :currency="{{ $currency }}" :priceamount="{{ $priceAmount }}" inline-template>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="cart">
             <mini-cart-item v-for="item in $parent.cartItems" :key="item.id" :item="item" :currency="{{ $currency }}" :id="item.product_sku.id" inline-template>
               <div class="row align-items-center m-0">
