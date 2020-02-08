@@ -1,16 +1,9 @@
 require('./bootstrap');
-import VueGlobalVar from "vue-global-var";
 window.Vue = require('vue');
 
 const longpress = require('vue-long-press-directive');
 
 Vue.use(longpress, { duration: 1000 });
-// Vue.use(VueGlobalVar,{
-//   globals: {
-//     $cartItems: []
-//   }
-// });
-Vue.prototype.$cartItems = []
 const ComponentContext = require.context('./', true, /\.vue$/i, 'lazy');
 
 ComponentContext.keys().forEach((componentFilePath) => {
@@ -19,8 +12,6 @@ ComponentContext.keys().forEach((componentFilePath) => {
   Vue.component(componentName, () => ComponentContext(componentFilePath));
 
 });
-require('./components/SelectDistrict');
-require('./components/UserAddressesCreateAndEdit');
 const app = new Vue({
   el: '#app',
   data () {
