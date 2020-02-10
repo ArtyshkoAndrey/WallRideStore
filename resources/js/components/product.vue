@@ -7,6 +7,10 @@
             <span class="text-uppercase font-weight-bold text-white" v-if="item.on_new">new</span>
             <span class="text-uppercase font-weight-bold text-white" v-else-if="item.on_sale">sale</span>
           </div>
+          <div class="position-absolute px-4 py-1" id="like" v-if="item.on_new || item.on_sale">
+            <button class="bg-transparent border-0 m-0 p-0" @click="favored" v-if="!favor"><i class="fal fa-heart"></i></button>
+            <button class="bg-transparent border-0 m-0 p-0" v-else><i class="fad fa-heart"></i></button>
+          </div>
           <img :src="item.image_url" v-if="slider" alt="item.image" class="carousel-cell-img img-fluid w-100 mb-3 rounded">
           <img :src="item.image_url" v-else alt="item.image" class="img-fluid w-100 mb-3 rounded">
           <div class="box">
@@ -82,6 +86,7 @@ line-height: 24px;" v-model="count" readonly disabled>
         count: 0,
         numberSize: 0,
         cart: false,
+        favor: false
       }
     },
     mounted() {
@@ -105,6 +110,30 @@ line-height: 24px;" v-model="count" readonly disabled>
           this.numberSize--;
           this.count = 0
         }
+      },
+      favored () {
+        // нициируйте запрос post ajax. URL запроса генерируется функцией backend route ().
+        axios.post('/products/' + this.item.id + '/favorite')
+          .then(() => {
+            swal('Операция прошла успешно', '', 'success')
+              .then(() => { // здесь добавлен метод then ()
+                this.favor = true
+                setTimeout(() => {
+                  this.favor = false
+                }, 2000)
+              });
+          }, (error) => { // Этот обратный вызов будет выполнен в случае сбоя запроса
+            // Если код возврата 401, вы не авторизованы
+            if (error.response && error.response.status === 401) {
+              swal('Пожалуйста, войдите сначала', '', 'error');
+            } else if (error.response && error.response.data.msg) {
+              // В других случаях с полем msg, отправьте сообщение пользователю
+              swal(error.response.data.msg, '', 'error');
+            }  else {
+              // В других случаях система должна зависать
+              swal('Системная ошибка', '', 'error');
+            }
+          })
       },
       addToCart() {
         if (this.count > 0) {
@@ -185,7 +214,20 @@ line-height: 24px;" v-model="count" readonly disabled>
     outline:none !important;
     box-shadow: none !important;
   }
-
+  #like {
+    right: 10px;
+    font-size: 26px;
+    color: #F33C3C;
+    transition: 1s;
+    > * {
+      transition: 1s;
+    }
+    i {
+      transition: 1s;
+      text-shadow: 0px 4px 10px rgba(243, 60, 60, 0.4);
+      color: #F33C3C;
+    }
+  }
   .card {
     border: 0;
     height: 100%;
