@@ -28,8 +28,8 @@
     </div>
   </section>
   <section class="mt-5 pt-5 px-00">
-    <div class="container">
-      <div class="row align-items-center px-3">
+    <div class="container-fluid">
+      <div class="row align-items-center px-5">
         <h2 class="font-weight-bold">Новые товары</h2>
         <a class="ml-auto c-red" href="#">Смотреть все <img src="{{ asset('public/images/arrow-long-right-red.png') }}" width="50" alt=""></a>
       </div>
@@ -50,8 +50,8 @@
   </section>
 
   <section class="mt-5 mb-5 px-0">
-    <div class="container">
-      <div class="row align-items-center px-3">
+    <div class="container-fluid">
+      <div class="row align-items-center px-5">
         <h2 class="font-weight-bold">Худи</h2>
         <a class="ml-auto c-red" href="#">Смотреть все <img src="{{ asset('public/images/arrow-long-right-red.png') }}" width="50" alt=""></a>
       </div>
