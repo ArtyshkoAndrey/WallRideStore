@@ -2,16 +2,15 @@
 @section('title', 'Список товаров')
 
 @section('content')
-{{--  {{ dd($productsNew[0]->skus[0]->title) }}--}}
   <section class="container-fluid p-0 text-white" id="slider">
     <div class="row p-0 m-0">
       <div class="col-12 p-0">
-        <img class="img-fluid"  src="{{ asset("public/storage/images/slide1.png") }}" alt="">
+        <img class="img-fluid"  src="{{ asset('public/storage/images/slide1.png') }}" alt="">
       </div>
       <div class="col-12 p-0 position-absolute text-center">
         <h1>Polar Scate Co</h1>
         <h3>New collection</h3>
-        <a href="#" class="btn">Купить сейчас <img src="{{ asset("public/images/arrow-long-right.png") }}" alt=""></a>
+        <a href="#" class="btn">Купить сейчас <img src="{{ asset('public/images/arrow-long-right.png') }}" alt=""></a>
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-md-6 col-sm-8 col-12">
@@ -38,7 +37,7 @@
     <div class="container-fluid carousel px-0" id="sliderList1">
       @if(count($productsNew) > 0)
         <product-list  inline-template>
-          <carousel :loop="false" :auto-width="true" :nav="false" :dots="false">
+          <carousel :loop="false"  :stage-padding="50" :auto-width="true" :nav="false" :dots="false">
             @foreach($productsNew as $product)
               <product :slider=true :currency="{{ $currency }}" :item="{{ $product }}"></product>
             @endforeach

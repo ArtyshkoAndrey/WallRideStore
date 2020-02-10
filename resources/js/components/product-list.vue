@@ -11,13 +11,13 @@
       }
     },
     methods: {
-
-    },
-    updated() {
-
+      adaptiveHeightButtons () {
+        $('.btn-to-cart-adaptive').height($('.btn-to-cart-adaptive').width())
+      }
     },
     mounted () {
-
+      this.adaptiveHeightButtons()
+      window.addEventListener("resize", this.adaptiveHeightButtons);
     }
   }
 </script>
