@@ -38,7 +38,7 @@
     <div class="container-fluid carousel px-0" id="sliderList1">
       @if(count($productsNew) > 0)
         <product-list  inline-template>
-          <carousel :loop="true" :autoWidth="true" :nav="false" :dots="false" :responsive="{0:{items:1},600:{items:2}, 800:{items:3}, 1000:{items: 4}, 1200:{items: 4}, 1400:{items: 6}, 1600:{items: 7}}">
+          <carousel :loop="false" :auto-width="true" :nav="false" :dots="false">
             @foreach($productsNew as $product)
               <product :slider=true :currency="{{ $currency }}" :item="{{ $product }}"></product>
             @endforeach
@@ -60,7 +60,7 @@
     <div class="container-fluid px-0 mx-0" id="sliderList2">
       @if(count($products) > 0)
         <product-list inline-template>
-          <carousel :loop="true" :autoWidth="true" :nav="false" :dots="false" :responsive="{0:{items:1},600:{items:2}, 800:{items:3}, 1000:{items: 4}, 1200:{items: 4}, 1400:{items: 6}, 1600:{items: 7}}">
+          <carousel :loop="false" :auto-width="true" :nav="false" :dots="false">
             @foreach($products as $product)
               <product :slider=true :currency="{{ $currency }}" :item="{{ $product }}"></product>
             @endforeach

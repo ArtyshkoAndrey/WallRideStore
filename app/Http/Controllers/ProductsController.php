@@ -43,8 +43,8 @@ class ProductsController extends Controller {
   }
   public function index() {
 
-    $productsNew = Product::where('on_new', true)->take(10)->with('skus')->get();
-    $products = Product::take(10)->with('skus')->get();
+    $productsNew = Product::where('on_new', true)->take(20)->with('skus')->get();
+    $products = Product::take(20)->with('skus')->get();
     return view('products.index', [
       'productsNew' => $productsNew,
       'products' => $products

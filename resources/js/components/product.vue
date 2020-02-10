@@ -19,16 +19,17 @@
               <button class="btn w-100" id="btn-remove-in-cart" v-else disabled readonly style="transition: 1s;"><i class="fal fa-check"></i></button>
           </div>
           <div class="col-4 px-0">
-            <div class="row m-0">
-              <div class="col-8 m-0 p-0">
-                <input class="form-control w-100 bg-white border-0 pr-0 font-weight-bolder text-center" type="number" v-model="count" readonly disabled>
+            <div class="row h-100 m-0">
+              <div class="col-7 m-0 p-0">
+                <input class="form-control w-100 bg-white h-100 border-0 p-0 font-weight-bolder text-center" type="number" style="font-size: 16px;
+line-height: 24px;" v-model="count" readonly disabled>
               </div>
               <div class="col-4 px-0">
-                <div class="row p-0 m-0">
-                  <div class="col-12 p-0 h-100 w-100">
+                <div class="row p-0 m-0 h-100">
+                  <div class="col-12 p-0 w-100 d-flex justify-content-center align-items-center">
                     <button class="btn p-0 m-0 btn-angle" v-long-press="addCounter" @click="addCounter"><i class="fal fa-angle-up"></i></button>
                   </div>
-                  <div class="col-12 p-0 h-100 w-100">
+                  <div class="col-12 p-0 w-100 d-flex justify-content-center align-items-center">
                     <button class="btn p-0 m-0 btn-angle" v-long-press="removeCounter" @click="removeCounter"><i class="fal fa-angle-down"></i></button>
                   </div>
                 </div>
@@ -36,12 +37,12 @@
             </div>
           </div>
           <div class="col-4 pr-0 pl-1">
-            <div class="row m-0">
+            <div class="row h-100 m-0">
               <div class="col-2 pl-0 pr-1">
                 <button class="btn p-0 m-0 bg-transparent btn-angle h-100" v-long-press="addNumberSize" @click="addNumberSize"><i class="fal fa-angle-left mt-1"></i></button>
               </div>
-              <div class="col-6 m-0 pl-1 pr-0">
-                <input class="form-control w-100 bg-white border-0 px-0 font-weight-bolder text-center" type="text" v-model="item.skus[numberSize].title" readonly disabled>
+              <div class="col-6 m-0 h-100 pl-1 pr-0">
+                <input class="form-control w-100 bg-white border-0 h-100 px-0 font-weight-bolder text-center" type="text" v-model="item.skus[numberSize].title" readonly disabled>
               </div>
               <div class="col-2 px-0">
                 <button class="btn p-0 m-0 bg-transparent btn-angle h-100" v-long-press="removeNumberSize" @click="removeNumberSize"><i class="fal fa-angle-right mt-1"></i></button>
@@ -170,48 +171,6 @@
     box-shadow: none !important;
   }
 
-  .carousel-cell {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    /*width: 65vw;*/
-    height: 100%;
-    margin-left: 15px;
-    margin-right: 15px;
-  }
-  /*@media (min-width: 600px) {*/
-  /*  .carousel-cell {*/
-  /*    width: 40vw;*/
-  /*  }*/
-  /*}*/
-  @media (max-width: 768px) {
-    .carousel-cell {
-      margin-left: 30px;
-      margin-right: 30px;
-    }
-  }
-  /*@media (min-width: 992px) {*/
-  /*  .carousel-cell {*/
-  /*    width: 20vw;*/
-  /*  }*/
-  /*}*/
-  /*@media (min-width: 1024px) {*/
-  /*  .carousel-cell {*/
-  /*    width: 23vw;*/
-  /*  }*/
-  /*}*/
-  /*@media (min-width: 1200px) {*/
-  /*  .carousel-cell {*/
-  /*    width: 18vw;*/
-  /*  }*/
-  /*}*/
-  /*@media (min-width: 1400px) {*/
-  /*  .carousel-cell {*/
-  /*    width: 13vw;*/
-  /*  }*/
-  /*}*/
-  .go-to-product {
-    cursor: pointer;
-  }
   .card {
     border: 0;
     height: 100%;
@@ -296,4 +255,52 @@
       line-height: 35px;
     }
   }
+
+  .carousel-cell {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 60vw;
+    height: 100%;
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+  @media (min-width: 450px) {
+    .carousel-cell {
+      width: 40vw;
+    }
+  }
+  @media (min-width: 600px) {
+    .carousel-cell {
+      width: 30vw;
+    }
+  }
+  @media (min-width: 768px) {
+    .carousel-cell {
+      width: 25vw;
+    }
+  }
+  @media (min-width: 992px) {
+    .carousel-cell {
+      width: 25vw;
+    }
+  }
+  @media (min-width: 1024px) {
+    .carousel-cell {
+      width: 20vw;
+    }
+  }
+  @media (min-width: 1200px) {
+    .carousel-cell {
+      width: 18vw;
+    }
+  }
+  @media (min-width: 1400px) {
+    .carousel-cell {
+      width: 13vw;
+    }
+  }
+  .go-to-product {
+    cursor: pointer;
+  }
+
 </style>
