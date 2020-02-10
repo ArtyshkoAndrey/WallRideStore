@@ -22,7 +22,7 @@
                       {{ $errors->first('email') }}
                     </div>
                   </div>
-                  <div class="md-form md-outline form-lg mb-0">
+                  <div class="md-form md-outline form-lg mb-3">
                     <input id="password" name="password" class="mb-0 form-control form-control-lg pr-5 {{ $errors->has('password') ? ' is-invalid' : '' }}" :type="showPass ? 'text' : 'password'" required>
                     <label for="password">Пароль</label>
                     <span @click="showPass = !showPass" :class="'fa fa-fw field-icon mr-3 toggle-password' + (showPass ? ' fa-eye-slash c-red'  : ' fa-eye')"></span>
@@ -32,7 +32,7 @@
                   </div>
                   <a href="{{ route('password.request') }}" class="c-red">Забыли пароль?</a>
 {{--                  TODO баг с галочкой --}}
-                  <div class="checkbox">
+                  <div class="checkbox mt-2">
                     <label>
                       <input type="checkbox" data-ng-model="example.check" name="remember" id="remember">
                       <span class="box"></span>
