@@ -42,6 +42,7 @@
     <li class="sep"><a href="{{ route('about') }}">О нас</a></li>
     <li class="sep c-red"><a style="color: #F33C3C!important;" href="{{ route('root') }}">Sale</a></li>
     <li class="sep"><a href="{{ route('products.favorites') }}">Избранное</a></li>
+    <li style="width: 100vw; margin-left: -20px" id="logo-leftbar"><img src="{{ asset('public/images/logo.png') }}" class="img-fluid mr-auto ml-auto mt-5 position-absolute" style="width: 20vw;bottom: 35px; left: calc(50% - 10vw);" alt=""></li>
   </ul>
 </nav>
 <!-- Content panel -->
@@ -82,6 +83,9 @@
             <a href="#" class="list-group-item list-group-item-action">Санкт-Петербурк</a>
           </div>
         </div>
+      </li>
+      <li class="nav-item mr-auto d-none d-sm-block ml-auto" style="display: flex;">
+        <a href="{{ route('root') }}"><img src="{{ asset('public/images/logo.png') }}" height="45" alt=""></a>
       </li>
       @guest
       <li class="nav-item mr-0 mr-sm-4" rel="profile" style="display: flex;">

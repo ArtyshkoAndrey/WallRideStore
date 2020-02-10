@@ -17,6 +17,10 @@
   }
 }
 
+#logo-leftbar {
+  display: none;
+}
+
 #nav-icon3 span{
   display: block;
   position: absolute;
@@ -82,6 +86,9 @@
 */
 
 @media (max-width: 768px) {
+  #logo-leftbar {
+    display: flex;
+  }
   nav.navbar ul.navbar-nav .dropdown-menu {
     width: 100vw!important;
     height: calc(100vh - 50px)!important;
@@ -332,9 +339,9 @@ nav.navbar {
   background: rgb(0, 0, 0)!important;
   ul.navbar-nav {
     width: 100%;
-    li[rel="city"] {
-      margin-right: auto;
-    }
+    //li[rel="city"] {
+    //  margin-right: auto;
+    //}
     li[rel="cart"] {
       &.show {
         &::before, &::after {
