@@ -35,7 +35,7 @@ requireComponent.keys().forEach(fileName => {
       fileName.replace(/^\.\/(.*)\.\w+$/, '$1')
   )
   /* eslint-disable no-console */
-  console.log('fileName',fileName,'=>',componentName);
+  // console.log('fileName',fileName,'=>',componentName);
   /* eslint-enable no-console */
   // Глобальная регистрация компонента
   Vue.component(

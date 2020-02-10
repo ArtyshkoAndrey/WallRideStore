@@ -48,7 +48,7 @@
   }
 
   #auth {
-    height: calc(100vh - 47px);
+    min-height: calc(100vh - 47px);
     background-size: cover;
     background-position: center;
     @import '../../sass/material';
@@ -68,9 +68,9 @@
     }
   }
 
-  @media screen and (max-height: 540px) {
+  /* @media screen and (max-height: 252px) {
     #auth {
       height: 100%;
     }
-  }
+  } */
 </style>

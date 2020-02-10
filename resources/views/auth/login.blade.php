@@ -3,7 +3,7 @@
 @section('content')
   <auth-login inline-template>
     <section id="auth">
-      <div class="container h-100">
+      <div class="container vh-100">
         <div class="row h-100 mt-auto align-items-center">
           <div class="col-md-6 d-none d-md-block col-lg-6">
             <h2 class="text-white">У нас ты найдешь товар по душе.</h2>
