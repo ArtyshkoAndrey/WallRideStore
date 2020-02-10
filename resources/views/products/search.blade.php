@@ -46,5 +46,10 @@
 @endsection
 
 @section('scriptsAfterJs')
-
+  <script>
+    $('.btn-to-cart-adaptive').height($('.btn-to-cart-adaptive').width());
+    window.addEventListener("resize", () => {
+      $('.btn-to-cart-adaptive').height($('.btn-to-cart-adaptive').width())
+    });
+  </script>
 @endsection
