@@ -20,14 +20,14 @@
               <button class="btn w-100 h-100" id="btn-add-to-cart" v-if="!cart" @click="addToCart()" style="transition: 1s;"><i class="fal fa-shopping-bag"></i></button>
               <button class="btn w-100 h-100" id="btn-remove-in-cart" v-else disabled readonly style="transition: 1s;"><i class="fal fa-check"></i></button>
           </div>
-          <div class="col-5 pr-0 pl-2">
-            <div class="row h-100 m-0">
-              <div class="col-12 m-0 p-0 text-center" style="font-size: 12px; line-height: 10px ">Количество</div>
-              <div class="col-7 m-0 p-0">
+          <div class="align-items-center col-4 d-flex pl-2 pr-0">
+            <div class="row m-0" style="border-right: 1px solid #D0D0D0;">
+              <div class="col-12  m-0 p-0 pr-1 text-center" style="font-size: 12px">Количество</div>
+              <div class="col-5 offset-2 mr-0 my-0 p-0" style="margin-top:-5px !important;">
                 <input class="form-control w-100 bg-white h-100 border-0 p-0 font-weight-bolder text-center" type="number" style="font-size: 18px;
 line-height: 24px;" v-model="count" readonly disabled>
               </div>
-              <div class="col-4 px-0">
+              <div class="col-4 px-0" style="margin-top:-7px !important;">
                 <div class="row p-0 m-0 h-100">
                   <div class="col-12 p-0 w-100 d-flex justify-content-start align-items-end">
                     <button class="btn p-0 m-0 btn-angle" v-long-press="addCounter" @click="addCounter"><i class="fal fa-angle-up"></i></button>
@@ -39,16 +39,16 @@ line-height: 24px;" v-model="count" readonly disabled>
               </div>
             </div>
           </div>
-          <div class="col-4 pr-0 pl-1">
-            <div class="row h-100 m-0">
-              <div class="col-12 m-0 p-0 text-center" style="font-size: 12px; line-height: 10px ">Размер</div>
-              <div class="col-2 pl-0 pr-1 d-flex align-items-center">
+          <div class="align-items-center col-4 d-flex pl-1 pr-0">
+            <div class="row m-0 pr-2 justify-content-end">
+              <div class="col-12 m-0 p-0 text-center" style="font-size: 12px">Размер</div>
+              <div class="col-2 px-0 d-flex align-items-center justify-content-end" style="margin-top:-5px !important;">
                 <button class="btn p-0 m-0 h-100 bg-transparent btn-angle" v-long-press="addNumberSize" @click="addNumberSize"><i class="fal fa-angle-left mt-1"></i></button>
               </div>
-              <div class="col-6 m-0 pl-1 pr-0">
-                <input class="form-control w-100 bg-white border-0 px-0 font-weight-bolder text-center" type="text" v-model="item.skus[numberSize].title" readonly disabled>
+              <div class="col-6 m-0 p-0" style="margin-top:-4px !important;">
+                <input class="form-control w-100 h-100 bg-white border-0 p-0 font-weight-bolder text-center" type="text" v-model="item.skus[numberSize].title" readonly disabled>
               </div>
-              <div class="col-2 px-0 d-flex align-items-center">
+              <div class="col-2 px-0 d-flex align-items-center" style="margin-top:-5px !important;">
                 <button class="btn p-0 m-0 h-100 bg-transparent btn-angle" v-long-press="removeNumberSize" @click="removeNumberSize"><i class="fal fa-angle-right mt-1"></i></button>
               </div>
             </div>
@@ -81,7 +81,7 @@ line-height: 24px;" v-model="count" readonly disabled>
       return {
         count: 0,
         numberSize: 0,
-        cart: false
+        cart: false,
       }
     },
     mounted() {
@@ -164,17 +164,17 @@ line-height: 24px;" v-model="count" readonly disabled>
 </script>
 
 <style scoped lang="scss">
-.box {
-    overflow: hidden;
-    height: 50px;
-    width: 100%;
-}
-.box > a {
-    -webkit-column-width: 150px;
-    -moz-column-width: 150px;
-    column-width: 150px;
-    height: 100%;
-}
+  .box {
+      overflow: hidden;
+      height: 50px;
+      width: 100%;
+  }
+  .box > a {
+      -webkit-column-width: 150px;
+      -moz-column-width: 150px;
+      column-width: 150px;
+      height: 100%;
+  }
   .fade-enter-active, .fade-leave-active {
     transition: opacity .5s;
   }
@@ -281,17 +281,44 @@ line-height: 24px;" v-model="count" readonly disabled>
   }
   @media (min-width: 468px) {
     .carousel-cell {
-      width: 35vw;
+      width: 40vw;
     }
   }
-  @media (min-width: 768px) {
+
+  @media (min-width: 610px) {
+    .carousel-cell {
+      width: 33vw;
+    }
+  }
+  @media (min-width: 800px) {
     .carousel-cell {
       width: 25vw;
     }
   }
+
   @media (min-width: 1024px) {
     .carousel-cell {
+      width: 20vw;
+    }
+  }
+  @media (min-width: 1150px) {
+    .carousel-cell {
+      width: 18vw;
+    }
+  }
+  @media (min-width: 1350px) {
+    .carousel-cell {
       width: 15vw;
+    }
+  }
+  @media (min-width: 1600px) {
+    .carousel-cell {
+      width: 13vw;
+    }
+  }
+  @media (min-width: 1921px) {
+    .carousel-cell {
+      width: 10vw;
     }
   }
   .go-to-product {
