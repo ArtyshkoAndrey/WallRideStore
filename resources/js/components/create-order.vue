@@ -60,7 +60,7 @@
                 express_company: this.order.pickup ? 'pickup' : this.order.express_company
               })
               .then((response) => {
-                console.log(response.data)
+                window.location = response.data
               })
               .catch(e => {
                 console.error(e)

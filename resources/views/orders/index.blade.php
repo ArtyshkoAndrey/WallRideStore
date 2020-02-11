@@ -3,7 +3,7 @@
 
 @section('content')
   @if (session('status'))
-    <div class="alert alert-success alert-dismissible fade show position-absolute d-table" style="right:0" role="alert">
+    <div class="alert alert-success alert-dismissible fade show position-absolute d-table" style="right:0; z-index: 101;" role="alert">
       <button type="button" class="close mt-2" data-dismiss="alert">×</button>
       <h5 class="mt-2"><strong>{{ session('status') }}</strong></h5>
     </div>
@@ -73,7 +73,7 @@
                           @endif
                         @empty
                           <tr>
-                            <td>Нет автивных заказов</td>
+                            <td colspan="5">Нет автивных заказов</td>
                           </tr>
                         @endforelse
                       </tbody>
@@ -117,7 +117,7 @@
                         @endif
                       @empty
                         <tr>
-                          <td>Нет автивных заказов</td>
+                          <td colspan="5">Нет выполненых заказов</td>
                         </tr>
                       @endforelse
                       </tbody>
