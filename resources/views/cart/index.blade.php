@@ -19,7 +19,7 @@
           </div>
         </div>
       </div>
-      <div class="col-12 col-md-8">
+      <div class="col-12 col-md-8 mt-3 mt-sm-0">
         <div class="card">
           <div class="card-body">
             @forelse($cartItems as $item)
@@ -60,8 +60,8 @@
           </div>
         </div>
       </div>
-      <div class="col-12 d-flex justify-content-end">
-        <button class="btn btn-dark font-weight-bold" id="offer-payment">Перейти к оформелению заказа <img src="{{asset('public/img/arrow-long-right.png')}}" class="bg-transparent img-fluid" alt=""></button>
+      <div class="col-12 mt-3 d-flex justify-content-end">
+        <a class="btn btn-dark font-weight-bold col-12 col-sm-auto" href="{{ route('orders.create') }}" id="offer-payment">Перейти к оформелению заказа <img src="{{asset('public/img/arrow-long-right.png')}}" class="bg-transparent img-fluid" alt=""></a>
       </div>
     </div>
   </section>

@@ -7,9 +7,9 @@
             <span class="text-uppercase font-weight-bold text-white" v-if="item.on_new">new</span>
             <span class="text-uppercase font-weight-bold text-white" v-else-if="item.on_sale">sale</span>
           </div>
-          <div class="position-absolute px-4 py-1" id="like" v-if="item.on_new || item.on_sale">
-            <button class="bg-transparent border-0 m-0 p-0" @click="favored" v-if="!favor"><i class="fal fa-heart"></i></button>
-            <button class="bg-transparent border-0 m-0 p-0" v-else><i class="fad fa-heart"></i></button>
+          <div class="position-absolute px-4 py-1" id="like">
+            <button class="bg-transparent border-0 m-0 p-0" @click="favored" v-if="!favor" style="transition: 1s;"><i class="fal fa-heart"></i></button>
+            <button class="bg-transparent border-0 m-0 p-0" v-else style="transition: 1s;"><i class="fas fa-heart"></i></button>
           </div>
           <img :src="item.image_url" v-if="slider" alt="item.image" class="carousel-cell-img img-fluid w-100 mb-3 rounded">
           <img :src="item.image_url" v-else alt="item.image" class="img-fluid w-100 mb-3 rounded">
@@ -21,8 +21,8 @@
         <div class="row px-0 mx-0">
           <div class="col-3 px-0 btn-to-cart-adaptive">
 <!--            Кнопка корзины-->
-              <button class="btn w-100 h-100" id="btn-add-to-cart" v-if="!cart" @click="addToCart()" style="transition: 1s;"><i class="fal fa-shopping-bag"></i></button>
-              <button class="btn w-100 h-100" id="btn-remove-in-cart" v-else disabled readonly style="transition: 1s;"><i class="fal fa-check"></i></button>
+              <button class="btn w-100 h-100" id="btn-add-to-cart" v-if="!cart" @click="addToCart()" style="transition: 1s; font-size: 18px;"><i class="fal fa-shopping-bag"></i></button>
+              <button class="btn w-100 h-100" id="btn-remove-in-cart" v-else disabled readonly style="transition: 1s; font-size: 18px;"><i class="fal fa-check"></i></button>
           </div>
           <div class="align-items-center col-4 d-flex pl-2 pr-0">
             <div class="row m-0" style="border-right: 1px solid #D0D0D0;">

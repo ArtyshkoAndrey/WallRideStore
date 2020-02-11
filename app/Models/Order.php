@@ -56,6 +56,7 @@ class Order extends Model
     'remark',
     'paid_at',
     'payment_method',
+    'express_company',
     'payment_no',
     'refund_status',
     'refund_no',
