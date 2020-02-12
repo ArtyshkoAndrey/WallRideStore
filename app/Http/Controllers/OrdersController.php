@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\OrderReviewed;
+use App\Events\OrderPaid;
 use App\Exceptions\CouponCodeUnavailableException;
 use App\Exceptions\InvalidRequestException;
 use App\Http\Requests\ApplyRefundRequest;
@@ -68,6 +68,7 @@ class OrdersController extends Controller
     $order->ship_status = Order::SHIP_STATUS_PENDING;
     $order->closed = 0;
     $order->save();
+    event(new OrderPaid($order));
     return redirect()->route('orders.index')->with('status', 'Ваш заказ оплачен и в обработке');
   }
 
