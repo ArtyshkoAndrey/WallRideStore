@@ -24,7 +24,7 @@ class OrderService
         $order = \DB::transaction(function () use ($user, $address, $items, $coupon, $payment_method, $express_company) {
 
             $order   = new Order([
-              'address'      => [ // 将地址信息放入订单中
+              'address'      => [
                   'address'       => "{$address['country']}, {$address['city']}, {$address['street']}",
                   'contact_name'  => $address['contact_name'],
                   'contact_phone' => $address['phone'],
@@ -47,8 +47,12 @@ class OrderService
                 $item->productSku()->associate($sku);
                 $item->save();
                 $totalAmount += $sku->price * $data['amount'];
+                // throw new \Exception($sku->);
+                // return $sku->decreaseStock($data['amount']);
+                // dd($sku->decreaseStock($data['amount']))
+                // return $sku->decreaseStock($data['amount']);
                 if ($sku->decreaseStock($data['amount']) <= 0) {
-                    throw new InvalidRequestException('该商品库存不足');
+                    throw new InvalidRequestException('Товар распродан');
                 }
             }
             if ($coupon) {
@@ -67,7 +71,7 @@ class OrderService
             return $order;
         });
 
-        dispatch(new CloseOrder($order, config('app.order_ttl')));
+        // dispatch(new CloseOrder($order, config('app.order_ttl')));
 
         return $order;
     }

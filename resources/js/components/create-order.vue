@@ -3,7 +3,7 @@
     name: "create-order",
     data () {
       return {
-        step: 2,
+        step: 1,
         order: {
           name: $('input[name=name]').val(),
           phone: $('input[name=contact_phone]').val(),
@@ -60,6 +60,7 @@
                 express_company: this.order.pickup ? 'pickup' : this.order.express_company
               })
               .then((response) => {
+                console.log(response);
                 window.location = response.data
               })
               .catch(e => {

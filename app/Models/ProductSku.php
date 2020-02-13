@@ -21,7 +21,7 @@ class ProductSku extends Model
             throw new InternalException('Менее инвентарь не должен быть меньше 0');
         }
 
-        return $this->newQuery()->where('id', $this->id)->where('stock', '>=', $amount)->decrement('stock', $amount);
+        return $this->where('id', $this->id)->where('stock', '>=', $amount)->decrement('stock', $amount);
     }
 
     public function addStock($amount)

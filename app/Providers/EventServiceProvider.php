@@ -21,7 +21,7 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         OrderPaid::class => [
-            // UpdateProductSoldCount::class,
+            UpdateProductSoldCount::class,
             SendOrderPaidMail::class,
         ],
     ];

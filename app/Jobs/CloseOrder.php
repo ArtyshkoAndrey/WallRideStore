@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\Models\Order;
 
-// 代表这个类需要被放到队列中执行，而不是触发时立即执行
+// Работа когда нужно закрыть заказ, т.е. отмена
 class CloseOrder implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
