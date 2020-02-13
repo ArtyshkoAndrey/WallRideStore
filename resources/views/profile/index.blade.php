@@ -112,11 +112,11 @@
                         </div>
                         <div class="col-md-6 col-12">
                           <select class="form-control mb-4" name="currency" placeholder="Валюта">
-                            @foreach($currencies as $currency)
-                              @if($address && $address->currency->id == $currency->id)
-                                <option selected value="{{ $currency->id }}">{{ $currency->name }}</option>
+                            @foreach($currencies as $currencyProfile)
+                              @if($address && $address->currency->id == $currencyProfile->id)
+                                <option selected value="{{ $currencyProfile->id }}">{{ $currencyProfile->name }}</option>
                               @else
-                                <option  value="{{ $currency->id }}">{{ $currency->name }}</option>
+                                <option  value="{{ $currencyProfile->id }}">{{ $currencyProfile->name }}</option>
                               @endif
                             @endforeach
                           </select>
