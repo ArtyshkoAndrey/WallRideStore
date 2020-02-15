@@ -8,40 +8,48 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable;
+  use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+  /**
+   * The attributes that are mass assignable.
+   *
+   * @var array
+   */
+  protected $fillable = [
+      'name', 'email', 'password',
+  ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+  protected $casts = [
+    'is_admin' => 'boolean',
+  ];
 
-    public function address()
-    {
-        return $this->hasOne(UserAddress::class);
-    }
+  /**
+   * The attributes that should be hidden for arrays.
+   *
+   * @var array
+   */
+  protected $hidden = [
+      'password', 'remember_token',
+  ];
 
-    public function favoriteProducts()
-    {
-        return $this->belongsToMany(Product::class, 'user_favorite_products')
-            ->withTimestamps()
-            ->orderBy('user_favorite_products.created_at', 'desc');
-    }
+  public function address()
+  {
+      return $this->hasOne(UserAddress::class);
+  }
 
-    public function cartItems()
-    {
-        return $this->hasMany(CartItem::class);
-    }
+  public function favoriteProducts()
+  {
+      return $this->belongsToMany(Product::class, 'user_favorite_products')
+          ->withTimestamps()
+          ->orderBy('user_favorite_products.created_at', 'desc');
+  }
+
+  public function cartItems()
+  {
+      return $this->hasMany(CartItem::class);
+  }
+public function isAdmin()
+{
+  return $this->is_admin; // поле is_admin в таблице users
+}
 }

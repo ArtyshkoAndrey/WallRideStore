@@ -24,7 +24,7 @@ class Controller extends BaseController
       $cartItems = [];
       $priceAmount = 0;
       $amount = 0;
-      if (Auth::check()) {
+      if (Auth::check() && $request->route()->getPrefix() !== '/admin') {
         $cartItems = $this->cartService->get();
         $priceAmount = $this->cartService->priceAmount();
         $amount = $this->cartService->amount();

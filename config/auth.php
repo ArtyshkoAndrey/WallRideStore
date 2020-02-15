@@ -36,15 +36,19 @@ return [
     */
 
     'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
+      'web' => [
+        'driver' => 'session',
+        'provider' => 'users',
+      ],
 
-        'api' => [
-            'driver' => 'token',
-            'provider' => 'users',
-        ],
+      'api' => [
+        'driver' => 'token',
+        'provider' => 'users',
+      ],
+      'admin' => [
+        'driver' => 'session',
+        'provider' => 'admins',
+      ],
     ],
 
     /*
@@ -65,15 +69,14 @@ return [
     */
 
     'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\User::class,
-        ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+      'users' => [
+          'driver' => 'eloquent',
+          'model' => App\Models\User::class,
+      ],
+      'admins' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\Admin::class,
+      ]
     ],
 
     /*
@@ -92,11 +95,16 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
-            'table' => 'password_resets',
-            'expire' => 60,
-        ],
+      'users' => [
+        'provider' => 'users',
+        'table' => 'password_resets',
+        'expire' => 60,
+      ],
+      'admins' => [
+        'provider' => 'admins',
+        'table' => 'password_resets', //here I have considered password resets time same for both the users and admin. If you have different than change this accordingly.
+        'expire' => 60, // you can change the expire time as your requirement
+      ],
     ],
 
 ];

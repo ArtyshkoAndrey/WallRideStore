@@ -19,7 +19,6 @@ Auth::routes(['verify' => true]);
 Route::group(['middleware' => ['auth', 'verified']], function() {
 //  TODO Добавить доступ заказа и тп не auth пользователей
 
-
     Route::post('products/{product}/favorite', 'ProductsController@favor')->name('products.favor');
     Route::delete('products/{product}/favorite', 'ProductsController@disfavor')->name('products.disfavor');
     Route::get('products/favorites', 'ProductsController@favorites')->name('products.favorites');
@@ -43,4 +42,12 @@ Route::group(['middleware' => ['auth']], function() {
   ]);
 });
 
+Route::prefix('admin')->group(function() {
+  Route::get('/login', 'Admin\Auth\AdminLoginController@showLoginForm')->name('admin.login');
+  Route::post('/login', 'Admin\Auth\AdminLoginController@login')->name('admin.login.submit');
+});
 
+Route::group(['prefix' => 'admin', 'guard' => 'admin', 'middleware' => ['auth:admin']], function () {
+  Route::get('logout', 'Admin\Auth\AdminLoginController@logout')->name('admin.logout');
+  Route::get('/', 'Admin\PageController@index')->name('admin.dashboard');
+});

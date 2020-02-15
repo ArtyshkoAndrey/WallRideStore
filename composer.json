@@ -1,5 +1,5 @@
 {
-    "name": "WallRide Shop",
+    "name": "WallRide",
     "type": "project",
     "description": "Ecommerce Shop",
     "keywords": [
@@ -41,8 +41,7 @@
             "App\\": "app/"
         },
         "classmap": [
-            "database/seeds",
-            "database/factories"
+            "database/seeds"
         ],
         "files": [
             "bootstrap/helpers.php"
