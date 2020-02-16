@@ -42,12 +42,25 @@ Route::group(['middleware' => ['auth']], function() {
   ]);
 });
 
-Route::prefix('admin')->group(function() {
-  Route::get('/login', 'Admin\Auth\AdminLoginController@showLoginForm')->name('admin.login');
-  Route::post('/login', 'Admin\Auth\AdminLoginController@login')->name('admin.login.submit');
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
+//  Route::get('/login', 'Admin\Auth\AdminLoginController@showLoginForm')->name('admin.login');
+//  Route::post('/login', 'Admin\Auth\AdminLoginController@login')->name('admin.login.submit');
+  Route::get('login', ['as' => 'admin.auth.login', 'uses' => 'Auth\LoginController@showLoginForm']);
+  Route::post('login', ['as' => 'admin.auth.login', 'uses' => 'Auth\LoginController@login']);
+//  Route::get('logout', ['as' => 'admin.auth.logout', 'uses' => 'Auth\LoginController@logout']);
+
+// Registration Routes...
+//  Route::get('register', ['as' => 'auth.register', 'uses' => 'Auth\AuthController@showRegistrationForm']);
+//  Route::post('register', ['as' => 'auth.register', 'uses' => 'Auth\AuthController@register']);
+
+// Password Reset Routes...
+//  Route::get('password/reset/{token?}', ['as' => 'admin.auth.password.reset', 'uses' => 'Auth\PasswordController@showResetForm']);
+//  Route::post('password/email', ['as' => 'admin.auth.password.email', 'uses' => 'Auth\PasswordController@sendResetLinkEmail']);
+//  Route::post('password/reset', ['as' => 'admin.auth.password.reset', 'uses' => 'Auth\PasswordController@reset']);
 });
 
-Route::group(['prefix' => 'admin', 'guard' => 'admin', 'middleware' => ['auth:admin']], function () {
-  Route::get('logout', 'Admin\Auth\AdminLoginController@logout')->name('admin.logout');
-  Route::get('/', 'Admin\PageController@index')->name('admin.dashboard');
+Route::group(['prefix' => 'admin', 'guard' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth:admin']], function () {
+  Route::get('logout', 'Auth\LoginController@logout')->name('admin.auth.logout');
+  Route::resource('/order', 'OrderController', ['as' => 'admin.store']);
+  Route::redirect('/', route('admin.store.order.index'));
 });

@@ -22,9 +22,10 @@ class Controller extends BaseController
     $this->cartService = $cartService;
     $this->middleware(function ($request, $next) {
       $cartItems = [];
+//      dd(explode('/', $request->route()->getPrefix())[0]);
       $priceAmount = 0;
       $amount = 0;
-      if (Auth::check() && $request->route()->getPrefix() !== '/admin') {
+      if (Auth::check() && explode('/', $request->route()->getPrefix())[0] !== 'admin') {
         $cartItems = $this->cartService->get();
         $priceAmount = $this->cartService->priceAmount();
         $amount = $this->cartService->amount();

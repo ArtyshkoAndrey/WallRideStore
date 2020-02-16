@@ -10,17 +10,28 @@
     <link href="{{ mix('css/admin.css') }}" rel="stylesheet">
     @yield('css')
   </head>
-  <body class="sidebar-mini  {{ Route::currentRouteNamed('admin.login') ? 'login-page' : '' }}">
+  <body class="{{ Route::currentRouteNamed('admin.auth.login') ? 'login-page' : '' }}">
     <div class="wrapper">
-      @include('admin.layouts.navbar')
-
-      @include('admin.layouts.aside')
-
-      @yield('content')
+      <div class="main-header ml-0">
+        @include('admin.layouts.navbar')
+      </div>
+      <div class="sidebar-wrapper">
+        @include('admin.layouts.aside')
+      </div>
+      <div class="content-wrapper">
+        @yield('content')
+      </div>
     </div>
     <script src="{{ mix('js/admin.js') }}"></script>
     <script>
       $( document ).ready( () => {
+
+        $(window).resize(() => {
+          if ($(window).width() >= 992) {
+           $('body').removeClass('sidebar-collapse');
+          }
+        });
+
         $('#name').click(() => {
           $('#list-auth').css('display', 'block')
         });
@@ -31,5 +42,6 @@
         })
       })
     </script>
+  @yield('js')
   </body>
 </html>

@@ -1,5 +1,5 @@
 @import "~admin-lte";
-
+@import "~icheck/skins/all.css";
 // Variables
 @import "fonts";
 
@@ -13,6 +13,7 @@ body {
   height: 100%;
   font: 18px/27px "Circe", sans-serif;
   font-size: 16px;
+  background: #F8F8F8;
   &::-webkit-scrollbar {
     width: 13px;
     background: rgba(0, 0, 0, 0.19);
@@ -40,5 +41,22 @@ body {
   }
   > i {
     color: #F33C3C;
+  }
+}
+
+.card {
+  > .card-header {
+    .col-auto > a {
+      font-size: 14px;
+      color: black;
+      text-decoration: none;
+      &:hover {
+        color: #F33C3C;
+      }
+      &.active {
+        color: #F33C3C;
+        text-decoration: underline;
+      }
+    }
   }
 }

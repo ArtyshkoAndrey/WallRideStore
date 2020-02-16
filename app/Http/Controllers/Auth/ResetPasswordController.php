@@ -12,35 +12,35 @@ use Illuminate\Support\Facades\View;
 
 class ResetPasswordController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Password Reset Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller is responsible for handling password reset requests
-    | and uses a simple trait to include this behavior. You're free to
-    | explore this trait and override any methods you wish to tweak.
-    |
-    */
+  /*
+  |--------------------------------------------------------------------------
+  | Password Reset Controller
+  |--------------------------------------------------------------------------
+  |
+  | This controller is responsible for handling password reset requests
+  | and uses a simple trait to include this behavior. You're free to
+  | explore this trait and override any methods you wish to tweak.
+  |
+  */
 
-    use ResetsPasswords;
+  use ResetsPasswords;
 
-    /**
-     * Where to redirect users after resetting their password.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/';
+  /**
+   * Where to redirect users after resetting their password.
+   *
+   * @var string
+   */
+  protected $redirectTo = '/';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+  /**
+   * Create a new controller instance.
+   *
+   * @return void
+   */
   protected $cartService;
 
   public function __construct(CartService $cartService) {
-      $this->middleware('guest');
+    $this->middleware('guest');
     $this->cartService = $cartService;
     $this->middleware(function ($request, $next) {
       $cartItems = [];
@@ -72,5 +72,5 @@ class ResetPasswordController extends Controller
       View::share('amount', $amount);
       return $next($request);
     });
-    }
+  }
 }

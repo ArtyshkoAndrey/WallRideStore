@@ -11,7 +11,8 @@
       <div class="card-body login-card-body">
         <p class="login-box-msg">Вход</p>
 
-        <form action="{{ route('admin.login.submit') }}" method="post">
+        <form action="{{ route('admin.auth.login') }}" method="post">
+          @csrf
           <div class="input-group mb-3">
             <input type="email" class="form-control" name="email" placeholder="Email">
             <div class="input-group-append">
@@ -48,7 +49,7 @@
         <!-- /.social-auth-links -->
 
         <p class="mb-1">
-          <a href="forgot-password.html">I forgot my password</a>
+          <a href="">Востановить пароль</a>
         </p>
       </div>
       <!-- /.login-card-body -->

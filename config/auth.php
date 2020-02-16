@@ -102,7 +102,7 @@ return [
       ],
       'admins' => [
         'provider' => 'admins',
-        'table' => 'password_resets', //here I have considered password resets time same for both the users and admin. If you have different than change this accordingly.
+        'table' => 'admin_password_resets', //here I have considered password resets time same for both the users and admin. If you have different than change this accordingly.
         'expire' => 60, // you can change the expire time as your requirement
       ],
     ],

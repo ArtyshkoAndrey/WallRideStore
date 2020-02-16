@@ -11,7 +11,7 @@ class PageController extends Controller {
    *
    * @return void
    */
-  public function __constructor()
+  public function __construct ()
   {
     $this->middleware('auth:admin');
   }
