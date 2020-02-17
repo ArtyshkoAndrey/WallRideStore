@@ -9,10 +9,12 @@
     <!-- /.login-logo -->
     <div class="card">
       <div class="card-body login-card-body">
-        <p class="login-box-msg">Сброс пароля</p>
+        <p class="login-box-msg">Сброс пароля</p> 
 
-        <form action="{{ route('admin.auth.reset') }}" method="post">
+        <form action="{{ route('admin.auth.password.reset') }}" method="post">
           @csrf
+          <input type="hidden" value="{{ $email }}" name="email">
+          <input type="hidden" name="token" value="{{ $token }}">
          <div class="input-group mb-3">
             <input type="password" class="form-control" name="password" placeholder="Пароль">
             <div class="input-group-append">

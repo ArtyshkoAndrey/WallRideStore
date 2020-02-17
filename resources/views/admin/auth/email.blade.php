@@ -11,7 +11,7 @@
       <div class="card-body login-card-body">
         <p class="login-box-msg">Востановление пароля</p>
 
-        <form action="{{ route('admin.auth.login') }}" method="post">
+        <form action="{{ route('admin.auth.password.email') }}" method="post">
           @csrf
           <div class="input-group mb-3">
             <input type="email" class="form-control" name="email" placeholder="Email">
