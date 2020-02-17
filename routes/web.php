@@ -43,20 +43,15 @@ Route::group(['middleware' => ['auth']], function() {
 });
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
-//  Route::get('/login', 'Admin\Auth\AdminLoginController@showLoginForm')->name('admin.login');
-//  Route::post('/login', 'Admin\Auth\AdminLoginController@login')->name('admin.login.submit');
   Route::get('login', ['as' => 'admin.auth.login', 'uses' => 'Auth\LoginController@showLoginForm']);
   Route::post('login', ['as' => 'admin.auth.login', 'uses' => 'Auth\LoginController@login']);
-//  Route::get('logout', ['as' => 'admin.auth.logout', 'uses' => 'Auth\LoginController@logout']);
-
-// Registration Routes...
-//  Route::get('register', ['as' => 'auth.register', 'uses' => 'Auth\AuthController@showRegistrationForm']);
-//  Route::post('register', ['as' => 'auth.register', 'uses' => 'Auth\AuthController@register']);
 
 // Password Reset Routes...
-//  Route::get('password/reset/{token?}', ['as' => 'admin.auth.password.reset', 'uses' => 'Auth\PasswordController@showResetForm']);
-//  Route::post('password/email', ['as' => 'admin.auth.password.email', 'uses' => 'Auth\PasswordController@sendResetLinkEmail']);
-//  Route::post('password/reset', ['as' => 'admin.auth.password.reset', 'uses' => 'Auth\PasswordController@reset']);
+ Route::post('password/email', ['as' => 'admin.auth.password.email', 'uses' => 'Auth\ForgotPasswordController@sendResetLinkEmail']);
+ Route::get('password/email', ['as' => 'admin.auth.password.email', 'uses' => 'Auth\ForgotPasswordController@showLinkRequestForm']);
+
+ Route::post('password/reset', ['as' => 'admin.auth.password.reset', 'uses' => 'Auth\PasswordController@reset']);
+  Route::get('password/reset/{token?}', ['as' => 'admin.auth.password.reset', 'uses' => 'Auth\ResetPasswordController@showResetForm']);
 });
 
 Route::group(['prefix' => 'admin', 'guard' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth:admin']], function () {

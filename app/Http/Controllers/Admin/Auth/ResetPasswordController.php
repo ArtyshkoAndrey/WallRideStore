@@ -48,4 +48,13 @@ class ResetPasswordController extends Controller
   {
     return Auth::guard('admin');
   }
+
+  public function showResetForm($token = null)
+  {
+    return view('admin.auth.reset')->with('token', $token);
+  }
+
+  public function reset () {
+    return []
+  }
 }

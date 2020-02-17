@@ -2,7 +2,7 @@
 @section('title', 'Вход')
 
 @section('content')
-  <div class="login-box mt-5">
+  <div class="login-box">
     <div class="login-logo">
       <a href="{{ route('root') }}"><b>WallRide</b> Store</a>
     </div>
@@ -49,7 +49,7 @@
         <!-- /.social-auth-links -->
 
         <p class="mb-1">
-          <a href="">Востановить пароль</a>
+          <a href="{{ route('admin.auth.password.email') }}">Востановить пароль</a>
         </p>
       </div>
       <!-- /.login-card-body -->

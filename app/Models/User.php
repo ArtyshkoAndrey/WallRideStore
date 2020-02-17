@@ -16,7 +16,7 @@ class User extends Authenticatable implements MustVerifyEmail
    * @var array
    */
   protected $fillable = [
-      'name', 'email', 'password',
+    'name', 'email', 'password',
   ];
 
   protected $casts = [
@@ -29,27 +29,23 @@ class User extends Authenticatable implements MustVerifyEmail
    * @var array
    */
   protected $hidden = [
-      'password', 'remember_token',
+    'password', 'remember_token',
   ];
 
   public function address()
   {
-      return $this->hasOne(UserAddress::class);
+    return $this->hasOne(UserAddress::class);
   }
 
   public function favoriteProducts()
   {
-      return $this->belongsToMany(Product::class, 'user_favorite_products')
-          ->withTimestamps()
-          ->orderBy('user_favorite_products.created_at', 'desc');
+    return $this->belongsToMany(Product::class, 'user_favorite_products')
+      ->withTimestamps()
+      ->orderBy('user_favorite_products.created_at', 'desc');
   }
 
   public function cartItems()
   {
-      return $this->hasMany(CartItem::class);
+    return $this->hasMany(CartItem::class);
   }
-public function isAdmin()
-{
-  return $this->is_admin; // поле is_admin в таблице users
-}
 }

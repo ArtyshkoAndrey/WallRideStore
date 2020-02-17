@@ -8,29 +8,41 @@ use Illuminate\Support\Facades\Auth;
 
 class ForgotPasswordController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Password Reset Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller is responsible for handling password reset emails and
-    | includes a trait which assists in sending these notifications from
-    | your application to your users. Feel free to explore this trait.
-    |
-    */
+  /*
+  |--------------------------------------------------------------------------
+  | Password Reset Controller
+  |--------------------------------------------------------------------------
+  |
+  | This controller is responsible for handling password reset emails and
+  | includes a trait which assists in sending these notifications from
+  | your application to your users. Feel free to explore this trait.
+  |
+  */
 
-    use SendsPasswordResetEmails;
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest:admin');
-    }
+  use SendsPasswordResetEmails;
+  /**
+   * Create a new controller instance.
+   *
+   * @return void
+   */
+  public function __construct()
+  {
+    $this->middleware('guest:admin');
+  }
   protected function guard()
   {
     return Auth::guard('admin');
+  }
+  public function broker()
+  {
+    return Password::broker('admins');
+  }
+
+  public function showLinkRequestForm () {
+    return view('admin.auth.email');
+  }
+
+  public function sendResetLinkEmail () {
+    return [];
   }
 }
