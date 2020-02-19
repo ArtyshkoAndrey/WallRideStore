@@ -141,7 +141,11 @@
 @section('js')
   <script>
     $(document).ready(() => {
-      $('input[type="checkbox"]').iCheck();
+      $('input[type="checkbox"]').iCheck({
+        checkboxClass: 'icheckbox_minimal',
+        radioClass: 'iradio_minimal',
+        increaseArea: '20%' // не обязательно
+      });
     })
   </script>
 @endsection
