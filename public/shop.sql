@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Фев 12 2020 г., 12:35
+-- Время создания: Фев 19 2020 г., 14:35
 -- Версия сервера: 5.7.25
 -- Версия PHP: 7.3.9
 
@@ -25,6 +25,49 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `admins`
+--
+
+CREATE TABLE `admins` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `admins`
+--
+
+INSERT INTO `admins` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Артышко', 'artyshko.andrey@gmail.com', NULL, '$2y$10$oVrjeU.N7GKcXXIiCcm.He8GgX2fKR9IggrE2AAGnMQiLUzBvIz02', 'EUFza77F47bk4YLnBFVFamFaau2P2kDTnzQvvppFTpAOvdiUJx8CSAnbtfJy', '2020-02-17 03:21:56', '2020-02-17 03:21:56');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `admin_password_resets`
+--
+
+CREATE TABLE `admin_password_resets` (
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `admin_password_resets`
+--
+
+INSERT INTO `admin_password_resets` (`email`, `token`, `created_at`) VALUES
+('artyshko.andrey@gmail.com', '$2y$10$8fUWp4q5bNMhTuApOhYK1.LPUXMLEXTi10qX974ebNBTOy80NyahC', '2020-02-17 05:32:21');
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `cart_items`
 --
 
@@ -41,7 +84,8 @@ CREATE TABLE `cart_items` (
 
 INSERT INTO `cart_items` (`id`, `user_id`, `product_sku_id`, `amount`) VALUES
 (9, 108, 125, 1),
-(11, 107, 123, 1);
+(11, 107, 123, 1),
+(14, 102, 123, 2);
 
 -- --------------------------------------------------------
 
@@ -125,7 +169,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (11, '2018_12_23_103610_create_coupon_codes_table', 1),
 (12, '2018_12_23_103753_orders_add_coupon_code_id', 1),
 (13, '2020_01_28_234016_create_currencies_table', 2),
-(14, '2018_12_23_042627_create_orders_table', 3);
+(14, '2018_12_23_042627_create_orders_table', 3),
+(15, '2020_02_15_154106_create_admins_table', 4),
+(16, '2020_02_16_095727_admin_password_resets', 4);
 
 -- --------------------------------------------------------
 
@@ -151,15 +197,6 @@ CREATE TABLE `orders` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Дамп данных таблицы `orders`
---
-
-INSERT INTO `orders` (`id`, `no`, `user_id`, `address`, `total_amount`, `paid_at`, `payment_method`, `payment_no`, `closed`, `reviewed`, `ship_status`, `ship_data`, `express_company`, `created_at`, `updated_at`) VALUES
-(17, '20200212003528704129', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"+79029634366\"}', '407100.00', '2020-02-12 00:36:08', 'card', NULL, 0, 0, 'pending', NULL, 'ems', '2020-02-11 17:35:28', '2020-02-11 17:36:08'),
-(18, '20200212003627960431', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"+79029634366\"}', '407100.00', NULL, 'card', NULL, 1, 0, 'paid', NULL, 'ase', '2020-02-11 17:36:27', '2020-02-11 17:36:28'),
-(19, '20200212161005182305', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"+79029634366\"}', '407100.00', '2020-02-12 16:11:59', 'card', NULL, 0, 0, 'pending', NULL, 'ase', '2020-02-12 09:10:05', '2020-02-12 09:11:59');
-
 -- --------------------------------------------------------
 
 --
@@ -177,30 +214,6 @@ CREATE TABLE `order_items` (
   `review` text COLLATE utf8mb4_unicode_ci,
   `reviewed_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Дамп данных таблицы `order_items`
---
-
-INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `product_sku_id`, `amount`, `price`, `rating`, `review`, `reviewed_at`) VALUES
-(23, 17, 59, 123, 1, '55900.00', NULL, NULL, NULL),
-(24, 17, 68, 139, 2, '21900.00', NULL, NULL, NULL),
-(25, 17, 68, 140, 2, '21900.00', NULL, NULL, NULL),
-(26, 17, 71, 143, 1, '27900.00', NULL, NULL, NULL),
-(27, 17, 70, 142, 2, '107900.00', NULL, NULL, NULL),
-(28, 17, 73, 146, 1, '19900.00', NULL, NULL, NULL),
-(29, 18, 59, 123, 1, '55900.00', NULL, NULL, NULL),
-(30, 18, 68, 139, 2, '21900.00', NULL, NULL, NULL),
-(31, 18, 68, 140, 2, '21900.00', NULL, NULL, NULL),
-(32, 18, 71, 143, 1, '27900.00', NULL, NULL, NULL),
-(33, 18, 70, 142, 2, '107900.00', NULL, NULL, NULL),
-(34, 18, 73, 146, 1, '19900.00', NULL, NULL, NULL),
-(35, 19, 59, 123, 1, '55900.00', NULL, NULL, NULL),
-(36, 19, 68, 139, 2, '21900.00', NULL, NULL, NULL),
-(37, 19, 68, 140, 2, '21900.00', NULL, NULL, NULL),
-(38, 19, 71, 143, 1, '27900.00', NULL, NULL, NULL),
-(39, 19, 70, 142, 2, '107900.00', NULL, NULL, NULL),
-(40, 19, 73, 146, 1, '19900.00', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -287,7 +300,7 @@ CREATE TABLE `product_skus` (
 
 INSERT INTO `product_skus` (`id`, `title`, `description`, `price`, `stock`, `product_id`, `created_at`, `updated_at`) VALUES
 (122, 'M', 'Размер М', '55900.00', 0, 58, '2020-01-30 01:54:55', '2020-01-30 01:54:55'),
-(123, 'L', 'Размер L', '55900.00', 2, 59, '2020-01-30 02:42:37', '2020-02-12 09:10:07'),
+(123, 'LL', 'Размер L', '55900.00', 2, 59, '2020-01-30 02:42:37', '2020-02-13 08:01:19'),
 (124, 'M', 'Размер M', '55900.00', 24, 59, '2020-01-30 02:42:37', '2020-02-11 12:55:35'),
 (125, 'L', 'L', '49900.00', 10, 60, '2020-01-30 02:43:57', '2020-02-11 17:08:59'),
 (126, 'M', 'M', '49900.00', 5, 60, '2020-01-30 02:43:57', '2020-02-11 12:55:35'),
@@ -335,7 +348,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `avatar`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(102, 'Андрей Артышко Алексеевич', 'artyshko.andrey@gmail.com', '1581049164.jpg', '2020-01-12 02:40:22', '$2y$10$eJNi1Z2UHjb96hhUqxuhWerv3jjk9Cp/YCGV7bvl4UidmP6qQXsHy', 'AV9BpLY2Zg8Zq0m2nT39tjNeXt5HORYQhGI3fMGsabxo0rvdW0TaJoILZQpM', '2020-01-12 02:39:54', '2020-02-07 04:19:26'),
+(102, 'Андрей Артышко Алексеевич', 'artyshko.andrey@gmail.com', '1581049164.jpg', '2020-01-12 02:40:22', '$2y$10$eJNi1Z2UHjb96hhUqxuhWerv3jjk9Cp/YCGV7bvl4UidmP6qQXsHy', 'B1XJLLZnK2Z8duEgWNV2ULJivrChsq72ZmVecVgJYcLH08BzROBQirTjbWj5', '2020-01-12 02:39:54', '2020-02-07 04:19:26'),
 (106, 'ANZHELIKA ARTYSHKO', 'lika.dudareva@gmail.com', '1581004168.jpg', NULL, '$2y$10$l5Eisw/yfNmepnwHJd7clOeVlljchofWtjWnz3ry2uXmq9zLjrKJa', NULL, '2020-02-03 08:04:08', '2020-02-03 08:04:08'),
 (107, 'Роман Иминов', 'iminovarts@gmail.com', NULL, '2020-02-11 08:06:18', '$2y$10$XCMQtYi8xMArrx0SCTxrzOl55OEtCLk.opVg/sGQnu9c/DJTsIsX6', NULL, '2020-02-11 07:48:06', '2020-02-11 08:06:18'),
 (108, 'Андрей Артышко', 'adad.artyshko@mail.ru', NULL, '2020-02-11 07:57:52', '$2y$10$nQpOvq/evc4nEI2jeqgGYeYHviuaAhapPO/SggFKJZeiMuG4K168u', 'kHfRnLezLkyRxqtFQyyjeC6LisWcAzesyMrgYjQPXFTTOzdSAe14y8fsuFOM', '2020-02-11 07:56:40', '2020-02-11 07:57:52');
@@ -363,7 +376,7 @@ CREATE TABLE `user_addresses` (
 --
 
 INSERT INTO `user_addresses` (`id`, `user_id`, `country`, `city`, `street`, `contact_phone`, `currency_id`, `created_at`, `updated_at`) VALUES
-(194, 102, 'Россия', 'Красноярск', 'ул. Горького, 24 кв 25, 660099', '+79029634366', 2, '2020-01-14 13:06:53', '2020-02-07 11:21:23'),
+(194, 102, 'Россия', 'Красноярск', 'ул. Горького, 24 кв 25, 660099', '+79029634366', 2, '2020-01-14 13:06:53', '2020-02-13 08:45:32'),
 (196, 108, 'Россия', 'Красноярск', 'Горького 24, 25', '89029634366', 3, '2020-02-11 08:07:09', '2020-02-11 08:07:09');
 
 -- --------------------------------------------------------
@@ -396,6 +409,19 @@ INSERT INTO `user_favorite_products` (`id`, `user_id`, `product_id`, `created_at
 --
 -- Индексы сохранённых таблиц
 --
+
+--
+-- Индексы таблицы `admins`
+--
+ALTER TABLE `admins`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `admins_email_unique` (`email`);
+
+--
+-- Индексы таблицы `admin_password_resets`
+--
+ALTER TABLE `admin_password_resets`
+  ADD KEY `admin_password_resets_email_index` (`email`);
 
 --
 -- Индексы таблицы `cart_items`
@@ -488,10 +514,16 @@ ALTER TABLE `user_favorite_products`
 --
 
 --
+-- AUTO_INCREMENT для таблицы `admins`
+--
+ALTER TABLE `admins`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT для таблицы `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT для таблицы `coupon_codes`
@@ -509,19 +541,19 @@ ALTER TABLE `currencies`
 -- AUTO_INCREMENT для таблицы `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `products`
