@@ -48,7 +48,7 @@ class RegisterController extends Controller
       $cartItems = [];
       $priceAmount = 0;
       $amount = 0;
-      if (Auth::check()) {
+      if (Auth::check() && explode('/', $request->route()->getPrefix())[0] !== 'admin') {
         $cartItems = $this->cartService->get();
         $priceAmount = $this->cartService->priceAmount();
         $amount = $this->cartService->amount();
