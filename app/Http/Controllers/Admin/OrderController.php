@@ -123,11 +123,12 @@ class OrderController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Factory|View
      */
     public function edit($id)
     {
-        //
+      $order = Order::find($id);
+      return view('admin.order.edit', compact('order'));
     }
 
     /**

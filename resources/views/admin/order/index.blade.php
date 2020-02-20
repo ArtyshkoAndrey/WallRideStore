@@ -43,6 +43,7 @@
               <div class="form-inline">
                 <select name="action" class="form-control rounded-0">
                   <option value="delete">Удалить</option>
+                  <option value="edit">Редактировать</option>
                 </select>
                 <button class="btn btn-dark border-0 rounded-0 ml-md-2 ml-0 mt-2 mt-md-0" id="action">Применить</button>
               </div>
@@ -132,9 +133,9 @@
       });
       $('select[name="time"]').val(filters.time);
       $('input[name="search"]').val(filters.search);
-      // $('select[name="time"]').on('change', function() {
-      //   $('form[name="form-time"]').submit();
-      // });
+      $('select[name="time"]').on('change', function() {
+        $('form[name="form-time"]').submit();
+      });
       //
       // $('input[name="check_all"]').change(function() {
       //   $('.check-to-order').iCheck('check');
@@ -149,8 +150,8 @@
         $('.check-to-order').each(function (el) {
           this.checked ? ids.push(Number($(this).attr('meta-order-id'))) : null
         })
-        if($('select[name="action"]').val() === 'delete' && ids.length > 0) {
-          window.axios.delete('/admin/order/all', {data: {id: ids}})
+        if ($('select[name="action"]').val() === 'delete' && ids.length > 0) {
+          window.axios.delete('{{ route('admin.store.order.collectionsDestroy') }}', {data: {id: ids}})
           .then(response => {
             if (response.data.status === 'success') {
               document.location.reload()
@@ -160,8 +161,10 @@
           .catch(e => {
             console.log(e)
           })
+        } else if ($('select[name="action"]').val() === 'edit' && ids.length === 1) {
+          window.location.replace('{{ route('admin.store.order.index') }}' + '/' + ids.pop() + '/edit');
         } else {
-          alert('Ни одна запись не выбрана')
+          alert('Ни одна запись не выбрана, или выбранно более одной для редактирования')
         }
       })
 

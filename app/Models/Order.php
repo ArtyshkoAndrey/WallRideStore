@@ -7,23 +7,25 @@ use Ramsey\Uuid\Uuid;
 
 class Order extends Model
 {
-  const REFUND_STATUS_PENDING     = 'pending';
-  const REFUND_STATUS_APPLIED     = 'applied';
-  const REFUND_STATUS_PROCESSING  = 'processing';
-  const REFUND_STATUS_SUCCESS     = 'success';
-  const REFUND_STATUS_FAILED      = 'failed';
 
   const SHIP_STATUS_PENDING   = 'pending';
   const SHIP_STATUS_PAID      = 'paid';
   const SHIP_STATUS_DELIVERED = 'delivered';
   const SHIP_STATUS_RECEIVED  = 'received';
 
+  const SHIP_STATUS_MAP = [
+    self::SHIP_STATUS_PENDING,
+    self::SHIP_STATUS_PAID,
+    self::SHIP_STATUS_DELIVERED,
+    self::SHIP_STATUS_RECEIVED
+  ];
+
   const PAYMENT_METHODS_CASH = 'cash';
   const PAYMENT_METHODS_CARD = 'card';
 
   public static $paymentMethodsMap = [
-    self::PAYMENT_METHODS_CASH  => 'Наличными',
-    self::PAYMENT_METHODS_CARD  => 'Картой',
+    self::PAYMENT_METHODS_CASH  => 'Оплата в магазине',
+    self::PAYMENT_METHODS_CARD  => 'Оплата картой',
   ];
 
   const EXPRESS_METHODS_ASE     = 'ase';
@@ -34,14 +36,6 @@ class Order extends Model
     self::EXPRESS_METHODS_ASE    => 'Asia sky Expreess',
     self::EXPRESS_METHODS_EMS    => 'EMS',
     self::EXPRESS_METHODS_PICKUP => 'Самовывоз'
-  ];
-
-  public static $refundStatusMap = [
-    self::REFUND_STATUS_PENDING    => 'Не возвращается',
-    self::REFUND_STATUS_APPLIED    => 'Требуется возврат',
-    self::REFUND_STATUS_PROCESSING => 'Возврат',
-    self::REFUND_STATUS_SUCCESS    => 'Возврат успешно',
-    self::REFUND_STATUS_FAILED     => 'Возврат не удался',
   ];
 
   public static $shipStatusMap = [

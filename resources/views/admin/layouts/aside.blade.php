@@ -1,12 +1,6 @@
 <!-- Main Sidebar Container -->
 @auth('admin')
 <aside class="main-sidebar sidebar-dark-primary" style="margin-top: 56px; min-height: calc(100vh - 56px); height: 100%;">
-  <!-- Brand Logo -->
-  <a href="{{ route('admin.store.order.index') }}" class="brand-link">
-    <img src="{{ asset('public/images/person.png') }}" alt="Logo" class="brand-image img-circle elevation-3"
-         style="opacity: .8">
-    <span class="brand-text font-weight-light">AdminLTE </span>
-  </a>
 
   <!-- Sidebar -->
   <div class="sidebar p-0 mt-3">

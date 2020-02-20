@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Фев 20 2020 г., 20:00
+-- Время создания: Фев 20 2020 г., 22:22
 -- Версия сервера: 5.7.25-log
 -- Версия PHP: 7.3.9
 
@@ -44,7 +44,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Артышко', 'artyshko.andrey@gmail.com', NULL, '$2y$10$oVrjeU.N7GKcXXIiCcm.He8GgX2fKR9IggrE2AAGnMQiLUzBvIz02', 'EUFza77F47bk4YLnBFVFamFaau2P2kDTnzQvvppFTpAOvdiUJx8CSAnbtfJy', '2020-02-17 03:21:56', '2020-02-17 03:21:56');
+(1, 'Артышко', 'artyshko.andrey@gmail.com', NULL, '$2y$10$oVrjeU.N7GKcXXIiCcm.He8GgX2fKR9IggrE2AAGnMQiLUzBvIz02', 'WP1oKmCAbT0r0tvOBhGL8xjwWzZBndADD8peSgFhd9GweBKdxitbBOKRbGcb', '2020-02-17 03:21:56', '2020-02-17 03:21:56');
 
 -- --------------------------------------------------------
 
@@ -205,10 +205,7 @@ CREATE TABLE `orders` (
 
 INSERT INTO `orders` (`id`, `no`, `user_id`, `address`, `total_amount`, `paid_at`, `payment_method`, `payment_no`, `closed`, `reviewed`, `ship_status`, `ship_data`, `express_company`, `created_at`, `updated_at`) VALUES
 (1, '20200220161505810682', 109, '{\"address\":\"ewr, wer, rwe\",\"contact_name\":\"123\",\"contact_phone\":\"839393939435935\"}', '111800', '2020-02-20 16:16:59', 'card', NULL, 0, 0, 'pending', NULL, 'ems', '2020-02-20 09:15:05', '2020-02-20 09:16:59'),
-(2, '20200220162607606659', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"+79029634366\"}', '838500', '2020-02-20 16:28:00', 'card', NULL, 0, 0, 'paid', NULL, 'ase', '2020-02-20 09:26:07', '2020-02-20 09:28:00'),
-(10, '20200220161505810682222', 109, '{\"address\":\"ewr, wer, rwe\",\"contact_name\":\"123\",\"contact_phone\":\"839393939435935\"}', '111800', '2020-02-20 16:16:59', 'card', NULL, 0, 0, 'pending', NULL, 'ems', '2020-02-20 09:15:05', '2020-02-20 09:16:59'),
-(11, '20200220162607606659333', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"+79029634366\"}', '838500', '2020-02-20 16:28:00', 'card', NULL, 0, 0, 'paid', NULL, 'ase', '2020-02-20 09:26:07', '2020-02-20 09:28:00'),
-(12, '12312313123123', 107, '\"{address:\'\'}\"', '300900', '2020-02-19 00:00:00', 'card', '123123123', 0, 0, 'pending', NULL, 'ems', '2020-02-19 17:00:00', '2020-02-19 17:00:00');
+(2, '20200220162607606659', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"+79029634366\"}', '838500', '2020-02-20 16:28:00', 'card', NULL, 0, 0, 'paid', '{\"express_no\":\"123123\"}', 'ase', '2020-02-20 09:26:07', '2020-02-20 09:28:00');
 
 -- --------------------------------------------------------
 
@@ -222,7 +219,7 @@ CREATE TABLE `order_items` (
   `product_id` int(10) UNSIGNED NOT NULL,
   `product_sku_id` int(10) UNSIGNED NOT NULL,
   `amount` int(10) UNSIGNED NOT NULL,
-  `price` decimal(10,2) NOT NULL,
+  `price` decimal(10,0) NOT NULL,
   `rating` int(10) UNSIGNED DEFAULT NULL,
   `review` text COLLATE utf8mb4_unicode_ci,
   `reviewed_at` timestamp NULL DEFAULT NULL
@@ -233,8 +230,9 @@ CREATE TABLE `order_items` (
 --
 
 INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `product_sku_id`, `amount`, `price`, `rating`, `review`, `reviewed_at`) VALUES
-(1, 1, 59, 123, 2, '55900.00', NULL, NULL, NULL),
-(2, 2, 59, 124, 15, '55900.00', NULL, NULL, NULL);
+(1, 1, 59, 123, 2, '55900', NULL, NULL, NULL),
+(2, 2, 59, 124, 15, '55900', NULL, NULL, NULL),
+(3, 2, 66, 137, 2, '3900', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -373,7 +371,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `avatar`, `email_verified_at`, `pass
 (106, 'ANZHELIKA ARTYSHKO', 'lika.dudareva@gmail.com', '1581004168.jpg', NULL, '$2y$10$l5Eisw/yfNmepnwHJd7clOeVlljchofWtjWnz3ry2uXmq9zLjrKJa', NULL, '2020-02-03 08:04:08', '2020-02-03 08:04:08'),
 (107, 'Роман Иминов', 'iminovarts@gmail.com', NULL, '2020-02-11 08:06:18', '$2y$10$XCMQtYi8xMArrx0SCTxrzOl55OEtCLk.opVg/sGQnu9c/DJTsIsX6', NULL, '2020-02-11 07:48:06', '2020-02-11 08:06:18'),
 (108, 'Андрей Артышко', 'adad.artyshko@mail.ru', NULL, '2020-02-11 07:57:52', '$2y$10$nQpOvq/evc4nEI2jeqgGYeYHviuaAhapPO/SggFKJZeiMuG4K168u', 'kHfRnLezLkyRxqtFQyyjeC6LisWcAzesyMrgYjQPXFTTOzdSAe14y8fsuFOM', '2020-02-11 07:56:40', '2020-02-11 07:57:52'),
-(109, 'Завирюха Богдан', 'bogdan@mail.ru', NULL, NULL, '$2y$10$opf8ZV2ytYVlmUbMTcJq5OVBkNLuyMnDdDU8NQZ/78zvIjqi/B7Di', NULL, '2020-02-20 09:13:50', '2020-02-20 09:13:50');
+(109, 'Завирюха Богдан', 'bogdan@mail.ru', NULL, NULL, '$2y$10$opf8ZV2ytYVlmUbMTcJq5OVBkNLuyMnDdDU8NQZ/78zvIjqi/B7Di', NULL, '2020-02-20 09:13:50', '2020-02-20 09:13:50'),
+(110, 'Alexey Yefimchenko', 'alexeyefimchenko@gmail.com', NULL, '2020-02-19 19:00:51', '$2y$10$vlrb2J1s/Z8AeOV.RQ0QIe7BM.060p2ti2WZdY3MpXdojzbNGue4G', NULL, '2020-02-19 18:54:59', '2020-02-19 19:00:51');
 
 -- --------------------------------------------------------
 
@@ -575,7 +574,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT для таблицы `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `products`
@@ -593,7 +592,7 @@ ALTER TABLE `product_skus`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
 
 --
 -- AUTO_INCREMENT для таблицы `user_addresses`

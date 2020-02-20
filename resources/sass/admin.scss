@@ -47,7 +47,6 @@ body {
 .card {
   > .card-header {
     .col-auto > a {
-      font-size: 14px;
       color: black;
       text-decoration: none;
       &:hover {
@@ -62,4 +61,8 @@ body {
 }
 .content-wrapper {
   background: #F8F8F8;
+}
+
+label {
+  margin-bottom: 0;
 }
