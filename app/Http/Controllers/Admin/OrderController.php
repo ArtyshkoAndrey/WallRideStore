@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Order;
+use App\Services\CartService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -12,6 +13,12 @@ use Illuminate\View\View;
 
 class OrderController extends Controller
 {
+
+  public function __construct()
+  {
+//    parent::__construct($cartService);
+  }
+
   /**
    * Display a listing of the resource.
    *
@@ -141,9 +148,14 @@ class OrderController extends Controller
      * @param  int  $id
      * @return RedirectResponse
      */
-    public function destroy($id) {
-      $order = Order::find($id);
-      $order->delete();
-      return redirect()->route('admin.store.order.index');
-    }
+  public function destroy($id) {
+    $order = Order::find($id);
+    $order->delete();
+    return redirect()->route('admin.store.order.index');
+  }
+
+  public function collectionsDestroy(Request $request) {
+    Order::destroy($request->id);
+    return ['status' => 'success'];
+  }
 }

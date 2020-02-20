@@ -43,9 +43,8 @@
               <div class="form-inline">
                 <select name="action" class="form-control rounded-0">
                   <option value="delete">Удалить</option>
-                  <option value="edit">Редактировать</option>
                 </select>
-                <button class="btn btn-dark border-0 rounded-0 ml-md-2 ml-0 mt-2 mt-md-0">Применить</button>
+                <button class="btn btn-dark border-0 rounded-0 ml-md-2 ml-0 mt-2 mt-md-0" id="action">Применить</button>
               </div>
             </div>
             <div class="col-md-auto col-12 mt-2 mt-md-0">
@@ -97,7 +96,7 @@
             <tbody>
             @forelse($orders as $order)
             <tr class="align-items-center">
-              <td style="vertical-align: middle;"><input type="checkbox" name="check_{{$order->id}}"></td>
+              <td style="vertical-align: middle;"><input type="checkbox" meta-order-id="{{ $order->id }}" class="check-to-order"></td>
               <td style="vertical-align: middle;">№ {{ $order->no }}</td>
               <td style="vertical-align: middle;">{{ $order->user->name }}</td>
               <td style="vertical-align: middle;">{{ $order->created_at->format('d.m.Y') }}</td>
@@ -133,9 +132,39 @@
       });
       $('select[name="time"]').val(filters.time);
       $('input[name="search"]').val(filters.search);
-      $('select[name="time"]').on('change', function() {
-        $('form[name="form-time"]').submit();
+      // $('select[name="time"]').on('change', function() {
+      //   $('form[name="form-time"]').submit();
+      // });
+      //
+      // $('input[name="check_all"]').change(function() {
+      //   $('.check-to-order').iCheck('check');
+      // });
+
+      $('input[name="check_all"]').on('ifChanged', function(event) {
+        event.target.checked ? $('.check-to-order').iCheck('check') : $('.check-to-order').iCheck('uncheck')
       });
+
+      $('#action').click(() => {
+        let ids = []
+        $('.check-to-order').each(function (el) {
+          this.checked ? ids.push(Number($(this).attr('meta-order-id'))) : null
+        })
+        if($('select[name="action"]').val() === 'delete' && ids.length > 0) {
+          window.axios.delete('/admin/order/all', {data: {id: ids}})
+          .then(response => {
+            if (response.data.status === 'success') {
+              document.location.reload()
+              console.log(response.data)
+            }
+          })
+          .catch(e => {
+            console.log(e)
+          })
+        } else {
+          alert('Ни одна запись не выбрана')
+        }
+      })
+
     })
   </script>
 @endsection

@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Фев 19 2020 г., 14:35
--- Версия сервера: 5.7.25
+-- Время создания: Фев 20 2020 г., 20:00
+-- Версия сервера: 5.7.25-log
 -- Версия PHP: 7.3.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -85,7 +85,9 @@ CREATE TABLE `cart_items` (
 INSERT INTO `cart_items` (`id`, `user_id`, `product_sku_id`, `amount`) VALUES
 (9, 108, 125, 1),
 (11, 107, 123, 1),
-(14, 102, 123, 2);
+(16, 109, 125, 12),
+(17, 109, 131, 1),
+(18, 109, 128, 1);
 
 -- --------------------------------------------------------
 
@@ -184,7 +186,7 @@ CREATE TABLE `orders` (
   `no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
   `address` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `total_amount` decimal(10,2) NOT NULL,
+  `total_amount` decimal(10,0) NOT NULL,
   `paid_at` datetime DEFAULT NULL,
   `payment_method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `payment_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -196,6 +198,17 @@ CREATE TABLE `orders` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `orders`
+--
+
+INSERT INTO `orders` (`id`, `no`, `user_id`, `address`, `total_amount`, `paid_at`, `payment_method`, `payment_no`, `closed`, `reviewed`, `ship_status`, `ship_data`, `express_company`, `created_at`, `updated_at`) VALUES
+(1, '20200220161505810682', 109, '{\"address\":\"ewr, wer, rwe\",\"contact_name\":\"123\",\"contact_phone\":\"839393939435935\"}', '111800', '2020-02-20 16:16:59', 'card', NULL, 0, 0, 'pending', NULL, 'ems', '2020-02-20 09:15:05', '2020-02-20 09:16:59'),
+(2, '20200220162607606659', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"+79029634366\"}', '838500', '2020-02-20 16:28:00', 'card', NULL, 0, 0, 'paid', NULL, 'ase', '2020-02-20 09:26:07', '2020-02-20 09:28:00'),
+(10, '20200220161505810682222', 109, '{\"address\":\"ewr, wer, rwe\",\"contact_name\":\"123\",\"contact_phone\":\"839393939435935\"}', '111800', '2020-02-20 16:16:59', 'card', NULL, 0, 0, 'pending', NULL, 'ems', '2020-02-20 09:15:05', '2020-02-20 09:16:59'),
+(11, '20200220162607606659333', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"+79029634366\"}', '838500', '2020-02-20 16:28:00', 'card', NULL, 0, 0, 'paid', NULL, 'ase', '2020-02-20 09:26:07', '2020-02-20 09:28:00'),
+(12, '12312313123123', 107, '\"{address:\'\'}\"', '300900', '2020-02-19 00:00:00', 'card', '123123123', 0, 0, 'pending', NULL, 'ems', '2020-02-19 17:00:00', '2020-02-19 17:00:00');
 
 -- --------------------------------------------------------
 
@@ -214,6 +227,14 @@ CREATE TABLE `order_items` (
   `review` text COLLATE utf8mb4_unicode_ci,
   `reviewed_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `order_items`
+--
+
+INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `product_sku_id`, `amount`, `price`, `rating`, `review`, `reviewed_at`) VALUES
+(1, 1, 59, 123, 2, '55900.00', NULL, NULL, NULL),
+(2, 2, 59, 124, 15, '55900.00', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -261,7 +282,7 @@ CREATE TABLE `products` (
 
 INSERT INTO `products` (`id`, `title`, `description`, `image`, `on_sale`, `on_new`, `rating`, `sold_count`, `review_count`, `price`, `created_at`, `updated_at`) VALUES
 (58, 'BRONZE56K HIGH PERFORMANCE WINDBREAKER ORANGE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.500 kg</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>M</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Windbreaker-Orange-1LOW_1800x180.jpg', 0, 1, 5.00, 0, 0, '55900.00', '2020-01-30 01:54:55', '2020-01-30 01:54:55'),
-(59, 'BRONZE56K HIGH PERFORMACE WINDBREAKER AIR FORCE BLUE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Windbreaker-Blue-1LOW_1800x1800.jpg', 1, 1, 5.00, 0, 0, '55900.00', '2020-01-30 02:42:36', '2020-01-30 02:42:36'),
+(59, 'BRONZE56K HIGH PERFORMACE WINDBREAKER AIR FORCE BLUE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Windbreaker-Blue-1LOW_1800x1800.jpg', 1, 1, 5.00, 17, 0, '55900.00', '2020-01-30 02:42:36', '2020-02-20 09:28:00'),
 (60, 'BRONZE56K HARD WEAR CARGO PANTS DARK NAVY', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Pants-Cargo-Blue-1LOW_1800x1800-300x300.jpg', 1, 1, 5.00, 0, 0, '49900.00', '2020-01-30 02:43:57', '2020-01-30 02:43:57'),
 (61, 'POLAR PATTERNED POLO SHIRT RED', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/PATTERNED-POLO-SHIRT-RED-1.jpg', 1, 0, 5.00, 0, 0, '29900.00', '2020-01-30 02:45:32', '2020-01-30 02:45:32'),
 (62, 'DIME POLO SHIRT PURPLE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/POLO_SHIRT_PURPLE_1_1400x1400-300x300.jpg', 1, 1, 5.00, 0, 0, '17940.00', '2020-01-30 02:46:56', '2020-01-30 02:46:56'),
@@ -300,8 +321,8 @@ CREATE TABLE `product_skus` (
 
 INSERT INTO `product_skus` (`id`, `title`, `description`, `price`, `stock`, `product_id`, `created_at`, `updated_at`) VALUES
 (122, 'M', 'Размер М', '55900.00', 0, 58, '2020-01-30 01:54:55', '2020-01-30 01:54:55'),
-(123, 'LL', 'Размер L', '55900.00', 2, 59, '2020-01-30 02:42:37', '2020-02-13 08:01:19'),
-(124, 'M', 'Размер M', '55900.00', 24, 59, '2020-01-30 02:42:37', '2020-02-11 12:55:35'),
+(123, 'LL', 'Размер L', '55900.00', 0, 59, '2020-01-30 02:42:37', '2020-02-20 09:15:05'),
+(124, 'M', 'Размер M', '55900.00', 9, 59, '2020-01-30 02:42:37', '2020-02-20 09:26:07'),
 (125, 'L', 'L', '49900.00', 10, 60, '2020-01-30 02:43:57', '2020-02-11 17:08:59'),
 (126, 'M', 'M', '49900.00', 5, 60, '2020-01-30 02:43:57', '2020-02-11 12:55:35'),
 (127, 'S', 'S', '49900.00', 23, 60, '2020-01-30 02:43:57', '2020-01-30 02:43:57'),
@@ -351,7 +372,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `avatar`, `email_verified_at`, `pass
 (102, 'Андрей Артышко Алексеевич', 'artyshko.andrey@gmail.com', '1581049164.jpg', '2020-01-12 02:40:22', '$2y$10$eJNi1Z2UHjb96hhUqxuhWerv3jjk9Cp/YCGV7bvl4UidmP6qQXsHy', 'B1XJLLZnK2Z8duEgWNV2ULJivrChsq72ZmVecVgJYcLH08BzROBQirTjbWj5', '2020-01-12 02:39:54', '2020-02-07 04:19:26'),
 (106, 'ANZHELIKA ARTYSHKO', 'lika.dudareva@gmail.com', '1581004168.jpg', NULL, '$2y$10$l5Eisw/yfNmepnwHJd7clOeVlljchofWtjWnz3ry2uXmq9zLjrKJa', NULL, '2020-02-03 08:04:08', '2020-02-03 08:04:08'),
 (107, 'Роман Иминов', 'iminovarts@gmail.com', NULL, '2020-02-11 08:06:18', '$2y$10$XCMQtYi8xMArrx0SCTxrzOl55OEtCLk.opVg/sGQnu9c/DJTsIsX6', NULL, '2020-02-11 07:48:06', '2020-02-11 08:06:18'),
-(108, 'Андрей Артышко', 'adad.artyshko@mail.ru', NULL, '2020-02-11 07:57:52', '$2y$10$nQpOvq/evc4nEI2jeqgGYeYHviuaAhapPO/SggFKJZeiMuG4K168u', 'kHfRnLezLkyRxqtFQyyjeC6LisWcAzesyMrgYjQPXFTTOzdSAe14y8fsuFOM', '2020-02-11 07:56:40', '2020-02-11 07:57:52');
+(108, 'Андрей Артышко', 'adad.artyshko@mail.ru', NULL, '2020-02-11 07:57:52', '$2y$10$nQpOvq/evc4nEI2jeqgGYeYHviuaAhapPO/SggFKJZeiMuG4K168u', 'kHfRnLezLkyRxqtFQyyjeC6LisWcAzesyMrgYjQPXFTTOzdSAe14y8fsuFOM', '2020-02-11 07:56:40', '2020-02-11 07:57:52'),
+(109, 'Завирюха Богдан', 'bogdan@mail.ru', NULL, NULL, '$2y$10$opf8ZV2ytYVlmUbMTcJq5OVBkNLuyMnDdDU8NQZ/78zvIjqi/B7Di', NULL, '2020-02-20 09:13:50', '2020-02-20 09:13:50');
 
 -- --------------------------------------------------------
 
@@ -523,7 +545,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT для таблицы `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT для таблицы `coupon_codes`
@@ -547,13 +569,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT для таблицы `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `products`
@@ -571,7 +593,7 @@ ALTER TABLE `product_skus`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
 
 --
 -- AUTO_INCREMENT для таблицы `user_addresses`
