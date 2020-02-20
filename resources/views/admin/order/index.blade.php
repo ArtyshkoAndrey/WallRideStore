@@ -18,14 +18,25 @@
       <div class="card border-0 w-100 rounded-0" style="z-index: 90;box-shadow: 0 18px 19px rgba(0, 0, 0, 0.25)">
         <div class="card-header">
           <div class="row">
-            <div class="col-auto"><a href="{{ route('admin.store.order.index') }}" class="{{ $type === null ? 'active' : ''}}">Все (100)</a></div>
+            <div class="col-auto"><a href="{{ route('admin.store.order.index') }}" class="{{ ($type === null || $type === 'all') ? 'active' : ''}}">Все ({{App\Models\Order::count()}})</a></div>
             <div class="col-auto">
-              <a href="{{ route('admin.store.order.index', ['type' => \App\Models\Order::SHIP_STATUS_PENDING]) }}" class="{{ $type === \App\Models\Order::SHIP_STATUS_PENDING ? 'active' : ''}}">В обработке (20)</a>
+              <a href="{{ route('admin.store.order.index', ['type' => \App\Models\Order::SHIP_STATUS_PENDING]) }}" class="{{ $type === \App\Models\Order::SHIP_STATUS_PENDING ? 'active' : ''}}">
+                В обработке ({{App\Models\Order::where('ship_status', \App\Models\Order::SHIP_STATUS_PENDING)->count()}})
+              </a>
             </div>
-            <div class="col-auto"><a href="{{ route('admin.store.order.index', ['type' => \App\Models\Order::SHIP_STATUS_RECEIVED]) }}" class="{{ $type === \App\Models\Order::SHIP_STATUS_RECEIVED ? 'active' : ''}}">Выполненные (20)</a></div>
-            <div class="col-auto"><a href="{{ route('admin.store.order.index', ['type' => \App\Models\Order::SHIP_STATUS_PAID]) }}" class="{{ $type === \App\Models\Order::SHIP_STATUS_PAID ? 'active' : ''}}">Оплачиваются (30)</a></div>
-            <div class="col-auto"><a href="{{ route('admin.store.order.index', ['type' => \App\Models\Order::SHIP_STATUS_DELIVERED]) }}" class="{{ $type === \App\Models\Order::SHIP_STATUS_DELIVERED ? 'active' : ''}}">Отпрвленые (30)</a></div>
-            <div class="col-auto ml-auto">{{ $orders->onEachSide(1)->links() }}</div>
+            <div class="col-auto"><a href="{{ route('admin.store.order.index', ['type' => \App\Models\Order::SHIP_STATUS_RECEIVED]) }}" class="{{ $type === \App\Models\Order::SHIP_STATUS_RECEIVED ? 'active' : ''}}">
+                Выполненные ({{App\Models\Order::where('ship_status', \App\Models\Order::SHIP_STATUS_RECEIVED)->count()}})
+              </a>
+            </div>
+            <div class="col-auto"><a href="{{ route('admin.store.order.index', ['type' => \App\Models\Order::SHIP_STATUS_PAID]) }}" class="{{ $type === \App\Models\Order::SHIP_STATUS_PAID ? 'active' : ''}}">
+                Оплачиваются ({{App\Models\Order::where('ship_status', \App\Models\Order::SHIP_STATUS_PAID)->count()}})
+              </a>
+            </div>
+            <div class="col-auto"><a href="{{ route('admin.store.order.index', ['type' => \App\Models\Order::SHIP_STATUS_DELIVERED]) }}" class="{{ $type === \App\Models\Order::SHIP_STATUS_DELIVERED ? 'active' : ''}}">
+                Отправленые ({{App\Models\Order::where('ship_status', \App\Models\Order::SHIP_STATUS_DELIVERED)->count()}})
+              </a>
+            </div>
+            <div class="col-auto ml-auto">{{ $orders->appends($filters)->render() }}</div>
           </div>
           <div class="row align-items-center">
             <div class="col-md-auto col-12 mt-2 mt-md-0">
@@ -38,20 +49,28 @@
               </div>
             </div>
             <div class="col-md-auto col-12 mt-2 mt-md-0">
-              <div class="form-inline">
-                <select name="time" class="form-control rounded-0">
-                  <option value="all">За всё время</option>
-                  <option value="year">За год</option>
-                  <option value="month">За месяц</option>
-                  <option value="week">За неделю</option>
-                </select>
-              </div>
+              <form action="{{ route('admin.store.order.index') }}" name="form-time" method="get">
+                <div class="form-inline">
+                  <input type="hidden" name="type" value="{{$filters['type']}}">
+                  <input type="hidden" name="search" value="{{$filters['search']}}">
+                  <select name="time" class="form-control rounded-0">
+                    <option value="all" {{ ($filters['time'] == 'all' || $filters['time'] == null) ? 'selected' : '' }}>За всё время</option>
+                    <option value="year" {{ $filters['time'] == 'year' ? 'selected' : '' }}>За год</option>
+                    <option value="month" {{ $filters['time'] == 'month' ? 'selected' : '' }}>За месяц</option>
+                    <option value="week" {{ $filters['time'] == 'week' ? 'selected' : '' }}>За неделю</option>
+                  </select>
+                </div>
+              </form>
             </div>
             <div class="col-md-auto col-12 mt-2 mt-md-0">
-              <div class="form-inline">
-                <input type="text" name="search" class="form-control rounded-0" placeholder="Поиск">
-                <button class="btn btn-dark border-0 rounded-0 ml-md-2 ml-0 mt-2 mt-md-0">Найти</button>
-              </div>
+              <form action="{{ route('admin.store.order.index') }}" name="form-search" method="get">
+                <div class="form-inline">
+                  <input type="hidden" name="type" value="{{$filters['type']}}">
+                  <input type="hidden" name="time" value="{{$filters['time']}}">
+                  <input type="text" name="search" class="form-control rounded-0" placeholder="Поиск" value="{{ $filters['search'] }}">
+                  <button class="btn btn-dark border-0 rounded-0 ml-md-2 ml-0 mt-2 mt-md-0" type="submit">Найти</button>
+                </div>
+              </form>
             </div>
             <div class="col-auto ml-auto mt-2 mt-md-0">
               <p class="mb-0">Всего {{ \App\Models\Order::all()->count() }} заказов</p>
@@ -67,69 +86,35 @@
                   <input type="checkbox" name="check_all">
                 </label>
               </th>
-              <th>User</th>
-              <th>Date</th>
-              <th>Status</th>
-              <th>Reason</th>
+              <th>Номер заказа</th>
+              <th>Клиент</th>
+              <th>Дата</th>
+              <th>Статус</th>
+              <th>Итого</th>
+              <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>183</td>
-              <td>John Doe</td>
-              <td>11-7-2014</td>
-              <td><span class="tag tag-success">Approved</span></td>
-              <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+            @forelse($orders as $order)
+            <tr class="align-items-center">
+              <td style="vertical-align: middle;"><input type="checkbox" name="check_{{$order->id}}"></td>
+              <td style="vertical-align: middle;">№ {{ $order->no }}</td>
+              <td style="vertical-align: middle;">{{ $order->user->name }}</td>
+              <td style="vertical-align: middle;">{{ $order->created_at->format('d.m.Y') }}</td>
+              <td style="vertical-align: middle;">{{ \App\Models\Order::$shipStatusMap[$order->ship_status] }}</td>
+              <td style="vertical-align: middle;">Валюта: тенге <br> <span class="font-weight-bold h5">{{ $order->total_amount }} тг.</span></td>
+              <td style="vertical-align: middle;">
+                <form action="{{ route('admin.store.order.destroy', $order->id) }}" method="post">
+                  @csrf
+                  @method('delete')
+                  <button class="bg-transparent border-0 rounded-0" style="color: #F33C3C" type="submit"><i style="font-size: 1.5rem" class="fal fa-trash"></i></button>
+                </form></td>
             </tr>
-            <tr>
-              <td>219</td>
-              <td>Alexander Pierce</td>
-              <td>11-7-2014</td>
-              <td><span class="tag tag-warning">Pending</span></td>
-              <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-            </tr>
-            <tr>
-              <td>657</td>
-              <td>Bob Doe</td>
-              <td>11-7-2014</td>
-              <td><span class="tag tag-primary">Approved</span></td>
-              <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-            </tr>
-            <tr>
-              <td>175</td>
-              <td>Mike Doe</td>
-              <td>11-7-2014</td>
-              <td><span class="tag tag-danger">Denied</span></td>
-              <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-            </tr>
-            <tr>
-              <td>134</td>
-              <td>Jim Doe</td>
-              <td>11-7-2014</td>
-              <td><span class="tag tag-success">Approved</span></td>
-              <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-            </tr>
-            <tr>
-              <td>494</td>
-              <td>Victoria Doe</td>
-              <td>11-7-2014</td>
-              <td><span class="tag tag-warning">Pending</span></td>
-              <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-            </tr>
-            <tr>
-              <td>832</td>
-              <td>Michael Doe</td>
-              <td>11-7-2014</td>
-              <td><span class="tag tag-primary">Approved</span></td>
-              <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-            </tr>
-            <tr>
-              <td>982</td>
-              <td>Rocky Doe</td>
-              <td>11-7-2014</td>
-              <td><span class="tag tag-danger">Denied</span></td>
-              <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-            </tr>
+            @empty
+              <tr>
+                <td colspan="7" class="text-center">Нет заказов</td>
+              </tr>
+            @endforelse
             </tbody>
           </table>
         </div>
@@ -140,11 +125,16 @@
 
 @section('js')
   <script>
+    let filters = {!! json_encode($filters) !!};
     $(document).ready(() => {
       $('input[type="checkbox"]').iCheck({
         checkboxClass: 'icheckbox_minimal',
         radioClass: 'iradio_minimal',
-        increaseArea: '20%' // не обязательно
+      });
+      $('select[name="time"]').val(filters.time);
+      $('input[name="search"]').val(filters.search);
+      $('select[name="time"]').on('change', function() {
+        $('form[name="form-time"]').submit();
       });
     })
   </script>

@@ -4,43 +4,80 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Order;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Carbon;
 use Illuminate\View\View;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Factory|View
-     */
+  /**
+   * Display a listing of the resource.
+   *
+   * @param Request $request
+   * @return Factory|View
+   */
     public function index(Request $request)
     {
       $type = $request->type;
+      $time = $request->time;
+      $search = $request->search;
+      $orders = Order::query()->with('user');
+      if (isset($search)) {
+        $orders = $orders->orWhereHas('user', function($q) use ($search) {
+            $q->where(function($q) use ($search) {
+              $q->where('name', 'LIKE', '%' . $search . '%');
+            });
+          })
+          ->orWhere('no', 'LIKE', '%'.$search.'%')
+          ->orWhere('created_at', 'LIKE', '%'.$search.'%')
+          ->orWhere('ship_data', 'LIKE', '%'.$search.'%');
+      } else {
+        $search = '';
+      }
       if (isset($type)) {
         switch ($type) {
           case Order::SHIP_STATUS_RECEIVED:
-            $orders = Order::where('ship_status', Order::SHIP_STATUS_RECEIVED)->paginate(20);
+            $orders =$orders->where('ship_status', Order::SHIP_STATUS_RECEIVED);
             break;
           case Order::SHIP_STATUS_PENDING:
-            $orders = Order::where('ship_status', Order::SHIP_STATUS_PENDING)->paginate(20);
+            $orders =$orders->where('ship_status', Order::SHIP_STATUS_PENDING);
             break;
           case Order::SHIP_STATUS_DELIVERED:
-            $orders = Order::where('ship_status', Order::SHIP_STATUS_DELIVERED)->paginate(20);
+            $orders =$orders->where('ship_status', Order::SHIP_STATUS_DELIVERED);
             break;
           case Order::SHIP_STATUS_PAID:
-            $orders = Order::where('ship_status', Order::SHIP_STATUS_PAID)->paginate(20);
-            break;
-          default:
-            $orders = Order::paginate(20);
+            $orders =$orders->where('ship_status', Order::SHIP_STATUS_PAID);
             break;
         }
       } else {
-        $orders = Order::paginate(20);
+        $type = 'all';
+      }
+      if (isset($time)) {
+        switch ($time) {
+          case 'year':
+            $orders =$orders->where('created_at', '<', Carbon::now())->where('created_at', '>', Carbon::now()->subYear(1));
+            break;
+          case 'month':
+            $orders =$orders->where('created_at', '<', Carbon::now())->where('created_at', '>',  Carbon::now()->subMonth(1));
+            break;
+          case 'week':
+            $orders =$orders->where('created_at', '<', Carbon::now())->where('created_at', '>',  Carbon::now()->subWeek(1));
+            break;
+        }
+      } else {
+        $time = 'all';
       }
 
-      return view('admin.order.index', compact('orders', 'type'));
+      $orders = $orders->paginate(20);
+      $filters = [
+        'type'  => $type,
+        'time'  => $time,
+        'search'=> $search
+      ];
+
+      return view('admin.order.index', compact('orders', 'type', 'filters'));
     }
 
     /**
@@ -102,10 +139,11 @@ class OrderController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id) {
+      $order = Order::find($id);
+      $order->delete();
+      return redirect()->route('admin.store.order.index');
     }
 }
