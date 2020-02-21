@@ -10,7 +10,7 @@
     </div>
     <div class="row mt-2" style="z-index: 100">
       <div class="col-auto ml-0 pl-0"><a href="{{ route('admin.store.order.index') }}" class="bg-white px-3 py-2 d-block">Заказы</a></div>
-      <div class="col-auto"><a href="{{ route('admin.store.order.index') }}" class="bg-dark px-3 py-2 d-block">Промокоды</a></div>
+      <div class="col-auto"><a href="{{ route('admin.store.coupon.index') }}" class="bg-dark px-3 py-2 d-block">Промокоды</a></div>
       <div class="col-auto"><a href="{{ route('admin.store.order.index') }}" class="bg-dark px-3 py-2 d-block">Доставка</a></div>
       <div class="col-auto"><a href="{{ route('admin.store.order.index') }}" class="bg-dark px-3 py-2 d-block">Оплата</a></div>
     </div>

@@ -58,5 +58,6 @@ Route::group(['prefix' => 'admin', 'guard' => 'admin', 'namespace' => 'Admin', '
   Route::get('logout', 'Auth\LoginController@logout')->name('admin.auth.logout');
   Route::delete('/order/all', 'OrderController@collectionsDestroy')->name('admin.store.order.collectionsDestroy');
   Route::resource('/order', 'OrderController', ['as' => 'admin.store']);
+  Route::resource('/coupon', 'CouponCodesController', ['as' => 'admin.store']);
   Route::redirect('/', route('admin.store.order.index'))->name('admin.root');
 });
