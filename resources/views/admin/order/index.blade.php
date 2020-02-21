@@ -5,14 +5,14 @@
   <div class="container-fluid pt-5 px-4">
     <div class="row">
       <div class="col-12">
-        <h2>Магазин</h2>
+        <h2>Заказы</h2>
       </div>
     </div>
     <div class="row mt-2" style="z-index: 100">
-      <div class="col-auto ml-0 pl-0"><a href="{{ route('admin.store.order.index') }}" class="bg-white px-3 py-2 d-block">Заказы</a></div>
-      <div class="col-auto"><a href="{{ route('admin.store.coupon.index') }}" class="bg-dark px-3 py-2 d-block">Промокоды</a></div>
-      <div class="col-auto"><a href="{{ route('admin.store.order.index') }}" class="bg-dark px-3 py-2 d-block">Доставка</a></div>
-      <div class="col-auto"><a href="{{ route('admin.store.order.index') }}" class="bg-dark px-3 py-2 d-block">Оплата</a></div>
+      <div class="col-sm-auto ml-0 pl-0 col-6 px-0 pr-sm-2"><a href="{{ route('admin.store.order.index') }}" class="bg-white px-3 py-2 d-block">Заказы</a></div>
+      <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.store.coupon.index') }}" class="bg-dark px-3 py-2 d-block">Промокоды</a></div>
+      <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.store.order.index') }}" class="bg-dark px-3 py-2 d-block">Доставка</a></div>
+      <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.store.order.index') }}" class="bg-dark px-3 py-2 d-block">Оплата</a></div>
     </div>
     <div class="row mt-0 pt-0">
       <div class="card border-0 w-100 rounded-0" style="z-index: 90;box-shadow: 0 18px 19px rgba(0, 0, 0, 0.25)">
@@ -136,10 +136,6 @@
       $('select[name="time"]').on('change', function() {
         $('form[name="form-time"]').submit();
       });
-      //
-      // $('input[name="check_all"]').change(function() {
-      //   $('.check-to-order').iCheck('check');
-      // });
 
       $('input[name="check_all"]').on('ifChanged', function(event) {
         event.target.checked ? $('.check-to-order').iCheck('check') : $('.check-to-order').iCheck('uncheck')

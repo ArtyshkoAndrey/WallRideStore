@@ -6,6 +6,7 @@ try {
   window.$ = window.jQuery = require('jquery');
   require('bootstrap');
   require('icheck');
+  require('select2');
   window.axios = require('axios');
   window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
   let token = document.head.querySelector('meta[name="csrf-token"]');
