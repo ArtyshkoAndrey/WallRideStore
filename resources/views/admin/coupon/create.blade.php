@@ -63,7 +63,7 @@
                             <label for="value">Размер скидки</label>
                           </div>
                           <div class="col-12">
-                            <input type="number" name="value" class="form-control rounded-0" id="value" required>
+                            <input type="number" name="value" class="form-control rounded-0" id="value" value="0" required>
                           </div>
                         </div>
                       </div>
@@ -134,12 +134,13 @@
                       <div class="col-md-6 mt-md-2 mt-2">
                         <div class="row">
                           <div class="col-12">
-                            <label for="max_amount">Максимальный расход</label>
+                            <label for="products[]">Товары</label>
                           </div>
                           <div class="col-12">
-                            <select class="js-example-basic-single form-control select2" name="state">
-                              <option value="AL">Alabama</option>
-                              <option value="WY">Wyoming</option>
+                            <select class="js-example-basic-multiple w-100 rounded-0" name="products[]" multiple="multiple">
+                              @foreach(\App\Models\Product::all() as $product)
+                                <option value="{{ $product->id }}">{{ ucwords(strtolower($product->title)) }}</option>
+                              @endforeach
                             </select>
                           </div>
                         </div>
@@ -148,10 +149,44 @@
                       <div class="col-md-6 mt-md-2 mt-2">
                        <div class="row">
                          <div class="col-12">
-                           <label for="max_amount">Максимальный расход</label>
+                           <label for="category[]">Категории</label>
                          </div>
                          <div class="col-12">
-                           <input type="number" min="0" name="max_amount" id="max_amount" class="form-control rounded-0" required>
+                           <select class="js-example-basic-multiple w-100 rounded-0" name="category[]" multiple="multiple">
+                              @foreach(\App\Models\Category::all() as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                              @endforeach
+                            </select>
+                         </div>
+                       </div>
+                      </div>
+
+                      <div class="col-md-6 mt-md-2 mt-2">
+                        <div class="row">
+                          <div class="col-12">
+                            <label for="disabled_products[]">Исключить товары</label>
+                          </div>
+                          <div class="col-12">
+                            <select class="js-example-basic-multiple w-100 rounded-0" name="disabled_products[]" multiple="multiple">
+                              @foreach(\App\Models\Product::all() as $product)
+                                <option value="{{ $product->id }}">{{ ucwords(strtolower($product->title)) }}</option>
+                              @endforeach
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 mt-md-2 mt-2">
+                       <div class="row">
+                         <div class="col-12">
+                           <label for="disabled_category[]">Исключить категории</label>
+                         </div>
+                         <div class="col-12">
+                           <select class="js-example-basic-multiple w-100 rounded-0" name="disabled_category[]" multiple="multiple">
+                               @foreach(\App\Models\Category::all() as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                              @endforeach
+                            </select>
                          </div>
                        </div>
                       </div>
@@ -176,7 +211,9 @@
         checkboxClass: 'icheckbox_minimal',
         radioClass: 'iradio_minimal',
       })
-      $('.js-example-basic-single').select2();
+      $('.js-example-basic-multiple').select2({
+        width: 'resolve'
+      });
     })
   </script>
 @endsection

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Фев 20 2020 г., 22:22
+-- Время создания: Фев 23 2020 г., 07:16
 -- Версия сервера: 5.7.25-log
 -- Версия PHP: 7.3.9
 
@@ -44,7 +44,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Артышко', 'artyshko.andrey@gmail.com', NULL, '$2y$10$oVrjeU.N7GKcXXIiCcm.He8GgX2fKR9IggrE2AAGnMQiLUzBvIz02', 'WP1oKmCAbT0r0tvOBhGL8xjwWzZBndADD8peSgFhd9GweBKdxitbBOKRbGcb', '2020-02-17 03:21:56', '2020-02-17 03:21:56');
+(1, 'Артышко', 'artyshko.andrey@gmail.com', NULL, '$2y$10$oVrjeU.N7GKcXXIiCcm.He8GgX2fKR9IggrE2AAGnMQiLUzBvIz02', 'EUFza77F47bk4YLnBFVFamFaau2P2kDTnzQvvppFTpAOvdiUJx8CSAnbtfJy', '2020-02-17 03:21:56', '2020-02-17 03:21:56');
 
 -- --------------------------------------------------------
 
@@ -92,6 +92,71 @@ INSERT INTO `cart_items` (`id`, `user_id`, `product_sku_id`, `amount`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`, `category_id`, `created_at`, `updated_at`) VALUES
+(1, 'Худи', NULL, NULL, NULL),
+(2, 'Bronze56', 1, NULL, NULL),
+(3, 'Шапки', NULL, NULL, NULL),
+(4, 'Носки', NULL, NULL, NULL),
+(5, 'Тапки', 2, NULL, NULL),
+(6, 'Adidas', 1, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `coupons_categories`
+--
+
+CREATE TABLE `coupons_categories` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `coupon_id` int(10) UNSIGNED NOT NULL,
+  `category_id` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `coupons_categories`
+--
+
+INSERT INTO `coupons_categories` (`id`, `coupon_id`, `category_id`) VALUES
+(1, 2, 2),
+(2, 2, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `coupons_products`
+--
+
+CREATE TABLE `coupons_products` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `coupon_id` int(10) UNSIGNED NOT NULL,
+  `product_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `coupons_products`
+--
+
+INSERT INTO `coupons_products` (`id`, `coupon_id`, `product_id`) VALUES
+(1, 2, 65);
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `coupon_codes`
 --
 
@@ -117,7 +182,7 @@ CREATE TABLE `coupon_codes` (
 
 INSERT INTO `coupon_codes` (`id`, `name`, `code`, `type`, `value`, `total`, `used`, `min_amount`, `not_before`, `not_after`, `enabled`, `created_at`, `updated_at`) VALUES
 (1, '2020 нг топчик', '2020', 'fixed', '20.00', 20, 0, '1.00', '2020-01-13 00:00:00', '2020-02-01 00:00:00', 1, '2020-01-14 08:37:24', '2020-01-14 08:37:54'),
-(2, 'Тест', 'test', 'percent', '90.00', 1000, 0, '5.00', '2020-01-13 00:00:00', '2020-01-31 00:00:00', 1, '2020-01-14 13:22:19', '2020-01-14 13:22:35');
+(2, 'Тест', 'test', 'percent', '90.00', 1000, 0, '5.00', '2020-01-13 00:00:00', '2020-01-31 00:00:00', 0, '2020-01-14 13:22:19', '2020-02-22 10:29:20');
 
 -- --------------------------------------------------------
 
@@ -173,7 +238,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (13, '2020_01_28_234016_create_currencies_table', 2),
 (14, '2018_12_23_042627_create_orders_table', 3),
 (15, '2020_02_15_154106_create_admins_table', 4),
-(16, '2020_02_16_095727_admin_password_resets', 4);
+(16, '2020_02_16_095727_admin_password_resets', 4),
+(17, '2020_02_22_182652_coupons_products', 5),
+(18, '2020_02_22_190314_categories', 6),
+(19, '2020_02_22_190430_coupons_categories', 7);
 
 -- --------------------------------------------------------
 
@@ -205,7 +273,10 @@ CREATE TABLE `orders` (
 
 INSERT INTO `orders` (`id`, `no`, `user_id`, `address`, `total_amount`, `paid_at`, `payment_method`, `payment_no`, `closed`, `reviewed`, `ship_status`, `ship_data`, `express_company`, `created_at`, `updated_at`) VALUES
 (1, '20200220161505810682', 109, '{\"address\":\"ewr, wer, rwe\",\"contact_name\":\"123\",\"contact_phone\":\"839393939435935\"}', '111800', '2020-02-20 16:16:59', 'card', NULL, 0, 0, 'pending', NULL, 'ems', '2020-02-20 09:15:05', '2020-02-20 09:16:59'),
-(2, '20200220162607606659', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"+79029634366\"}', '838500', '2020-02-20 16:28:00', 'card', NULL, 0, 0, 'paid', '{\"express_no\":\"123123\"}', 'ase', '2020-02-20 09:26:07', '2020-02-20 09:28:00');
+(2, '20200220162607606659', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"+79029634366\"}', '838500', '2020-02-20 16:28:00', 'card', NULL, 0, 0, 'paid', NULL, 'ase', '2020-02-20 09:26:07', '2020-02-20 09:28:00'),
+(10, '20200220161505810682222', 109, '{\"address\":\"ewr, wer, rwe\",\"contact_name\":\"123\",\"contact_phone\":\"839393939435935\"}', '111800', '2020-02-20 16:16:59', 'card', NULL, 0, 0, 'pending', NULL, 'ems', '2020-02-20 09:15:05', '2020-02-20 09:16:59'),
+(11, '20200220162607606659333', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"+79029634366\"}', '838500', '2020-02-20 16:28:00', 'card', NULL, 0, 0, 'paid', NULL, 'ase', '2020-02-20 09:26:07', '2020-02-20 09:28:00'),
+(12, '12312313123123', 107, '\"{address:\'\'}\"', '300900', '2020-02-19 00:00:00', 'card', '123123123', 0, 0, 'pending', NULL, 'ems', '2020-02-19 17:00:00', '2020-02-19 17:00:00');
 
 -- --------------------------------------------------------
 
@@ -219,7 +290,7 @@ CREATE TABLE `order_items` (
   `product_id` int(10) UNSIGNED NOT NULL,
   `product_sku_id` int(10) UNSIGNED NOT NULL,
   `amount` int(10) UNSIGNED NOT NULL,
-  `price` decimal(10,0) NOT NULL,
+  `price` decimal(10,2) NOT NULL,
   `rating` int(10) UNSIGNED DEFAULT NULL,
   `review` text COLLATE utf8mb4_unicode_ci,
   `reviewed_at` timestamp NULL DEFAULT NULL
@@ -230,9 +301,8 @@ CREATE TABLE `order_items` (
 --
 
 INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `product_sku_id`, `amount`, `price`, `rating`, `review`, `reviewed_at`) VALUES
-(1, 1, 59, 123, 2, '55900', NULL, NULL, NULL),
-(2, 2, 59, 124, 15, '55900', NULL, NULL, NULL),
-(3, 2, 66, 137, 2, '3900', NULL, NULL, NULL);
+(1, 1, 59, 123, 2, '55900.00', NULL, NULL, NULL),
+(2, 2, 59, 124, 15, '55900.00', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -371,8 +441,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `avatar`, `email_verified_at`, `pass
 (106, 'ANZHELIKA ARTYSHKO', 'lika.dudareva@gmail.com', '1581004168.jpg', NULL, '$2y$10$l5Eisw/yfNmepnwHJd7clOeVlljchofWtjWnz3ry2uXmq9zLjrKJa', NULL, '2020-02-03 08:04:08', '2020-02-03 08:04:08'),
 (107, 'Роман Иминов', 'iminovarts@gmail.com', NULL, '2020-02-11 08:06:18', '$2y$10$XCMQtYi8xMArrx0SCTxrzOl55OEtCLk.opVg/sGQnu9c/DJTsIsX6', NULL, '2020-02-11 07:48:06', '2020-02-11 08:06:18'),
 (108, 'Андрей Артышко', 'adad.artyshko@mail.ru', NULL, '2020-02-11 07:57:52', '$2y$10$nQpOvq/evc4nEI2jeqgGYeYHviuaAhapPO/SggFKJZeiMuG4K168u', 'kHfRnLezLkyRxqtFQyyjeC6LisWcAzesyMrgYjQPXFTTOzdSAe14y8fsuFOM', '2020-02-11 07:56:40', '2020-02-11 07:57:52'),
-(109, 'Завирюха Богдан', 'bogdan@mail.ru', NULL, NULL, '$2y$10$opf8ZV2ytYVlmUbMTcJq5OVBkNLuyMnDdDU8NQZ/78zvIjqi/B7Di', NULL, '2020-02-20 09:13:50', '2020-02-20 09:13:50'),
-(110, 'Alexey Yefimchenko', 'alexeyefimchenko@gmail.com', NULL, '2020-02-19 19:00:51', '$2y$10$vlrb2J1s/Z8AeOV.RQ0QIe7BM.060p2ti2WZdY3MpXdojzbNGue4G', NULL, '2020-02-19 18:54:59', '2020-02-19 19:00:51');
+(109, 'Завирюха Богдан', 'bogdan@mail.ru', NULL, NULL, '$2y$10$opf8ZV2ytYVlmUbMTcJq5OVBkNLuyMnDdDU8NQZ/78zvIjqi/B7Di', NULL, '2020-02-20 09:13:50', '2020-02-20 09:13:50');
 
 -- --------------------------------------------------------
 
@@ -451,6 +520,29 @@ ALTER TABLE `cart_items`
   ADD PRIMARY KEY (`id`),
   ADD KEY `cart_items_user_id_foreign` (`user_id`),
   ADD KEY `cart_items_product_sku_id_foreign` (`product_sku_id`);
+
+--
+-- Индексы таблицы `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `categories_category_id_foreign` (`category_id`);
+
+--
+-- Индексы таблицы `coupons_categories`
+--
+ALTER TABLE `coupons_categories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `coupons_categories_coupon_id_foreign` (`coupon_id`),
+  ADD KEY `coupons_categories_category_id_foreign` (`category_id`);
+
+--
+-- Индексы таблицы `coupons_products`
+--
+ALTER TABLE `coupons_products`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `coupons_products_coupon_id_foreign` (`coupon_id`),
+  ADD KEY `coupons_products_product_id_foreign` (`product_id`);
 
 --
 -- Индексы таблицы `coupon_codes`
@@ -547,6 +639,24 @@ ALTER TABLE `cart_items`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
+-- AUTO_INCREMENT для таблицы `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT для таблицы `coupons_categories`
+--
+ALTER TABLE `coupons_categories`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT для таблицы `coupons_products`
+--
+ALTER TABLE `coupons_products`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT для таблицы `coupon_codes`
 --
 ALTER TABLE `coupon_codes`
@@ -562,7 +672,7 @@ ALTER TABLE `currencies`
 -- AUTO_INCREMENT для таблицы `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT для таблицы `orders`
@@ -574,7 +684,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT для таблицы `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `products`
@@ -592,7 +702,7 @@ ALTER TABLE `product_skus`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
 
 --
 -- AUTO_INCREMENT для таблицы `user_addresses`
@@ -616,6 +726,26 @@ ALTER TABLE `user_favorite_products`
 ALTER TABLE `cart_items`
   ADD CONSTRAINT `cart_items_product_sku_id_foreign` FOREIGN KEY (`product_sku_id`) REFERENCES `product_skus` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `cart_items_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `categories`
+--
+ALTER TABLE `categories`
+  ADD CONSTRAINT `categories_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `coupons_categories`
+--
+ALTER TABLE `coupons_categories`
+  ADD CONSTRAINT `coupons_categories_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `coupons_categories_coupon_id_foreign` FOREIGN KEY (`coupon_id`) REFERENCES `coupon_codes` (`id`) ON DELETE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `coupons_products`
+--
+ALTER TABLE `coupons_products`
+  ADD CONSTRAINT `coupons_products_coupon_id_foreign` FOREIGN KEY (`coupon_id`) REFERENCES `coupon_codes` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `coupons_products_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `orders`

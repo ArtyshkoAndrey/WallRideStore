@@ -90,11 +90,11 @@
             @forelse($coupons as $coupon)
               <tr class="align-items-center">
                 <td style="vertical-align: middle;"><input type="checkbox" meta-coupon-id="{{ $coupon->id }}" class="check-to-order"></td>
-                <td><p class="text-red">{{$coupon->code}}</p></td>
-                <td><p>{{$coupon->type === 'fixed' ? 'Фиксированная скидка' : 'Процент скидки'}}</p></td>
-                <td><p>{{$coupon->value}}</p></td>
-                <td><p>{{$coupon->used}}/{{$coupon->total}}</p></td>
-                <td><p>{{$coupon->not_after->format('d.m.Y')}}</p></td>
+                <td style="vertical-align: middle;"><a href="{{ route('admin.store.coupon.edit', $coupon->id) }}" class="text-red">{{$coupon->code}}</a></td>
+                <td style="vertical-align: middle;">{{$coupon->type === 'fixed' ? 'Фиксированная скидка' : 'Процент скидки'}}</td>
+                <td style="vertical-align: middle;">{{$coupon->value}}</td>
+                <td style="vertical-align: middle;">{{$coupon->used}}/{{$coupon->total}}</td>
+                <td style="vertical-align: middle;" >{{$coupon->not_after->format('d.m.Y')}}</td>
                 <td style="vertical-align: middle;">
                   <form action="{{ route('admin.store.coupon.destroy', $coupon->id) }}" method="post">
                     @csrf

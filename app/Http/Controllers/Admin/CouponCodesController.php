@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\View\View;
+use App\Models\Category;
 
 class CouponCodesController extends Controller
 {
@@ -98,8 +99,30 @@ class CouponCodesController extends Controller
      */
     public function edit($id)
     {
-        //
+      $coupon = CouponCode::find($id);
+      $categories = Category::whereNull('category_id')
+        ->with('childrenCategories')
+        ->get();
+      dd($coupon->productsEnabled, $categories, $coupon->categoriesEnabled);
+      // foreach ($categories as $category) {
+      //   echo '<li>' . $category->name . '</li>'.'<ul>';
+      //   foreach ($category->childrenCategories as $childCategory) {
+      //     $this->child($childCategory);
+      //   }
+      //   echo '</ul>';
+      // }
     }
+
+    // private function child($child) {
+    //   echo '<li>' . $child->name . '</li>';
+    //   if ($child->categories) {
+    //     echo '<ul>';
+    //       foreach ($child->categories as $childCategory) {
+    //         $this->child($childCategory);
+    //       }
+    //     echo '</ul>';
+    //   }
+    // }
 
     /**
      * Update the specified resource in storage.
