@@ -100,10 +100,10 @@ class CouponCodesController extends Controller
     public function edit($id)
     {
       $coupon = CouponCode::find($id);
-      $categories = Category::whereNull('category_id')
-        ->with('childrenCategories')
-        ->get();
-      dd($coupon->productsEnabled, $categories, $coupon->categoriesEnabled);
+      // $categories = Category::whereNull('category_id')
+        // ->with('childrenCategories')
+        // ->get();
+      // dd($coupon->productsEnabled, $categories, $coupon->categoriesEnabled, $coupon->productsDisabled, $coupon->categoriesDisabled);
       // foreach ($categories as $category) {
       //   echo '<li>' . $category->name . '</li>'.'<ul>';
       //   foreach ($category->childrenCategories as $childCategory) {
@@ -111,6 +111,8 @@ class CouponCodesController extends Controller
       //   }
       //   echo '</ul>';
       // }
+
+      return view('admin.coupon.edit', compact('coupon'));
     }
 
     // private function child($child) {

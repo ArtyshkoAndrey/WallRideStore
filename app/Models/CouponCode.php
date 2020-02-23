@@ -26,15 +26,20 @@ class CouponCode extends Model
     'total',
     'used',
     'min_amount',
+    'max_amount',
     'not_before',
     'not_after',
     'enabled',
+    'disabled_other_sales',
+    'disabled_other_coupons'
   ];
   protected $casts = [
     'enabled' => 'boolean',
+    'disabled_other_coupons' => 'boolean',
+    'disabled_other_sales' => 'boolean'
   ];
   // указывает, что эти два поля являются типами даты
-  protected $dates = ['not_before', 'not_after'];
+  protected $dates = ['not_before', 'not_after', ];
 
   protected $appends = ['description'];
 
@@ -43,13 +48,13 @@ class CouponCode extends Model
     $str = '';
 
     if ($this->min_amount > 0) {
-      $str = 'От '.str_replace('.00', '', $this->min_amount). ' р. ';
+      $str = 'От '.str_replace('.00', '', $this->min_amount). ' тг. ';
     }
     if ($this->type === self::TYPE_PERCENT) {
       return $str.'Скидка '.str_replace('.00', '', $this->value).'%';
     }
 
-    return $str.'до '.str_replace('.00', '', $this->value) . ' р. скидка';
+    return $str.'до '.str_replace('.00', '', $this->value) . ' тг. скидка';
   }
 
   public function checkAvailable(User $user, $orderAmount = null)
@@ -81,8 +86,7 @@ class CouponCode extends Model
           $query->whereNull('paid_at')
           ->where('closed', false);
         })->orWhere(function($query) {
-          $query->whereNotNull('paid_at')
-          ->where('refund_status', '!=', Order::REFUND_STATUS_SUCCESS);
+          $query->whereNotNull('paid_at');
         });
       })
       ->exists();
@@ -129,5 +133,13 @@ class CouponCode extends Model
 
   public function categoriesEnabled () {
     return $this->belongsToMany('App\Models\Category', 'coupons_categories', 'coupon_id', 'category_id');
+  }
+
+   public function productsDisabled () {
+    return $this->belongsToMany('App\Models\Product', 'disabled_coupons_products', 'coupon_id', 'product_id');
+  }
+
+  public function categoriesDisabled () {
+    return $this->belongsToMany('App\Models\Category', 'disabled_coupons_categories', 'coupon_id', 'category_id');
   }
 }

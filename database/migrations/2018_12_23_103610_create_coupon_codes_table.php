@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Carbon\Carbon;
 
 class CreateCouponCodesTable extends Migration
 {
@@ -21,10 +22,13 @@ class CreateCouponCodesTable extends Migration
             $table->decimal('value');
             $table->unsignedInteger('total');
             $table->unsignedInteger('used')->default(0);
-            $table->decimal('min_amount', 10, 2);
-            $table->datetime('not_before')->nullable();
-            $table->datetime('not_after')->nullable();
-            $table->boolean('enabled');
+            $table->decimal('min_amount', 10, 0);
+            $table->decimal('max_amount', 10, 0);
+            $table->boolean('disabled_other_coupons')->default(true);
+            $table->boolean('disabled_other_sales')->default(true);
+            $table->datetime('not_before')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->datetime('not_after');
+            $table->boolean('enabled')->default(1);
             $table->timestamps();
         });
     }
