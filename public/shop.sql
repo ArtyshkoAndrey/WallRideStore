@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Фев 23 2020 г., 07:16
+-- Время создания: Фев 24 2020 г., 13:46
 -- Версия сервера: 5.7.25-log
 -- Версия PHP: 7.3.9
 
@@ -87,7 +87,8 @@ INSERT INTO `cart_items` (`id`, `user_id`, `product_sku_id`, `amount`) VALUES
 (11, 107, 123, 1),
 (16, 109, 125, 12),
 (17, 109, 131, 1),
-(18, 109, 128, 1);
+(18, 109, 128, 1),
+(19, 102, 133, 1);
 
 -- --------------------------------------------------------
 
@@ -132,8 +133,8 @@ CREATE TABLE `coupons_categories` (
 --
 
 INSERT INTO `coupons_categories` (`id`, `coupon_id`, `category_id`) VALUES
-(1, 2, 2),
-(2, 2, 3);
+(3, 2, 2),
+(4, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -152,7 +153,9 @@ CREATE TABLE `coupons_products` (
 --
 
 INSERT INTO `coupons_products` (`id`, `coupon_id`, `product_id`) VALUES
-(1, 2, 65);
+(2, 3, 58),
+(3, 3, 59),
+(4, 3, 60);
 
 -- --------------------------------------------------------
 
@@ -168,10 +171,13 @@ CREATE TABLE `coupon_codes` (
   `value` decimal(8,2) NOT NULL,
   `total` int(10) UNSIGNED NOT NULL,
   `used` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `min_amount` decimal(10,2) NOT NULL,
-  `not_before` datetime DEFAULT NULL,
-  `not_after` datetime DEFAULT NULL,
-  `enabled` tinyint(1) NOT NULL,
+  `min_amount` decimal(10,0) NOT NULL,
+  `max_amount` decimal(10,0) NOT NULL,
+  `disabled_other_coupons` tinyint(1) NOT NULL DEFAULT '0',
+  `disabled_other_sales` tinyint(1) NOT NULL DEFAULT '0',
+  `not_before` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `not_after` datetime NOT NULL,
+  `enabled` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -180,9 +186,10 @@ CREATE TABLE `coupon_codes` (
 -- Дамп данных таблицы `coupon_codes`
 --
 
-INSERT INTO `coupon_codes` (`id`, `name`, `code`, `type`, `value`, `total`, `used`, `min_amount`, `not_before`, `not_after`, `enabled`, `created_at`, `updated_at`) VALUES
-(1, '2020 нг топчик', '2020', 'fixed', '20.00', 20, 0, '1.00', '2020-01-13 00:00:00', '2020-02-01 00:00:00', 1, '2020-01-14 08:37:24', '2020-01-14 08:37:54'),
-(2, 'Тест', 'test', 'percent', '90.00', 1000, 0, '5.00', '2020-01-13 00:00:00', '2020-01-31 00:00:00', 0, '2020-01-14 13:22:19', '2020-02-22 10:29:20');
+INSERT INTO `coupon_codes` (`id`, `name`, `code`, `type`, `value`, `total`, `used`, `min_amount`, `max_amount`, `disabled_other_coupons`, `disabled_other_sales`, `not_before`, `not_after`, `enabled`, `created_at`, `updated_at`) VALUES
+(1, 'wallride', 'wallride', 'fixed', '2000.00', 60, 3, '500', '2000', 1, 1, '2020-02-23 12:22:03', '2020-02-29 00:00:00', 1, '2020-02-22 17:00:00', '2020-02-24 09:33:58'),
+(2, '2020', '2020', 'percent', '50.00', 30, 0, '1000', '50000', 0, 0, '2020-02-24 16:57:41', '2020-02-29 00:00:00', 0, '2020-02-24 09:57:41', '2020-02-24 10:04:42'),
+(3, 'best333', 'best333', 'fixed', '10000.00', 10, 0, '1000', '10000', 1, 1, '2020-02-24 17:04:20', '2020-02-20 00:00:00', 0, '2020-02-24 10:04:20', '2020-02-24 10:04:26');
 
 -- --------------------------------------------------------
 
@@ -211,6 +218,44 @@ INSERT INTO `currencies` (`id`, `name`, `ratio`, `symbol`, `created_at`, `update
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `disabled_coupons_categories`
+--
+
+CREATE TABLE `disabled_coupons_categories` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `coupon_id` int(10) UNSIGNED NOT NULL,
+  `category_id` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `disabled_coupons_categories`
+--
+
+INSERT INTO `disabled_coupons_categories` (`id`, `coupon_id`, `category_id`) VALUES
+(7, 3, 5);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `disabled_coupons_products`
+--
+
+CREATE TABLE `disabled_coupons_products` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `coupon_id` int(10) UNSIGNED NOT NULL,
+  `product_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `disabled_coupons_products`
+--
+
+INSERT INTO `disabled_coupons_products` (`id`, `coupon_id`, `product_id`) VALUES
+(2, 3, 60);
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `migrations`
 --
 
@@ -233,7 +278,6 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (7, '2018_12_22_065917_create_user_favorite_products_table', 1),
 (8, '2018_12_22_071404_create_cart_items_table', 1),
 (10, '2018_12_23_042632_create_order_items_table', 1),
-(11, '2018_12_23_103610_create_coupon_codes_table', 1),
 (12, '2018_12_23_103753_orders_add_coupon_code_id', 1),
 (13, '2020_01_28_234016_create_currencies_table', 2),
 (14, '2018_12_23_042627_create_orders_table', 3),
@@ -241,7 +285,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (16, '2020_02_16_095727_admin_password_resets', 4),
 (17, '2020_02_22_182652_coupons_products', 5),
 (18, '2020_02_22_190314_categories', 6),
-(19, '2020_02_22_190430_coupons_categories', 7);
+(19, '2020_02_22_190430_coupons_categories', 7),
+(21, '2018_12_23_103610_create_coupon_codes_table', 8),
+(22, '2020_02_23_124447_disabled_coupons_categories', 9),
+(23, '2020_02_23_124857_disabled_coupons_products', 9);
 
 -- --------------------------------------------------------
 
@@ -558,6 +605,22 @@ ALTER TABLE `currencies`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `disabled_coupons_categories`
+--
+ALTER TABLE `disabled_coupons_categories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `disabled_coupons_categories_coupon_id_foreign` (`coupon_id`),
+  ADD KEY `disabled_coupons_categories_category_id_foreign` (`category_id`);
+
+--
+-- Индексы таблицы `disabled_coupons_products`
+--
+ALTER TABLE `disabled_coupons_products`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `disabled_coupons_products_coupon_id_foreign` (`coupon_id`),
+  ADD KEY `disabled_coupons_products_product_id_foreign` (`product_id`);
+
+--
 -- Индексы таблицы `migrations`
 --
 ALTER TABLE `migrations`
@@ -636,7 +699,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT для таблицы `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT для таблицы `categories`
@@ -648,19 +711,19 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT для таблицы `coupons_categories`
 --
 ALTER TABLE `coupons_categories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `coupons_products`
 --
 ALTER TABLE `coupons_products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `coupon_codes`
 --
 ALTER TABLE `coupon_codes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `currencies`
@@ -669,10 +732,22 @@ ALTER TABLE `currencies`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT для таблицы `disabled_coupons_categories`
+--
+ALTER TABLE `disabled_coupons_categories`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT для таблицы `disabled_coupons_products`
+--
+ALTER TABLE `disabled_coupons_products`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT для таблицы `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT для таблицы `orders`
@@ -746,6 +821,20 @@ ALTER TABLE `coupons_categories`
 ALTER TABLE `coupons_products`
   ADD CONSTRAINT `coupons_products_coupon_id_foreign` FOREIGN KEY (`coupon_id`) REFERENCES `coupon_codes` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `coupons_products_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `disabled_coupons_categories`
+--
+ALTER TABLE `disabled_coupons_categories`
+  ADD CONSTRAINT `disabled_coupons_categories_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `disabled_coupons_categories_coupon_id_foreign` FOREIGN KEY (`coupon_id`) REFERENCES `coupon_codes` (`id`) ON DELETE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `disabled_coupons_products`
+--
+ALTER TABLE `disabled_coupons_products`
+  ADD CONSTRAINT `disabled_coupons_products_coupon_id_foreign` FOREIGN KEY (`coupon_id`) REFERENCES `coupon_codes` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `disabled_coupons_products_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `orders`

@@ -34,7 +34,8 @@
             <div class="row mt-3">
 
               <div class="col-sm-6 col-md-4 col-12">
-                <input type="text" name="code" class="form-control rounded-0" placeholder="Код промокода" required>
+                <input type="text" name="code" class="form-control rounded-0 {{ $errors->has('code') ? ' is-invalid' : '' }}" placeholder="Код промокода" required>
+                <span id="exampleInputEmail1-error" class="error invalid-feedback">Код не должен повтаряться</span>
               </div>
 
               <div class="col-12 mt-5">
@@ -63,7 +64,8 @@
                             <label for="value">Размер скидки</label>
                           </div>
                           <div class="col-12">
-                            <input type="number" name="value" class="form-control rounded-0" id="value" value="0" required>
+                            <input type="number" name="value" class="form-control rounded-0 {{ $errors->has('value') ? ' is-invalid' : '' }}" id="value" value="0" required>
+                            <span id="exampleInputEmail1-error" class="error invalid-feedback">Минимаьное значение 1</span>
                           </div>
                         </div>
                       </div>
@@ -75,6 +77,18 @@
                           </div>
                           <div class="col-12">
                             <input type="date" name="not_after" class="form-control rounded-0" id="not_after" required>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 mt-md-3 mt-2">
+                        <div class="row">
+                          <div class="col-12">
+                            <label for="total">Кол-во</label>
+                          </div>
+                          <div class="col-12">
+                            <input type="number" name="total" class="form-control rounded-0 {{ $errors->has('total') ? ' is-invalid' : '' }}" id="total" required>
+                            <span id="exampleInputEmail1-error" class="error invalid-feedback">Минимальное значение 0</span>
                           </div>
                         </div>
                       </div>
@@ -149,10 +163,10 @@
                       <div class="col-md-6 mt-md-2 mt-2">
                        <div class="row">
                          <div class="col-12">
-                           <label for="category[]">Категории</label>
+                           <label for="categories[]">Категории</label>
                          </div>
                          <div class="col-12">
-                           <select class="js-example-basic-multiple w-100 rounded-0" name="category[]" multiple="multiple">
+                           <select class="js-example-basic-multiple w-100 rounded-0" name="categories[]" multiple="multiple">
                               @foreach(\App\Models\Category::all() as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                               @endforeach
@@ -179,10 +193,10 @@
                       <div class="col-md-6 mt-md-2 mt-2">
                        <div class="row">
                          <div class="col-12">
-                           <label for="disabled_category[]">Исключить категории</label>
+                           <label for="disabled_categories[]">Исключить категории</label>
                          </div>
                          <div class="col-12">
-                           <select class="js-example-basic-multiple w-100 rounded-0" name="disabled_category[]" multiple="multiple">
+                           <select class="js-example-basic-multiple w-100 rounded-0" name="disabled_categories[]" multiple="multiple">
                                @foreach(\App\Models\Category::all() as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                               @endforeach

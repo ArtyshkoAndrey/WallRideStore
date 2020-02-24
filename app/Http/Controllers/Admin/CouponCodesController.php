@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\View\View;
 use App\Models\Category;
+use Carbon\Carbon;
 
 class CouponCodesController extends Controller
 {
@@ -77,7 +78,34 @@ class CouponCodesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $request->validate([
+        'code' => 'required|unique:coupon_codes,code',
+        'value' => 'required|numeric|min:0',
+        'total' => 'required|numeric|min:0'
+      ]);
+      $coupon = new CouponCode();
+      $coupon->name = $request->code;
+      $coupon->code = $request->code;
+      $coupon->type = $request->type;
+      $coupon->value = $request->value;
+      $coupon->total = $request->total;
+      $coupon->min_amount = $request->min_amount;
+      $coupon->max_amount  =$request->max_amount;
+      $coupon->disabled_other_coupons = false;
+      $coupon->disabled_other_sales = false;
+      if (isset($request->disabled_other_coupons))
+        $coupon->disabled_other_coupons = true;
+      if (isset($request->disabled_other_sales))
+        $coupon->disabled_other_sales = true;
+      $coupon->not_after = Carbon::parse($request->not_after);
+      // $coupon->categoriesDisabled()->detach();
+      $coupon->save();
+      $coupon->productsEnabled()->sync($request->products);
+      $coupon->productsDisabled()->sync($request->disabled_products);
+      $coupon->categoriesEnabled()->sync($request->categories);
+      $coupon->categoriesDisabled()->sync($request->disabled_categories);
+      // dd($request->disabled_category);
+      return redirect()->route('admin.store.coupon.index');
     }
 
     /**
@@ -135,7 +163,35 @@ class CouponCodesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $request->validate([
+        'code' => 'required|unique:coupon_codes,code,'.$id,
+        'value' => 'required|numeric|min:0',
+        'total' => 'required|numeric|min:0'
+      ]);
+      $coupon = CouponCode::find($id);
+      $coupon->name = $request->code;
+      $coupon->code = $request->code;
+      $coupon->type = $request->type;
+      $coupon->value = $request->value;
+      $coupon->total = $request->total;
+      $coupon->min_amount = $request->min_amount;
+      $coupon->max_amount  =$request->max_amount;
+      $coupon->disabled_other_coupons = false;
+      $coupon->disabled_other_sales = false;
+      if (isset($request->disabled_other_coupons))
+        $coupon->disabled_other_coupons = true;
+      if (isset($request->disabled_other_sales))
+        $coupon->disabled_other_sales = true;
+      $coupon->not_after = Carbon::parse($request->not_after);
+      // $coupon->categoriesDisabled()->detach();
+      $coupon->save();
+      $coupon->productsEnabled()->sync($request->products);
+      $coupon->productsDisabled()->sync($request->disabled_products);
+      $coupon->categoriesEnabled()->sync($request->categories);
+      $coupon->categoriesDisabled()->sync($request->disabled_categories);
+      
+      // dd($request->disabled_category);
+      return redirect()->route('admin.store.coupon.edit', $id);
     }
 
     /**
