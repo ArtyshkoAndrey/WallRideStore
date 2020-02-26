@@ -132,7 +132,7 @@
                 </div>
                 <div class="col-md-4 mt-2 mt-md-0 h-100">
                   <div class="row px-3 px-md-0">
-                    <span class="col-md-9 col-9 p-0 cart-price">@{{ item.amount }} х @{{ (item.product_sku.price * currency.ratio).toFixed(0) }} @{{currency.symbol}}</span>
+                    <span class="col-md-9 col-9 p-0 cart-price">@{{ item.amount }} х @{{ $cost(item.product_sku.price * currency.ratio) }} @{{currency.symbol}}</span>
                     <button class="btn btn-default col-md-3 col-3 p-0" @click="deleteItem"><i class="fal fa-times fa-fw fa-lg c-red"></i></button>
                   </div>
                 </div>
@@ -144,7 +144,7 @@
               <div class="col-md-6 col-6 h-100">
                 <a class="btn btn-dark" href="{{ route('cart.index') }}" role="button">Перейти в корзину</a>
               </div>
-              <div class="col-md-6 col-6 h-100"><p class="p-0 cart-price m-0">Итого: @{{ ($parent.priceAmount * currency.ratio).toFixed(0) }} @{{currency.symbol}}</p></div>
+              <div class="col-md-6 col-6 h-100"><p class="p-0 cart-price m-0">Итого: @{{ $cost($parent.priceAmount * currency.ratio) }} @{{currency.symbol}}</p></div>
             </div>
           </div>
         </header-cart>

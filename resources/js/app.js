@@ -47,6 +47,10 @@ requireComponent.keys().forEach(fileName => {
   )
 })
 
+Vue.prototype.$cost = function (number) {
+  return new Intl.NumberFormat('ru-RU').format((number).toFixed(0))
+}
+
 const app = new Vue({
   el: '#app',
   data () {

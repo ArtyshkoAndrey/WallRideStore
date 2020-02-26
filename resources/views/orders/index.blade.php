@@ -58,7 +58,7 @@
                                 style="color: {{ $order->ship_status == \App\Models\Order::SHIP_STATUS_PENDING ? '#D0D0D0' : '#04B900'}}"
                               >{{ \App\Models\Order::$shipStatusMap[$order->ship_status] }}</td>
                               <td>{{ \App\Models\Order::$paymentMethodsMap[$order->payment_method] }}</td>
-                              <td>{{ \App\Models\Order::$expressMethodsMap[$order->express_company] }}</td>
+                              <td>{{ $order->expressCompany->name }}</td>
                               <td>
                                 @if($order->ship_status == \App\Models\Order::SHIP_STATUS_DELIVERED || !isset($order->ship_data['express_no']))
                                   Ожидайте
@@ -68,7 +68,7 @@
                                 @endif
 {{--                                RP2303403402pp <a href="#" class="c-red d-block">Отследить</a>--}}
                               </td>
-                              <td>{{ $order->total_amount }} тг.</td>
+                              <td>{{ cost($order->total_amount) }} тг.</td>
                             </tr>
                           @endif
                         @empty
@@ -102,7 +102,7 @@
                               style="color: {{ $order->ship_status == \App\Models\Order::SHIP_STATUS_PENDING ? '#D0D0D0' : '#04B900'}}"
                             >{{ \App\Models\Order::$shipStatusMap[$order->ship_status] }}</td>
                             <td>{{ \App\Models\Order::$paymentMethodsMap[$order->payment_method] }}</td>
-                            <td>{{ \App\Models\Order::$expressMethodsMap[$order->express_company] }}</td>
+                            <td>{{ $order->expressCompany->name }}</td>
                             <td>
                               @if($order->ship_status == \App\Models\Order::SHIP_STATUS_DELIVERED || !isset($order->ship_data['express_no']))
                                 Ожидайте
@@ -112,7 +112,7 @@
                               @endif
                               {{--                                RP2303403402pp <a href="#" class="c-red d-block">Отследить</a>--}}
                             </td>
-                            <td>{{ $order->total_amount }} тг.</td>
+                            <td>{{ cost($order->total_amount) }} тг.</td>
                           </tr>
                         @endif
                       @empty

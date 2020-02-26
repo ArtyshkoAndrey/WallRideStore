@@ -27,7 +27,8 @@ class CreateOrdersTable extends Migration
             $table->boolean('reviewed')->default(false);
             $table->string('ship_status')->default(\App\Models\Order::SHIP_STATUS_PAID);
             $table->text('ship_data')->nullable();
-            $table->text('express_company');
+            $table->unsignedInteger('id_express_company')->nullable();
+            $table->foreign('id_express_company')->references('id')->on('express_companies')->onDelete('set null');
             $table->timestamps();
         });
     }

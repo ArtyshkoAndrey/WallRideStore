@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\ExpressCompany;
 use Ramsey\Uuid\Uuid;
 
 class Order extends Model
@@ -28,16 +29,6 @@ class Order extends Model
     self::PAYMENT_METHODS_CARD  => 'Оплата картой',
   ];
 
-  const EXPRESS_METHODS_ASE     = 'ase';
-  const EXPRESS_METHODS_EMS     = 'ems';
-  const EXPRESS_METHODS_PICKUP  = 'pickup';
-
-  public static $expressMethodsMap = [
-    self::EXPRESS_METHODS_ASE    => 'Asia sky Expreess',
-    self::EXPRESS_METHODS_EMS    => 'EMS',
-    self::EXPRESS_METHODS_PICKUP => 'Самовывоз'
-  ];
-
   public static $shipStatusMap = [
     self::SHIP_STATUS_PAID      => 'Оплачивается',
     self::SHIP_STATUS_PENDING   => 'В обработке',
@@ -51,7 +42,7 @@ class Order extends Model
     'total_amount',
     'paid_at',
     'payment_method',
-    'express_company',
+    'id_express_company',
     'payment_no',
     'closed',
     'reviewed',
@@ -102,31 +93,35 @@ class Order extends Model
       return $this->belongsTo(CouponCode::class);
   }
 
+  public function expressCompany()
+  {
+      return $this->belongsTo(ExpressCompany::class, 'id_express_company', 'id');
+  }
+
   public static function findAvailableNo()
   {
-      // Префикс серийного номера заказа
-      $prefix = date('YmdHis');
-      for ($i = 0; $i < 10; $i++) {
-          // Случайно сгенерированный 6-значный номер
-          $no = $prefix.str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
-          // Определите, существует ли он уже
-          if (!static::query()->where('no', $no)->exists()) {
-              return $no;
-          }
-      }
-      \Log::warning('find order no failed');
+    // Префикс серийного номера заказа
+    $prefix = date('YmdHis');
+    for ($i = 0; $i < 10; $i++) {
+        // Случайно сгенерированный 6-значный номер
+        $no = $prefix.str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+        // Определите, существует ли он уже
+        if (!static::query()->where('no', $no)->exists()) {
+            return $no;
+        }
+    }
+    \Log::warning('find order no failed');
 
-      return false;
+    return false;
   }
 
   public static function getAvailableRefundNo()
   {
-      do {
-          // Класс Uuid может быть использован для генерации уникальных строк с высокой вероятностью
-          $no = Uuid::uuid4()->getHex();
-          // Чтобы избежать повторения, мы запрашиваем базу данных после генерации, чтобы узнать, существует ли такой же номер заказа на возврат.
-      } while (self::query()->where('refund_no', $no)->exists());
-
-      return $no;
+    do {
+      // Класс Uuid может быть использован для генерации уникальных строк с высокой вероятностью
+      $no = Uuid::uuid4()->getHex();
+      // Чтобы избежать повторения, мы запрашиваем базу данных после генерации, чтобы узнать, существует ли такой же номер заказа на возврат.
+    } while (self::query()->where('refund_no', $no)->exists());
+    return $no;
   }
 }

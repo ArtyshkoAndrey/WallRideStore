@@ -1981,6 +1981,9 @@ __webpack_require__.r(__webpack_exports__);
     amount: {
       type: Number,
       required: true
+    },
+    express_companies: {
+      required: true
     }
   },
   methods: {
@@ -2009,7 +2012,7 @@ __webpack_require__.r(__webpack_exports__);
               },
               items: items,
               payment_method: this.order.payment_method,
-              express_company: this.order.pickup ? 'pickup' : this.order.express_company
+              express_company: this.order.pickup ? 3 : this.order.express_company
             }).then(function (response) {
               console.log(response);
               window.location = response.data;
@@ -43540,9 +43543,9 @@ var render = function() {
               _c("p", { staticClass: "price mt-1 pt-0" }, [
                 _vm._v(
                   _vm._s(
-                    (
+                    _vm.$cost(
                       _vm.item.skus[_vm.numberSize].price * _vm.currency.ratio
-                    ).toFixed(0)
+                    )
                   ) +
                     " " +
                     _vm._s(_vm.currency.symbol)
@@ -56127,6 +56130,11 @@ requireComponent.keys().forEach(function (fileName) {
   // иначе будет использован корневой уровень модуля.
   componentConfig["default"] || componentConfig);
 });
+
+Vue.prototype.$cost = function (number) {
+  return new Intl.NumberFormat('ru-RU').format(number.toFixed(0));
+};
+
 var app = new Vue({
   el: '#app',
   data: function data() {

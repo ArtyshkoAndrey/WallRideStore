@@ -29,6 +29,9 @@
       amount: {
         type: Number,
         required: true
+      },
+      express_companies: {
+        required: true
       }
     },
     methods: {
@@ -57,7 +60,7 @@
                 },
                 items: items,
                 payment_method: this.order.payment_method,
-                express_company: this.order.pickup ? 'pickup' : this.order.express_company
+                express_company: this.order.pickup ? 3 : this.order.express_company
               })
               .then((response) => {
                 console.log(response);

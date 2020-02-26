@@ -49,7 +49,7 @@
             <li class="breadcrumb-item active px-0" aria-current="page">{{ ucwords(strtolower($product->title)) }}</li>
           </ol>
         </div>
-        <h1 class="font-weight-bold text-uppercase">@{{  (Number(size.price) * currency.ratio).toFixed(0) }} @{{ currency.symbol }}</h1>
+        <h1 class="font-weight-bold text-uppercase">@{{ $cost(Number(size.price) * currency.ratio) }} @{{ currency.symbol }}</h1>
         <h4 class="font-weight-bold mt-4">Размер</h4>
         <div class="btn-group btn-group-toggle">
           <label v-for="(sku, index) in skus" :key="sku.id" :class="(index===0 ? 'mr-2' : 'mx-2') + ' btn sku-btn' + (idSku === sku.id ? ' active' : '')">
@@ -60,7 +60,7 @@
 
         <div class="row mt-4 align-items-center">
           <div class="col-12">
-            <h4 class="font-weight-bold">Количесвто</h4>
+            <h4 class="font-weight-bold">Количество</h4>
           </div>
           <div class="col-12">
             <p class="text-muted pb-0 mb-0">В наличии: @{{ size.stock }}</p>

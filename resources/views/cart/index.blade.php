@@ -13,7 +13,7 @@
             <h4 class="font-weight-bold">Количество товаров</h4>
             <p class="h5 mt-3" id="amount">{{ $amount }} шт.</p>
             <h4 class="font-weight-bold mt-4">Сумма товаров</h4>
-            <p class="h5 mt-3" id="priceAmount">{{ round((integer) $priceAmount * $currency->ratio, 0) }} {{ $currency->symbol }}</p>
+            <p class="h5 mt-3" id="priceAmount">{{ cost(round((integer) $priceAmount * $currency->ratio, 0)) }} {{ $currency->symbol }}</p>
 {{--            {{ dd($currency->ratio) }}--}}
             <input type="text" value="{{ auth()->user()->name }}" name="name" class="w-100 py-2 px-2 mt-2" placeholder="Имя">
           </div>
@@ -47,7 +47,7 @@
                     </div>
                   </div>
                   <div class="col-4 col-md text-center">
-                    {{ round($item->productSku->price * $currency->ratio, 0) }} {{ $currency->symbol }}
+                    {{ cost(round($item->productSku->price * $currency->ratio, 0)) }} {{ $currency->symbol }}
                   </div>
                   <div class="col-4 col-md">
                     <button class="btn-angle d-block w-100 m-0" @click="deleteItem"><i class="fal fa-times"></i></button>

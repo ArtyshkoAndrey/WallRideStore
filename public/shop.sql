@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Фев 24 2020 г., 13:46
--- Версия сервера: 5.7.25-log
+-- Время создания: Фев 26 2020 г., 13:07
+-- Версия сервера: 5.7.25
 -- Версия PHP: 7.3.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -87,8 +87,7 @@ INSERT INTO `cart_items` (`id`, `user_id`, `product_sku_id`, `amount`) VALUES
 (11, 107, 123, 1),
 (16, 109, 125, 12),
 (17, 109, 131, 1),
-(18, 109, 128, 1),
-(19, 102, 133, 1);
+(18, 109, 128, 1);
 
 -- --------------------------------------------------------
 
@@ -256,6 +255,30 @@ INSERT INTO `disabled_coupons_products` (`id`, `coupon_id`, `product_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `express_companies`
+--
+
+CREATE TABLE `express_companies` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `enabled` tinyint(1) NOT NULL DEFAULT '1',
+  `cost` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Настраиваемая',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `express_companies`
+--
+
+INSERT INTO `express_companies` (`id`, `name`, `enabled`, `cost`, `created_at`, `updated_at`) VALUES
+(1, 'EMS', 1, 'Настраиваемая', NULL, NULL),
+(2, 'ASE', 1, 'Настраиваемая', NULL, NULL),
+(3, 'Самовывоз', 1, '0 тг.', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `migrations`
 --
 
@@ -280,7 +303,6 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (10, '2018_12_23_042632_create_order_items_table', 1),
 (12, '2018_12_23_103753_orders_add_coupon_code_id', 1),
 (13, '2020_01_28_234016_create_currencies_table', 2),
-(14, '2018_12_23_042627_create_orders_table', 3),
 (15, '2020_02_15_154106_create_admins_table', 4),
 (16, '2020_02_16_095727_admin_password_resets', 4),
 (17, '2020_02_22_182652_coupons_products', 5),
@@ -288,7 +310,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (19, '2020_02_22_190430_coupons_categories', 7),
 (21, '2018_12_23_103610_create_coupon_codes_table', 8),
 (22, '2020_02_23_124447_disabled_coupons_categories', 9),
-(23, '2020_02_23_124857_disabled_coupons_products', 9);
+(23, '2020_02_23_124857_disabled_coupons_products', 9),
+(24, '2020_02_26_142913_create_express_companies_table', 10),
+(25, '2020_02_26_142927_create_orders_table', 11);
 
 -- --------------------------------------------------------
 
@@ -309,7 +333,7 @@ CREATE TABLE `orders` (
   `reviewed` tinyint(1) NOT NULL DEFAULT '0',
   `ship_status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'paid',
   `ship_data` text COLLATE utf8mb4_unicode_ci,
-  `express_company` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_express_company` int(10) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -318,12 +342,9 @@ CREATE TABLE `orders` (
 -- Дамп данных таблицы `orders`
 --
 
-INSERT INTO `orders` (`id`, `no`, `user_id`, `address`, `total_amount`, `paid_at`, `payment_method`, `payment_no`, `closed`, `reviewed`, `ship_status`, `ship_data`, `express_company`, `created_at`, `updated_at`) VALUES
-(1, '20200220161505810682', 109, '{\"address\":\"ewr, wer, rwe\",\"contact_name\":\"123\",\"contact_phone\":\"839393939435935\"}', '111800', '2020-02-20 16:16:59', 'card', NULL, 0, 0, 'pending', NULL, 'ems', '2020-02-20 09:15:05', '2020-02-20 09:16:59'),
-(2, '20200220162607606659', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"+79029634366\"}', '838500', '2020-02-20 16:28:00', 'card', NULL, 0, 0, 'paid', NULL, 'ase', '2020-02-20 09:26:07', '2020-02-20 09:28:00'),
-(10, '20200220161505810682222', 109, '{\"address\":\"ewr, wer, rwe\",\"contact_name\":\"123\",\"contact_phone\":\"839393939435935\"}', '111800', '2020-02-20 16:16:59', 'card', NULL, 0, 0, 'pending', NULL, 'ems', '2020-02-20 09:15:05', '2020-02-20 09:16:59'),
-(11, '20200220162607606659333', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"+79029634366\"}', '838500', '2020-02-20 16:28:00', 'card', NULL, 0, 0, 'paid', NULL, 'ase', '2020-02-20 09:26:07', '2020-02-20 09:28:00'),
-(12, '12312313123123', 107, '\"{address:\'\'}\"', '300900', '2020-02-19 00:00:00', 'card', '123123123', 0, 0, 'pending', NULL, 'ems', '2020-02-19 17:00:00', '2020-02-19 17:00:00');
+INSERT INTO `orders` (`id`, `no`, `user_id`, `address`, `total_amount`, `paid_at`, `payment_method`, `payment_no`, `closed`, `reviewed`, `ship_status`, `ship_data`, `id_express_company`, `created_at`, `updated_at`) VALUES
+(1, '123123123', 102, '\"{\'address\':\'test\'}\"', '100000', '2020-02-25 00:00:00', 'card', '233144', 0, 0, 'pending', NULL, 1, NULL, NULL),
+(2, '20200226170503735991', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"+79029634366\"}', '525000', NULL, 'card', NULL, 0, 0, 'paid', NULL, 1, '2020-02-26 10:05:03', '2020-02-26 10:05:03');
 
 -- --------------------------------------------------------
 
@@ -348,8 +369,8 @@ CREATE TABLE `order_items` (
 --
 
 INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `product_sku_id`, `amount`, `price`, `rating`, `review`, `reviewed_at`) VALUES
-(1, 1, 59, 123, 2, '55900.00', NULL, NULL, NULL),
-(2, 2, 59, 124, 15, '55900.00', NULL, NULL, NULL);
+(3, 2, 63, 133, 1, '21900.00', NULL, NULL, NULL),
+(4, 2, 59, 124, 9, '55900.00', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -437,7 +458,7 @@ CREATE TABLE `product_skus` (
 INSERT INTO `product_skus` (`id`, `title`, `description`, `price`, `stock`, `product_id`, `created_at`, `updated_at`) VALUES
 (122, 'M', 'Размер М', '55900.00', 0, 58, '2020-01-30 01:54:55', '2020-01-30 01:54:55'),
 (123, 'LL', 'Размер L', '55900.00', 0, 59, '2020-01-30 02:42:37', '2020-02-20 09:15:05'),
-(124, 'M', 'Размер M', '55900.00', 9, 59, '2020-01-30 02:42:37', '2020-02-20 09:26:07'),
+(124, 'M', 'Размер M', '55900.00', 0, 59, '2020-01-30 02:42:37', '2020-02-26 10:05:03'),
 (125, 'L', 'L', '49900.00', 10, 60, '2020-01-30 02:43:57', '2020-02-11 17:08:59'),
 (126, 'M', 'M', '49900.00', 5, 60, '2020-01-30 02:43:57', '2020-02-11 12:55:35'),
 (127, 'S', 'S', '49900.00', 23, 60, '2020-01-30 02:43:57', '2020-01-30 02:43:57'),
@@ -446,7 +467,7 @@ INSERT INTO `product_skus` (`id`, `title`, `description`, `price`, `stock`, `pro
 (130, 'S', 'S', '29900.00', 2, 61, '2020-01-30 02:45:32', '2020-01-30 02:45:32'),
 (131, 'L', 'L', '17940.00', 2, 62, '2020-01-30 02:46:56', '2020-02-11 17:05:09'),
 (132, 'M', 'M', '17940.00', 1, 62, '2020-01-30 02:46:56', '2020-01-30 02:46:56'),
-(133, 'L', 'L', '21900.00', 1, 63, '2020-01-30 06:09:49', '2020-01-30 06:09:49'),
+(133, 'L', 'L', '21900.00', 0, 63, '2020-01-30 06:09:49', '2020-02-26 10:05:03'),
 (134, 'M', 'M', '21900.00', 2, 63, '2020-01-30 06:09:49', '2020-01-30 06:09:49'),
 (135, 'S', '<table>	<tbody>		<tr>			<th>Вес</th>			<td>0.200 kg</td>		</tr>	</tbody></table>', '16900.00', 13, 64, '2020-01-30 06:10:59', '2020-01-30 06:10:59'),
 (136, 'M', '<table>	<tbody>		<tr>			<th>Вес</th>			<td>0.110 kg</td>		</tr>	</tbody></table>', '17900.00', 34, 65, '2020-01-30 06:12:32', '2020-01-30 06:12:32'),
@@ -513,7 +534,7 @@ CREATE TABLE `user_addresses` (
 --
 
 INSERT INTO `user_addresses` (`id`, `user_id`, `country`, `city`, `street`, `contact_phone`, `currency_id`, `created_at`, `updated_at`) VALUES
-(194, 102, 'Россия', 'Красноярск', 'ул. Горького, 24 кв 25, 660099', '+79029634366', 2, '2020-01-14 13:06:53', '2020-02-13 08:45:32'),
+(194, 102, 'Россия', 'Красноярск', 'ул. Горького, 24 кв 25, 660099', '+79029634366', 1, '2020-01-14 13:06:53', '2020-02-26 09:01:31'),
 (196, 108, 'Россия', 'Красноярск', 'Горького 24, 25', '89029634366', 3, '2020-02-11 08:07:09', '2020-02-11 08:07:09');
 
 -- --------------------------------------------------------
@@ -621,6 +642,12 @@ ALTER TABLE `disabled_coupons_products`
   ADD KEY `disabled_coupons_products_product_id_foreign` (`product_id`);
 
 --
+-- Индексы таблицы `express_companies`
+--
+ALTER TABLE `express_companies`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `migrations`
 --
 ALTER TABLE `migrations`
@@ -632,7 +659,8 @@ ALTER TABLE `migrations`
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `orders_no_unique` (`no`),
-  ADD KEY `orders_user_id_foreign` (`user_id`);
+  ADD KEY `orders_user_id_foreign` (`user_id`),
+  ADD KEY `orders_id_express_company_foreign` (`id_express_company`);
 
 --
 -- Индексы таблицы `order_items`
@@ -699,7 +727,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT для таблицы `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT для таблицы `categories`
@@ -744,22 +772,28 @@ ALTER TABLE `disabled_coupons_products`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT для таблицы `express_companies`
+--
+ALTER TABLE `express_companies`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT для таблицы `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `products`
@@ -840,6 +874,7 @@ ALTER TABLE `disabled_coupons_products`
 -- Ограничения внешнего ключа таблицы `orders`
 --
 ALTER TABLE `orders`
+  ADD CONSTRAINT `orders_id_express_company_foreign` FOREIGN KEY (`id_express_company`) REFERENCES `express_companies` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `orders_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --

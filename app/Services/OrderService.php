@@ -30,7 +30,7 @@ class OrderService
                   'contact_phone' => $address['phone'],
               ],
               'total_amount' => 0,
-              'express_company' => $express_company,
+              'id_express_company' => $express_company,
               'payment_method' => $payment_method
             ]);
             $order->user()->associate($user);
