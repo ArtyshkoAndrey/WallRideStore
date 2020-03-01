@@ -9,7 +9,10 @@ class ExpressCompany extends Model
  	protected $fillable = [
     'name',
     'enabled',
-    'cast'
+    'cost',
+    'cost_step',
+    'step',
+    'type'
   ];
 
   protected $casts = [

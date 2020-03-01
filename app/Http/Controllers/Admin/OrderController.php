@@ -100,7 +100,7 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -134,13 +134,26 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function update(Request $request, $id)
     {
-        //
+//      dd($request);
+      $request->validate([
+        'created_at' => 'required|date',
+        'ship_status' => 'required',
+        'user' => 'required|exists:users,id',
+        'express_no' => 'nullable'
+      ]);
+      $order = Order::find($id);
+      $order->created_at = Carbon::parse($request->created_at);
+      $order->ship_status = $request->ship_status;
+      $order->ship_data = ['express_no' => $request->express_no];
+      $order->user()->associate($request->user);
+      $order->save();
+      return redirect()->route('admin.store.order.index');
     }
 
     /**

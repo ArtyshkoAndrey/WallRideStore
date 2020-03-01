@@ -11,7 +11,7 @@
     <div class="row mt-2" style="z-index: 100">
       <div class="col-sm-auto ml-0 pl-0 col-6 px-0 pr-sm-2"><a href="{{ route('admin.store.order.index') }}" class="bg-white px-3 py-2 d-block">Заказы</a></div>
       <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.store.coupon.index') }}" class="bg-dark px-3 py-2 d-block">Промокоды</a></div>
-      <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.store.order.index') }}" class="bg-dark px-3 py-2 d-block">Доставка</a></div>
+      <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.store.express.index') }}" class="bg-dark px-3 py-2 d-block">Доставка</a></div>
       <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.store.order.index') }}" class="bg-dark px-3 py-2 d-block">Оплата</a></div>
     </div>
     <div class="row mt-0 pt-0">
@@ -98,7 +98,7 @@
             @forelse($orders as $order)
             <tr class="align-items-center">
               <td style="vertical-align: middle;"><input type="checkbox" meta-order-id="{{ $order->id }}" class="check-to-order"></td>
-              <td style="vertical-align: middle;">№ {{ $order->no }}</td>
+              <td style="vertical-align: middle;"><a href="{{ route('admin.store.order.edit', $order->id) }}" class="text-red">№ {{ $order->no }}</a></td>
               <td style="vertical-align: middle;">{{ $order->user->name }}</td>
               <td style="vertical-align: middle;">{{ $order->created_at->format('d.m.Y') }}</td>
               <td style="vertical-align: middle;">{{ \App\Models\Order::$shipStatusMap[$order->ship_status] }}</td>

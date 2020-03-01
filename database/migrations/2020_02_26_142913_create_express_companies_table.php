@@ -17,7 +17,10 @@ class CreateExpressCompaniesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->boolean('enabled')->default(1);
-            $table->string('cost')->default('Настраиваемая');
+            $table->string('cost_type')->default('Настраиваемая');
+            $table->decimal('cost', 10, 0)->nullable();
+            $table->double('step', 10, 2)->nullable();
+            $table->decimal('cost_step', 10, 0);
             $table->timestamps();
         });
     }

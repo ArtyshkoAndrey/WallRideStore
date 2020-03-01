@@ -58,7 +58,9 @@ Route::group(['prefix' => 'admin', 'guard' => 'admin', 'namespace' => 'Admin', '
   Route::get('logout', 'Auth\LoginController@logout')->name('admin.auth.logout');
   Route::delete('/order/all', 'OrderController@collectionsDestroy')->name('admin.store.order.collectionsDestroy');
   Route::delete('/coupon/all', 'CouponCodesController@collectionsDestroy')->name('admin.store.coupon.collectionsDestroy');
+  Route::put('/express/enabled/{id}', 'ExpressController@enabled')->name('admin.store.express.enabled');
   Route::resource('/order', 'OrderController', ['as' => 'admin.store']);
+  Route::resource('/express', 'ExpressController', ['as' => 'admin.store']);
   Route::resource('/coupon', 'CouponCodesController', ['as' => 'admin.store']);
   Route::redirect('/', route('admin.store.order.index'))->name('admin.root');
 });

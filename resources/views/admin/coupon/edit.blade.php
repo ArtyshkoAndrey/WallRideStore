@@ -11,7 +11,7 @@
     <div class="row mt-2" style="z-index: 100">
       <div class="col-sm-auto ml-0 pl-0 col-6 px-0 pr-sm-2"><a href="{{ route('admin.store.order.index') }}" class="bg-dark px-3 py-2 d-block">Заказы</a></div>
       <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.store.coupon.index') }}" class="bg-white px-3 py-2 d-block">Промокоды</a></div>
-      <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.store.order.index') }}" class="bg-dark px-3 py-2 d-block">Доставка</a></div>
+      <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.store.express.index') }}" class="bg-dark px-3 py-2 d-block">Доставка</a></div>
       <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.store.order.index') }}" class="bg-dark px-3 py-2 d-block">Оплата</a></div>
     </div>
     <div class="row mt-0 pt-0">
@@ -81,7 +81,7 @@
                           </div>
                         </div>
                       </div>
-                      
+
                       <div class="col-md-6 mt-md-3 mt-2">
                         <div class="row">
                           <div class="col-12">

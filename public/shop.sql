@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Фев 26 2020 г., 13:07
--- Версия сервера: 5.7.25
+-- Время создания: Мар 01 2020 г., 16:36
+-- Версия сервера: 5.7.25-log
 -- Версия PHP: 7.3.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -87,7 +87,8 @@ INSERT INTO `cart_items` (`id`, `user_id`, `product_sku_id`, `amount`) VALUES
 (11, 107, 123, 1),
 (16, 109, 125, 12),
 (17, 109, 131, 1),
-(18, 109, 128, 1);
+(18, 109, 128, 1),
+(21, 102, 131, 1);
 
 -- --------------------------------------------------------
 
@@ -262,7 +263,10 @@ CREATE TABLE `express_companies` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `enabled` tinyint(1) NOT NULL DEFAULT '1',
-  `cost` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Настраиваемая',
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Настраиваемая',
+  `cost` decimal(10,0) DEFAULT NULL,
+  `step` double(10,2) DEFAULT NULL,
+  `cost_step` decimal(10,0) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -271,10 +275,10 @@ CREATE TABLE `express_companies` (
 -- Дамп данных таблицы `express_companies`
 --
 
-INSERT INTO `express_companies` (`id`, `name`, `enabled`, `cost`, `created_at`, `updated_at`) VALUES
-(1, 'EMS', 1, 'Настраиваемая', NULL, NULL),
-(2, 'ASE', 1, 'Настраиваемая', NULL, NULL),
-(3, 'Самовывоз', 1, '0 тг.', NULL, NULL);
+INSERT INTO `express_companies` (`id`, `name`, `enabled`, `type`, `cost`, `step`, `cost_step`, `created_at`, `updated_at`) VALUES
+(1, 'EMS', 0, 'Настраиваемая', NULL, NULL, NULL, NULL, '2020-03-01 13:31:25'),
+(2, 'ASE', 0, 'Настраиваемая', NULL, NULL, NULL, NULL, '2020-03-01 13:31:22'),
+(3, 'Самовывоз', 1, '0 тг.', NULL, NULL, NULL, NULL, '2020-03-01 13:31:31');
 
 -- --------------------------------------------------------
 
@@ -343,7 +347,7 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `no`, `user_id`, `address`, `total_amount`, `paid_at`, `payment_method`, `payment_no`, `closed`, `reviewed`, `ship_status`, `ship_data`, `id_express_company`, `created_at`, `updated_at`) VALUES
-(1, '123123123', 102, '\"{\'address\':\'test\'}\"', '100000', '2020-02-25 00:00:00', 'card', '233144', 0, 0, 'pending', NULL, 1, NULL, NULL),
+(1, '123123123', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"+79029634366\"}', '100000', '2020-02-25 00:00:00', 'card', '233144', 0, 0, 'pending', '{\"express_no\":\"123\"}', 1, '2020-02-28 17:00:00', '2020-02-29 08:59:29'),
 (2, '20200226170503735991', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"+79029634366\"}', '525000', NULL, 'card', NULL, 0, 0, 'paid', NULL, 1, '2020-02-26 10:05:03', '2020-02-26 10:05:03');
 
 -- --------------------------------------------------------
@@ -727,7 +731,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT для таблицы `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT для таблицы `categories`

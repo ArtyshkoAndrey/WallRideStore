@@ -11,7 +11,7 @@
     <div class="row mt-2" style="z-index: 100">
       <div class="col-sm-auto ml-0 pl-0 col-6 px-0 pr-sm-2"><a href="{{ route('admin.store.order.index') }}" class="bg-white px-3 py-2 d-block">Заказы</a></div>
       <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.store.coupon.index') }}" class="bg-dark px-3 py-2 d-block">Промокоды</a></div>
-      <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.store.order.index') }}" class="bg-dark px-3 py-2 d-block">Доставка</a></div>
+      <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.store.express.index') }}" class="bg-dark px-3 py-2 d-block">Доставка</a></div>
       <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.store.order.index') }}" class="bg-dark px-3 py-2 d-block">Оплата</a></div>
     </div>
     <div class="row mt-0 pt-0">
@@ -26,6 +26,7 @@
         <div class="card-body">
           <form action="{{ route('admin.store.order.update', $order->id) }}" method="post">
             @csrf
+            @method('PUT')
             <div class="row justify-content-between">
               <div class="col-auto">
                 <h3>Заказ № {{ $order->no }}</h3>
@@ -125,7 +126,7 @@
                     <label for="express_company">Способ доставки</label>
                   </div>
                   <div class="col-12">
-                    <p id="express_company" class="text-muted">{{ \App\Models\Order::$expressMethodsMap[$order->express_company] }}</p>
+                    <p id="express_company" class="text-muted">{{$order->expressCompany->name }}</p>
                   </div>
                 </div>
 
@@ -188,7 +189,7 @@
             </div>
             <div class="row mt-4 justify-content-lg-between px-md-4 px-0">
               <div class="col-12 col-md-auto h5">
-                <span class="font-weight-bold">Доставка:</span> {{ \App\Models\Order::$expressMethodsMap[$order->express_company] }} - 0 тг. ИЗМЕНИТЬ
+                <span class="font-weight-bold">Доставка:</span> {{ $order->expressCompany->name }} - 0 тг. ИЗМЕНИТЬ
               </div>
               <div class="col-12 col-md-auto h5">
                 <span class="font-weight-bold">Сумма заказа:</span> {{ $order->total_amount }} тг.
