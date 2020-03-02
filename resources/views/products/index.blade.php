@@ -31,7 +31,7 @@
     <div class="container-fluid">
       <div class="row align-items-center px-5">
         <h2 class="font-weight-bold">Новые товары</h2>
-        <a class="ml-auto c-red" href="#">Смотреть все <img src="{{ asset('public/images/arrow-long-right-red.png') }}" width="50" alt=""></a>
+        <a class="ml-auto text-dark" href="#">Смотреть все <img src="{{ asset('public/images/arrow-long-right-red.png') }}" width="50" alt=""></a>
       </div>
     </div>
     <div class="container-fluid carousel px-0" id="sliderList1">
@@ -53,7 +53,7 @@
     <div class="container-fluid">
       <div class="row align-items-center px-5">
         <h2 class="font-weight-bold">Худи</h2>
-        <a class="ml-auto c-red" href="#">Смотреть все <img src="{{ asset('public/images/arrow-long-right-red.png') }}" width="50" alt=""></a>
+        <a class="ml-auto text-dark" href="#">Смотреть все <img src="{{ asset('public/images/arrow-long-right-red.png') }}" width="50" alt=""></a>
       </div>
     </div>
     <div class="container-fluid px-0 mx-0" id="sliderList2">

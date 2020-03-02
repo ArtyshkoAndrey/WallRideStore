@@ -2616,7 +2616,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "product",
   props: {
@@ -43459,7 +43458,7 @@ var render = function() {
           },
           [
             _c("div", [
-              _vm.item.on_new || _vm.item.on_sale
+              _vm.item.on_new
                 ? _c(
                     "div",
                     {
@@ -43475,15 +43474,6 @@ var render = function() {
                                 "text-uppercase font-weight-bold text-white"
                             },
                             [_vm._v("new")]
-                          )
-                        : _vm.item.on_sale
-                        ? _c(
-                            "span",
-                            {
-                              staticClass:
-                                "text-uppercase font-weight-bold text-white"
-                            },
-                            [_vm._v("sale")]
                           )
                         : _vm._e()
                     ]

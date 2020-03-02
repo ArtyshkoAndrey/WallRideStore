@@ -65,11 +65,12 @@
           <div class="col-12">
             <p class="text-muted pb-0 mb-0">В наличии: @{{ size.stock }}</p>
           </div>
-          <div class="col-auto h-100"><button class="btn btn-angle text-white" @click="addCounter"><i class="fal fa-plus mt-1"></i></button></div>
+          <div class="col-auto h-100 mt-1"><button class="btn btn-angle text-white" @click="removeCounter"><i class="fal fa-minus mt-1"></i></button></div>
           <div class="col-md-2 h-100 col-sm-2 col-2 p-0">
             <input class="form-control bg-white border-0 px-0 font-weight-bolder text-center" type="number" v-model="counter" readonly disabled>
           </div>
-          <div class="col-auto h-100 mt-1"><button class="btn btn-angle text-white" @click="removeCounter"><i class="fal fa-minus mt-1"></i></button></div>
+          <div class="col-auto h-100"><button class="btn btn-angle text-white" @click="addCounter"><i class="fal fa-plus mt-1"></i></button></div>
+
           <div class="col-md-auto col-sm-6 h-100 mt-md-1 mt-3">
             <button class="btn btn-block py-3" id="btn-add-to-cart" @click="addToCart" v-if="!cart"><i class="fal fa-shopping-bag"></i> Добавить в корзину</button>
             <button class="btn btn-block py-3" id="btn-remove-in-cart" v-else disabled readonly><i class="fal fa-check"></i> Добавлено</button>

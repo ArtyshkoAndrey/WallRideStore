@@ -3,9 +3,8 @@
     <div :class="slider ? 'card' : 'card h-100'">
       <div class="card-body px-0 pb-0 justify-content-between d-flex flex-column">
         <div>
-          <div class="position-absolute px-4 py-1" id="event" v-if="item.on_new || item.on_sale">
+          <div class="position-absolute px-4 py-1" id="event" v-if="item.on_new">
             <span class="text-uppercase font-weight-bold text-white" v-if="item.on_new">new</span>
-            <span class="text-uppercase font-weight-bold text-white" v-else-if="item.on_sale">sale</span>
           </div>
           <div class="position-absolute px-4 py-1" id="like">
             <button class="bg-transparent border-0 m-0 p-0" @click="favored" v-if="!favor" style="transition: 1s;"><i class="fal fa-heart"></i></button>
