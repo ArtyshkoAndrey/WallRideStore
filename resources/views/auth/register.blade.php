@@ -11,7 +11,7 @@
         <div class="col-md-6 col-lg-6">
           <div class="card auth-card">
             <div class="card-body">
-              <a href="{{ route('root') }}"><img src="../../img/Arrow%2010.png" alt="arrow" width="35" class="img-fluid mr-2">Назад к сайту</a>
+              <a href="{{ route('root') }}">Назад к сайту</a>
               <h3 class="mt-3">Регистрация</h3>
               <form class="needs-validation" novalidate method="POST" action="{{ route('register') }}">
                 @csrf

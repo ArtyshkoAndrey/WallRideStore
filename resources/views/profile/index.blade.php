@@ -32,7 +32,7 @@
                   @method('PUT')
                   <input type="file" id="photo" name="photo" size="chars" accept="image/jpeg,image/png" style="visibility: hidden">
                   <input type="hidden" value="photo" name="metadata">
-                  <button type="button" class="btn btn-danger position-absolute" id="add-photo">
+                  <button type="button" class="btn btn-dark position-absolute" id="add-photo">
                     <i class="fal fa-camera"></i>
                   </button>
                 </form>

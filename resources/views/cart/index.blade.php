@@ -61,7 +61,7 @@
         </div>
       </div>
       <div class="col-12 mt-3 d-flex justify-content-end">
-        <a class="btn btn-dark font-weight-bold col-12 col-sm-auto" href="{{ route('orders.create') }}" id="offer-payment">Перейти к оформелению заказа <img src="{{asset('public/img/arrow-long-right.png')}}" class="bg-transparent img-fluid" alt=""></a>
+        <a class="btn btn-dark font-weight-bold col-12 col-sm-auto" href="{{ route('orders.create') }}" id="offer-payment">Перейти к оформелению заказа</a>
       </div>
     </div>
   </section>

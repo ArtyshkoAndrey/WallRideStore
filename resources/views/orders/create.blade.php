@@ -103,8 +103,8 @@
               <h4>Общая сумма {{ cost(round($priceAmount * $currency->ratio, 0)) }} {{ $currency->symbol }}</h4>
             </div>
             <div class="col-sm-auto col-12 mt-2 mt-sm-0">
-              <button v-if="step === 1" class="btn btn-dark" @click="ordered" id="offer-payment">Следующий шаг <img src="{{asset('public/img/arrow-long-right.png')}}" class="bg-transparent img-fluid" alt=""></button>
-              <button v-else class="btn btn-dark" @click="ordered" id="offer-payment">Завершить оформление заказа и оплатить <img src="{{asset('public/img/arrow-long-right.png')}}" class="bg-transparent img-fluid" alt=""></button>
+              <button v-if="step === 1" class="btn btn-dark" @click="ordered" id="offer-payment">Следующий шаг</button>
+              <button v-else class="btn btn-dark" @click="ordered" id="offer-payment">Завершить оформление заказа и оплатить</button>
             </div>
           </div>
         </div>

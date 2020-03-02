@@ -10,7 +10,7 @@
       <div class="col-12 p-0 position-absolute text-center">
         <h1>Polar Scate Co</h1>
         <h3>New collection</h3>
-        <a href="#" class="btn">Купить сейчас <img src="{{ asset('public/images/arrow-long-right.png') }}" alt=""></a>
+        <a href="#" class="btn">Купить сейчас</a>
 {{--        <div class="container">--}}
 {{--          <div class="row justify-content-center">--}}
 {{--            <div class="col-md-6 col-sm-8 col-12">--}}
@@ -31,7 +31,7 @@
     <div class="container-fluid">
       <div class="row align-items-center px-5">
         <h2 class="font-weight-bold">Новые товары</h2>
-        <a class="ml-auto text-dark" href="{{ route('products.all', ['order' => 'new_desc']) }}">Смотреть все <img src="{{ asset('public/images/arrow-long-right-black.png') }}" width="50" alt=""></a>
+        <a class="ml-auto text-dark" href="{{ route('products.all', ['order' => 'new_desc']) }}">Смотреть все</a>
       </div>
     </div>
     <div class="container-fluid" id="sliderList1">
@@ -51,7 +51,7 @@
     <div class="container-fluid">
       <div class="row align-items-center px-5">
         <h2 class="font-weight-bold">Худи</h2>
-        <a class="ml-auto text-dark" href="#">Смотреть все <img src="{{ asset('public/images/arrow-long-right-black.png') }}" width="50" alt=""></a>
+        <a class="ml-auto text-dark" href="#">Смотреть все</a>
       </div>
     </div>
     <div class="container-fluid" id="sliderList2">

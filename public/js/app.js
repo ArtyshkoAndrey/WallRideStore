@@ -43391,16 +43391,7 @@ var render = function() {
                     staticClass: "text-white",
                     attrs: { href: "/news/" + _vm.item.id }
                   },
-                  [
-                    _vm._v("Подробнее "),
-                    _c("img", {
-                      attrs: {
-                        src: "/../../img/arrow-long-right.png",
-                        width: "100",
-                        alt: ""
-                      }
-                    })
-                  ]
+                  [_vm._v("Подробнее")]
                 )
               ])
             ],
@@ -56875,9 +56866,9 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\OSPanel\domains\myshop\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! D:\OSPanel\domains\myshop\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! D:\OSPanel\domains\myshop\resources\sass\admin.scss */"./resources/sass/admin.scss");
+__webpack_require__(/*! C:\OSPanel\domains\myshop\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\OSPanel\domains\myshop\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! C:\OSPanel\domains\myshop\resources\sass\admin.scss */"./resources/sass/admin.scss");
 
 
 /***/ })
