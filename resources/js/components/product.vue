@@ -3,15 +3,15 @@
     <div class="card h-100">
       <div class="card-body px-0 pb-0 justify-content-between d-flex flex-column">
         <div>
-          <div class="position-absolute px-4 py-1" id="event" v-if="item.on_new">
-            <span class="text-uppercase font-weight-bold text-white" v-if="item.on_new">new</span>
-          </div>
+<!--          <div class="position-absolute px-4 py-1" id="event" v-if="item.on_new">-->
+<!--            <span class="text-uppercase font-weight-bold text-white" v-if="item.on_new">new</span>-->
+<!--          </div>-->
           <div class="position-absolute px-4 py-1" id="like">
             <button class="bg-transparent border-0 m-0 p-0" @click="favored" v-if="!favor" style="transition: 1s;"><i class="fal fa-heart"></i></button>
             <button class="bg-transparent border-0 m-0 p-0" v-else style="transition: 1s;"><i class="fas fa-heart"></i></button>
           </div>
 <!--          <img :src="item.image_url" v-if="slider" alt="item.image" class="carousel-cell-img img-fluid w-100 mb-3 rounded">-->
-          <img :src="item.image_url" alt="item.image" class="img-fluid w-100 mb-3 rounded">
+          <a :href="'/product/'+item.id"><img :src="item.image_url" alt="item.image" class="img-fluid w-100 mb-3 rounded"></a>
           <div class="box">
             <a :href="'/product/'+item.id" class="mt-4 pb-0 mb-0 name">{{ item.title }}</a>
           </div>
@@ -209,15 +209,15 @@ line-height: 24px;" v-model="count" readonly disabled>
   #like {
     right: 10px;
     font-size: 26px;
-    color: #F33C3C;
+    color: #000;
     transition: 1s;
     > * {
       transition: 1s;
     }
     i {
       transition: 1s;
-      text-shadow: 0px 4px 10px rgba(243, 60, 60, 0.4);
-      color: #F33C3C;
+      text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+      color: #000;
     }
   }
   .card {
@@ -267,7 +267,7 @@ line-height: 24px;" v-model="count" readonly disabled>
       }
       .btn-angle {
         background-color: white;
-        color: #F33C3C;
+        color: #000;
         height: 15px;
         display: block;
         border: none !important;

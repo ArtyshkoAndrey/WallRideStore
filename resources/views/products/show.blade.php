@@ -42,10 +42,10 @@
         </div>
         <div class="col-12 px-0">
           <ol class="breadcrumb bg-transparent text-black px-0">
-            <li class="breadcrumb-item px-0"><a href="#" class="c-red">Магазин</a></li>
-            <li class="breadcrumb-item px-0"><a href="#" class="c-red">Бренды</a></li>
-            <li class="breadcrumb-item px-0"><a href="#" class="c-red">Худи</a></li>
-            <li class="breadcrumb-item px-0"><a href="#" class="c-red">Fucking Awesome</a></li>
+            <li class="breadcrumb-item px-0"><a href="#" class="text-dark">Магазин</a></li>
+            <li class="breadcrumb-item px-0"><a href="#" class="text-dark">Бренды</a></li>
+            <li class="breadcrumb-item px-0"><a href="#" class="text-dark">Худи</a></li>
+            <li class="breadcrumb-item px-0"><a href="#" class="text-dark">Fucking Awesome</a></li>
             <li class="breadcrumb-item active px-0" aria-current="page">{{ ucwords(strtolower($product->title)) }}</li>
           </ol>
         </div>
@@ -76,8 +76,8 @@
             <button class="btn btn-block py-3" id="btn-remove-in-cart" v-else disabled readonly><i class="fal fa-check"></i> Добавлено</button>
           </div>
           <div class="col-md-auto col-sm-6 h-100 mt-md-1 mt-3">
-            <button class="btn h-100 py-3 btn-block bg-transparent p-0 c-red" @click="favored" v-if="!favoredData"><i class="fal fa-heart"></i> Добавить в избранное</button>
-            <button class="btn h-100 py-3 btn-block bg-transparent p-0 c-red" @click="disFavored" v-else><i class="fad fa-heart"></i> Удалить из избранных</button>
+            <button class="btn h-100 py-3 btn-block bg-transparent p-0 text-dark" @click="favored" v-if="!favoredData"><i class="fal fa-heart"></i> Добавить в избранное</button>
+            <button class="btn h-100 py-3 btn-block bg-transparent p-0 text-dark" @click="disFavored" v-else><i class="fad fa-heart"></i> Удалить из избранных</button>
           </div>
         </div>
       </div>

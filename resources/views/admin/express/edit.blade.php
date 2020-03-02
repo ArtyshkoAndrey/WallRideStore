@@ -33,7 +33,10 @@
               </div>
             </div>
             <div class="row mt-3">
-              
+              <div class="col-md-4">
+                <input type="text" name="name" id="name" required>
+
+              </div>
             </div>
           </form>
         </div>

@@ -9,6 +9,7 @@
         <div class="col-md col-6 mt-4 mt-md-0">
           <select name="order" class="form-control">
             <option value="">Сортировать по</option>
+            <option value="new_desc">Сначала новые</option>
             <option value="price_asc">Сначала дешовые</option>
             <option value="price_desc">Сначало дорогие</option>
             <option value="sold_count_desc">По убыванию продаж</option>

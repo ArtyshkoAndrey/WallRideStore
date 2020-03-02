@@ -113,7 +113,6 @@
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profile">
           <a href="{{ route('profile.index') }}" class="dropdown-item">Мой профиль</a>
           <a href="{{ route('orders.index') }}" class="dropdown-item">Мои заказы</a>
-          <a href="{{ route('products.favorites') }}" class="dropdown-item">Моя коллекция</a>
           <a class="dropdown-item" id="logout" href="#"
              onclick="event.preventDefault();document.getElementById('logout-form').submit();">Выйти</a>
           <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

@@ -21,8 +21,8 @@
       </div>
       <div class="col-12 text-center mt-5">
         <h2>Наши контакты</h2>
-        <p class="c-red h4 mt-3">+7 (727) 332-27-09</p>
-        <p class="c-red h4">+7 (727) 332-27-09</p>
+        <p class="text-dark h4 mt-3">+7 (727) 332-27-09</p>
+        <p class="text-dark h4">+7 (727) 332-27-09</p>
       </div>
       <div class="col-12 text-center mt-5">
         <h2>Соц. сети</h2>

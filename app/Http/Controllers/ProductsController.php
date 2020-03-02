@@ -20,7 +20,7 @@ class ProductsController extends Controller {
   public function all (Request $request) {
     if ($order = $request->input('order', '')) {
       if (preg_match('/^(.+)_(asc|desc)$/', $order, $m)) {
-        if (in_array($m[1], ['price', 'sold_count', 'rating'])) {
+        if (in_array($m[1], ['price', 'sold_count', 'rating', 'new'])) {
           if ($m[1] == 'price') {
             $products = Product::select('products.*', \DB::raw("MAX(product_skus.price) AS max_price"), \DB::raw("MIN(product_skus.price) AS min_price"))
               ->join('product_skus', 'products.id', '=', 'product_skus.product_id')
@@ -28,6 +28,8 @@ class ProductsController extends Controller {
               ->orderBy($m[2] == 'desc' ? 'max_price' : 'min_price', $m[2])
               ->with('skus')->orderBy('price', $m[2] == 'asc'? 'desc' : 'asc')
               ->paginate(16);
+          } else if ($m[1] == 'new') {
+            $products = Product::orderBy('created_at', 'desc')->with('skus')->paginate(16);
           } else {
             $products = Product::with('skus')->orderBy($m[1], $m[2])->paginate(16);
           }

@@ -7424,7 +7424,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".box[data-v-1b2b3ef4] {\n  overflow: hidden;\n  height: 50px;\n  width: 100%;\n}\n.box > a[data-v-1b2b3ef4] {\n  -webkit-column-width: 150px;\n  -moz-column-width: 150px;\n  column-width: 150px;\n  height: 100%;\n}\n.fade-enter-active[data-v-1b2b3ef4], .fade-leave-active[data-v-1b2b3ef4] {\n  transition: opacity 0.5s;\n}\n.fade-enter[data-v-1b2b3ef4], .fade-leave-to[data-v-1b2b3ef4] {\n  opacity: 0;\n}\nbutton[data-v-1b2b3ef4]:focus {\n  outline: none !important;\n  box-shadow: none !important;\n}\n#like[data-v-1b2b3ef4] {\n  right: 10px;\n  font-size: 26px;\n  color: #F33C3C;\n  transition: 1s;\n}\n#like > *[data-v-1b2b3ef4] {\n  transition: 1s;\n}\n#like i[data-v-1b2b3ef4] {\n  transition: 1s;\n  text-shadow: 0px 4px 10px rgba(243, 60, 60, 0.4);\n  color: #F33C3C;\n}\n.card[data-v-1b2b3ef4] {\n  border: 0;\n  height: 100%;\n  background: #FFFFFF;\n  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.09);\n  border-radius: 15px;\n}\n.card .card-body #event[data-v-1b2b3ef4] {\n  background-color: #F33C3C;\n  box-shadow: 0 4px 20px rgba(247, 7, 7, 0.43);\n  border-radius: 32px;\n  left: -15px;\n}\n.card .card-body #event span[data-v-1b2b3ef4] {\n  font-size: 18px;\n  line-height: 35px;\n}\n.card .card-body > div[data-v-1b2b3ef4] {\n  padding: 0 23px;\n}\n.card .card-body [type=number][data-v-1b2b3ef4] {\n  font-size: 14px;\n}\n.card .card-body #btn-add-to-cart[data-v-1b2b3ef4] {\n  background: #000;\n  color: white;\n  border-radius: 0 15px 0 15px;\n}\n.card .card-body #btn-add-to-cart[data-v-1b2b3ef4]:focus {\n  outline: 0 !important;\n}\n.card .card-body #btn-add-to-cart[data-v-1b2b3ef4]:active {\n  outline: 0 !important;\n}\n.card .card-body #btn-remove-in-cart[data-v-1b2b3ef4] {\n  background: #04B900;\n  color: white;\n  border-radius: 0 15px 0 15px;\n}\n.card .card-body #btn-remove-in-cart[data-v-1b2b3ef4]:focus {\n  outline: 0 !important;\n}\n.card .card-body #btn-remove-in-cart[data-v-1b2b3ef4]:active {\n  outline: 0 !important;\n}\n.card .card-body .btn-angle[data-v-1b2b3ef4] {\n  background-color: white;\n  color: #F33C3C;\n  height: 15px;\n  display: block;\n  border: none !important;\n  outline: none !important;\n}\n.card .card-body .btn-angle > i[data-v-1b2b3ef4] {\n  font-size: 16px;\n  font-weight: bold;\n}\n.card .card-body .btn-angle[data-v-1b2b3ef4]:hover {\n  color: black;\n}\n.card .card-body .btn-angle[data-v-1b2b3ef4]:focus, .card .card-body .btn-angle[data-v-1b2b3ef4]::-moz-focus-inner, .card .card-body .btn-angle[data-v-1b2b3ef4]:active {\n  outline: none !important;\n  border: 0 !important;\n  box-shadow: none !important;\n  -moz-outline-style: none !important;\n  outline: 0 !important;\n}\n.card a.name[data-v-1b2b3ef4] {\n  height: 32px;\n  font-size: 16px;\n  line-height: 24px;\n  color: black;\n  text-decoration: none;\n}\n.card a.name[data-v-1b2b3ef4]:hover {\n  color: #F33C3C;\n}\n.card p.price[data-v-1b2b3ef4] {\n  font-weight: bold;\n  font-size: 24px;\n  line-height: 35px;\n}\n.carousel-cell[data-v-1b2b3ef4] {\n  padding-top: 10px;\n  padding-bottom: 10px;\n  width: 60vw;\n  height: 100%;\n  margin-left: 30px;\n}\n@media (min-width: 468px) {\n.carousel-cell[data-v-1b2b3ef4] {\n    width: 40vw;\n}\n}\n@media (min-width: 610px) {\n.carousel-cell[data-v-1b2b3ef4] {\n    width: 33vw;\n}\n}\n@media (min-width: 800px) {\n.carousel-cell[data-v-1b2b3ef4] {\n    width: 25vw;\n}\n}\n@media (min-width: 1024px) {\n.carousel-cell[data-v-1b2b3ef4] {\n    width: 20vw;\n}\n}\n@media (min-width: 1150px) {\n.carousel-cell[data-v-1b2b3ef4] {\n    width: 18vw;\n}\n}\n@media (min-width: 1350px) {\n.carousel-cell[data-v-1b2b3ef4] {\n    width: 15vw;\n}\n}\n@media (min-width: 1600px) {\n.carousel-cell[data-v-1b2b3ef4] {\n    width: 13vw;\n}\n}\n@media (min-width: 1921px) {\n.carousel-cell[data-v-1b2b3ef4] {\n    width: 10vw;\n}\n}\n.go-to-product[data-v-1b2b3ef4] {\n  cursor: pointer;\n}", ""]);
+exports.push([module.i, ".box[data-v-1b2b3ef4] {\n  overflow: hidden;\n  height: 50px;\n  width: 100%;\n}\n.box > a[data-v-1b2b3ef4] {\n  -webkit-column-width: 150px;\n  -moz-column-width: 150px;\n  column-width: 150px;\n  height: 100%;\n}\n.fade-enter-active[data-v-1b2b3ef4], .fade-leave-active[data-v-1b2b3ef4] {\n  transition: opacity 0.5s;\n}\n.fade-enter[data-v-1b2b3ef4], .fade-leave-to[data-v-1b2b3ef4] {\n  opacity: 0;\n}\nbutton[data-v-1b2b3ef4]:focus {\n  outline: none !important;\n  box-shadow: none !important;\n}\n#like[data-v-1b2b3ef4] {\n  right: 10px;\n  font-size: 26px;\n  color: #000;\n  transition: 1s;\n}\n#like > *[data-v-1b2b3ef4] {\n  transition: 1s;\n}\n#like i[data-v-1b2b3ef4] {\n  transition: 1s;\n  text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);\n  color: #000;\n}\n.card[data-v-1b2b3ef4] {\n  border: 0;\n  height: 100%;\n  background: #FFFFFF;\n  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.09);\n  border-radius: 15px;\n}\n.card .card-body #event[data-v-1b2b3ef4] {\n  background-color: #F33C3C;\n  box-shadow: 0 4px 20px rgba(247, 7, 7, 0.43);\n  border-radius: 32px;\n  left: -15px;\n}\n.card .card-body #event span[data-v-1b2b3ef4] {\n  font-size: 18px;\n  line-height: 35px;\n}\n.card .card-body > div[data-v-1b2b3ef4] {\n  padding: 0 23px;\n}\n.card .card-body [type=number][data-v-1b2b3ef4] {\n  font-size: 14px;\n}\n.card .card-body #btn-add-to-cart[data-v-1b2b3ef4] {\n  background: #000;\n  color: white;\n  border-radius: 0 15px 0 15px;\n}\n.card .card-body #btn-add-to-cart[data-v-1b2b3ef4]:focus {\n  outline: 0 !important;\n}\n.card .card-body #btn-add-to-cart[data-v-1b2b3ef4]:active {\n  outline: 0 !important;\n}\n.card .card-body #btn-remove-in-cart[data-v-1b2b3ef4] {\n  background: #04B900;\n  color: white;\n  border-radius: 0 15px 0 15px;\n}\n.card .card-body #btn-remove-in-cart[data-v-1b2b3ef4]:focus {\n  outline: 0 !important;\n}\n.card .card-body #btn-remove-in-cart[data-v-1b2b3ef4]:active {\n  outline: 0 !important;\n}\n.card .card-body .btn-angle[data-v-1b2b3ef4] {\n  background-color: white;\n  color: #000;\n  height: 15px;\n  display: block;\n  border: none !important;\n  outline: none !important;\n}\n.card .card-body .btn-angle > i[data-v-1b2b3ef4] {\n  font-size: 16px;\n  font-weight: bold;\n}\n.card .card-body .btn-angle[data-v-1b2b3ef4]:hover {\n  color: black;\n}\n.card .card-body .btn-angle[data-v-1b2b3ef4]:focus, .card .card-body .btn-angle[data-v-1b2b3ef4]::-moz-focus-inner, .card .card-body .btn-angle[data-v-1b2b3ef4]:active {\n  outline: none !important;\n  border: 0 !important;\n  box-shadow: none !important;\n  -moz-outline-style: none !important;\n  outline: 0 !important;\n}\n.card a.name[data-v-1b2b3ef4] {\n  height: 32px;\n  font-size: 16px;\n  line-height: 24px;\n  color: black;\n  text-decoration: none;\n}\n.card a.name[data-v-1b2b3ef4]:hover {\n  color: #F33C3C;\n}\n.card p.price[data-v-1b2b3ef4] {\n  font-weight: bold;\n  font-size: 24px;\n  line-height: 35px;\n}\n.carousel-cell[data-v-1b2b3ef4] {\n  padding-top: 10px;\n  padding-bottom: 10px;\n  width: 60vw;\n  height: 100%;\n  margin-left: 30px;\n}\n@media (min-width: 468px) {\n.carousel-cell[data-v-1b2b3ef4] {\n    width: 40vw;\n}\n}\n@media (min-width: 610px) {\n.carousel-cell[data-v-1b2b3ef4] {\n    width: 33vw;\n}\n}\n@media (min-width: 800px) {\n.carousel-cell[data-v-1b2b3ef4] {\n    width: 25vw;\n}\n}\n@media (min-width: 1024px) {\n.carousel-cell[data-v-1b2b3ef4] {\n    width: 20vw;\n}\n}\n@media (min-width: 1150px) {\n.carousel-cell[data-v-1b2b3ef4] {\n    width: 18vw;\n}\n}\n@media (min-width: 1350px) {\n.carousel-cell[data-v-1b2b3ef4] {\n    width: 15vw;\n}\n}\n@media (min-width: 1600px) {\n.carousel-cell[data-v-1b2b3ef4] {\n    width: 13vw;\n}\n}\n@media (min-width: 1921px) {\n.carousel-cell[data-v-1b2b3ef4] {\n    width: 10vw;\n}\n}\n.go-to-product[data-v-1b2b3ef4] {\n  cursor: pointer;\n}", ""]);
 
 // exports
 
@@ -43388,14 +43388,14 @@ var render = function() {
                   "a",
                   {
                     key: "2",
-                    staticClass: "c-red",
+                    staticClass: "text-white",
                     attrs: { href: "/news/" + _vm.item.id }
                   },
                   [
                     _vm._v("Подробнее "),
                     _c("img", {
                       attrs: {
-                        src: "/../../img/arrow-long-right-red.png",
+                        src: "/../../img/arrow-long-right.png",
                         width: "100",
                         alt: ""
                       }
@@ -43450,28 +43450,6 @@ var render = function() {
           },
           [
             _c("div", [
-              _vm.item.on_new
-                ? _c(
-                    "div",
-                    {
-                      staticClass: "position-absolute px-4 py-1",
-                      attrs: { id: "event" }
-                    },
-                    [
-                      _vm.item.on_new
-                        ? _c(
-                            "span",
-                            {
-                              staticClass:
-                                "text-uppercase font-weight-bold text-white"
-                            },
-                            [_vm._v("new")]
-                          )
-                        : _vm._e()
-                    ]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
               _c(
                 "div",
                 {
@@ -43500,10 +43478,12 @@ var render = function() {
                 ]
               ),
               _vm._v(" "),
-              _c("img", {
-                staticClass: "img-fluid w-100 mb-3 rounded",
-                attrs: { src: _vm.item.image_url, alt: "item.image" }
-              }),
+              _c("a", { attrs: { href: "/product/" + _vm.item.id } }, [
+                _c("img", {
+                  staticClass: "img-fluid w-100 mb-3 rounded",
+                  attrs: { src: _vm.item.image_url, alt: "item.image" }
+                })
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "box" }, [
                 _c(
@@ -56895,9 +56875,9 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\OSPanel\domains\myshop\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! C:\OSPanel\domains\myshop\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! C:\OSPanel\domains\myshop\resources\sass\admin.scss */"./resources/sass/admin.scss");
+__webpack_require__(/*! D:\OSPanel\domains\myshop\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! D:\OSPanel\domains\myshop\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! D:\OSPanel\domains\myshop\resources\sass\admin.scss */"./resources/sass/admin.scss");
 
 
 /***/ })

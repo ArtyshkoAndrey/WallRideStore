@@ -31,11 +31,11 @@
     <div class="container-fluid">
       <div class="row align-items-center px-5">
         <h2 class="font-weight-bold">Новые товары</h2>
-        <a class="ml-auto text-dark" href="#">Смотреть все <img src="{{ asset('public/images/arrow-long-right-black.png') }}" width="50" alt=""></a>
+        <a class="ml-auto text-dark" href="{{ route('products.all', ['order' => 'new_desc']) }}">Смотреть все <img src="{{ asset('public/images/arrow-long-right-black.png') }}" width="50" alt=""></a>
       </div>
     </div>
     <div class="container-fluid" id="sliderList1">
-      <div class="row">
+      <div class="row px-md-5 px-2">
         @if(count($productsNew) > 0)
           @foreach($productsNew as $product)
             <product :slider=true :currency="{{ $currency }}" :item="{{ $product }}"></product>
@@ -55,7 +55,7 @@
       </div>
     </div>
     <div class="container-fluid" id="sliderList2">
-      <div class="row">
+      <div class="row px-md-5 px-2">
         @if(count($products) > 0)
           @foreach($products as $product)
             <product :slider=true :currency="{{ $currency }}" :item="{{ $product }}"></product>
@@ -81,6 +81,10 @@
 @endsection
 
 @section('scriptsAfterJs')
-<script>
-</script>
+  <script>
+    $('.btn-to-cart-adaptive').height($('.btn-to-cart-adaptive').width());
+    window.addEventListener("resize", () => {
+      $('.btn-to-cart-adaptive').height($('.btn-to-cart-adaptive').width())
+    });
+  </script>
 @endsection

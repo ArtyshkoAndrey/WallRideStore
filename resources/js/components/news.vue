@@ -16,7 +16,7 @@
          <div class="position-absolute info-big-news">
            <transition-group name="fade" appear>
              <h2 key="1">{{ item.title }}</h2>
-             <a :href="'/news/'+item.id" key="2" class="c-red">Подробнее <img src="/../../img/arrow-long-right-red.png" width="100" alt=""></a>
+             <a :href="'/news/'+item.id" key="2" class="text-white">Подробнее <img src="/../../img/arrow-long-right.png" width="100" alt=""></a>
            </transition-group>
          </div>
         </div>
