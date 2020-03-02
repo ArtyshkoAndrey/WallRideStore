@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="card-body">
-          <form action="{{ route('admin.store.coupon.update', $express->id) }}" method="post">
+          <form action="{{ route('admin.store.express.update', $express->id) }}" method="post">
             @csrf
             @method('PUT')
             <div class="row justify-content-end">
@@ -34,8 +34,32 @@
             </div>
             <div class="row mt-3">
               <div class="col-md-4">
-                <input type="text" name="name" id="name" required>
-
+                <input type="text" name="name" id="name" class="w-100 px-2" value="{{ $express->name }}" required>
+              </div>
+              <div class="col-md-2">
+                <select name="cost_type" id="cost_type" class="h-100 w-100">
+                  <option value="Настраиваемая">Настраиваемая</option>
+                </select>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-md-4">
+               <div class="form-group">
+                 <label for="cost">Стоимость</label>
+                 <input type="number" name="cost" value="{{ $express->cost }}" class="form-control" required>
+               </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="cost">Шаг кг.</label>
+                  <input type="number" name="step" step="0.01" value="{{ $express->step }}" class="form-control" required>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="cost">Стоимость за шаг</label>
+                  <input type="number" name="cost_step" value="{{ $express->cost_step }}" class="form-control" required>
+                </div>
               </div>
             </div>
           </form>

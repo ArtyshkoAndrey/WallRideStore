@@ -87,7 +87,16 @@ class ExpressController extends Controller
    */
   public function update(Request $request, $id)
   {
-      //
+    $request->validate([
+      'name' => 'required|unique:express_companies,name,' . $id,
+      'cost' => 'required|numeric|min:0',
+      'step' => 'required|numeric|min:0',
+      'cost_step' => 'required|numeric|min:0',
+    ]);
+    $express = ExpressCompany::find($id);
+    $express->update($request->all());
+    $express->save();
+    return redirect()->route('admin.store.express.index');
   }
 
   /**

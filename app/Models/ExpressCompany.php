@@ -18,4 +18,8 @@ class ExpressCompany extends Model
   protected $casts = [
     'enables'    => 'boolean'
   ];
+
+  public function cities() {
+    return $this->belongsTo(CityExpress::class, 'id', 'express_id');
+  }
 }

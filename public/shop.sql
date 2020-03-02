@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Мар 01 2020 г., 16:36
+-- Время создания: Мар 02 2020 г., 18:22
 -- Версия сервера: 5.7.25-log
 -- Версия PHP: 7.3.9
 
@@ -115,6 +115,28 @@ INSERT INTO `categories` (`id`, `name`, `category_id`, `created_at`, `updated_at
 (4, 'Носки', NULL, NULL, NULL),
 (5, 'Тапки', 2, NULL, NULL),
 (6, 'Adidas', 1, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `city_expresses`
+--
+
+CREATE TABLE `city_expresses` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `express_id` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `city_expresses`
+--
+
+INSERT INTO `city_expresses` (`id`, `name`, `express_id`, `created_at`, `updated_at`) VALUES
+(1, 'Москва', 1, '2020-03-01 17:00:00', NULL),
+(2, 'Киев', 1, '2020-03-01 17:00:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -276,8 +298,8 @@ CREATE TABLE `express_companies` (
 --
 
 INSERT INTO `express_companies` (`id`, `name`, `enabled`, `type`, `cost`, `step`, `cost_step`, `created_at`, `updated_at`) VALUES
-(1, 'EMS', 0, 'Настраиваемая', NULL, NULL, NULL, NULL, '2020-03-01 13:31:25'),
-(2, 'ASE', 0, 'Настраиваемая', NULL, NULL, NULL, NULL, '2020-03-01 13:31:22'),
+(1, 'EMS', 1, 'Настраиваемая', NULL, NULL, NULL, NULL, '2020-03-02 14:25:43'),
+(2, 'ASE', 1, 'Настраиваемая', '1000', 1.40, '500', NULL, '2020-03-02 14:52:42'),
 (3, 'Самовывоз', 1, '0 тг.', NULL, NULL, NULL, NULL, '2020-03-01 13:31:31');
 
 -- --------------------------------------------------------
@@ -316,7 +338,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (22, '2020_02_23_124447_disabled_coupons_categories', 9),
 (23, '2020_02_23_124857_disabled_coupons_products', 9),
 (24, '2020_02_26_142913_create_express_companies_table', 10),
-(25, '2020_02_26_142927_create_orders_table', 11);
+(25, '2020_02_26_142927_create_orders_table', 11),
+(26, '2020_03_02_215746_create_city_expresses_table', 12);
 
 -- --------------------------------------------------------
 
@@ -601,6 +624,13 @@ ALTER TABLE `categories`
   ADD KEY `categories_category_id_foreign` (`category_id`);
 
 --
+-- Индексы таблицы `city_expresses`
+--
+ALTER TABLE `city_expresses`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `city_expresses_express_id_foreign` (`express_id`);
+
+--
 -- Индексы таблицы `coupons_categories`
 --
 ALTER TABLE `coupons_categories`
@@ -740,6 +770,12 @@ ALTER TABLE `categories`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT для таблицы `city_expresses`
+--
+ALTER TABLE `city_expresses`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT для таблицы `coupons_categories`
 --
 ALTER TABLE `coupons_categories`
@@ -785,7 +821,7 @@ ALTER TABLE `express_companies`
 -- AUTO_INCREMENT для таблицы `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT для таблицы `orders`
@@ -845,6 +881,12 @@ ALTER TABLE `cart_items`
 --
 ALTER TABLE `categories`
   ADD CONSTRAINT `categories_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `city_expresses`
+--
+ALTER TABLE `city_expresses`
+  ADD CONSTRAINT `city_expresses_express_id_foreign` FOREIGN KEY (`express_id`) REFERENCES `express_companies` (`id`) ON DELETE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `coupons_categories`
