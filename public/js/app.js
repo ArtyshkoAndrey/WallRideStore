@@ -2622,14 +2622,13 @@ __webpack_require__.r(__webpack_exports__);
     currency: {
       required: true
     },
-    slider: {
-      type: Boolean,
-      required: false,
-      "default": false
-    },
     item: {
       type: Object,
       required: false,
+      "default": false
+    },
+    slider: {
+      type: Boolean,
       "default": false
     }
   },
@@ -2705,16 +2704,9 @@ __webpack_require__.r(__webpack_exports__);
             }, 2000); // location.href = '/cart';
           });
           var data = response.data;
-
-          if (_this2.slider) {
-            _this2.$parent.$parent.$parent.cartItems = data.cartItems;
-            _this2.$parent.$parent.$parent.priceAmount = data.priceAmount;
-            _this2.$parent.$parent.$parent.amount = data.amount;
-          } else {
-            _this2.$parent.cartItems = data.cartItems;
-            _this2.$parent.priceAmount = data.priceAmount;
-            _this2.$parent.amount = data.amount;
-          }
+          _this2.$parent.cartItems = data.cartItems;
+          _this2.$parent.priceAmount = data.priceAmount;
+          _this2.$parent.amount = data.amount;
         }, function (error) {
           // Запрос не смог выполнить этот обратный вызов
           if (error.response.status === 401) {
@@ -43445,11 +43437,11 @@ var render = function() {
     "div",
     {
       class: _vm.slider
-        ? "carousel-cell"
-        : "col-md-4 col-lg-3 col-sm-6 col-10 offset-1 offset-sm-0 my-3"
+        ? "col-lg col-md-4 offset-1 offset-sm-0  col-10 my-3"
+        : "col-md-4 col-lg-3 offset-1 offset-sm-0  col-10 my-3"
     },
     [
-      _c("div", { class: _vm.slider ? "card" : "card h-100" }, [
+      _c("div", { staticClass: "card h-100" }, [
         _c(
           "div",
           {
@@ -43508,16 +43500,10 @@ var render = function() {
                 ]
               ),
               _vm._v(" "),
-              _vm.slider
-                ? _c("img", {
-                    staticClass:
-                      "carousel-cell-img img-fluid w-100 mb-3 rounded",
-                    attrs: { src: _vm.item.image_url, alt: "item.image" }
-                  })
-                : _c("img", {
-                    staticClass: "img-fluid w-100 mb-3 rounded",
-                    attrs: { src: _vm.item.image_url, alt: "item.image" }
-                  }),
+              _c("img", {
+                staticClass: "img-fluid w-100 mb-3 rounded",
+                attrs: { src: _vm.item.image_url, alt: "item.image" }
+              }),
               _vm._v(" "),
               _c("div", { staticClass: "box" }, [
                 _c(

@@ -84,8 +84,17 @@
           </div>
         </div>
       </li>
-      <li class="nav-item mr-auto d-none d-sm-block ml-auto" style="display: flex;">
+      <li class="nav-item d-none d-lg-block position-absolute" style="display: flex; left: calc( 50vw  - 25px )">
         <a href="{{ route('root') }}"><img src="{{ asset('public/images/logo.png') }}" height="45" alt=""></a>
+      </li>
+      <li class="nav-item mr-2 d-none d-sm-block ml-auto" style="display: flex;">
+        <form action="{{ route('products.search') }}" id="big-search" class="form-inline w-100">
+          <div class="form-group mb-0 mr-0">
+            <label class="sr-only">Что-то искали?</label>
+            <input type="text" name="name" value="{{ isset($name) ? $name : null }}" class="form-control border-0 rounded-0" placeholder="Что-то искали?">
+          </div>
+          <button type="submit" class="btn btn-primary border-0 ml-0 rounded-0"><i class="far fa-search"></i></button>
+        </form>
       </li>
       @guest
       <li class="nav-item mr-0 mr-sm-4" rel="profile" style="display: flex;">

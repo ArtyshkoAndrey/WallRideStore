@@ -1,6 +1,6 @@
 <template>
-  <div :class="slider ? 'carousel-cell' : 'col-md-4 col-lg-3 col-sm-6 col-10 offset-1 offset-sm-0 my-3'">
-    <div :class="slider ? 'card' : 'card h-100'">
+  <div :class="slider ? 'col-lg col-md-4 offset-1 offset-sm-0  col-10 my-3' : 'col-md-4 col-lg-3 offset-1 offset-sm-0  col-10 my-3'">
+    <div class="card h-100">
       <div class="card-body px-0 pb-0 justify-content-between d-flex flex-column">
         <div>
           <div class="position-absolute px-4 py-1" id="event" v-if="item.on_new">
@@ -10,8 +10,8 @@
             <button class="bg-transparent border-0 m-0 p-0" @click="favored" v-if="!favor" style="transition: 1s;"><i class="fal fa-heart"></i></button>
             <button class="bg-transparent border-0 m-0 p-0" v-else style="transition: 1s;"><i class="fas fa-heart"></i></button>
           </div>
-          <img :src="item.image_url" v-if="slider" alt="item.image" class="carousel-cell-img img-fluid w-100 mb-3 rounded">
-          <img :src="item.image_url" v-else alt="item.image" class="img-fluid w-100 mb-3 rounded">
+<!--          <img :src="item.image_url" v-if="slider" alt="item.image" class="carousel-cell-img img-fluid w-100 mb-3 rounded">-->
+          <img :src="item.image_url" alt="item.image" class="img-fluid w-100 mb-3 rounded">
           <div class="box">
             <a :href="'/product/'+item.id" class="mt-4 pb-0 mb-0 name">{{ item.title }}</a>
           </div>
@@ -69,14 +69,13 @@ line-height: 24px;" v-model="count" readonly disabled>
       currency: {
         required: true
       },
-      slider: {
-        type: Boolean,
-        required: false,
-        default: false
-      },
       item: {
         type: Object,
         required: false,
+        default: false
+      },
+      slider: {
+        type: Boolean,
         default: false
       }
     },
@@ -150,15 +149,9 @@ line-height: 24px;" v-model="count" readonly disabled>
                   // location.href = '/cart';
                 });
               let data = response.data
-              if (this.slider) {
-                this.$parent.$parent.$parent.cartItems = data.cartItems
-                this.$parent.$parent.$parent.priceAmount = data.priceAmount
-                this.$parent.$parent.$parent.amount = data.amount
-              } else {
-                this.$parent.cartItems = data.cartItems
-                this.$parent.priceAmount = data.priceAmount
-                this.$parent.amount = data.amount
-              }
+              this.$parent.cartItems = data.cartItems
+              this.$parent.priceAmount = data.priceAmount
+              this.$parent.amount = data.amount
             }, function (error) { // Запрос не смог выполнить этот обратный вызов
               if (error.response.status === 401) {
                 // код статуса http 401, пользователь не авторизован

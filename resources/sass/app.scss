@@ -65,7 +65,6 @@ body {
   }
 }
 #big-search {
-  margin-top: 140px;
   box-shadow: 0 4px 40px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
 
@@ -79,11 +78,9 @@ body {
     background: #000;
     margin-left: -1px;
     width: 50px;
-    border-radius: 0 4px 4px 0;
   }
   input {
     width: 100%;
-    border-radius: 4px 0 0 4px;
   }
 }
 
