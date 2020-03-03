@@ -15,9 +15,10 @@ class CreateCityExpressesTable extends Migration
   {
     Schema::create('city_expresses', function (Blueprint $table) {
       $table->increments('id');
-      $table->text('name');
-      $table->unsignedInteger('express_id');
-      $table->foreign('express_id')->references('id')->on('express_companies')->onDelete('cascade');
+      $table->unsignedInteger('city_id');
+      $table->unsignedInteger('express_zone_id');
+      $table->foreign('express_zone_id')->references('id')->on('express_zones')->onDelete('cascade');
+      $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
       $table->timestamps();
     });
   }

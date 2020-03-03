@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateExpressCompaniesTable extends Migration
+class CreateCountriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateExpressCompaniesTable extends Migration
      */
     public function up()
     {
-        Schema::create('express_companies', function (Blueprint $table) {
+        Schema::create('countries', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->boolean('enabled')->default(1);
-            $table->string('cost_type')->default('Настраиваемая');
+            $table->string('name')->unique();
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ class CreateExpressCompaniesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('express_companies');
+        Schema::dropIfExists('countries');
     }
 }

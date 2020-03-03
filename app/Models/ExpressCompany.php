@@ -9,17 +9,14 @@ class ExpressCompany extends Model
  	protected $fillable = [
     'name',
     'enabled',
-    'cost',
-    'cost_step',
-    'step',
-    'type'
+    'cost_type'
   ];
 
   protected $casts = [
     'enables'    => 'boolean'
   ];
 
-  public function cities() {
-    return $this->belongsTo(CityExpress::class, 'id', 'express_id');
+  public function zones() {
+    return $this->hasMany(ExpressZone::class, 'company_id', 'id');
   }
 }
