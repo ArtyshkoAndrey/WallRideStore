@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
+use App\Models\Country;
 use App\Models\User;
 use App\Models\UserAddress;
 use Illuminate\Contracts\View\Factory;
@@ -23,7 +25,7 @@ class ProfileController extends Controller
   */
   public function index()
   {
-    $address = auth()->user()->address;
+    $address = UserAddress::where('user_id', auth()->id())->first();
     $currencies = Currency::all();
     return view('profile.index', compact('address', 'currencies'));
   }
@@ -84,8 +86,8 @@ class ProfileController extends Controller
     if ($request->metadata === 'address') {
       if ($user->email != $request->email) {
         $request->validate([
-          'country' => 'required|max:255',
-          'city' => 'required|max:255',
+          'country' => 'required|exists:countries,id',
+          'city' => 'required|exists:cities,id',
           'street' => 'required|max:255',
           'contact_phone' => 'required|max:255',
           'currency' => 'required',
@@ -94,8 +96,8 @@ class ProfileController extends Controller
         ]);
       } else {
         $request->validate([
-          'country' => 'required|max:255',
-          'city' => 'required|max:255',
+          'country' => 'required|exists:countries,id',
+          'city' => 'required|exists:cities,id',
           'street' => 'required|max:255',
           'contact_phone' => 'required|max:255',
           'currency' => 'required',
@@ -104,25 +106,25 @@ class ProfileController extends Controller
       }
       if ($user->address == null) {
         $address = new UserAddress();
-        $address['country'] = $request->country;
-        $address['city'] = $request->city;
         $address['street'] = $request->street;
         $address['contact_phone'] = $request->contact_phone;
         $currency = Currency::find($request->currency);
         $address->currency()->associate($currency);
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->address->city()->associate(City::find($request->city));
+        $user->address->country()->associate(Country::find($request->ccountry));
         $user->address()->save($address);
         $user->save();
       } else {
         $user->address->update([
-          'country' => $request->country,
-          'city' => $request->city,
           'street' => $request->street,
           'contact_phone' => $request->contact_phone
         ]);
         $currency = Currency::find($request->currency);
         $user->address->currency()->associate($currency);
+        $user->address->city()->associate(City::find($request->city));
+        $user->address->country()->associate(Country::find($request->country));
         $user->address->save();
         $user->name = $request->name;
         $user->email = $request->email;

@@ -6,6 +6,7 @@ try {
     window.$ = window.jQuery = require('jquery');
     require('bootstrap');
     require('slick-carousel');
+    require('select2');
 } catch (e) {}
 
 window.axios = require('axios');

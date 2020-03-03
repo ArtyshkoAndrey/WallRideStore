@@ -5,7 +5,7 @@
       return {
         step: 1,
         order: {
-          name: $('input[name=name]').val(),
+          name: $('input[name=username]').val(),
           phone: $('input[name=contact_phone]').val(),
           email: $('input[name=email]').val(),
           country: $('input[name=country]').val(),

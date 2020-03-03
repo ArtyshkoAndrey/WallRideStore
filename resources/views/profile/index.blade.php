@@ -125,16 +125,21 @@
                           @endif
                         </div>
                         <div class="col-md-6 col-12">
-                          <input type="text" class="form-control mb-4" placeholder="Страна" name="country" value="{{ old('country', $address ? $address->country ? $address->country : null : null) }}" required>
+                          <select id="mySelect3" name="country" class="w-100 h-100 form-control">
+                            <option value="{{ $address->country->id }}" selected>{{ $address->country->name }}</option>
+                          </select>
                           @if ($errors->has('country'))
                             <span class="text-danger">{{ $errors->first('country') }}</span>
                           @endif
                         </div>
-                        <div class="col-md-6 col-12">
-                          <input type="text" class="form-control mb-4" name="city" placeholder="Город" value="{{ old('city', $address ? $address->city? $address->city : null : null) }}" required>
-                          @if ($errors->has('city'))
-                            <span class="text-danger">{{ $errors->first('city') }}</span>
-                          @endif
+                        <div class="col-md-6 col-12 mb-4">
+{{--                          <input type="text" class="form-control mb-4" name="city" placeholder="Город" value="{{ old('city', $address ? $address->city? $address->city : null : null) }}" required>--}}
+{{--                          @if ($errors->has('city'))--}}
+{{--                            <span class="text-danger">{{ $errors->first('city') }}</span>--}}
+{{--                          @endif--}}
+                          <select id="mySelect2" name="city" class="w-100 h-100 form-control">
+                            <option value="{{ $address->city->id }}" selected>{{ $address->city->name }}</option>
+                          </select>
                         </div>
                         <div class="col-12">
                           <input type="text" class="form-control mb-0" name="street" placeholder="Улица, индекс" value="{{ old('country', $address ? $address->street ? $address->street : null : null) }}" required>
@@ -159,11 +164,51 @@
 
 @section('scriptsAfterJs')
   <script>
-    $('#add-photo').click(() => {
-      $('#photo').click();
-    });
-    $("#photo").change(() => {
-      swal({
+    $(document).ready(function() {
+      $('#mySelect2').select2({
+        ajax: {
+          type: "POST",
+          dataType: 'json',
+          url: function (params) {
+            return '{{ route('api.city', '') }}' + '/' + params.term;
+          },
+          processResults: function (data) {
+            return {
+              results: data.items.map((e) => {
+                return {
+                  text: e.name,
+                  id: e.id
+                };
+              })
+            };
+          }
+        }
+      });
+
+      $('#mySelect3').select2({
+        ajax: {
+          type: "POST",
+          dataType: 'json',
+          url: function (params) {
+            return '{{ route('api.country', '') }}' + '/' + params.term;
+          },
+          processResults: function (data) {
+            return {
+              results: data.items.map((e) => {
+                return {
+                  text: e.name,
+                  id: e.id
+                };
+              })
+            };
+          }
+        }
+      });
+      $('#add-photo').click(() => {
+        $('#photo').click();
+      });
+      $("#photo").change(() => {
+        swal({
           title: "Вы уверены?",
           text: "Данные действие обновит фотографию профиля!",
           icon: "warning",
@@ -177,19 +222,20 @@
           },
           dangerMode: true,
         })
-        .then((answer) => {
-          switch (answer) {
-            case "success":
-              swal("Фотография обновлена!", 'success');
-              $('#form-photo').submit()
-              break;
-            case "cancle":
-              swal("Действик отменено");
-              break;
-            default:
-              swal("Действик отменено");
-          }
-        })
+          .then((answer) => {
+            switch (answer) {
+              case "success":
+                swal("Фотография обновлена!", 'success');
+                $('#form-photo').submit()
+                break;
+              case "cancle":
+                swal("Действик отменено");
+                break;
+              default:
+                swal("Действик отменено");
+            }
+          })
+      });
     });
   </script>
 @endsection

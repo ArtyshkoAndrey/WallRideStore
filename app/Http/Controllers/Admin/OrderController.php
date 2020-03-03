@@ -76,7 +76,7 @@ class OrderController extends Controller
       } else {
         $time = 'all';
       }
-
+      $orders = $orders->orderByDesc('created_at');
       $orders = $orders->paginate(20);
       $filters = [
         'type'  => $type,

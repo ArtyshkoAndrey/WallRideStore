@@ -44,7 +44,7 @@
               </div>
             </div>
             <hr>
-            <div class="row">
+            <div class="row table-responsive">
               <table class="table text-nowrap">
                 <thead>
                   <tr>

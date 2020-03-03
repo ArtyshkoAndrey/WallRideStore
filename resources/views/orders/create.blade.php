@@ -20,14 +20,14 @@
           <div class="card">
             <div class="card-body mt-2" v-if="step === 1">
               <h4 class="font-weight-bold">Контактные данные</h4>
-              <input type="text" value="{{ auth()->user()->name }}" v-model="order.name" name="name" class="w-100 py-2 px-2 mt-2" placeholder="Имя">
+              <input type="text" value="{{ auth()->user()->name }}" v-model="order.name" name="username" class="w-100 py-2 px-2 mt-2" placeholder="Имя">
               <input type="text" value="{{ auth()->user()->email }}" v-model="order.email" name="email" class="w-100 py-2 px-2 mt-2" placeholder="E-mail">
               <input type="text" value="{{ auth()->user()->address !== null ? auth()->user()->address->contact_phone !== null ? auth()->user()->address->contact_phone : '' : '' }}" v-model="order.phone" name="contact_phone" class="w-100 py-2 px-2 mt-2" placeholder="Телефон">
             </div>
             <div class="card-body mt-2" v-else>
               <h4 class="font-weight-bold">Адрессные данные</h4>
-              <input type="text" value="{{ auth()->user()->address !== null ? auth()->user()->address->country !== null ? auth()->user()->address->country : '' : ''}}" v-model="order.country" name="country" class="w-100 py-2 px-2 mt-2" placeholder="Страна">
-              <input type="text" value="{{ auth()->user()->address !== null ? auth()->user()->address->city !== null ? auth()->user()->address->city : '' : ''}}" v-model="order.city" name="city" class="w-100 py-2 px-2 mt-2" placeholder="Город">
+              <input type="text" value="{{ auth()->user()->address !== null ? auth()->user()->address->country->name !== null ? auth()->user()->address->country->name : '' : ''}}" v-model="order.country" name="country" class="w-100 py-2 px-2 mt-2" placeholder="Страна">
+              <input type="text" value="{{ auth()->user()->address !== null ? auth()->user()->address->city->name !== null ? auth()->user()->address->city->name : '' : ''}}" v-model="order.city" name="city" class="w-100 py-2 px-2 mt-2" placeholder="Город">
               <input type="text" value="{{ auth()->user()->address !== null ? auth()->user()->address->street !== null ? auth()->user()->address->street : '' : ''}}" v-model="order.street" name="street" class="w-100 py-2 px-2 mt-2" placeholder="Адрес">
             </div>
           </div>
