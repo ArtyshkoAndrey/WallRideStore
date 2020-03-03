@@ -34,33 +34,45 @@
             </div>
             <div class="row mt-3">
               <div class="col-md-4">
-                <input type="text" name="name" id="name" class="w-100 px-2" value="{{ $express->name }}" required>
+                <input type="text" name="name" id="name" class="w-100 px-2 form-control rounded-0" value="{{ $express->name }}" required>
               </div>
               <div class="col-md-2">
-                <select name="cost_type" id="cost_type" class="h-100 w-100">
-                  <option value="Настраиваемая">Настраиваемая</option>
+                <select name="cost_type" id="cost_type" class="h-100 w-100 form-control rounded-0">
+                  <option value="Настраиваемая" {{ $express->cost_type == 'Настраиваемая' ? 'selected' : null }}>Настраиваемая</option>
+                  <option value="0 тг." {{ $express->cost_type == '0 тг.' ? 'selected' : null }}>0 тг.</option>
                 </select>
               </div>
             </div>
-            <div class="row mt-3">
-              <div class="col-md-4">
-               <div class="form-group">
-                 <label for="cost">Стоимость</label>
-                 <input type="number" name="cost" value="{{ $express->cost }}" class="form-control" required>
-               </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label for="cost">Шаг кг.</label>
-                  <input type="number" name="step" step="0.01" value="{{ $express->step }}" class="form-control" required>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label for="cost">Стоимость за шаг</label>
-                  <input type="number" name="cost_step" value="{{ $express->cost_step }}" class="form-control" required>
-                </div>
-              </div>
+            <hr>
+            <div class="row">
+              <table class="table text-nowrap">
+                <thead>
+                  <tr>
+                    <th>Название зоны</th>
+                    <th>Цена за кг.</th>
+                    <th>Цена каждый шаг в кг.</th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach($express->zones as $zone)
+                    <tr class="align-items-center">
+                      <td>{{ $zone->name }}</td>
+                      <td>{{ cost($zone->cost) }} тг.</td>
+                      <td>{{ cost($zone->cost_step) }} тг. / {{ $zone->step }} кг.</td>
+                      <td><a href="" class="btn btn-warning border-0 rounded-0">Редактировать</a></td>
+                      <td>
+                        <form action="{{ route('admin.store.express.destroy', $zone->id) }}" method="post">
+                          @csrf
+                          @method('delete')
+                          <button class="bg-transparent border-0 rounded-0" style="color: #F33C3C" type="submit"><i style="font-size: 1.5rem" class="fal fa-trash"></i></button>
+                        </form>
+                      </td>
+                    </tr>
+                  @endforeach
+                </tbody>
+              </table>
             </div>
           </form>
         </div>
