@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use App\Models\Currency;
 use App\Models\UserAddress;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -19,6 +20,9 @@ class Controller extends BaseController
   protected $cartService;
 
   public function __construct(CartService $cartService) {
+    if (!isset($_COOKIE['city'])) {
+      setcookie('city', City::first()->id, time() + (86400 * 30), "/");
+    }
     $this->cartService = $cartService;
     $this->middleware(function ($request, $next) {
       $cartItems = [];

@@ -10,7 +10,7 @@ use App\Models\Country;
 class ApiController extends Controller {
 
   public function city ($city) {
-    $cities = City::whereLike('name', $city)->get();
+    $cities = City::whereLike('name', $city)->take(20)->get();
     return ['items' => $cities];
   }
 

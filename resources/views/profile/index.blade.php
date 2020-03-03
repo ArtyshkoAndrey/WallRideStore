@@ -124,9 +124,11 @@
                             <span class="text-danger">{{ $errors->first('currency') }}</span>
                           @endif
                         </div>
-                        <div class="col-md-6 col-12">
+                        <div class="col-md-6 col-12 mb-4">
                           <select id="mySelect3" name="country" class="w-100 h-100 form-control">
-                            <option value="{{ $address->country->id }}" selected>{{ $address->country->name }}</option>
+                            @if(isset($address->country))
+                              <option value="{{ $address->country->id }}" selected>{{ $address->country->name }}</option>
+                            @endif
                           </select>
                           @if ($errors->has('country'))
                             <span class="text-danger">{{ $errors->first('country') }}</span>
@@ -138,7 +140,9 @@
 {{--                            <span class="text-danger">{{ $errors->first('city') }}</span>--}}
 {{--                          @endif--}}
                           <select id="mySelect2" name="city" class="w-100 h-100 form-control">
-                            <option value="{{ $address->city->id }}" selected>{{ $address->city->name }}</option>
+                            @if(isset($address->city))
+                              <option value="{{ $address->city->id }}" selected>{{ $address->city->name }}</option>
+                            @endif
                           </select>
                         </div>
                         <div class="col-12">

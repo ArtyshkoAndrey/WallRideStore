@@ -6,36 +6,9 @@
     <li class="sep dropdown" rel=1>
       <a>Бренды</a>
       <ul class="dropdown-3 submenu-1">
-        <li><a href="#">Adidas Skateboarding</a></li>
-        <li><a href="#">All timers</a></li>
-        <li><a href="#">Baker</a></li>
-        <li><a href="#">BirdHouse</a></li>
-        <li><a href="#">Bronson</a></li>
-        <li><a href="#">Bronze56k</a></li>
-        <li><a href="#">Converce</a></li>
-        <li><a href="#">Creature</a></li>
-        <li><a href="#">Deathwish</a></li>
-        <li><a href="#">Dime</a></li>
-        <li><a href="#">Fucking Awesome</a></li>
-        <li><a href="#">Helas</a></li>
-        <li><a href="#">Hockey</a></li>
-        <li><a href="#">Huf</a></li>
-        <li><a href="#">Illegal civilisation</a></li>
-        <li><a href="#">Independent</a></li>
-        <li><a href="#">Krux</a></li>
-        <li><a href="#">Magente</a></li>
-        <li><a href="#">Mob Grip</a></li>
-        <li><a href="#">ObFive</a></li>
-        <li><a href="#">Oj wheels</a></li>
-        <li><a href="#">Polar</a></li>
-        <li><a href="#">Ricta</a></li>
-        <li><a href="#">Santa Junt</a></li>
-        <li><a href="#">Shake Junt</a></li>
-        <li><a href="#">Thrasher</a></li>
-        <li><a href="#">Thunder</a></li>
-        <li><a href="#">Nike SB</a></li>
-        <li><a href="#">WallRide</a></li>
-        <li><a href="#">Асфальт</a></li>
+        @foreach(App\Models\Category::all() as $category)
+          <li><a href="#">{{ $category->name }}</a></li>
+        @endforeach
       </ul>
     </li>
     <li class="sep"><a href="{{ route('contact') }}">Контакты</a></li>
@@ -57,30 +30,45 @@
     <ul class="navbar-nav justify-content-end">
       <li class="nav-item dropdown d-none d-sm-block" rel="city">
         <a class="nav-link d-flex align-items-center" id="city" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <span class="d-none d-md-block">Вы находитесь в: г. Москва</span>
-          <span class="d-block d-md-none">г. Москва</span>
+          @guest
+            @if(!isset($_COOKIE['city']))
+              <? setcookie('city', App\Models\City::first()->id, time() + (86400 * 30), "/"); ?>
+              <span class="d-none d-md-block">Вы находитесь в: г. Москва</span>
+              <span class="d-block d-md-none">г. Москва</span>
+            @else
+              <span class="d-none d-md-block">Вы находитесь в: г. {{ App\Models\City::find($_COOKIE['city'])->name }}</span>
+              <span class="d-block d-md-none">г. {{ App\Models\City::find($_COOKIE['city'])->name }}</span>
+            @endif
+          @else
+            @if(isset(auth()->user()->address))
+              <span class="d-none d-md-block">Вы находитесь в: г. {{ auth()->user()->address->city->name }}</span>
+              <span class="d-block d-md-none">г. {{ auth()->user()->address->city->name }}</span>
+            @else
+              @if(!isset($_COOKIE['city']))
+                <? setcookie('city', App\Models\City::first()->id, time() + (86400 * 30), "/"); ?>
+                <span class="d-none d-md-block">Вы находитесь в: г. Москва</span>
+                <span class="d-block d-md-none">г. Москва</span>
+              @else
+                <span class="d-none d-md-block">Вы находитесь в: г. {{ App\Models\City::find($_COOKIE['city'])->name }}</span>
+                <span class="d-block d-md-none">г. {{ App\Models\City::find($_COOKIE['city'])->name }}</span>
+              @endif
+            @endif
+          @endguest
           <i class="fal fa-angle-down fa-fw"></i>
         </a>
         <div class="dropdown-menu" aria-labelledby="city">
           <div class="material_input">
-            <input type="text" required>
+            <input type="text" name="location_city" autocomplete="off" onkeyup="resetListCity()" readonly onfocus="this.removeAttribute('readonly');">
             <span class="highlight"></span>
             <span class="bar"></span>
             <label id="mla">Начните печатать</label>
           </div>
-          <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action">
-              Москва
-            </a>
-            <a href="#" class="list-group-item list-group-item-action">
-              Питер
-            </a>
-            <a href="#" class="list-group-item list-group-item-action">
-              Махачкала
-            </a>
-            <a href="#" class="list-group-item list-group-item-action">Красноярск</a>
-            <a href="#" class="list-group-item list-group-item-action">Новосибирск</a>
-            <a href="#" class="list-group-item list-group-item-action">Санкт-Петербурк</a>
+          <div class="list-group" id="list-city">
+            @foreach(App\Models\City::paginate(10) as $city)
+              <a href="/location/{{$city->id}}" class="list-group-item list-group-item-action">
+                {{ $city->name }}
+              </a>
+            @endforeach
           </div>
         </div>
       </li>

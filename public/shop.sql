@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Мар 03 2020 г., 09:23
+-- Время создания: Мар 03 2020 г., 16:41
 -- Версия сервера: 5.7.25-log
 -- Версия PHP: 7.3.9
 
@@ -87,8 +87,7 @@ INSERT INTO `cart_items` (`id`, `user_id`, `product_sku_id`, `amount`) VALUES
 (11, 107, 123, 1),
 (16, 109, 125, 12),
 (17, 109, 131, 1),
-(18, 109, 128, 1),
-(21, 102, 131, 1);
+(18, 109, 128, 1);
 
 -- --------------------------------------------------------
 
@@ -17674,7 +17673,6 @@ CREATE TABLE `migrations` (
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '2014_10_12_000000_create_users_table', 1),
 (2, '2014_10_12_100000_create_password_resets_table', 1),
-(4, '2018_12_19_152909_create_user_addresses_table', 1),
 (5, '2018_12_22_042326_create_products_table', 1),
 (6, '2018_12_22_042331_create_product_skus_table', 1),
 (7, '2018_12_22_065917_create_user_favorite_products_table', 1),
@@ -17695,7 +17693,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (30, '2020_03_03_110112_create_express_zones_table', 12),
 (33, '2020_03_03_115355_create_countries_table', 13),
 (34, '2020_03_03_115412_create_cities_table', 13),
-(35, '2020_03_03_215746_create_city_expresses_table', 13);
+(35, '2020_03_03_215746_create_city_expresses_table', 13),
+(36, '2020_12_19_152909_create_user_addresses_table', 14);
 
 -- --------------------------------------------------------
 
@@ -17727,7 +17726,8 @@ CREATE TABLE `orders` (
 
 INSERT INTO `orders` (`id`, `no`, `user_id`, `address`, `total_amount`, `paid_at`, `payment_method`, `payment_no`, `closed`, `reviewed`, `ship_status`, `ship_data`, `id_express_company`, `created_at`, `updated_at`) VALUES
 (1, '123123123', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"+79029634366\"}', '100000', '2020-02-25 00:00:00', 'card', '233144', 0, 0, 'pending', '{\"express_no\":\"123\"}', 1, '2020-02-28 17:00:00', '2020-02-29 08:59:29'),
-(2, '20200226170503735991', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"+79029634366\"}', '525000', NULL, 'card', NULL, 0, 0, 'paid', NULL, 1, '2020-02-26 10:05:03', '2020-02-26 10:05:03');
+(2, '20200226170503735991', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"+79029634366\"}', '525000', NULL, 'card', NULL, 0, 0, 'paid', NULL, 1, '2020-02-26 10:05:03', '2020-02-26 10:05:03'),
+(3, '20200303182237711837', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432. 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"89029634366\"}', '17940', '2020-03-03 18:23:41', 'card', NULL, 0, 0, 'pending', NULL, 1, '2020-03-03 11:22:37', '2020-03-03 11:23:41');
 
 -- --------------------------------------------------------
 
@@ -17753,7 +17753,8 @@ CREATE TABLE `order_items` (
 
 INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `product_sku_id`, `amount`, `price`, `rating`, `review`, `reviewed_at`) VALUES
 (3, 2, 63, 133, 1, '21900.00', NULL, NULL, NULL),
-(4, 2, 59, 124, 9, '55900.00', NULL, NULL, NULL);
+(4, 2, 59, 124, 9, '55900.00', NULL, NULL, NULL),
+(5, 3, 62, 131, 1, '17940.00', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -17804,7 +17805,7 @@ INSERT INTO `products` (`id`, `title`, `description`, `image`, `on_sale`, `on_ne
 (59, 'BRONZE56K HIGH PERFORMACE WINDBREAKER AIR FORCE BLUE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Windbreaker-Blue-1LOW_1800x1800.jpg', 1, 1, 5.00, 17, 0, '55900.00', '2020-01-30 02:42:36', '2020-02-20 09:28:00'),
 (60, 'BRONZE56K HARD WEAR CARGO PANTS DARK NAVY', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Pants-Cargo-Blue-1LOW_1800x1800-300x300.jpg', 1, 1, 5.00, 0, 0, '49900.00', '2020-01-30 02:43:57', '2020-01-30 02:43:57'),
 (61, 'POLAR PATTERNED POLO SHIRT RED', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/PATTERNED-POLO-SHIRT-RED-1.jpg', 1, 0, 5.00, 0, 0, '29900.00', '2020-01-30 02:45:32', '2020-01-30 02:45:32'),
-(62, 'DIME POLO SHIRT PURPLE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/POLO_SHIRT_PURPLE_1_1400x1400-300x300.jpg', 1, 1, 5.00, 0, 0, '17940.00', '2020-01-30 02:46:56', '2020-01-30 02:46:56'),
+(62, 'DIME POLO SHIRT PURPLE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/POLO_SHIRT_PURPLE_1_1400x1400-300x300.jpg', 1, 1, 5.00, 1, 0, '17940.00', '2020-01-30 02:46:56', '2020-03-03 11:23:41'),
 (63, 'BRONZE56K HARDWARE TECHNOLOGY LONGSLEEVE CARDINAL', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.500 kg</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/LSTee-Bronze-Technology-Red-1LOW.jpg', 1, 1, 5.00, 0, 0, '21900.00', '2020-01-30 06:09:49', '2020-01-30 06:09:49'),
 (64, 'BRONZE56K MOUNTAIN BEANIE GREEN', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.200 kg</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Beanie-Green-1LOW_1800x1800.jpg', 1, 1, 5.00, 0, 0, '16900.00', '2020-01-30 06:10:59', '2020-01-30 06:10:59'),
 (65, 'BRONSON BEARING RAW', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.110 kg</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/BR_RAW_SingleCase_Angled.jpg', 0, 0, 5.00, 0, 0, '17900.00', '2020-01-30 06:12:32', '2020-01-30 06:12:32'),
@@ -17848,7 +17849,7 @@ INSERT INTO `product_skus` (`id`, `title`, `description`, `price`, `stock`, `pro
 (128, 'L', 'L', '29900.00', 1, 61, '2020-01-30 02:45:32', '2020-01-30 02:45:32'),
 (129, 'S', 'S', '29900.00', 3, 61, '2020-01-30 02:45:32', '2020-01-30 02:45:32'),
 (130, 'S', 'S', '29900.00', 2, 61, '2020-01-30 02:45:32', '2020-01-30 02:45:32'),
-(131, 'L', 'L', '17940.00', 2, 62, '2020-01-30 02:46:56', '2020-02-11 17:05:09'),
+(131, 'L', 'L', '17940.00', 1, 62, '2020-01-30 02:46:56', '2020-03-03 11:22:37'),
 (132, 'M', 'M', '17940.00', 1, 62, '2020-01-30 02:46:56', '2020-01-30 02:46:56'),
 (133, 'L', 'L', '21900.00', 0, 63, '2020-01-30 06:09:49', '2020-02-26 10:05:03'),
 (134, 'M', 'M', '21900.00', 2, 63, '2020-01-30 06:09:49', '2020-01-30 06:09:49'),
@@ -17888,7 +17889,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `avatar`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(102, 'Андрей Артышко Алексеевич', 'artyshko.andrey@gmail.com', '1581049164.jpg', '2020-01-12 02:40:22', '$2y$10$eJNi1Z2UHjb96hhUqxuhWerv3jjk9Cp/YCGV7bvl4UidmP6qQXsHy', 'B1XJLLZnK2Z8duEgWNV2ULJivrChsq72ZmVecVgJYcLH08BzROBQirTjbWj5', '2020-01-12 02:39:54', '2020-02-07 04:19:26'),
+(102, 'Андрей Артышко Алексеевич', 'artyshko.andrey@gmail.com', '1581049164.jpg', '2020-01-12 02:40:22', '$2y$10$eJNi1Z2UHjb96hhUqxuhWerv3jjk9Cp/YCGV7bvl4UidmP6qQXsHy', 'ixR6vDJzqgK0oZDJdZRjqpiNIvyhTNvj2rGHexOLPFhHOohLn4r90WqdwX9Y', '2020-01-12 02:39:54', '2020-02-07 04:19:26'),
 (106, 'ANZHELIKA ARTYSHKO', 'lika.dudareva@gmail.com', '1581004168.jpg', NULL, '$2y$10$l5Eisw/yfNmepnwHJd7clOeVlljchofWtjWnz3ry2uXmq9zLjrKJa', NULL, '2020-02-03 08:04:08', '2020-02-03 08:04:08'),
 (107, 'Роман Иминов', 'iminovarts@gmail.com', NULL, '2020-02-11 08:06:18', '$2y$10$XCMQtYi8xMArrx0SCTxrzOl55OEtCLk.opVg/sGQnu9c/DJTsIsX6', NULL, '2020-02-11 07:48:06', '2020-02-11 08:06:18'),
 (108, 'Андрей Артышко', 'adad.artyshko@mail.ru', NULL, '2020-02-11 07:57:52', '$2y$10$nQpOvq/evc4nEI2jeqgGYeYHviuaAhapPO/SggFKJZeiMuG4K168u', 'kHfRnLezLkyRxqtFQyyjeC6LisWcAzesyMrgYjQPXFTTOzdSAe14y8fsuFOM', '2020-02-11 07:56:40', '2020-02-11 07:57:52'),
@@ -17903,11 +17904,11 @@ INSERT INTO `users` (`id`, `name`, `email`, `avatar`, `email_verified_at`, `pass
 CREATE TABLE `user_addresses` (
   `id` int(10) UNSIGNED NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
-  `country` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `city` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `country_id` int(10) UNSIGNED NOT NULL,
+  `city_id` int(10) UNSIGNED NOT NULL,
   `street` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `contact_phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `currency_id` int(11) UNSIGNED NOT NULL,
+  `currency_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -17916,9 +17917,9 @@ CREATE TABLE `user_addresses` (
 -- Дамп данных таблицы `user_addresses`
 --
 
-INSERT INTO `user_addresses` (`id`, `user_id`, `country`, `city`, `street`, `contact_phone`, `currency_id`, `created_at`, `updated_at`) VALUES
-(194, 102, 'Россия', 'Красноярск', 'ул. Горького, 24 кв 25, 660099', '+79029634366', 1, '2020-01-14 13:06:53', '2020-02-26 09:01:31'),
-(196, 108, 'Россия', 'Красноярск', 'Горького 24, 25', '89029634366', 3, '2020-02-11 08:07:09', '2020-02-11 08:07:09');
+INSERT INTO `user_addresses` (`id`, `user_id`, `country_id`, `city_id`, `street`, `contact_phone`, `currency_id`, `created_at`, `updated_at`) VALUES
+(1, 102, 1, 1116, 'ул. Горького, 24 кв. 25, 660099', '89029634366', 2, '2020-03-02 17:00:00', '2020-03-03 13:02:22'),
+(2, 108, 1, 1116, 'Горького 24, 25', '89029634366', 3, '2020-03-03 12:49:53', '2020-03-03 12:51:18');
 
 -- --------------------------------------------------------
 
@@ -18117,7 +18118,9 @@ ALTER TABLE `users`
 ALTER TABLE `user_addresses`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_addresses_user_id_foreign` (`user_id`),
-  ADD KEY `currency_id` (`currency_id`);
+  ADD KEY `user_addresses_city_id_foreign` (`city_id`),
+  ADD KEY `user_addresses_country_id_foreign` (`country_id`),
+  ADD KEY `user_addresses_currency_id_foreign` (`currency_id`);
 
 --
 -- Индексы таблицы `user_favorite_products`
@@ -18141,7 +18144,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT для таблицы `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT для таблицы `categories`
@@ -18219,19 +18222,19 @@ ALTER TABLE `express_zones`
 -- AUTO_INCREMENT для таблицы `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT для таблицы `products`
@@ -18255,7 +18258,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `user_addresses`
 --
 ALTER TABLE `user_addresses`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=197;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `user_favorite_products`
@@ -18352,6 +18355,9 @@ ALTER TABLE `product_skus`
 -- Ограничения внешнего ключа таблицы `user_addresses`
 --
 ALTER TABLE `user_addresses`
+  ADD CONSTRAINT `user_addresses_city_id_foreign` FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `user_addresses_country_id_foreign` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `user_addresses_currency_id_foreign` FOREIGN KEY (`currency_id`) REFERENCES `currencies` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `user_addresses_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --

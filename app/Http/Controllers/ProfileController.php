@@ -110,10 +110,10 @@ class ProfileController extends Controller
         $address['contact_phone'] = $request->contact_phone;
         $currency = Currency::find($request->currency);
         $address->currency()->associate($currency);
+        $address->city()->associate(City::find($request->city));
+        $address->country()->associate(Country::find($request->country));
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->address->city()->associate(City::find($request->city));
-        $user->address->country()->associate(Country::find($request->ccountry));
         $user->address()->save($address);
         $user->save();
       } else {

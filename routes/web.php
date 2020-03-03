@@ -8,6 +8,7 @@ Route::get('products', 'ProductsController@index')->name('products.index'); // �
 Route::get('products/all', 'ProductsController@all')->name('products.all');
 Route::get('products/search', 'ProductsController@search')->name('products.search'); // Главная с товарами
 Route::get('product/{product}', 'ProductsController@show')->name('products.show');
+Route::get('location/{city}', ['as' => 'location', 'uses' => 'PagesController@location']);
 Route::resource('news', 'NewsController')->except([
   'edit', 'create', 'destroy', 'create'
 ]);
