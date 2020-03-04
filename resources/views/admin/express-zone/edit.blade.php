@@ -5,7 +5,7 @@
   <div class="container-fluid pt-5 px-4">
     <div class="row">
       <div class="col-12">
-        <h2>Промокод</h2>
+        <h2>Зона доставки</h2>
       </div>
     </div>
     <div class="row mt-2" style="z-index: 100">
@@ -34,15 +34,19 @@
             </div>
             <div class="row mt-3">
               <div class="col-md-3">
+                <label for="name">Наименование</label>
                 <input type="text" name="name" id="name" class="form-control rounded-0" value="{{ $zone->name }}" required>
               </div>
               <div class="col-md-3">
+                <label for="cost">Стоимость</label>
                 <input type="number" name="cost" id="cost" class="form-control rounded-0" value="{{ $zone->cost }}" required>
               </div>
               <div class="col-md-3">
+                <label for="step">Шаг</label>
                 <input type="number" name="step" id="step" class="form-control rounded-0" step="0.01" value="{{ $zone->step }}" required>
               </div>
               <div class="col-md-3">
+                <label for="cost_step">Стоимость шага</label>
                 <input type="number" name="cost_step" id="cost_step" class="form-control rounded-0" value="{{ $zone->cost_step }}" required>
               </div>
             </div>

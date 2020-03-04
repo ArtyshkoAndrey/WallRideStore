@@ -5,7 +5,7 @@
   <div class="container-fluid pt-5 px-4">
     <div class="row">
       <div class="col-12">
-        <h2>Промокод</h2>
+        <h2>Компания доставки</h2>
       </div>
     </div>
     <div class="row mt-2" style="z-index: 100">
@@ -34,10 +34,12 @@
             </div>
             <div class="row mt-3">
               <div class="col-md-4">
+                <label for="name">Наименование</label>
                 <input type="text" name="name" id="name" class="w-100 px-2 form-control rounded-0" value="{{ $express->name }}" required>
               </div>
               <div class="col-md-2">
-                <select name="cost_type" id="cost_type" class="h-100 w-100 form-control rounded-0">
+                <label for="cost_type">Тип стоимости</label>
+                <select name="cost_type" id="cost_type" class="form-control rounded-0">
                   <option value="Настраиваемая" {{ $express->cost_type == 'Настраиваемая' ? 'selected' : null }}>Настраиваемая</option>
                   <option value="0 тг." {{ $express->cost_type == '0 тг.' ? 'selected' : null }}>0 тг.</option>
                 </select>
