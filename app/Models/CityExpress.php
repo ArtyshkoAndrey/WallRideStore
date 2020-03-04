@@ -9,7 +9,7 @@ class CityExpress extends Model
   protected $fillable = [
   ];
 
-  public function name() {
-    return $this->belongsTo(City::class, 'id', 'city_id');
+  public function cityOriginal() {
+    return $this->hasOne(City::class, 'id', 'city_id');
   }
 }

@@ -61,7 +61,7 @@
                       <td>{{ $zone->name }}</td>
                       <td>{{ cost($zone->cost) }} тг.</td>
                       <td>{{ cost($zone->cost_step) }} тг. / {{ $zone->step }} кг.</td>
-                      <td><a href="" class="btn btn-warning border-0 rounded-0">Редактировать</a></td>
+                      <td><a href="{{ route('admin.store.express-zone.edit', $zone->id) }}" class="btn btn-warning border-0 rounded-0">Редактировать</a></td>
                       <td>
                         <form action="{{ route('admin.store.express.destroy', $zone->id) }}" method="post">
                           @csrf

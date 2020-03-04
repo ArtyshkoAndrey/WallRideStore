@@ -40,7 +40,7 @@
             @forelse($expresses as $express)
               <tr class="align-items-center">
                 <td style="vertical-align: middle;"><a href="{{ route('admin.store.express.edit', $express->id) }}" class="text-red">{{$express->name}}</a></td>
-                <td style="vertical-align: middle;">{{$express->type}}</td>
+                <td style="vertical-align: middle;">{{$express->cost_type}}</td>
                 <td style="vertical-align: middle;">
                   <div class="custom-control custom-switch">
                     <input type="checkbox" class="custom-control-input" id="customSwitch{{$express->id}}" {{$express->enabled ? 'checked' : null}}>
