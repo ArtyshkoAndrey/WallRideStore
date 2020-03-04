@@ -17,8 +17,10 @@ class CreateCityExpressesTable extends Migration
       $table->increments('id');
       $table->unsignedInteger('city_id');
       $table->unsignedInteger('express_zone_id');
+      $table->unsignedInteger('express_company_id');
       $table->foreign('express_zone_id')->references('id')->on('express_zones')->onDelete('cascade');
       $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
+      $table->foreign('express_company_id')->references('id')->on('express_companies')->onDelete('cascade');
       $table->timestamps();
     });
   }

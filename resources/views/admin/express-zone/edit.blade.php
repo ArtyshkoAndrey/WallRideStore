@@ -47,30 +47,31 @@
               </div>
             </div>
             <hr>
+            <div class="row">
+              <div class="col-md-4">
+                <select name="city" id="city" class="form-control w-100" placeholder="Город"></select>
+              </div>
+              <button class="btn bg-dark" onclick="addColumn()" type="button">Добавить</button>
+            </div>
+            <hr>
             <div class="row table-responsive">
               <table class="table text-nowrap">
                 <thead>
                 <tr>
                   <th>Город</th>
-                  <th style="vertical-align: middle" class="d-flex">
-                    <input type="button" class="btn ml-auto bg-dark rounded-0" onclick="addColumn()" value="Добавить новый">
-                  </th>
+                  <th></th>
                 </tr>
                 </thead>
                 <tbody id="tbody">
-                <? $index = 0; ?>
                 @foreach($zone->cities as $city)
-                  <tr class="align-items-center" id="city-{{ $index }}">
+                  <tr class="align-items-center" id="city-{{ $city->id }}">
                     <td>
-                      <select id="mySelect2" name="city[]" class="w-100 h-100 form-control mySelect{{$index}}">
-                          <option value="{{ $city->city_id }}" selected>{{ $city->cityOriginal->name }}</option>
-                      </select>
+                      {{ $city->name }}
                     </td>
                     <td>
-                      <button class="bg-transparent border-0 rounded-0" style="color: #F33C3C" onclick="onDelete({{ $index}})"><i style="font-size: 1.5rem" class="fal fa-trash"></i></button>
+                      <button class="bg-transparent border-0 rounded-0" style="color: #F33C3C" onclick="onDelete({{ $city->id }})" type="button"><i style="font-size: 1.5rem" class="fal fa-trash"></i></button>
                     </td>
                   </tr>
-                  <? $index++; ?>
                 @endforeach
                 </tbody>
               </table>
@@ -84,51 +85,63 @@
 
 @section('js')
   <script !src="">
-    let index = {{ $index }}
     function addColumn() {
-      $('#tbody').prepend(
-        '<tr class="align-items-center" id="city-'+index+'">\n' +
-        '                    <td>\n' +
-        '                      <select id="mySelect2" name="city[]" class="w-100 h-100 form-control mySelect2">\n' +
-        '                      </select>\n' +
-        '                    </td>\n' +
-        '                    <td>\n' +
-      '                        <button class="bg-transparent border-0 rounded-0" style="color: #F33C3C"onclick="onDelete('+index+')"><i style="font-size: 1.5rem" class="fal fa-trash"></i></button>\n' +
-        '                    </td>\n' +
-        '                  </tr>'
-      )
-
-
-      $('.mySelect'+index).select2({
-        ajax: {
-          type: "POST",
-          dataType: 'json',
-          url: function (params) {
-            return '{{ route('api.city', '') }}' + '/' + params.term;
-          },
-          processResults: function (data) {
-            return {
-              results: data.items.map((e) => {
-                return {
-                  text: e.name,
-                  id: e.id
-                };
-              })
-            };
+      axios.put('{{ route('admin.store.express-zone.update', $zone->id) }}',
+        {
+          city_id: $('#city').val()
+        })
+        .then((response) => {
+          console.log(response)
+          if (response.data.success === 'ok') {
+            $('#tbody').prepend(
+              '<tr class="align-items-center" id="city-' + $('#city').val() + '">\n' +
+              '                    <td>\n' +
+              '                      ' + $('#city').text() + '\n' +
+              '                    </td>\n' +
+              '                    <td>\n' +
+              '                        <button class="bg-transparent border-0 rounded-0" style="color: #F33C3C"onclick="onDelete(' + $('#city').val() + ')" type="button"><i style="font-size: 1.5rem" class="fal fa-trash"></i></button>\n' +
+              '                    </td>\n' +
+              '                  </tr>'
+            )
+          } else {
+            swal(response, '', 'error');
           }
-        }
-      });
-      index++;
+        })
+        .catch((error) => {
+          console.log(error, 123);
+          for (let key in error.response.data.errors) {
+            swal(error.response.data.errors[key][0], '', 'error');
+          }
+
+        });
     }
 
     function onDelete(index) {
-      $('#city-'+index).remove()
-      index--;
+      console.log(index)
+      axios.post('{{ route("admin.store.express-zone.destroyCity", $zone->id) }}',
+        {
+          city_id: index
+        }
+        )
+        .then((response) => {
+          console.log(response)
+          if (response.data.success === 'ok') {
+            $('#city-'+index).remove()
+          }
+        })
+        .catch((error) => {
+          console.log(error, 123);
+          for (let key in error.response.data.errors) {
+            swal(error.response.data.errors[key][0], '', 'error');
+          }
+
+        });
     }
 
 
 
-    $('.mySelect2').select2({
+    $('#city').select2({
+      placeholder: 'Город',
       ajax: {
         type: "POST",
         dataType: 'json',

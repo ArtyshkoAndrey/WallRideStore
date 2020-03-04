@@ -10,7 +10,12 @@ use Illuminate\View\View;
 
 class ExpressZoneController extends Controller
 {
-    /**
+  public function __construct()
+  {
+//    parent::__construct($cartService);
+  }
+
+  /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -33,7 +38,7 @@ class ExpressZoneController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -68,23 +73,45 @@ class ExpressZoneController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return array
      */
     public function update(Request $request, $id)
     {
-        //
+      if (isset($request->city_id)) {
+        $zone = ExpressZone::find($id);
+        $request->validate([
+          'city_id' => 'required|unique:city_expresses,city_id,'.$request->city_id.',id,express_company_id,'.$zone->company->id
+        ]);
+
+        $zone->cities()->attach($request->city_id, ['express_company_id' => $zone->company->id]);
+        return ['success' => 'ok'];
+      }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+  /**
+   * Remove the specified resource from storage.
+   *
+   * @param Request $request
+   * @param int $id
+   * @return array
+   */
+    public function destroy(Request $request, $id)
     {
-        //
+      if (isset($request->city_id)) {
+        $zone = ExpressZone::find($id);
+        $zone->cities()->detach($request->city_id);
+        return $request;
+      }
     }
+
+  public function destroyCity(Request $request, $id)
+  {
+    if (isset($request->city_id)) {
+      $zone = ExpressZone::find($id);
+      $zone->cities()->detach($request->city_id);
+      return ['success'=>'ok'];
+    }
+  }
 }

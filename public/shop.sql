@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Мар 03 2020 г., 16:41
+-- Время создания: Мар 04 2020 г., 15:28
 -- Версия сервера: 5.7.25-log
 -- Версия PHP: 7.3.9
 
@@ -17224,9 +17224,17 @@ CREATE TABLE `city_expresses` (
   `id` int(10) UNSIGNED NOT NULL,
   `city_id` int(10) UNSIGNED NOT NULL,
   `express_zone_id` int(10) UNSIGNED NOT NULL,
+  `express_company_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `city_expresses`
+--
+
+INSERT INTO `city_expresses` (`id`, `city_id`, `express_zone_id`, `express_company_id`, `created_at`, `updated_at`) VALUES
+(1, 70, 4, 2, '2020-03-04 12:01:51', '2020-03-04 12:01:51');
 
 -- --------------------------------------------------------
 
@@ -17693,8 +17701,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (30, '2020_03_03_110112_create_express_zones_table', 12),
 (33, '2020_03_03_115355_create_countries_table', 13),
 (34, '2020_03_03_115412_create_cities_table', 13),
-(35, '2020_03_03_215746_create_city_expresses_table', 13),
-(36, '2020_12_19_152909_create_user_addresses_table', 14);
+(36, '2020_12_19_152909_create_user_addresses_table', 14),
+(38, '2020_03_03_215746_create_city_expresses_table', 15);
 
 -- --------------------------------------------------------
 
@@ -17994,7 +18002,8 @@ ALTER TABLE `cities`
 ALTER TABLE `city_expresses`
   ADD PRIMARY KEY (`id`),
   ADD KEY `city_expresses_express_zone_id_foreign` (`express_zone_id`),
-  ADD KEY `city_expresses_city_id_foreign` (`city_id`);
+  ADD KEY `city_expresses_city_id_foreign` (`city_id`),
+  ADD KEY `city_expresses_express_company_id_foreign` (`express_company_id`);
 
 --
 -- Индексы таблицы `countries`
@@ -18162,7 +18171,7 @@ ALTER TABLE `cities`
 -- AUTO_INCREMENT для таблицы `city_expresses`
 --
 ALTER TABLE `city_expresses`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `countries`
@@ -18222,7 +18231,7 @@ ALTER TABLE `express_zones`
 -- AUTO_INCREMENT для таблицы `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT для таблицы `orders`
@@ -18294,6 +18303,7 @@ ALTER TABLE `cities`
 --
 ALTER TABLE `city_expresses`
   ADD CONSTRAINT `city_expresses_city_id_foreign` FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `city_expresses_express_company_id_foreign` FOREIGN KEY (`express_company_id`) REFERENCES `express_companies` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `city_expresses_express_zone_id_foreign` FOREIGN KEY (`express_zone_id`) REFERENCES `express_zones` (`id`) ON DELETE CASCADE;
 
 --
