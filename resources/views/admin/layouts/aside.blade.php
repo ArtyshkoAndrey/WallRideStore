@@ -26,7 +26,7 @@
         </li>
 
         <li class="nav-item">
-          <a href="{{ route('admin.store.order.index') }}" class="nav-link rounded-0 {{ Route::currentRouteNamed('admin.order') ? 'active' : '' }}">
+          <a href="{{ route('admin.production.products.index') }}" class="nav-link rounded-0 {{ Route::currentRouteNamed('admin.production.*') ? 'active' : '' }}">
             <i class="fas fa-cube mr-3"></i>
             <p>
               Товары
@@ -36,7 +36,7 @@
 
         <li class="nav-item">
           <a href="{{ route('admin.store.order.index') }}" class="nav-link rounded-0 {{ Route::currentRouteNamed('admin.user') ? 'active' : '' }}">
-            <i class="fas fa-cube mr-3"></i>
+            <i class="fas fa-user mr-3"></i>
             <p>
               Пользователи
             </p>

@@ -54,13 +54,13 @@ class ProductsController extends Controller {
   }
 
     public function show(Product $product, Request $request) {
-      if (!$product->on_sale) {
-          throw new InvalidRequestException('Нет в продаже');
+      if (isset($product->deleted_at)) {
+        throw new InvalidRequestException('Нет в продаже');
       }
 
       $favored = false;
       if($user = $request->user()) {
-          $favored = (bool) $user->favoriteProducts()->find($product->id);
+        $favored = (bool) $user->favoriteProducts()->find($product->id);
       }
 
       $reviews = OrderItem::query()

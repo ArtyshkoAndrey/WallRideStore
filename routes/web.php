@@ -59,6 +59,8 @@ Route::group(['prefix' => 'admin', 'guard' => 'admin', 'namespace' => 'Admin', '
   Route::get('logout', 'Auth\LoginController@logout')->name('admin.auth.logout');
   Route::delete('/order/all', 'OrderController@collectionsDestroy')->name('admin.store.order.collectionsDestroy');
   Route::delete('/coupon/all', 'CouponCodesController@collectionsDestroy')->name('admin.store.coupon.collectionsDestroy');
+  Route::delete('/products/all', 'ProductsController@collectionsDestroy')->name('admin.production.products.collectionsDestroy');
+
   Route::put('/express/enabled/{id}', 'ExpressController@enabled')->name('admin.store.express.enabled');
   Route::post('/express-zone/{id}/destroy', 'ExpressZoneController@destroyCity')->name('admin.store.express-zone.destroyCity');
   Route::get('/reports', 'ReportsController@index')->name('admin.store.reports.index');
@@ -67,4 +69,8 @@ Route::group(['prefix' => 'admin', 'guard' => 'admin', 'namespace' => 'Admin', '
   Route::resource('/express', 'ExpressController', ['as' => 'admin.store']);
   Route::resource('/coupon', 'CouponCodesController', ['as' => 'admin.store']);
   Route::redirect('/', route('admin.store.order.index'))->name('admin.root');
+
+  Route::resource('/products', 'ProductsController', ['as' => 'admin.production']);
+  Route::resource('/attr', 'ProductsController', ['as' => 'admin.production']);
+  Route::resource('/category', 'ProductsController', ['as' => 'admin.production']);
 });
