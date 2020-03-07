@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Category;
 use App\Models\City;
 use App\Models\Country;
 
@@ -17,5 +18,10 @@ class ApiController extends Controller {
   public function country ($country) {
     $countries = Country::whereLike('name', $country)->get();
     return ['items' => $countries];
+  }
+
+  public function category ($category) {
+    $categories = Category::whereLike('name', $category)->get();
+    return ['items' => $categories];
   }
 }

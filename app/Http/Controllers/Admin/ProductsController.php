@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\Photo;
 use App\Models\Product;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Facades\File;
 
 class ProductsController extends Controller {
   public function __construct() {
@@ -137,4 +140,28 @@ class ProductsController extends Controller {
   public function destroy($id) {
 
   }
+
+  public function photo(Request $request, $id) {
+    // read image from temporary file
+    $image = $request->file('file');
+    $destinationPath = public_path('storage/products/');
+    $name = $request->file('file')->getClientOriginalName();
+    $img = Image::make($image->getRealPath());
+    $img->save($destinationPath.'/'.$name);
+    $ph = new Photo();
+    $ph['name'] = $name;
+    $pr = Product::withTrashed()->find($id);
+    $ph->product()->associate($pr);
+    $ph->save();
+    echo $name;
+  }
+  public function photoDelete(Request $request, $id) {
+    // read image from temporary file
+    echo $request->name;
+    File::delete(public_path('storage/products/') . '/' .$request->name);
+    $ph = Photo::where('name', $request->name)->first();
+    $ph->delete();
+//    $product->photo->
+  }
+
 }

@@ -3,6 +3,22 @@
 
 @section('css')
   <link href="https://cdn.jsdelivr.net/npm/froala-editor@3.0.6/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.0/min/dropzone.min.css">
+  <style>
+    .dz-image > img {
+      width: 100%;
+      height: auto;
+    }
+    .dropzone {
+      background: white;
+      border-radius: 5px;
+      border: 2px dashed rgb(0, 135, 247);
+      border-image: none;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
 @endsection
 
 @section('content')
@@ -55,16 +71,41 @@
                 <div class="row">
                   <div class="col-12">
                     <label for="description">Описание</label>
-                    <textarea name="description" class="form-control" id="description" cols="30" rows="10"></textarea>
+                    <textarea name="description" class="form-control" id="description" cols="30" rows="10">{{ $product->description }}</textarea>
+                  </div>
+                  <div class="col-12 mt-2">
+                    <label for="category">Категории</label>
+                    <select name="category[]" class="form-control rounded-0" multiple id="category">
+                      @foreach($product->categories as $category)
+                        <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  <div class="col-md-6 mt-2">
+                    <label for="price">Цена</label>
+                    <input type="number" min="0" name="price" class="form-control rounded-0" id="price" value="{{ $product->price }}">
+                  </div>
+                  <div class="col-md-6 mt-2">
+                    <label for="price_sale">Цена со скидкой</label>
+                    <input type="number" min="0" name="price_sale" class="form-control rounded-0" id="price_sale" value="{{ $product->price_sale }}">
+                  </div>
+
+                  <div class="col-md-6 offset-md-6 mt-2">
+                    <label for="weight">Вес товара (кг)</label>
+                    <input type="number" min="0" name="weight" class="form-control rounded-0" id="weight" value="{{ $product->weight }}">
                   </div>
                 </div>
               </div>
 
               <div class="col-md-4">
-
               </div>
             </div>
-          </form>.
+          </form>
+          <div class="row mt-3">
+            <div class="col-md-8">
+              <form id="upload-widget" method="post" action="{{route('admin.production.products.photo', $product->id)}}" class="dropzone"></form>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -73,7 +114,99 @@
 
 @section('js')
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@3.0.6/js/froala_editor.pkgd.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.0/min/dropzone.min.js"></script>
   <script !src="">
     let editor = new FroalaEditor('textarea')
+
+    $('#category').select2({
+      width: '100%',
+      ajax: {
+        type: "POST",
+        dataType: 'json',
+        url: function (params) {
+          return '{{ route('api.category', '') }}' + '/' + params.term;
+        },
+        processResults: function (data) {
+          return {
+            results: data.items.map((e) => {
+              return {
+                text: e.name,
+                id: e.id
+              };
+            })
+          };
+        }
+      }
+    });
+    Dropzone.autoDiscover = false;
+    var i =0;
+    var fileList = new Array;
+    const uploader = new Dropzone('#upload-widget', {
+      init: function() {
+
+        // Hack: Add the dropzone class to the element
+        $(this.element).addClass("dropzone");
+
+        this.on("success", function (file, serverFileName) {
+          fileList[i] = {"serverFileName": serverFileName, "fileName": file.name, "fileId": i};
+          //console.log(fileList);
+          i++;
+        });
+        this.on("removedfile", function(file) {
+          var rmvFile = "";
+          for(let f=0;f<fileList.length;f++){
+
+            if(fileList[f].fileName == file.name)
+            {
+              rmvFile = fileList[f].serverFileName;
+            }
+
+          }
+
+          if (rmvFile){
+            console.log(rmvFile)
+            axios.post("{{route('admin.production.products.photoDelete', $product->id)}}", {
+              name: rmvFile
+            })
+            .then(response => {
+              console.log(response)
+            })
+          }
+        });
+      },
+      paramName: 'file',
+      maxFiles: 3,
+      dictDefaultMessage: 'Drag an image here to upload, or click to select one',
+      headers: {
+        'x-csrf-token': document.querySelectorAll('meta[name=csrf-token]')[0].getAttributeNode('content').value,
+      },
+      acceptedFiles: 'image/*',
+      url: "{{route('admin.production.products.photo', $product->id)}}",
+      renameFile: function (file) {
+        let newName = new Date().getTime() + '_' + file.name;
+        return newName;
+      },
+      addRemoveLinks: true,
+    });
+
+
+
+    $(document).ready(function() {
+      $('.select2-selection').css('border-radius','0px')
+      $('.fr-toolbar').css('border-radius','0px')
+      $('.second-toolbar').css('border-radius','0px')
+      $('.fr-wrapper').children().first().remove()
+      <? $i = 0;?>
+      @foreach($product->photos as $photo)
+      var mockFile = { name: '{{ $photo->name }}', size: 0 };
+      uploader.emit("addedfile", mockFile);
+      uploader.emit("thumbnail", mockFile, '{{ asset('storage/products/') . '/' . $photo->name }}');
+      uploader.emit("complete", mockFile);
+      uploader.files.push(mockFile)
+      fileList.push({"serverFileName": '{{ $photo->name }}', "fileName":'{{ $photo->name }}', "fileId": {{ $i }}});
+      <? $i++?>
+      @endforeach
+    });
+
   </script>
 @endsection

@@ -40,4 +40,12 @@ class Product extends Model
     return (boolean) $counter > 0;
 //    return $counter;
   }
+
+  public function categories() {
+    return $this->belongsToMany(Category::class, 'products_categories', 'product_id', 'category_id');
+  }
+
+  public function photos() {
+    return $this->hasMany(Photo::class, 'product_id', 'id');
+  }
 }

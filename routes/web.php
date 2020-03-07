@@ -63,6 +63,8 @@ Route::group(['prefix' => 'admin', 'guard' => 'admin', 'namespace' => 'Admin', '
 
   Route::put('/express/enabled/{id}', 'ExpressController@enabled')->name('admin.store.express.enabled');
   Route::post('/express-zone/{id}/destroy', 'ExpressZoneController@destroyCity')->name('admin.store.express-zone.destroyCity');
+  Route::post('/products/{id}/photo', 'ProductsController@photo')->name('admin.production.products.photo');
+  Route::post('/products/{id}/photo-delete', 'ProductsController@photoDelete')->name('admin.production.products.photoDelete');
   Route::get('/reports', 'ReportsController@index')->name('admin.store.reports.index');
   Route::resource('/order', 'OrderController', ['as' => 'admin.store']);
   Route::resource('/express-zone', 'ExpressZoneController', ['as' => 'admin.store']);
