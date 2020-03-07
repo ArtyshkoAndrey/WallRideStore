@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Мар 04 2020 г., 15:28
+-- Время создания: Мар 07 2020 г., 23:36
 -- Версия сервера: 5.7.25-log
 -- Версия PHP: 7.3.9
 
@@ -17229,13 +17229,6 @@ CREATE TABLE `city_expresses` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Дамп данных таблицы `city_expresses`
---
-
-INSERT INTO `city_expresses` (`id`, `city_id`, `express_zone_id`, `express_company_id`, `created_at`, `updated_at`) VALUES
-(1, 70, 4, 2, '2020-03-04 12:01:51', '2020-03-04 12:01:51');
-
 -- --------------------------------------------------------
 
 --
@@ -17630,9 +17623,9 @@ CREATE TABLE `express_companies` (
 --
 
 INSERT INTO `express_companies` (`id`, `name`, `enabled`, `cost_type`, `created_at`, `updated_at`) VALUES
-(1, 'EMS', 1, 'Настраиваемая', '2020-03-02 17:00:00', '2020-03-02 17:00:00'),
 (2, 'AES', 1, 'Настраиваемая', '2020-03-02 17:00:00', '2020-03-02 17:00:00'),
-(3, 'Самовывоз', 1, '0 тг.', '2020-03-02 17:00:00', '2020-03-02 17:00:00');
+(3, 'Самовывоз', 1, '0 тг.', '2020-03-02 17:00:00', '2020-03-02 17:00:00'),
+(8, 'EMS', 1, 'Настраиваемая', '2020-03-07 06:32:08', '2020-03-07 06:32:08');
 
 -- --------------------------------------------------------
 
@@ -17656,9 +17649,6 @@ CREATE TABLE `express_zones` (
 --
 
 INSERT INTO `express_zones` (`id`, `name`, `company_id`, `cost`, `step`, `cost_step`, `created_at`, `updated_at`) VALUES
-(1, 'Казахстанская зона 1', 1, '1000', 1.00, '500', '2020-03-02 17:00:00', '2020-03-02 17:00:00'),
-(2, 'Казахстанская зона 2', 1, '2000', 0.50, '1500', '2020-03-02 17:00:00', '2020-03-02 17:00:00'),
-(3, 'Казахстанская зона 3', 1, '5000', 1.00, '3000', '2020-03-02 17:00:00', '2020-03-02 17:00:00'),
 (4, 'Зона 1', 2, '10000', 1.00, '3000', '2020-03-02 17:00:00', '2020-03-02 17:00:00'),
 (5, 'Зона 2', 2, '12000', 1.00, '4000', '2020-03-02 17:00:00', '2020-03-02 17:00:00');
 
@@ -17702,7 +17692,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (33, '2020_03_03_115355_create_countries_table', 13),
 (34, '2020_03_03_115412_create_cities_table', 13),
 (36, '2020_12_19_152909_create_user_addresses_table', 14),
-(38, '2020_03_03_215746_create_city_expresses_table', 15);
+(38, '2020_03_03_215746_create_city_expresses_table', 15),
+(39, '2020_03_08_004219_products_categories', 16),
+(40, '2020_03_08_025512_products_image', 17);
 
 -- --------------------------------------------------------
 
@@ -17733,9 +17725,10 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `no`, `user_id`, `address`, `total_amount`, `paid_at`, `payment_method`, `payment_no`, `closed`, `reviewed`, `ship_status`, `ship_data`, `id_express_company`, `created_at`, `updated_at`) VALUES
-(1, '123123123', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"+79029634366\"}', '100000', '2020-02-25 00:00:00', 'card', '233144', 0, 0, 'pending', '{\"express_no\":\"123\"}', 1, '2020-02-28 17:00:00', '2020-02-29 08:59:29'),
-(2, '20200226170503735991', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"+79029634366\"}', '525000', NULL, 'card', NULL, 0, 0, 'paid', NULL, 1, '2020-02-26 10:05:03', '2020-02-26 10:05:03'),
-(3, '20200303182237711837', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432. 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"89029634366\"}', '17940', '2020-03-03 18:23:41', 'card', NULL, 0, 0, 'pending', NULL, 1, '2020-03-03 11:22:37', '2020-03-03 11:23:41');
+(1, '123123123', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"+79029634366\"}', '100000', '2020-02-25 00:00:00', 'card', '233144', 0, 0, 'received', '{\"express_no\":\"123\"}', NULL, '2020-02-28 17:00:00', '2020-02-29 08:59:29'),
+(2, '20200226170503735991', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"+79029634366\"}', '525000', NULL, 'card', NULL, 0, 0, 'received', NULL, NULL, '2020-02-26 10:05:03', '2020-02-26 10:05:03'),
+(3, '20200303182237711837', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432. 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"89029634366\"}', '17940', '2020-03-03 18:23:41', 'card', '123123', 0, 0, 'received', '{\"express_no\":\"123123\"}', NULL, '2020-03-03 11:22:00', '2020-03-04 12:34:27'),
+(4, '13214154', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"+79029634366\"}', '1333', '2020-02-24 00:00:00', 'card', '233144', 0, 0, 'received', '{\"express_no\":\"123\"}', NULL, '2020-01-21 17:00:00', '2020-02-29 08:59:29');
 
 -- --------------------------------------------------------
 
@@ -17800,6 +17793,7 @@ CREATE TABLE `products` (
   `sold_count` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `review_count` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `price` decimal(10,2) NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -17808,23 +17802,66 @@ CREATE TABLE `products` (
 -- Дамп данных таблицы `products`
 --
 
-INSERT INTO `products` (`id`, `title`, `description`, `image`, `on_sale`, `on_new`, `rating`, `sold_count`, `review_count`, `price`, `created_at`, `updated_at`) VALUES
-(58, 'BRONZE56K HIGH PERFORMANCE WINDBREAKER ORANGE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.500 kg</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>M</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Windbreaker-Orange-1LOW_1800x180.jpg', 0, 1, 5.00, 0, 0, '55900.00', '2020-01-30 01:54:55', '2020-01-30 01:54:55'),
-(59, 'BRONZE56K HIGH PERFORMACE WINDBREAKER AIR FORCE BLUE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Windbreaker-Blue-1LOW_1800x1800.jpg', 1, 1, 5.00, 17, 0, '55900.00', '2020-01-30 02:42:36', '2020-02-20 09:28:00'),
-(60, 'BRONZE56K HARD WEAR CARGO PANTS DARK NAVY', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Pants-Cargo-Blue-1LOW_1800x1800-300x300.jpg', 1, 1, 5.00, 0, 0, '49900.00', '2020-01-30 02:43:57', '2020-01-30 02:43:57'),
-(61, 'POLAR PATTERNED POLO SHIRT RED', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/PATTERNED-POLO-SHIRT-RED-1.jpg', 1, 0, 5.00, 0, 0, '29900.00', '2020-01-30 02:45:32', '2020-01-30 02:45:32'),
-(62, 'DIME POLO SHIRT PURPLE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/POLO_SHIRT_PURPLE_1_1400x1400-300x300.jpg', 1, 1, 5.00, 1, 0, '17940.00', '2020-01-30 02:46:56', '2020-03-03 11:23:41'),
-(63, 'BRONZE56K HARDWARE TECHNOLOGY LONGSLEEVE CARDINAL', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.500 kg</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/LSTee-Bronze-Technology-Red-1LOW.jpg', 1, 1, 5.00, 0, 0, '21900.00', '2020-01-30 06:09:49', '2020-01-30 06:09:49'),
-(64, 'BRONZE56K MOUNTAIN BEANIE GREEN', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.200 kg</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Beanie-Green-1LOW_1800x1800.jpg', 1, 1, 5.00, 0, 0, '16900.00', '2020-01-30 06:10:59', '2020-01-30 06:10:59'),
-(65, 'BRONSON BEARING RAW', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.110 kg</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/BR_RAW_SingleCase_Angled.jpg', 0, 0, 5.00, 0, 0, '17900.00', '2020-01-30 06:12:32', '2020-01-30 06:12:32'),
-(66, 'BRONZE56K 2020 HAT KHAKI/CHARCOAL', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.200 kg</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Hat-2020-Khaki-Grey-1LOW_800x.jpg', 0, 1, 5.00, 0, 0, '16900.00', '2020-01-30 06:15:24', '2020-01-30 06:15:24'),
-(67, 'BRONZE56K LOGO LEATHER BELT BLACK', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.800 kg</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Belt-Black-4LOW_1800x1800.jpg', 0, 1, 5.00, 0, 0, '24900.00', '2020-01-30 06:16:34', '2020-01-30 06:16:34'),
-(68, 'BRONZE56K LOGO TENNIS LONGSLEEVE WHITE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/LSTee-TennisBall-White-1LOW_1800.jpg', 1, 1, 5.00, 0, 0, '21900.00', '2020-02-08 08:59:19', '2020-02-08 08:59:19'),
-(69, 'POLAR LIGHTWEIGHT CAP-BLUE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.90 kg</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/LIGHTWEIGHT-CAP-BLUE-1.jpg', 1, 1, 5.00, 0, 0, '18900.00', '2020-02-08 09:00:40', '2020-02-08 09:00:40'),
-(70, 'POLAR STRIPE PUFFER', '<p>SHELL: 100% NYLON TASLAN</p>\r\n\r\n<p>&ndash; WATER REPELLENT</p>\r\n\r\n<p>&ndash; DOWNPROOF</p>\r\n\r\n<p>&ndash; BREATHABLE</p>\r\n\r\n<p>&ndash; MOISTURE PERMEABLE</p>\r\n\r\n<p>LINING: 100% POLYESTER</p>\r\n\r\n<p>FILLING: 90% DOWN &ndash; 10% OTHER FEATHERS</p>\r\n\r\n<p>&ndash; 750 FILL POWER &ndash; FILL POWER MEASURES THE LOFT OF THE DOWN AND RANGES FROM 450 TO 1000 FOR CLOTHING</p>\r\n\r\n<p>YKK ZIPPERS</p>\r\n\r\n<p>CUSTOMISED ZIP PULLER</p>\r\n\r\n<p>FULL-ZIP FRONT WITH 2-WAY ZIPPER OPENING</p>\r\n\r\n<p>EMBROIDERY</p>\r\n\r\n<p>DRAWCORD HEM</p>\r\n\r\n<p>HAND WASH</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>MADE IN CHINA</p>\r\n\r\n<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/STRIPE-PUFFER-NAVY-1.jpg', 1, 1, 5.00, 0, 0, '107900.00', '2020-02-08 09:02:20', '2020-02-08 09:02:20'),
-(71, 'SWIM SHORTS ORANGE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>ес</th>\r\n			<td>0.400 kg</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/p3qpmwlFTPmq2tGi8Xu2_SWIM-SHORTS-ORANGE-1_672x672.jpg', 1, 1, 5.00, 0, 0, '27900.00', '2020-02-08 09:03:32', '2020-02-08 09:03:32'),
-(72, 'POLAR CORD JACKET', '<p>COLOUR: TAN</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>SHELL: 100% COTTON</p>\r\n\r\n<p>THICK CORDUROY &ndash; 8 WAVES PER INCH</p>\r\n\r\n<p>LINING: 100% POLYESTER</p>\r\n\r\n<p>THICK SHERPA FABRIC</p>\r\n\r\n<p>YKK ZIPPER &amp; BUTTONS</p>\r\n\r\n<p>CUSTOMISED ZIP PULLER</p>\r\n\r\n<p>TONAL EMBROIDERY</p>\r\n\r\n<p>WIDE FIT</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>MADE IN POLAND</p>', 'images/CORD-JACKET-TAN-2.jpg', 1, 1, 5.00, 0, 0, '79900.00', '2020-02-08 09:04:24', '2020-02-08 09:04:24'),
-(73, 'POLAR WOOL CAP BLK', '<p>COLOUR: BLACK</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>80% POLYESTER &ndash; 20% POLYAMIDE</p>\r\n\r\n<p>WOOL&nbsp;FABRIC</p>\r\n\r\n<p>UNSTRUCTURED 6-PANEL CAP</p>\r\n\r\n<p>PRE-BENT&nbsp;BRIM</p>\r\n\r\n<p>EMBROIDERY ON FRONT AND BACK</p>\r\n\r\n<p>SQUARE LOW&nbsp;FIT</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>MADE IN POLAND</p>', 'images/WOOL-CAP-BLACK-1.jpg', 1, 1, 5.00, 0, 0, '19900.00', '2020-02-08 09:05:31', '2020-02-08 09:05:31');
+INSERT INTO `products` (`id`, `title`, `description`, `image`, `on_sale`, `on_new`, `rating`, `sold_count`, `review_count`, `price`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(58, 'BRONZE56K HIGH PERFORMANCE WINDBREAKER ORANGE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.500 kg</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>M</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Windbreaker-Orange-1LOW_1800x180.jpg', 0, 1, 5.00, 0, 0, '55900.00', NULL, '2020-01-30 01:54:55', '2020-01-30 01:54:55'),
+(59, 'BRONZE56K HIGH PERFORMACE WINDBREAKER AIR FORCE BLUE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Windbreaker-Blue-1LOW_1800x1800.jpg', 1, 1, 5.00, 17, 0, '55900.00', NULL, '2020-01-30 02:42:36', '2020-02-20 09:28:00'),
+(60, 'BRONZE56K HARD WEAR CARGO PANTS DARK NAVY', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Pants-Cargo-Blue-1LOW_1800x1800-300x300.jpg', 1, 1, 5.00, 0, 0, '49900.00', NULL, '2020-01-30 02:43:57', '2020-01-30 02:43:57'),
+(61, 'POLAR PATTERNED POLO SHIRT RED', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/PATTERNED-POLO-SHIRT-RED-1.jpg', 1, 0, 5.00, 0, 0, '29900.00', NULL, '2020-01-30 02:45:32', '2020-01-30 02:45:32'),
+(62, 'DIME POLO SHIRT PURPLE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/POLO_SHIRT_PURPLE_1_1400x1400-300x300.jpg', 1, 1, 5.00, 1, 0, '17940.00', NULL, '2020-01-30 02:46:56', '2020-03-03 11:23:41'),
+(63, 'BRONZE56K HARDWARE TECHNOLOGY LONGSLEEVE CARDINAL', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.500 kg</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/LSTee-Bronze-Technology-Red-1LOW.jpg', 1, 1, 5.00, 0, 0, '21900.00', NULL, '2020-01-30 06:09:49', '2020-01-30 06:09:49'),
+(64, 'BRONZE56K MOUNTAIN BEANIE GREEN', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.200 kg</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Beanie-Green-1LOW_1800x1800.jpg', 1, 1, 5.00, 0, 0, '16900.00', NULL, '2020-01-30 06:10:59', '2020-01-30 06:10:59'),
+(65, 'BRONSON BEARING RAW', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.110 kg</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/BR_RAW_SingleCase_Angled.jpg', 0, 0, 5.00, 0, 0, '17900.00', NULL, '2020-01-30 06:12:32', '2020-01-30 06:12:32'),
+(66, 'BRONZE56K 2020 HAT KHAKI/CHARCOAL', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.200 kg</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Hat-2020-Khaki-Grey-1LOW_800x.jpg', 0, 1, 5.00, 0, 0, '16900.00', NULL, '2020-01-30 06:15:24', '2020-01-30 06:15:24'),
+(67, 'BRONZE56K LOGO LEATHER BELT BLACK', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.800 kg</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Belt-Black-4LOW_1800x1800.jpg', 0, 1, 5.00, 0, 0, '24900.00', NULL, '2020-01-30 06:16:34', '2020-01-30 06:16:34'),
+(68, 'BRONZE56K LOGO TENNIS LONGSLEEVE WHITE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/LSTee-TennisBall-White-1LOW_1800.jpg', 1, 1, 5.00, 0, 0, '21900.00', NULL, '2020-02-08 08:59:19', '2020-02-08 08:59:19'),
+(69, 'POLAR LIGHTWEIGHT CAP-BLUE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.90 kg</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/LIGHTWEIGHT-CAP-BLUE-1.jpg', 1, 1, 5.00, 0, 0, '18900.00', NULL, '2020-02-08 09:00:40', '2020-02-08 09:00:40'),
+(70, 'POLAR STRIPE PUFFER', '<p>SHELL: 100% NYLON TASLAN</p>\r\n\r\n<p>&ndash; WATER REPELLENT</p>\r\n\r\n<p>&ndash; DOWNPROOF</p>\r\n\r\n<p>&ndash; BREATHABLE</p>\r\n\r\n<p>&ndash; MOISTURE PERMEABLE</p>\r\n\r\n<p>LINING: 100% POLYESTER</p>\r\n\r\n<p>FILLING: 90% DOWN &ndash; 10% OTHER FEATHERS</p>\r\n\r\n<p>&ndash; 750 FILL POWER &ndash; FILL POWER MEASURES THE LOFT OF THE DOWN AND RANGES FROM 450 TO 1000 FOR CLOTHING</p>\r\n\r\n<p>YKK ZIPPERS</p>\r\n\r\n<p>CUSTOMISED ZIP PULLER</p>\r\n\r\n<p>FULL-ZIP FRONT WITH 2-WAY ZIPPER OPENING</p>\r\n\r\n<p>EMBROIDERY</p>\r\n\r\n<p>DRAWCORD HEM</p>\r\n\r\n<p>HAND WASH</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>MADE IN CHINA</p>\r\n\r\n<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/STRIPE-PUFFER-NAVY-1.jpg', 1, 1, 5.00, 0, 0, '107900.00', NULL, '2020-02-08 09:02:20', '2020-02-08 09:02:20'),
+(71, 'SWIM SHORTS ORANGE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>ес</th>\r\n			<td>0.400 kg</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/p3qpmwlFTPmq2tGi8Xu2_SWIM-SHORTS-ORANGE-1_672x672.jpg', 1, 1, 5.00, 0, 0, '27900.00', NULL, '2020-02-08 09:03:32', '2020-02-08 09:03:32'),
+(72, 'POLAR CORD JACKET', '<p>COLOUR: TAN</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>SHELL: 100% COTTON</p>\r\n\r\n<p>THICK CORDUROY &ndash; 8 WAVES PER INCH</p>\r\n\r\n<p>LINING: 100% POLYESTER</p>\r\n\r\n<p>THICK SHERPA FABRIC</p>\r\n\r\n<p>YKK ZIPPER &amp; BUTTONS</p>\r\n\r\n<p>CUSTOMISED ZIP PULLER</p>\r\n\r\n<p>TONAL EMBROIDERY</p>\r\n\r\n<p>WIDE FIT</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>MADE IN POLAND</p>', 'images/CORD-JACKET-TAN-2.jpg', 1, 1, 5.00, 0, 0, '79900.00', NULL, '2020-02-08 09:04:24', '2020-02-08 09:04:24'),
+(73, 'POLAR WOOL CAP BLK', '<p>COLOUR: BLACK</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>80% POLYESTER &ndash; 20% POLYAMIDE</p>\r\n\r\n<p>WOOL&nbsp;FABRIC</p>\r\n\r\n<p>UNSTRUCTURED 6-PANEL CAP</p>\r\n\r\n<p>PRE-BENT&nbsp;BRIM</p>\r\n\r\n<p>EMBROIDERY ON FRONT AND BACK</p>\r\n\r\n<p>SQUARE LOW&nbsp;FIT</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>MADE IN POLAND</p>', 'images/WOOL-CAP-BLACK-1.jpg', 1, 1, 5.00, 0, 0, '19900.00', '2020-03-05 17:00:00', '2020-02-08 09:05:31', '2020-02-08 09:05:31');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `products_categories`
+--
+
+CREATE TABLE `products_categories` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `product_id` int(10) UNSIGNED NOT NULL,
+  `category_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `products_categories`
+--
+
+INSERT INTO `products_categories` (`id`, `product_id`, `category_id`, `created_at`, `updated_at`) VALUES
+(1, 73, 3, '2020-03-07 17:00:00', '2020-03-07 17:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `products_image`
+--
+
+CREATE TABLE `products_image` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `product_id` int(10) UNSIGNED NOT NULL,
+  `name` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `products_image`
+--
+
+INSERT INTO `products_image` (`id`, `product_id`, `name`, `created_at`, `updated_at`) VALUES
+(5, 73, '1583613124848_diplom2.jpg', '2020-03-07 20:32:05', '2020-03-07 20:32:05'),
+(6, 73, '1583613127220_diplom2.jpg', '2020-03-07 20:32:07', '2020-03-07 20:32:07');
 
 -- --------------------------------------------------------
 
@@ -18108,6 +18145,21 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `products_categories`
+--
+ALTER TABLE `products_categories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `products_categories_product_id_foreign` (`product_id`),
+  ADD KEY `products_categories_category_id_foreign` (`category_id`);
+
+--
+-- Индексы таблицы `products_image`
+--
+ALTER TABLE `products_image`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `products_image_product_id_foreign` (`product_id`);
+
+--
 -- Индексы таблицы `product_skus`
 --
 ALTER TABLE `product_skus`
@@ -18171,7 +18223,7 @@ ALTER TABLE `cities`
 -- AUTO_INCREMENT для таблицы `city_expresses`
 --
 ALTER TABLE `city_expresses`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `countries`
@@ -18219,7 +18271,7 @@ ALTER TABLE `disabled_coupons_products`
 -- AUTO_INCREMENT для таблицы `express_companies`
 --
 ALTER TABLE `express_companies`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT для таблицы `express_zones`
@@ -18231,13 +18283,13 @@ ALTER TABLE `express_zones`
 -- AUTO_INCREMENT для таблицы `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `order_items`
@@ -18250,6 +18302,18 @@ ALTER TABLE `order_items`
 --
 ALTER TABLE `products`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+
+--
+-- AUTO_INCREMENT для таблицы `products_categories`
+--
+ALTER TABLE `products_categories`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT для таблицы `products_image`
+--
+ALTER TABLE `products_image`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT для таблицы `product_skus`
@@ -18354,6 +18418,19 @@ ALTER TABLE `order_items`
   ADD CONSTRAINT `order_items_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `order_items_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `order_items_product_sku_id_foreign` FOREIGN KEY (`product_sku_id`) REFERENCES `product_skus` (`id`) ON DELETE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `products_categories`
+--
+ALTER TABLE `products_categories`
+  ADD CONSTRAINT `products_categories_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `products_categories_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `products_image`
+--
+ALTER TABLE `products_image`
+  ADD CONSTRAINT `products_image_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `product_skus`
