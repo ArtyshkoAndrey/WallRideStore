@@ -61,6 +61,7 @@ Route::group(['prefix' => 'admin', 'guard' => 'admin', 'namespace' => 'Admin', '
   Route::delete('/coupon/all', 'CouponCodesController@collectionsDestroy')->name('admin.store.coupon.collectionsDestroy');
   Route::put('/express/enabled/{id}', 'ExpressController@enabled')->name('admin.store.express.enabled');
   Route::post('/express-zone/{id}/destroy', 'ExpressZoneController@destroyCity')->name('admin.store.express-zone.destroyCity');
+  Route::get('/reports', 'ReportsController@index')->name('admin.store.reports.index');
   Route::resource('/order', 'OrderController', ['as' => 'admin.store']);
   Route::resource('/express-zone', 'ExpressZoneController', ['as' => 'admin.store']);
   Route::resource('/express', 'ExpressController', ['as' => 'admin.store']);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\ExpressCompany;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\View\View;
@@ -27,7 +28,6 @@ class ExpressController extends Controller
   }
 
   public function enabled(Request $request, $id) {
-//    dd($request);
     $express = ExpressCompany::find($id);
     $express->enabled = $request->enabled;
     $express->save();
@@ -37,22 +37,30 @@ class ExpressController extends Controller
   /**
    * Show the form for creating a new resource.
    *
-   * @return \Illuminate\Http\Response
+   * @return Factory|View
    */
   public function create()
   {
-      //
+    return view('admin.express.create');
   }
 
   /**
    * Store a newly created resource in storage.
    *
-   * @param  \Illuminate\Http\Request  $request
-   * @return \Illuminate\Http\Response
+   * @param Request $request
+   * @return RedirectResponse
    */
   public function store(Request $request)
   {
-      //
+    $request->validate([
+      'name' => 'required|unique:express_companies,name',
+      'cost_type' => 'required',
+    ]);
+
+    $express = new ExpressCompany();
+    $express = $express->create($request->all());
+
+    return redirect()->route('admin.store.express.edit', $express->id);
   }
 
   /**
@@ -81,19 +89,19 @@ class ExpressController extends Controller
   /**
    * Update the specified resource in storage.
    *
-   * @param  \Illuminate\Http\Request  $request
+   * @param Request $request
    * @param  int  $id
-   * @return \Illuminate\Http\Response
+   * @return RedirectResponse
    */
   public function update(Request $request, $id)
   {
     $request->validate([
       'name' => 'required|unique:express_companies,name,' . $id,
-      'cost_type' => 'required|numeric|min:0',
+      'cost_type' => 'required',
     ]);
+
     $express = ExpressCompany::find($id);
     $express->update($request->all());
-    $express->save();
     return redirect()->route('admin.store.express.index');
   }
 
@@ -101,10 +109,12 @@ class ExpressController extends Controller
    * Remove the specified resource from storage.
    *
    * @param  int  $id
-   * @return \Illuminate\Http\Response
+   * @return RedirectResponse
    */
   public function destroy($id)
   {
-      //
+    $company = ExpressCompany::find($id);
+    $company->delete();
+    return redirect()->route('admin.store.express.index');
   }
 }

@@ -1,7 +1,8 @@
 @extends('admin.layouts.app')
-@section('title', 'Редактирование купона')
+@section('title', 'Редактирование компании доставки')
 
 @section('content')
+{{--  {{ dd($errors) }}--}}
   <div class="container-fluid pt-5 px-4">
     <div class="row">
       <div class="col-12">
@@ -13,6 +14,7 @@
       <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.store.coupon.index') }}" class="bg-dark px-3 py-2 d-block">Промокоды</a></div>
       <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.store.express.index') }}" class="bg-white px-3 py-2 d-block">Доставка</a></div>
       <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.store.order.index') }}" class="bg-dark px-3 py-2 d-block">Оплата</a></div>
+      <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.store.reports.index') }}" class="bg-dark px-3 py-2 d-block">Отчеты</a></div>
     </div>
     <div class="row mt-0 pt-0">
       <div class="card border-0 w-100 rounded-0" style="z-index: 90;box-shadow: 0 18px 19px rgba(0, 0, 0, 0.25)">
@@ -27,6 +29,7 @@
           <form action="{{ route('admin.store.express.update', $express->id) }}" method="post">
             @csrf
             @method('PUT')
+            <input type="hidden" value="{{ $express->enabled }}" name="enabled">
             <div class="row justify-content-end">
               <div class="col-auto">
                 <button class="btn btn-dark rounded-0 border-0 px-3 py-2" type="submit">Обновить</button>
@@ -35,14 +38,19 @@
             <div class="row mt-3">
               <div class="col-md-4">
                 <label for="name">Наименование</label>
-                <input type="text" name="name" id="name" class="w-100 px-2 form-control rounded-0" value="{{ $express->name }}" required>
+                <input type="text" name="name" id="name" class="w-100 px-2 form-control rounded-0 {{ $errors->has('name') ? ' is-invalid' : '' }}" value="{{ $express->name }}" required>
+                <span id="name-error" class="error invalid-feedback">{{ $errors->first('name') }}</span>
               </div>
               <div class="col-md-2">
                 <label for="cost_type">Тип стоимости</label>
-                <select name="cost_type" id="cost_type" class="form-control rounded-0">
+                <select name="cost_type" id="cost_type" class="form-control rounded-0 {{ $errors->has('cost_type') ? ' is-invalid' : '' }}">
                   <option value="Настраиваемая" {{ $express->cost_type == 'Настраиваемая' ? 'selected' : null }}>Настраиваемая</option>
                   <option value="0 тг." {{ $express->cost_type == '0 тг.' ? 'selected' : null }}>0 тг.</option>
                 </select>
+                <span id="cost-error" class="error invalid-feedback">{{ $errors->first('cost_type') }}</span>
+              </div>
+              <div class="col-md-4 align-items-end d-flex">
+                <a href="{{ route('admin.store.express-zone.create') }}" class="btn bg-dark rounded-0">Создать зону</a>
               </div>
             </div>
             <hr>
@@ -65,11 +73,11 @@
                       <td>{{ cost($zone->cost_step) }} тг. / {{ $zone->step }} кг.</td>
                       <td><a href="{{ route('admin.store.express-zone.edit', $zone->id) }}" class="btn btn-warning border-0 rounded-0">Редактировать</a></td>
                       <td>
-                        <form action="{{ route('admin.store.express.destroy', $zone->id) }}" method="post">
-                          @csrf
-                          @method('delete')
-                          <button class="bg-transparent border-0 rounded-0" style="color: #F33C3C" type="submit"><i style="font-size: 1.5rem" class="fal fa-trash"></i></button>
-                        </form>
+{{--                        <form action="{{ route('admin.store.express-zone.destroy', $zone->id) }}" method="post">--}}
+{{--                          @csrf--}}
+{{--                          @method('delete')--}}
+                          <button class="bg-transparent border-0 rounded-0" style="color: #F33C3C" type="button" onclick="deletedZone({{ $zone->id }})"><i style="font-size: 1.5rem" class="fal fa-trash"></i></button>
+{{--                        </form>--}}
                       </td>
                     </tr>
                   @endforeach
@@ -85,6 +93,16 @@
 
 @section('js')
   <script !src="">
+    function deletedZone(id) {
+      let form = document.createElement('form');
+      form.action = '{{ route('admin.store.express-zone.index') }}/' + id;
+      form.method = 'POST';
+      $(form).append('<input type="hidden" name="_token" value="'+ $('meta[name="csrf-token"]').attr('content') +'">')
+      $(form).append('<input type="hidden" name="_method" value="delete">')
+// перед отправкой формы, её нужно вставить в документ
+      document.body.append(form);
 
+      form.submit();
+    }
   </script>
 @endsection

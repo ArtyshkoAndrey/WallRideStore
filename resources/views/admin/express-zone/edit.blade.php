@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', 'Редактирование купона')
+@section('title', 'Редактирование зоны доставки')
 
 @section('content')
   <div class="container-fluid pt-5 px-4">
@@ -13,6 +13,7 @@
       <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.store.coupon.index') }}" class="bg-dark px-3 py-2 d-block">Промокоды</a></div>
       <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.store.express.index') }}" class="bg-white px-3 py-2 d-block">Доставка</a></div>
       <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.store.order.index') }}" class="bg-dark px-3 py-2 d-block">Оплата</a></div>
+      <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.store.reports.index') }}" class="bg-dark px-3 py-2 d-block">Отчеты</a></div>
     </div>
     <div class="row mt-0 pt-0">
       <div class="card border-0 w-100 rounded-0" style="z-index: 90;box-shadow: 0 18px 19px rgba(0, 0, 0, 0.25)">
@@ -33,21 +34,34 @@
               </div>
             </div>
             <div class="row mt-3">
-              <div class="col-md-3">
+              <div class="col-md">
                 <label for="name">Наименование</label>
-                <input type="text" name="name" id="name" class="form-control rounded-0" value="{{ $zone->name }}" required>
+                <input type="text" name="name" id="name" class="form-control rounded-0 {{ $errors->has('name') ? ' is-invalid' : '' }}" value="{{ $zone->name }}" required>
+                <span id="cost-error" class="error invalid-feedback">{{ $errors->first('name') }}</span>
               </div>
-              <div class="col-md-3">
+              <div class="col-md">
                 <label for="cost">Стоимость</label>
-                <input type="number" name="cost" id="cost" class="form-control rounded-0" value="{{ $zone->cost }}" required>
+                <input type="number" name="cost" id="cost" class="form-control rounded-0 {{ $errors->has('cost') ? ' is-invalid' : '' }}" value="{{ $zone->cost }}" required>
+                <span id="cost-error" class="error invalid-feedback">{{ $errors->first('cost') }}</span>
               </div>
-              <div class="col-md-3">
+              <div class="col-md">
                 <label for="step">Шаг</label>
-                <input type="number" name="step" id="step" class="form-control rounded-0" step="0.01" value="{{ $zone->step }}" required>
+                <input type="number" name="step" id="step" class="form-control rounded-0 {{ $errors->has('step') ? ' is-invalid' : '' }}" step="0.01" value="{{ $zone->step }}" required>
+                <span id="cost-error" class="error invalid-feedback">{{ $errors->first('step') }}</span>
               </div>
-              <div class="col-md-3">
+              <div class="col-md">
                 <label for="cost_step">Стоимость шага</label>
-                <input type="number" name="cost_step" id="cost_step" class="form-control rounded-0" value="{{ $zone->cost_step }}" required>
+                <input type="number" name="cost_step" id="cost_step" class="form-control rounded-0 {{ $errors->has('cost_step') ? ' is-invalid' : '' }}" value="{{ $zone->cost_step }}" required>
+                <span id="cost-error" class="error invalid-feedback">{{ $errors->first('cost_step') }}</span>
+              </div>
+              <div class="col-md">
+                <label for="company_id">Компания</label>
+                <select name="company_id" class="form-control rounded-0 {{ $errors->has('company_id') ? ' is-invalid' : '' }}" id="company">
+                  @foreach(App\Models\ExpressCompany::where('cost_type', 'Настраиваемая')->get() as $company)
+                    <option value="{{$company->id}}" {{$zone->company->id == $company->id ? 'selected' : null}}>{{$company->name}}</option>
+                  @endforeach
+                </select>
+                <span id="cost-error" class="error invalid-feedback">{{ $errors->first('company_id') }}</span>
               </div>
             </div>
             <hr>
@@ -55,7 +69,7 @@
               <div class="col-md-4">
                 <select name="city" id="city" class="form-control w-100" placeholder="Город"></select>
               </div>
-              <button class="btn bg-dark" onclick="addColumn()" type="button">Добавить</button>
+              <button class="btn bg-dark rounded-0" onclick="addColumn()" type="button">Добавить</button>
             </div>
             <hr>
             <div class="row table-responsive">

@@ -58,7 +58,7 @@
                                 style="color: {{ $order->ship_status == \App\Models\Order::SHIP_STATUS_PENDING ? '#D0D0D0' : '#04B900'}}"
                               >{{ \App\Models\Order::$shipStatusMap[$order->ship_status] }}</td>
                               <td>{{ \App\Models\Order::$paymentMethodsMap[$order->payment_method] }}</td>
-                              <td>{{ $order->expressCompany->name }}</td>
+                              <td>{{ $order->expressCompany ? $order->expressCompany->name : 'Компания больше не доступна' }}</td>
                               <td>
                                 @if($order->ship_status == \App\Models\Order::SHIP_STATUS_DELIVERED || !isset($order->ship_data['express_no']))
                                   Ожидайте
@@ -102,7 +102,7 @@
                               style="color: {{ $order->ship_status == \App\Models\Order::SHIP_STATUS_PENDING ? '#D0D0D0' : '#04B900'}}"
                             >{{ \App\Models\Order::$shipStatusMap[$order->ship_status] }}</td>
                             <td>{{ \App\Models\Order::$paymentMethodsMap[$order->payment_method] }}</td>
-                            <td>{{ $order->expressCompany->name }}</td>
+                            <td>{{ $order->expressCompany ? $order->expressCompany->name : 'Метод больше не доступен' }}</td>
                             <td>
                               @if($order->ship_status == \App\Models\Order::SHIP_STATUS_DELIVERED || !isset($order->ship_data['express_no']))
                                 Ожидайте

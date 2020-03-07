@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\ExpressZone;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
 use Illuminate\View\View;
 
 class ExpressZoneController extends Controller
@@ -18,7 +20,7 @@ class ExpressZoneController extends Controller
   /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -28,30 +30,41 @@ class ExpressZoneController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Factory|View
      */
     public function create()
     {
-        //
+      return view('admin.express-zone.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
-        //
+      $request->validate([
+        'name' => 'required|unique:express_zones,name',
+        'cost' => 'required|numeric|min:0',
+        'step' => 'required|numeric|min:0',
+        'cost_step' => 'required|numeric|min:0',
+        'company_id' => 'required|exists:express_zones,id'
+      ]);
+
+      $zone = new ExpressZone();
+      $zone = $zone->create($request->all());
+
+      return redirect()->route('admin.store.express-zone.edit', $zone->id);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+  /**
+   * Display the specified resource.
+   *
+   * @param int $id
+   * @return void
+   */
     public function show($id)
     {
         //
@@ -66,7 +79,6 @@ class ExpressZoneController extends Controller
     public function edit($id)
     {
       $zone = ExpressZone::find($id);
-//      dd($zone->cities[0]->cityOriginal->name);
       return view('admin.express-zone.edit', compact('zone'));
     }
 
@@ -75,7 +87,7 @@ class ExpressZoneController extends Controller
      *
      * @param Request $request
      * @param  int  $id
-     * @return array
+     * @return RedirectResponse
      */
     public function update(Request $request, $id)
     {
@@ -87,23 +99,32 @@ class ExpressZoneController extends Controller
 
         $zone->cities()->attach($request->city_id, ['express_company_id' => $zone->company->id]);
         return ['success' => 'ok'];
+      } else {
+        $zone = ExpressZone::find($id);
+        $request->validate([
+          'name' => 'required|unique:express_zones,name,' . $id,
+          'cost' => 'required|numeric|min:0',
+          'step' => 'required|numeric|min:0',
+          'cost_step' => 'required|numeric|min:0',
+          'company_id' => 'required|exists:express_zones'
+        ]);
+
+        $zone->update($request->all());
+        return redirect()->route('admin.store.express-zone.edit', $zone->id);
       }
     }
 
   /**
    * Remove the specified resource from storage.
    *
-   * @param Request $request
    * @param int $id
-   * @return array
+   * @return RedirectResponse
    */
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
-      if (isset($request->city_id)) {
-        $zone = ExpressZone::find($id);
-        $zone->cities()->detach($request->city_id);
-        return $request;
-      }
+      $zone = ExpressZone::find($id);
+      $zone->delete();
+      return redirect()->route('admin.store.express.edit', $zone->company->id);
     }
 
   public function destroyCity(Request $request, $id)

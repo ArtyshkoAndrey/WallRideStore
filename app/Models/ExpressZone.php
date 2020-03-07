@@ -11,6 +11,7 @@ class ExpressZone extends Model
     'cost',
     'cost_step',
     'step',
+    'company_id'
   ];
 
   public function cities() {

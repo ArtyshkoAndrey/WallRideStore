@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "admin-lte": "^3.0.2",
+        "flot": "^4.2.0",
         "icheck": "^1.0.2",
         "jquery-zoom": "^1.7.21",
         "mdbootstrap": "^4.13.0",
