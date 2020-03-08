@@ -13,7 +13,7 @@
       <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.store.coupon.index') }}" class="bg-dark px-3 py-2 d-block">Промокоды</a></div>
       <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.store.express.index') }}" class="bg-white px-3 py-2 d-block">Доставка</a></div>
       <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.store.order.index') }}" class="bg-dark px-3 py-2 d-block">Оплата</a></div>
-      <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.store.reports.index') }}" class="bg-dark px-3 py-2 d-block">Отчеты</a></div>
+      <div class="col-sm-auto col-12 px-0 px-sm-2"><a href="{{ route('admin.store.reports.index') }}" class="bg-dark px-3 py-2 d-block">Отчеты</a></div>
     </div>
     <div class="row mt-0 pt-0">
       <div class="card border-0 w-100 rounded-0" style="z-index: 90;box-shadow: 0 18px 19px rgba(0, 0, 0, 0.25)">
@@ -55,7 +55,7 @@
               </div>
               <div class="col-md">
                 <label for="company_id">Компания</label>
-                <select name="company_id" class="form-control rounded-0 {{ $errors->has('company_id') ? ' is-invalid' : '' }}" id="company">
+                <select name="company_id" class="form-control rounded-0 {{ $errors->has('company_id') ? ' is-invalid' : '' }}" id="company_id">
                   @foreach(App\Models\ExpressCompany::where('cost_type', 'Настраиваемая')->get() as $company)
                     <option value="{{$company->id}}" {{old('company_id') == $company->id ? 'selected' : null}}>{{$company->name}}</option>
                   @endforeach
