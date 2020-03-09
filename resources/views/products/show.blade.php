@@ -7,30 +7,39 @@
     <div class="row">
       <div class="col-md-5">
         <div class="slider-for">
-          <div class="slider-for__item ex1">
-            <img src="{{ $product->image_url }}" alt="" />
-          </div>
+          @if ($product->photos)
+            @forelse($product->photos as $ph)
+              <div class="slider-for__item ex1">
+                <img src="{{ asset('storage/products/'.$ph->name) }}" alt="{{ $ph->name }}" />
+              </div>
+            @empty
+              <div class="slider-for__item ex1">
+                <img src="https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png" alt="error" />
+              </div>
+            @endforelse
+          @else
+            <div class="slider-for__item ex1">
+              <img src="https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png" alt="error" />
+            </div>
+          @endif
 
-          <div class="slider-for__item ex1">
-            <img src="{{ $product->image_url }}" alt="" />
-          </div>
-
-          <div class="slider-for__item ex1">
-            <img src="{{ $product->image_url }}" alt="" />
-          </div>
         </div>
         <div class="slider-nav">
-          <div class="slider-nav__item">
-            <img src="{{ $product->image_url }}" alt="" />
-          </div>
-
-          <div class="slider-nav__item">
-            <img src="{{ $product->image_url }}" alt="" />
-          </div>
-
-          <div class="slider-nav__item">
-            <img src="{{ $product->image_url }}" alt="" />
-          </div>
+          @if ($product->photos)
+            @forelse($product->photos as $ph)
+              <div class="slider-for__item">
+                <img src="{{ asset('storage/products/'.$ph->name) }}" alt="{{ $ph->name }}" />
+              </div>
+            @empty
+              <div class="slider-for__item">
+                <img src="https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png" alt="error" />
+              </div>
+            @endforelse
+          @else
+            <div class="slider-for__item">
+              <img src="https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png" alt="error" />
+            </div>
+          @endif
         </div>
       </div>
       <div class="col-md-7 mt-5 mt-md-0">
@@ -49,12 +58,12 @@
             <li class="breadcrumb-item active px-0" aria-current="page">{{ ucwords(strtolower($product->title)) }}</li>
           </ol>
         </div>
-        <h1 class="font-weight-bold text-uppercase">@{{ $cost(Number(size.price) * currency.ratio) }} @{{ currency.symbol }}</h1>
+        <h1 class="font-weight-bold text-uppercase">@{{ $cost(Number(product.price) * currency.ratio) }} @{{ currency.symbol }}</h1>
         <h4 class="font-weight-bold mt-4">Размер</h4>
         <div class="btn-group btn-group-toggle">
           <label v-for="(sku, index) in skus" :key="sku.id" :class="(index===0 ? 'mr-2' : 'mx-2') + ' btn sku-btn' + (idSku === sku.id ? ' active' : '')">
             <input type="radio" :id="'gender_' + index" autocomplete="off" name="sku_id" :value="sku.id" v-model.number='idSku'>
-            @{{ sku.title}}
+            @{{  sku.skus !== null ? sku.skus.title : 'One Size'}}
           </label>
         </div>
 

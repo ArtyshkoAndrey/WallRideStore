@@ -71,7 +71,7 @@ class CartService
   {
     $user = Auth::user();
     return $user->cartItems()->get()->map(function ($item) {
-      return $item->productSku->price * $item->amount;
+      return $item->productSku->product->price * $item->amount;
     })->sum();
   }
 }

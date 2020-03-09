@@ -7,6 +7,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Photo;
 use App\Models\Product;
+use App\Models\ProductSku;
+use App\Models\Skus;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -135,6 +137,32 @@ class ProductsController extends Controller {
     $product->weight = $request->weight;
     $product->on_new = isset($request->on_new) ? 1 : 0;
     $product->on_sale = isset($request->on_sale) ? 1 : 0;
+    $product->categories()->sync($request->category);
+    if (isset($request->stock)) {
+      if ($product->skus->count() === 1 && $product->skus->first()->skus_id === null) {
+        $sk = ProductSku::where('product_id', $id)->first();
+        $sk->stock = $request->stock;
+        $sk->save();
+      } else {
+        ProductSku::where('product_id', $id)->delete();
+        $sk = new ProductSku();
+        $sk['stock'] = (int) $request->stock;
+        $sk->product()->associate($product);
+        $sk->save();
+      }
+    } else if (isset($request->skus)) {
+      ProductSku::where('product_id', $id)->delete();
+      foreach ($request->skus as $key => $skus) {
+        if ($skus !== null && (int) $skus !== 0) {
+          $sk = new ProductSku();
+          $sk->stock = $skus;
+          $sk->product()->associate($product);
+          $sk->skus()->associate(Skus::find($key));
+          $sk->save();
+        }
+      }
+    }
+
     $product->save();
     return redirect()->route('admin.production.products.edit', $id);
   }
@@ -147,6 +175,18 @@ class ProductsController extends Controller {
    */
   public function destroy($id) {
 
+  }
+
+  public function collectionsDestroy(Request $request) {
+    Product::destroy($request->id);
+    return ['status' => 'success'];
+  }
+
+  public function collectionsRestore(Request $request) {
+    foreach($request['data']['id'] as $id) {
+      Product::withTrashed()->find($id)->restore();
+    }
+    return ['status' => 'success'];
   }
 
   public function photo(Request $request, $id) {

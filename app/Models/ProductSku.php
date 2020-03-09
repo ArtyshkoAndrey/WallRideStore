@@ -11,6 +11,8 @@ class ProductSku extends Model
 
     protected $casts =['product'];
 
+  protected $with = ['skus'];
+
   public function skus()
   {
     return $this->belongsTo(Skus::class);

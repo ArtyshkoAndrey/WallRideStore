@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="row mt-2" style="z-index: 100">
-      <div class="col-sm-auto ml-0 pl-0 col-6 px-0 pr-sm-2"><a href="{{ route('admin.production.products.index') }}" class="bg-white px-3 py-2 d-block">Заказы</a></div>
+      <div class="col-sm-auto ml-0 pl-0 col-6 px-0 pr-sm-2"><a href="{{ route('admin.production.products.index') }}" class="bg-white px-3 py-2 d-block">Товары</a></div>
       <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.production.category.index') }}" class="bg-dark px-3 py-2 d-block">Категории</a></div>
       <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.production.attr.index') }}" class="bg-dark px-3 py-2 d-block">Атрибуты</a></div>
     </div>
@@ -40,6 +40,7 @@
                 <select name="action" class="form-control rounded-0">
                   <option value="delete">Удалить</option>
                   <option value="edit">Редактировать</option>
+                  <option value="restore">Востановить</option>
                 </select>
                 <button class="btn btn-dark border-0 rounded-0 ml-md-2 ml-0 mt-2 mt-md-0" id="action">Применить</button>
               </div>
@@ -93,7 +94,9 @@
                   {{ cost($product->price) }} тг.
                 </td>
                 <td style="vertical-align: middle;" class="text-wrap">
-                  Одежда, худи, Fucking Awesome
+                  @foreach($product->categories as $index => $cat)
+                    {{ $product->categories->count() == $index + 1 ? $cat->name : $cat->name . ', ' }}
+                  @endforeach
                 </td>
                 <td style="vertical-align: middle;">
                   {{ $product->created_at->format('d.m.Y') }}
@@ -150,6 +153,17 @@
             })
         } else if ($('select[name="action"]').val() === 'edit' && ids.length === 1) {
           window.location.replace('{{ route('admin.production.products.index') }}' + '/' + ids.pop() + '/edit');
+        } else if ($('select[name="action"]').val() === 'restore' && ids.length > 0) {
+          window.axios.post('{{ route('admin.production.products.collectionsRestore') }}', {data: {id: ids}})
+            .then(response => {
+              if (response.data.status === 'success') {
+                document.location.reload()
+                console.log(response.data)
+              }
+            })
+            .catch(e => {
+              console.log(e)
+            })
         } else {
           alert('Ни одна запись не выбрана, или выбранно более одной для редактирования')
         }

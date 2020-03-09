@@ -16,6 +16,8 @@ class Product extends Model
     'on_sale' => 'boolean',
     'on_new' => 'boolean'
   ];
+
+  protected $with = ['photos'];
   protected $dates = ['deleted_at'];
 
   public function skus()

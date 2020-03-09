@@ -29,7 +29,7 @@
       </div>
     </div>
     <div class="row mt-2" style="z-index: 100">
-      <div class="col-sm-auto ml-0 pl-0 col-6 px-0 pr-sm-2"><a href="{{ route('admin.production.products.index') }}" class="bg-white px-3 py-2 d-block">Заказы</a></div>
+      <div class="col-sm-auto ml-0 pl-0 col-6 px-0 pr-sm-2"><a href="{{ route('admin.production.products.index') }}" class="bg-white px-3 py-2 d-block">Товары</a></div>
       <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.production.category.index') }}" class="bg-dark px-3 py-2 d-block">Категории</a></div>
       <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.production.attr.index') }}" class="bg-dark px-3 py-2 d-block">Атрибуты</a></div>
     </div>
@@ -84,8 +84,8 @@
                   </div>
 
                   <div class="col-md-6 mt-2">
-                    <label for="weight">Запасы</label>
-                    <input type="number" min="0" name="cost" class="form-control rounded-0" id="cost" {{ $product->skus->count() > 1 || $product->skus->first()->skus_id !== null ? 'disabled' : null }}>
+                    <label for="stock">Запасы</label>
+                    <input type="number" min="0" name="stock" class="form-control rounded-0" id="stock" value="{{ $product->skus->count() === 1 && $product->skus->first()->skus_id === null ? $product->skus->first()->stock : null }}" {{ $product->skus->count() > 1 || $product->skus->first() ? $product->skus->first()->skus_id !== null ? 'disabled' : null : null }}>
                   </div>
 
                   <div class="col-md-6 mt-2">
@@ -113,18 +113,19 @@
                     <div class="row">
                       <div class="col-12">
                         <div class="custom-control custom-switch">
-                          <input type="checkbox" class="custom-control-input" id="customSwitch" {{ $product->skus->count() === 1 &&  $product->skus->first()->skus_id !== null ? 'checked' : null }}>
+                          <input type="checkbox" class="custom-control-input" id="customSwitch" {{ $product->skus->count() >= 1 &&  $product->skus->first()->skus_id !== null ? 'checked' : null }}>
                           <label class="custom-control-label" for="customSwitch">Размеры</label>
                         </div>
                       </div>
                       <div class="col-12">
                         <div class="row">
 {{--                          {{ dd($product->skus()->where('skus_id', 3)->first()->skus) }}--}}
+                          <? $ch = $product->skus->count() >= 1 &&  $product->skus->first()->skus_id !== null ? null : 'disabled'; ?>
                           @foreach(App\Models\Skus::all() as $sku)
                             <div class="col-12">
                               <div class="row mt-2">
                                 <label for="skus[{{ $sku->id }}]" class="col-1">{{ $sku->title }}</label>
-                                <input type="number" min="0" class="form-control col-10 skus" id="skus-{{ $sku->id }}" name="skus[{{ $sku->id }}]" value="{{ $product->skus()->where('skus_id', $sku->id)->first() ? $product->skus()->where('skus_id', $sku->id)->first()->stock : null }}">
+                                <input type="number" min="0" class="form-control col-10 skus" id="skus-{{ $sku->id }}" name="skus[{{ $sku->id }}]" {{ $ch }} value="{{ $product->skus()->where('skus_id', $sku->id)->first() ? $product->skus()->where('skus_id', $sku->id)->first()->stock : null }}">
                               </div>
                             </div>
                           @endforeach
@@ -263,12 +264,12 @@
         console.log(ch ? 1 : 0);
         if (!ch) {
           $('.skus').attr('disabled', true)
-          $('#cost').attr('disabled', false)
+          $('#stock').attr('disabled', false)
           $('.skus').val('')
         } else {
           $('.skus').attr('disabled', false)
-          $('#cost').attr('disabled', true)
-          $('#cost').val('')
+          $('#stock').attr('disabled', true)
+          $('#stock').val('')
         }
       })
     });

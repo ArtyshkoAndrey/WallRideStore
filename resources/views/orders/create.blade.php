@@ -38,15 +38,15 @@
               @forelse($cartItems as $item)
                 <div class="row mt-3 justify-content-center align-items-center">
                   <div class="col-md-2 offset-md-1 col-4">
-                    <img src="{{ $item->productSku->product->imageurl }}" class="img-fluid" alt="{{ $item->productSku->product->title }}">
+                    <img src="{{ isset($item->productSku->product->photos) ?  asset('storage/products/' . $item->productSku->product->photos()->first()->name) : 'https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png' }}" class="img-fluid" alt="{{ $item->productSku->product->title }}">
                   </div>
                   <div class="col-4 col-md-4">
                     {{ ucwords(strtolower($item->productSku->product->title)) }}
                     <br>
-                    <p class="text-muted font-small">Размер: {{ $item->productSku->title }}</p>
+                    <p class="text-muted font-small">Размер: {{ $item->productSku->skus ? $item->productSku->skus->title : 'One Size' }}</p>
                   </div>
                   <div class="col-4 col-md text-center font-weight-bold">
-                    {{ cost(round($item->productSku->price * $currency->ratio, 0)) }} {{ $currency->symbol }} X {{ $item->amount }}
+                    {{ cost(round($item->productSku->product->price * $currency->ratio, 0)) }} {{ $currency->symbol }} X {{ $item->amount }}
                   </div>
                 </div>
               @empty
@@ -103,8 +103,8 @@
               <h4>Общая сумма {{ cost(round($priceAmount * $currency->ratio, 0)) }} {{ $currency->symbol }}</h4>
             </div>
             <div class="col-sm-auto col-12 mt-2 mt-sm-0">
-              <button v-if="step === 1" class="btn btn-dark" @click="ordered" id="offer-payment">Следующий шаг</button>
-              <button v-else class="btn btn-dark" @click="ordered" id="offer-payment">Завершить оформление заказа и оплатить</button>
+              <button v-if="step === 1" class="btn btn-dark rounded-0" @click="ordered" id="offer-payment">Следующий шаг</button>
+              <button v-else class="btn btn-dark rounded-0" @click="ordered" id="offer-payment">Завершить оформление заказа и оплатить</button>
             </div>
           </div>
         </div>

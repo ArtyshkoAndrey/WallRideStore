@@ -11,11 +11,11 @@
             <button class="bg-transparent border-0 m-0 p-0" v-else style="transition: 1s;"><i class="fas fa-heart"></i></button>
           </div>
 <!--          <img :src="item.image_url" v-if="slider" alt="item.image" class="carousel-cell-img img-fluid w-100 mb-3 rounded">-->
-          <a :href="'/product/'+item.id"><img :src="item.image_url" alt="item.image" class="img-fluid w-100 mb-3 rounded"></a>
+          <a :href="'/product/'+item.id"><img :src="item.photos !== null && item.photos.length > 0  ? '/public/storage/products/' + item.photos[0].name : 'https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png'" alt="item.image" class="img-fluid w-100 mb-3 rounded"></a>
           <div class="box">
             <a :href="'/product/'+item.id" class="mt-4 pb-0 mb-0 name">{{ item.title }}</a>
           </div>
-          <p class="price mt-1 pt-0">{{ $cost(item.skus[numberSize].price * currency.ratio) }} {{ currency.symbol }}</p>
+          <p class="price mt-1 pt-0">{{ $cost(item.price * currency.ratio) }} {{ currency.symbol }}</p>
         </div>
         <div class="row px-0 mx-0">
           <div class="col-3 px-0 btn-to-cart-adaptive">
@@ -42,14 +42,28 @@ line-height: 24px;" v-model="count" readonly disabled>
               </div>
             </div>
           </div>
-          <div class="align-items-center col-4 d-flex pl-1 pr-0">
+          <div class="align-items-center col-4 d-flex pl-1 pr-0" v-if="item.skus.length === 1 && item.skus[0].skus === null">
             <div class="row m-0 pr-2 justify-content-end">
               <div class="col-12 m-0 p-0 text-center" style="font-size: 12px">Размер</div>
               <div class="col-2 px-0 d-flex align-items-center justify-content-end" style="margin-top:-5px !important;">
                 <button class="btn p-0 m-0 h-100 bg-transparent btn-angle" v-long-press="addNumberSize" @click="addNumberSize"><i class="fal fa-angle-left mt-1"></i></button>
               </div>
               <div class="col-6 m-0 p-0" style="margin-top:-4px !important;">
-                <input class="form-control w-100 h-100 bg-white border-0 p-0 font-weight-bolder text-center" type="text" v-model="item.skus[numberSize].title" readonly disabled>
+                <input class="form-control w-100 h-100 bg-white border-0 p-0 font-weight-bolder text-center" type="text" value="ALL" readonly disabled>
+              </div>
+              <div class="col-2 px-0 d-flex align-items-center" style="margin-top:-5px !important;">
+                <button class="btn p-0 m-0 h-100 bg-transparent btn-angle" v-long-press="removeNumberSize" @click="removeNumberSize"><i class="fal fa-angle-right mt-1"></i></button>
+              </div>
+            </div>
+          </div>
+          <div class="align-items-center col-4 d-flex pl-1 pr-0" v-else>
+            <div class="row m-0 pr-2 justify-content-end">
+              <div class="col-12 m-0 p-0 text-center" style="font-size: 12px">Размер</div>
+              <div class="col-2 px-0 d-flex align-items-center justify-content-end" style="margin-top:-5px !important;">
+                <button class="btn p-0 m-0 h-100 bg-transparent btn-angle" v-long-press="addNumberSize" @click="addNumberSize"><i class="fal fa-angle-left mt-1"></i></button>
+              </div>
+              <div class="col-6 m-0 p-0" style="margin-top:-4px !important;">
+                <input class="form-control w-100 h-100 bg-white border-0 p-0 font-weight-bolder text-center" type="text" v-model="item.skus[numberSize].skus.title" readonly disabled>
               </div>
               <div class="col-2 px-0 d-flex align-items-center" style="margin-top:-5px !important;">
                 <button class="btn p-0 m-0 h-100 bg-transparent btn-angle" v-long-press="removeNumberSize" @click="removeNumberSize"><i class="fal fa-angle-right mt-1"></i></button>

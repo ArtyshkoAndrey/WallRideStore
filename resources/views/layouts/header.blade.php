@@ -121,14 +121,14 @@
             <mini-cart-item v-for="item in $parent.cartItems" :key="item.id" :item="item" :currency="{{ $currency }}" :id="item.product_sku.id" inline-template>
               <div class="row align-items-center m-0">
                 <div class="col-md-3 col-6 h-100">
-                  <img :src="item.product_sku.product.image_url" alt="t-short" class="img-fluid">
+                  <img :src="item.product_sku.product.photos !== null && item.product_sku.product.photos.length > 0  ? '/public/storage/products/' + item.product_sku.product.photos[0].name : 'https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png'" alt="t-short" class="img-fluid">
                 </div>
                 <div class="col-md-5 col-6 h-100">
                   <p class="p-0 m-0">@{{ item.product_sku.product.title }}</p>
                 </div>
                 <div class="col-md-4 mt-2 mt-md-0 h-100">
                   <div class="row px-3 px-md-0">
-                    <span class="col-md-9 col-9 p-0 cart-price">@{{ item.amount }} х @{{ $cost(item.product_sku.price * currency.ratio) }} @{{currency.symbol}}</span>
+                    <span class="col-md-9 col-9 p-0 cart-price">@{{ item.amount }} х @{{ $cost(item.product_sku.product.price * currency.ratio) }} @{{currency.symbol}}</span>
                     <button class="btn btn-default col-md-3 col-3 p-0" @click="deleteItem"><i class="fal fa-times fa-fw fa-lg text-dark"></i></button>
                   </div>
                 </div>

@@ -12,7 +12,7 @@ class ProductsController extends Controller {
 
   public function search () {
     $name = Input::get('name', '');
-    $products = Product::with('skus')->where('title','LIKE','%'.$name.'%')->paginate(16);
+    $products = Product::with('skus', 'photos')->where('title','LIKE','%'.$name.'%')->paginate(16);
     $products->appends(['name' => $name]);
     return view('products.search', compact('products', 'name'));
   }
@@ -26,17 +26,17 @@ class ProductsController extends Controller {
               ->join('product_skus', 'products.id', '=', 'product_skus.product_id')
               ->groupBy('products.id')
               ->orderBy($m[2] == 'desc' ? 'max_price' : 'min_price', $m[2])
-              ->with('skus')->orderBy('price', $m[2] == 'asc'? 'desc' : 'asc')
+              ->with('skus', 'photos')->orderBy('price', $m[2] == 'asc'? 'desc' : 'asc')
               ->paginate(16);
           } else if ($m[1] == 'new') {
-            $products = Product::orderBy('created_at', 'desc')->with('skus')->paginate(16);
+            $products = Product::orderBy('created_at', 'desc')->with('skus', 'photos')->paginate(16);
           } else {
-            $products = Product::with('skus')->orderBy($m[1], $m[2])->paginate(16);
+            $products = Product::with('skus', 'photos')->orderBy($m[1], $m[2])->paginate(16);
           }
         }
       }
     } else {
-      $products = Product::with('skus')->paginate(16);
+      $products = Product::with('skus', 'photos')->paginate(16);
     }
     $filters = [
       'order'  => $order,
@@ -45,8 +45,8 @@ class ProductsController extends Controller {
   }
   public function index() {
 
-    $productsNew = Product::where('on_new', true)->take(5)->with('skus')->get();
-    $products = Product::take(5)->with('skus')->get();
+    $productsNew = Product::where('on_new', true)->take(5)->with('skus', 'photos')->get();
+    $products = Product::take(5)->with('skus', 'photos')->get();
     return view('products.index', [
       'productsNew' => $productsNew,
       'products' => $products
@@ -70,7 +70,7 @@ class ProductsController extends Controller {
           ->orderBy('reviewed_at', 'desc') // 按评价时间倒序
           ->limit(10) // 取出 10 条
           ->get();
-      $products = Product::take(4)->with('skus')->get();
+      $products = Product::take(4)->with('skus', 'photos')->get();
       return view('products.show', [
         'product' => $product,
         'products' => $products,

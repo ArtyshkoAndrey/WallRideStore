@@ -60,7 +60,9 @@ Route::group(['prefix' => 'admin', 'guard' => 'admin', 'namespace' => 'Admin', '
   Route::delete('/order/all', 'OrderController@collectionsDestroy')->name('admin.store.order.collectionsDestroy');
   Route::delete('/coupon/all', 'CouponCodesController@collectionsDestroy')->name('admin.store.coupon.collectionsDestroy');
   Route::delete('/products/all', 'ProductsController@collectionsDestroy')->name('admin.production.products.collectionsDestroy');
+  Route::post('/products/all', 'ProductsController@collectionsRestore')->name('admin.production.products.collectionsRestore');
 
+  Route::post('/products/{id}/destroy', 'ExpressZoneController@destroyCity')->name('admin.store.express-zone.destroyCity');
   Route::put('/express/enabled/{id}', 'ExpressController@enabled')->name('admin.store.express.enabled');
   Route::post('/express-zone/{id}/destroy', 'ExpressZoneController@destroyCity')->name('admin.store.express-zone.destroyCity');
   Route::post('/products/{id}/photo', 'ProductsController@photo')->name('admin.production.products.photo');

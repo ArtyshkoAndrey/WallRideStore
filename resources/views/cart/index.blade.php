@@ -26,12 +26,12 @@
               <mini-cart-item :id="{{$item->productSku->id}}" :item="{{ $item }}" :currency="{{$currency}}" inline-template>
                 <div class="row mt-2 justify-content-center align-items-center">
                   <div class="col-md col-4">
-                    <img src="{{ $item->productSku->product->imageurl }}" class="img-fluid" alt="{{ $item->productSku->product->title }}">
+                    <img src="{{ isset($item->productSku->product->photos) ?  asset('storage/products/' . $item->productSku->product->photos()->first()->name) : 'https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png' }}" class="img-fluid" alt="{{ $item->productSku->product->title }}">
                   </div>
                   <div class="col-8 col-md-4">
                     {{ ucwords(strtolower($item->productSku->product->title)) }}
                     <br>
-                    <p class="text-muted font-small">Размер: {{ $item->productSku->title }}</p>
+                    <p class="text-muted font-small">Размер: {{ $item->productSku->skus ? $item->productSku->skus->title : 'One Size' }}</p>
                   </div>
                   <div class="col-4 col-md">
                     <div class="row m-0">
@@ -47,7 +47,7 @@
                     </div>
                   </div>
                   <div class="col-4 col-md text-center">
-                    {{ cost(round($item->productSku->price * $currency->ratio, 0)) }} {{ $currency->symbol }}
+                    {{ cost(round($item->productSku->product->price * $currency->ratio, 0)) }} {{ $currency->symbol }}
                   </div>
                   <div class="col-4 col-md">
                     <button class="btn-angle d-block w-100 m-0" @click="deleteItem"><i class="fal fa-times"></i></button>
@@ -61,7 +61,7 @@
         </div>
       </div>
       <div class="col-12 mt-3 d-flex justify-content-end">
-        <a class="btn btn-dark font-weight-bold col-12 col-sm-auto" href="{{ route('orders.create') }}" id="offer-payment">Перейти к оформелению заказа</a>
+        <a class="btn btn-dark font-weight-bold col-12 col-sm-auto rounded-0" href="{{ route('orders.create') }}" id="offer-payment">Перейти к оформелению заказа</a>
       </div>
     </div>
   </section>
