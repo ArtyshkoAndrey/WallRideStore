@@ -6,7 +6,7 @@
     <li class="sep dropdown" rel=1>
       <a>Бренды</a>
       <ul class="dropdown-3 submenu-1">
-        @foreach(App\Models\Category::all() as $category)
+        @foreach(App\Models\Category::where('is_brand', true)->get() as $category)
           <li><a href="#">{{ $category->name }}</a></li>
         @endforeach
       </ul>

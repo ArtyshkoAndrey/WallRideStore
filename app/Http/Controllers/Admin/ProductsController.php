@@ -126,9 +126,17 @@ class ProductsController extends Controller {
    */
   public function update(Request $request, $id)
   {
-    $request->validate([
-      'created_at' => 'required|date',
-    ]);
+//    dd($request);
+    $product = Product::withTrashed()->find($id);
+    $product->title = $request->title;
+    $product->description = $request->description;
+    $product->price = $request->price;
+    $product->price_sale = $request->price_sale;
+    $product->weight = $request->weight;
+    $product->on_new = isset($request->on_new) ? 1 : 0;
+    $product->on_sale = isset($request->on_sale) ? 1 : 0;
+    $product->save();
+    return redirect()->route('admin.production.products.edit', $id);
   }
 
   /**

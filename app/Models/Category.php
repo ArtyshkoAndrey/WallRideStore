@@ -11,6 +11,10 @@ class Category extends Model
     'name'
   ];
 
+  protected $casts = [
+    'is_brand' => 'boolean'
+  ];
+
   public function categories()
   {
     return $this->hasMany(Category::class);

@@ -43,7 +43,7 @@
                 <input type="number" name="cost" id="cost" class="form-control rounded-0 {{ $errors->has('cost') ? ' is-invalid' : '' }}" value="{{ old('cost') }}" required>
                 <span id="cost-error" class="error invalid-feedback">{{ $errors->first('cost') }}</span>
               </div>
-              <div class="col-mdo">
+              <div class="col-md">
                 <label for="step">Шаг</label>
                 <input type="number" name="step" id="step" class="form-control rounded-0 {{ $errors->has('step') ? ' is-invalid' : '' }}" step="0.01" value="{{ old('step') }}" required>
                 <span id="cost-error" class="error invalid-feedback">{{ $errors->first('step') }}</span>

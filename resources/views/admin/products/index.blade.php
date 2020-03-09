@@ -81,7 +81,7 @@
               <tr class="align-items-center">
                 <td style="vertical-align: middle;"><input type="checkbox" meta-product-id="{{ $product->id }}" class="check-to-product"></td>
                 <td style="vertical-align: middle;">
-                  <img src="{{ $product->image_url }}" alt="{{ $product->title }}" style="height: 100px; width: auto">
+                  <img src="{{ $product->photos->count() > 0 ? asset('storage/products/'.$product->photos->first()->name) : 'https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png' }}" alt="{{ $product->title }}" style="height: 100px; width: auto">
                 </td>
                 <td style="vertical-align: middle;" class="text-wrap w-25">
                   <a href="{{ route('admin.production.products.edit', $product->id) }}" class="text-red">{{ $product->title }}</a>

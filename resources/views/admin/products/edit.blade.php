@@ -56,13 +56,6 @@
                 <label for="title">Наименование</label>
                 <input type="text" class="form-control rounded-0" name="title" id="title" value="{{ $product->title }}">
               </div>
-              <div class="col-md-4">
-                <label for="type">Тип</label>
-                <select name="type" id="type" class="form-control rounded-0">
-                  <option value="0">Вариативный</option>
-                  <option value="1">Обычный</option>
-                </select>
-              </div>
               <div class="col-12 ml-md-4 ml-2">
                 <p class="font-smaller">Ссылка: <a href="{{ route('products.show', $product->id) }}" target="_blank" class="text-red" style="text-decoration: underline">{{ route('products.show', $product->id) }}</a></p>
               </div>
@@ -90,7 +83,12 @@
                     <input type="number" min="0" name="price_sale" class="form-control rounded-0" id="price_sale" value="{{ $product->price_sale }}">
                   </div>
 
-                  <div class="col-md-6 offset-md-6 mt-2">
+                  <div class="col-md-6 mt-2">
+                    <label for="weight">Запасы</label>
+                    <input type="number" min="0" name="cost" class="form-control rounded-0" id="cost" {{ $product->skus->count() > 1 || $product->skus->first()->skus_id !== null ? 'disabled' : null }}>
+                  </div>
+
+                  <div class="col-md-6 mt-2">
                     <label for="weight">Вес товара (кг)</label>
                     <input type="number" min="0" name="weight" class="form-control rounded-0" id="weight" value="{{ $product->weight }}">
                   </div>
@@ -98,12 +96,54 @@
               </div>
 
               <div class="col-md-4">
+                <div class="row">
+                  <div class="col-md-11 offset-md-1 mt-4">
+                    <label>
+                      <input type="checkbox" name="on_new" id="new" {{ $product->on_new ? 'checked' : null }}>
+                      NEW
+                    </label>
+
+                    <label class="ml-3">
+                      <input type="checkbox" name="on_sale" id="sale" {{ $product->on_sale ? 'checked' : null }}>
+                      SALE
+                    </label>
+                  </div>
+                  <div class="col-md-11 offset-md-1 mt-4">
+                    <h4 class="font-weight-bold">Атрибуты</h4>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="custom-control custom-switch">
+                          <input type="checkbox" class="custom-control-input" id="customSwitch" {{ $product->skus->count() === 1 &&  $product->skus->first()->skus_id !== null ? 'checked' : null }}>
+                          <label class="custom-control-label" for="customSwitch">Размеры</label>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="row">
+{{--                          {{ dd($product->skus()->where('skus_id', 3)->first()->skus) }}--}}
+                          @foreach(App\Models\Skus::all() as $sku)
+                            <div class="col-12">
+                              <div class="row mt-2">
+                                <label for="skus[{{ $sku->id }}]" class="col-1">{{ $sku->title }}</label>
+                                <input type="number" min="0" class="form-control col-10 skus" id="skus-{{ $sku->id }}" name="skus[{{ $sku->id }}]" value="{{ $product->skus()->where('skus_id', $sku->id)->first() ? $product->skus()->where('skus_id', $sku->id)->first()->stock : null }}">
+                              </div>
+                            </div>
+                          @endforeach
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </form>
           <div class="row mt-3">
             <div class="col-md-8">
               <form id="upload-widget" method="post" action="{{route('admin.production.products.photo', $product->id)}}" class="dropzone"></form>
+            </div>
+          </div>
+          <div class="row mt-3 justify-content-end">
+            <div class="col-auto">
+              <button class="btn btn-dark rounded-0 border-0 px-3 py-2" type="submit">Обновить</button>
             </div>
           </div>
         </div>
@@ -206,6 +246,31 @@
       fileList.push({"serverFileName": '{{ $photo->name }}', "fileName":'{{ $photo->name }}', "fileId": {{ $i }}});
       <? $i++?>
       @endforeach
+
+      $('#new').iCheck({
+        checkboxClass: 'icheckbox_minimal',
+        radioClass: 'iradio_minimal',
+      });
+      $('#sale').iCheck({
+        checkboxClass: 'icheckbox_minimal',
+        radioClass: 'iradio_minimal',
+      });
+
+
+      $('.custom-control-label').click(function(evt) {
+        let ch = !$('#' + $(this).attr('for')).prop("checked");
+        let id = $(this).attr('for').replace(/\D+/g,"");
+        console.log(ch ? 1 : 0);
+        if (!ch) {
+          $('.skus').attr('disabled', true)
+          $('#cost').attr('disabled', false)
+          $('.skus').val('')
+        } else {
+          $('.skus').attr('disabled', false)
+          $('#cost').attr('disabled', true)
+          $('#cost').val('')
+        }
+      })
     });
 
   </script>
