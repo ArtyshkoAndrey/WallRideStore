@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Мар 07 2020 г., 23:36
+-- Время создания: Мар 10 2020 г., 17:21
 -- Версия сервера: 5.7.25-log
 -- Версия PHP: 7.3.9
 
@@ -87,7 +87,9 @@ INSERT INTO `cart_items` (`id`, `user_id`, `product_sku_id`, `amount`) VALUES
 (11, 107, 123, 1),
 (16, 109, 125, 12),
 (17, 109, 131, 1),
-(18, 109, 128, 1);
+(18, 109, 128, 1),
+(20, 102, 173, 1),
+(21, 102, 125, 1);
 
 -- --------------------------------------------------------
 
@@ -99,6 +101,7 @@ CREATE TABLE `categories` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `category_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `is_brand` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -107,13 +110,20 @@ CREATE TABLE `categories` (
 -- Дамп данных таблицы `categories`
 --
 
-INSERT INTO `categories` (`id`, `name`, `category_id`, `created_at`, `updated_at`) VALUES
-(1, 'Худи', NULL, NULL, NULL),
-(2, 'Bronze56', 1, NULL, NULL),
-(3, 'Шапки', NULL, NULL, NULL),
-(4, 'Носки', NULL, NULL, NULL),
-(5, 'Тапки', 2, NULL, NULL),
-(6, 'Adidas', 1, NULL, NULL);
+INSERT INTO `categories` (`id`, `name`, `category_id`, `is_brand`, `created_at`, `updated_at`) VALUES
+(1, 'Худи', NULL, 0, NULL, NULL),
+(2, 'Bronze56k', 1, 1, NULL, NULL),
+(3, 'Шапки', NULL, 0, NULL, NULL),
+(4, 'Носки', NULL, 0, NULL, NULL),
+(5, 'Тапки', 2, 0, NULL, NULL),
+(7, 'Adidas Skateboarding', NULL, 1, NULL, NULL),
+(8, 'Birdhouse', NULL, 1, NULL, NULL),
+(9, 'Dime', NULL, 1, NULL, NULL),
+(10, 'Dime', NULL, 1, NULL, NULL),
+(11, 'Independent', NULL, 1, NULL, NULL),
+(12, 'Mob Grip', NULL, 1, NULL, NULL),
+(13, 'Polar', NULL, 1, NULL, NULL),
+(14, 'Shake Junt', NULL, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -17562,7 +17572,7 @@ CREATE TABLE `currencies` (
 
 INSERT INTO `currencies` (`id`, `name`, `ratio`, `symbol`, `created_at`, `updated_at`) VALUES
 (1, 'Тенге', 1, 'тг.', NULL, NULL),
-(2, 'Российский рубль', 0.1638, 'р.', NULL, NULL),
+(2, 'Российский рубль', 0.19, 'р.', NULL, NULL),
 (3, 'Американский доллар', 0.0026, '$', NULL, NULL);
 
 -- --------------------------------------------------------
@@ -17694,7 +17704,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (36, '2020_12_19_152909_create_user_addresses_table', 14),
 (38, '2020_03_03_215746_create_city_expresses_table', 15),
 (39, '2020_03_08_004219_products_categories', 16),
-(40, '2020_03_08_025512_products_image', 17);
+(40, '2020_03_08_025512_products_image', 17),
+(41, '2018_03_09_133109_create_skuses_table', 18);
 
 -- --------------------------------------------------------
 
@@ -17789,10 +17800,10 @@ CREATE TABLE `products` (
   `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `on_sale` tinyint(1) NOT NULL DEFAULT '1',
   `on_new` tinyint(1) NOT NULL DEFAULT '1',
-  `rating` double(8,2) NOT NULL DEFAULT '5.00',
   `sold_count` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `review_count` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `price` decimal(10,2) NOT NULL,
+  `price_sale` decimal(10,0) NOT NULL,
+  `weight` decimal(10,2) NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -17802,23 +17813,23 @@ CREATE TABLE `products` (
 -- Дамп данных таблицы `products`
 --
 
-INSERT INTO `products` (`id`, `title`, `description`, `image`, `on_sale`, `on_new`, `rating`, `sold_count`, `review_count`, `price`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(58, 'BRONZE56K HIGH PERFORMANCE WINDBREAKER ORANGE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.500 kg</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>M</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Windbreaker-Orange-1LOW_1800x180.jpg', 0, 1, 5.00, 0, 0, '55900.00', NULL, '2020-01-30 01:54:55', '2020-01-30 01:54:55'),
-(59, 'BRONZE56K HIGH PERFORMACE WINDBREAKER AIR FORCE BLUE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Windbreaker-Blue-1LOW_1800x1800.jpg', 1, 1, 5.00, 17, 0, '55900.00', NULL, '2020-01-30 02:42:36', '2020-02-20 09:28:00'),
-(60, 'BRONZE56K HARD WEAR CARGO PANTS DARK NAVY', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Pants-Cargo-Blue-1LOW_1800x1800-300x300.jpg', 1, 1, 5.00, 0, 0, '49900.00', NULL, '2020-01-30 02:43:57', '2020-01-30 02:43:57'),
-(61, 'POLAR PATTERNED POLO SHIRT RED', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/PATTERNED-POLO-SHIRT-RED-1.jpg', 1, 0, 5.00, 0, 0, '29900.00', NULL, '2020-01-30 02:45:32', '2020-01-30 02:45:32'),
-(62, 'DIME POLO SHIRT PURPLE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/POLO_SHIRT_PURPLE_1_1400x1400-300x300.jpg', 1, 1, 5.00, 1, 0, '17940.00', NULL, '2020-01-30 02:46:56', '2020-03-03 11:23:41'),
-(63, 'BRONZE56K HARDWARE TECHNOLOGY LONGSLEEVE CARDINAL', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.500 kg</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/LSTee-Bronze-Technology-Red-1LOW.jpg', 1, 1, 5.00, 0, 0, '21900.00', NULL, '2020-01-30 06:09:49', '2020-01-30 06:09:49'),
-(64, 'BRONZE56K MOUNTAIN BEANIE GREEN', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.200 kg</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Beanie-Green-1LOW_1800x1800.jpg', 1, 1, 5.00, 0, 0, '16900.00', NULL, '2020-01-30 06:10:59', '2020-01-30 06:10:59'),
-(65, 'BRONSON BEARING RAW', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.110 kg</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/BR_RAW_SingleCase_Angled.jpg', 0, 0, 5.00, 0, 0, '17900.00', NULL, '2020-01-30 06:12:32', '2020-01-30 06:12:32'),
-(66, 'BRONZE56K 2020 HAT KHAKI/CHARCOAL', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.200 kg</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Hat-2020-Khaki-Grey-1LOW_800x.jpg', 0, 1, 5.00, 0, 0, '16900.00', NULL, '2020-01-30 06:15:24', '2020-01-30 06:15:24'),
-(67, 'BRONZE56K LOGO LEATHER BELT BLACK', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.800 kg</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Belt-Black-4LOW_1800x1800.jpg', 0, 1, 5.00, 0, 0, '24900.00', NULL, '2020-01-30 06:16:34', '2020-01-30 06:16:34'),
-(68, 'BRONZE56K LOGO TENNIS LONGSLEEVE WHITE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/LSTee-TennisBall-White-1LOW_1800.jpg', 1, 1, 5.00, 0, 0, '21900.00', NULL, '2020-02-08 08:59:19', '2020-02-08 08:59:19'),
-(69, 'POLAR LIGHTWEIGHT CAP-BLUE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.90 kg</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/LIGHTWEIGHT-CAP-BLUE-1.jpg', 1, 1, 5.00, 0, 0, '18900.00', NULL, '2020-02-08 09:00:40', '2020-02-08 09:00:40'),
-(70, 'POLAR STRIPE PUFFER', '<p>SHELL: 100% NYLON TASLAN</p>\r\n\r\n<p>&ndash; WATER REPELLENT</p>\r\n\r\n<p>&ndash; DOWNPROOF</p>\r\n\r\n<p>&ndash; BREATHABLE</p>\r\n\r\n<p>&ndash; MOISTURE PERMEABLE</p>\r\n\r\n<p>LINING: 100% POLYESTER</p>\r\n\r\n<p>FILLING: 90% DOWN &ndash; 10% OTHER FEATHERS</p>\r\n\r\n<p>&ndash; 750 FILL POWER &ndash; FILL POWER MEASURES THE LOFT OF THE DOWN AND RANGES FROM 450 TO 1000 FOR CLOTHING</p>\r\n\r\n<p>YKK ZIPPERS</p>\r\n\r\n<p>CUSTOMISED ZIP PULLER</p>\r\n\r\n<p>FULL-ZIP FRONT WITH 2-WAY ZIPPER OPENING</p>\r\n\r\n<p>EMBROIDERY</p>\r\n\r\n<p>DRAWCORD HEM</p>\r\n\r\n<p>HAND WASH</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>MADE IN CHINA</p>\r\n\r\n<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/STRIPE-PUFFER-NAVY-1.jpg', 1, 1, 5.00, 0, 0, '107900.00', NULL, '2020-02-08 09:02:20', '2020-02-08 09:02:20'),
-(71, 'SWIM SHORTS ORANGE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>ес</th>\r\n			<td>0.400 kg</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/p3qpmwlFTPmq2tGi8Xu2_SWIM-SHORTS-ORANGE-1_672x672.jpg', 1, 1, 5.00, 0, 0, '27900.00', NULL, '2020-02-08 09:03:32', '2020-02-08 09:03:32'),
-(72, 'POLAR CORD JACKET', '<p>COLOUR: TAN</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>SHELL: 100% COTTON</p>\r\n\r\n<p>THICK CORDUROY &ndash; 8 WAVES PER INCH</p>\r\n\r\n<p>LINING: 100% POLYESTER</p>\r\n\r\n<p>THICK SHERPA FABRIC</p>\r\n\r\n<p>YKK ZIPPER &amp; BUTTONS</p>\r\n\r\n<p>CUSTOMISED ZIP PULLER</p>\r\n\r\n<p>TONAL EMBROIDERY</p>\r\n\r\n<p>WIDE FIT</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>MADE IN POLAND</p>', 'images/CORD-JACKET-TAN-2.jpg', 1, 1, 5.00, 0, 0, '79900.00', NULL, '2020-02-08 09:04:24', '2020-02-08 09:04:24'),
-(73, 'POLAR WOOL CAP BLK', '<p>COLOUR: BLACK</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>80% POLYESTER &ndash; 20% POLYAMIDE</p>\r\n\r\n<p>WOOL&nbsp;FABRIC</p>\r\n\r\n<p>UNSTRUCTURED 6-PANEL CAP</p>\r\n\r\n<p>PRE-BENT&nbsp;BRIM</p>\r\n\r\n<p>EMBROIDERY ON FRONT AND BACK</p>\r\n\r\n<p>SQUARE LOW&nbsp;FIT</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>MADE IN POLAND</p>', 'images/WOOL-CAP-BLACK-1.jpg', 1, 1, 5.00, 0, 0, '19900.00', '2020-03-05 17:00:00', '2020-02-08 09:05:31', '2020-02-08 09:05:31');
+INSERT INTO `products` (`id`, `title`, `description`, `image`, `on_sale`, `on_new`, `sold_count`, `price`, `price_sale`, `weight`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(58, 'BRONZE56K HIGH PERFORMANCE WINDBREAKER ORANGE', '<table><tbody><tr><th>Вес</th><td>0.500 kg</td></tr><tr><th>Размеры</th><td><p>M</p></td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 'images/Windbreaker-Orange-1LOW_1800x180.jpg', 0, 1, 0, '55900.00', '0', '0.00', NULL, '2020-01-30 01:54:55', '2020-03-09 12:42:43'),
+(59, 'BRONZE56K HIGH PERFORMACE WINDBREAKER AIR FORCE BLUE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Windbreaker-Blue-1LOW_1800x1800.jpg', 1, 1, 17, '55900.00', '0', '0.00', NULL, '2020-01-30 02:42:36', '2020-03-09 12:24:02'),
+(60, 'BRONZE56K HARD WEAR CARGO PANTS DARK NAVY', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Pants-Cargo-Blue-1LOW_1800x1800-300x300.jpg', 1, 1, 0, '49900.00', '0', '0.00', NULL, '2020-01-30 02:43:57', '2020-03-09 12:24:02'),
+(61, 'POLAR PATTERNED POLO SHIRT RED', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/PATTERNED-POLO-SHIRT-RED-1.jpg', 1, 0, 0, '29900.00', '0', '0.00', NULL, '2020-01-30 02:45:32', '2020-03-09 12:24:02'),
+(62, 'DIME POLO SHIRT PURPLE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/POLO_SHIRT_PURPLE_1_1400x1400-300x300.jpg', 1, 1, 1, '17940.00', '0', '0.00', NULL, '2020-01-30 02:46:56', '2020-03-09 12:24:02'),
+(63, 'BRONZE56K HARDWARE TECHNOLOGY LONGSLEEVE CARDINAL', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.500 kg</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/LSTee-Bronze-Technology-Red-1LOW.jpg', 1, 1, 0, '21900.00', '0', '0.00', NULL, '2020-01-30 06:09:49', '2020-03-09 12:24:02'),
+(64, 'BRONZE56K MOUNTAIN BEANIE GREEN', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.200 kg</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Beanie-Green-1LOW_1800x1800.jpg', 1, 1, 0, '16900.00', '0', '0.00', NULL, '2020-01-30 06:10:59', '2020-03-09 12:23:58'),
+(65, 'BRONSON BEARING RAW', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.110 kg</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/BR_RAW_SingleCase_Angled.jpg', 0, 0, 0, '17900.00', '0', '0.00', NULL, '2020-01-30 06:12:32', '2020-03-09 12:23:58'),
+(66, 'BRONZE56K 2020 HAT KHAKI/CHARCOAL', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.200 kg</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Hat-2020-Khaki-Grey-1LOW_800x.jpg', 0, 1, 0, '16900.00', '0', '0.00', NULL, '2020-01-30 06:15:24', '2020-03-09 12:23:58'),
+(67, 'BRONZE56K LOGO LEATHER BELT BLACK', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.800 kg</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/Belt-Black-4LOW_1800x1800.jpg', 0, 1, 0, '24900.00', '0', '0.00', NULL, '2020-01-30 06:16:34', '2020-03-09 12:23:58'),
+(68, 'BRONZE56K LOGO TENNIS LONGSLEEVE WHITE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/LSTee-TennisBall-White-1LOW_1800.jpg', 1, 1, 0, '21900.00', '0', '0.00', NULL, '2020-02-08 08:59:19', '2020-03-09 12:23:58'),
+(69, 'POLAR LIGHTWEIGHT CAP-BLUE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>0.90 kg</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/LIGHTWEIGHT-CAP-BLUE-1.jpg', 1, 1, 0, '18900.00', '0', '0.00', NULL, '2020-02-08 09:00:40', '2020-03-09 12:23:49'),
+(70, 'POLAR STRIPE PUFFER', '<p>SHELL: 100% NYLON TASLAN</p>\r\n\r\n<p>&ndash; WATER REPELLENT</p>\r\n\r\n<p>&ndash; DOWNPROOF</p>\r\n\r\n<p>&ndash; BREATHABLE</p>\r\n\r\n<p>&ndash; MOISTURE PERMEABLE</p>\r\n\r\n<p>LINING: 100% POLYESTER</p>\r\n\r\n<p>FILLING: 90% DOWN &ndash; 10% OTHER FEATHERS</p>\r\n\r\n<p>&ndash; 750 FILL POWER &ndash; FILL POWER MEASURES THE LOFT OF THE DOWN AND RANGES FROM 450 TO 1000 FOR CLOTHING</p>\r\n\r\n<p>YKK ZIPPERS</p>\r\n\r\n<p>CUSTOMISED ZIP PULLER</p>\r\n\r\n<p>FULL-ZIP FRONT WITH 2-WAY ZIPPER OPENING</p>\r\n\r\n<p>EMBROIDERY</p>\r\n\r\n<p>DRAWCORD HEM</p>\r\n\r\n<p>HAND WASH</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>MADE IN CHINA</p>\r\n\r\n<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>Вес</th>\r\n			<td>Н/Д</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/STRIPE-PUFFER-NAVY-1.jpg', 1, 1, 0, '107900.00', '0', '0.00', NULL, '2020-02-08 09:02:20', '2020-03-09 12:23:49'),
+(71, 'SWIM SHORTS ORANGE', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<th>ес</th>\r\n			<td>0.400 kg</td>\r\n		</tr>\r\n		<tr>\r\n			<th>Размеры</th>\r\n			<td>\r\n			<p>L, M, S</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'images/p3qpmwlFTPmq2tGi8Xu2_SWIM-SHORTS-ORANGE-1_672x672.jpg', 1, 1, 0, '27900.00', '0', '0.00', NULL, '2020-02-08 09:03:32', '2020-03-09 12:23:49'),
+(72, 'POLAR CORD JACKET', '<p>COLOUR: TAN</p><p>&nbsp;</p><p>SHELL: 100% COTTON</p><p>THICK CORDUROY &ndash; 8 WAVES PER INCH</p><p>LINING: 100% POLYESTER</p><p>THICK SHERPA FABRIC</p><p>YKK ZIPPER &amp; BUTTONS</p><p>CUSTOMISED ZIP PULLER</p><p>TONAL EMBROIDERY</p><p>WIDE FIT</p><p>&nbsp;</p><p>MADE IN POLAND</p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 'images/CORD-JACKET-TAN-2.jpg', 1, 1, 0, '79900.00', '0', '0.00', NULL, '2020-02-08 09:04:24', '2020-03-09 12:26:51'),
+(73, 'POLAR WOOL CAP BLK', '<p>color</p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 'images/WOOL-CAP-BLACK-1.jpg', 0, 0, 0, '19900.00', '10000', '1.00', NULL, '2020-02-08 09:05:31', '2020-03-09 12:23:49');
 
 -- --------------------------------------------------------
 
@@ -17839,7 +17850,11 @@ CREATE TABLE `products_categories` (
 --
 
 INSERT INTO `products_categories` (`id`, `product_id`, `category_id`, `created_at`, `updated_at`) VALUES
-(1, 73, 3, '2020-03-07 17:00:00', '2020-03-07 17:00:00');
+(2, 73, 13, NULL, NULL),
+(3, 73, 1, NULL, NULL),
+(4, 72, 3, NULL, NULL),
+(5, 72, 4, NULL, NULL),
+(6, 72, 5, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -17861,7 +17876,19 @@ CREATE TABLE `products_image` (
 
 INSERT INTO `products_image` (`id`, `product_id`, `name`, `created_at`, `updated_at`) VALUES
 (5, 73, '1583613124848_diplom2.jpg', '2020-03-07 20:32:05', '2020-03-07 20:32:05'),
-(6, 73, '1583613127220_diplom2.jpg', '2020-03-07 20:32:07', '2020-03-07 20:32:07');
+(7, 72, '1583741327529_FILE0003.JPG', '2020-03-09 08:08:48', '2020-03-09 08:08:48'),
+(8, 73, '1583741395885_FILE0039.JPG', '2020-03-09 08:09:57', '2020-03-09 08:09:57'),
+(9, 73, '1583741395887_FILE0040.JPG', '2020-03-09 08:09:57', '2020-03-09 08:09:57'),
+(10, 58, '1583741678783_FILE0017.JPG', '2020-03-09 08:14:39', '2020-03-09 08:14:39'),
+(11, 63, '1583741694463_FILE0015.JPG', '2020-03-09 08:14:55', '2020-03-09 08:14:55'),
+(12, 62, '1583741699019_FILE0004.JPG', '2020-03-09 08:15:00', '2020-03-09 08:15:00'),
+(13, 61, '1583741702896_FILE0027.JPG', '2020-03-09 08:15:03', '2020-03-09 08:15:03'),
+(14, 60, '1583741709045_FILE0039.JPG', '2020-03-09 08:15:10', '2020-03-09 08:15:10'),
+(15, 60, '1583741709048_FILE0040.JPG', '2020-03-09 08:15:10', '2020-03-09 08:15:10'),
+(16, 60, '1583741709050_FILE0042.JPG', '2020-03-09 08:15:12', '2020-03-09 08:15:12'),
+(17, 59, '1583741728936_FILE0050.JPG', '2020-03-09 08:15:29', '2020-03-09 08:15:29'),
+(18, 59, '1583741728932_FILE0049.JPG', '2020-03-09 08:15:30', '2020-03-09 08:15:30'),
+(19, 59, '1583741728937_FILE0054.JPG', '2020-03-09 08:15:31', '2020-03-09 08:15:31');
 
 -- --------------------------------------------------------
 
@@ -17871,11 +17898,9 @@ INSERT INTO `products_image` (`id`, `product_id`, `name`, `created_at`, `updated
 
 CREATE TABLE `product_skus` (
   `id` int(10) UNSIGNED NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `price` decimal(10,2) NOT NULL,
   `stock` int(10) UNSIGNED NOT NULL,
   `product_id` int(10) UNSIGNED NOT NULL,
+  `skus_id` int(10) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -17884,32 +17909,57 @@ CREATE TABLE `product_skus` (
 -- Дамп данных таблицы `product_skus`
 --
 
-INSERT INTO `product_skus` (`id`, `title`, `description`, `price`, `stock`, `product_id`, `created_at`, `updated_at`) VALUES
-(122, 'M', 'Размер М', '55900.00', 0, 58, '2020-01-30 01:54:55', '2020-01-30 01:54:55'),
-(123, 'LL', 'Размер L', '55900.00', 0, 59, '2020-01-30 02:42:37', '2020-02-20 09:15:05'),
-(124, 'M', 'Размер M', '55900.00', 0, 59, '2020-01-30 02:42:37', '2020-02-26 10:05:03'),
-(125, 'L', 'L', '49900.00', 10, 60, '2020-01-30 02:43:57', '2020-02-11 17:08:59'),
-(126, 'M', 'M', '49900.00', 5, 60, '2020-01-30 02:43:57', '2020-02-11 12:55:35'),
-(127, 'S', 'S', '49900.00', 23, 60, '2020-01-30 02:43:57', '2020-01-30 02:43:57'),
-(128, 'L', 'L', '29900.00', 1, 61, '2020-01-30 02:45:32', '2020-01-30 02:45:32'),
-(129, 'S', 'S', '29900.00', 3, 61, '2020-01-30 02:45:32', '2020-01-30 02:45:32'),
-(130, 'S', 'S', '29900.00', 2, 61, '2020-01-30 02:45:32', '2020-01-30 02:45:32'),
-(131, 'L', 'L', '17940.00', 1, 62, '2020-01-30 02:46:56', '2020-03-03 11:22:37'),
-(132, 'M', 'M', '17940.00', 1, 62, '2020-01-30 02:46:56', '2020-01-30 02:46:56'),
-(133, 'L', 'L', '21900.00', 0, 63, '2020-01-30 06:09:49', '2020-02-26 10:05:03'),
-(134, 'M', 'M', '21900.00', 2, 63, '2020-01-30 06:09:49', '2020-01-30 06:09:49'),
-(135, 'S', '<table>	<tbody>		<tr>			<th>Вес</th>			<td>0.200 kg</td>		</tr>	</tbody></table>', '16900.00', 13, 64, '2020-01-30 06:10:59', '2020-01-30 06:10:59'),
-(136, 'M', '<table>	<tbody>		<tr>			<th>Вес</th>			<td>0.110 kg</td>		</tr>	</tbody></table>', '17900.00', 34, 65, '2020-01-30 06:12:32', '2020-01-30 06:12:32'),
-(137, 'ALL', 'Общий размер', '16900.00', 3, 66, '2020-01-30 06:15:24', '2020-01-30 06:15:24'),
-(138, 'ALL', 'ALL', '24900.00', 5, 67, '2020-01-30 06:16:34', '2020-01-30 06:16:34'),
-(139, 'M', 'M', '21900.00', 10, 68, '2020-02-08 08:59:19', '2020-02-12 09:10:07'),
-(140, 'S', 'S', '21900.00', 3, 68, '2020-02-08 08:59:19', '2020-02-12 09:10:07'),
-(141, 'ALL', 'All', '18900.00', 14, 69, '2020-02-08 09:00:40', '2020-02-08 09:00:40'),
-(142, 'M', 'M', '107900.00', 3, 70, '2020-02-08 09:02:20', '2020-02-12 09:10:07'),
-(143, 'L', 'L', '27900.00', 14, 71, '2020-02-08 09:03:32', '2020-02-12 09:10:07'),
-(144, 'M', 'M', '27900.00', 16, 71, '2020-02-08 09:03:32', '2020-02-08 09:03:32'),
-(145, 'S', 'S', '79900.00', 90, 72, '2020-02-08 09:04:24', '2020-02-08 09:04:24'),
-(146, 'ALL', 'ALL', '19900.00', 18, 73, '2020-02-08 09:05:31', '2020-02-12 09:10:07');
+INSERT INTO `product_skus` (`id`, `stock`, `product_id`, `skus_id`, `created_at`, `updated_at`) VALUES
+(123, 0, 59, 5, '2020-01-30 02:42:37', '2020-02-20 09:15:05'),
+(124, 0, 59, 2, '2020-01-30 02:42:37', '2020-02-26 10:05:03'),
+(125, 10, 60, 5, '2020-01-30 02:43:57', '2020-02-11 17:08:59'),
+(126, 5, 60, 2, '2020-01-30 02:43:57', '2020-02-11 12:55:35'),
+(127, 23, 60, 3, '2020-01-30 02:43:57', '2020-01-30 02:43:57'),
+(128, 1, 61, 5, '2020-01-30 02:45:32', '2020-01-30 02:45:32'),
+(129, 3, 61, 2, '2020-01-30 02:45:32', '2020-01-30 02:45:32'),
+(130, 2, 61, 3, '2020-01-30 02:45:32', '2020-01-30 02:45:32'),
+(131, 1, 62, 5, '2020-01-30 02:46:56', '2020-03-03 11:22:37'),
+(132, 1, 62, 2, '2020-01-30 02:46:56', '2020-01-30 02:46:56'),
+(133, 0, 63, 5, '2020-01-30 06:09:49', '2020-02-26 10:05:03'),
+(134, 2, 63, 2, '2020-01-30 06:09:49', '2020-01-30 06:09:49'),
+(135, 13, 64, 5, '2020-01-30 06:10:59', '2020-01-30 06:10:59'),
+(136, 34, 65, 5, '2020-01-30 06:12:32', '2020-01-30 06:12:32'),
+(137, 3, 66, 5, '2020-01-30 06:15:24', '2020-01-30 06:15:24'),
+(138, 5, 67, 4, '2020-01-30 06:16:34', '2020-01-30 06:16:34'),
+(139, 10, 68, 5, '2020-02-08 08:59:19', '2020-02-12 09:10:07'),
+(140, 3, 68, 2, '2020-02-08 08:59:19', '2020-02-12 09:10:07'),
+(141, 14, 69, 5, '2020-02-08 09:00:40', '2020-02-08 09:00:40'),
+(142, 3, 70, 4, '2020-02-08 09:02:20', '2020-02-12 09:10:07'),
+(143, 14, 71, 5, '2020-02-08 09:03:32', '2020-02-12 09:10:07'),
+(144, 16, 71, 2, '2020-02-08 09:03:32', '2020-02-08 09:03:32'),
+(169, 10, 73, 2, '2020-03-09 12:07:41', '2020-03-09 12:07:41'),
+(170, 10, 73, 3, '2020-03-09 12:07:41', '2020-03-09 12:07:41'),
+(171, 3, 73, 4, '2020-03-09 12:07:41', '2020-03-09 12:07:41'),
+(172, 90, 72, 4, '2020-03-09 12:26:51', '2020-03-09 12:26:51'),
+(173, 10, 58, NULL, '2020-03-09 12:42:43', '2020-03-09 12:42:43');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `skuses`
+--
+
+CREATE TABLE `skuses` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `skuses`
+--
+
+INSERT INTO `skuses` (`id`, `title`, `created_at`, `updated_at`) VALUES
+(2, 'M', NULL, NULL),
+(3, 'L', NULL, NULL),
+(4, 'XL', NULL, NULL),
+(5, 'S', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -18164,7 +18214,14 @@ ALTER TABLE `products_image`
 --
 ALTER TABLE `product_skus`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `product_skus_product_id_foreign` (`product_id`);
+  ADD KEY `product_skus_product_id_foreign` (`product_id`),
+  ADD KEY `child_ibfk_1` (`skus_id`);
+
+--
+-- Индексы таблицы `skuses`
+--
+ALTER TABLE `skuses`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `users`
@@ -18205,13 +18262,13 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT для таблицы `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT для таблицы `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT для таблицы `cities`
@@ -18283,7 +18340,7 @@ ALTER TABLE `express_zones`
 -- AUTO_INCREMENT для таблицы `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT для таблицы `orders`
@@ -18307,19 +18364,25 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT для таблицы `products_categories`
 --
 ALTER TABLE `products_categories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `products_image`
 --
 ALTER TABLE `products_image`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT для таблицы `product_skus`
 --
 ALTER TABLE `product_skus`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=174;
+
+--
+-- AUTO_INCREMENT для таблицы `skuses`
+--
+ALTER TABLE `skuses`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
@@ -18436,6 +18499,7 @@ ALTER TABLE `products_image`
 -- Ограничения внешнего ключа таблицы `product_skus`
 --
 ALTER TABLE `product_skus`
+  ADD CONSTRAINT `child_ibfk_1` FOREIGN KEY (`skus_id`) REFERENCES `skuses` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `product_skus_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 
 --
