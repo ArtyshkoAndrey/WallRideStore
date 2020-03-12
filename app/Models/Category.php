@@ -8,7 +8,7 @@ class Category extends Model
 {
 
   protected $fillable = [
-    'name'
+    'name', 'id'
   ];
 
   protected $casts = [
@@ -17,7 +17,7 @@ class Category extends Model
 
   public function categories()
   {
-    return $this->hasMany(Category::class);
+    return $this->hasMany(Category::class, 'id', 'category_id')->with('categories');
   }
 
   public function childrenCategories()

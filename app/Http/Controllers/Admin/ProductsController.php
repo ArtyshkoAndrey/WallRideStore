@@ -78,22 +78,56 @@ class ProductsController extends Controller {
   /**
    * Show the form for creating a new resource.
    *
-   * @return \Illuminate\Http\Response
+   * @return Factory|View
    */
   public function create()
   {
-    //
+    return view('admin.products.create');
   }
 
   /**
    * Store a newly created resource in storage.
    *
    * @param Request $request
-   * @return \Illuminate\Http\Response
+   * @return RedirectResponse
    */
   public function store(Request $request)
   {
-    //
+//    dd($request);
+    $product = new Product();
+    $product->title = $request->title;
+    $product->description = $request->description;
+    $product->price = $request->price;
+    $product->price_sale = $request->price_sale;
+    $product->weight = $request->weight;
+    $product->on_new = isset($request->on_new) ? 1 : 0;
+    $product->on_sale = isset($request->on_sale) ? 1 : 0;
+    $product->save();
+    $product->categories()->sync($request->category);
+    if (isset($request->stock)) {
+      $sk = new ProductSku();
+      $sk['stock'] = (int) $request->stock;
+      $sk->product()->associate($product);
+      $sk->save();
+    } else if (isset($request->skus)) {
+      foreach ($request->skus as $key => $skus) {
+        if ($skus !== null && (int) $skus !== 0) {
+          $sk = new ProductSku();
+          $sk->stock = $skus;
+          $sk->product()->associate($product);
+          $sk->skus()->associate(Skus::find($key));
+          $sk->save();
+        }
+      }
+    }
+    foreach ($request->photo as $key => $photo) {
+      if ($photo !== null && $photo !== '') {
+        $ph = Photo::where('name', $photo)->first();
+        $ph->product()->associate($product);
+        $ph->save();
+      }
+    }
+    return redirect()->route('admin.production.products.index');
   }
 
   /**
@@ -212,4 +246,23 @@ class ProductsController extends Controller {
 //    $product->photo->
   }
 
+  public function photoCreate(Request $request) {
+    // read image from temporary file
+    $image = $request->file('file');
+    $destinationPath = public_path('storage/products/');
+    $name = $request->file('file')->getClientOriginalName();
+    $img = Image::make($image->getRealPath());
+    $img->save($destinationPath.'/'.$name);
+    $ph = new Photo();
+    $ph['name'] = $name;
+    $ph->save();
+    echo $name;
+  }
+  public function photoDeleteCreate(Request $request) {
+    // read image from temporary file
+    echo $request->name;
+    File::delete(public_path('storage/products/') . '/' .$request->name);
+    $ph = Photo::where('name', $request->name)->first();
+    $ph->delete();
+  }
 }

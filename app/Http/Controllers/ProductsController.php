@@ -46,7 +46,9 @@ class ProductsController extends Controller {
   public function index() {
 
     $productsNew = Product::where('on_new', true)->take(5)->with('skus', 'photos')->get();
-    $products = Product::take(5)->with('skus', 'photos')->get();
+    $products = Product::with('photos', 'skus')->whereHas('categories', function($query) {
+      $query->whereIn('categories.name', ['Толстовки']);
+    })->take(5)->get();
     return view('products.index', [
       'productsNew' => $productsNew,
       'products' => $products
@@ -70,7 +72,10 @@ class ProductsController extends Controller {
           ->orderBy('reviewed_at', 'desc') // 按评价时间倒序
           ->limit(10) // 取出 10 条
           ->get();
-      $products = Product::take(4)->with('skus', 'photos')->get();
+      $ids = $product->categories->pluck('id')->toArray();
+      $products = Product::with('photos', 'skus', 'categories')->whereHas('categories', function($query) use ($ids) {
+        $query->whereIn('categories.id', $ids);
+      })->take(4)->get();
       return view('products.show', [
         'product' => $product,
         'products' => $products,

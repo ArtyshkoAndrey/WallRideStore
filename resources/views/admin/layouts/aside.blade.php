@@ -1,6 +1,6 @@
 <!-- Main Sidebar Container -->
 @auth('admin')
-<aside class="main-sidebar sidebar-dark-primary" style="margin-top: 56px; min-height: calc(100vh - 56px); height: 100%;">
+<aside class="main-sidebar sidebar-dark-primary" style="margin-top: 56px; min-height: calc(100vh - 56px); height: 100%; z-index: 1038">
 
   <!-- Sidebar -->
   <div class="sidebar p-0 mt-3">

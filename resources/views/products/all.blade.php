@@ -20,24 +20,23 @@
         </div>
         <div class="col-md col-6 mt-4 mt-md-0">
           <select name="category" class="form-control">
-            <option value="">Категория</option>
-            <option value="price_asc">Худи</option>
-            <option value="price_desc">Брюки</option>
+            @foreach(App\Models\Category::where('is_brand', 0)->get() as $cat)
+              <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+            @endforeach
           </select>
         </div>
         <div class="col-md col-6 mt-4 mt-md-0">
           <select name="brand" class="form-control">
-            <option value="">Бренд</option>
-            <option value="price_asc">Addidas</option>
-            <option value="price_desc">Nike</option>
+            @foreach(App\Models\Category::where('is_brand', 1)->get() as $cat)
+              <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+            @endforeach
           </select>
         </div>
         <div class="col-md col-6 mt-4 mt-md-0">
           <select name="size" class="form-control">
-            <option value="">Размер</option>
-            <option value="price_asc">L</option>
-            <option value="price_desc">XL</option>
-            <option value="price_desc">XXL</option>
+            @foreach(App\Models\Skus::get() as $attr)
+              <option value="{{ $attr->id }}">{{ $attr->title }}</option>
+            @endforeach
           </select>
         </div>
       </div>

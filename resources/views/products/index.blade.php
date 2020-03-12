@@ -40,6 +40,9 @@
           @foreach($productsNew as $product)
             <product :slider=true :currency="{{ $currency }}" :item="{{ $product }}"></product>
           @endforeach
+            @for($i = 0; $i < 5 - $productsNew->count(); $i++)
+              <div class="col-lg"></div>
+            @endfor
         @else
           <h3 class="text-center mt-5 pb-5">Нет данных товаров</h3>
         @endif
@@ -50,8 +53,8 @@
   <section class="mt-5 mb-5 px-0">
     <div class="container-fluid">
       <div class="row align-items-center px-5">
-        <h2 class="font-weight-bold">Худи</h2>
-        <a class="ml-auto text-dark" href="#">Смотреть все</a>
+        <h2 class="font-weight-bold">Толстовки</h2>
+        <a class="ml-auto text-dark" href="{{ route('products.all', ['category' => App\Models\Category::where('name', 'Толстовки')->first()->id]) }}">Смотреть все</a>
       </div>
     </div>
     <div class="container-fluid" id="sliderList2">
@@ -60,6 +63,9 @@
           @foreach($products as $product)
             <product :slider=true :currency="{{ $currency }}" :item="{{ $product }}"></product>
           @endforeach
+          @for($i = 0; $i < 5 - $products->count(); $i++)
+          <div class="col-lg"></div>
+          @endfor
         @else
           <h3 class="text-center mt-5 pb-5">Нет данных товаров</h3>
         @endif
