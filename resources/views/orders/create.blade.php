@@ -3,7 +3,7 @@
 
 @section('content')
   <section class="container mt-5 pt-5 mb-5" id="cart">
-    <create-order :amount="{{ $amount }}" :express_companies="{{ App\Models\ExpressCompany::where('name', '!=', 'Самовывоз')->get() }}" :cart_items="{{ json_encode($cartItems) }}" inline-template>
+    <create-order :amount="{{ $amount }}" :express_companies="{{ json_encode($express_companies) }}" :cart_items="{{ json_encode($cartItems) }}" inline-template>
       <div class="row">
         <div class="col-12">
           <div class="row">
@@ -70,14 +70,19 @@
                 <div class="col-md-6 mt-3 mt-md-0">
                   <h5 class="font-weight-bold">Выберите службу доставки</h5>
                   <div class="btn-group btn-group-toggle" data-toggle="buttons" v-if="!order.pickup">
-                      <label v-for="company in express_companies" class="btn btn-white border-0 rounded-0 p-3 ml-2" :disabled="order.pickup" @click="() => {!order.pickup ? order.express_company = company.id : null}">
-                        <input type="radio" :value="company.id" name="express_company" id="option3" autocomplete="off" :checked="order.express_company === company.id">
+                    <div v-for="(company, index) in express_companies" class="btn p-0 rounded-0 border-0 ml-2" :disabled="order.pickup || company.costedTransfer == null">
+                      <label  class="btn-white border-0 rounded-0 p-3 mb-0" :disabled="order.pickup || company.costedTransfer == null" @click="() => { !order.pickup ? (order.express_company = company.id, order.costTransfer = company.costedTransfer) : null}">
+                        <input type="radio" :value="company.id" name="express_company" autocomplete="off" :checked="order.express_company === company.id">
                         @{{ company.name }}
                       </label>
+                      <p class="m-0 p-0 position-absolute font-weight-bold">@{{ company.costedTransfer ? $cost(Number(company.costedTransfer)) + ' тг.' : '' }}</p>
+                    </div>
+
 <!--                     <label class="btn btn-white border-0 rounded-0 p-3 ml-2" :disabled="order.pickup" @click="() => {!order.pickup ? order.express_company = 'ems' : null}">
                       <input type="radio" value="ems" name="express_company" id="option4" autocomplete="off" :checked="order.express_company === 'ems'"> EMS
                     </label> -->
                   </div>
+
                   <div v-else class="mt-3">
                     <p class="m-0 p-0 d-flex">В самовывозе нет служб доставки</p>
                   </div>

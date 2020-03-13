@@ -136,7 +136,7 @@
                     <label for="total_amount">Сумма доставки</label>
                   </div>
                   <div class="col-12">
-                    <p id="total_amount" class="text-muted">{{ $order->total_amount }} тг. ЗАМЕНИТЬ</p>
+                    <p id="total_amount" class="text-muted">{{ cost($order->ship_price) }} тг.</p>
                   </div>
                 </div>
               </div>
@@ -156,7 +156,7 @@
                     <label for="total_amount">Сумма без доставки</label>
                   </div>
                   <div class="col-12">
-                    <p id="total_amount" class="text-muted">{{ $order->total_amount }} тг.</p>
+                    <p id="total_amount" class="text-muted">{{ cost($order->total_amount) }} тг.</p>
                   </div>
                 </div>
               </div>
@@ -177,11 +177,11 @@
                   <tbody>
                   @foreach($order->items as $item)
                     <tr align="center">
-                      <td style="width:10%; vertical-align: middle;"><img src="{{ $item->product->image_url }}" height="100px" alt=""></td>
-                      <td style="width:20%; vertical-align: middle;" class="text-wrap">{{ ucwords(strtolower($item->product->title)) }} - {{ $item->productSku->title }}</td>
-                      <td style="width:20%; vertical-align: middle;">{{ $item->price }} тг.</td>
+                      <td style="width:10%; vertical-align: middle;"><img src="{{  isset($item->product->photos) ? asset('storage/products/'. $item->product->photos->first()->name) : 'https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png' }}" height="100px" alt=""></td>
+                      <td style="width:20%; vertical-align: middle;" class="text-wrap">{{ ucwords(strtolower($item->product->title)) }} - {{ $item->product_sku }}</td>
+                      <td style="width:20%; vertical-align: middle;">{{ cost($item->price) }} тг.</td>
                       <td style="width:20%; vertical-align: middle;">{{ $item->amount }}</td>
-                      <td style="width:20%; vertical-align: middle;">{{ $item->price * $item->amount }} тг.</td>
+                      <td style="width:20%; vertical-align: middle;">{{ cost($item->price * $item->amount) }} тг.</td>
                     </tr>
                   @endforeach
                   </tbody>
@@ -190,10 +190,10 @@
             </div>
             <div class="row mt-4 justify-content-lg-between px-md-4 px-0">
               <div class="col-12 col-md-auto h5">
-                <span class="font-weight-bold">Доставка:</span> {{ $order->expressCompany->name }} - 0 тг. ИЗМЕНИТЬ
+                <span class="font-weight-bold">Доставка:</span> {{ $order->expressCompany->name }} - {{ cost($order->ship_price) }} тг.
               </div>
               <div class="col-12 col-md-auto h5">
-                <span class="font-weight-bold">Сумма заказа:</span> {{ $order->total_amount }} тг.
+                <span class="font-weight-bold">Сумма заказа:</span> {{ cost($order->total_amount + $order->ship_price) }} тг.
               </div>
             </div>
           </form>

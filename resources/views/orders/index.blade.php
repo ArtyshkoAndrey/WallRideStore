@@ -60,11 +60,11 @@
                               <td>{{ \App\Models\Order::$paymentMethodsMap[$order->payment_method] }}</td>
                               <td>{{ $order->expressCompany ? $order->expressCompany->name : 'Компания больше не доступна' }}</td>
                               <td>
-                                @if($order->ship_status == \App\Models\Order::SHIP_STATUS_DELIVERED || !isset($order->ship_data['express_no']))
-                                  Ожидайте
-                                @elseif(isset($order->ship_data['express_no']))
+                                @if(isset($order->ship_data['express_no']))
                                   {{ $order->ship_data['express_no'] }}
                                   <a href="#" class="c-red d-block">Отследить</a>
+                                @else
+                                  Ожидайте
                                 @endif
 {{--                                RP2303403402pp <a href="#" class="c-red d-block">Отследить</a>--}}
                               </td>
@@ -104,11 +104,11 @@
                             <td>{{ \App\Models\Order::$paymentMethodsMap[$order->payment_method] }}</td>
                             <td>{{ $order->expressCompany ? $order->expressCompany->name : 'Метод больше не доступен' }}</td>
                             <td>
-                              @if($order->ship_status == \App\Models\Order::SHIP_STATUS_DELIVERED || !isset($order->ship_data['express_no']))
-                                Ожидайте
-                              @elseif(isset($order->ship_data['express_no']))
+                              @if(isset($order->ship_data['express_no']))
                                 {{ $order->ship_data['express_no'] }}
                                 <a href="#" class="c-red d-block">Отследить</a>
+                              @else
+                                Ожидайте
                               @endif
                               {{--                                RP2303403402pp <a href="#" class="c-red d-block">Отследить</a>--}}
                             </td>

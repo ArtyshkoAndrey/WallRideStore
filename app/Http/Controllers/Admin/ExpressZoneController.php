@@ -50,7 +50,7 @@ class ExpressZoneController extends Controller
         'cost' => 'required|numeric|min:0',
         'step' => 'required|numeric|min:0',
         'cost_step' => 'required|numeric|min:0',
-        'company_id' => 'required|exists:express_companies,id'
+        'company_id' => 'required|exists:express_companies,id',
       ]);
 
       $zone = new ExpressZone();

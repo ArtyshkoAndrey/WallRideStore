@@ -18,6 +18,7 @@ class CreateExpressCompaniesTable extends Migration
             $table->string('name');
             $table->boolean('enabled')->default(1);
             $table->string('cost_type')->default('Настраиваемая');
+            $table->text('track_code')->nullable();
             $table->timestamps();
         });
     }

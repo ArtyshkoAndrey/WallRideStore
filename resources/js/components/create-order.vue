@@ -13,7 +13,7 @@
           street: $('input[name=street]').val(),
           pickup: false,
           payment_method: 'card',
-          express_company: 'ase',
+          express_company: 2,
           coupon: null
         }
       }
@@ -49,6 +49,7 @@
                   sku_id: item.product_sku_id,
                   amount: item.amount
                 })
+                console.log(items);
               })
               axios.post('/orders', {
                 address: {
@@ -60,7 +61,8 @@
                 },
                 items: items,
                 payment_method: this.order.payment_method,
-                express_company: this.order.pickup ? 3 : this.order.express_company
+                express_company: this.order.pickup ? 3 : this.order.express_company,
+                cost_transfer: this.order.costTransfer
               })
               .then((response) => {
                 console.log(response);

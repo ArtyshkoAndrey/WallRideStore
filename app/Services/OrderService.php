@@ -14,14 +14,14 @@ use App\Exceptions\CouponCodeUnavailableException;
 
 class OrderService
 {
-    public function store(User $user, $address, $items, $payment_method, $express_company, CouponCode $coupon = null)
+    public function store(User $user, $address, $items, $payment_method, $express_company, $cost_transfer, CouponCode $coupon = null)
     {
         // 如果传入了优惠券，则先检查是否可用
         if ($coupon) {
             $coupon->checkAvailable($user);
         }
         // 开启一个数据库事务
-        $order = \DB::transaction(function () use ($user, $address, $items, $coupon, $payment_method, $express_company) {
+        $order = \DB::transaction(function () use ($user, $address, $items, $coupon, $payment_method, $express_company, $cost_transfer) {
 
             $order   = new Order([
               'address'      => [
@@ -31,7 +31,8 @@ class OrderService
               ],
               'total_amount' => 0,
               'id_express_company' => $express_company,
-              'payment_method' => $payment_method
+              'payment_method' => $payment_method,
+              'ship_price' => $cost_transfer
             ]);
             $order->user()->associate($user);
             $order->save();
@@ -41,12 +42,12 @@ class OrderService
                 $sku  = ProductSku::find($data['sku_id']);
                 $item = $order->items()->make([
                     'amount' => $data['amount'],
-                    'price'  => $sku->price,
+                    'price'  => $sku->product->price,
                 ]);
                 $item->product()->associate($sku->product_id);
-                $item->productSku()->associate($sku);
+                $item->product_sku = $sku->skus->title;
                 $item->save();
-                $totalAmount += $sku->price * $data['amount'];
+                $totalAmount += $sku->product->price * $data['amount'];
                 // throw new \Exception($sku->);
                 // return $sku->decreaseStock($data['amount']);
                 // dd($sku->decreaseStock($data['amount']))

@@ -9,7 +9,8 @@ class ExpressCompany extends Model
  	protected $fillable = [
     'name',
     'enabled',
-    'cost_type'
+    'cost_type',
+    'track_code'
   ];
 
   protected $casts = [

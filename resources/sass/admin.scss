@@ -83,3 +83,10 @@ label {
 .main-sidebar {
   z-index: 2;
 }
+.category li {
+  list-style: none;
+  border-bottom: 1px solid #D2D2D2;
+  padding: 2px 35px 2px 5px;
+  display: flex;
+  justify-content: space-between;
+}

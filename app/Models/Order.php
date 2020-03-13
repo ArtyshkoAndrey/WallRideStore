@@ -48,6 +48,7 @@ class Order extends Model
     'reviewed',
     'ship_status',
     'ship_data',
+    'ship_price'
   ];
 
   protected $casts = [

@@ -18,21 +18,21 @@ class OrderRequest extends Request
                 'required',
                 function ($attribute, $value, $fail) {
                     if (!$sku = ProductSku::find($value)) {
-                        return $fail('该商品不存在');
+                        return $fail('Этот продукт не существует');
                     }
-                    if (!$sku->product->on_sale) {
-                        return $fail('该商品未上架');
+                    if ($sku->product->deteled_at !== null) {
+                        return $fail('Этот продукт недоступен');
                     }
                     if ($sku->stock === 0) {
-                        return $fail('该商品已售完');
+                        return $fail('Этот продукт распродан');
                     }
                     // 获取当前索引
                     preg_match('/items\.(\d+)\.sku_id/', $attribute, $m);
                     $index = $m[1];
-                    // 根据索引找到用户所提交的购买数量
+                    // Найти количество покупок, представленных пользователем на основе индекса
                     $amount = $this->input('items')[$index]['amount'];
                     if ($amount > 0 && $amount > $sku->stock) {
-                        return $fail('该商品库存不足');
+                        return $fail('Товар отсутствует на складе');
                     }
                 },
             ],

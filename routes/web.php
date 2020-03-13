@@ -79,5 +79,5 @@ Route::group(['prefix' => 'admin', 'guard' => 'admin', 'namespace' => 'Admin', '
 
   Route::resource('/products', 'ProductsController', ['as' => 'admin.production']);
   Route::resource('/attr', 'SkusController', ['as' => 'admin.production']);
-  Route::resource('/category', 'ProductsController', ['as' => 'admin.production']);
+  Route::resource('/category', 'CategoryController', ['as' => 'admin.production']);
 });

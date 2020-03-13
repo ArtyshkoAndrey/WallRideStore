@@ -18,7 +18,7 @@ class Categories extends Migration
       $table->string('name');
       $table->unsignedBigInteger('category_id')->nullable();
       $table->boolean('is_brand')->default('0');
-      $table->foreign('category_id')->references('id')->on('categories');
+      $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
       $table->timestamps();
     });
   }

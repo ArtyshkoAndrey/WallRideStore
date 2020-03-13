@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\City;
 use App\Models\Currency;
 use App\Models\UserAddress;
+use Carbon\Carbon;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -12,6 +13,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use App\Services\CartService;
+use Nathanmac\Utilities\Parser\Parser;
 
 class Controller extends BaseController
 {
@@ -48,6 +50,21 @@ class Controller extends BaseController
         }
       } else {
         $currencyGlobal = Currency::find(1);
+      }
+      if(Carbon::parse($currencyGlobal->updated_at)->addDay() < Carbon::now()) {
+        $ar = simplexml_load_file('https://nationalbank.kz/rss/rates_all.xml');
+        foreach($ar->channel->item as $item) {
+          if ((string)$item->title === 'USD') {
+            $currency = Currency::where('name', 'Американский доллар')->first();
+            $currency->ratio = 1/$item->description;
+            $currency->save();
+          } else if ((string)$item->title === 'RUB') {
+            $currency = Currency::where('name', 'Российский рубль')->first();
+            $currency->ratio = 1/$item->description;
+            $currency->save();
+          }
+        }
+        header("Refresh: 0;");
       }
       View::share('currency', $currencyGlobal);
       View::share('cartItems', $cartItems);
