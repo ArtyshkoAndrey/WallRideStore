@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', 'Магазин - Отчёты')
+@section('title', 'Магазин - Товары')
 
 @section('content')
   <div class="container-fluid pt-5 px-4">

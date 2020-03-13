@@ -59,6 +59,7 @@ Route::group(['prefix' => 'admin', 'guard' => 'admin', 'namespace' => 'Admin', '
   Route::get('logout', 'Auth\LoginController@logout')->name('admin.auth.logout');
   Route::delete('/order/all', 'OrderController@collectionsDestroy')->name('admin.store.order.collectionsDestroy');
   Route::delete('/coupon/all', 'CouponCodesController@collectionsDestroy')->name('admin.store.coupon.collectionsDestroy');
+  Route::delete('/attr/all', 'SkusController@collectionsDestroy')->name('admin.production.attr.collectionsDestroy');
   Route::delete('/products/all', 'ProductsController@collectionsDestroy')->name('admin.production.products.collectionsDestroy');
   Route::post('/products/all', 'ProductsController@collectionsRestore')->name('admin.production.products.collectionsRestore');
 
@@ -77,6 +78,6 @@ Route::group(['prefix' => 'admin', 'guard' => 'admin', 'namespace' => 'Admin', '
   Route::redirect('/', route('admin.store.order.index'))->name('admin.root');
 
   Route::resource('/products', 'ProductsController', ['as' => 'admin.production']);
-  Route::resource('/attr', 'ProductsController', ['as' => 'admin.production']);
+  Route::resource('/attr', 'SkusController', ['as' => 'admin.production']);
   Route::resource('/category', 'ProductsController', ['as' => 'admin.production']);
 });
