@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\City;
+use App\Models\Country;
 use App\Models\User;
 use App\Models\UserAddress;
 use App\Models\Order;
@@ -25,7 +27,7 @@ class OrderService
 
             $order   = new Order([
               'address'      => [
-                  'address'       => "{$address['country']}, {$address['city']}, {$address['street']}",
+                  'address'       => ''.Country::find($address['country'])->name.','.City::find($address['city'])->name.','. $address['street'],
                   'contact_name'  => $address['contact_name'],
                   'contact_phone' => $address['phone'],
               ],

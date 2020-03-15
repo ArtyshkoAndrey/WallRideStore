@@ -15,7 +15,8 @@
     },
     data () {
       return {
-        cartItem: {}
+        cartItem: {},
+        type: ''
       }
     },
     mounted () {
@@ -24,8 +25,9 @@
     methods: {
       postServe () {
         axios.post('/cart/minus', {
-          sku_id: this.cartItem.product_sku.id,
+          sku_id: this.cartItem.product_sku ? this.cartItem.product_sku.id : this.cartItem.productSku.id,
           amount: this.cartItem.amount,
+          type: this.type
         })
           .then((response) => { // Запрос успешно выполнил этот обратный вызов
             // swal('Значение изменено', '', 'success')
@@ -57,9 +59,9 @@
           })
       },
       addCounter() {
-        console.log(this.cartItem.product_sku.stock);
-        if (this.cartItem.product_sku.stock > this.cartItem.amount) {
+        if (this.cartItem.product_sku ? this.cartItem.product_sku.stock : this.cartItem.productSku.stock > this.cartItem.amount) {
           this.cartItem.amount++;
+          this.type = 'pluses'
           this.postServe()
         }
       },
@@ -67,6 +69,7 @@
         console.log(this.cartItem.amount);
         if (this.cartItem.amount > 1) {
           this.cartItem.amount--
+          this.type='minus'
           this.postServe();
         }
       },

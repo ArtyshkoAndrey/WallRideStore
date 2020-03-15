@@ -28,6 +28,7 @@
         "flot": "^4.2.0",
         "icheck": "^1.0.2",
         "jquery-zoom": "^1.7.21",
+        "jquery.cookie": "^1.4.1",
         "mdbootstrap": "^4.13.0",
         "select2": "~4.0",
         "slick-carousel": "^1.8.1",

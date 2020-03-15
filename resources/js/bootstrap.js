@@ -1,9 +1,10 @@
 require('sweetalert');
 window._ = require('lodash');
 
+window.$ = window.jQuery = require('jquery');
+require('jquery.cookie');
 try {
-    window.Popper = require('popper.js').default;
-    window.$ = window.jQuery = require('jquery');
+    window.Popper = require('popper.js').default
     require('bootstrap');
     require('slick-carousel');
     require('select2');
@@ -17,4 +18,8 @@ if (token) {
     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+}
+
+if(!$.cookie("products")) {
+  $.cookie("products", '',{expires: 7, path: '/'});
 }

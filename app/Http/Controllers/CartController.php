@@ -10,6 +10,7 @@ use App\Models\ProductSku;
 use App\Services\CartService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Cookie;
 
 class CartController extends Controller
 {
@@ -52,39 +53,163 @@ class CartController extends Controller
 
   public function index(Request $request)
   {
-    $cartItems = $this->cartService->get();
-    $amount =$this->cartService->amount();
-    $priceAmount = $this->cartService->priceAmount();
-    $address = $request->user()->address;
-//        TODO Серствать страницу корзины
+    $amount = 0;
+    $priceAmount = 0;
+    $address = [];
+    $cartItems = [];
+    if(Auth::check()) {
+      $cartItems = $this->cartService->get();
+      $amount =$this->cartService->amount();
+      $priceAmount = $this->cartService->priceAmount();
+      $address = $request->user()->address;
+    } else {
+      if(isset($_COOKIE["products"])) {
+        $arr = explode(',',$_COOKIE["products"]);
+        $cartItems = [];
+        $amount = count($arr);
+        if ($arr[0] !== "") {
+          foreach ($arr as $id) {
+            $id = (int)$id;
+            $ch = false;
+            $item = [];
+
+            $prs = ProductSku::with('product')->where('id', $id)->first();
+            foreach ($cartItems as $key => $item) {
+              if ($item['id'] === $id) {
+                $ch = true;
+                $cartItems[$key]['amount'] = $item['amount'] + 1;
+                $priceAmount += $prs->product->price;
+                break;
+              }
+            }
+            if (!$ch) {
+              $item['amount'] = 1;
+              $item['id'] = $id;
+              $item['productSku'] = $prs;
+              $priceAmount += $prs->product->price;
+              array_push($cartItems, $item);
+            }
+          }
+        }
+      }
+    }
     return view('cart.index', compact('cartItems','address', 'amount', 'priceAmount'));
   }
 
   public function add(AddCartRequest $request)
   {
-    $this->cartService->add($request->input('sku_id'), $request->input('amount'));
-    $cartItems = $this->cartService->get();
-    $amount =$this->cartService->amount();
-    $priceAmount = $this->cartService->priceAmount();
-
-    return ['cartItems' => $cartItems, 'amount' => $amount, 'priceAmount' => $priceAmount];
+    if(Auth::check()) {
+      $this->cartService->add($request->input('sku_id'), $request->input('amount'));
+      $cartItems = $this->cartService->get();
+      $amount =$this->cartService->amount();
+      $priceAmount = $this->cartService->priceAmount();
+      return ['cartItems' => $cartItems, 'amount' => $amount, 'priceAmount' => $priceAmount, 'type' => 'auth'];
+    } else {
+        return ['type' => 'web'];
+    }
   }
 
-  public function minus(AddCartRequest $request)
-  {
-    $this->cartService->minusAmount($request->input('sku_id'), $request->input('amount'));
-    $cartItems = $this->cartService->get();
-    $amount =$this->cartService->amount();
-    $priceAmount = $this->cartService->priceAmount();
+  public function getData(Request $request) {
+    if(Auth::check()) {
+      return ['type' => 'auth'];
+    } else {
+      $ids = $request->ids;
+      $cartItems = [];
+      $priceAmount = 0;
+      $amount = 0;
+      foreach ($ids as $id) {
+        $id = (int)$id;
+        $ch = false;
+        $item = [];
+        $prs = ProductSku::with('product')->where('id', $id)->first();
+        foreach ($cartItems as $key => $item) {
+          if ($item['product_sku']['id'] === $id) {
+            $ch = true;
+            $cartItems[$key]['amount'] = $item['amount'] + 1;
+            $priceAmount += $prs->product->price;
+            break;
+          }
+        }
+        if (!$ch) {
+          $item['amount'] = 1;
+          $item['id'] = $id;
+          $item['product_sku'] = $prs;
+          $priceAmount += $prs->product->price;
+          array_push($cartItems, $item);
+        }
+        $amount++;
+      }
+      return ['cartItems' => $cartItems, 'amount' => $amount, 'priceAmount' => $priceAmount, 'type' => 'web'];
+    }
+  }
 
-    return ['cartItems' => $cartItems, 'amount' => $amount, 'priceAmount' => $priceAmount];
+  public function minus(Request $request)
+  {
+    if(Auth::check()) {
+      $this->cartService->minusAmount($request->input('sku_id'), (int) $request->input('amount'));
+      $cartItems = $this->cartService->get();
+      $amount = $this->cartService->amount();
+      $priceAmount = $this->cartService->priceAmount();
+
+      return ['cartItems' => $cartItems, 'amount' => $amount, 'priceAmount' => $priceAmount];
+    } else {
+      $ids = explode(',',$_COOKIE["products"]);
+      foreach ($ids as $key => $id) {
+        if ((int) $id === (int) $request->sku_id) {
+          if ($request->type === 'minus') {
+            unset($ids[$key]);
+            sort($ids);
+            break;
+          } else if ($request->type === 'pluses') {
+            array_push($ids, $request->sku_id);
+            break;
+          }
+        }
+      }
+      $cartItems = [];
+      $priceAmount = 0;
+      foreach ($ids as $id) {
+        $id = (int) $id;
+        $ch = false;
+        $item = [];
+        $prs = ProductSku::with('product')->where('id', $id)->first();
+        foreach ($cartItems as $key => $item) {
+          if($item['product_sku']['id'] === $id) {
+            $ch = true;
+            $cartItems[$key]['amount'] = $item['amount'] + 1;
+            $priceAmount += $prs->product->price;
+            break;
+          }
+        }
+        if (!$ch) {
+          $item['amount'] = 1;
+          $item['id'] = $id;
+          $item['product_sku'] = $prs;
+          $priceAmount += $prs->product->price;
+          array_push($cartItems, $item);
+        }
+      }
+//      return implode(",", $ids);
+      setcookie("products", implode(",", $ids), time() + (3600 * 24 * 30), "/", request()->getHost());
+      return ['cartItems' => $cartItems, 'amount' => count($ids), 'priceAmount' => $priceAmount];
+    }
 
   }
 
   public function remove(ProductSku $sku, Request $request)
   {
-    $this->cartService->remove($sku->id);
-
-    return [];
+    if(Auth::check()) {
+      $this->cartService->remove($sku->id);
+      return [];
+    } else {
+      $ids = explode(',',$_COOKIE["products"]);
+      foreach ($ids as $key => $id) {
+        if ((int) $id === (int) $sku->id) {
+          unset($ids[$key]);
+        }
+      }
+      setcookie("products", implode(",", $ids), time() + (3600 * 24 * 30), "/", request()->getHost());
+      return [];
+    }
   }
 }

@@ -15,7 +15,7 @@
             <h4 class="font-weight-bold mt-4">Сумма товаров</h4>
             <p class="h5 mt-3" id="priceAmount">{{ cost(round((integer) $priceAmount * $currency->ratio, 0)) }} {{ $currency->symbol }}</p>
 {{--            {{ dd($currency->ratio) }}--}}
-            <input type="text" value="{{ auth()->user()->name }}" name="name" class="w-100 py-2 px-2 mt-2" placeholder="Имя">
+            <input type="text" value="{{ auth()->user() ?  auth()->user()->name : '' }}" name="name" class="w-100 py-2 px-2 mt-2" placeholder="Имя">
           </div>
         </div>
       </div>
@@ -23,15 +23,21 @@
         <div class="card">
           <div class="card-body">
             @forelse($cartItems as $item)
-              <mini-cart-item :id="{{$item->productSku->id}}" :item="{{ $item }}" :currency="{{$currency}}" inline-template>
+              <mini-cart-item :id="{{isset($item->productSku) ? $item->productSku->id : $item['productSku']->id}}" :item="{{ json_encode($item) }}" :currency="{{$currency}}" inline-template>
                 <div class="row mt-2 justify-content-center align-items-center">
                   <div class="col-md col-4">
-                    <img src="{{ isset($item->productSku->product->photos) ?  asset('storage/products/' . $item->productSku->product->photos()->first()->name) : 'https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png' }}" class="img-fluid" alt="{{ $item->productSku->product->title }}">
+                    <img src="{{ isset($item->productSku) ?
+                      $item->productSku->product->photos ?
+                        asset('storage/products/' . $item->productSku->product->photos()->first()->name) :
+                        'https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png' :
+                      $item['productSku']->product->photos ?
+                        asset('storage/products/' . $item['productSku']->product->photos()->first()->name) :
+                        'https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png' }}" class="img-fluid">
                   </div>
                   <div class="col-8 col-md-4">
-                    {{ ucwords(strtolower($item->productSku->product->title)) }}
+                    {{ ucwords(strtolower(isset($item->productSku) ? $item->productSku->product->title : $item['productSku']->product->title )) }}
                     <br>
-                    <p class="text-muted font-small">Размер: {{ $item->productSku->skus ? $item->productSku->skus->title : 'One Size' }}</p>
+                    <p class="text-muted font-small">Размер: {{isset($item->productSku) ?  $item->productSku->skus ? $item->productSku->skus->title : 'One Size' : $item['productSku']->skus ? $item['productSku']->skus->title : 'One Size' }}</p>
                   </div>
                   <div class="col-4 col-md">
                     <div class="row m-0">
@@ -47,7 +53,7 @@
                     </div>
                   </div>
                   <div class="col-4 col-md text-center">
-                    {{ cost(round($item->productSku->product->price * $currency->ratio, 0)) }} {{ $currency->symbol }}
+                    {{ cost(round(isset($item->productSku) ? $item->productSku->product->price : $item['productSku']->product->price  * $currency->ratio, 0)) }} {{ $currency->symbol }}
                   </div>
                   <div class="col-4 col-md">
                     <button class="btn-angle d-block w-100 m-0" @click="deleteItem"><i class="fal fa-times"></i></button>

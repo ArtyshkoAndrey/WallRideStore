@@ -84,7 +84,7 @@
 
                   <div class="col-md-6 mt-2">
                     <label for="weight">Вес товара (кг)</label>
-                    <input type="number" min="0" name="weight" class="form-control rounded-0" id="weight" value="0">
+                    <input type="number" min="0" name="weight" step="0.01" class="form-control rounded-0" id="weight" value="0">
                   </div>
                 </div>
               </div>

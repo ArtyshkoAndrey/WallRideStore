@@ -20,15 +20,27 @@
           <div class="card">
             <div class="card-body mt-2" v-if="step === 1">
               <h4 class="font-weight-bold">Контактные данные</h4>
-              <input type="text" value="{{ auth()->user()->name }}" v-model="order.name" name="username" class="w-100 py-2 px-2 mt-2" placeholder="Имя">
-              <input type="text" value="{{ auth()->user()->email }}" v-model="order.email" name="email" class="w-100 py-2 px-2 mt-2" placeholder="E-mail">
-              <input type="text" value="{{ auth()->user()->address !== null ? auth()->user()->address->contact_phone !== null ? auth()->user()->address->contact_phone : '' : '' }}" v-model="order.phone" name="contact_phone" class="w-100 py-2 px-2 mt-2" placeholder="Телефон">
+              <input type="text" value="{{ auth()->user() ?  auth()->user()->name : '' }}" v-model="order.name" name="username" class="w-100 py-2 px-2 mt-2" placeholder="Имя">
+              <input type="text" value="{{ auth()->user() ?  auth()->user()->email : '' }}" v-model="order.email" name="email" class="w-100 py-2 px-2 mt-2" placeholder="E-mail">
+              <input type="text" value="{{ auth()->user() ? auth()->user()->address !== null ? auth()->user()->address->contact_phone !== null ? auth()->user()->address->contact_phone : '' : '' : '' }}" v-model="order.phone" name="contact_phone" class="w-100 py-2 px-2 mt-2" placeholder="Телефон">
             </div>
             <div class="card-body mt-2" v-else>
               <h4 class="font-weight-bold">Адрессные данные</h4>
-              <input type="text" value="{{ auth()->user()->address !== null ? auth()->user()->address->country->name !== null ? auth()->user()->address->country->name : '' : ''}}" v-model="order.country" name="country" class="w-100 py-2 px-2 mt-2" placeholder="Страна">
-              <input type="text" value="{{ auth()->user()->address !== null ? auth()->user()->address->city->name !== null ? auth()->user()->address->city->name : '' : ''}}" v-model="order.city" name="city" class="w-100 py-2 px-2 mt-2" placeholder="Город">
-              <input type="text" value="{{ auth()->user()->address !== null ? auth()->user()->address->street !== null ? auth()->user()->address->street : '' : ''}}" v-model="order.street" name="street" class="w-100 py-2 px-2 mt-2" placeholder="Адрес">
+              <div class="mt-2">
+                <select name="country" id="country" class="rounded-0 mt-2 form-control" placeholder="Страна">
+                  @if (auth()->user() ? auth()->user()->address !== null : null)
+                    <option value="{{ auth()->user()->address->country_id }}" selected>{{ auth()->user()->address->country->name }}</option>
+                  @endif
+                </select>
+              </div>
+              <div class="mt-2">
+                <select name="city" id="city1" class="rounded-0 mt-2 form-control" v-model="order.city" placeholder="Город">
+                  @if (auth()->user() ? auth()->user()->address !== null : $_COOKIE['city'] !== null)
+                    <option value="{{ auth()->user() ?  auth()->user()->address->city_id : $_COOKIE['city'] }}" selected>{{ auth()->user() ? auth()->user()->address->city->name : App\Models\City::find($_COOKIE['city'])->name }}</option>
+                  @endif
+                </select>
+              </div>
+              <input type="text" value="{{ auth()->user() ? auth()->user()->address !== null ? auth()->user()->address->street !== null ? auth()->user()->address->street : '' : '' : ''}}" v-model="order.street" name="street" class="w-100 py-2 px-2 mt-2" placeholder="Адрес">
             </div>
           </div>
         </div>
@@ -119,5 +131,6 @@
 @endsection
 
 @section('scriptsAfterJs')
-
+  <script !src="">
+  </script>
 @endsection

@@ -8,21 +8,44 @@ use App\Exceptions\InvalidRequestException;
 use App\Http\Requests\ApplyRefundRequest;
 use App\Http\Requests\OrderRequest;
 use App\Http\Requests\SendReviewRequest;
+use App\Models\City;
 use App\Models\CouponCode;
+use App\Models\Currency;
 use App\Models\ExpressCompany;
 use App\Models\ExpressZone;
+use App\Models\ProductSku;
+use App\Models\User;
 use App\Models\UserAddress;
 use App\Models\Order;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
+use Illuminate\Support\Facades\Auth;
 
 class OrdersController extends Controller
 {
 
   public function store(OrderRequest $request, OrderService $orderService)
   {
-    $user = $request->user();
+    if(Auth::check()) {
+      $user = $request->user();
+    } else {
+//      return $request->address;
+      $user = new User();
+      $user->email = $request->email;
+      $user->name = $request->address['contact_name'];
+      $address = new UserAddress();
+      $address->contact_phone = $request->address['phone'];
+      $address->country_id = $request->address['country'];
+      $address->city_id = $request->address['city'];
+      $address->currency_id = Currency::first()->id;
+      $address->street = $request->address['street'];
+      $user->password = bcrypt(str_random(10));
+      $user->save();
+      $user->address()->save($address);
+      $address->save();
+      Auth::login($user);
+    }
     $address = $request->address;
     $coupon = null;
     $payment_method = $request->payment_method;
@@ -37,6 +60,7 @@ class OrdersController extends Controller
     }
     $order = $orderService->store($user, $address, $request->items, $payment_method, $express_company, $cost_transfer, $coupon);
 //    return $order;
+    setcookie("products", '', time() + (3600 * 24 * 30), "/", request()->getHost());
     if ($payment_method === 'card') {
       $request = [
         'pg_merchant_id' => 514888,
@@ -73,6 +97,7 @@ class OrdersController extends Controller
         return 'Ошибка';
       }
     }
+
   }
 
   public function success($no)
@@ -102,7 +127,11 @@ class OrdersController extends Controller
   {
     $express_companies = ExpressCompany::where('name', '!=', 'Самовывоз')->get();
     $zones = ExpressZone::with('company')->whereHas('cities', function ($qq) {
+      if(Auth::check()) {
         $qq->where('cities.id', Auth()->user()->address->city_id);
+      } else {
+        $qq->where('cities.id', $_COOKIE['city']);
+      }
     })->get();
     $express_companies = $express_companies->toArray();
     for($i=0;$i<count($express_companies); $i++) {
@@ -115,7 +144,39 @@ class OrdersController extends Controller
         $express_companies[$i]['costedTransfer'] = null;
       }
     }
-//    dd($express_companies);
+    if(!Auth::check()) {
+      if (isset($_COOKIE["products"])) {
+        $ids = explode(',', $_COOKIE["products"]);
+      } else {
+        $ids = [];
+      }
+      $city = City::find($_COOKIE['city']);
+      $cartItems = [];
+      $priceAmount = 0;
+      foreach ($ids as $id) {
+        $id = (int)$id;
+        $ch = false;
+        $item = (object)array();
+        $prs = ProductSku::with('product')->where('id', $id)->first();
+        foreach ($cartItems as $key => $item) {
+          if ($item->productSku->id === $id) {
+            $ch = true;
+            $cartItems[$key]->amount = $item->amount + 1;
+            $priceAmount += $prs->product->price;
+            break;
+          }
+        }
+        if (!$ch) {
+          $item->amount = 1;
+          $item->id = $id;
+          $item->productSku = $prs;
+          $priceAmount += $prs->product->price;
+          array_push($cartItems, $item);
+        }
+      }
+      $amount = count($ids);
+      return view('orders.create', compact('express_companies', 'city', 'cartItems', 'priceAmount', 'amount'));
+    }
     return view('orders.create', compact('express_companies'));
   }
 }

@@ -25,6 +25,9 @@ class Controller extends BaseController
     if (!isset($_COOKIE['city'])) {
       setcookie('city', City::first()->id, time() + (86400 * 30), "/");
     }
+    if(!isset($_COOKIE["products"])) {
+      setcookie("products", '', time() + (3600 * 24 * 30), "/", request()->getHost());
+    }
     $this->cartService = $cartService;
     $this->middleware(function ($request, $next) {
       $cartItems = [];
@@ -64,6 +67,9 @@ class Controller extends BaseController
             $currency->save();
           }
         }
+        $currency = Currency::where('name', 'Тенге')->first();
+        $currency->updated_at = Carbon::now();
+        $currency->save();
         header("Refresh: 0;");
       }
       View::share('currency', $currencyGlobal);

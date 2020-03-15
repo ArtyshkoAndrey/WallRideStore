@@ -8,8 +8,8 @@
           name: $('input[name=username]').val(),
           phone: $('input[name=contact_phone]').val(),
           email: $('input[name=email]').val(),
-          country: $('input[name=country]').val(),
-          city: $('input[name=city]').val(),
+          country: $('select[id=country]').val(),
+          city: $('select[id=city1]').val(),
           street: $('input[name=street]').val(),
           pickup: false,
           payment_method: 'card',
@@ -40,13 +40,56 @@
           if (this.step === 1) {
             if (this.order.name !== '' && this.order.email !== '' && this.order.phone !== '') {
               this.step = 2
+              setTimeout(()=> {
+                $('#city1').select2({
+                  placeholder: 'Город',
+                  ajax: {
+                    type: "POST",
+                    dataType: 'json',
+                    url: function (params) {
+                      return '/api/city/' + params.term;
+                    },
+                    processResults: function (data) {
+                      console.log($('#country').val())
+                      return {
+                        results: data.items.map((e) => {
+                          return {
+                            text: e.name,
+                            id: e.id
+                          };
+                        })
+                      };
+                    }
+                  }
+                });
+                $('#country').select2({
+                  placeholder: 'Страна',
+                  ajax: {
+                    type: "POST",
+                    dataType: 'json',
+                    url: function (params) {
+                      return '/api/country/' + params.term;
+                    },
+                    processResults: function (data) {
+                      return {
+                        results: data.items.map((e) => {
+                          return {
+                            text: e.name,
+                            id: e.id
+                          };
+                        })
+                      };
+                    }
+                  }
+                });
+              }, 300)
             }
           } else if (this.step === 2) {
             if (this.order.name !== '' && this.order.email !== '' && this.order.phone !== '') {
               let items = []
               this.cart_items.forEach(item => {
                 items.push({
-                  sku_id: item.product_sku_id,
+                  sku_id: item.product_sku ? item.product_sku.id : item.productSku.id,
                   amount: item.amount
                 })
                 console.log(items);
@@ -54,11 +97,12 @@
               axios.post('/orders', {
                 address: {
                   phone: this.order.phone,
-                  country: this.order.country,
-                  city: this.order.city,
+                  country: $('select[id=country]').val(),
+                  city: $('select[id=city1]').val(),
                   street: this.order.street,
                   contact_name: this.order.name
                 },
+                email: this.order.email,
                 items: items,
                 payment_method: this.order.payment_method,
                 express_company: this.order.pickup ? 3 : this.order.express_company,
@@ -79,6 +123,5 @@
   }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
 </style>

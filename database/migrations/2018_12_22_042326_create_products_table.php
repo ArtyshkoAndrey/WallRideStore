@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
       $table->boolean('on_new')->default(true);
       $table->unsignedInteger('sold_count')->default(0);
       $table->decimal('price', 10, 0);
-      $table->decimal('price_sale', 10, 0);
+      $table->decimal('price_sale', 10, 0)->nullable();
       $table->decimal('weight', 10, 2);
       $table->timestamps();
       $table->softDeletes();

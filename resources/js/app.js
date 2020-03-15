@@ -61,6 +61,30 @@ const app = new Vue({
     }
   },
   mounted () {
+    window.axios = require('axios');
+    window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+    let token = document.head.querySelector('meta[name="csrf-token"]');
+
+    if (token) {
+        window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+    } else {
+        console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+    }
     this.amount = this.$el.attributes.amount.value
+    let arr = $.cookie('products').split(',')
+    if(arr.length ===1 && arr[0] === '') {
+      arr.pop();
+    }
+    axios.post('/cart/getData', {
+      ids: arr
+    })
+    .then(response => {
+      let data = response.data
+      if (data.type === 'web') {
+        this.cartItems = data.cartItems
+        this.priceAmount = data.priceAmount
+        this.amount = data.amount
+      }
+    })
   }
 });
