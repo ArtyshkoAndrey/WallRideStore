@@ -70,6 +70,11 @@ class CartService
   public function priceAmount ()
   {
     $user = Auth::user();
+    $user->cartItems()->get()->map(function ($item) {
+      if($item->productSku->product === null) {
+        $item->delete();
+      }
+    });
     return $user->cartItems()->get()->map(function ($item) {
       return $item->productSku->product->price * $item->amount;
     })->sum();

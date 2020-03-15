@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Мар 12 2020 г., 23:10
+-- Время создания: Мар 15 2020 г., 13:41
 -- Версия сервера: 5.7.25-log
 -- Версия PHP: 7.3.9
 
@@ -77,6 +77,13 @@ CREATE TABLE `cart_items` (
   `product_sku_id` int(10) UNSIGNED NOT NULL,
   `amount` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `cart_items`
+--
+
+INSERT INTO `cart_items` (`id`, `user_id`, `product_sku_id`, `amount`) VALUES
+(7, 102, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -17231,6 +17238,14 @@ CREATE TABLE `city_expresses` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Дамп данных таблицы `city_expresses`
+--
+
+INSERT INTO `city_expresses` (`id`, `city_id`, `express_zone_id`, `express_company_id`, `created_at`, `updated_at`) VALUES
+(1, 1116, 5, 2, '2020-03-13 11:07:30', '2020-03-13 11:07:30'),
+(2, 1116, 6, 8, '2020-03-13 12:58:12', '2020-03-13 12:58:12');
+
 -- --------------------------------------------------------
 
 --
@@ -17546,9 +17561,9 @@ CREATE TABLE `currencies` (
 --
 
 INSERT INTO `currencies` (`id`, `name`, `ratio`, `symbol`, `created_at`, `updated_at`) VALUES
-(1, 'Тенге', 1, 'тг.', NULL, NULL),
-(2, 'Российский рубль', 0.19, 'р.', NULL, NULL),
-(3, 'Американский доллар', 0.0026, '$', NULL, NULL);
+(1, 'Тенге', 1, 'тг.', NULL, '2020-03-14 14:18:08'),
+(2, 'Российский рубль', 0.179211, 'р.', NULL, '2020-03-14 14:18:08'),
+(3, 'Американский доллар', 0.00246633, '$', NULL, '2020-03-14 14:18:08');
 
 -- --------------------------------------------------------
 
@@ -17585,6 +17600,7 @@ CREATE TABLE `express_companies` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `enabled` tinyint(1) NOT NULL DEFAULT '1',
   `cost_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Настраиваемая',
+  `track_code` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -17593,10 +17609,10 @@ CREATE TABLE `express_companies` (
 -- Дамп данных таблицы `express_companies`
 --
 
-INSERT INTO `express_companies` (`id`, `name`, `enabled`, `cost_type`, `created_at`, `updated_at`) VALUES
-(2, 'AES', 1, 'Настраиваемая', '2020-03-02 17:00:00', '2020-03-02 17:00:00'),
-(3, 'Самовывоз', 1, '0 тг.', '2020-03-02 17:00:00', '2020-03-02 17:00:00'),
-(8, 'EMS', 1, 'Настраиваемая', '2020-03-07 06:32:08', '2020-03-07 06:32:08');
+INSERT INTO `express_companies` (`id`, `name`, `enabled`, `cost_type`, `track_code`, `created_at`, `updated_at`) VALUES
+(2, 'AES', 0, 'Настраиваемая', NULL, '2020-03-02 17:00:00', '2020-03-13 14:00:23'),
+(3, 'Самовывоз', 0, '0 тг.', NULL, '2020-03-02 17:00:00', '2020-03-13 14:00:31'),
+(8, 'EMS', 1, 'Настраиваемая', NULL, '2020-03-07 06:32:08', '2020-03-07 06:32:08');
 
 -- --------------------------------------------------------
 
@@ -17621,7 +17637,8 @@ CREATE TABLE `express_zones` (
 
 INSERT INTO `express_zones` (`id`, `name`, `company_id`, `cost`, `step`, `cost_step`, `created_at`, `updated_at`) VALUES
 (4, 'Зона 1', 2, '10000', 1.00, '3000', '2020-03-02 17:00:00', '2020-03-02 17:00:00'),
-(5, 'Зона 2', 2, '12000', 1.00, '4000', '2020-03-02 17:00:00', '2020-03-02 17:00:00');
+(5, 'Зона 2', 2, '12000', 1.00, '4000', '2020-03-02 17:00:00', '2020-03-02 17:00:00'),
+(6, 'Зона тест', 8, '1000', 1.00, '500', '2020-03-13 12:58:04', '2020-03-13 12:58:04');
 
 -- --------------------------------------------------------
 
@@ -17680,6 +17697,7 @@ CREATE TABLE `orders` (
   `user_id` int(10) UNSIGNED NOT NULL,
   `address` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `total_amount` decimal(10,0) NOT NULL,
+  `ship_price` decimal(10,0) NOT NULL DEFAULT '0',
   `paid_at` datetime DEFAULT NULL,
   `payment_method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `payment_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -17692,6 +17710,20 @@ CREATE TABLE `orders` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Дамп данных таблицы `orders`
+--
+
+INSERT INTO `orders` (`id`, `no`, `user_id`, `address`, `total_amount`, `ship_price`, `paid_at`, `payment_method`, `payment_no`, `closed`, `reviewed`, `ship_status`, `ship_data`, `id_express_company`, `created_at`, `updated_at`) VALUES
+(2, '20200313170953637375', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432. 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"89029634366\"}', '1000', '0', '2020-03-13 17:10:50', 'card', NULL, 0, 0, 'received', '{\"express_no\":null}', 2, '2020-02-13 10:09:00', '2020-03-13 13:52:02'),
+(4, '20200313183409596905', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432. 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"89029634366\"}', '55900', '0', NULL, 'cash', NULL, 0, 0, 'received', '{\"express_no\":\"123123\"}', 3, '2020-01-13 11:34:00', '2020-03-13 13:53:12'),
+(5, '20200313183502743516', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432. 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"89029634366\"}', '39900', '0', '2020-03-13 18:35:29', 'card', NULL, 0, 0, 'received', '{\"express_no\":\"123123\"}', 3, '2020-02-13 11:35:00', '2020-03-13 13:52:26'),
+(6, '20200313194023834658', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432. 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"89029634366\"}', '39900', '12000', '2020-03-13 19:41:04', 'card', NULL, 0, 0, 'pending', NULL, 2, '2020-03-13 12:40:23', '2020-03-13 12:41:04'),
+(7, '20200313194143915116', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432. 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"89029634366\"}', '16900', '12000', '2020-03-13 19:42:05', 'card', NULL, 0, 0, 'received', '{\"express_no\":\"RU550649534HK\"}', 2, '2020-03-13 12:41:00', '2020-03-13 13:51:42'),
+(8, '20200315153328400872', 120, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f,\\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a,\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24\",\"contact_name\":\"fulliton\",\"contact_phone\":\"89029634366\"}', '39900', '12000', NULL, 'card', NULL, 0, 0, 'paid', NULL, 2, '2020-03-15 08:33:28', '2020-03-15 08:33:28'),
+(9, '20200315154442926986', 120, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f,\\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a,\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24\",\"contact_name\":\"fulliton\",\"contact_phone\":\"89029634366\"}', '150600', '12000', '2020-03-15 15:45:22', 'card', NULL, 0, 0, 'pending', NULL, 2, '2020-03-15 08:44:42', '2020-03-15 08:45:22'),
+(13, '20200315155538327515', 124, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f,\\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a,\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24\",\"contact_name\":\"\\u0422\\u0435\\u0441\\u0442\\u043e\\u0432\\u044b\\u0439 \\u0410\\u043a\\u043a\\u0430\\u0443\\u043d\\u0442 \\u0434\\u043b\\u044f \\u043f\\u043e\\u043a\\u0443\\u043f\\u043a\\u0438\",\"contact_phone\":\"89029634366\"}', '79800', '12000', NULL, 'card', NULL, 0, 0, 'paid', NULL, 2, '2020-03-15 08:55:38', '2020-03-15 08:55:38');
+
 -- --------------------------------------------------------
 
 --
@@ -17702,13 +17734,29 @@ CREATE TABLE `order_items` (
   `id` int(10) UNSIGNED NOT NULL,
   `order_id` int(10) UNSIGNED NOT NULL,
   `product_id` int(10) UNSIGNED NOT NULL,
-  `product_sku_id` int(10) UNSIGNED NOT NULL,
+  `product_sku` text COLLATE utf8mb4_unicode_ci,
   `amount` int(10) UNSIGNED NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `rating` int(10) UNSIGNED DEFAULT NULL,
   `review` text COLLATE utf8mb4_unicode_ci,
   `reviewed_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `order_items`
+--
+
+INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `product_sku`, `amount`, `price`, `rating`, `review`, `reviewed_at`) VALUES
+(1, 2, 3, 'S', 1, '39900.00', NULL, NULL, NULL),
+(3, 4, 2, 'M', 1, '55900.00', NULL, NULL, NULL),
+(4, 5, 4, 'S', 1, '39900.00', NULL, NULL, NULL),
+(5, 6, 4, 'S', 1, '39900.00', NULL, NULL, NULL),
+(6, 7, 9, 'M', 1, '16900.00', NULL, NULL, NULL),
+(7, 8, 13, 'M', 1, '39900.00', NULL, NULL, NULL),
+(8, 9, 5, 'M', 1, '21900.00', NULL, NULL, NULL),
+(9, 9, 6, 'L', 3, '42900.00', NULL, NULL, NULL),
+(16, 13, 4, 'S', 1, '39900.00', NULL, NULL, NULL),
+(17, 13, 4, 'S', 1, '39900.00', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -17743,7 +17791,7 @@ CREATE TABLE `products` (
   `on_new` tinyint(1) NOT NULL DEFAULT '1',
   `sold_count` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `price` decimal(10,2) NOT NULL,
-  `price_sale` decimal(10,0) NOT NULL,
+  `price_sale` decimal(10,0) DEFAULT NULL,
   `weight` decimal(10,2) NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -17756,18 +17804,18 @@ CREATE TABLE `products` (
 
 INSERT INTO `products` (`id`, `title`, `description`, `on_sale`, `on_new`, `sold_count`, `price`, `price_sale`, `weight`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (2, 'BRONZE56K HIGH PERFORMANCE WINDBREAKER ORANGE', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 438px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Н/Д</td></tr><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Размеры</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\"><p style=\"box-sizing: border-box; margin: 0px;\">M</p></td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '55900.00', '55900', '2.00', NULL, '2020-03-12 18:30:33', '2020-03-12 18:31:22'),
-(3, 'BRONZE56K LOGO SNOW HOODY BLACK', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Н/Д</td></tr><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Размеры</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\"><p style=\"box-sizing: border-box; margin: 0px;\">L, M, S</p></td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '39900.00', '39900', '2.00', NULL, '2020-03-12 18:33:39', '2020-03-12 18:33:39'),
-(4, 'BRONZE56K MONEY CLIP HOODY NAVY', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Н/Д</td></tr><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Размеры</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\"><p style=\"box-sizing: border-box; margin: 0px;\">XL, L, M, S</p></td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '39900.00', '39900', '2.00', NULL, '2020-03-12 18:35:01', '2020-03-12 18:35:01'),
-(5, 'BRONZE56K HARDWARE TECHNOLOGY LONGSLEEVE NAVY', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Н/Д</td></tr><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Размеры</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\"><p style=\"box-sizing: border-box; margin: 0px;\">XL, L, M, S</p></td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '21900.00', '21900', '2.00', NULL, '2020-03-12 18:37:05', '2020-03-12 18:37:05'),
-(6, 'BRONZE56K MICRODOSE 1/4 ZIP MUSTARD/NAVY', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Н/Д</td></tr><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Размеры</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\"><p style=\"box-sizing: border-box; margin: 0px;\">L, M</p></td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 0, 0, '42900.00', '42900', '1.00', NULL, '2020-03-12 18:38:18', '2020-03-12 18:38:18'),
+(3, 'BRONZE56K LOGO SNOW HOODY BLACK', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Н/Д</td></tr><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Размеры</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\"><p style=\"box-sizing: border-box; margin: 0px;\">L, M, S</p></td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 1, '39900.00', '39900', '2.00', NULL, '2020-03-12 18:33:39', '2020-03-13 10:10:50'),
+(4, 'BRONZE56K MONEY CLIP HOODY NAVY', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Н/Д</td></tr><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Размеры</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\"><p style=\"box-sizing: border-box; margin: 0px;\">XL, L, M, S</p></td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 2, '39900.00', '39900', '2.00', NULL, '2020-03-12 18:35:01', '2020-03-13 12:41:04'),
+(5, 'BRONZE56K HARDWARE TECHNOLOGY LONGSLEEVE NAVY', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Н/Д</td></tr><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Размеры</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\"><p style=\"box-sizing: border-box; margin: 0px;\">XL, L, M, S</p></td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 1, '21900.00', '21900', '2.00', NULL, '2020-03-12 18:37:05', '2020-03-15 08:45:22'),
+(6, 'BRONZE56K MICRODOSE 1/4 ZIP MUSTARD/NAVY', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Н/Д</td></tr><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Размеры</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\"><p style=\"box-sizing: border-box; margin: 0px;\">L, M</p></td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 0, 3, '42900.00', '42900', '1.00', NULL, '2020-03-12 18:38:18', '2020-03-15 08:45:22'),
 (7, 'BRONZE56K LOGO LEATHER BELT BLACK', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\">0.800 kg</td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 0, 0, '24900.00', '24900', '1.00', NULL, '2020-03-12 18:39:45', '2020-03-12 18:39:45'),
 (8, 'BRONZE56K LAVA LAMP TEE NAVY', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Н/Д</td></tr><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Размеры</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\"><p style=\"box-sizing: border-box; margin: 0px;\">L, M, S</p></td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 0, 0, '16900.00', '16900', '1.00', NULL, '2020-03-12 18:41:26', '2020-03-12 18:41:26'),
-(9, 'BRONZE56K MONEY CLIP TEE BLACK', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Н/Д</td></tr><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Размеры</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\"><p style=\"box-sizing: border-box; margin: 0px;\">M, S</p></td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 0, 0, '16900.00', '16900', '1.00', NULL, '2020-03-12 18:42:24', '2020-03-12 18:42:24'),
+(9, 'BRONZE56K MONEY CLIP TEE BLACK', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Н/Д</td></tr><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Размеры</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\"><p style=\"box-sizing: border-box; margin: 0px;\">M, S</p></td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 0, 1, '16900.00', '16900', '1.00', NULL, '2020-03-12 18:42:24', '2020-03-13 12:42:05'),
 (10, 'BRONSON BEARING RAW', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\">0.110 kg</td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 0, 0, '17900.00', '17900', '1.00', NULL, '2020-03-12 18:45:03', '2020-03-12 18:45:03'),
 (11, 'BRONSON BEARING G2', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 535px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\">0.110 kg</td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 0, 0, '10900.00', '10900', '1.00', NULL, '2020-03-12 18:46:06', '2020-03-12 18:46:06'),
 (12, 'BRONSON BEARING G3', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 535px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\">0.127 kg</td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 0, 0, '11900.00', '11900', '1.00', NULL, '2020-03-12 18:47:00', '2020-03-12 18:47:00'),
 (13, 'BRONZE56K MONEY CLIP HOODY ASH', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Вес</th><td data-o_content=\"Н/Д\" style=\"box-sizing: border-box; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">0.800 kg</td></tr><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Размеры</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\"><p style=\"box-sizing: border-box; margin: 0px;\">L, M</p></td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '39900.00', '39900', '1.00', NULL, '2020-03-12 19:16:37', '2020-03-12 19:16:37'),
-(14, 'BRONZE56K VERT FLEECE NAVY/RED', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Н/Д</td></tr><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Размеры</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\"><p style=\"box-sizing: border-box; margin: 0px;\">XL, M, S</p></td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 0, 0, '49900.00', '49900', '1.00', NULL, '2020-03-12 19:17:30', '2020-03-12 19:17:30');
+(14, 'BRONZE56K VERT FLEECE NAVY/RED', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Н/Д</td></tr><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Размеры</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\"><p style=\"box-sizing: border-box; margin: 0px;\">XL, M, S</p></td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 0, 0, '49900.00', '49900', '1.00', NULL, '2020-03-12 19:17:30', '2020-03-13 13:56:25');
 
 -- --------------------------------------------------------
 
@@ -17806,7 +17854,8 @@ INSERT INTO `products_categories` (`id`, `product_id`, `category_id`, `created_a
 (17, 13, 17, NULL, NULL),
 (18, 13, 2, NULL, NULL),
 (19, 14, 17, NULL, NULL),
-(20, 14, 2, NULL, NULL);
+(20, 14, 2, NULL, NULL),
+(21, 14, 18, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -17866,26 +17915,26 @@ CREATE TABLE `product_skus` (
 --
 
 INSERT INTO `product_skus` (`id`, `stock`, `product_id`, `skus_id`, `created_at`, `updated_at`) VALUES
-(3, 1, 2, 2, '2020-03-12 18:31:22', '2020-03-12 18:31:22'),
-(4, 1, 3, 5, '2020-03-12 18:33:39', '2020-03-12 18:33:39'),
-(5, 5, 4, 5, '2020-03-12 18:35:01', '2020-03-12 18:35:01'),
-(6, 1, 5, 2, '2020-03-12 18:37:05', '2020-03-12 18:37:05'),
+(4, 0, 3, 5, '2020-03-12 18:33:39', '2020-03-13 10:09:53'),
+(5, 1, 4, 5, '2020-03-12 18:35:01', '2020-03-15 08:55:38'),
+(6, 0, 5, 2, '2020-03-12 18:37:05', '2020-03-15 08:44:42'),
 (7, 3, 5, 3, '2020-03-12 18:37:06', '2020-03-12 18:37:06'),
 (8, 4, 5, 5, '2020-03-12 18:37:06', '2020-03-12 18:37:06'),
-(9, 3, 6, 3, '2020-03-12 18:38:18', '2020-03-12 18:38:18'),
+(9, 0, 6, 3, '2020-03-12 18:38:18', '2020-03-15 08:44:42'),
 (10, 2, 7, NULL, '2020-03-12 18:39:45', '2020-03-12 18:39:45'),
 (11, 3, 8, 2, '2020-03-12 18:41:27', '2020-03-12 18:41:27'),
 (12, 10, 8, 5, '2020-03-12 18:41:27', '2020-03-12 18:41:27'),
-(13, 3, 9, 2, '2020-03-12 18:42:24', '2020-03-12 18:42:24'),
+(13, 2, 9, 2, '2020-03-12 18:42:24', '2020-03-13 12:41:44'),
 (14, 10, 9, 5, '2020-03-12 18:42:24', '2020-03-12 18:42:24'),
 (15, 10, 10, NULL, '2020-03-12 18:45:03', '2020-03-12 18:45:03'),
 (16, 14, 11, NULL, '2020-03-12 18:46:07', '2020-03-12 18:46:07'),
 (17, 18, 12, NULL, '2020-03-12 18:47:01', '2020-03-12 18:47:01'),
-(18, 1, 13, 2, '2020-03-12 19:16:37', '2020-03-12 19:16:37'),
+(18, 0, 13, 2, '2020-03-12 19:16:37', '2020-03-15 08:33:28'),
 (19, 1, 13, 3, '2020-03-12 19:16:38', '2020-03-12 19:16:38'),
-(20, 1, 14, 2, '2020-03-12 19:17:30', '2020-03-12 19:17:30'),
-(21, 4, 14, 3, '2020-03-12 19:17:30', '2020-03-12 19:17:30'),
-(22, 3, 14, 5, '2020-03-12 19:17:30', '2020-03-12 19:17:30');
+(25, 0, 2, 2, '2020-03-13 09:46:17', '2020-03-13 11:34:09'),
+(27, 1, 14, 2, '2020-03-13 13:03:17', '2020-03-13 13:03:17'),
+(28, 4, 14, 3, '2020-03-13 13:03:17', '2020-03-13 13:03:17'),
+(29, 3, 14, 5, '2020-03-13 13:03:18', '2020-03-13 13:03:18');
 
 -- --------------------------------------------------------
 
@@ -17905,10 +17954,10 @@ CREATE TABLE `skuses` (
 --
 
 INSERT INTO `skuses` (`id`, `title`, `created_at`, `updated_at`) VALUES
-(2, 'M', NULL, NULL),
-(3, 'L', NULL, NULL),
-(4, 'XL', NULL, NULL),
-(5, 'S', NULL, NULL);
+(2, 'M', '2020-02-29 17:00:00', '2020-03-13 09:40:30'),
+(3, 'L', '2020-03-01 17:00:00', NULL),
+(4, 'XL', '2020-03-01 17:00:00', '2020-03-13 09:40:34'),
+(5, 'S', '2020-03-01 17:00:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -17933,11 +17982,13 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `avatar`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(102, 'Андрей Артышко Алексеевич', 'artyshko.andrey@gmail.com', '1581049164.jpg', '2020-01-12 02:40:22', '$2y$10$eJNi1Z2UHjb96hhUqxuhWerv3jjk9Cp/YCGV7bvl4UidmP6qQXsHy', 'ixR6vDJzqgK0oZDJdZRjqpiNIvyhTNvj2rGHexOLPFhHOohLn4r90WqdwX9Y', '2020-01-12 02:39:54', '2020-02-07 04:19:26'),
+(102, 'Андрей Артышко Алексеевич', 'artyshko.andrey@gmail.com', '1581049164.jpg', '2020-01-12 02:40:22', '$2y$10$eJNi1Z2UHjb96hhUqxuhWerv3jjk9Cp/YCGV7bvl4UidmP6qQXsHy', 'dWhc3FCdGrETu6jP76cUMt51RMxNw8cqduGA4JsmPOxkowX9DrTj3hi4sfWs', '2020-01-12 02:39:54', '2020-02-07 04:19:26'),
 (106, 'ANZHELIKA ARTYSHKO', 'lika.dudareva@gmail.com', '1581004168.jpg', NULL, '$2y$10$l5Eisw/yfNmepnwHJd7clOeVlljchofWtjWnz3ry2uXmq9zLjrKJa', NULL, '2020-02-03 08:04:08', '2020-02-03 08:04:08'),
 (107, 'Роман Иминов', 'iminovarts@gmail.com', NULL, '2020-02-11 08:06:18', '$2y$10$XCMQtYi8xMArrx0SCTxrzOl55OEtCLk.opVg/sGQnu9c/DJTsIsX6', NULL, '2020-02-11 07:48:06', '2020-02-11 08:06:18'),
 (108, 'Андрей Артышко', 'adad.artyshko@mail.ru', NULL, '2020-02-11 07:57:52', '$2y$10$nQpOvq/evc4nEI2jeqgGYeYHviuaAhapPO/SggFKJZeiMuG4K168u', 'kHfRnLezLkyRxqtFQyyjeC6LisWcAzesyMrgYjQPXFTTOzdSAe14y8fsuFOM', '2020-02-11 07:56:40', '2020-02-11 07:57:52'),
-(109, 'Завирюха Богдан', 'bogdan@mail.ru', NULL, NULL, '$2y$10$opf8ZV2ytYVlmUbMTcJq5OVBkNLuyMnDdDU8NQZ/78zvIjqi/B7Di', NULL, '2020-02-20 09:13:50', '2020-02-20 09:13:50');
+(109, 'Завирюха Богдан', 'bogdan@mail.ru', NULL, NULL, '$2y$10$opf8ZV2ytYVlmUbMTcJq5OVBkNLuyMnDdDU8NQZ/78zvIjqi/B7Di', NULL, '2020-02-20 09:13:50', '2020-02-20 09:13:50'),
+(120, 'fulliton', 'xepaya5003@upcmaill.com', NULL, NULL, '$2y$10$wHsbGq/D.lfgmlhULH38GeDwosQ8RpW2miGZT3dn7mWE8WG1OuSni', 'ik9wcqtWKQ4A79CyQLMdOLzCnVjRcKICFbgSyIODLrpvAL4XNwSSZen9wspz', '2020-03-15 08:33:28', '2020-03-15 08:33:28'),
+(124, 'Тестовый Аккаунт для покупки', 'xepaya5023@upcmaill.com', NULL, NULL, '$2y$10$93d.4HKCGABd1f6bLRFcAOPwwzCI.PCASOsyw37ogWSFZKayBRXOW', NULL, '2020-03-15 08:55:38', '2020-03-15 08:55:38');
 
 -- --------------------------------------------------------
 
@@ -17963,7 +18014,9 @@ CREATE TABLE `user_addresses` (
 
 INSERT INTO `user_addresses` (`id`, `user_id`, `country_id`, `city_id`, `street`, `contact_phone`, `currency_id`, `created_at`, `updated_at`) VALUES
 (1, 102, 1, 1116, 'ул. Горького, 24 кв. 25, 660099', '89029634366', 2, '2020-03-02 17:00:00', '2020-03-03 13:02:22'),
-(2, 108, 1, 1116, 'Горького 24, 25', '89029634366', 3, '2020-03-03 12:49:53', '2020-03-03 12:51:18');
+(2, 108, 1, 1116, 'Горького 24, 25', '89029634366', 3, '2020-03-03 12:49:53', '2020-03-03 12:51:18'),
+(4, 120, 1, 1116, 'Горького 24', '89029634366', 1, '2020-03-15 08:33:28', '2020-03-15 08:33:28'),
+(6, 124, 1, 1116, 'Горького 24', '89029634366', 1, '2020-03-15 08:55:38', '2020-03-15 08:55:38');
 
 -- --------------------------------------------------------
 
@@ -18115,8 +18168,7 @@ ALTER TABLE `orders`
 ALTER TABLE `order_items`
   ADD PRIMARY KEY (`id`),
   ADD KEY `order_items_order_id_foreign` (`order_id`),
-  ADD KEY `order_items_product_id_foreign` (`product_id`),
-  ADD KEY `order_items_product_sku_id_foreign` (`product_sku_id`);
+  ADD KEY `order_items_product_id_foreign` (`product_id`);
 
 --
 -- Индексы таблицы `password_resets`
@@ -18198,7 +18250,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT для таблицы `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT для таблицы `categories`
@@ -18216,7 +18268,7 @@ ALTER TABLE `cities`
 -- AUTO_INCREMENT для таблицы `city_expresses`
 --
 ALTER TABLE `city_expresses`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `countries`
@@ -18270,7 +18322,7 @@ ALTER TABLE `express_companies`
 -- AUTO_INCREMENT для таблицы `express_zones`
 --
 ALTER TABLE `express_zones`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `migrations`
@@ -18282,13 +18334,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT для таблицы `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT для таблицы `products`
@@ -18300,7 +18352,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT для таблицы `products_categories`
 --
 ALTER TABLE `products_categories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT для таблицы `products_image`
@@ -18312,7 +18364,7 @@ ALTER TABLE `products_image`
 -- AUTO_INCREMENT для таблицы `product_skus`
 --
 ALTER TABLE `product_skus`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT для таблицы `skuses`
@@ -18324,13 +18376,13 @@ ALTER TABLE `skuses`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 
 --
 -- AUTO_INCREMENT для таблицы `user_addresses`
 --
 ALTER TABLE `user_addresses`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `user_favorite_products`
@@ -18353,7 +18405,7 @@ ALTER TABLE `cart_items`
 -- Ограничения внешнего ключа таблицы `categories`
 --
 ALTER TABLE `categories`
-  ADD CONSTRAINT `categories_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
+  ADD CONSTRAINT `categories_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `cities`
@@ -18415,8 +18467,7 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `order_items`
   ADD CONSTRAINT `order_items_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `order_items_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `order_items_product_sku_id_foreign` FOREIGN KEY (`product_sku_id`) REFERENCES `product_skus` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `order_items_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `products_categories`
