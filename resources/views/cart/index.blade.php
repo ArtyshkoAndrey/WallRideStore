@@ -31,15 +31,29 @@
                         asset('storage/products/' . $item->productSku->product->photos->first()->name) :
                         'https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png' :
                       $item['productSku']->product->photos ?
-					              count($item['productSku']->product->photos) > 0 ?
+					   count($item['productSku']->product->photos) > 0 ?
                          asset('storage/products/' . $item['productSku']->product->photos->first()->name) :
                         'https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png':
-                      'https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png'}}" class="img-fluid">
+							  'https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png'}}" class="img-fluid">
                   </div>
                   <div class="col-8 col-md-4">
                     {{ ucwords(strtolower(isset($item->productSku) ? $item->productSku->product->title : $item['productSku']->product->title )) }}
                     <br>
-                    <p class="text-muted font-small">Размер: {{isset($item->productSku) ?  $item->productSku->skus ? $item->productSku->skus->title : 'One Size' : $item['productSku']->skus ? $item['productSku']->skus->title : 'One Size' }}</p>
+                    <p class="text-muted font-small">Размер:
+                      @if(isset($item->productSku))
+                        @if(isset($item->productSku->skus))
+                          {{ $item->productSku->skus->title}}
+                        @else
+                          {{ 'One Size' }}
+                        @endif
+                      @else
+                        @if(isset($item['productSku']->skus))
+                          {{ $item['productSku']->skus->title }}
+                        @else
+                          {{'One Size'}}
+                        @endif
+                      @endif
+        					  </p>
                   </div>
                   <div class="col-4 col-md">
                     <div class="row m-0">
@@ -55,7 +69,7 @@
                     </div>
                   </div>
                   <div class="col-4 col-md text-center">
-                    {{ cost(round(isset($item->productSku) ? $item->productSku->product->price : $item['productSku']->product->price  * $currency->ratio, 0)) }} {{ $currency->symbol }}
+                    {{ cost(round((isset($item->productSku) ? $item->productSku->product->price : $item['productSku']->product->price)  * $currency->ratio, 0)) }} {{ $currency->symbol }}
                   </div>
                   <div class="col-4 col-md">
                     <button class="btn-angle d-block w-100 m-0" @click="deleteItem"><i class="fal fa-times"></i></button>
