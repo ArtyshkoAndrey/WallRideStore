@@ -75,6 +75,9 @@
           <div class="col-12">
             <p class="text-muted pb-0 mb-0">В наличии: @{{ size.stock }}</p>
           </div>
+          <div class="col-12">
+            <p class="text-muted pb-0 mb-0">Вес: @{{ Number(product.weight) }} кг.</p>
+          </div>
           <div class="col-auto h-100 mt-1"><button class="btn btn-angle text-white" @click="removeCounter"><i class="fal fa-minus mt-1"></i></button></div>
           <div class="col-md-2 h-100 col-sm-2 col-2 p-0">
             <input class="form-control bg-white border-0 px-0 font-weight-bolder text-center" type="number" v-model="counter" readonly disabled>
@@ -89,6 +92,11 @@
             <button class="btn h-100 py-3 btn-block bg-transparent p-0 text-dark" @click="favored" v-if="!favoredData"><i class="fal fa-heart"></i> Добавить в избранное</button>
             <button class="btn h-100 py-3 btn-block bg-transparent p-0 text-dark" @click="disFavored" v-else><i class="fad fa-heart"></i> Удалить из избранных</button>
           </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-12">
+  			     {!! $product->description !!}
+    		  </div
         </div>
       </div>
     </div>
