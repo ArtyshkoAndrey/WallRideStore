@@ -90,7 +90,8 @@
           }
           axios.delete('/cart/' + this.id)
           .then((response) => {
-            if (response.data.ids) {
+            if (response.data.ids === '' || response.data.ids) {
+              console.log(response.data.ids)
               $.cookie("products", response.data.ids, {expires: 7, path: '/'});
             }
             location.reload();

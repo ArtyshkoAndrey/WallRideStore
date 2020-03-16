@@ -117,7 +117,7 @@ class CartController extends Controller
       $cartItems = [];
       $priceAmount = 0;
       $amount = 0;
-      foreach ($ids as $id) {
+      foreach ($ids as $k => $id) {
         $id = (int)$id;
         $ch = false;
         $item = [];
@@ -131,14 +131,19 @@ class CartController extends Controller
           }
         }
         if (!$ch) {
-          $item['amount'] = 1;
-          $item['id'] = $id;
-          $item['product_sku'] = $prs;
-          $priceAmount += $prs->product->price;
-          array_push($cartItems, $item);
+          if (isset($prs)) {
+            $item = [];
+            $item['amount'] = 1;
+            $item['id'] = $id;
+            $item['product_sku'] = $prs;
+            $priceAmount += $prs->product->price;
+            array_push($cartItems, $item);
+          } else {
+            unset($ids[$k]);
+          }
         }
-        $amount++;
       }
+      $amount = count($ids);
       return ['cartItems' => $cartItems, 'amount' => $amount, 'priceAmount' => $priceAmount, 'type' => 'web'];
     }
   }
@@ -203,11 +208,13 @@ class CartController extends Controller
       return [];
     } else {
       $ids = explode(',',$_COOKIE["products"]);
+
       foreach ($ids as $key => $id) {
         if ((int) $id === (int) $sku->id) {
           unset($ids[$key]);
         }
       }
+//      return implode(",", $ids);
 //      setcookie("products", implode(",", $ids), time() + (3600 * 24 * 30), "/", request()->getHost());
       return ['ids' => implode(",", $ids)];
     }

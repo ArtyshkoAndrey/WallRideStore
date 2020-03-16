@@ -34,6 +34,13 @@
         required: true
       }
     },
+    mounted() {
+      let ids = [];
+      this.cart_items.forEach(e => {
+        ids.push(e.id)
+      })
+      $.cookie("products", ids.join(','), {expires: 7, path: '/'});
+    },
     methods: {
       ordered () {
         if (this.amount > 0) {
@@ -110,11 +117,29 @@
               })
               .then((response) => {
                 console.log(response);
-                window.location = response.data
-              })
-              .catch(e => {
-                console.error(e)
-              })
+                swal('\n' + 'Заказ успешно создан', '', 'success')
+                .then(() => {
+                  window.location = response.data
+                });
+              }, function (error) {
+                if (error.response.status === 422) {
+                  // Код состояния http: 422, что указывает на сбой проверки ввода пользователя
+                  var html = '<div>';
+                  _.each(error.response.data.errors, function (errors) {
+                    _.each(errors, function (error) {
+                      html += error+'<br>';
+                    })
+                  });
+                  html += '</div>';
+                  swal({content: $(html)[0], icon: 'error'})
+                } else if (error.response.status === 403) { // Судя по статусу здесь 403
+                  swal(error.response.data.msg, '', 'error');
+                }  else {
+                  // В других случаях система должна зависать
+                  swal('Системная ошибка', '', 'error');
+                }
+              });
+
             }
           }
         }

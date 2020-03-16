@@ -84,6 +84,11 @@ const app = new Vue({
         this.cartItems = data.cartItems
         this.priceAmount = data.priceAmount
         this.amount = data.amount
+        let ids = [];
+        this.cartItems.forEach((e) => {
+          ids.push(e.id)
+        })
+        $.cookie("products", ids.join(','), {expires: 7, path: '/'});
       }
     })
   }

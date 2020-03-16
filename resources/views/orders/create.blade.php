@@ -96,7 +96,7 @@
                   </div>
 
                   <div v-else class="mt-3">
-                    <p class="m-0 p-0 d-flex">В самовывозе нет служб доставки</p>
+                    <p class="m-0 p-0 d-flex">Вы можете забрать свой заказ по адресу мкр.Самал-3, 1</p>
                   </div>
                 </div>
                 <div class="col-md-8 mt-3">

@@ -153,25 +153,29 @@ class OrdersController extends Controller
       $city = City::find($_COOKIE['city']);
       $cartItems = [];
       $priceAmount = 0;
-      foreach ($ids as $id) {
-        $id = (int)$id;
+      foreach ($ids as $k => $id) {
+        $id = (int) $id;
         $ch = false;
-        $item = (object)array();
+        $item = (object) array();
         $prs = ProductSku::with('product')->where('id', $id)->first();
         foreach ($cartItems as $key => $item) {
           if ($item->productSku->id === $id) {
             $ch = true;
             $cartItems[$key]->amount = $item->amount + 1;
             $priceAmount += $prs->product->price;
-            break;
           }
         }
         if (!$ch) {
-          $item->amount = 1;
-          $item->id = $id;
-          $item->productSku = $prs;
-          $priceAmount += $prs->product->price;
-          array_push($cartItems, $item);
+          if (isset($prs)) {
+            $item = (object)array();
+            $item->amount = 1;
+            $item->id = $id;
+            $item->productSku = $prs;
+            $priceAmount += $prs->product->price;
+            array_push($cartItems, $item);
+          } else {
+            unset($ids[$k]);
+          }
         }
       }
       $amount = count($ids);
