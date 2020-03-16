@@ -71,19 +71,49 @@
             amount: this.counter,
           })
             .then((response) => { // Запрос успешно выполнил этот обратный вызов
-              swal('Товар добавлен в корзину', '', 'success')
-                .then(() => {
-                  this.cart = true
-                  setTimeout(() => {
-                    this.cart = false
-                  }, 2000)
-                  // location.href = '/cart';
-                });
-              let data = response.data
-              console.log(data)
-              this.$parent.cartItems = data.cartItems
-              this.$parent.priceAmount = data.priceAmount
-              this.$parent.amount = data.amount
+              if (response.data.type === 'auth') {
+                swal('Товар добавлен в корзину', '', 'success')
+                  .then(() => {
+                    this.cart = true
+                    setTimeout(() => {
+                      this.cart = false
+                    }, 2000)
+                    // location.href = '/cart';
+                  });
+                let data = response.data
+                this.$parent.cartItems = data.cartItems
+                this.$parent.priceAmount = data.priceAmount
+                this.$parent.amount = data.amount
+              } else if (response.data.type === 'web') {
+                // $.cookie("products",[5, 1, 54],{expires: 7, path: '/'});
+                let arr = $.cookie('products').split(',')
+                console.log(arr)
+                if (arr[0] === '' || arr.length === 0) {
+                  $.cookie("products", this.size.id,{expires: 7, path: '/'});
+                  arr = [this.size.id]
+                } else {
+                  arr.push(this.size.id)
+                  $.cookie("products",arr ,{expires: 7, path: '/'});
+                }
+                axios.post('/cart/getData', {
+                  ids: arr
+                })
+                  .then(response => {
+                    let data = response.data
+                    console.log(data);
+                    this.$parent.cartItems = data.cartItems
+                    this.$parent.priceAmount = data.priceAmount
+                    this.$parent.amount = data.amount
+                    swal('Товар добавлен в корзину', '', 'success')
+                      .then(() => {
+                        this.cart = true
+                        setTimeout(() => {
+                          this.cart = false
+                        }, 2000)
+                        // location.href = '/cart';
+                      });
+                  })
+              }
             }, function (error) { // Запрос не смог выполнить этот обратный вызов
               if (error.response.status === 401) {
                 // код статуса http 401, пользователь не авторизован
