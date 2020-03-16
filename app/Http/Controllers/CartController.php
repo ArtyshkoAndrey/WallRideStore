@@ -190,8 +190,8 @@ class CartController extends Controller
         }
       }
 //      return implode(",", $ids);
-      setcookie("products", implode(",", $ids), time() + (3600 * 24 * 30), "/", request()->getHost());
-      return ['cartItems' => $cartItems, 'amount' => count($ids), 'priceAmount' => $priceAmount];
+//      setcookie("products", implode(",", $ids), time() + (3600 * 24 * 30), "/", request()->getHost());
+      return ['cartItems' => $cartItems, 'amount' => count($ids), 'priceAmount' => $priceAmount, 'ids' => implode(",", $ids) ];
     }
 
   }
@@ -208,8 +208,8 @@ class CartController extends Controller
           unset($ids[$key]);
         }
       }
-      setcookie("products", implode(",", $ids), time() + (3600 * 24 * 30), "/", request()->getHost());
-      return [];
+//      setcookie("products", implode(",", $ids), time() + (3600 * 24 * 30), "/", request()->getHost());
+      return ['ids' => implode(",", $ids)];
     }
   }
 }

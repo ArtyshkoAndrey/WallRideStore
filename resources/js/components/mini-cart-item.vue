@@ -36,6 +36,9 @@
             this.$parent.cartItems = data.cartItems
             this.$parent.priceAmount = data.priceAmount
             this.$parent.amount = data.amount
+            if (response.data.ids) {
+              $.cookie("products", response.data.ids, {expires: 7, path: '/'});
+            }
             $('#amount').text(data.amount + ' шт.')
             $('#priceAmount').text((data.priceAmount * this.currency.ratio).toFixed(0) + ' ' + this.currency.symbol)
           }, function (error) { // Запрос не смог выполнить этот обратный вызов
@@ -86,7 +89,10 @@
             return;
           }
           axios.delete('/cart/' + this.id)
-          .then(() => {
+          .then((response) => {
+            if (response.data.ids) {
+              $.cookie("products", response.data.ids, {expires: 7, path: '/'});
+            }
             location.reload();
           })
         });
