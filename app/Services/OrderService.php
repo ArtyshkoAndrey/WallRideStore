@@ -41,13 +41,17 @@ class OrderService
 
             $totalAmount = 0;
             foreach ($items as $data) {
-                $sku  = ProductSku::find($data['sku_id']);
-                $item = $order->items()->make([
-                    'amount' => $data['amount'],
-                    'price'  => $sku->product->price,
-                ]);
-                $item->product()->associate($sku->product_id);
+              $sku = ProductSku::find($data['sku_id']);
+              $item = $order->items()->make([
+                'amount' => $data['amount'],
+                'price' => $sku->product->price,
+              ]);
+              $item->product()->associate($sku->product_id);
+              if (isset($sku->skus->title)) {
                 $item->product_sku = $sku->skus->title;
+              } else {
+                $item->product_sku = 'One Size';
+              }
                 $item->save();
                 $totalAmount += $sku->product->price * $data['amount'];
                 // throw new \Exception($sku->);
