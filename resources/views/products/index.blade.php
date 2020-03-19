@@ -5,12 +5,13 @@
   <section class="container-fluid p-0 text-white" id="slider">
     <div class="row p-0 m-0">
       <div class="col-12 p-0">
-        <img class="img-fluid"  src="{{ asset('public/storage/images/slide1.png') }}" alt="">
+        <div style="width: 100%; height: 100%; background: rgba(0,0,0,0.5); position:absolute;"></div>
+        <img class="img-fluid"  src="{{ asset('public/storage/header/' . $h->photo) }}" alt="">
       </div>
       <div class="col-12 p-0 position-absolute text-center">
-        <h1>Polar Scate Co</h1>
-        <h3>New collection</h3>
-        <a href="#" class="btn">Купить сейчас</a>
+        <h1>{{$h->h1}}</h1>
+        <h3>{{ $h->h2 }}</h3>
+        <a href="{{ $h->url }}" class="btn">{{ $h->btn_text }}</a>
 {{--        <div class="container">--}}
 {{--          <div class="row justify-content-center">--}}
 {{--            <div class="col-md-6 col-sm-8 col-12">--}}
@@ -81,7 +82,7 @@
       </div>
     </div>
     <div class="container">
-      <news></news>
+      <news :news="{{ $news }}"></news>
     </div>
   </section>
 @endsection

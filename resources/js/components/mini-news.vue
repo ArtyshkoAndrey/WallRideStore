@@ -5,7 +5,7 @@
         <div class="row">
           <div class="col-5">
             <div class="darkened">
-              <img :src="news.img" alt="" class="img-fluid">
+              <img :src="'/public/storage/news/' + news.photo" alt="" class="img-fluid">
             </div>
           </div>
           <div class="col-7 py-4">

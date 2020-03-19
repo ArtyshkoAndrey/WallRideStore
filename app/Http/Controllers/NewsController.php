@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\News;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class NewsController extends Controller {
   /**
    * Display a listing of the resource.
    *
-   * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+   * @return Factory|View
    */
   public function index()
   {
@@ -40,11 +43,16 @@ class NewsController extends Controller {
    * Display the specified resource.
    *
    * @param  int  $id
-   * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+   * @return void
    */
   public function show($id)
   {
-    return view('news.show');
+    $n = News::find($id);
+    if($n) {
+      return view('news.show', compact('n'));
+    } else {
+      return abort(404);
+    }
   }
 
   /**

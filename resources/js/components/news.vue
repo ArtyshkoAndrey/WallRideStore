@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-lg-4 col-md-6 pl-sm-0" id="mini-news">
       <div class="row">
-        <miniNews v-for="(oneNews, index) in news" :news="oneNews" :key="oneNews.slug" :active="activated[index]" :index="index" v-on:toggle="getNews(index)"/>
+        <miniNews v-for="(oneNews, index) in news" :news="oneNews" :key="oneNews.id" :active="activated[index]" :index="index" v-on:toggle="getNews(index)"/>
       </div>
     </div>
     <div class="col-lg-8 col-md-6" id="big-news">
@@ -10,13 +10,13 @@
         <div class="card-body p-0">
          <div class="darkened">
            <transition name="fade" appear>
-            <img :src="item.img" class="img-fluid" alt="">
+            <img :src="'/public/storage/news/' + item.photo" class="img-fluid" alt="">
            </transition>
          </div>
          <div class="position-absolute info-big-news">
            <transition-group name="fade" appear>
              <h2 key="1">{{ item.title }}</h2>
-             <a :href="'/news/'+item.id" key="2" class="text-white">Подробнее</a>
+             <a :href="'/news/'+item.id" :key="2" class="text-white">Подробнее</a>
            </transition-group>
          </div>
         </div>
@@ -37,21 +37,18 @@
         default: function () {
           return [
             {
-              img: '../../../public/storage/images/news1.jpg',
+              photo: '../../../public/storage/images/news1.jpg',
               title: 'Новая коллекция Polar Skate Co',
-              slug: 'new-collection',
               id: 1
             },
             {
               img: '../../../public/storage/images/news2.jpg',
               title: 'Новогодние скидки в Wallride Store',
-              slug: 'cristmas-sale',
               id: 2
             },
             {
               img: '../../../public/storage/images/news1.jpg',
               title: 'Новая коллекция Polar Skate Co',
-              slug: 'new-collection2',
               id: 3
             },
           ];

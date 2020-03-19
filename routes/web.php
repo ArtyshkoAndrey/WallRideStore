@@ -66,6 +66,15 @@ Route::group(['prefix' => 'admin', 'guard' => 'admin', 'namespace' => 'Admin', '
   Route::post('/products/photo-create', 'ProductsController@photoCreate')->name('admin.production.products.photoCreate');
   Route::post('/products/{id}/photo-delete', 'ProductsController@photoDelete')->name('admin.production.products.photoDelete');
   Route::post('/products/photo-delete-create', 'ProductsController@photoDeleteCreate')->name('admin.production.products.photoDeleteCreate');
+
+
+  Route::post('/news/photo-create', 'NewsController@photoCreate')->name('admin.news.photoCreate');
+  Route::post('/news/photo-delete', 'NewsController@photoDelete')->name('admin.news.photoDelete');
+  Route::post('/news/restore/{id}', 'NewsController@restore')->name('admin.news.restore');
+
+  Route::post('/header/photo-create', 'HeaderController@photoCreate')->name('admin.header.photoCreate');
+  Route::post('/header/photo-delete', 'HeaderController@photoDelete')->name('admin.header.photoDelete');
+
   Route::get('/reports', 'ReportsController@index')->name('admin.store.reports.index');
   Route::resource('/order', 'OrderController', ['as' => 'admin.store']);
   Route::resource('/express-zone', 'ExpressZoneController', ['as' => 'admin.store']);
@@ -76,4 +85,8 @@ Route::group(['prefix' => 'admin', 'guard' => 'admin', 'namespace' => 'Admin', '
   Route::resource('/products', 'ProductsController', ['as' => 'admin.production']);
   Route::resource('/attr', 'SkusController', ['as' => 'admin.production']);
   Route::resource('/category', 'CategoryController', ['as' => 'admin.production']);
+  Route::resource('/currency', 'CurrencyController', ['as' => 'admin']);
+  Route::resource('/news', 'NewsController', ['as' => 'admin']);
+  Route::resource('/pay', 'PayController', ['as' => 'admin.store']);
+  Route::resource('/header', 'HeaderController', ['as' => 'admin']);
 });

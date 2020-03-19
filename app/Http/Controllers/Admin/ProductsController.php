@@ -51,7 +51,6 @@ class ProductsController extends Controller {
     if (isset($type)) {
       switch ($type) {
         case 'publish':
-          $products = $products;
           break;
         case 'all':
           $products = $products->withTrashed();
@@ -61,8 +60,7 @@ class ProductsController extends Controller {
           break;
       }
     } else {
-      $type = 'all';
-      $products = $products->withTrashed();
+      $type = 'publish';
     }
 
     $products = $products->orderByDesc('created_at');
@@ -208,7 +206,13 @@ class ProductsController extends Controller {
    * @return RedirectResponse
    */
   public function destroy($id) {
-
+    $pr = Product::withTrashed()->find($id);
+    if ($pr->trashed()) {
+      $pr->forceDelete();
+    } else {
+      $pr->delete();
+    }
+    return redirect()->back();
   }
 
   public function collectionsDestroy(Request $request) {
@@ -258,6 +262,7 @@ class ProductsController extends Controller {
     $ph->save();
     echo $name;
   }
+
   public function photoDeleteCreate(Request $request) {
     // read image from temporary file
     echo $request->name;

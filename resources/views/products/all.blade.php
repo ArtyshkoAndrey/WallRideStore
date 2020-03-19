@@ -14,8 +14,6 @@
             <option value="price_desc">Сначало дорогие</option>
             <option value="sold_count_desc">По убыванию продаж</option>
             <option value="sold_count_asc">По возрастанию продаж</option>
-            <option value="rating_desc">По убыванию оценки</option>
-            <option value="rating_asc">По возрастанию оценки</option>
           </select>
         </div>
         <div class="col-md col-6 mt-4 mt-md-0">

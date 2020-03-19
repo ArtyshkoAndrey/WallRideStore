@@ -144,7 +144,7 @@
           </div>
           <div class="row mt-3 justify-content-end">
             <div class="col-auto">
-{{--              <button class="btn btn-dark rounded-0 border-0 px-3 py-2" type="submit">Создать</button>--}}
+              {{--              <button class="btn btn-dark rounded-0 border-0 px-3 py-2" type="submit">Создать</button>--}}
             </div>
           </div>
         </div>
@@ -189,7 +189,8 @@
         $(this.element).addClass("dropzone");
 
         this.on("success", function (file, serverFileName) {
-          fileList[i] = {"serverFileName": serverFileName, "fileName": file.name, "fileId": i};
+          fileList[i] = {"serverFileName": file.upload.filename, "fileName": file.name, "fileId": i};
+          serverFileName = file.upload.filename;
           if ($('input[name="photo['+ i +']"]').val() === '') {
             $('input[name="photo[' + i + ']"]').val(serverFileName)
           } else {
@@ -202,7 +203,6 @@
             }
 
           }
-          console.log(file)
 
           i++;
         });

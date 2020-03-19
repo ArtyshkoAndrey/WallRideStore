@@ -124,8 +124,10 @@
                           @foreach(App\Models\Skus::all() as $sku)
                             <div class="col-12">
                               <div class="row mt-2">
-                                <label for="skus[{{ $sku->id }}]" class="col-1">{{ $sku->title }}</label>
-                                <input type="number" min="0" class="form-control col-10 skus" id="skus-{{ $sku->id }}" name="skus[{{ $sku->id }}]" {{ $ch }} value="{{ $product->skus()->where('skus_id', $sku->id)->first() ? $product->skus()->where('skus_id', $sku->id)->first()->stock : null }}">
+                                <div class="col-12">
+                                  <label for="skus[{{ $sku->id }}]">{{ $sku->title }}</label>
+                                  <input type="number" min="0" class="form-control skus rounded-0" id="skus-{{ $sku->id }}" name="skus[{{ $sku->id }}]" {{ $ch }} value="{{ $product->skus()->where('skus_id', $sku->id)->first() ? $product->skus()->where('skus_id', $sku->id)->first()->stock : null }}">
+                                </div>
                               </div>
                             </div>
                           @endforeach

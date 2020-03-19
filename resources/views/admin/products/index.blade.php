@@ -21,7 +21,7 @@
         <div class="card-header">
           <div class="row">
             <div class="col-auto">
-              <a href="{{ route('admin.production.products.index') }}" class="{{ ($filters['type'] === null || $filters['type'] === 'all') ? 'active' : ''}}">Все ({{App\Models\Product::withTrashed()->count()}})</a>
+              <a href="{{ route('admin.production.products.index', ['type' => 'all']) }}" class="{{ ($filters['type'] === null || $filters['type'] === 'all') ? 'active' : ''}}">Все ({{App\Models\Product::withTrashed()->count()}})</a>
             </div>
             <div class="col-auto">
               <a href="{{ route('admin.production.products.index', ['type' => 'publish']) }}" class="{{ $filters['type'] === 'publish' ? 'active' : ''}}">

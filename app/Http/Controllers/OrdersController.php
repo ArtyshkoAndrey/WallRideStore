@@ -13,6 +13,7 @@ use App\Models\CouponCode;
 use App\Models\Currency;
 use App\Models\ExpressCompany;
 use App\Models\ExpressZone;
+use App\Models\Pay;
 use App\Models\ProductSku;
 use App\Models\User;
 use App\Models\UserAddress;
@@ -62,9 +63,10 @@ class OrdersController extends Controller
 //    return $order;
     setcookie("products", '', time() + (3600 * 24 * 30), "/", request()->getHost());
     if ($payment_method === 'card') {
+      $p = Pay::first();
       $request = [
-        'pg_merchant_id' => 514888,
-        'pg_testing_mode' => 1,
+        'pg_merchant_id' => $p->pg_merchant_id,
+        'pg_testing_mode' => $p->pg_testing_mode,
         'pg_user_contact_email' => $user->email,
         'pg_currency' => 'KZT',
         'pg_amount' => $order->total_amount + $order->ship_price,
@@ -72,18 +74,18 @@ class OrdersController extends Controller
         'pg_order_id' => $order->no,
         'pg_success_url_method' => 'POST',
         'pg_user_phone' => $address['phone'],
-        'pg_description' => 'Описание заказа',
+        'pg_description' => $p->pg_description,
         'pg_success_url' => route('orders.success', ['no' => $order->no]),
         'pg_result_url' => route('orders.index')
       ];
       ksort($request); //sort alphabetically
       array_unshift($request, 'payment.php');
-      array_push($request, 'kDY43tnDGs9yqtHG');
+      array_push($request, $p->code);
       $request['pg_sig'] = md5(implode(';', $request));
       unset($request[0], $request[1]);
       $query = http_build_query($request);
       if ($order->no) {
-        return 'https://api.paybox.money/payment.php?' . $query;
+        return $p->url . $query;
       } else {
         return 'Ошибка';
       }

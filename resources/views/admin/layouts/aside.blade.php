@@ -17,7 +17,7 @@
         </li>
 
         <li class="nav-item">
-          <a href="{{ route('admin.store.order.index') }}" class="nav-link rounded-0 {{ Route::currentRouteNamed('admin.currencies.*') ? 'active' : '' }}">
+          <a href="{{ route('admin.currency.index') }}" class="nav-link rounded-0 {{ Route::currentRouteNamed('admin.currency.*') ? 'active' : '' }}">
             <i class="fal fa-badge-dollar mr-3"></i>
             <p>
               Валюта
@@ -35,13 +35,32 @@
         </li>
 
         <li class="nav-item">
-          <a href="{{ route('admin.store.order.index') }}" class="nav-link rounded-0 {{ Route::currentRouteNamed('admin.user') ? 'active' : '' }}">
+          <a href="{{ route('admin.store.order.index') }}" class="nav-link rounded-0 {{ Route::currentRouteNamed('admin.user.*') ? 'active' : '' }}">
             <i class="fas fa-user mr-3"></i>
             <p>
               Пользователи
             </p>
           </a>
         </li>
+
+        <li class="nav-item">
+          <a href="{{ route('admin.news.index') }}" class="nav-link rounded-0 {{ Route::currentRouteNamed('admin.news.*') ? 'active' : '' }}">
+            <i class="fas fa-newspaper mr-3"></i>
+            <p>
+              Новости
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="{{ route('admin.header.index') }}" class="nav-link rounded-0 {{ Route::currentRouteNamed('admin.header.*') ? 'active' : '' }}">
+            <i class="fas fa-cog mr-3"></i>
+            <p>
+              Настройки
+            </p>
+          </a>
+        </li>
+
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

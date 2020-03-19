@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\InvalidRequestException;
+use App\Models\Header;
+use App\Models\News;
 use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -20,9 +22,9 @@ class ProductsController extends Controller {
   public function all (Request $request) {
     if ($order = $request->input('order', '')) {
       if (preg_match('/^(.+)_(asc|desc)$/', $order, $m)) {
-        if (in_array($m[1], ['price', 'sold_count', 'rating', 'new'])) {
+        if (in_array($m[1], ['price', 'sold_count', 'new'])) {
           if ($m[1] == 'price') {
-            $products = Product::select('products.*', \DB::raw("MAX(product_skus.price) AS max_price"), \DB::raw("MIN(product_skus.price) AS min_price"))
+            $products = Product::select('products.*', \DB::raw("MAX(price) AS max_price"), \DB::raw("MIN(price) AS min_price"))
               ->join('product_skus', 'products.id', '=', 'product_skus.product_id')
               ->groupBy('products.id')
               ->orderBy($m[2] == 'desc' ? 'max_price' : 'min_price', $m[2])
@@ -33,7 +35,11 @@ class ProductsController extends Controller {
           } else {
             $products = Product::with('skus', 'photos')->orderBy($m[1], $m[2])->paginate(16);
           }
+        } else {
+          $products = Product::with('skus', 'photos')->paginate(16);
         }
+      } else {
+        $products = Product::with('skus', 'photos')->paginate(16);
       }
     } else {
       $products = Product::with('skus', 'photos')->paginate(16);
@@ -49,9 +55,13 @@ class ProductsController extends Controller {
     $products = Product::with('photos', 'skus')->whereHas('categories', function($query) {
       $query->whereIn('categories.name', ['Толстовки']);
     })->take(5)->get();
+    $news = News::take(3)->get();
+    $h = Header::first();
     return view('products.index', [
       'productsNew' => $productsNew,
-      'products' => $products
+      'products' => $products,
+      'news' => $news,
+      'h' => $h
     ]);
   }
 
