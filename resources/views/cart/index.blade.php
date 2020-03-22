@@ -27,14 +27,14 @@
                 <div class="row mt-2 justify-content-center align-items-center">
                   <div class="col-md col-4">
                     <img src="{{ isset($item->productSku) ?
-                      $item->productSku->product->photos ?
+                      $item->productSku->product->photos()->get()->toArray() ?
                         asset('storage/products/' . $item->productSku->product->photos->first()->name) :
                         'https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png' :
                       $item['productSku']->product->photos ?
-					   count($item['productSku']->product->photos) > 0 ?
+             count($item['productSku']->product->photos) > 0 ?
                          asset('storage/products/' . $item['productSku']->product->photos->first()->name) :
                         'https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png':
-							  'https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png'}}" class="img-fluid">
+                'https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png'}}" class="img-fluid">
                   </div>
                   <div class="col-8 col-md-4">
                     {{ ucwords(strtolower(isset($item->productSku) ? $item->productSku->product->title : $item['productSku']->product->title )) }}
@@ -53,7 +53,7 @@
                           {{'One Size'}}
                         @endif
                       @endif
-        					  </p>
+                    </p>
                   </div>
                   <div class="col-4 col-md">
                     <div class="row m-0">

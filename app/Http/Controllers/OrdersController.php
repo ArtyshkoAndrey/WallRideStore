@@ -65,8 +65,8 @@ class OrdersController extends Controller
     if ($payment_method === 'card') {
       $p = Pay::first();
       $request = [
-        'pg_merchant_id' => $p->pg_merchant_id,
-        'pg_testing_mode' => $p->pg_testing_mode,
+        'pg_merchant_id' => (int) $p->pg_merchant_id,
+        'pg_testing_mode' => (int) $p->pg_testing_mode,
         'pg_user_contact_email' => $user->email,
         'pg_currency' => 'KZT',
         'pg_amount' => $order->total_amount + $order->ship_price,

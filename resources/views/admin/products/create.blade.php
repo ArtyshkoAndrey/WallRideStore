@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', 'Магазин - Отчёты')
+@section('title', 'Магазин - Товары')
 
 @section('css')
   <link href="https://cdn.jsdelivr.net/npm/froala-editor@3.0.6/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
@@ -25,7 +25,7 @@
   <div class="container-fluid pt-5 px-4">
     <div class="row">
       <div class="col-12">
-        <h2>Отчёты</h2>
+        <h2>Товары</h2>
       </div>
     </div>
     <div class="row mt-2" style="z-index: 100">
@@ -118,8 +118,8 @@
                           @foreach(App\Models\Skus::all() as $sku)
                             <div class="col-12">
                               <div class="row mt-2">
-                                <label for="skus[{{ $sku->id }}]" class="col-1">{{ $sku->title }}</label>
-                                <input type="number" min="0" class="form-control col-10 skus" id="skus-{{ $sku->id }}" name="skus[{{ $sku->id }}]" {{ $ch }} value="">
+                                <label for="skus[{{ $sku->id }}]" class="col-12">{{ $sku->title }}</label>
+                                <input type="number" min="0" class="form-control col-12 skus" id="skus-{{ $sku->id }}" name="skus[{{ $sku->id }}]" {{ $ch }} value="">
                               </div>
                             </div>
                           @endforeach

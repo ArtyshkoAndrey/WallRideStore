@@ -50,7 +50,7 @@
               @forelse($cartItems as $item)
                 <div class="row mt-3 justify-content-center align-items-center">
                   <div class="col-md-2 offset-md-1 col-4">
-                    <img src="{{ isset($item->productSku->product->photos) ?  asset('storage/products/' . $item->productSku->product->photos()->first()->name) : 'https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png' }}" class="img-fluid" alt="{{ $item->productSku->product->title }}">
+                    <img src="{{ $item->productSku->product->photos()->get()->toArray() ?  asset('storage/products/' . $item->productSku->product->photos()->first()->name) : 'https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png' }}" class="img-fluid" alt="{{ $item->productSku->product->title }}">
                   </div>
                   <div class="col-4 col-md-4">
                     {{ ucwords(strtolower($item->productSku->product->title)) }}
