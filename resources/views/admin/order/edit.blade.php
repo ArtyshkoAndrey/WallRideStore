@@ -177,7 +177,7 @@
                   <tbody>
                   @foreach($order->items as $item)
                     <tr align="center">
-                      <td style="width:10%; vertical-align: middle;"><img src="{{  isset($item->product->photos) ? asset('storage/products/'. $item->product->photos->first()->name) : 'https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png' }}" height="100px" alt=""></td>
+                      <td style="width:10%; vertical-align: middle;"><img src="{{  isset($item->product->photos) && $item->product->photos()->get()->toArray() ? asset('storage/products/'. $item->product->photos->first()->name) : 'https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png' }}" height="100px" alt=""></td>
                       <td style="width:20%; vertical-align: middle;" class="text-wrap">{{ ucwords(strtolower($item->product->title)) }} - {{ $item->product_sku }}</td>
                       <td style="width:20%; vertical-align: middle;">{{ cost($item->price) }} тг.</td>
                       <td style="width:20%; vertical-align: middle;">{{ $item->amount }}</td>
