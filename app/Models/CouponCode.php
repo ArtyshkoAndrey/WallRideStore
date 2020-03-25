@@ -57,7 +57,7 @@ class CouponCode extends Model
     return $str.'до '.str_replace('.00', '', $this->value) . ' тг. скидка';
   }
 
-  public function checkAvailable(User $user, $orderAmount = null)
+  public function checkAvailable(User $user = null, $orderAmount = null)
   {
     if (!$this->enabled) {
       throw new CouponCodeUnavailableException('Купон не существует');
@@ -77,21 +77,6 @@ class CouponCode extends Model
 
     if (!is_null($orderAmount) && $orderAmount < $this->min_amount) {
       throw new CouponCodeUnavailableException('Сумма заказа не соответствует минимальной сумме купона');
-    }
-
-    $used = Order::where('user_id', $user->id)
-      ->where('coupon_code_id', $this->id)
-      ->where(function($query) {
-        $query->where(function($query) {
-          $query->whereNull('paid_at')
-          ->where('closed', false);
-        })->orWhere(function($query) {
-          $query->whereNotNull('paid_at');
-        });
-      })
-      ->exists();
-    if ($used) {
-      throw new CouponCodeUnavailableException('Вы уже использовали этот купон');
     }
   }
 

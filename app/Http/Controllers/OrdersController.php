@@ -31,6 +31,9 @@ class OrdersController extends Controller
     if(Auth::check()) {
       $user = $request->user();
     } else {
+      $request->validate([
+        'email' => 'required|unique:users',
+      ]);
 //      return $request->address;
       $user = new User();
       $user->email = $request->email;
@@ -53,10 +56,10 @@ class OrdersController extends Controller
     $express_company = $request->express_company;
     $cost_transfer = (int) $request->cost_transfer !== null && isset($request->cost_transfer) ? $request->cost_transfer : 0;
 
-    if ($code = $request->input('coupon_code')) {
+    if ($code = $request->input('coupon')) {
       $coupon = CouponCode::where('code', $code)->first();
       if (!$coupon) {
-        throw new CouponCodeUnavailableException('优惠券不存在');
+        throw new CouponCodeUnavailableException('Данного купона не существует');
       }
     }
     $order = $orderService->store($user, $address, $request->items, $payment_method, $express_company, $cost_transfer, $coupon);

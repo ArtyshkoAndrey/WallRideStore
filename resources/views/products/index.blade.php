@@ -12,19 +12,6 @@
         <h1>{{$h->h1}}</h1>
         <h3>{{ $h->h2 }}</h3>
         <a href="{{ $h->url }}" class="btn">{{ $h->btn_text }}</a>
-{{--        <div class="container">--}}
-{{--          <div class="row justify-content-center">--}}
-{{--            <div class="col-md-6 col-sm-8 col-12">--}}
-{{--              <form action="{{ route('products.search') }}" id="big-search" class="form-inline w-100">--}}
-{{--                <div class="form-group mb-0 mr-0">--}}
-{{--                  <label class="sr-only">Что-то искали?</label>--}}
-{{--                  <input type="text" name="name" class="form-control border-0" placeholder="Что-то искали?">--}}
-{{--                </div>--}}
-{{--                <button type="submit" class="btn btn-primary border-0 ml-0"><i class="far fa-search"></i></button>--}}
-{{--              </form>--}}
-{{--            </div>--}}
-{{--          </div>--}}
-{{--        </div>--}}
       </div>
     </div>
   </section>

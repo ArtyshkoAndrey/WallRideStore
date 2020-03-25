@@ -22,7 +22,7 @@ Route::delete('cart/{sku}', 'CartController@remove')->name('cart.remove');
 Route::get('orders/create', 'OrdersController@create')->name('orders.create');
 Route::post('orders', 'OrdersController@store')->name('orders.store');
 Route::post('orders/success/{no}', 'OrdersController@success')->name('orders.success');
-
+Route::post('coupon_codes/{code}', 'CouponCodesController@show')->name('coupon_codes.show');
 Auth::routes();
 
 
@@ -36,7 +36,6 @@ Route::group(['middleware' => ['auth']], function() {
   Route::get('products/favorites', 'ProductsController@favorites')->name('products.favorites');
 
   Route::get('orders', 'OrdersController@index')->name('orders.index');
-  Route::get('coupon_codes/{code}', 'CouponCodesController@show')->name('coupon_codes.show');
 });
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {

@@ -21,15 +21,15 @@
             <div class="card-body mt-2" v-if="step === 1">
               <h4 class="font-weight-bold">Контактные данные</h4>
               <input type="text" value="{{ auth()->user() ?  auth()->user()->name : '' }}" v-model="order.name" name="username" class="w-100 py-2 px-2 mt-2" placeholder="Имя">
-              <input type="text" value="{{ auth()->user() ?  auth()->user()->email : '' }}" v-model="order.email" name="email" class="w-100 py-2 px-2 mt-2" placeholder="E-mail">
+              <input type="email" value="{{ auth()->user() ?  auth()->user()->email : '' }}" v-model="order.email" name="email" class="w-100 py-2 px-2 mt-2" placeholder="E-mail">
               <input type="text" value="{{ auth()->user() ? auth()->user()->address !== null ? auth()->user()->address->contact_phone !== null ? auth()->user()->address->contact_phone : '' : '' : '' }}" v-model="order.phone" name="contact_phone" class="w-100 py-2 px-2 mt-2" placeholder="Телефон">
             </div>
             <div class="card-body mt-2" v-else>
               <h4 class="font-weight-bold">Адрессные данные</h4>
               <div class="mt-2">
                 <select name="country" id="country" class="rounded-0 mt-2 form-control" placeholder="Страна">
-                  @if (auth()->user() ? auth()->user()->address !== null : null)
-                    <option value="{{ auth()->user()->address->country_id }}" selected>{{ auth()->user()->address->country->name }}</option>
+                  @if (auth()->user() ? auth()->user()->address !== null : $_COOKIE['city'] !== null)
+                    <option value="{{ auth()->user() ? auth()->user()->address->country_id : App\Models\City::find($_COOKIE['city'])->country->id }}" selected>{{ auth()->user() ? auth()->user()->address->country->name : App\Models\City::find($_COOKIE['city'])->country->name }}</option>
                   @endif
                 </select>
               </div>
@@ -41,6 +41,16 @@
                 </select>
               </div>
               <input type="text" value="{{ auth()->user() ? auth()->user()->address !== null ? auth()->user()->address->street !== null ? auth()->user()->address->street : '' : '' : ''}}" v-model="order.street" name="street" class="w-100 py-2 px-2 mt-2" placeholder="Адрес">
+              <div class="mt-2">
+                <div class="row">
+                  <div class="col-8">
+                    <input type="text" id="coupon" v-model="order.coupon" class="form-control rounded-0" placeholder="Промокод">
+                  </div>
+                  <div class="col-4 p-0">
+                    <button class="btn rounded-0 bg-dark text-white" id="checkCoupon" @click="checkCoupon">Применить</button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -82,17 +92,13 @@
                 <div class="col-md-6 mt-3 mt-md-0">
                   <h5 class="font-weight-bold">Выберите службу доставки</h5>
                   <div class="btn-group btn-group-toggle" data-toggle="buttons" v-if="!order.pickup">
-                    <div v-for="(company, index) in express_companies" class="btn p-0 rounded-0 border-0 ml-2" :disabled="order.pickup || company.costedTransfer == null">
-                      <label  class="btn-white border-0 rounded-0 p-3 mb-0" :disabled="order.pickup || company.costedTransfer == null" @click="() => { !order.pickup ? (order.express_company = company.id, order.costTransfer = company.costedTransfer) : null}">
+                    <div v-for="(company, index) in companies" class="btn p-0 rounded-0 border-0 ml-2" :disabled="order.pickup || company.costedTransfer == null">
+                      <label  class="btn-white border-0 rounded-0 p-3 mb-0" :disabled="order.pickup || company.costedTransfer == null" @click="() => { !order.pickup && company.costedTransfer !== null ? (order.express_company = company.id, order.costTransfer = company.costedTransfer) : null}">
                         <input type="radio" :value="company.id" name="express_company" autocomplete="off" :checked="order.express_company === company.id">
                         @{{ company.name }}
                       </label>
                       <p class="m-0 p-0 position-absolute font-weight-bold">@{{ company.costedTransfer ? $cost(Number(company.costedTransfer)) + ' тг.' : '' }}</p>
                     </div>
-
-<!--                     <label class="btn btn-white border-0 rounded-0 p-3 ml-2" :disabled="order.pickup" @click="() => {!order.pickup ? order.express_company = 'ems' : null}">
-                      <input type="radio" value="ems" name="express_company" id="option4" autocomplete="off" :checked="order.express_company === 'ems'"> EMS
-                    </label> -->
                   </div>
 
                   <div v-else class="mt-3">
@@ -117,7 +123,7 @@
         <div class="col-12 mt-3">
           <div :class="(step === 1 ? 'justify-content-end' : 'justify-content-between') + ' row'">
             <div class="col-sm-auto col-12 ml-2 ml-sm-0" v-if="step === 2">
-              <h4>Общая сумма {{ cost(round($priceAmount * $currency->ratio, 0)) }} {{ $currency->symbol }}</h4>
+              <h4 ref="totalAmountBottom">Общая сумма {{ cost(round($priceAmount * $currency->ratio, 0)) }} {{ $currency->symbol }}</h4>
             </div>
             <div class="col-sm-auto col-12 mt-2 mt-sm-0">
               <button v-if="step === 1" class="btn btn-dark rounded-0" @click="ordered" id="offer-payment">Следующий шаг</button>

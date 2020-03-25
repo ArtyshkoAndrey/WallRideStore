@@ -35,6 +35,17 @@ class Controller extends BaseController
       $priceAmount = 0;
       $amount = 0;
       if (Auth::check() && explode('/', $request->route()->getPrefix())[0] !== 'admin') {
+        if(isset($_COOKIE["products"])) {
+          if (count(explode(',', $_COOKIE["products"])) > 0) {
+            $arr = explode(',', $_COOKIE["products"]);
+            if ($arr[0] !== "") {
+              foreach ($arr as $id) {
+                $this->cartService->add((int) $id, 1);
+              }
+              setcookie("products", "", time() + (3600 * 24 * 30), "/", request()->getHost());
+            }
+          }
+        }
         $cartItems = $this->cartService->get();
         $priceAmount = $this->cartService->priceAmount();
         $amount = $this->cartService->amount();

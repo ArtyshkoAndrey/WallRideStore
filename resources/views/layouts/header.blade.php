@@ -7,7 +7,7 @@
       <a>Бренды</a>
       <ul class="dropdown-3 submenu-1">
         @foreach(App\Models\Category::where('is_brand', true)->get() as $category)
-          <li><a href="#">{{ $category->name }}</a></li>
+          <li><a href="{{ route('products.all', ['brand' => $category->id]) }}">{{ $category->name }}</a></li>
         @endforeach
       </ul>
     </li>
@@ -144,6 +144,34 @@
             </div>
           </div>
         </header-cart>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<nav class="navbar navbar-expand" style="position: fixed; margin-top: 50px; background: rgba(0, 0, 0, 0.58)!important; z-index: 99;width: 100vw">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent" style="width: 100vw;">
+    <ul class="navbar-nav justify-content-center" style="width: 100vw;">
+      <li class="nav-item mr-0 mr-sm-4">
+        <a class="nav-link d-flex align-items-center" href="{{ route('root') }}">Главная</a>
+      </li>
+      <li class="nav-item mr-0 mr-sm-4">
+        <a class="nav-link d-flex align-items-center" href="{{ route('products.all') }}">Магазин</a>
+      </li>
+      <li class="nav-item mr-0 mr-sm-4">
+        <a class="nav-link d-flex align-items-center" id="top-brands" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Бренды
+        </a>
+        <div class="dropdown-menu border-0 m-0 rounded-0 p-0" style="left: auto; top: 50px; max-height: 300px" aria-labelledby="top-brands">
+          <ul class="list-group rounded-0 d-flex p-2" id="top-drop-ul-brands" style="max-height: 300px; overflow-y:scroll; webkit-overflow-scrolling: touch;">
+            @foreach(App\Models\Category::where('is_brand', true)->get() as $category)
+              <li class="list-group-item rounded-0 border-0 p-2"><a href="#" class="c-red">{{ $category->name }}</a></li>
+            @endforeach
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item mr-0 mr-sm-4">
+        <a class="nav-link d-flex align-items-center c-red" href="{{ route('products.all') }}">Sale</a>
       </li>
     </ul>
   </div>
