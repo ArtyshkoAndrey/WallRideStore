@@ -7,8 +7,11 @@ use App\Models\Currency;
 use App\Models\UserAddress;
 use App\Services\CartService;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -84,5 +87,28 @@ class LoginController extends Controller
       View::share('amount', $amount);
       return $next($request);
     });
+  }
+
+  public function login(Request $request)
+  {
+    // validate the form data
+    $this->validate($request, [
+      'email' => 'required|email|exists:users,email',
+      'password' => 'required|min:3'
+    ]);
+    if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+
+      // if successful -> redirect forward
+      return redirect()->intended('/');
+    }
+
+    // if unsuccessful -> redirect back
+    return Redirect::back()
+      ->withInput()
+      ->withErrors(
+        [
+          'password' => 'Неверный пароль',
+        ]
+      );
   }
 }
