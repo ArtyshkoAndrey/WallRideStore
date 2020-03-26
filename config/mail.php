@@ -56,7 +56,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'notify.karies@yandex.ru'),
+        'address' => env('MAIL_FROM_ADDRESS', 'order@wallridestore.com'),
         'name' => env('MAIL_FROM_NAME', 'WallRide Notification'),
     ],
 
@@ -84,9 +84,9 @@ return [
     |
     */
 
-    'username' => env('MAIL_USERNAME', 'notify.karies@yandex.ru'),
+    'username' => env('MAIL_USERNAME', 'order@wallridestore.com'),
 
-    'password' => env('MAIL_PASSWORD', '241298art'),
+    'password' => env('MAIL_PASSWORD', 'H7m823ko9!'),
 
     /*
     |--------------------------------------------------------------------------

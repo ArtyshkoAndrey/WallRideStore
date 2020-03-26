@@ -85,10 +85,10 @@ class CouponCode extends Model
     // фиксированная сумма
     if ($this->type === self::TYPE_FIXED) {
       // Чтобы обеспечить надежность системы, нам необходимо сумма заказа не менее 0,01 юаня
-      return max(0.01, $orderAmount - $this->value);
+      return (int) max(0.01, $orderAmount - $this->value);
     }
 
-    return number_format($orderAmount * (100 - $this->value) / 100, 2, '.', '');
+    return (int) number_format($orderAmount * (100 - $this->value) / 100, 2, '.', '');
   }
 
   public function changeUsed($increase = true)
