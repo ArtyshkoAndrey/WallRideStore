@@ -42,7 +42,7 @@
   .darkened {
     position: relative;
     height: 100%;
-    border-radius: 10px 0 0 10px;
+    border-radius:0;
   }
 
   .darkened::before {
@@ -55,12 +55,12 @@
     background-color: rgba(0,0,0,0.5);
     z-index: 1;
     height: 100%;
-    border-radius: 10px 0 0 10px;
+    border-radius: 0;
   }
   .card {
     border: 0;
     box-shadow: 0 4px 40px rgba(0, 0, 0, 0.08);
-    border-radius: 10px;
+    border-radius: 0;
     background: #ffffff;
     color: black;
     cursor: pointer;
@@ -83,7 +83,7 @@
       width: auto;
       max-width: 100%;
       object-fit: cover;
-      border-radius: 10px 0 0 10px;
+      border-radius: 0
     }
   }
 </style>

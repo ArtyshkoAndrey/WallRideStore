@@ -37,6 +37,9 @@
     },
     mounted() {
       this.companies = this.express_companies;
+      setTimeout(() => {
+        $('input[name=contact_phone]').mask("+7 (999) 999-99-99");
+      }, 100)
     },
     methods: {
       checkCoupon () {
@@ -72,7 +75,7 @@
           })
       },
       createOrder () {
-        if (Number(this.order.city ) === 10451) {
+        if (Number(this.order.city ) === 10451 || Number($('select[id=country]').val()) === 1) {
           let items = [];
           this.cart_items.forEach(item => {
             items.push({
@@ -123,7 +126,7 @@
               }
             });
         } else {
-          swal('Извините, на данный момент доставка осуществляется только по городу Алматы', '', 'error');
+          swal('Извините, на данный момент доставка осуществляется только по городу Алматы и по России', '', 'error');
         }
       },
       validEmail (email) {

@@ -154,11 +154,13 @@
 @endsection
 
 @section('js')
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@3.0.6/js/froala_editor.pkgd.min.js"></script>
+  <script src='https://cdn.tiny.cloud/1/z826n1n5ayf774zeqdphsta5v2rflavdm2kvy7xtmczyokv3/tinymce/5/tinymce.min.js' referrerpolicy="origin"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.0/min/dropzone.min.js"></script>
   <script !src="">
-    let editor = new FroalaEditor('textarea')
-
+    // let editor = new FroalaEditor('textarea')
+    tinymce.init({
+      selector: 'textarea'
+    });
     $('#category').select2({
       width: '100%',
       ajax: {
@@ -254,7 +256,6 @@
       $('.select2-selection').css('border-radius','0px')
       $('.fr-toolbar').css('border-radius','0px')
       $('.second-toolbar').css('border-radius','0px')
-      $('.fr-wrapper').children().first().remove()
 
       $('#new').iCheck({
         checkboxClass: 'icheckbox_minimal',

@@ -18,6 +18,8 @@ use App\Models\ProductSku;
 use App\Models\User;
 use App\Models\UserAddress;
 use App\Models\Order;
+use App\Notifications\OrderPaidNotification;
+use App\Notifications\RegisterPassword;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
@@ -44,11 +46,13 @@ class OrdersController extends Controller
       $address->city_id = $request->address['city'];
       $address->currency_id = Currency::first()->id;
       $address->street = $request->address['street'];
-      $user->password = bcrypt(str_random(10));
+      $pass = str_random(10);
+      $user->password = bcrypt($pass);
       $user->save();
       $user->address()->save($address);
       $address->save();
       Auth::login($user);
+      $user->notify(new RegisterPassword($user->email, $pass));
     }
     $address = $request->address;
     $coupon = null;

@@ -31,7 +31,7 @@ class CartController extends Controller
               foreach ($arr as $id) {
                 $this->cartService->add((int) $id, 1);
               }
-              setcookie("products", "", time() + (3600 * 24 * 30), "/", request()->getHost());
+              setcookie("products", '', time() - 3600);
             }
           }
         }

@@ -22,7 +22,7 @@
               <h4 class="font-weight-bold">Контактные данные</h4>
               <input type="text" value="{{ auth()->user() ?  auth()->user()->name : '' }}" v-model="order.name" name="username" class="w-100 py-2 px-2 mt-2" placeholder="Имя">
               <input type="email" value="{{ auth()->user() ?  auth()->user()->email : '' }}" v-model="order.email" name="email" class="w-100 py-2 px-2 mt-2" placeholder="E-mail">
-              <input type="text" value="{{ auth()->user() ? auth()->user()->address !== null ? auth()->user()->address->contact_phone !== null ? auth()->user()->address->contact_phone : '' : '' : '' }}" v-model="order.phone" name="contact_phone" class="w-100 py-2 px-2 mt-2" placeholder="Телефон">
+              <input type="text" maxlength="14" value="{{ auth()->user() ? auth()->user()->address !== null ? auth()->user()->address->contact_phone !== null ? auth()->user()->address->contact_phone : '' : '' : '' }}" v-model="order.phone" name="contact_phone" class="w-100 py-2 px-2 mt-2" placeholder="Телефон">
             </div>
             <div class="card-body mt-2" v-else>
               <h4 class="font-weight-bold">Адрессные данные</h4>
@@ -137,6 +137,7 @@
 @endsection
 
 @section('scriptsAfterJs')
+  <script src="{{ asset('public/js/jquery.mask.min.js') }}"></script>
   <script !src="">
   </script>
 @endsection

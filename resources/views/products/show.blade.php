@@ -24,23 +24,6 @@
           @endif
 
         </div>
-        <div class="slider-nav">
-          @if ($product->photos)
-            @forelse($product->photos as $ph)
-              <div class="slider-for__item">
-                <img src="{{ asset('storage/products/'.$ph->name) }}" alt="{{ $ph->name }}" />
-              </div>
-            @empty
-              <div class="slider-for__item">
-                <img src="https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png" alt="error" />
-              </div>
-            @endforelse
-          @else
-            <div class="slider-for__item">
-              <img src="https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png" alt="error" />
-            </div>
-          @endif
-        </div>
       </div>
       <div class="col-md-7 mt-5 mt-md-0">
         <h3 style="line-height: 35px;">{{ $product->title }}</h3>

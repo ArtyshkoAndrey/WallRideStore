@@ -13,7 +13,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use App\Services\CartService;
-use Nathanmac\Utilities\Parser\Parser;
 
 class Controller extends BaseController
 {
@@ -23,6 +22,7 @@ class Controller extends BaseController
 
   public function __construct(CartService $cartService) {
     if (!isset($_COOKIE['city'])) {
+
       setcookie('city', City::first()->id, time() + (86400 * 30), "/");
     }
     if(!isset($_COOKIE["products"])) {
@@ -42,7 +42,7 @@ class Controller extends BaseController
               foreach ($arr as $id) {
                 $this->cartService->add((int) $id, 1);
               }
-              setcookie("products", "", time() + (3600 * 24 * 30), "/", request()->getHost());
+              setcookie("products", '', time() - 3600);;
             }
           }
         }

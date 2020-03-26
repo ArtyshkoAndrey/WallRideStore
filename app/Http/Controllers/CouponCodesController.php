@@ -12,9 +12,9 @@ class CouponCodesController extends Controller
     public function show($code, Request $request)
     {
       if (!$record = CouponCode::where('code', $code)->first()) {
-        throw new CouponCodeUnavailableException('优惠券不存在');
+        throw new CouponCodeUnavailableException('Данного купона не существует');
       }
       $record->checkAvailable(Auth::check() ? $request->user() : null);
-      return ['record' => $record, 'totalAmount' => $record->getAdjustedPrice($request->totalAmount)];
+      return ['record' => $record, 'totalAmount' => (int) $record->getAdjustedPrice($request->totalAmount)];
     }
 }

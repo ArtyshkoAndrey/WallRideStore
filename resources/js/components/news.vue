@@ -115,7 +115,7 @@
   .darkened {
     position: relative;
     height: 100%;
-    border-radius: 10px;
+    border-radius: 0;
     img {
       min-height: 100%;
       min-width: 100%;
@@ -132,7 +132,7 @@
       max-width: 100%;
       object-fit: cover;
       object-position: 85% 20%;
-      border-radius: 10px;
+      border-radius: 0;
     }
   }
 
@@ -147,11 +147,11 @@
     background: linear-gradient(0deg, rgba(0,0,0,0.804359243697479) 0%, rgba(0,0,0,0.7371323529411764) 50%, rgba(0,0,0,0.3617822128851541) 100%);
     z-index: 1;
     height: 100%;
-    border-radius: 10px;
+    border-radius: 10;
   }
   .card {
     height: 100%;
-    border-radius: 10px;
+    border-radius: 0;
     border: 0;
     .card-body {
       height: 100%;

@@ -1,6 +1,8 @@
 <?php
 // Для всех
 // Продукты переписать под ресурс
+use App\Models\City;
+
 Route::redirect('/', '/products')->name('root'); // Главаня
 Route::get('/about', 'PagesController@about')->name('about'); // Главаня
 Route::get('/contact', 'PagesController@contact')->name('contact'); // Главаня
@@ -12,6 +14,17 @@ Route::get('location/{city}', ['as' => 'location', 'uses' => 'PagesController@lo
 Route::resource('news', 'NewsController')->except([
   'edit', 'create', 'destroy', 'create'
 ]);
+Route::get('/test', function () {
+  $curl = curl_init();
+  curl_setopt($curl, CURLOPT_URL, 'http://free.ipwhois.io/json/' . \Request::ip() . '?lang=ru');
+  curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+  curl_setopt($curl, CURLOPT_POST, 1);
+  curl_setopt($curl, CURLOPT_POSTFIELDS, []);
+  $out = curl_exec($curl);
+  curl_close($curl);
+//  dd( City::where('name',json_decode($out)->city)->first());
+  dd( json_decode($out)->city);
+});
 
 Route::post('cart', 'CartController@add')->name('cart.add');
 Route::post('cart/minus', 'CartController@minus')->name('cart.minus');
