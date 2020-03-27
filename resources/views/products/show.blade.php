@@ -28,17 +28,13 @@
       <div class="col-md-7 mt-5 mt-md-0">
         <h3 style="line-height: 35px;">{{ $product->title }}</h3>
         <div class="col-12 px-0">
-          @foreach($product->categories()->get() as $cat)
-            <a href="{{ route('products.all', ['category' => $cat->id]) }}" class="btn btn-default border-dark rounded-0 mr-2">{{ $cat->name }}</a>
+          @foreach($product->brands()->get() as $brand)
+            <a href="{{ route('products.all', ['brand' => $brand->id]) }}" class="btn btn-default border-dark rounded-0 mr-2">{{ $brand->name }}</a>
           @endforeach
         </div>
         <div class="col-12 px-0">
           <ol class="breadcrumb bg-transparent text-black px-0">
             <li class="breadcrumb-item px-0"><a href="{{ route('products.all') }}" class="text-dark">Магазин</a></li>
-            @foreach($product->categories()->get() as $cat)
-              @include('layouts.categories', ['cat' => $cat])
-              <li class="breadcrumb-item px-0"><a href="{{ route('products.all', ['category' => $cat->id]) }}" class="text-dark">{{ $cat->name }}</a></li>
-            @endforeach
             <li class="breadcrumb-item active px-0" aria-current="page">{{ ucwords(strtolower($product->title)) }}</li>
           </ol>
         </div>

@@ -116,15 +116,15 @@ class CouponCode extends Model
     return $this->belongsToMany('App\Models\Product', 'coupons_products', 'coupon_id', 'product_id');
   }
 
-  public function categoriesEnabled () {
-    return $this->belongsToMany('App\Models\Category', 'coupons_categories', 'coupon_id', 'category_id');
+  public function brandsEnabled () {
+    return $this->belongsToMany('App\Models\Brand', 'coupons_brands', 'coupon_id', 'brand_id');
   }
 
    public function productsDisabled () {
     return $this->belongsToMany('App\Models\Product', 'disabled_coupons_products', 'coupon_id', 'product_id');
   }
 
-  public function categoriesDisabled () {
-    return $this->belongsToMany('App\Models\Category', 'disabled_coupons_categories', 'coupon_id', 'category_id');
+  public function brandsDisabled () {
+    return $this->belongsToMany('App\Models\Brand', 'disabled_coupons_brands', 'coupon_id', 'brand_id');
   }
 }

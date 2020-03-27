@@ -174,20 +174,20 @@
                       <div class="col-md-6 mt-md-2 mt-2">
                        <div class="row">
                          <div class="col-12">
-                           <label for="categories[]">Категории</label>
+                           <label for="brands[]">Бренды</label>
                          </div>
                          <div class="col-12">
-                           <select class="js-example-basic-multiple w-100 rounded-0" name="categories[]" multiple="multiple">
-                              @foreach(\App\Models\Category::all() as $category)
+                           <select class="js-example-basic-multiple w-100 rounded-0" name="brands[]" multiple="multiple">
+                              @foreach(\App\Models\Brand::all() as $brand)
                               <?= $check = false; ?>
-                                @foreach($coupon->categoriesEnabled as $cat)
-                                  @if($cat->id === $category->id)
+                                @foreach($coupon->brandsEnabled as $cat)
+                                  @if($cat->id === $brand->id)
                                     <?= $check = true; ?>
-                                    <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
+                                    <option value="{{ $brand->id }}" selected>{{ $brand->name }}</option>
                                   @endif
                                 @endforeach
                                 @if(!$check)
-                                  <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                  <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                 @endif
                               @endforeach
                             </select>
@@ -222,20 +222,20 @@
                       <div class="col-md-6 mt-md-2 mt-2">
                        <div class="row">
                          <div class="col-12">
-                           <label for="disabled_categories[]">Исключить категории</label>
+                           <label for="disabled_brands[]">Исключить бренды</label>
                          </div>
                          <div class="col-12">
-                           <select class="js-example-basic-multiple w-100 rounded-0" name="disabled_categories[]" multiple="multiple">
-                             @foreach(\App\Models\Category::all() as $category)
+                           <select class="js-example-basic-multiple w-100 rounded-0" name="disabled_brands[]" multiple="multiple">
+                             @foreach(\App\Models\Brand::all() as $brand)
                               <?= $check = false; ?>
-                                @foreach($coupon->categoriesDisabled as $cat)
-                                  @if($cat->id === $category->id)
+                                @foreach($coupon->brandsDisabled as $cat)
+                                  @if($cat->id === $brand->id)
                                     <?= $check = true; ?>
-                                    <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
+                                    <option value="{{ $brand->id }}" selected>{{ $brand->name }}</option>
                                   @endif
                                 @endforeach
                                 @if(!$check)
-                                  <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                  <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                 @endif
                               @endforeach
                             </select>

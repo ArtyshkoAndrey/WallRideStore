@@ -19,40 +19,30 @@
         <div class="card-body">
           <div class="row">
             <div class="col-md-6">
-              <form action="{{ route('admin.production.category.store') }}" method="post">
+              <form action="{{ route('admin.production.category.update', $category->id) }}" method="post">
                 @csrf
+                @method('PUT')
                 <div class="form-group">
                   <label for="name">Название категории</label>
-                  <input type="text" class="form-control rounded-0" id="name" name="name" placeholder="Название категории" required>
+                  <input type="text" class="form-control rounded-0" id="name" name="name" placeholder="Название категории" value="{{ old('name') ? old('name') : $category->name }}">
                 </div>
                 <div class="form-group">
                   <label for="categories" class="col-12">Родительская категория</label>
                   <select name="categories[]" multiple id="categories" class="form-control rounded-0 js-example-basic-multiple">
+                    <option value="">Без родителя</option>
                     @foreach(App\Models\Category::all() as $cat)
-                      <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                      <option value="{{ $cat->id }}"
+                      @foreach($category->parents as $pr)
+                       {{ $pr->id === $cat->id ? 'selected' : null }}
+                      @endforeach
+                      >{{ $cat->name }}</option>
                     @endforeach
                   </select>
                 </div>
                 <div class="form-group">
-                  <button type="submit" class="btn bg-dark rounded-0 border-0">Добавить</button>
+                  <button type="submit" class="btn bg-dark rounded-0 border-0">Изменить</button>
                 </div>
               </form>
-            </div>
-            <div class="col-md-6 category">
-              <ul>
-                @foreach($categories as $category)
-                  <li><a href="{{ route('admin.production.category.edit', $category->id) }}" class="text-red">{{ $category->name }}</a> <form action="{{ route('admin.production.category.destroy', $category->id) }}" method="post">
-                      @csrf
-                      @method('delete')
-                      <button class="bg-transparent border-0 rounded-0" style="color: #F33C3C" type="submit"><i style="font-size: 1.5rem" class="fal fa-trash"></i></button>
-                    </form></li>
-                  @if($category->child()->count() > 0)
-                    <ul>
-                      @include('admin.layouts.categoryList', ['cat' => $category->child()->get(), 'deleted' => true])
-                    </ul>
-                  @endif
-                @endforeach
-              </ul>
             </div>
           </div>
         </div>

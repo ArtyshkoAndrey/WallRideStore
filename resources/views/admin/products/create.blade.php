@@ -31,6 +31,7 @@
     <div class="row mt-2" style="z-index: 100">
       <div class="col-sm-auto ml-0 pl-0 col-6 px-0 pr-sm-2"><a href="{{ route('admin.production.products.index') }}" class="bg-white px-3 py-2 d-block">Товары</a></div>
       <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.production.category.index') }}" class="bg-dark px-3 py-2 d-block">Категории</a></div>
+      <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.production.brand.index') }}" class="bg-dark px-3 py-2 d-block">Бренды</a></div>
       <div class="col-sm-auto col-6 px-0 px-sm-2"><a href="{{ route('admin.production.attr.index') }}" class="bg-dark px-3 py-2 d-block">Атрибуты</a></div>
     </div>
     <div class="row mt-0 pt-0">

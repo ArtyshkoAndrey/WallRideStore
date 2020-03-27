@@ -20,7 +20,7 @@ class Product extends Model
   protected $with = ['photos'];
   protected $dates = ['deleted_at'];
 
-  public function skus()
+  public function skus ()
   {
     return $this->hasMany(ProductSku::class);
   }
@@ -36,6 +36,10 @@ class Product extends Model
 
   public function categories() {
     return $this->belongsToMany(Category::class, 'products_categories', 'product_id', 'category_id');
+  }
+
+  public function brands() {
+    return $this->belongsToMany(Brand::class, 'products_brands', 'product_id', 'brand_id');
   }
 
   public function photos() {

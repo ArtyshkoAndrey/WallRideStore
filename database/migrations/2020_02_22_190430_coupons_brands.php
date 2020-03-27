@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CouponsCategories extends Migration
+class CouponsBrands extends Migration
 {
   /**
    * Run the migrations.
@@ -13,12 +13,12 @@ class CouponsCategories extends Migration
    */
   public function up()
   {
-    Schema::create('coupons_categories', function (Blueprint $table) {
+    Schema::create('coupons_brands', function (Blueprint $table) {
       $table->increments('id');
       $table->unsignedInteger('coupon_id');
-      $table->unsignedBigInteger('category_id');
+      $table->unsignedBigInteger('brand_id');
       $table->foreign('coupon_id')->references('id')->on('coupon_codes')->onDelete('cascade');
-      $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+      $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
     });
   }
 
@@ -29,6 +29,6 @@ class CouponsCategories extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('coupons_categories');
+    Schema::dropIfExists('coupons_brands');
   }
 }

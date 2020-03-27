@@ -97,6 +97,7 @@ Route::group(['prefix' => 'admin', 'guard' => 'admin', 'namespace' => 'Admin', '
   Route::resource('/products', 'ProductsController', ['as' => 'admin.production']);
   Route::resource('/attr', 'SkusController', ['as' => 'admin.production']);
   Route::resource('/category', 'CategoryController', ['as' => 'admin.production']);
+  Route::resource('/brand', 'BrandController', ['as' => 'admin.production']);
   Route::resource('/currency', 'CurrencyController', ['as' => 'admin']);
   Route::resource('/news', 'NewsController', ['as' => 'admin']);
   Route::resource('/pay', 'PayController', ['as' => 'admin.store']);

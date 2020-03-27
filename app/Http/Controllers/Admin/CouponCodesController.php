@@ -8,7 +8,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\View\View;
-use App\Models\Category;
 use Carbon\Carbon;
 
 class CouponCodesController extends Controller
@@ -74,7 +73,7 @@ class CouponCodesController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
@@ -102,8 +101,8 @@ class CouponCodesController extends Controller
       $coupon->save();
       $coupon->productsEnabled()->sync($request->products);
       $coupon->productsDisabled()->sync($request->disabled_products);
-      $coupon->categoriesEnabled()->sync($request->categories);
-      $coupon->categoriesDisabled()->sync($request->disabled_categories);
+      $coupon->brandsEnabled()->sync($request->brands);
+      $coupon->brandsDisabled()->sync($request->disabled_brands);
       // dd($request->disabled_category);
       return redirect()->route('admin.store.coupon.index');
     }
@@ -123,43 +122,21 @@ class CouponCodesController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Factory|View
      */
     public function edit($id)
     {
       $coupon = CouponCode::find($id);
-      // $categories = Category::whereNull('category_id')
-        // ->with('childrenCategories')
-        // ->get();
-      // dd($coupon->productsEnabled, $categories, $coupon->categoriesEnabled, $coupon->productsDisabled, $coupon->categoriesDisabled);
-      // foreach ($categories as $category) {
-      //   echo '<li>' . $category->name . '</li>'.'<ul>';
-      //   foreach ($category->childrenCategories as $childCategory) {
-      //     $this->child($childCategory);
-      //   }
-      //   echo '</ul>';
-      // }
-
       return view('admin.coupon.edit', compact('coupon'));
     }
 
-    // private function child($child) {
-    //   echo '<li>' . $child->name . '</li>';
-    //   if ($child->categories) {
-    //     echo '<ul>';
-    //       foreach ($child->categories as $childCategory) {
-    //         $this->child($childCategory);
-    //       }
-    //     echo '</ul>';
-    //   }
-    // }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function update(Request $request, $id)
     {
@@ -187,9 +164,9 @@ class CouponCodesController extends Controller
       $coupon->save();
       $coupon->productsEnabled()->sync($request->products);
       $coupon->productsDisabled()->sync($request->disabled_products);
-      $coupon->categoriesEnabled()->sync($request->categories);
-      $coupon->categoriesDisabled()->sync($request->disabled_categories);
-      
+      $coupon->brandsEnabled()->sync($request->brands);
+      $coupon->brandsDisabled()->sync($request->disabled_brands);
+
       // dd($request->disabled_category);
       return redirect()->route('admin.store.coupon.edit', $id);
     }

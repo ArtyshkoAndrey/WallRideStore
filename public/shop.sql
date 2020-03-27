@@ -2,10 +2,10 @@
 -- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Хост: srv-db-plesk03.ps.kz:3306
--- Время создания: Мар 19 2020 г., 21:57
--- Версия сервера: 10.2.29-MariaDB
--- Версия PHP: 7.1.14
+-- Хост: 127.0.0.1:3306
+-- Время создания: Мар 27 2020 г., 18:04
+-- Версия сервера: 5.7.25-log
+-- Версия PHP: 7.3.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- База данных: `wallride_wp_q3ua7`
+-- База данных: `shop`
 --
 
 -- --------------------------------------------------------
@@ -68,6 +68,48 @@ INSERT INTO `admin_password_resets` (`email`, `token`, `created_at`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `brands`
+--
+
+CREATE TABLE `brands` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `brands`
+--
+
+INSERT INTO `brands` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Nike', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `brands_categories`
+--
+
+CREATE TABLE `brands_categories` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `brand_id` bigint(20) UNSIGNED NOT NULL,
+  `category_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `brands_categories`
+--
+
+INSERT INTO `brands_categories` (`id`, `brand_id`, `category_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 30, '2020-03-26 17:00:00', '2020-03-26 17:00:00'),
+(2, 1, 22, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `cart_items`
 --
 
@@ -83,7 +125,9 @@ CREATE TABLE `cart_items` (
 --
 
 INSERT INTO `cart_items` (`id`, `user_id`, `product_sku_id`, `amount`) VALUES
-(11, 102, 37, 1);
+(2, 130, 16, 1),
+(3, 130, 15, 1),
+(4, 130, 11, 1);
 
 -- --------------------------------------------------------
 
@@ -94,8 +138,6 @@ INSERT INTO `cart_items` (`id`, `user_id`, `product_sku_id`, `amount`) VALUES
 CREATE TABLE `categories` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `category_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `is_brand` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -104,32 +146,34 @@ CREATE TABLE `categories` (
 -- Дамп данных таблицы `categories`
 --
 
-INSERT INTO `categories` (`id`, `name`, `category_id`, `is_brand`, `created_at`, `updated_at`) VALUES
-(2, 'Bronze56k', NULL, 1, NULL, NULL),
-(7, 'Adidas Skateboarding', NULL, 1, NULL, NULL),
-(8, 'Birdhouse', NULL, 1, NULL, NULL),
-(9, 'Dime', NULL, 1, NULL, NULL),
-(10, 'Dime', NULL, 1, NULL, NULL),
-(11, 'Independent', NULL, 1, NULL, NULL),
-(12, 'Mob Grip', NULL, 1, NULL, NULL),
-(13, 'Polar', NULL, 1, NULL, NULL),
-(14, 'Shake Junt', NULL, 1, NULL, NULL),
-(15, 'Куртки', 16, 0, NULL, NULL),
-(16, 'Одежда', NULL, 0, NULL, NULL),
-(17, 'Толстовки', 16, 0, NULL, NULL),
-(18, 'Лонгсливы', 16, 0, NULL, NULL),
-(19, 'Аксессуары', NULL, 0, NULL, NULL),
-(20, 'Ремни', 19, 0, NULL, NULL),
-(21, 'Футболки', 16, 0, NULL, NULL),
-(22, 'Скейтборд', NULL, 0, NULL, NULL),
-(23, 'Подшипники', 22, 0, NULL, NULL),
-(25, 'Кепки', 9, 0, '2020-03-15 09:26:30', '2020-03-15 09:26:30'),
-(26, 'Свитшоты', 9, 0, '2020-03-17 10:55:08', '2020-03-17 10:55:08'),
-(27, 'Худи', 9, 0, '2020-03-18 07:21:35', '2020-03-18 07:21:35'),
-(28, 'Флиски', 9, 0, '2020-03-18 08:07:25', '2020-03-18 08:07:25'),
-(29, 'Шорты', 9, 0, '2020-03-19 11:10:46', '2020-03-19 11:10:46'),
-(30, 'Штаны', 9, 0, '2020-03-19 11:15:19', '2020-03-19 11:15:19'),
-(31, 'Деки', 13, 0, '2020-03-19 12:21:10', '2020-03-19 12:21:10');
+INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(22, 'Скейтборд', NULL, NULL),
+(29, 'Колёса', '2020-03-27 12:58:19', '2020-03-27 12:58:19'),
+(30, 'Подшипники', '2020-03-27 12:58:27', '2020-03-27 13:11:25'),
+(31, 'Доска', '2020-03-27 12:58:57', '2020-03-27 12:58:57');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `categories_categories`
+--
+
+CREATE TABLE `categories_categories` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `category_id` bigint(20) UNSIGNED NOT NULL,
+  `child_category_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `categories_categories`
+--
+
+INSERT INTO `categories_categories` (`id`, `category_id`, `child_category_id`, `created_at`, `updated_at`) VALUES
+(16, 22, 29, NULL, NULL),
+(17, 29, 30, NULL, NULL),
+(18, 22, 31, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -17252,7 +17296,7 @@ CREATE TABLE `city_expresses` (
 INSERT INTO `city_expresses` (`id`, `city_id`, `express_zone_id`, `express_company_id`, `created_at`, `updated_at`) VALUES
 (1, 1116, 5, 2, '2020-03-13 11:07:30', '2020-03-13 11:07:30'),
 (2, 1116, 6, 8, '2020-03-13 12:58:12', '2020-03-13 12:58:12'),
-(3, 10451, 4, 2, '2020-03-17 03:50:55', '2020-03-17 03:50:55');
+(3, 10451, 7, 8, '2020-03-25 19:16:06', '2020-03-25 19:16:06');
 
 -- --------------------------------------------------------
 
@@ -17494,14 +17538,21 @@ INSERT INTO `countries` (`id`, `name`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `coupons_categories`
+-- Структура таблицы `coupons_brands`
 --
 
-CREATE TABLE `coupons_categories` (
+CREATE TABLE `coupons_brands` (
   `id` int(10) UNSIGNED NOT NULL,
   `coupon_id` int(10) UNSIGNED NOT NULL,
-  `category_id` bigint(20) UNSIGNED NOT NULL
+  `brand_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `coupons_brands`
+--
+
+INSERT INTO `coupons_brands` (`id`, `coupon_id`, `brand_id`) VALUES
+(1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -17514,6 +17565,15 @@ CREATE TABLE `coupons_products` (
   `coupon_id` int(10) UNSIGNED NOT NULL,
   `product_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `coupons_products`
+--
+
+INSERT INTO `coupons_products` (`id`, `coupon_id`, `product_id`) VALUES
+(1, 1, 5),
+(2, 1, 6),
+(3, 1, 10);
 
 -- --------------------------------------------------------
 
@@ -17528,14 +17588,14 @@ CREATE TABLE `coupon_codes` (
   `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `value` decimal(8,2) NOT NULL,
   `total` int(10) UNSIGNED NOT NULL,
-  `used` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `used` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `min_amount` decimal(10,0) NOT NULL,
   `max_amount` decimal(10,0) NOT NULL,
-  `disabled_other_coupons` tinyint(1) NOT NULL DEFAULT 0,
-  `disabled_other_sales` tinyint(1) NOT NULL DEFAULT 0,
-  `not_before` datetime NOT NULL DEFAULT current_timestamp(),
+  `disabled_other_coupons` tinyint(1) NOT NULL DEFAULT '0',
+  `disabled_other_sales` tinyint(1) NOT NULL DEFAULT '0',
+  `not_before` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `not_after` datetime NOT NULL,
-  `enabled` tinyint(1) NOT NULL DEFAULT 1,
+  `enabled` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -17545,7 +17605,7 @@ CREATE TABLE `coupon_codes` (
 --
 
 INSERT INTO `coupon_codes` (`id`, `name`, `code`, `type`, `value`, `total`, `used`, `min_amount`, `max_amount`, `disabled_other_coupons`, `disabled_other_sales`, `not_before`, `not_after`, `enabled`, `created_at`, `updated_at`) VALUES
-(1, 'wallride', 'wallride', 'fixed', '2000.00', 60, 3, '500', '2000', 1, 1, '2020-02-23 12:22:03', '2020-02-29 00:00:00', 1, '2020-02-22 17:00:00', '2020-02-24 09:33:58'),
+(1, 'wallride', 'wallride', 'fixed', '2000.00', 60, 7, '500', '2000', 1, 1, '2020-02-23 12:22:03', '2020-04-29 00:00:00', 1, '2020-02-22 17:00:00', '2020-03-26 07:41:38'),
 (2, '2020', '2020', 'percent', '50.00', 30, 0, '1000', '50000', 0, 0, '2020-02-24 16:57:41', '2020-02-29 00:00:00', 0, '2020-02-24 09:57:41', '2020-02-24 10:04:42'),
 (3, 'best333', 'best333', 'fixed', '10000.00', 10, 0, '1000', '10000', 1, 1, '2020-02-24 17:04:20', '2020-02-20 00:00:00', 0, '2020-02-24 10:04:20', '2020-02-24 10:04:26');
 
@@ -17569,21 +17629,28 @@ CREATE TABLE `currencies` (
 --
 
 INSERT INTO `currencies` (`id`, `name`, `ratio`, `symbol`, `created_at`, `updated_at`) VALUES
-(1, 'Тенге', 1, 'тг.', NULL, '2020-03-19 04:13:31'),
-(2, 'Российский рубль', 0.177305, 'р.', NULL, '2020-03-19 04:13:31'),
-(3, 'Американский доллар', 0.00227625, '$', NULL, '2020-03-19 04:13:31');
+(1, 'Тенге', 1, 'тг.', NULL, '2020-03-27 10:42:42'),
+(2, 'Российский рубль', 0.175747, 'р.', NULL, '2020-03-27 10:42:42'),
+(3, 'Американский доллар', 0.00224185, '$', NULL, '2020-03-27 10:42:42');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `disabled_coupons_categories`
+-- Структура таблицы `disabled_coupons_brands`
 --
 
-CREATE TABLE `disabled_coupons_categories` (
+CREATE TABLE `disabled_coupons_brands` (
   `id` int(10) UNSIGNED NOT NULL,
   `coupon_id` int(10) UNSIGNED NOT NULL,
-  `category_id` bigint(20) UNSIGNED NOT NULL
+  `brand_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `disabled_coupons_brands`
+--
+
+INSERT INTO `disabled_coupons_brands` (`id`, `coupon_id`, `brand_id`) VALUES
+(1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -17597,6 +17664,13 @@ CREATE TABLE `disabled_coupons_products` (
   `product_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Дамп данных таблицы `disabled_coupons_products`
+--
+
+INSERT INTO `disabled_coupons_products` (`id`, `coupon_id`, `product_id`) VALUES
+(1, 1, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -17606,9 +17680,9 @@ CREATE TABLE `disabled_coupons_products` (
 CREATE TABLE `express_companies` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `enabled` tinyint(1) NOT NULL DEFAULT 1,
+  `enabled` tinyint(1) NOT NULL DEFAULT '1',
   `cost_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Настраиваемая',
-  `track_code` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `track_code` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -17618,8 +17692,8 @@ CREATE TABLE `express_companies` (
 --
 
 INSERT INTO `express_companies` (`id`, `name`, `enabled`, `cost_type`, `track_code`, `created_at`, `updated_at`) VALUES
-(2, 'AES', 1, 'Настраиваемая', NULL, '2020-03-02 17:00:00', '2020-03-17 03:50:33'),
-(3, 'Самовывоз', 1, '0 тг.', NULL, '2020-03-02 17:00:00', '2020-03-16 11:40:47'),
+(2, 'AES', 0, 'Настраиваемая', NULL, '2020-03-02 17:00:00', '2020-03-13 14:00:23'),
+(3, 'Самовывоз', 0, '0 тг.', NULL, '2020-03-02 17:00:00', '2020-03-13 14:00:31'),
 (8, 'EMS', 1, 'Настраиваемая', NULL, '2020-03-07 06:32:08', '2020-03-07 06:32:08');
 
 -- --------------------------------------------------------
@@ -17647,7 +17721,7 @@ INSERT INTO `express_zones` (`id`, `name`, `company_id`, `cost`, `step`, `cost_s
 (4, 'Зона 1', 2, '10000', 1.00, '3000', '2020-03-02 17:00:00', '2020-03-02 17:00:00'),
 (5, 'Зона 2', 2, '12000', 1.00, '4000', '2020-03-02 17:00:00', '2020-03-02 17:00:00'),
 (6, 'Зона тест', 8, '1000', 1.00, '500', '2020-03-13 12:58:04', '2020-03-13 12:58:04'),
-(7, 'алматы', 2, '0', 500.00, '0', '2020-03-17 03:49:21', '2020-03-17 03:49:21');
+(7, 'Зота ХЗ', 8, '100000', 0.50, '1000', '2020-03-25 19:16:00', '2020-03-25 19:16:00');
 
 -- --------------------------------------------------------
 
@@ -17657,7 +17731,7 @@ INSERT INTO `express_zones` (`id`, `name`, `company_id`, `cost`, `step`, `cost_s
 
 CREATE TABLE `headers` (
   `id` int(10) UNSIGNED NOT NULL,
-  `photo` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `photo` text COLLATE utf8mb4_unicode_ci,
   `url` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `h1` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `h2` text COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -17703,9 +17777,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (16, '2020_02_16_095727_admin_password_resets', 4),
 (17, '2020_02_22_182652_coupons_products', 5),
 (18, '2020_02_22_190314_categories', 6),
-(19, '2020_02_22_190430_coupons_categories', 7),
 (21, '2018_12_23_103610_create_coupon_codes_table', 8),
-(22, '2020_02_23_124447_disabled_coupons_categories', 9),
 (23, '2020_02_23_124857_disabled_coupons_products', 9),
 (25, '2020_02_26_142927_create_orders_table', 11),
 (29, '2020_02_26_142913_create_express_companies_table', 12),
@@ -17719,7 +17791,13 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (41, '2018_03_09_133109_create_skuses_table', 18),
 (42, '2020_03_19_153357_create_news_table', 19),
 (43, '2020_03_19_203313_create_pays_table', 20),
-(44, '2020_03_19_211158_create_headers_table', 21);
+(44, '2020_03_19_211158_create_headers_table', 21),
+(45, '2020_02_22_174245_create_brands_table', 22),
+(46, '2020_02_22_190430_coupons_brands', 22),
+(47, '2020_02_23_124447_disabled_coupons_brands', 22),
+(48, '2020_03_08_004219_products_brands', 23),
+(50, '2020_03_08_004219_categories_categories', 24),
+(51, '2020_03_08_004219_brands_categories', 25);
 
 -- --------------------------------------------------------
 
@@ -17731,7 +17809,7 @@ CREATE TABLE `news` (
   `id` int(10) UNSIGNED NOT NULL,
   `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `title` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `photo` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `photo` text COLLATE utf8mb4_unicode_ci,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -17756,16 +17834,17 @@ CREATE TABLE `orders` (
   `id` int(10) UNSIGNED NOT NULL,
   `no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
+  `coupon_code_id` int(255) DEFAULT NULL,
   `address` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `total_amount` decimal(10,0) NOT NULL,
-  `ship_price` decimal(10,0) NOT NULL DEFAULT 0,
+  `ship_price` decimal(10,0) NOT NULL DEFAULT '0',
   `paid_at` datetime DEFAULT NULL,
   `payment_method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `payment_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `closed` tinyint(1) NOT NULL DEFAULT 0,
-  `reviewed` tinyint(1) NOT NULL DEFAULT 0,
+  `closed` tinyint(1) NOT NULL DEFAULT '0',
+  `reviewed` tinyint(1) NOT NULL DEFAULT '0',
   `ship_status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'paid',
-  `ship_data` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ship_data` text COLLATE utf8mb4_unicode_ci,
   `id_express_company` int(10) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -17775,15 +17854,17 @@ CREATE TABLE `orders` (
 -- Дамп данных таблицы `orders`
 --
 
-INSERT INTO `orders` (`id`, `no`, `user_id`, `address`, `total_amount`, `ship_price`, `paid_at`, `payment_method`, `payment_no`, `closed`, `reviewed`, `ship_status`, `ship_data`, `id_express_company`, `created_at`, `updated_at`) VALUES
-(2, '20200313170953637375', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432. 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"89029634366\"}', '1000', '0', '2020-03-13 17:10:50', 'card', NULL, 0, 0, 'received', '{\"express_no\":null}', 2, '2020-02-13 10:09:00', '2020-03-13 13:52:02'),
-(4, '20200313183409596905', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432. 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"89029634366\"}', '55900', '0', NULL, 'cash', NULL, 0, 0, 'received', '{\"express_no\":\"123123\"}', 3, '2020-01-13 11:34:00', '2020-03-13 13:53:12'),
-(5, '20200313183502743516', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432. 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"89029634366\"}', '39900', '0', '2020-03-13 18:35:29', 'card', NULL, 0, 0, 'received', '{\"express_no\":\"123123\"}', 3, '2020-02-13 11:35:00', '2020-03-13 13:52:26'),
-(6, '20200313194023834658', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432. 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"89029634366\"}', '39900', '12000', '2020-03-13 19:41:04', 'card', NULL, 0, 0, 'pending', NULL, 2, '2020-03-13 12:40:23', '2020-03-13 12:41:04'),
-(7, '20200313194143915116', 102, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f, \\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a, \\u0443\\u043b. \\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e, 24 \\u043a\\u0432. 25, 660099\",\"contact_name\":\"\\u0410\\u043d\\u0434\\u0440\\u0435\\u0439 \\u0410\\u0440\\u0442\\u044b\\u0448\\u043a\\u043e \\u0410\\u043b\\u0435\\u043a\\u0441\\u0435\\u0435\\u0432\\u0438\\u0447\",\"contact_phone\":\"89029634366\"}', '16900', '12000', '2020-03-13 19:42:05', 'card', NULL, 0, 0, 'received', '{\"express_no\":\"RU550649534HK\"}', 2, '2020-03-13 12:41:00', '2020-03-13 13:51:42'),
-(11, '20200317095227505915', 256, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f,\\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a,\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24\",\"contact_name\":\"fulliton\",\"contact_phone\":\"89029634366\"}', '31800', '0', NULL, 'cash', NULL, 0, 0, 'pending', NULL, 3, '2020-03-17 03:52:27', '2020-03-17 03:52:27'),
-(12, '20200317095704888713', 260, '{\"address\":\"\\u041a\\u0430\\u0437\\u0430\\u0445\\u0441\\u0442\\u0430\\u043d,\\u0410\\u043b\\u043c\\u0430\\u0442\\u044b (\\u0410\\u043b\\u043c\\u0430-\\u0410\\u0442\\u0430),\\u0410\\u0440\\u043a\\u0442\\u0438\\u0447\\u0435\\u0441\\u043a\\u0430\\u044f 115\",\"contact_name\":\"\\u0420\\u043e\\u043c\\u0430\\u043d\",\"contact_phone\":\"+77474117635\"}', '14900', '0', NULL, 'cash', NULL, 0, 0, 'delivered', '{\"express_no\":\"qweqweqweqweqweqweqweqwewqe\"}', 3, '2020-03-17 03:57:00', '2020-03-17 03:59:22'),
-(13, '20200319175610403135', 269, '{\"address\":\"\\u041a\\u0430\\u0437\\u0430\\u0445\\u0441\\u0442\\u0430\\u043d,\\u041c\\u043e\\u0441\\u043a\\u0432\\u0430,\\u0414\\u043e\\u0441\\u0442\\u044b\\u043a 34\",\"contact_name\":\"\\u0420\\u0443\\u0441\\u0442\\u0430\\u043c\",\"contact_phone\":\"87778385299\"}', '41900', '0', NULL, 'card', NULL, 0, 0, 'paid', NULL, 2, '2020-03-19 11:56:10', '2020-03-19 11:56:10');
+INSERT INTO `orders` (`id`, `no`, `user_id`, `coupon_code_id`, `address`, `total_amount`, `ship_price`, `paid_at`, `payment_method`, `payment_no`, `closed`, `reviewed`, `ship_status`, `ship_data`, `id_express_company`, `created_at`, `updated_at`) VALUES
+(8, '20200315153328400872', 120, NULL, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f,\\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a,\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24\",\"contact_name\":\"fulliton\",\"contact_phone\":\"89029634366\"}', '39900', '12000', NULL, 'card', NULL, 0, 0, 'paid', NULL, 2, '2020-03-15 08:33:28', '2020-03-15 08:33:28'),
+(9, '20200315154442926986', 120, NULL, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f,\\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a,\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24\",\"contact_name\":\"fulliton\",\"contact_phone\":\"89029634366\"}', '150600', '12000', '2020-03-15 15:45:22', 'card', NULL, 0, 0, 'pending', NULL, 2, '2020-03-15 08:44:42', '2020-03-15 08:45:22'),
+(13, '20200315155538327515', 124, NULL, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f,\\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a,\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24\",\"contact_name\":\"\\u0422\\u0435\\u0441\\u0442\\u043e\\u0432\\u044b\\u0439 \\u0410\\u043a\\u043a\\u0430\\u0443\\u043d\\u0442 \\u0434\\u043b\\u044f \\u043f\\u043e\\u043a\\u0443\\u043f\\u043a\\u0438\",\"contact_phone\":\"89029634366\"}', '79800', '12000', NULL, 'card', NULL, 0, 0, 'paid', NULL, 2, '2020-03-15 08:55:38', '2020-03-15 08:55:38'),
+(14, '20200317094508106937', 125, NULL, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f,\\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a,\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24\",\"contact_name\":\"fulliton\",\"contact_phone\":\"89029634366\"}', '156600', '0', NULL, 'cash', NULL, 0, 0, 'pending', NULL, 3, '2020-03-17 02:45:08', '2020-03-17 02:45:08'),
+(17, '20200326022027717169', 127, 1, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f,\\u041c\\u043e\\u0441\\u043a\\u0432\\u0430,\\u0413\\u043e\\u0440\\u044c\\u0435\\u043e\\u0433\\u043e\",\"contact_name\":\"fulliton\",\"contact_phone\":\"89029634366\"}', '15900', '100000', NULL, 'cash', NULL, 0, 0, 'pending', NULL, 3, '2020-03-25 19:20:27', '2020-03-25 19:20:28'),
+(18, '20200326022409282916', 128, 1, '{\"address\":\"\\u041a\\u0430\\u0437\\u0430\\u0445\\u0441\\u0442\\u0430\\u043d,\\u0410\\u043b\\u043c\\u0430\\u0442\\u044b (\\u0410\\u043b\\u043c\\u0430-\\u0410\\u0442\\u0430),\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24\",\"contact_name\":\"fulliton\",\"contact_phone\":\"89029634366\"}', '32800', '12000', NULL, 'cash', NULL, 0, 0, 'pending', NULL, 3, '2020-03-25 19:24:09', '2020-03-25 19:24:09'),
+(19, '20200326023216761752', 129, 1, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f,\\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a,\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24\",\"contact_name\":\"fulliton\",\"contact_phone\":\"89029634366\"}', '50700', '100000', '2020-03-26 02:33:33', 'card', NULL, 0, 0, 'pending', NULL, 8, '2020-03-25 19:32:16', '2020-03-25 19:33:33'),
+(20, '20200326024806473839', 129, NULL, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f,\\u0410\\u043b\\u043c\\u0430\\u0442\\u044b (\\u0410\\u043b\\u043c\\u0430-\\u0410\\u0442\\u0430),\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24\",\"contact_name\":\"fulliton\",\"contact_phone\":\"89029634366\"}', '17900', '0', NULL, 'cash', NULL, 0, 0, 'pending', NULL, 3, '2020-03-25 19:48:07', '2020-03-25 19:48:07'),
+(21, '20200326024907100933', 129, NULL, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f,\\u0410\\u043b\\u043c\\u0430\\u0442\\u044b (\\u0410\\u043b\\u043c\\u0430-\\u0410\\u0442\\u0430),\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24\",\"contact_name\":\"fulliton\",\"contact_phone\":\"89029634366\"}', '16900', '0', NULL, 'cash', NULL, 0, 0, 'pending', NULL, 3, '2020-03-25 19:49:07', '2020-03-25 19:49:07'),
+(22, '20200326144138165576', 130, 1, '{\"address\":\"\\u041a\\u0430\\u0437\\u0430\\u0445\\u0441\\u0442\\u0430\\u043d,\\u0410\\u043b\\u043c\\u0430\\u0442\\u044b (\\u0410\\u043b\\u043c\\u0430-\\u0410\\u0442\\u0430),\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24, 25\",\"contact_name\":\"fulliton\",\"contact_phone\":\"89029634366\"}', '8900', '0', NULL, 'cash', NULL, 0, 0, 'pending', NULL, 3, '2020-03-26 07:41:38', '2020-03-26 07:41:38');
 
 -- --------------------------------------------------------
 
@@ -17795,11 +17876,11 @@ CREATE TABLE `order_items` (
   `id` int(10) UNSIGNED NOT NULL,
   `order_id` int(10) UNSIGNED NOT NULL,
   `product_id` int(10) UNSIGNED NOT NULL,
-  `product_sku` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_sku` text COLLATE utf8mb4_unicode_ci,
   `amount` int(10) UNSIGNED NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `rating` int(10) UNSIGNED DEFAULT NULL,
-  `review` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `review` text COLLATE utf8mb4_unicode_ci,
   `reviewed_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -17808,10 +17889,18 @@ CREATE TABLE `order_items` (
 --
 
 INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `product_sku`, `amount`, `price`, `rating`, `review`, `reviewed_at`) VALUES
-(7, 11, 18, 'One Size', 1, '15900.00', NULL, NULL, NULL),
-(8, 11, 19, 'One Size', 1, '15900.00', NULL, NULL, NULL),
-(9, 12, 16, 'One Size', 1, '14900.00', NULL, NULL, NULL),
-(10, 13, 26, 'M', 1, '41900.00', NULL, NULL, NULL);
+(8, 9, 5, 'M', 1, '21900.00', NULL, NULL, NULL),
+(9, 9, 6, 'L', 3, '42900.00', NULL, NULL, NULL),
+(18, 14, 9, 'M', 1, '16900.00', NULL, NULL, NULL),
+(21, 17, 10, 'One Size', 1, '17900.00', NULL, NULL, NULL),
+(22, 18, 10, 'One Size', 1, '17900.00', NULL, NULL, NULL),
+(23, 18, 9, 'M', 1, '16900.00', NULL, NULL, NULL),
+(24, 19, 11, 'One Size', 1, '10900.00', NULL, NULL, NULL),
+(25, 19, 8, 'M', 1, '16900.00', NULL, NULL, NULL),
+(26, 19, 7, 'One Size', 1, '24900.00', NULL, NULL, NULL),
+(27, 20, 10, 'One Size', 1, '17900.00', NULL, NULL, NULL),
+(28, 21, 8, 'M', 1, '16900.00', NULL, NULL, NULL),
+(29, 22, 11, 'One Size', 1, '10900.00', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -17830,7 +17919,8 @@ CREATE TABLE `password_resets` (
 --
 
 INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
-('adad.artyshko@mail.ru', '$2y$10$I0qrmje9ssvO4JH/YOkKROteu.76LOy.n/xVsM8.u5bnMDxKrbUAm', '2020-01-27 17:52:06');
+('adad.artyshko@mail.ru', '$2y$10$I0qrmje9ssvO4JH/YOkKROteu.76LOy.n/xVsM8.u5bnMDxKrbUAm', '2020-01-27 17:52:06'),
+('artyshko.andrey@gmail.com', '$2y$10$/3dGSeD.OsjZkOiGzYvvUeRkxtKks5/lxAhBXJkKbIJePmhHn4P5.', '2020-03-26 05:15:02');
 
 -- --------------------------------------------------------
 
@@ -17855,7 +17945,7 @@ CREATE TABLE `pays` (
 --
 
 INSERT INTO `pays` (`id`, `name`, `pg_testing_mode`, `pg_merchant_id`, `pg_description`, `url`, `code`, `created_at`, `updated_at`) VALUES
-(1, 'PayBox', 0, 514888, 'Описание заказа', 'https://api.paybox.money/payment.php?', 'kDY43tnDGs9yqtHG', '2020-03-18 17:00:00', '2020-03-19 16:53:22');
+(1, 'PayBox', 1, 514888, 'Описание заказа', 'https://api.paybox.money/payment.php?', 'kDY43tnDGs9yqtHG', '2020-03-18 17:00:00', '2020-03-19 14:06:24');
 
 -- --------------------------------------------------------
 
@@ -17867,9 +17957,9 @@ CREATE TABLE `products` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `on_sale` tinyint(1) NOT NULL DEFAULT 1,
-  `on_new` tinyint(1) NOT NULL DEFAULT 1,
-  `sold_count` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `on_sale` tinyint(1) NOT NULL DEFAULT '1',
+  `on_new` tinyint(1) NOT NULL DEFAULT '1',
+  `sold_count` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `price` decimal(10,2) NOT NULL,
   `price_sale` decimal(10,0) DEFAULT NULL,
   `weight` decimal(10,2) NOT NULL,
@@ -17883,49 +17973,35 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `title`, `description`, `on_sale`, `on_new`, `sold_count`, `price`, `price_sale`, `weight`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(16, 'DIME CLASSIC LOGO CORDUROY CAP', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>CHOCOLATE</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>100% COTTON</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>SELF FABRIC STRAP</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>EMBROIDERED LOGO</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>YELLOW CLASSIC LOGO TAB</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>DEBOSSED LOGO METAL BUCKLE</span></p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '14900.00', NULL, '0.20', NULL, '2020-03-15 11:21:26', '2020-03-15 11:53:42'),
-(17, 'DIME CLASSIC LOGO CORDUROY CAP', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>BLACK</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>100% COTTON</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>SELF FABRIC STRAP</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>EMBROIDERED LOGO</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>YELLOW CLASSIC LOGO TAB</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>DEBOSSED LOGO METAL BUCKLE</span></p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '14900.00', NULL, '0.20', NULL, '2020-03-15 12:05:08', '2020-03-15 12:06:40'),
-(18, 'DIME PERF CAP', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>BLUE</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>100% POLYESTER</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>YKK ADJUSTABLE FASTENING CLOSURE</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>GREY UNDERBRIM</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>PVC LOGO PATCH</span></p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '15900.00', NULL, '0.20', NULL, '2020-03-15 12:11:59', '2020-03-15 12:13:10'),
-(19, 'DIME PERF CAP', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>BLACK</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>100% POLYESTER</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>YKK ADJUSTABLE FASTENING CLOSURE</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>GREY UNDERBRIM</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>PVC LOGO PATCH</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>PERFORATED LOGO</span></p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '15900.00', NULL, '0.20', NULL, '2020-03-15 12:15:40', '2020-03-15 12:16:09'),
-(20, 'DIME PERF CAP', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>WHITE</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>100% POLYESTER</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>YKK ADJUSTABLE FASTENING CLOSURE</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>GREY UNDERBRIM</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>PVC LOGO PATCH</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>PERFORATED LOGO</span></p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '15900.00', NULL, '0.20', NULL, '2020-03-17 10:48:26', '2020-03-17 10:52:45'),
-(25, 'DIME BLOCK TERRY CREWNECK', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>LIGHT BLUE &amp; CREAM</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>100% FRENCH TERRY COTTON</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>EMBROIDERED LOGO</span></p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '41900.00', NULL, '0.50', NULL, '2020-03-17 11:30:25', '2020-03-18 07:19:43'),
-(26, 'DIME BLOCK TERRY CREWNECK', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>NAVY &amp; GREEN</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>100% FRENCH TERRY COTTON</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>EMBROIDERED LOGO</span></p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '41900.00', NULL, '0.50', NULL, '2020-03-18 07:19:05', '2020-03-18 07:19:24'),
-(27, 'DIME DELETE HOODIE', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>ASH</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>14 oz 100% COTTON</span></p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '36900.00', NULL, '0.70', NULL, '2020-03-18 07:22:13', '2020-03-18 07:22:39'),
-(28, 'DIME DELETE HOODIE', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>BLACK</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>14 oz 100% COTTON</span></p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '36900.00', NULL, '0.70', NULL, '2020-03-18 07:25:43', '2020-03-18 07:26:07'),
-(29, 'DIME CHILLING CLASSIC LOGO CREWNECK', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>WHITE</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>14 oz 100% COTTON</span></p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '34900.00', NULL, '0.50', NULL, '2020-03-18 07:30:31', '2020-03-18 07:32:20'),
-(30, 'DIME CHILLING CLASSIC LOGO CREWNECK', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>BLACK</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>14 oz 100% COTTON</span></p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '34900.00', NULL, '0.50', NULL, '2020-03-18 07:32:09', '2020-03-18 07:32:40'),
-(31, 'DIME MANA HOODIE', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>ASH</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>14 oz 100% COTTON</span></p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '36900.00', NULL, '0.70', NULL, '2020-03-18 07:38:15', '2020-03-18 07:38:31');
-INSERT INTO `products` (`id`, `title`, `description`, `on_sale`, `on_new`, `sold_count`, `price`, `price_sale`, `weight`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(32, 'DIME MANA HOODIE', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>BLACK</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>14 oz 100% COTTON</span> </p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '36900.00', NULL, '0.70', NULL, '2020-03-18 07:38:16', '2020-03-18 08:05:24'),
-(33, 'DIME FACES QUARTER ZIP FLEECE', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>CREAM</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>100% POLAR FLEECE</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>PVC LOGO PATCH</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>ELASTIC BINDING</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>ZIPPER GUARD</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>YKK ZIPPER</span></p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '43900.00', NULL, '0.50', NULL, '2020-03-18 08:24:17', '2020-03-18 08:28:59'),
-(34, 'DIME FACES QUARTER ZIP FLEECE', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>BLACK</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>100% POLAR FLEECE</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>PVC LOGO PATCH</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>ELASTIC BINDING</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>ZIPPER GUARD</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>YKK ZIPPER</span></p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '43900.00', NULL, '0.50', NULL, '2020-03-18 08:28:03', '2020-03-18 08:28:48'),
-(36, 'Test', '<p>Qwerty</p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 0, 0, '100.00', NULL, '0.20', '2020-03-18 18:43:59', '2020-03-18 18:43:47', '2020-03-18 18:43:59'),
-(37, 'Test1', '<p>Йцуукен</p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 0, 0, '123.00', NULL, '0.00', '2020-03-18 18:45:04', '2020-03-18 18:44:56', '2020-03-18 18:45:04'),
-(38, 'DIME CLASSIC LOGO T-SHIRT', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>ATLANTIC GREEN</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>6.5 oz 100% COTTON</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>MADE IN USA</span> </p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '14900.00', NULL, '0.40', NULL, '2020-03-19 10:47:13', '2020-03-19 10:47:13'),
-(39, 'DIME FILMS T-SHIRT', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>POOL</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>6.5 oz 100% COTTON</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>MADE IN USA</span> </p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '14900.00', NULL, '0.40', NULL, '2020-03-19 10:49:21', '2020-03-19 10:49:21'),
-(40, 'DIME LAST TRY T-SHIRT', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>BEIGE</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>6.5 oz 100% COTTON</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>MADE IN USA</span> </p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '14900.00', NULL, '0.40', NULL, '2020-03-19 10:53:13', '2020-03-19 10:53:13'),
-(41, 'DIME LAST TRY T-SHIRT', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>WHITE</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>6.5 oz 100% COTTON</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>MADE IN USA</span> </p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '14900.00', NULL, '0.40', NULL, '2020-03-19 10:54:32', '2020-03-19 10:54:32'),
-(42, 'DIME SPHYNX T-SHIRT', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>BLACK</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>6.5 oz 100% COTTON</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>MADE IN USA</span> </p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '14900.00', NULL, '0.40', NULL, '2020-03-19 10:57:26', '2020-03-19 10:57:26'),
-(43, 'DIME SPHYNX T-SHIRT', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>ATLANTIC GREEN</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>6.5 oz 100% COTTON</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>MADE IN USA</span></p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '14900.00', NULL, '0.40', NULL, '2020-03-19 10:58:29', '2020-03-19 10:58:40'),
-(44, 'DIME TANTRIC T-SHIRT', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>WHITE</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>6.5 oz 100% COTTON</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>MADE IN USA</span> </p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '14900.00', NULL, '0.40', NULL, '2020-03-19 11:00:19', '2020-03-19 11:00:19'),
-(45, 'DIME TANTRIC T-SHIRT', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>BLACK</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>6.5 oz 100% COTTON</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>MADE IN USA</span> </p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '14900.00', NULL, '0.40', NULL, '2020-03-19 11:02:12', '2020-03-19 11:02:12'),
-(46, 'DIME ZONE T-SHIRT', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>GOLD</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>6.5 oz 100% COTTON</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>MADE IN USA</span> </p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '14900.00', NULL, '0.40', NULL, '2020-03-19 11:04:21', '2020-03-19 11:04:21'),
-(47, 'DIME CLASSIC EMBROIDERED T-SHIRT', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>TOMATO</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>6.5 oz 100% COTTON</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>MADE IN USA</span> </p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '14900.00', NULL, '0.40', NULL, '2020-03-19 11:07:09', '2020-03-19 11:07:09');
-INSERT INTO `products` (`id`, `title`, `description`, `on_sale`, `on_new`, `sold_count`, `price`, `price_sale`, `weight`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(48, 'DIME CLASSIC LOGO T-SHIRT', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>LIGHT PINK</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>6.5 oz 100% COTTON</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>MADE IN USA</span> </p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '14900.00', NULL, '0.40', NULL, '2020-03-19 11:08:46', '2020-03-19 11:08:46'),
-(49, 'DIME JEAN SHORTS', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>BLUE</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>100% RAW DENIM COTTON</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>CUSTOM LEATHER PATCH</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>CUSTOM BUTTONS AND RIVETS</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>EMBROIDERED CLASSIC LOGOS</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>CLASSIC LOGO YELLOW TAB</span> </p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '26900.00', NULL, '0.50', NULL, '2020-03-19 11:12:29', '2020-03-19 11:12:29'),
-(50, 'DIME JEAN SHORTS', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>BLACK</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>100% RAW DENIM COTTON</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>CUSTOM LEATHER PATCH</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>CUSTOM BUTTONS AND RIVETS</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>EMBROIDERED CLASSIC LOGOS</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>CLASSIC LOGO YELLOW TAB</span> </p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '26900.00', NULL, '0.50', NULL, '2020-03-19 11:13:55', '2020-03-19 11:13:55'),
-(51, 'DIME TWILL PANTS', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>BLACK</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>100% BRUSHED TWILL COTTON</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>EMBROIDERED CLASSIC LOGO</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>BACK POCKET</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>YELLOW CLASSIC LOGO TAB</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>SELF FABRIC ELASTIC WAIST W/ HIDDEN DRAWSTRINGS</span> </p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '29900.00', NULL, '0.60', NULL, '2020-03-19 11:16:29', '2020-03-19 11:16:29'),
-(52, 'DIME TWILL PANTS', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>SLATE BLUE</span> <br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>100% BRUSHED TWILL COTTON</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>EMBROIDERED CLASSIC LOGO</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>BACK POCKET</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>YELLOW CLASSIC LOGO TAB</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>SELF FABRIC ELASTIC WAIST W/ HIDDEN DRAWSTRINGS</span></p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '29900.00', NULL, '0.60', NULL, '2020-03-19 11:18:36', '2020-03-19 11:18:36'),
-(53, 'DIME TWILL PANTS', '<p><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>NAVY</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>100% BRUSHED TWILL COTTON</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>EMBROIDERED CLASSIC LOGO</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>BACK POCKET</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>YELLOW CLASSIC LOGO TAB</span><br style=\"box-sizing: border-box; color: rgb(51, 51, 51); font-family: HelveticaNeue, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\'color: rgb(51, 51, 51); font-family: HelveticaNeue, \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\'>SELF FABRIC ELASTIC WAIST W/ HIDDEN DRAWSTRINGS</span> </p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '29900.00', NULL, '0.60', NULL, '2020-03-19 11:25:23', '2020-03-19 11:25:23'),
-(54, 'AARON HERRINGTON - BREAKFAST - BLUE', '<p><u style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);\">8.375&quot; X 32&quot;</u><br style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\">NOSE: 7.0&quot;</span><br style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\">WHEEL BASE: 14.5&quot;</span><br style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\">TAIL: 6.625&quot;</span> </p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '26900.00', NULL, '1.00', NULL, '2020-03-19 12:23:14', '2020-03-19 12:23:14'),
-(55, 'DANE BRADY - ALONE - RED', '<p><u style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);\">8.5&quot; X 32.125&quot;</u><br style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; background-color: rgb(255, 255, 255); font-size: 15px;\">NOSE: 7.125&quot;</span><br style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; background-color: rgb(255, 255, 255); font-size: 15px;\">WHEEL BASE: 14.5&quot;</span><br style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\"color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\">TAIL: 6.75&quot;</span> </p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '26900.00', NULL, '1.00', NULL, '2020-03-19 12:28:53', '2020-03-19 12:28:53'),
-(56, 'DANE BRADY - ALONE - YELLOW', '<p><u style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);\">8.38&quot; (WIDEST POINT) X 31.79&quot;</u><span style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; background-color: rgb(255, 255, 255); font-size: 15px;\">&nbsp;</span><br style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; background-color: rgb(255, 255, 255); font-size: 15px;\">NOSE: 6.924&quot;</span><br style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; background-color: rgb(255, 255, 255); font-size: 15px;\">WHEEL BASE: 14.125&quot;</span><br style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; background-color: rgb(255, 255, 255); font-size: 15px;\">TAIL: 6.5&quot;</span> </p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '26900.00', NULL, '1.00', NULL, '2020-03-19 12:30:43', '2020-03-19 12:30:43');
-INSERT INTO `products` (`id`, `title`, `description`, `on_sale`, `on_new`, `sold_count`, `price`, `price_sale`, `weight`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(57, 'DANE BRADY - SHOPPING SPREE', '<p style=\"box-sizing: border-box; margin-top: 0.85677rem; margin-bottom: 0.85677rem; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><u style=\"box-sizing: border-box;\">8.5&quot; X 32.125&quot; - WITH SLICK</u><br style=\"box-sizing: border-box;\">NOSE: 7.125&quot;<br style=\"box-sizing: border-box;\">WHEEL BASE: 14.5&quot;<br style=\"box-sizing: border-box;\">TAIL: 6.75&quot;</p><p style=\"box-sizing: border-box; margin-top: 0.85677rem; margin-bottom: 0.85677rem; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\">&nbsp;<u style=\"box-sizing: border-box;\">DANE 1 SPECIAL SHAPE - WITH WHEEL WELLS</u><br style=\"box-sizing: border-box;\"><u style=\"box-sizing: border-box;\">9.75&quot; (WIDEST POINT) X 31.375&quot;</u><br style=\"box-sizing: border-box;\">NOSE: 6.25&quot;<br style=\"box-sizing: border-box;\">WHEEL BASE: 14.125&quot;<br style=\"box-sizing: border-box;\">TAIL: 6.625&quot;</p><p style=\"box-sizing: border-box; margin-top: 0.85677rem; margin-bottom: 0.85677rem;\"><br style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"></p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 0, 0, '26900.00', NULL, '1.00', NULL, '2020-03-19 12:44:03', '2020-03-19 13:02:07'),
-(58, 'HJALTE HALBERG - BIG HEAD - YELLOW', '<p><u style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);\">8.0&quot; X 31.875&quot;</u><br style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; background-color: rgb(255, 255, 255);\">NOSE: 7.0&quot;</span><br style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; background-color: rgb(255, 255, 255);\">WHEEL BASE: 14.25&quot;</span><br style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; background-color: rgb(255, 255, 255);\">TAIL: 6.5&quot;</span> </p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '26900.00', NULL, '1.00', NULL, '2020-03-19 13:05:58', '2020-03-19 13:05:58'),
-(59, 'HJALTE HALBERG - STAIRCASE - BLUE', '<p><u style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);\">8.5&quot; X 32.125&quot;</u><br style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\"color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\">NOSE: 7.125&quot;</span><br style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\"color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\">WHEEL BASE: 14.5&quot;</span><br style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><span style=\"color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\">TAIL: 6.75&quot;</span></p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 0, 0, '26900.00', NULL, '1.00', NULL, '2020-03-19 13:08:51', '2020-03-19 13:09:06'),
-(60, 'KLEZ ZAWISZA - BRAIN BLOWER - BLUE', '<p style=\"box-sizing: border-box; margin-top: 0.85677rem; margin-bottom: 0.85677rem; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><u style=\"box-sizing: border-box;\">8.375&quot; X 32&quot;</u><br style=\"box-sizing: border-box;\">NOSE: 7.0&quot;<br style=\"box-sizing: border-box;\">WHEEL BASE: 14.5&quot;<br style=\"box-sizing: border-box;\">TAIL: 6.625&quot;</p><p style=\"box-sizing: border-box; margin-top: 0.85677rem; margin-bottom: 0.85677rem; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\"><br></p><p><u style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);\">1992 SPECIAL SHAPE<br style=\"box-sizing: border-box;\">9.25&quot; (WIDEST POINT) X 32&quot;</u></p><p><span style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; background-color: rgb(255, 255, 255); font-size: 15px;\">NOSE: 6.875&quot;</span></p><p><span style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; background-color: rgb(255, 255, 255); font-size: 15px;\">WHEEL BASE: 14.25&quot;</span></p><p><span style=\"box-sizing: border-box; color: rgb(0, 0, 0); font-family: Helvetica, sans-serif; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 900; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; background-color: rgb(255, 255, 255); font-size: 15px;\">TAIL: 6.625&quot;</span></p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 0, 0, '26900.00', NULL, '1.00', NULL, '2020-03-19 13:20:54', '2020-03-19 13:20:54');
+(2, 'BRONZE56K HIGH PERFORMANCE WINDBREAKER ORANGE', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 438px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Н/Д</td></tr><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Размеры</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\"><p style=\"box-sizing: border-box; margin: 0px;\">M</p></td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '55900.00', '55900', '2.00', NULL, '2020-03-12 18:30:33', '2020-03-12 18:31:22'),
+(5, 'BRONZE56K HARDWARE TECHNOLOGY LONGSLEEVE NAVY', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Н/Д</td></tr><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Размеры</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\"><p style=\"box-sizing: border-box; margin: 0px;\">XL, L, M, S</p></td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 1, '21900.00', '21900', '2.00', NULL, '2020-03-12 18:37:05', '2020-03-15 08:45:22'),
+(6, 'BRONZE56K MICRODOSE 1/4 ZIP MUSTARD/NAVY', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Н/Д</td></tr><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Размеры</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\"><p style=\"box-sizing: border-box; margin: 0px;\">L, M</p></td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 0, 3, '42900.00', '42900', '1.00', NULL, '2020-03-12 18:38:18', '2020-03-15 08:45:22'),
+(7, 'BRONZE56K LOGO LEATHER BELT BLACK', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\">0.800 kg</td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 0, 1, '24900.00', '24900', '1.00', NULL, '2020-03-12 18:39:45', '2020-03-25 19:33:33'),
+(8, 'BRONZE56K LAVA LAMP TEE NAVY', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Н/Д</td></tr><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Размеры</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\"><p style=\"box-sizing: border-box; margin: 0px;\">L, M, S</p></td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 0, 1, '16900.00', '16900', '1.00', NULL, '2020-03-12 18:41:26', '2020-03-25 19:33:33'),
+(9, 'BRONZE56K MONEY CLIP TEE BLACK', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Н/Д</td></tr><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Размеры</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\"><p style=\"box-sizing: border-box; margin: 0px;\">M, S</p></td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 0, 1, '16900.00', '16900', '1.00', NULL, '2020-03-12 18:42:24', '2020-03-13 12:42:05'),
+(10, 'BRONSON BEARING RAW', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\">0.110 kg</td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 0, 2, '17900.00', '17900', '1.00', NULL, '2020-03-12 18:45:03', '2020-03-25 08:08:20'),
+(11, 'BRONSON BEARING G2', '<table style=\"box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 535px; margin: 0px; color: #777777; font-family: \'PT Sans\', sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; text-decoration-style: initial; text-decoration-color: initial;\">\r\n<tbody style=\"box-sizing: border-box;\">\r\n<tr style=\"box-sizing: border-box;\">\r\n<th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Вес</th>\r\n<td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\">0.110 kg</td>\r\n</tr>\r\n</tbody>\r\n</table>', 0, 0, 1, '10900.00', '10900', '1.00', NULL, '2020-03-12 18:46:06', '2020-03-26 08:49:58');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `products_brands`
+--
+
+CREATE TABLE `products_brands` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `product_id` int(10) UNSIGNED NOT NULL,
+  `brand_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `products_brands`
+--
+
+INSERT INTO `products_brands` (`id`, `product_id`, `brand_id`, `created_at`, `updated_at`) VALUES
+(1, 5, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -17946,88 +18022,7 @@ CREATE TABLE `products_categories` (
 --
 
 INSERT INTO `products_categories` (`id`, `product_id`, `category_id`, `created_at`, `updated_at`) VALUES
-(22, 16, 9, NULL, NULL),
-(23, 16, 19, NULL, NULL),
-(24, 16, 25, NULL, NULL),
-(25, 17, 9, NULL, NULL),
-(26, 17, 19, NULL, NULL),
-(27, 17, 25, NULL, NULL),
-(28, 18, 9, NULL, NULL),
-(29, 18, 19, NULL, NULL),
-(30, 18, 25, NULL, NULL),
-(31, 19, 9, NULL, NULL),
-(32, 19, 19, NULL, NULL),
-(33, 19, 25, NULL, NULL),
-(34, 20, 9, NULL, NULL),
-(35, 20, 25, NULL, NULL),
-(36, 20, 19, NULL, NULL),
-(42, 25, 9, NULL, NULL),
-(43, 25, 26, NULL, NULL),
-(44, 26, 9, NULL, NULL),
-(45, 26, 26, NULL, NULL),
-(46, 27, 9, NULL, NULL),
-(47, 27, 27, NULL, NULL),
-(48, 28, 9, NULL, NULL),
-(49, 28, 27, NULL, NULL),
-(50, 29, 9, NULL, NULL),
-(51, 29, 26, NULL, NULL),
-(52, 30, 9, NULL, NULL),
-(53, 30, 26, NULL, NULL),
-(54, 31, 9, NULL, NULL),
-(55, 31, 27, NULL, NULL),
-(56, 32, 9, NULL, NULL),
-(57, 32, 27, NULL, NULL),
-(58, 33, 9, NULL, NULL),
-(59, 33, 28, NULL, NULL),
-(60, 34, 9, NULL, NULL),
-(61, 34, 28, NULL, NULL),
-(63, 36, 25, NULL, NULL),
-(64, 37, 25, NULL, NULL),
-(65, 38, 9, NULL, NULL),
-(66, 38, 21, NULL, NULL),
-(67, 39, 9, NULL, NULL),
-(68, 39, 21, NULL, NULL),
-(69, 40, 9, NULL, NULL),
-(70, 40, 21, NULL, NULL),
-(71, 41, 9, NULL, NULL),
-(72, 41, 21, NULL, NULL),
-(73, 42, 9, NULL, NULL),
-(74, 42, 21, NULL, NULL),
-(75, 43, 9, NULL, NULL),
-(76, 43, 21, NULL, NULL),
-(77, 44, 9, NULL, NULL),
-(78, 44, 21, NULL, NULL),
-(79, 45, 9, NULL, NULL),
-(80, 45, 21, NULL, NULL),
-(81, 46, 9, NULL, NULL),
-(82, 46, 21, NULL, NULL),
-(83, 47, 9, NULL, NULL),
-(84, 47, 21, NULL, NULL),
-(85, 48, 9, NULL, NULL),
-(86, 48, 21, NULL, NULL),
-(87, 49, 9, NULL, NULL),
-(88, 49, 29, NULL, NULL),
-(89, 50, 9, NULL, NULL),
-(90, 50, 29, NULL, NULL),
-(91, 51, 9, NULL, NULL),
-(92, 51, 30, NULL, NULL),
-(93, 52, 9, NULL, NULL),
-(94, 52, 30, NULL, NULL),
-(95, 53, 9, NULL, NULL),
-(96, 53, 30, NULL, NULL),
-(97, 54, 13, NULL, NULL),
-(98, 54, 31, NULL, NULL),
-(99, 55, 13, NULL, NULL),
-(100, 55, 31, NULL, NULL),
-(101, 56, 13, NULL, NULL),
-(102, 56, 31, NULL, NULL),
-(103, 57, 13, NULL, NULL),
-(104, 57, 31, NULL, NULL),
-(105, 58, 13, NULL, NULL),
-(106, 58, 31, NULL, NULL),
-(107, 59, 13, NULL, NULL),
-(108, 60, 13, NULL, NULL),
-(109, 60, 31, NULL, NULL);
+(16, 11, 30, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -18048,75 +18043,19 @@ CREATE TABLE `products_image` (
 --
 
 INSERT INTO `products_image` (`id`, `product_id`, `name`, `created_at`, `updated_at`) VALUES
-(79, 16, '1584268108233_DIME_CLASSIC_LOGO_CORDUROY_CAP_C.jpg', '2020-03-15 11:28:27', '2020-03-15 11:28:27'),
-(80, 16, '1584268108248_DIME_CLASSIC_LOGO_CORDUROY_CAP_C2.jpg', '2020-03-15 11:28:28', '2020-03-15 11:28:28'),
-(81, 16, '1584268108240_DIME_CLASSIC_LOGO_CORDUROY_CAP_C1.jpg', '2020-03-15 11:28:28', '2020-03-15 11:28:28'),
-(85, 17, '1584270396662_DIME_CLASSIC_LOGO_CORDUROY_CAP_B.jpg', '2020-03-15 12:06:35', '2020-03-15 12:06:35'),
-(86, 17, '1584270396670_DIME_CLASSIC_LOGO_CORDUROY_CAP_BLACK_2_1024x1024.jpg', '2020-03-15 12:06:35', '2020-03-15 12:06:35'),
-(87, 17, '1584270396676_DIME_CLASSIC_LOGO_CORDUROY_CAP_BLACK_3_1024x1024.jpg', '2020-03-15 12:06:35', '2020-03-15 12:06:35'),
-(94, 18, '1584270788025_PERF_CAP_BLUE_2_1024x1024.jpg', '2020-03-15 12:13:06', '2020-03-15 12:13:06'),
-(95, 18, '1584270788033_PERF_CAP_BLUE_3_1024x1024.jpg', '2020-03-15 12:13:06', '2020-03-15 12:13:06'),
-(96, 18, '1584270788015_PERF_CAP_BLUE_1_1024x1024.jpg', '2020-03-15 12:13:07', '2020-03-15 12:13:07'),
-(100, 19, '1584270967241_PERF_CAP_BLACK_1_2000x2000.jpg', '2020-03-15 12:16:05', '2020-03-15 12:16:05'),
-(101, 19, '1584270967247_PERF_CAP_BLACK_2_2000x2000.jpg', '2020-03-15 12:16:05', '2020-03-15 12:16:05'),
-(102, 19, '1584270967254_PERF_CAP_BLACK_3_2000x2000.jpg', '2020-03-15 12:16:06', '2020-03-15 12:16:06'),
-(106, 20, '1584438759177_PERF_CAP_WHITE_2_2000x2000.jpg', '2020-03-17 10:52:40', '2020-03-17 10:52:40'),
-(107, 20, '1584438759169_PERF_CAP_WHITE_1_2000x2000.jpg', '2020-03-17 10:52:41', '2020-03-17 10:52:41'),
-(108, 20, '1584438759184_PERF_CAP_WHITE_3_2000x2000.jpg', '2020-03-17 10:52:42', '2020-03-17 10:52:42'),
-(129, 25, '1584511968742_BLOCK_TERRY_CREWNECK_LIGHT_BLUE.jpg', '2020-03-18 07:12:50', '2020-03-18 07:12:50'),
-(130, 25, '1584511968750_BLOCK_TERRY_CREWNECK_LIGHT_BLUE1.jpg', '2020-03-18 07:12:52', '2020-03-18 07:12:52'),
-(133, 26, '1584512361158_BLOCK_TERRY_CREWNECK_NAVY_GREEN_1_2000x2000.jpg', '2020-03-18 07:19:21', '2020-03-18 07:19:21'),
-(134, 26, '1584512361163_BLOCK_TERRY_CREWNECK_NAVY_GREEN_2_2000x2000.jpg', '2020-03-18 07:19:22', '2020-03-18 07:19:22'),
-(137, 27, '1584512549888_DELETE_HOODIE_ASH_1_2000x2000.jpg', '2020-03-18 07:22:30', '2020-03-18 07:22:30'),
-(138, 27, '1584512549893_DELETE_HOODIE_ASH_2_2000x2000.jpg', '2020-03-18 07:22:31', '2020-03-18 07:22:31'),
-(141, 28, '1584512758820_DELETE_HOODIE_BLACK_1_2000x2000.jpg', '2020-03-18 07:25:59', '2020-03-18 07:25:59'),
-(142, 28, '1584512758826_DELETE_HOODIE_BLACK_2_2000x2000.jpg', '2020-03-18 07:26:00', '2020-03-18 07:26:00'),
-(143, 29, '1584513042459_DIME_CHILLING_CLASSIC_LOGO_CREWN.jpg', '2020-03-18 07:30:42', '2020-03-18 07:30:42'),
-(144, 29, '1584513042466_DIME_CHILLING_CLASSIC_LOGO_CREWN1.jpg', '2020-03-18 07:30:43', '2020-03-18 07:30:43'),
-(145, 30, '1584513155998_DIME_CHILLING_CLASSIC_LOGO_CREWNECK_BLACK_1_2000x2000.png', '2020-03-18 07:32:37', '2020-03-18 07:32:37'),
-(146, 31, '1584513544559_MANA_HOODIE_ASH_1_2000x2000.jpg', '2020-03-18 07:39:05', '2020-03-18 07:39:05'),
-(147, 31, '1584513544564_MANA_HOODIE_ASH_2_2000x2000.jpg', '2020-03-18 07:39:05', '2020-03-18 07:39:05'),
-(148, 32, '1584515039786_MANA_HOODIE_BLACK_1_2000x2000.jpg', '2020-03-18 08:04:01', '2020-03-18 08:04:01'),
-(149, 32, '1584515039795_MANA_HOODIE_BLACK_2_2000x2000.jpg', '2020-03-18 08:04:02', '2020-03-18 08:04:02'),
-(152, 33, '1584516275524_FACES_QUARTER_ZIP_FLEECE_CREAM_1.jpg', '2020-03-18 08:24:36', '2020-03-18 08:24:36'),
-(153, 33, '1584516275533_FACES_QUARTER_ZIP_FLEECE_CREAM_2.jpg', '2020-03-18 08:24:36', '2020-03-18 08:24:36'),
-(154, 34, '1584516524993_FACES_QUARTER_ZIP_FLEECE_BLACK_1.jpg', '2020-03-18 08:28:45', '2020-03-18 08:28:45'),
-(155, 34, '1584516525002_FACES_QUARTER_ZIP_FLEECE_BLACK_2.jpg', '2020-03-18 08:28:46', '2020-03-18 08:28:46'),
-(159, NULL, '1584552427375_1581048243.jpg', '2020-03-18 18:27:06', '2020-03-18 18:27:06'),
-(160, NULL, '1584552450072_1581048243.jpg', '2020-03-18 18:27:29', '2020-03-18 18:27:29'),
-(163, 37, '1584553579410_1584516524993_FACES_QUARTER_ZIP_FLEECE_BLACK_1.jpg', '2020-03-18 18:44:51', '2020-03-18 18:44:56'),
-(164, 38, '1584611230372_DIME_CLASSIC_EMBROIDERED_LOGO_T1.jpg', '2020-03-19 10:47:10', '2020-03-19 10:47:13'),
-(165, 39, '1584611346073_DIME_FILMS_T-SHIRT_POOL_2000x200.jpg', '2020-03-19 10:49:05', '2020-03-19 10:49:21'),
-(166, 40, '1584611585544_LAST_TRY_T-SHIRT_BEIGE_2000x2000.jpg', '2020-03-19 10:53:05', '2020-03-19 10:53:13'),
-(167, 41, '1584611667892_LAST_TRY_T-SHIRT_WHITE_2000x2000.jpg', '2020-03-19 10:54:27', '2020-03-19 10:54:32'),
-(168, 42, '1584611830467_SPHYNX_T-SHIRT_BLACK_2000x2000.jpg', '2020-03-19 10:57:10', '2020-03-19 10:57:26'),
-(169, 43, '1584611903194_SPHYNX_T-SHIRT_ATLANTIC_GREEN_20.jpg', '2020-03-19 10:58:23', '2020-03-19 10:58:29'),
-(170, 44, '1584612010982_TANTRIC_T-SHIRT_WHITE_2000x2000.jpg', '2020-03-19 11:00:13', '2020-03-19 11:00:19'),
-(171, 45, '1584612094868_TANTRIC_T-SHIRT_BLACK_2000x2000.jpg', '2020-03-19 11:01:34', '2020-03-19 11:02:12'),
-(172, 46, '1584612258462_DIME_ZONE_T-SHIRT_GOLD_1024x1024.jpg', '2020-03-19 11:04:17', '2020-03-19 11:04:21'),
-(173, 47, '1584612422860_DIME_CLASSIC_EMBROIDERED_T-SHIRT_TOMATO_1024x1024.jpg', '2020-03-19 11:07:02', '2020-03-19 11:07:09'),
-(174, 48, '1584612523902_DIME_CLASSIC_EMBROIDERED_LOGO_T.jpg', '2020-03-19 11:08:43', '2020-03-19 11:08:46'),
-(175, 49, '1584612727923_DIME_JEAN_SHORTS_1_2000x2000.jpg', '2020-03-19 11:12:08', '2020-03-19 11:12:29'),
-(176, 49, '1584612727932_DIME_JEAN_SHORTS_2_6e1bab79-ae07.jpg', '2020-03-19 11:12:09', '2020-03-19 11:12:29'),
-(177, 50, '1584612829029_DIME_JEAN_SHORTS_BLACK_1_2000x20.jpg', '2020-03-19 11:13:48', '2020-03-19 11:13:55'),
-(178, 50, '1584612829037_DIME_JEAN_SHORTS_BLACK_2_2000x20.jpg', '2020-03-19 11:13:50', '2020-03-19 11:13:55'),
-(179, 51, '1584612970705_DIME_TWILL_PANTS_SLATE_BLACK_1_2.jpg', '2020-03-19 11:16:10', '2020-03-19 11:16:29'),
-(180, 51, '1584612970712_DIME_TWILL_PANTS_SLATE_BLACK_2_2.jpg', '2020-03-19 11:16:11', '2020-03-19 11:16:29'),
-(181, 52, '1584613073233_DIME_TWILL_PANTS_SLATE_BLUE_1_20.jpg', '2020-03-19 11:17:52', '2020-03-19 11:18:36'),
-(182, 52, '1584613073241_DIME_TWILL_PANTS_SLATE_BLUE_2_20.jpg', '2020-03-19 11:17:53', '2020-03-19 11:18:36'),
-(183, 53, '1584613519127_DIME_TWILL_PANTS_NAVY_1_2000x200.jpg', '2020-03-19 11:25:19', '2020-03-19 11:25:23'),
-(184, 53, '1584613519134_DIME_TWILL_PANTS_NAVY_2_2000x200.jpg', '2020-03-19 11:25:20', '2020-03-19 11:25:23'),
-(185, 54, '1584616991680_AARON-HERRINGTON-BREAKFAST-BLUE_640x640.jpg', '2020-03-19 12:23:11', '2020-03-19 12:23:14'),
-(186, 55, '1584617311912_DANE-BRADY-ALONE-RED_640x640.jpg', '2020-03-19 12:28:31', '2020-03-19 12:28:53'),
-(187, 56, '1584617442425_DANE-BRADY-ALONE-YELLOW-ARIGATO_640x640.jpg', '2020-03-19 12:30:41', '2020-03-19 12:30:43'),
-(188, NULL, '1584618138582_HH-STAIRCASE-BLUE_640x640.jpg', '2020-03-19 12:42:18', '2020-03-19 12:42:18'),
-(190, 57, '1584619234089_DANE-BRADY-SHOPPING-SPREE_8.5_640x640.jpg', '2020-03-19 13:00:34', '2020-03-19 13:00:34'),
-(191, 57, '1584619234095_DANE-BRADY-SHOPPING-SPREE-DANE1-WHEEL-WELLS_640x640.jpg', '2020-03-19 13:00:34', '2020-03-19 13:00:34'),
-(192, NULL, '1584619427425_HJALTE-HALBERG-BIG-HEAD-YELLOW_640x640.jpg', '2020-03-19 13:03:46', '2020-03-19 13:03:46'),
-(193, 58, '1584619507171_HJALTE-HALBERG-BIG-HEAD-YELLOW_640x640.jpg', '2020-03-19 13:05:06', '2020-03-19 13:05:58'),
-(194, 59, '1584619744216_HH-STAIRCASE-BLUE_640x640.jpg', '2020-03-19 13:09:03', '2020-03-19 13:09:03'),
-(195, 60, '1584620451042_KLEZ-BRAIN-BLOWER-BLUE_640x640.jpg', '2020-03-19 13:20:50', '2020-03-19 13:20:54'),
-(196, 60, '1584620451050_KLEZ-BRAIN-BLOWER-BLUE-1992_640x640.jpg', '2020-03-19 13:20:51', '2020-03-19 13:20:54');
+(52, 2, '1584037830533_Windbreaker-Orange-1LOW_1800x180.jpg', '2020-03-12 18:30:31', '2020-03-12 18:30:33'),
+(55, 5, '1584038220156_LSTee-Bronze-Technology-Navy-1LO.jpg', '2020-03-12 18:37:00', '2020-03-12 18:37:06'),
+(56, 6, '1584038251595_Quarter-Zip-Yellow-1LOW_1800x180.jpg', '2020-03-12 18:37:32', '2020-03-12 18:38:18'),
+(57, 7, '1584038378840_Belt-Black-4LOW_1800x1800.jpg', '2020-03-12 18:39:39', '2020-03-12 18:39:46'),
+(58, 8, '1584038416806_Tee-TrippyHardware-Navy-1LOW_180.jpg', '2020-03-12 18:40:17', '2020-03-12 18:41:27'),
+(59, 8, '1584038431544_Tee-TrippyHardware-Navy-2LOW_180.jpg', '2020-03-12 18:40:32', '2020-03-12 18:41:27'),
+(60, 9, '1584038506512_Tee-MoneyClip-Black-1LOW_1800x18.jpg', '2020-03-12 18:41:47', '2020-03-12 18:42:25'),
+(61, 10, '1584038682765_BR_RAW_SingleCase_Angled.jpg', '2020-03-12 18:44:43', '2020-03-12 18:45:03'),
+(62, 10, '1584038684525_BR_RAW_IndividualBack.jpg', '2020-03-12 18:44:44', '2020-03-12 18:45:03'),
+(63, 11, '1584038731495_29144.jpg', '2020-03-12 18:45:31', '2020-03-12 18:46:07'),
+(64, 11, '1584038732948_29145.jpg', '2020-03-12 18:45:33', '2020-03-12 18:46:07'),
+(65, NULL, '1584610066609_1581049164.jpg', '2020-03-19 09:27:46', '2020-03-19 09:27:46'),
+(66, NULL, '1584617448033_1581049164.jpg', '2020-03-19 11:30:48', '2020-03-19 11:30:48');
 
 -- --------------------------------------------------------
 
@@ -18138,79 +18077,18 @@ CREATE TABLE `product_skus` (
 --
 
 INSERT INTO `product_skus` (`id`, `stock`, `product_id`, `skus_id`, `created_at`, `updated_at`) VALUES
-(37, 1, 16, NULL, '2020-03-15 11:21:26', '2020-03-17 10:50:57'),
-(38, 1, 17, NULL, '2020-03-15 12:05:08', '2020-03-15 12:05:08'),
-(39, 1, 18, NULL, '2020-03-15 12:13:10', '2020-03-17 10:51:23'),
-(40, 1, 19, NULL, '2020-03-15 12:15:40', '2020-03-17 10:50:30'),
-(41, 1, 20, NULL, '2020-03-17 10:48:26', '2020-03-17 10:48:26'),
-(53, 0, 26, 2, '2020-03-18 07:19:25', '2020-03-19 11:56:10'),
-(54, 1, 26, 5, '2020-03-18 07:19:25', '2020-03-18 07:19:25'),
-(55, 1, 25, 2, '2020-03-18 07:19:43', '2020-03-18 07:19:43'),
-(56, 1, 25, 3, '2020-03-18 07:19:43', '2020-03-18 07:19:43'),
-(59, 1, 27, 2, '2020-03-18 07:22:39', '2020-03-18 07:22:39'),
-(60, 1, 27, 3, '2020-03-18 07:22:39', '2020-03-18 07:22:39'),
-(63, 1, 28, 2, '2020-03-18 07:26:07', '2020-03-18 07:26:07'),
-(64, 1, 28, 3, '2020-03-18 07:26:07', '2020-03-18 07:26:07'),
-(70, 1, 29, 2, '2020-03-18 07:32:20', '2020-03-18 07:32:20'),
-(71, 1, 29, 3, '2020-03-18 07:32:20', '2020-03-18 07:32:20'),
-(72, 1, 30, 2, '2020-03-18 07:32:40', '2020-03-18 07:32:40'),
-(79, 1, 31, 2, '2020-03-18 07:39:23', '2020-03-18 07:39:23'),
-(80, 1, 31, 3, '2020-03-18 07:39:23', '2020-03-18 07:39:23'),
-(81, 1, 32, 2, '2020-03-18 08:05:24', '2020-03-18 08:05:24'),
-(96, 1, 33, 2, '2020-03-18 08:28:59', '2020-03-18 08:28:59'),
-(97, 1, 33, 3, '2020-03-18 08:28:59', '2020-03-18 08:28:59'),
-(98, 1, 33, 4, '2020-03-18 08:28:59', '2020-03-18 08:28:59'),
-(99, 1, 33, 5, '2020-03-18 08:28:59', '2020-03-18 08:28:59'),
-(100, 1, 34, 2, '2020-03-18 08:29:22', '2020-03-18 08:29:22'),
-(101, 1, 34, 3, '2020-03-18 08:29:22', '2020-03-18 08:29:22'),
-(102, 1, 34, 4, '2020-03-18 08:29:22', '2020-03-18 08:29:22'),
-(104, 1, 36, NULL, '2020-03-18 18:43:47', '2020-03-18 18:43:47'),
-(105, 5, 37, NULL, '2020-03-18 18:44:56', '2020-03-18 18:44:56'),
-(106, 1, 38, 2, '2020-03-19 10:47:13', '2020-03-19 10:47:13'),
-(107, 1, 38, 3, '2020-03-19 10:47:13', '2020-03-19 10:47:13'),
-(108, 1, 38, 4, '2020-03-19 10:47:13', '2020-03-19 10:47:13'),
-(109, 1, 38, 5, '2020-03-19 10:47:13', '2020-03-19 10:47:13'),
-(110, 1, 39, 2, '2020-03-19 10:49:21', '2020-03-19 10:49:21'),
-(111, 1, 39, 3, '2020-03-19 10:49:21', '2020-03-19 10:49:21'),
-(112, 1, 40, 2, '2020-03-19 10:53:13', '2020-03-19 10:53:13'),
-(113, 1, 40, 3, '2020-03-19 10:53:13', '2020-03-19 10:53:13'),
-(114, 1, 41, 2, '2020-03-19 10:54:32', '2020-03-19 10:54:32'),
-(115, 1, 41, 3, '2020-03-19 10:54:32', '2020-03-19 10:54:32'),
-(116, 1, 41, 5, '2020-03-19 10:54:32', '2020-03-19 10:54:32'),
-(117, 1, 42, 2, '2020-03-19 10:57:26', '2020-03-19 10:57:26'),
-(118, 1, 42, 3, '2020-03-19 10:57:26', '2020-03-19 10:57:26'),
-(122, 1, 43, 2, '2020-03-19 10:58:40', '2020-03-19 10:58:40'),
-(123, 1, 43, 3, '2020-03-19 10:58:40', '2020-03-19 10:58:40'),
-(124, 1, 43, 5, '2020-03-19 10:58:40', '2020-03-19 10:58:40'),
-(125, 1, 44, 2, '2020-03-19 11:00:19', '2020-03-19 11:00:19'),
-(126, 1, 45, 2, '2020-03-19 11:02:12', '2020-03-19 11:02:12'),
-(127, 1, 45, 3, '2020-03-19 11:02:12', '2020-03-19 11:02:12'),
-(128, 1, 46, 2, '2020-03-19 11:04:21', '2020-03-19 11:04:21'),
-(129, 1, 46, 3, '2020-03-19 11:04:21', '2020-03-19 11:04:21'),
-(130, 1, 47, 2, '2020-03-19 11:07:09', '2020-03-19 11:07:09'),
-(131, 1, 47, 5, '2020-03-19 11:07:09', '2020-03-19 11:07:09'),
-(132, 1, 48, 2, '2020-03-19 11:08:46', '2020-03-19 11:08:46'),
-(133, 1, 48, 3, '2020-03-19 11:08:46', '2020-03-19 11:08:46'),
-(134, 1, 49, 2, '2020-03-19 11:12:29', '2020-03-19 11:12:29'),
-(135, 1, 49, 5, '2020-03-19 11:12:29', '2020-03-19 11:12:29'),
-(136, 1, 50, 2, '2020-03-19 11:13:55', '2020-03-19 11:13:55'),
-(137, 1, 50, 5, '2020-03-19 11:13:55', '2020-03-19 11:13:55'),
-(138, 1, 51, 3, '2020-03-19 11:16:29', '2020-03-19 11:16:29'),
-(139, 1, 51, 4, '2020-03-19 11:16:29', '2020-03-19 11:16:29'),
-(140, 1, 52, 2, '2020-03-19 11:18:36', '2020-03-19 11:18:36'),
-(141, 1, 52, 3, '2020-03-19 11:18:36', '2020-03-19 11:18:36'),
-(142, 1, 53, 2, '2020-03-19 11:25:23', '2020-03-19 11:25:23'),
-(143, 1, 53, 3, '2020-03-19 11:25:23', '2020-03-19 11:25:23'),
-(144, 1, 53, 5, '2020-03-19 11:25:23', '2020-03-19 11:25:23'),
-(145, 1, 54, NULL, '2020-03-19 12:23:14', '2020-03-19 12:23:14'),
-(146, 1, 55, NULL, '2020-03-19 12:28:53', '2020-03-19 12:28:53'),
-(147, 1, 56, NULL, '2020-03-19 12:30:43', '2020-03-19 12:30:43'),
-(154, 1, 57, 7, '2020-03-19 13:02:07', '2020-03-19 13:02:07'),
-(155, 1, 57, 8, '2020-03-19 13:02:07', '2020-03-19 13:02:07'),
-(156, 1, 58, NULL, '2020-03-19 13:05:58', '2020-03-19 13:05:58'),
-(157, 1, 59, NULL, '2020-03-19 13:08:51', '2020-03-19 13:08:51'),
-(158, 1, 60, 9, '2020-03-19 13:20:54', '2020-03-19 13:20:54'),
-(159, 1, 60, 10, '2020-03-19 13:20:54', '2020-03-19 13:20:54');
+(6, 0, 5, 2, '2020-03-12 18:37:05', '2020-03-15 08:44:42'),
+(7, 3, 5, 3, '2020-03-12 18:37:06', '2020-03-12 18:37:06'),
+(8, 4, 5, 5, '2020-03-12 18:37:06', '2020-03-12 18:37:06'),
+(9, 0, 6, 3, '2020-03-12 18:38:18', '2020-03-15 08:44:42'),
+(10, 0, 7, NULL, '2020-03-12 18:39:45', '2020-03-25 19:32:17'),
+(11, 1, 8, 2, '2020-03-12 18:41:27', '2020-03-25 19:49:07'),
+(12, 10, 8, 5, '2020-03-12 18:41:27', '2020-03-12 18:41:27'),
+(13, 0, 9, 2, '2020-03-12 18:42:24', '2020-03-25 19:24:09'),
+(14, 10, 9, 5, '2020-03-12 18:42:24', '2020-03-12 18:42:24'),
+(15, 5, 10, NULL, '2020-03-12 18:45:03', '2020-03-25 19:48:07'),
+(16, 12, 11, NULL, '2020-03-12 18:46:07', '2020-03-26 07:41:38'),
+(25, 0, 2, 2, '2020-03-13 09:46:17', '2020-03-13 11:34:09');
 
 -- --------------------------------------------------------
 
@@ -18234,10 +18112,7 @@ INSERT INTO `skuses` (`id`, `title`, `created_at`, `updated_at`) VALUES
 (3, 'L', '2020-03-01 17:00:00', NULL),
 (4, 'XL', '2020-03-01 17:00:00', '2020-03-13 09:40:34'),
 (5, 'S', '2020-03-01 17:00:00', NULL),
-(7, '8.5\" X 32.125\"', '2020-03-19 12:41:13', '2020-03-19 12:41:13'),
-(8, '9.75\" (WIDEST POINT) X 31.375\"', '2020-03-19 12:41:36', '2020-03-19 12:41:36'),
-(9, '8.375\" X 32\"', '2020-03-19 13:17:27', '2020-03-19 13:17:27'),
-(10, '9.25\" (WIDEST POINT) X 32\"', '2020-03-19 13:17:49', '2020-03-19 13:17:49');
+(6, '9.75\" (WIDEST POINT) X 31.375\"', '2020-03-19 13:28:39', '2020-03-19 13:28:39');
 
 -- --------------------------------------------------------
 
@@ -18249,7 +18124,7 @@ CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `avatar` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `avatar` text COLLATE utf8mb4_unicode_ci,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -18262,21 +18137,17 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `avatar`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(102, 'Андрей Артышко Алексеевич', 'artyshko.andrey@gmail.com', '1581049164.jpg', '2020-01-12 02:40:22', '$2y$10$eJNi1Z2UHjb96hhUqxuhWerv3jjk9Cp/YCGV7bvl4UidmP6qQXsHy', 'ceQdsZaswnqKSdHXgPOAZI6mE7A481B3eEYh4H3AJndhbJhlDffEQA8CRyW1', '2020-01-12 02:39:54', '2020-02-07 04:19:26'),
+(106, 'ANZHELIKA ARTYSHKO', 'lika.dudareva@gmail.com', '1581004168.jpg', NULL, '$2y$10$l5Eisw/yfNmepnwHJd7clOeVlljchofWtjWnz3ry2uXmq9zLjrKJa', NULL, '2020-02-03 08:04:08', '2020-02-03 08:04:08'),
 (107, 'Роман Иминов', 'iminovarts@gmail.com', NULL, '2020-02-11 08:06:18', '$2y$10$XCMQtYi8xMArrx0SCTxrzOl55OEtCLk.opVg/sGQnu9c/DJTsIsX6', NULL, '2020-02-11 07:48:06', '2020-02-11 08:06:18'),
-(110, 'Виталий', 'mrkrimer1@gmail.com', NULL, NULL, '$2y$10$JfyAcm4jww9wi6WxBHP6n.9TiGWlljtEPH3CxhO09eq3hrLQyUFzq', 'GZJhgIqJvAa1nGTt3gfIceW3vmhYJ4h9NjcQXSGV6nTQBGEn8R2b6NtYHmvG', '2020-03-14 11:47:20', '2020-03-14 11:47:20'),
-(111, 'konstantin. kucherov', 'konstantin.kucherov@gmail.com', NULL, NULL, '$2y$10$x43RWdg5JDEXaWiu/bQuDOoewVs2uNj1VDXEB1Ir/FvXEmp1hUz8C', NULL, '2020-03-14 13:20:26', '2020-03-14 13:20:26'),
-(112, 'Артрур', 'kingofalmaty@gmail.com', NULL, NULL, '$2y$10$sjR0UfcMiXWm0pkmgZix7uf1/I7RQ5MyKReic1TkDBW7viR0/f9A6', NULL, '2020-03-14 17:42:03', '2020-03-14 17:42:03'),
-(113, 'Kirill Mileev', 'kirillmileev@icloud.com', NULL, NULL, '$2y$10$H4fC41QjMzFmc77BH5uKQ.DC6fB.GZDUdgz2WKQsw9X4mj62qFmvu', NULL, '2020-03-14 18:39:21', '2020-03-14 18:39:21'),
-(114, 'Kirill', 'keshaog228@gmail.com', NULL, NULL, '$2y$10$8u3kjwVASY1oUTEiE24krOVq2UIr04fqU8TUXMyZ9LCx2dhoS8H4K', NULL, '2020-03-14 18:42:15', '2020-03-14 18:42:15'),
-(256, 'fulliton', 'artyshko.andrey12312311@gmail.com', NULL, NULL, '$2y$10$EVQt7eFTP7.hh4Ov.zlZ3eab7xkhriukZQlNKEvHSazQibJ92r9Hu', NULL, '2020-03-17 03:52:27', '2020-03-17 03:52:27'),
-(260, 'Роман', '666tmetallica666@gmail.com', NULL, NULL, '$2y$10$xCfheVa89imad7PqJ0/WUeaUzt1TB84zm2AQ1o8fCXvdh3jGABuoO', 'RXgmBF49i7GrMLoXKoG1Puxn54LK4nfWYh3qMYRF23RJIApGM1JY9hyQ9FLo', '2020-03-17 03:57:04', '2020-03-17 04:06:11'),
-(261, 'Arman', 'arman.abdaz@mail.ru', NULL, NULL, '$2y$10$3ksYkGsWpPw9u2uK8V/og.BL619C8jrODH7rtGNmGFlU0jyDYVgr.', NULL, '2020-03-17 09:33:40', '2020-03-17 09:33:40'),
-(262, 'Alibek Serikov', 'serikovalibek06@yandex.ru', NULL, NULL, '$2y$10$uGh7lhQ5VnUyaHIzAp9EguHMnkJsYcANXxdZZLtU4GESv/3HZXW4G', NULL, '2020-03-17 12:10:40', '2020-03-17 12:10:40'),
-(263, 'Алишер', '87071698565@gmail.com', NULL, NULL, '$2y$10$oVAiAuD1tQSSeicyVLFLT.tgx5RiU4R4xNIZzJrFLJyvn9iqEGEt2', 'ZyPPtraroJa5m5v6JDqNX8AvRimkqZMTEvPk6sKdR3zTP467G3fhebOslux6', '2020-03-18 10:00:26', '2020-03-18 10:00:26'),
-(264, 'Мариям', 'kushkumbaeva.mariyam@mail.ru', NULL, NULL, '$2y$10$8H8g5wj7eizKl4wMGjNsaezAUBJEzB7V4dOrhEDeLrl3DZ5x3jom.', NULL, '2020-03-18 19:02:54', '2020-03-18 19:02:54'),
-(265, 'йцуке', 'йцуке', NULL, NULL, '$2y$10$h3t8wUVPdTLgNd0kJFrTw.jo1EpAgIuxMc77xjdVa5gZmQPjjzmf2', NULL, '2020-03-19 11:20:23', '2020-03-19 11:20:23'),
-(269, 'Рустам', 'ayupovrustam1992@gmail.com', NULL, NULL, '$2y$10$Z2hUSqLkViXzxrY7zOD9VOpv3tKlPVcTxaLtMQeA09qTFCYNh3FFi', NULL, '2020-03-19 11:56:10', '2020-03-19 11:56:10');
+(108, 'Андрей Артышко', 'adad.artyshko@mail.ru', NULL, '2020-02-11 07:57:52', '$2y$10$nQpOvq/evc4nEI2jeqgGYeYHviuaAhapPO/SggFKJZeiMuG4K168u', 'kHfRnLezLkyRxqtFQyyjeC6LisWcAzesyMrgYjQPXFTTOzdSAe14y8fsuFOM', '2020-02-11 07:56:40', '2020-02-11 07:57:52'),
+(109, 'Завирюха Богдан', 'bogdan@mail.ru', NULL, NULL, '$2y$10$opf8ZV2ytYVlmUbMTcJq5OVBkNLuyMnDdDU8NQZ/78zvIjqi/B7Di', NULL, '2020-02-20 09:13:50', '2020-02-20 09:13:50'),
+(120, 'fulliton', 'xepaya5003@upcmaill.com', NULL, NULL, '$2y$10$wHsbGq/D.lfgmlhULH38GeDwosQ8RpW2miGZT3dn7mWE8WG1OuSni', 'ik9wcqtWKQ4A79CyQLMdOLzCnVjRcKICFbgSyIODLrpvAL4XNwSSZen9wspz', '2020-03-15 08:33:28', '2020-03-15 08:33:28'),
+(124, 'Тестовый Аккаунт для покупки', 'xepaya5023@upcmaill.com', NULL, NULL, '$2y$10$93d.4HKCGABd1f6bLRFcAOPwwzCI.PCASOsyw37ogWSFZKayBRXOW', NULL, '2020-03-15 08:55:38', '2020-03-15 08:55:38'),
+(125, 'fulliton', 'artyshko.andrey123123@gmail.com', NULL, NULL, '$2y$10$zkxLuNC2isZ9IoqNN.EtjuPxqn7Rz.DdgReZYNNexAWAU7YDq2pTi', 'zeFrdXolmNqae553KQCrDGqIT5ZsUydM48SMkKWp3pufHRK7M6hiVYFQucEx', '2020-03-17 02:45:08', '2020-03-17 02:45:08'),
+(127, 'fulliton', 'artyshko.andrey123123123123@gmail.com', NULL, NULL, '$2y$10$kFsp6vOD1ekvKVdygv4Os.VI7d42JmZNyq6omrMe/HQb29q.6li3G', 'wMWaaxsYmSwBYf3yxDfM5Rux8Dcux2NjsuuPHeyxydgF7ufVNNJdqjJPwzky', '2020-03-25 19:20:27', '2020-03-25 19:20:27'),
+(128, 'fulliton', 'artyshko.andrey3333333@gmail.com', NULL, NULL, '$2y$10$5qOtC9wIyUZXsBuAR9.7bOXhQ9KInU91lfOFoFDn/4KlSD2elnLoe', 'HXWo3VAY9zGU3wMQPt23UU9qde5mEgYBqcDNGFAqF1aktehBApUECyQHVL91', '2020-03-25 19:24:08', '2020-03-25 19:24:08'),
+(129, 'fulliton', 'artyshko.andrey22333@gmail.com', NULL, NULL, '$2y$10$QDjS.pmKjSLK.9DFv2tjVufjDsBuMAGCjvuOokcCIT5tvCHtw5inK', NULL, '2020-03-25 19:32:16', '2020-03-25 19:32:16'),
+(130, 'fulliton', 'artyshko.andrey@gmail.com', NULL, NULL, '$2y$10$I1JEkCWawX7pyPmTU6YeXubbDVcnNdv8u8XsOGzMPS20NTQ9.ZGd6', '8jzl4Z3Go3EUiVRP2Pgy7u2W3UEVk8HFdOmOyPy2AfQOtvMrUlHrdHQRZVcC', '2020-03-26 07:41:36', '2020-03-26 07:44:44');
 
 -- --------------------------------------------------------
 
@@ -18301,10 +18172,14 @@ CREATE TABLE `user_addresses` (
 --
 
 INSERT INTO `user_addresses` (`id`, `user_id`, `country_id`, `city_id`, `street`, `contact_phone`, `currency_id`, `created_at`, `updated_at`) VALUES
-(1, 102, 1, 173, 'ул. Горького, 24 кв. 25, 660099', '89029634366', 2, '2020-03-02 17:00:00', '2020-03-16 04:42:59'),
-(5, 256, 1, 1116, 'Горького 24', '89029634366', 2, '2020-03-17 03:52:27', '2020-03-17 03:53:23'),
-(6, 260, 82, 10451, 'Арктическая 115', '+77474117635', 1, '2020-03-17 03:57:04', '2020-03-17 03:57:04'),
-(7, 269, 82, 1, 'Достык 34', '87778385299', 1, '2020-03-19 11:56:10', '2020-03-19 11:56:10');
+(2, 108, 1, 1116, 'Горького 24, 25', '89029634366', 3, '2020-03-03 12:49:53', '2020-03-03 12:51:18'),
+(4, 120, 1, 1116, 'Горького 24', '89029634366', 1, '2020-03-15 08:33:28', '2020-03-15 08:33:28'),
+(6, 124, 1, 1116, 'Горького 24', '89029634366', 1, '2020-03-15 08:55:38', '2020-03-15 08:55:38'),
+(7, 125, 1, 1116, 'Горького 24', '89029634366', 1, '2020-03-17 02:45:08', '2020-03-17 02:45:08'),
+(9, 127, 1, 1, 'Горьеого', '89029634366', 1, '2020-03-25 19:20:27', '2020-03-25 19:20:27'),
+(10, 128, 82, 10451, 'Горького 24', '89029634366', 1, '2020-03-25 19:24:09', '2020-03-25 19:24:09'),
+(11, 129, 1, 10451, 'Горького 24', '89029634366', 1, '2020-03-25 19:32:16', '2020-03-25 19:48:45'),
+(12, 130, 82, 10451, 'Горького 24, 25', '89029634366', 1, '2020-03-26 07:41:36', '2020-03-26 07:41:36');
 
 -- --------------------------------------------------------
 
@@ -18338,6 +18213,20 @@ ALTER TABLE `admin_password_resets`
   ADD KEY `admin_password_resets_email_index` (`email`);
 
 --
+-- Индексы таблицы `brands`
+--
+ALTER TABLE `brands`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `brands_categories`
+--
+ALTER TABLE `brands_categories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `brands_categories_brand_id_foreign` (`brand_id`),
+  ADD KEY `brands_categories_category_id_foreign` (`category_id`);
+
+--
 -- Индексы таблицы `cart_items`
 --
 ALTER TABLE `cart_items`
@@ -18349,8 +18238,15 @@ ALTER TABLE `cart_items`
 -- Индексы таблицы `categories`
 --
 ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `categories_categories`
+--
+ALTER TABLE `categories_categories`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `categories_category_id_foreign` (`category_id`);
+  ADD KEY `categories_categories_category_id_foreign` (`category_id`),
+  ADD KEY `categories_categories_child_category_id_foreign` (`child_category_id`);
 
 --
 -- Индексы таблицы `cities`
@@ -18377,12 +18273,12 @@ ALTER TABLE `countries`
   ADD UNIQUE KEY `countries_name_unique` (`name`);
 
 --
--- Индексы таблицы `coupons_categories`
+-- Индексы таблицы `coupons_brands`
 --
-ALTER TABLE `coupons_categories`
+ALTER TABLE `coupons_brands`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `coupons_categories_coupon_id_foreign` (`coupon_id`),
-  ADD KEY `coupons_categories_category_id_foreign` (`category_id`);
+  ADD KEY `coupons_brands_coupon_id_foreign` (`coupon_id`),
+  ADD KEY `coupons_brands_brand_id_foreign` (`brand_id`);
 
 --
 -- Индексы таблицы `coupons_products`
@@ -18406,12 +18302,12 @@ ALTER TABLE `currencies`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `disabled_coupons_categories`
+-- Индексы таблицы `disabled_coupons_brands`
 --
-ALTER TABLE `disabled_coupons_categories`
+ALTER TABLE `disabled_coupons_brands`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `disabled_coupons_categories_coupon_id_foreign` (`coupon_id`),
-  ADD KEY `disabled_coupons_categories_category_id_foreign` (`category_id`);
+  ADD KEY `disabled_coupons_brands_coupon_id_foreign` (`coupon_id`),
+  ADD KEY `disabled_coupons_brands_brand_id_foreign` (`brand_id`);
 
 --
 -- Индексы таблицы `disabled_coupons_products`
@@ -18489,6 +18385,14 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `products_brands`
+--
+ALTER TABLE `products_brands`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `products_brands_product_id_foreign` (`product_id`),
+  ADD KEY `products_brands_brand_id_foreign` (`brand_id`);
+
+--
 -- Индексы таблицы `products_categories`
 --
 ALTER TABLE `products_categories`
@@ -18553,16 +18457,34 @@ ALTER TABLE `admins`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT для таблицы `brands`
+--
+ALTER TABLE `brands`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT для таблицы `brands_categories`
+--
+ALTER TABLE `brands_categories`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT для таблицы `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+
+--
+-- AUTO_INCREMENT для таблицы `categories_categories`
+--
+ALTER TABLE `categories_categories`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT для таблицы `cities`
@@ -18583,16 +18505,16 @@ ALTER TABLE `countries`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=219;
 
 --
--- AUTO_INCREMENT для таблицы `coupons_categories`
+-- AUTO_INCREMENT для таблицы `coupons_brands`
 --
-ALTER TABLE `coupons_categories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `coupons_brands`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `coupons_products`
 --
 ALTER TABLE `coupons_products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `coupon_codes`
@@ -18607,16 +18529,16 @@ ALTER TABLE `currencies`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT для таблицы `disabled_coupons_categories`
+-- AUTO_INCREMENT для таблицы `disabled_coupons_brands`
 --
-ALTER TABLE `disabled_coupons_categories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `disabled_coupons_brands`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `disabled_coupons_products`
 --
 ALTER TABLE `disabled_coupons_products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `express_companies`
@@ -18640,7 +18562,7 @@ ALTER TABLE `headers`
 -- AUTO_INCREMENT для таблицы `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT для таблицы `news`
@@ -18652,13 +18574,13 @@ ALTER TABLE `news`
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT для таблицы `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT для таблицы `pays`
@@ -18670,43 +18592,49 @@ ALTER TABLE `pays`
 -- AUTO_INCREMENT для таблицы `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT для таблицы `products_brands`
+--
+ALTER TABLE `products_brands`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `products_categories`
 --
 ALTER TABLE `products_categories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT для таблицы `products_image`
 --
 ALTER TABLE `products_image`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=197;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT для таблицы `product_skus`
 --
 ALTER TABLE `product_skus`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=160;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT для таблицы `skuses`
 --
 ALTER TABLE `skuses`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=270;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
 
 --
 -- AUTO_INCREMENT для таблицы `user_addresses`
 --
 ALTER TABLE `user_addresses`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT для таблицы `user_favorite_products`
@@ -18719,6 +18647,13 @@ ALTER TABLE `user_favorite_products`
 --
 
 --
+-- Ограничения внешнего ключа таблицы `brands_categories`
+--
+ALTER TABLE `brands_categories`
+  ADD CONSTRAINT `brands_categories_brand_id_foreign` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `brands_categories_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE;
+
+--
 -- Ограничения внешнего ключа таблицы `cart_items`
 --
 ALTER TABLE `cart_items`
@@ -18726,10 +18661,11 @@ ALTER TABLE `cart_items`
   ADD CONSTRAINT `cart_items_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
--- Ограничения внешнего ключа таблицы `categories`
+-- Ограничения внешнего ключа таблицы `categories_categories`
 --
-ALTER TABLE `categories`
-  ADD CONSTRAINT `categories_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE;
+ALTER TABLE `categories_categories`
+  ADD CONSTRAINT `categories_categories_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `categories_categories_child_category_id_foreign` FOREIGN KEY (`child_category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `cities`
@@ -18746,11 +18682,11 @@ ALTER TABLE `city_expresses`
   ADD CONSTRAINT `city_expresses_express_zone_id_foreign` FOREIGN KEY (`express_zone_id`) REFERENCES `express_zones` (`id`) ON DELETE CASCADE;
 
 --
--- Ограничения внешнего ключа таблицы `coupons_categories`
+-- Ограничения внешнего ключа таблицы `coupons_brands`
 --
-ALTER TABLE `coupons_categories`
-  ADD CONSTRAINT `coupons_categories_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `coupons_categories_coupon_id_foreign` FOREIGN KEY (`coupon_id`) REFERENCES `coupon_codes` (`id`) ON DELETE CASCADE;
+ALTER TABLE `coupons_brands`
+  ADD CONSTRAINT `coupons_brands_brand_id_foreign` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `coupons_brands_coupon_id_foreign` FOREIGN KEY (`coupon_id`) REFERENCES `coupon_codes` (`id`) ON DELETE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `coupons_products`
@@ -18760,11 +18696,11 @@ ALTER TABLE `coupons_products`
   ADD CONSTRAINT `coupons_products_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 
 --
--- Ограничения внешнего ключа таблицы `disabled_coupons_categories`
+-- Ограничения внешнего ключа таблицы `disabled_coupons_brands`
 --
-ALTER TABLE `disabled_coupons_categories`
-  ADD CONSTRAINT `disabled_coupons_categories_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `disabled_coupons_categories_coupon_id_foreign` FOREIGN KEY (`coupon_id`) REFERENCES `coupon_codes` (`id`) ON DELETE CASCADE;
+ALTER TABLE `disabled_coupons_brands`
+  ADD CONSTRAINT `disabled_coupons_brands_brand_id_foreign` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `disabled_coupons_brands_coupon_id_foreign` FOREIGN KEY (`coupon_id`) REFERENCES `coupon_codes` (`id`) ON DELETE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `disabled_coupons_products`
@@ -18792,6 +18728,13 @@ ALTER TABLE `orders`
 ALTER TABLE `order_items`
   ADD CONSTRAINT `order_items_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `order_items_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `products_brands`
+--
+ALTER TABLE `products_brands`
+  ADD CONSTRAINT `products_brands_brand_id_foreign` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `products_brands_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `products_categories`
