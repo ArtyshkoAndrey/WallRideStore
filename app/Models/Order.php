@@ -30,7 +30,7 @@ class Order extends Model
   ];
 
   public static $shipStatusMap = [
-    self::SHIP_STATUS_PAID      => 'Оплачивается',
+    self::SHIP_STATUS_PAID      => 'Не оплачен',
     self::SHIP_STATUS_PENDING   => 'В обработке',
     self::SHIP_STATUS_DELIVERED => 'Отправлен',
     self::SHIP_STATUS_RECEIVED  => 'Получен',

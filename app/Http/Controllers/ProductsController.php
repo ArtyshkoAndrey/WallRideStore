@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\InvalidRequestException;
+use App\Models\Category;
 use App\Models\Header;
 use App\Models\News;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\Skus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 
 class ProductsController extends Controller {
@@ -19,106 +22,175 @@ class ProductsController extends Controller {
     return view('products.search', compact('products', 'name'));
   }
 
-  public function all (Request $request) {
-    if ($order = $request->input('order', '')) {
+  public function all (Request $request)
+  {
+    $products = Product::query();
+    if ($order = $request->input('order', null)) {
       if (preg_match('/^(.+)_(asc|desc)$/', $order, $m)) {
         if (in_array($m[1], ['price', 'sold_count', 'new'])) {
           if ($m[1] == 'price') {
-            $products = Product::select('products.*', \DB::raw("MAX(price) AS max_price"), \DB::raw("MIN(price) AS min_price"))
+            $products = $products->select('products.*', \DB::raw("MAX(price) AS max_price"), \DB::raw("MIN(price) AS min_price"))
               ->join('product_skus', 'products.id', '=', 'product_skus.product_id')
               ->groupBy('products.id')
               ->orderBy($m[2] == 'desc' ? 'max_price' : 'min_price', $m[2])
-              ->with('skus', 'photos')->orderBy('price', $m[2] == 'asc'? 'desc' : 'asc')
-              ->paginate(16);
+              ->with('skus', 'photos')->orderBy('price', $m[2] == 'asc' ? 'desc' : 'asc');
           } else if ($m[1] == 'new') {
-            $products = Product::orderBy('created_at', 'desc')->with('skus', 'photos')->paginate(16);
+            $products = $products->orderBy('created_at', 'desc')->with('skus', 'photos');
           } else {
-            $products = Product::with('skus', 'photos')->orderBy($m[1], $m[2])->paginate(16);
+            $products = $products->with('skus', 'photos')->orderBy($m[1], $m[2]);
           }
-        } else {
-          $products = Product::with('skus', 'photos')->paginate(16);
         }
-      } else {
-        $products = Product::with('skus', 'photos')->paginate(16);
       }
-    } else {
-      $products = Product::with('skus', 'photos')->paginate(16);
     }
+    if ($brand = $request->input('brand', null)) {
+      $products = $products->whereHas('brands', function ($query) use ($brand) {
+        return $query->where('brands.id', $brand);
+      });
+    }
+    if ($category = $request->input('category', null)) {
+      $products = $products->whereHas('categories', function ($query) use ($category) {
+        $query->whereHas('parents', function ($query) use ($category) {
+          $query->where('laravel_reserved_0.id', $category);
+        })
+          ->orWhere('categories.id', $category);
+      });
+    }
+
+    if ($size = $request->input('size', null)) {
+      $products = $products->whereHas('skus.skus', function ($query) use ($size) {
+        $query->where('skuses.id', $size);
+      });
+    }
+
+    if($brand !== null) {
+      $categories = Category::whereHas('products.brands', function ($q) use ($brand) {
+        $q->where('products_brands.brand_id', $brand);
+      })->get();
+    } else {
+      $categories = Category::all();
+    }
+
+    if ($brand !== null && $category !== null) {
+      $attributes = Skus::whereHas('products.brands', function ($q) use ($brand) {
+        $q->where('products_brands.brand_id', $brand);
+      })
+      ->whereHas('products.categories', function ($q) use ($category) {
+        $q->where('products_categories.category_id', $category);
+      })->get();
+    } else if ($category !== null && $brand === null) {
+      $attributes = Skus::whereHas('products.categories', function ($q) use ($category) {
+        $q->where('products_categories.category_id', $category);
+      })->get();
+    } else if ($category === null && $brand !== null) {
+      $attributes = Skus::whereHas('products.brands', function ($q) use ($brand) {
+        $q->where('products_brands.brand_id', $brand);
+      })->get();
+    } else {
+      $attributes = Skus::all();
+    }
+//    dd($attributes);
     $filters = [
-      'order'  => $order,
+      'order'     => $order,
+      'brand'     => $brand,
+      'category'  => $category,
+      'size'      => $size
     ];
-    return view('products.all', compact('products', 'filters'));
+    $products = $products->with('skus', 'photos')->paginate(16);
+//    dd($products);
+    return view('products.all', compact('products', 'filters', 'attributes', 'categories'));
   }
+
+  public function allsale ()
+  {
+    $products = Product::query();
+    $products = $products->with('skus', 'photos')->where('on_sale', true)->paginate(16);
+    return view('products.all_sale', compact('products'));
+  }
+
+  public function allfavor ()
+  {
+    $products = Auth::user()->favoriteProducts()->with('skus', 'photos')->paginate(16);
+    return view('products.favor', compact('products'));
+  }
+
   public function index() {
 
     $productsNew = Product::where('on_new', true)->take(5)->with('skus', 'photos')->get();
-    $products = Product::with('photos', 'skus')->whereHas('categories', function($query) {
-      $query->whereIn('categories.name', ['Толстовки']);
-    })->take(5)->get();
+
+    $category = Category::withCount('products')->orderBy('products_count', 'desc')->first();
+    if($category) {
+      $products = $category->products()->take(5)->with('skus', 'photos')->get();
+    } else {
+      $products = [];
+      $category = null;
+    }
     $news = News::take(3)->get();
     $h = Header::first();
     return view('products.index', [
       'productsNew' => $productsNew,
       'products' => $products,
       'news' => $news,
-      'h' => $h
+      'h' => $h,
+      'category' => $category
     ]);
   }
 
-    public function show(Product $product, Request $request) {
-      if (isset($product->deleted_at)) {
-        throw new InvalidRequestException('Нет в продаже');
+  public function show(Product $product, Request $request) {
+    if (isset($product->deleted_at)) {
+      throw new InvalidRequestException('Нет в продаже');
+    }
+
+    $favored = false;
+    if($user = $request->user()) {
+      $favored = (bool) $user->favoriteProducts()->find($product->id);
+    }
+
+    $reviews = OrderItem::query()
+        ->with(['order.user', 'productSku']) // 预先加载关联关系
+        ->where('product_id', $product->id)
+        ->whereNotNull('reviewed_at') // 筛选出已评价的
+        ->orderBy('reviewed_at', 'desc') // 按评价时间倒序
+        ->limit(10) // 取出 10 条
+        ->get();
+    $ids = $product->categories->pluck('id')->toArray();
+    $products = Product::with('photos', 'skus', 'categories')->whereHas('categories', function($query) use ($ids) {
+      $query->whereIn('categories.id', $ids);
+    })->take(4)->get();
+    return view('products.show', [
+      'product' => $product,
+      'products' => $products,
+      'favored' => $favored,
+      'reviews' => $reviews
+    ]);
+  }
+
+
+
+  public function favor(Product $product, Request $request)
+  {
+      $user = $request->user();
+      if ($user->favoriteProducts()->find($product->id)) {
+          return [];
       }
 
-      $favored = false;
-      if($user = $request->user()) {
-        $favored = (bool) $user->favoriteProducts()->find($product->id);
-      }
+      $user->favoriteProducts()->attach($product);
 
-      $reviews = OrderItem::query()
-          ->with(['order.user', 'productSku']) // 预先加载关联关系
-          ->where('product_id', $product->id)
-          ->whereNotNull('reviewed_at') // 筛选出已评价的
-          ->orderBy('reviewed_at', 'desc') // 按评价时间倒序
-          ->limit(10) // 取出 10 条
-          ->get();
-      $ids = $product->categories->pluck('id')->toArray();
-      $products = Product::with('photos', 'skus', 'categories')->whereHas('categories', function($query) use ($ids) {
-        $query->whereIn('categories.id', $ids);
-      })->take(4)->get();
-      return view('products.show', [
-        'product' => $product,
-        'products' => $products,
-        'favored' => $favored,
-        'reviews' => $reviews
-      ]);
-    }
+      return [];
+  }
 
-    public function favor(Product $product, Request $request)
-    {
-        $user = $request->user();
-        if ($user->favoriteProducts()->find($product->id)) {
-            return [];
-        }
+  public function disfavor(Product $product, Request $request)
+  {
+      $user = $request->user();
+      $user->favoriteProducts()->detach($product);
 
-        $user->favoriteProducts()->attach($product);
+      return [];
+  }
 
-        return [];
-    }
-
-    public function disfavor(Product $product, Request $request)
-    {
-        $user = $request->user();
-        $user->favoriteProducts()->detach($product);
-
-        return [];
-    }
-
-    public function favorites(Request $request)
-    {
-        $products = $request->user()->favoriteProducts()->paginate(16);
-        return $products;
+  public function favorites(Request $request)
+  {
+      $products = $request->user()->favoriteProducts()->paginate(16);
+      return $products;
 //        TODO  Сверстать страницу избранных
-        return view('products.favorites', ['products' => $products]);
-    }
+      return view('products.favorites', ['products' => $products]);
+  }
 }

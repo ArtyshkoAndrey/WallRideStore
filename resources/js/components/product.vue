@@ -15,7 +15,7 @@
           <div class="box">
             <a :href="'/product/'+item.id" class="mt-4 pb-0 mb-0 name">{{ item.title }}</a>
           </div>
-          <p class="price mt-1 pt-0">{{ $cost(item.price * currency.ratio) }} {{ currency.symbol }}</p>
+          <p class="price mt-1 pt-0">{{ item.on_sale && item.price_sale ? $cost(Number(item.price_sale) * currency.ratio)  : $cost(Number(item.price) * currency.ratio) }} {{ currency.symbol }}</p>
         </div>
         <div class="row px-0 mx-0">
           <div class="col-3 px-0 btn-to-cart-adaptive">

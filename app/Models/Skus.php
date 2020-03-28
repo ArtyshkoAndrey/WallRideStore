@@ -7,5 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Skus extends Model
 {
-  protected $fillable = ['title',];
+  protected $fillable = ['title'];
+
+  public function products()
+  {
+    return $this->belongsToMany(Product::class, 'product_skus', 'skus_id', 'product_id');
+  }
 }

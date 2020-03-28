@@ -37,12 +37,12 @@
       </div>
     </div>
   </section>
-
+  @if($category)
   <section class="mt-5 mb-5 px-0">
     <div class="container-fluid">
       <div class="row align-items-center px-5">
-        <h2 class="font-weight-bold">Толстовки</h2>
-        <a class="ml-auto text-dark" href="{{ route('products.all', ['category' => App\Models\Category::where('name', 'Толстовки')->first()->id]) }}">Смотреть все</a>
+        <h2 class="font-weight-bold">{{ $category->name }}</h2>
+        <a class="ml-auto text-dark" href="{{ route('products.all', ['category' => $category->id]) }}">Смотреть все</a>
       </div>
     </div>
     <div class="container-fluid" id="sliderList2">
@@ -60,6 +60,7 @@
       </div>
     </div>
   </section>
+  @endif
   <section class="mt-5 mb-5">
     <div class="container">
       <div class="row align-items-center">

@@ -22,8 +22,10 @@ class Controller extends BaseController
 
   public function __construct(CartService $cartService) {
     if (!isset($_COOKIE['city'])) {
-
       setcookie('city', City::first()->id, time() + (86400 * 30), "/");
+    }
+    if (!isset($_COOKIE['whooip'])) {
+      setcookie('whooip', 0, time() + (86400 * 30));
     }
     if(!isset($_COOKIE["products"])) {
       setcookie("products", '', time() + (3600 * 24 * 30), "/", request()->getHost());

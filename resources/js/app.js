@@ -72,7 +72,7 @@ const app = new Vue({
     }
     this.amount = this.$el.attributes.amount.value
     let arr = $.cookie('products').split(',')
-    if(arr.length ===1 && arr[0] === '') {
+    if(arr.length === 1 && arr[0] === '') {
       arr.pop();
     }
     axios.post('/cart/getData', {
@@ -86,8 +86,13 @@ const app = new Vue({
         this.amount = data.amount
         let ids = [];
         this.cartItems.forEach((e) => {
-          ids.push(e.id)
+          let i = e.amount
+          while(i > 0) {
+            ids.push(e.id)
+            i--;
+          }
         })
+        console.log(ids)
         $.cookie("products", ids.join(','), {expires: 7, path: '/'});
       }
     })

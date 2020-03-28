@@ -44,7 +44,7 @@ class OrderService
               $sku = ProductSku::find($data['sku_id']);
               $item = $order->items()->make([
                 'amount' => $data['amount'],
-                'price' => $sku->product->price,
+                'price' => $sku->product->on_sale ? $sku->product->price_sale : $sku->product->price,
               ]);
               $item->product()->associate($sku->product_id);
               if (isset($sku->skus->title)) {
@@ -53,7 +53,7 @@ class OrderService
                 $item->product_sku = 'One Size';
               }
                 $item->save();
-                $totalAmount += $sku->product->price * $data['amount'];
+                $totalAmount += ($sku->product->on_sale ? $sku->product->price_sale : $sku->product->price) * $data['amount'];
                 // throw new \Exception($sku->);
                 // return $sku->decreaseStock($data['amount']);
                 // dd($sku->decreaseStock($data['amount']))

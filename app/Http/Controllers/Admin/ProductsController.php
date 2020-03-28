@@ -102,6 +102,7 @@ class ProductsController extends Controller {
     $product->on_sale = isset($request->on_sale) ? 1 : 0;
     $product->save();
     $product->categories()->sync($request->category);
+    $product->brands()->sync($request->brands);
     if (isset($request->stock)) {
       $sk = new ProductSku();
       $sk['stock'] = (int) $request->stock;
@@ -169,6 +170,7 @@ class ProductsController extends Controller {
     $product->weight = $request->weight;
     $product->on_new = isset($request->on_new) ? 1 : 0;
     $product->on_sale = isset($request->on_sale) ? 1 : 0;
+    $product->brands()->sync($request->brands);
     $product->categories()->sync($request->category);
     if (isset($request->stock)) {
       if ($product->skus->count() === 1 && $product->skus->first()->skus_id === null) {

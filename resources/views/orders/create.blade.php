@@ -68,7 +68,7 @@
                     <p class="text-muted font-small">Размер: {{ $item->productSku->skus ? $item->productSku->skus->title : 'One Size' }}</p>
                   </div>
                   <div class="col-4 col-md text-center font-weight-bold">
-                    {{ cost(round($item->productSku->product->price * $currency->ratio, 0)) }} {{ $currency->symbol }} X {{ $item->amount }}
+                    {{ cost(round(($item->productSku->product->on_sale ? $item->productSku->product->price_sale : $item->productSku->product->price) * $currency->ratio, 0)) }} {{ $currency->symbol }} X {{ $item->amount }}
                   </div>
                 </div>
               @empty

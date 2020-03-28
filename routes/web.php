@@ -8,6 +8,7 @@ Route::get('/about', 'PagesController@about')->name('about'); // Главаня
 Route::get('/contact', 'PagesController@contact')->name('contact'); // Главаня
 Route::get('products', 'ProductsController@index')->name('products.index'); // Главная с товарами
 Route::get('products/all', 'ProductsController@all')->name('products.all');
+Route::get('products/all-sale', 'ProductsController@allsale')->name('products.allsale');
 Route::get('products/search', 'ProductsController@search')->name('products.search'); // Главная с товарами
 Route::get('product/{product}', 'ProductsController@show')->name('products.show');
 Route::get('location/{city}', ['as' => 'location', 'uses' => 'PagesController@location']);
@@ -16,7 +17,7 @@ Route::resource('news', 'NewsController')->except([
 ]);
 Route::get('/test', function () {
   $curl = curl_init();
-  curl_setopt($curl, CURLOPT_URL, 'http://free.ipwhois.io/json/' . \Request::ip() . '?lang=ru');
+  curl_setopt($curl, CURLOPT_URL, 'http://free.ipwhois.io/json/' . '212.154.252.19' . '?lang=ru');
   curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
   curl_setopt($curl, CURLOPT_POST, 1);
   curl_setopt($curl, CURLOPT_POSTFIELDS, []);
@@ -46,7 +47,7 @@ Route::group(['middleware' => ['auth']], function() {
   ]);
   Route::post('products/{product}/favorite', 'ProductsController@favor')->name('products.favor');
   Route::delete('products/{product}/favorite', 'ProductsController@disfavor')->name('products.disfavor');
-  Route::get('products/favorites', 'ProductsController@favorites')->name('products.favorites');
+  Route::get('products/favorites', 'ProductsController@allfavor')->name('products.favorites');
 
   Route::get('orders', 'OrdersController@index')->name('orders.index');
 });

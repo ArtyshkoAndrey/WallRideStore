@@ -69,7 +69,7 @@
                     </div>
                   </div>
                   <div class="col-4 col-md text-center">
-                    {{ cost(round((isset($item->productSku) ? $item->productSku->product->price : $item['productSku']->product->price)  * $currency->ratio, 0)) }} {{ $currency->symbol }}
+                    {{ cost(round((isset($item->productSku) ? ( $item->productSku->product->on_sale ? $item->productSku->product->price_sale : $item->productSku->product->price) : ($item['productSku']->product->on_sale ? $item['productSku']->product->price_sale :$item['productSku']->product->price))  * $currency->ratio, 0)) }} {{ $currency->symbol }}
                   </div>
                   <div class="col-4 col-md">
                     <button class="btn-angle d-block w-100 m-0" @click="deleteItem"><i class="fal fa-times"></i></button>

@@ -89,7 +89,7 @@ class CartController extends Controller
               if ($item['id'] === $id) {
                 $ch = true;
                 $cartItems[$key]['amount'] = $item['amount'] + 1;
-                $priceAmount += $prs->product->price;
+                $priceAmount += $prs->product->on_sale ? $prs->product->price_sale : $prs->product->price;
                 break;
               }
             }
@@ -97,7 +97,7 @@ class CartController extends Controller
               $item['amount'] = 1;
               $item['id'] = $id;
               $item['productSku'] = $prs;
-              $priceAmount += $prs->product->price;
+              $priceAmount += $prs->product->on_sale ? $prs->product->price_sale : $prs->product->price;
               array_push($cartItems, $item);
             }
           }
@@ -137,7 +137,7 @@ class CartController extends Controller
           if ($item['product_sku']['id'] === $id) {
             $ch = true;
             $cartItems[$key]['amount'] = $item['amount'] + 1;
-            $priceAmount += $prs->product->price;
+            $priceAmount += $prs->product->on_sale ? $prs->product->price_sale : $prs->product->price;
             break;
           }
         }
@@ -147,7 +147,7 @@ class CartController extends Controller
             $item['amount'] = 1;
             $item['id'] = $id;
             $item['product_sku'] = $prs;
-            $priceAmount += $prs->product->price;
+            $priceAmount += $prs->product->on_sale ? $prs->product->price_sale : $prs->product->price;
             array_push($cartItems, $item);
           } else {
             unset($ids[$k]);
@@ -193,7 +193,7 @@ class CartController extends Controller
           if($item['product_sku']['id'] === $id) {
             $ch = true;
             $cartItems[$key]['amount'] = $item['amount'] + 1;
-            $priceAmount += $prs->product->price;
+            $priceAmount += $prs->product->on_sale ? $prs->product->price_sale : $prs->product->price;
             break;
           }
         }
@@ -201,7 +201,7 @@ class CartController extends Controller
           $item['amount'] = 1;
           $item['id'] = $id;
           $item['product_sku'] = $prs;
-          $priceAmount += $prs->product->price;
+          $priceAmount += $prs->product->on_sale ? $prs->product->price_sale : $prs->product->price;
           array_push($cartItems, $item);
         }
       }

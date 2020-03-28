@@ -4,7 +4,7 @@
 @section('content')
 <section class="container pt-5 my-5">
   <product-show :product="{{ $product }}" :currency="{{ $currency }}" :skus="{{$product->skus}}" :favor="{{ $favored ? 'true' : 'false' }}" inline-template>
-    <div class="row">
+    <div class="row mt-5">
       <div class="col-md-5">
         <div class="slider-for">
           @if ($product->photos)
@@ -38,8 +38,13 @@
             <li class="breadcrumb-item active px-0" aria-current="page">{{ ucwords(strtolower($product->title)) }}</li>
           </ol>
         </div>
-        <h1 class="font-weight-bold text-uppercase">@{{ $cost(Number(product.price) * currency.ratio) }} @{{ currency.symbol }}</h1>
-        <h4 class="font-weight-bold mt-4">Размер</h4>
+        <h1 class="font-weight-bold text-uppercase">@{{ product.on_sale && product.price_sale ? $cost(Number(product.price_sale) * currency.ratio)  : $cost(Number(product.price) * currency.ratio) }} @{{ currency.symbol }}</h1>
+        <div class="row mt-2">
+          <div class="col-12">
+            {!! $product->description !!}
+          </div>
+        </div>
+        <h4 class="font-weight-bold mt-1">Размер</h4>
         <div class="btn-group btn-group-toggle">
           <label v-for="(sku, index) in skus" :key="sku.id" :class="(index===0 ? 'mr-2' : 'mx-2') + ' btn sku-btn' + (idSku === sku.id ? ' active' : '')">
             <input type="radio" :id="'gender_' + index" autocomplete="off" name="sku_id" :value="sku.id" v-model.number='idSku'>
@@ -71,11 +76,6 @@
             <button class="btn h-100 py-3 btn-block bg-transparent p-0 text-dark" @click="favored" v-if="!favoredData"><i class="fal fa-heart"></i> Добавить в избранное</button>
             <button class="btn h-100 py-3 btn-block bg-transparent p-0 text-dark" @click="disFavored" v-else><i class="fad fa-heart"></i> Удалить из избранных</button>
           </div>
-        </div>
-        <div class="row mt-2">
-          <div class="col-12">
-  			     {!! $product->description !!}
-    		  </div
         </div>
       </div>
     </div>
