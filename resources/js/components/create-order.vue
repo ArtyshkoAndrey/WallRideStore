@@ -3,6 +3,7 @@
     name: "create-order",
     data () {
       return {
+        cartItems: [],
         step: 1,
         order: {
           name: $('input[name=username]').val(),
@@ -27,6 +28,9 @@
       cart_items: {
         required: true
       },
+      currency: {
+        required: true
+      },
       amount: {
         type: Number,
         required: true
@@ -40,6 +44,15 @@
       setTimeout(() => {
         $('input[name=contact_phone]').mask("+7 (999) 999-99-99");
       }, 100)
+
+      this.cartItems = []
+      this.cart_items.forEach(el => {
+        this.cartItems.push({
+          amount: el.amount,
+          id: el.id,
+          productSku: el.product_sku ? el.product_sku : el.productSku
+        })
+      })
     },
     methods: {
       checkCoupon () {
@@ -50,14 +63,16 @@
           return;
         }
         let amount = 0
-        this.cart_items.forEach(item => {
-          amount += Number(item.amount) * Number(item.product_sku ? item.product_sku.product.price : item.productSku.product.price)
+        this.cartItems.forEach(item => {
+          amount += Number(item.amount) * Number( item.productSku.product.price)
         });
         // Вызов интерфейса проверки
-        axios.post('/coupon_codes/' + code, {totalAmount: amount})
+        axios.post('/coupon_codes/' + code, {totalAmount: amount, items: this.cartItems})
           .then((response) => {  // Первым параметром метода then является обратный вызов, который будет вызываться при успешном выполнении запроса
             console.log(response.data)
-            this.$refs.totalAmountBottom.innerText = 'Общая сумма ' + new Intl.NumberFormat('ru-RU').format((response.data.totalAmount).toFixed(0)) + ' тг.'
+            this.$refs.totalAmountBottom.innerText = 'Общая сумма ' +
+              new Intl.NumberFormat('ru-RU').format((response.data.totalAmount * this.currency.ratio).toFixed(0)) +
+              ' ' + this.currency.symbol
             swal('Купон применился', '', 'success')
             $('#checkCoupon').prop('disabled', true);
             $('#coupon').prop('readonly', true);
@@ -77,10 +92,10 @@
       createOrder () {
         if (Number(this.order.city ) === 10451 || Number($('select[id=country]').val()) === 1) {
           let items = [];
-          this.cart_items.forEach(item => {
+          this.cartItems.forEach(item => {
             items.push({
-              sku_id: item.product_sku ? item.product_sku.id : item.productSku.id,
-              amount: item.amount
+              sku_id: item.productSku.id,
+              amount: item.amount,
             });
             console.log(items);
           });
@@ -93,7 +108,7 @@
               contact_name: this.order.name
             },
             email: this.order.email,
-            items: items,
+            items: this.cartItems,
             coupon: this.order.coupon,
             payment_method: this.order.payment_method,
             express_company: this.order.pickup ? 3 : this.order.express_company,

@@ -80,15 +80,44 @@ class CouponCode extends Model
     }
   }
 
-  public function getAdjustedPrice($orderAmount)
+  public function getAdjustedPrice($orderAmount, $items)
   {
     // фиксированная сумма
-    if ($this->type === self::TYPE_FIXED) {
+    $price = 0;
+//    disabled_other_sales
+//    return (int) number_format($orderAmount * (100 - $this->value) / 100, 2, '.', '');
+    if ($this->type === self::TYPE_PERCENT) {
       // Чтобы обеспечить надежность системы, нам необходимо сумма заказа не менее 0,01 юаня
-      return (int) max(0.01, $orderAmount - $this->value);
+//      return (int) max(0.01, $orderAmount - $this->value);
+      foreach($items as $item) {
+        // Проверка что купон делает скидку на скидочные товары и товар со скидкой
+        if ($item['productSku']['product']['on_sale'] && !$this->disabled_other_sales) {
+          $price += (int) ( (int) $item['productSku']['product']['price_sale'] * (int) $item['amount'] * ((100 - $this->value) / 100) );
+        } else if($item['productSku']['product']['on_sale'] && $this->disabled_other_sales) {
+          $price += (int) $item['productSku']['product']['price_sale'] * (int) $item['amount'];
+        } else {
+          $price += (int) ( (int) $item['productSku']['product']['price'] * (int) $item['amount'] * ((100 - $this->value) / 100) );
+        }
+      }
+      return (int) $price;
     }
 
-    return (int) number_format($orderAmount * (100 - $this->value) / 100, 2, '.', '');
+    if ($this->type === self::TYPE_FIXED) {
+      // Чтобы обеспечить надежность системы, нам необходимо сумма заказа не менее 0,01 юаня
+//      return (int) max(0.01, $orderAmount - $this->value);
+      foreach($items as $item) {
+
+        // Проверка что купон делает скидку на скидочные товары и товар со скидкой
+        if ($item['productSku']['product']['on_sale'] && !$this->disabled_other_sales) {
+          $price += max(100 , (int) $item['productSku']['product']['price_sale'] * (int) $item['amount'] - $this->value);
+        } else if($item['productSku']['product']['on_sale'] && $this->disabled_other_sales) {
+          $price += max(100 , (int) $item['productSku']['product']['price_sale'] * (int) $item['amount']);
+        } else {
+          $price += max(100 , (int) $item['productSku']['product']['price'] * (int) $item['amount'] - $this->value);
+        }
+      }
+      return (int) $price;
+    }
   }
 
   public function changeUsed($increase = true)

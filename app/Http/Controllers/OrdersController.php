@@ -8,6 +8,7 @@ use App\Exceptions\InvalidRequestException;
 use App\Http\Requests\ApplyRefundRequest;
 use App\Http\Requests\OrderRequest;
 use App\Http\Requests\SendReviewRequest;
+use App\Models\Admin;
 use App\Models\City;
 use App\Models\CouponCode;
 use App\Models\Currency;
@@ -19,6 +20,7 @@ use App\Models\User;
 use App\Models\UserAddress;
 use App\Models\Order;
 use App\Notifications\OrderPaidNotification;
+use App\Notifications\RegisterPaid;
 use App\Notifications\RegisterPassword;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -27,6 +29,11 @@ use Illuminate\Support\Facades\Auth;
 
 class OrdersController extends Controller
 {
+  function multiexplode ($delimiters,$string) {
+    $ready = str_replace($delimiters, $delimiters[0], $string);
+    $launch = explode($delimiters[0], $ready);
+    return  $launch;
+  }
 
   public function store(OrderRequest $request, OrderService $orderService)
   {
@@ -80,7 +87,7 @@ class OrdersController extends Controller
         'pg_salt' => 'randomStringForProfessionModel',
         'pg_order_id' => $order->no,
         'pg_success_url_method' => 'POST',
-        'pg_user_phone' => $address['phone'],
+        'pg_user_phone' => implode('', $this->multiexplode(array('-', '+', '(', ')', ' ',), $address['phone'])),
         'pg_description' => $p->pg_description,
         'pg_success_url' => route('orders.success', ['no' => $order->no]),
         'pg_result_url' => route('orders.index')
@@ -101,6 +108,8 @@ class OrdersController extends Controller
         $order->ship_status = Order::SHIP_STATUS_PENDING;
         $order->closed = 0;
         $order->save();
+        $admin = Admin::first();
+        $admin->notify(new RegisterPaid($order));
         return route('orders.index');
       } else {
         return 'Ошибка';
@@ -117,6 +126,9 @@ class OrdersController extends Controller
     $order->closed = 0;
     $order->save();
     event(new OrderPaid($order));
+    $admin = Admin::first();
+    $admin->notify(new RegisterPaid($order));
+
     return redirect()->route('orders.index')->with('status', 'Ваш заказ оплачен и в обработке');
   }
 
@@ -171,7 +183,7 @@ class OrdersController extends Controller
           if ($item->productSku->id === $id) {
             $ch = true;
             $cartItems[$key]->amount = $item->amount + 1;
-            $priceAmount += $prs->product->price;
+            $priceAmount += $prs->product->on_sale ? $prs->product->price_sale : $prs->product->price;
           }
         }
         if (!$ch) {
@@ -180,7 +192,7 @@ class OrdersController extends Controller
             $item->amount = 1;
             $item->id = $id;
             $item->productSku = $prs;
-            $priceAmount += $prs->product->price;
+            $priceAmount += $prs->product->on_sale ? $prs->product->price_sale : $prs->product->price;
             array_push($cartItems, $item);
           } else {
             unset($ids[$k]);

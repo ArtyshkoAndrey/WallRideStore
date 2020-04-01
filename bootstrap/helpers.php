@@ -32,7 +32,7 @@ function pay_link($order) {
     'pg_salt' => 'randomStringForProfessionModel',
     'pg_order_id' => $order->no,
     'pg_success_url_method' => 'POST',
-    'pg_user_phone' => auth()->user()->address->contact_phone,
+    'pg_user_phone' => implode('', multiexplode(array('-', '+', '(', ')', ' ',), auth()->user()->address->contact_phone)),
     'pg_description' => $p->pg_description,
     'pg_success_url' => route('orders.success', ['no' => $order->no]),
     'pg_result_url' => route('orders.index')
@@ -44,5 +44,11 @@ function pay_link($order) {
   unset($request[0], $request[1]);
   $query = http_build_query($request);
   return $p->url . $query;
+}
+
+function multiexplode ($delimiters,$string) {
+  $ready = str_replace($delimiters, $delimiters[0], $string);
+  $launch = explode($delimiters[0], $ready);
+  return  $launch;
 }
 

@@ -3,7 +3,7 @@
 
 @section('content')
   <section class="container mt-5 pt-5 mb-5" id="cart">
-    <create-order :amount="{{ $amount }}" :express_companies="{{ json_encode($express_companies) }}" :cart_items="{{ json_encode($cartItems) }}" inline-template>
+    <create-order :amount="{{ $amount }}" :currency="{{ $currency }}" :express_companies="{{ json_encode($express_companies) }}" :cart_items="{{ json_encode($cartItems) }}" inline-template>
       <div class="row">
         <div class="col-12">
           <div class="row">

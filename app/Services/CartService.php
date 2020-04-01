@@ -76,7 +76,7 @@ class CartService
       }
     });
     return $user->cartItems()->get()->map(function ($item) {
-      return $item->productSku->product->on_sale ? $item->productSku->product->price_sale * $item->amount : $item->productSku->product->price * $item->amoun;
+      return ($item->productSku->product->on_sale ? $item->productSku->product->price_sale : $item->productSku->product->price) * $item->amount;
     })->sum();
   }
 }

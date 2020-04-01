@@ -167,8 +167,10 @@
 @endsection
 
 @section('scriptsAfterJs')
+  <script src="{{ asset('public/js/jquery.mask.min.js') }}"></script>
   <script>
     $(document).ready(function() {
+      $('input[name=contact_phone]').mask("+7 (999) 999-99-99");
       $('#mySelect2').select2({
         ajax: {
           type: "POST",

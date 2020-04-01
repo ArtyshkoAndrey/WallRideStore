@@ -14,7 +14,7 @@ class OrderRequest extends Request
                 'required',
             ],
             'items'          => ['required', 'array'],
-            'items.*.sku_id' => [ // 检查 items 数组下每一个子数组的 sku_id 参数
+            'items.*.productSku.id' => [ // 检查 items 数组下每一个子数组的 sku_id 参数
                 'required',
                 function ($attribute, $value, $fail) {
                     if (!$sku = ProductSku::find($value)) {
@@ -27,7 +27,7 @@ class OrderRequest extends Request
                         return $fail('Этот продукт распродан');
                     }
                     // 获取当前索引
-                    preg_match('/items\.(\d+)\.sku_id/', $attribute, $m);
+                    preg_match('/items\.(\d+)\.productSku.id/', $attribute, $m);
                     $index = $m[1];
                     // Найти количество покупок, представленных пользователем на основе индекса
                     $amount = $this->input('items')[$index]['amount'];

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Мар 27 2020 г., 18:04
+-- Время создания: Апр 01 2020 г., 16:24
 -- Версия сервера: 5.7.25-log
 -- Версия PHP: 7.3.9
 
@@ -83,7 +83,7 @@ CREATE TABLE `brands` (
 --
 
 INSERT INTO `brands` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'Nike', NULL, NULL);
+(1, 'Nike', '2020-03-29 07:38:44', '2020-03-29 07:38:44');
 
 -- --------------------------------------------------------
 
@@ -104,8 +104,7 @@ CREATE TABLE `brands_categories` (
 --
 
 INSERT INTO `brands_categories` (`id`, `brand_id`, `category_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 30, '2020-03-26 17:00:00', '2020-03-26 17:00:00'),
-(2, 1, 22, NULL, NULL);
+(1, 1, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -125,9 +124,7 @@ CREATE TABLE `cart_items` (
 --
 
 INSERT INTO `cart_items` (`id`, `user_id`, `product_sku_id`, `amount`) VALUES
-(2, 130, 16, 1),
-(3, 130, 15, 1),
-(4, 130, 11, 1);
+(14, 136, 26, 1);
 
 -- --------------------------------------------------------
 
@@ -147,10 +144,7 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(22, 'Скейтборд', NULL, NULL),
-(29, 'Колёса', '2020-03-27 12:58:19', '2020-03-27 12:58:19'),
-(30, 'Подшипники', '2020-03-27 12:58:27', '2020-03-27 13:11:25'),
-(31, 'Доска', '2020-03-27 12:58:57', '2020-03-27 12:58:57');
+(1, 'Тест', '2020-03-29 07:38:31', '2020-03-29 07:38:31');
 
 -- --------------------------------------------------------
 
@@ -165,15 +159,6 @@ CREATE TABLE `categories_categories` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Дамп данных таблицы `categories_categories`
---
-
-INSERT INTO `categories_categories` (`id`, `category_id`, `child_category_id`, `created_at`, `updated_at`) VALUES
-(16, 22, 29, NULL, NULL),
-(17, 29, 30, NULL, NULL),
-(18, 22, 31, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -10469,7 +10454,7 @@ INSERT INTO `cities` (`id`, `name`, `country_id`, `created_at`, `updated_at`) VA
 (10420, 'Акбеит', 82, NULL, NULL),
 (10421, 'Аксу', 82, NULL, NULL),
 (10422, 'Алексеевка', 82, NULL, NULL),
-(10423, 'Астана', 82, NULL, NULL),
+(10423, 'Нур Султан', 82, NULL, NULL),
 (10424, 'Астраханка', 82, NULL, NULL),
 (10425, 'Атбасар', 82, NULL, NULL),
 (10426, 'Балкашино', 82, NULL, NULL),
@@ -11675,9 +11660,9 @@ INSERT INTO `cities` (`id`, `name`, `country_id`, `created_at`, `updated_at`) VA
 (11660, 'Prilep', 113, NULL, NULL),
 (11661, 'Radovis', 113, NULL, NULL),
 (11662, 'Saraj', 113, NULL, NULL),
-(11663, 'Dojran', 113, NULL, NULL),
-(11664, 'Struga', 113, NULL, NULL);
+(11663, 'Dojran', 113, NULL, NULL);
 INSERT INTO `cities` (`id`, `name`, `country_id`, `created_at`, `updated_at`) VALUES
+(11664, 'Struga', 113, NULL, NULL),
 (11665, 'Strumica', 113, NULL, NULL),
 (11666, 'Sveti Nikole', 113, NULL, NULL),
 (11667, 'Tetov', 113, NULL, NULL),
@@ -13044,9 +13029,9 @@ INSERT INTO `cities` (`id`, `name`, `country_id`, `created_at`, `updated_at`) VA
 (13062, 'Guarda', 148, NULL, NULL),
 (13063, 'Seia', 148, NULL, NULL),
 (13064, 'Vila Nova de Fozcoa', 148, NULL, NULL),
-(13065, 'Alcobaa', 148, NULL, NULL),
-(13066, 'Amor', 148, NULL, NULL);
+(13065, 'Alcobaa', 148, NULL, NULL);
 INSERT INTO `cities` (`id`, `name`, `country_id`, `created_at`, `updated_at`) VALUES
+(13066, 'Amor', 148, NULL, NULL),
 (13067, 'Batalha', 148, NULL, NULL),
 (13068, 'Benedita', 148, NULL, NULL),
 (13069, 'Caldad da Rainha', 148, NULL, NULL),
@@ -14394,9 +14379,9 @@ INSERT INTO `cities` (`id`, `name`, `country_id`, `created_at`, `updated_at`) VA
 (14499, 'Moberly', 153, NULL, NULL),
 (14502, 'Raymore', 153, NULL, NULL),
 (14503, 'Saint Charles', 153, NULL, NULL),
-(14504, 'Saint Louis', 153, NULL, NULL),
-(14505, 'Sedalia', 153, NULL, NULL);
+(14504, 'Saint Louis', 153, NULL, NULL);
 INSERT INTO `cities` (`id`, `name`, `country_id`, `created_at`, `updated_at`) VALUES
+(14505, 'Sedalia', 153, NULL, NULL),
 (14507, 'St. Robert', 153, NULL, NULL),
 (14508, 'Sweet Springs', 153, NULL, NULL),
 (14509, 'West Plains', 153, NULL, NULL),
@@ -15764,9 +15749,9 @@ INSERT INTO `cities` (`id`, `name`, `country_id`, `created_at`, `updated_at`) VA
 (16063, 'Seinjoki', 197, NULL, NULL),
 (16064, 'Somerniemi', 197, NULL, NULL),
 (16066, 'Sydnmaa', 197, NULL, NULL),
-(16067, 'Tammerfors', 197, NULL, NULL),
-(16068, 'Tampere', 197, NULL, NULL);
+(16067, 'Tammerfors', 197, NULL, NULL);
 INSERT INTO `cities` (`id`, `name`, `country_id`, `created_at`, `updated_at`) VALUES
+(16068, 'Tampere', 197, NULL, NULL),
 (16069, 'Tourula', 197, NULL, NULL),
 (16070, 'Turku', 197, NULL, NULL),
 (16071, 'Tuuri', 197, NULL, NULL),
@@ -17142,10 +17127,10 @@ INSERT INTO `cities` (`id`, `name`, `country_id`, `created_at`, `updated_at`) VA
 (17457, 'Мирианг', 215, NULL, NULL),
 (17458, 'Чинхэ', 215, NULL, NULL),
 (17459, 'Чиню', 215, NULL, NULL),
-(17460, 'Пусан', 215, NULL, NULL),
-(17461, 'Сеул', 215, NULL, NULL),
-(17462, 'Тэгу', 215, NULL, NULL);
+(17460, 'Пусан', 215, NULL, NULL);
 INSERT INTO `cities` (`id`, `name`, `country_id`, `created_at`, `updated_at`) VALUES
+(17461, 'Сеул', 215, NULL, NULL),
+(17462, 'Тэгу', 215, NULL, NULL),
 (17463, 'Тэджон', 215, NULL, NULL),
 (17464, 'Ульсан', 215, NULL, NULL),
 (17465, 'Кимпо', 215, NULL, NULL),
@@ -17547,13 +17532,6 @@ CREATE TABLE `coupons_brands` (
   `brand_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Дамп данных таблицы `coupons_brands`
---
-
-INSERT INTO `coupons_brands` (`id`, `coupon_id`, `brand_id`) VALUES
-(1, 1, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -17565,15 +17543,6 @@ CREATE TABLE `coupons_products` (
   `coupon_id` int(10) UNSIGNED NOT NULL,
   `product_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Дамп данных таблицы `coupons_products`
---
-
-INSERT INTO `coupons_products` (`id`, `coupon_id`, `product_id`) VALUES
-(1, 1, 5),
-(2, 1, 6),
-(3, 1, 10);
 
 -- --------------------------------------------------------
 
@@ -17605,7 +17574,7 @@ CREATE TABLE `coupon_codes` (
 --
 
 INSERT INTO `coupon_codes` (`id`, `name`, `code`, `type`, `value`, `total`, `used`, `min_amount`, `max_amount`, `disabled_other_coupons`, `disabled_other_sales`, `not_before`, `not_after`, `enabled`, `created_at`, `updated_at`) VALUES
-(1, 'wallride', 'wallride', 'fixed', '2000.00', 60, 7, '500', '2000', 1, 1, '2020-02-23 12:22:03', '2020-04-29 00:00:00', 1, '2020-02-22 17:00:00', '2020-03-26 07:41:38'),
+(1, 'wallride', 'wallride', 'percent', '10.00', 60, 10, '500', '2000', 1, 0, '2020-02-23 12:22:03', '2020-04-29 00:00:00', 1, '2020-02-22 17:00:00', '2020-03-29 08:18:03'),
 (2, '2020', '2020', 'percent', '50.00', 30, 0, '1000', '50000', 0, 0, '2020-02-24 16:57:41', '2020-02-29 00:00:00', 0, '2020-02-24 09:57:41', '2020-02-24 10:04:42'),
 (3, 'best333', 'best333', 'fixed', '10000.00', 10, 0, '1000', '10000', 1, 1, '2020-02-24 17:04:20', '2020-02-20 00:00:00', 0, '2020-02-24 10:04:20', '2020-02-24 10:04:26');
 
@@ -17629,9 +17598,9 @@ CREATE TABLE `currencies` (
 --
 
 INSERT INTO `currencies` (`id`, `name`, `ratio`, `symbol`, `created_at`, `updated_at`) VALUES
-(1, 'Тенге', 1, 'тг.', NULL, '2020-03-27 10:42:42'),
-(2, 'Российский рубль', 0.175747, 'р.', NULL, '2020-03-27 10:42:42'),
-(3, 'Американский доллар', 0.00224185, '$', NULL, '2020-03-27 10:42:42');
+(1, 'Тенге', 1, 'тг.', NULL, '2020-03-30 16:26:57'),
+(2, 'Российский рубль', 0.177305, 'р.', NULL, '2020-03-30 16:26:57'),
+(3, 'Американский доллар', 0.00223209, '$', NULL, '2020-03-30 16:26:57');
 
 -- --------------------------------------------------------
 
@@ -17645,13 +17614,6 @@ CREATE TABLE `disabled_coupons_brands` (
   `brand_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Дамп данных таблицы `disabled_coupons_brands`
---
-
-INSERT INTO `disabled_coupons_brands` (`id`, `coupon_id`, `brand_id`) VALUES
-(1, 1, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -17663,13 +17625,6 @@ CREATE TABLE `disabled_coupons_products` (
   `coupon_id` int(10) UNSIGNED NOT NULL,
   `product_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Дамп данных таблицы `disabled_coupons_products`
---
-
-INSERT INTO `disabled_coupons_products` (`id`, `coupon_id`, `product_id`) VALUES
-(1, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -17796,8 +17751,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (46, '2020_02_22_190430_coupons_brands', 22),
 (47, '2020_02_23_124447_disabled_coupons_brands', 22),
 (48, '2020_03_08_004219_products_brands', 23),
-(50, '2020_03_08_004219_categories_categories', 24),
-(51, '2020_03_08_004219_brands_categories', 25);
+(51, '2020_03_08_004219_brands_categories', 25),
+(52, '2020_03_08_004219_categories_categories', 26);
 
 -- --------------------------------------------------------
 
@@ -17855,16 +17810,9 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `no`, `user_id`, `coupon_code_id`, `address`, `total_amount`, `ship_price`, `paid_at`, `payment_method`, `payment_no`, `closed`, `reviewed`, `ship_status`, `ship_data`, `id_express_company`, `created_at`, `updated_at`) VALUES
-(8, '20200315153328400872', 120, NULL, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f,\\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a,\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24\",\"contact_name\":\"fulliton\",\"contact_phone\":\"89029634366\"}', '39900', '12000', NULL, 'card', NULL, 0, 0, 'paid', NULL, 2, '2020-03-15 08:33:28', '2020-03-15 08:33:28'),
-(9, '20200315154442926986', 120, NULL, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f,\\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a,\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24\",\"contact_name\":\"fulliton\",\"contact_phone\":\"89029634366\"}', '150600', '12000', '2020-03-15 15:45:22', 'card', NULL, 0, 0, 'pending', NULL, 2, '2020-03-15 08:44:42', '2020-03-15 08:45:22'),
-(13, '20200315155538327515', 124, NULL, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f,\\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a,\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24\",\"contact_name\":\"\\u0422\\u0435\\u0441\\u0442\\u043e\\u0432\\u044b\\u0439 \\u0410\\u043a\\u043a\\u0430\\u0443\\u043d\\u0442 \\u0434\\u043b\\u044f \\u043f\\u043e\\u043a\\u0443\\u043f\\u043a\\u0438\",\"contact_phone\":\"89029634366\"}', '79800', '12000', NULL, 'card', NULL, 0, 0, 'paid', NULL, 2, '2020-03-15 08:55:38', '2020-03-15 08:55:38'),
-(14, '20200317094508106937', 125, NULL, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f,\\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a,\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24\",\"contact_name\":\"fulliton\",\"contact_phone\":\"89029634366\"}', '156600', '0', NULL, 'cash', NULL, 0, 0, 'pending', NULL, 3, '2020-03-17 02:45:08', '2020-03-17 02:45:08'),
-(17, '20200326022027717169', 127, 1, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f,\\u041c\\u043e\\u0441\\u043a\\u0432\\u0430,\\u0413\\u043e\\u0440\\u044c\\u0435\\u043e\\u0433\\u043e\",\"contact_name\":\"fulliton\",\"contact_phone\":\"89029634366\"}', '15900', '100000', NULL, 'cash', NULL, 0, 0, 'pending', NULL, 3, '2020-03-25 19:20:27', '2020-03-25 19:20:28'),
-(18, '20200326022409282916', 128, 1, '{\"address\":\"\\u041a\\u0430\\u0437\\u0430\\u0445\\u0441\\u0442\\u0430\\u043d,\\u0410\\u043b\\u043c\\u0430\\u0442\\u044b (\\u0410\\u043b\\u043c\\u0430-\\u0410\\u0442\\u0430),\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24\",\"contact_name\":\"fulliton\",\"contact_phone\":\"89029634366\"}', '32800', '12000', NULL, 'cash', NULL, 0, 0, 'pending', NULL, 3, '2020-03-25 19:24:09', '2020-03-25 19:24:09'),
-(19, '20200326023216761752', 129, 1, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f,\\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a,\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24\",\"contact_name\":\"fulliton\",\"contact_phone\":\"89029634366\"}', '50700', '100000', '2020-03-26 02:33:33', 'card', NULL, 0, 0, 'pending', NULL, 8, '2020-03-25 19:32:16', '2020-03-25 19:33:33'),
-(20, '20200326024806473839', 129, NULL, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f,\\u0410\\u043b\\u043c\\u0430\\u0442\\u044b (\\u0410\\u043b\\u043c\\u0430-\\u0410\\u0442\\u0430),\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24\",\"contact_name\":\"fulliton\",\"contact_phone\":\"89029634366\"}', '17900', '0', NULL, 'cash', NULL, 0, 0, 'pending', NULL, 3, '2020-03-25 19:48:07', '2020-03-25 19:48:07'),
-(21, '20200326024907100933', 129, NULL, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f,\\u0410\\u043b\\u043c\\u0430\\u0442\\u044b (\\u0410\\u043b\\u043c\\u0430-\\u0410\\u0442\\u0430),\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24\",\"contact_name\":\"fulliton\",\"contact_phone\":\"89029634366\"}', '16900', '0', NULL, 'cash', NULL, 0, 0, 'pending', NULL, 3, '2020-03-25 19:49:07', '2020-03-25 19:49:07'),
-(22, '20200326144138165576', 130, 1, '{\"address\":\"\\u041a\\u0430\\u0437\\u0430\\u0445\\u0441\\u0442\\u0430\\u043d,\\u0410\\u043b\\u043c\\u0430\\u0442\\u044b (\\u0410\\u043b\\u043c\\u0430-\\u0410\\u0442\\u0430),\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24, 25\",\"contact_name\":\"fulliton\",\"contact_phone\":\"89029634366\"}', '8900', '0', NULL, 'cash', NULL, 0, 0, 'pending', NULL, 3, '2020-03-26 07:41:38', '2020-03-26 07:41:38');
+(28, '20200329151803524905', 136, 1, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f,\\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a,\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24, 25\",\"contact_name\":\"fulliton\",\"contact_phone\":\"+7 (902) 963-43-66\"}', '24120', '1000', NULL, 'card', NULL, 0, 0, 'received', '{\"express_no\":null}', 8, '2020-03-29 08:18:00', '2020-03-29 13:17:20'),
+(29, '20200329155555143522', 136, NULL, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f,\\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a,\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24, 25\",\"contact_name\":\"fulliton\",\"contact_phone\":\"+7 (902) 963-43-66\"}', '21900', '1000', '2020-03-29 15:56:29', 'card', NULL, 0, 0, 'received', '{\"express_no\":null}', 8, '2020-03-29 08:55:00', '2020-03-29 13:17:27'),
+(30, '20200329201143042015', 137, NULL, '{\"address\":\"\\u0420\\u043e\\u0441\\u0441\\u0438\\u044f,\\u041a\\u0440\\u0430\\u0441\\u043d\\u043e\\u044f\\u0440\\u0441\\u043a,\\u0413\\u043e\\u0440\\u044c\\u043a\\u043e\\u0433\\u043e 24, 25\",\"contact_name\":\"fulliton\",\"contact_phone\":\"89029634366\"}', '15900', '0', NULL, 'cash', NULL, 0, 0, 'received', '{\"express_no\":null}', 3, '2020-03-29 13:11:00', '2020-03-29 13:17:33');
 
 -- --------------------------------------------------------
 
@@ -17889,18 +17837,10 @@ CREATE TABLE `order_items` (
 --
 
 INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `product_sku`, `amount`, `price`, `rating`, `review`, `reviewed_at`) VALUES
-(8, 9, 5, 'M', 1, '21900.00', NULL, NULL, NULL),
-(9, 9, 6, 'L', 3, '42900.00', NULL, NULL, NULL),
-(18, 14, 9, 'M', 1, '16900.00', NULL, NULL, NULL),
-(21, 17, 10, 'One Size', 1, '17900.00', NULL, NULL, NULL),
-(22, 18, 10, 'One Size', 1, '17900.00', NULL, NULL, NULL),
-(23, 18, 9, 'M', 1, '16900.00', NULL, NULL, NULL),
-(24, 19, 11, 'One Size', 1, '10900.00', NULL, NULL, NULL),
-(25, 19, 8, 'M', 1, '16900.00', NULL, NULL, NULL),
-(26, 19, 7, 'One Size', 1, '24900.00', NULL, NULL, NULL),
-(27, 20, 10, 'One Size', 1, '17900.00', NULL, NULL, NULL),
-(28, 21, 8, 'M', 1, '16900.00', NULL, NULL, NULL),
-(29, 22, 11, 'One Size', 1, '10900.00', NULL, NULL, NULL);
+(38, 28, 10, 'One Size', 1, '15900.00', NULL, NULL, NULL),
+(39, 28, 11, 'One Size', 1, '10900.00', NULL, NULL, NULL),
+(40, 29, 5, 'L', 1, '21900.00', NULL, NULL, NULL),
+(41, 30, 10, 'One Size', 1, '15900.00', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -17974,12 +17914,12 @@ CREATE TABLE `products` (
 
 INSERT INTO `products` (`id`, `title`, `description`, `on_sale`, `on_new`, `sold_count`, `price`, `price_sale`, `weight`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (2, 'BRONZE56K HIGH PERFORMANCE WINDBREAKER ORANGE', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 438px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Н/Д</td></tr><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Размеры</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\"><p style=\"box-sizing: border-box; margin: 0px;\">M</p></td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 0, '55900.00', '55900', '2.00', NULL, '2020-03-12 18:30:33', '2020-03-12 18:31:22'),
-(5, 'BRONZE56K HARDWARE TECHNOLOGY LONGSLEEVE NAVY', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Н/Д</td></tr><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Размеры</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\"><p style=\"box-sizing: border-box; margin: 0px;\">XL, L, M, S</p></td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 1, 1, '21900.00', '21900', '2.00', NULL, '2020-03-12 18:37:05', '2020-03-15 08:45:22'),
+(5, 'BRONZE56K HARDWARE TECHNOLOGY LONGSLEEVE NAVY', '<table style=\"box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: #777777; font-family: \'PT Sans\', sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; text-decoration-style: initial; text-decoration-color: initial;\">\r\n<tbody style=\"box-sizing: border-box;\">\r\n<tr style=\"box-sizing: border-box;\">\r\n<th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid #ebebeb; border-top-color: #ebebeb; border-right-color: #ebebeb; border-left-color: #ebebeb;\">Вес</th>\r\n<td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border-bottom: 1px solid #ebebeb; border-top-color: #ebebeb; border-right-color: #ebebeb; border-left-color: #ebebeb;\">Н/Д</td>\r\n</tr>\r\n<tr style=\"box-sizing: border-box;\">\r\n<th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Размеры</th>\r\n<td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\">\r\n<p style=\"box-sizing: border-box; margin: 0px;\">XL, L, M, S</p>\r\n</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n<p style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\" data-f-id=\"pbf\">Powered by <a title=\"Froala Editor\" href=\"https://www.froala.com/wysiwyg-editor?pb=1\">Froala Editor</a></p>', 0, 1, 1, '21900.00', '21900', '2.00', NULL, '2020-03-12 18:37:05', '2020-03-28 02:53:29'),
 (6, 'BRONZE56K MICRODOSE 1/4 ZIP MUSTARD/NAVY', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Н/Д</td></tr><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Размеры</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\"><p style=\"box-sizing: border-box; margin: 0px;\">L, M</p></td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 0, 3, '42900.00', '42900', '1.00', NULL, '2020-03-12 18:38:18', '2020-03-15 08:45:22'),
 (7, 'BRONZE56K LOGO LEATHER BELT BLACK', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\">0.800 kg</td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 0, 1, '24900.00', '24900', '1.00', NULL, '2020-03-12 18:39:45', '2020-03-25 19:33:33'),
 (8, 'BRONZE56K LAVA LAMP TEE NAVY', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Н/Д</td></tr><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Размеры</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\"><p style=\"box-sizing: border-box; margin: 0px;\">L, M, S</p></td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 0, 1, '16900.00', '16900', '1.00', NULL, '2020-03-12 18:41:26', '2020-03-25 19:33:33'),
-(9, 'BRONZE56K MONEY CLIP TEE BLACK', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(235, 235, 235); border-top-color: rgb(235, 235, 235); border-right-color: rgb(235, 235, 235); border-left-color: rgb(235, 235, 235);\">Н/Д</td></tr><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Размеры</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\"><p style=\"box-sizing: border-box; margin: 0px;\">M, S</p></td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 0, 1, '16900.00', '16900', '1.00', NULL, '2020-03-12 18:42:24', '2020-03-13 12:42:05'),
-(10, 'BRONSON BEARING RAW', '<table style=\'box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: rgb(119, 119, 119); font-family: \"PT Sans\", sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\'><tbody style=\"box-sizing: border-box;\"><tr style=\"box-sizing: border-box;\"><th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Вес</th><td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\">0.110 kg</td></tr></tbody></table><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>', 0, 0, 2, '17900.00', '17900', '1.00', NULL, '2020-03-12 18:45:03', '2020-03-25 08:08:20'),
+(9, 'BRONZE56K MONEY CLIP TEE BLACK', '<p>Lorem Ipsum<span style=\"font-family: \'Open Sans\', Arial, sans-serif; font-size: 14px; text-align: justify;\">&nbsp;- это текст-\"рыба\", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной \"рыбой\" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и</span></p>', 0, 0, 1, '16900.00', '16900', '1.00', NULL, '2020-03-12 18:42:24', '2020-03-28 09:14:43'),
+(10, 'BRONSON BEARING RAW', '<table style=\"box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 866px; margin: 0px; color: #777777; font-family: \'PT Sans\', sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; text-decoration-style: initial; text-decoration-color: initial;\">\r\n<tbody style=\"box-sizing: border-box;\">\r\n<tr style=\"box-sizing: border-box;\">\r\n<th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Вес</th>\r\n<td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\">0.110 kg</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n<p style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\" data-f-id=\"pbf\">Powered by <a title=\"Froala Editor\" href=\"https://www.froala.com/wysiwyg-editor?pb=1\">Froala Editor</a></p>', 1, 1, 2, '17900.00', '15900', '1.00', NULL, '2020-03-12 18:45:03', '2020-03-28 11:09:43'),
 (11, 'BRONSON BEARING G2', '<table style=\"box-sizing: border-box; border-collapse: collapse; border-spacing: 0px; width: 535px; margin: 0px; color: #777777; font-family: \'PT Sans\', sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; text-decoration-style: initial; text-decoration-color: initial;\">\r\n<tbody style=\"box-sizing: border-box;\">\r\n<tr style=\"box-sizing: border-box;\">\r\n<th style=\"box-sizing: border-box; text-align: left; padding: 0.6rem 1rem; border: none;\">Вес</th>\r\n<td style=\"box-sizing: border-box; padding: 0.6rem 1rem; border: none;\">0.110 kg</td>\r\n</tr>\r\n</tbody>\r\n</table>', 0, 0, 1, '10900.00', '10900', '1.00', NULL, '2020-03-12 18:46:06', '2020-03-26 08:49:58');
 
 -- --------------------------------------------------------
@@ -17996,13 +17936,6 @@ CREATE TABLE `products_brands` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Дамп данных таблицы `products_brands`
---
-
-INSERT INTO `products_brands` (`id`, `product_id`, `brand_id`, `created_at`, `updated_at`) VALUES
-(1, 5, 1, NULL, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -18016,13 +17949,6 @@ CREATE TABLE `products_categories` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Дамп данных таблицы `products_categories`
---
-
-INSERT INTO `products_categories` (`id`, `product_id`, `category_id`, `created_at`, `updated_at`) VALUES
-(16, 11, 30, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -18077,18 +18003,16 @@ CREATE TABLE `product_skus` (
 --
 
 INSERT INTO `product_skus` (`id`, `stock`, `product_id`, `skus_id`, `created_at`, `updated_at`) VALUES
-(6, 0, 5, 2, '2020-03-12 18:37:05', '2020-03-15 08:44:42'),
-(7, 3, 5, 3, '2020-03-12 18:37:06', '2020-03-12 18:37:06'),
-(8, 4, 5, 5, '2020-03-12 18:37:06', '2020-03-12 18:37:06'),
 (9, 0, 6, 3, '2020-03-12 18:38:18', '2020-03-15 08:44:42'),
 (10, 0, 7, NULL, '2020-03-12 18:39:45', '2020-03-25 19:32:17'),
-(11, 1, 8, 2, '2020-03-12 18:41:27', '2020-03-25 19:49:07'),
+(11, 0, 8, 2, '2020-03-12 18:41:27', '2020-03-29 08:15:48'),
 (12, 10, 8, 5, '2020-03-12 18:41:27', '2020-03-12 18:41:27'),
-(13, 0, 9, 2, '2020-03-12 18:42:24', '2020-03-25 19:24:09'),
-(14, 10, 9, 5, '2020-03-12 18:42:24', '2020-03-12 18:42:24'),
-(15, 5, 10, NULL, '2020-03-12 18:45:03', '2020-03-25 19:48:07'),
-(16, 12, 11, NULL, '2020-03-12 18:46:07', '2020-03-26 07:41:38'),
-(25, 0, 2, 2, '2020-03-13 09:46:17', '2020-03-13 11:34:09');
+(15, 0, 10, NULL, '2020-03-12 18:45:03', '2020-03-29 13:11:44'),
+(16, 11, 11, NULL, '2020-03-12 18:46:07', '2020-03-29 08:18:03'),
+(25, 0, 2, 2, '2020-03-13 09:46:17', '2020-03-13 11:34:09'),
+(26, 1, 5, 3, '2020-03-28 02:53:29', '2020-03-29 08:55:55'),
+(27, 4, 5, 5, '2020-03-28 02:53:29', '2020-03-28 02:53:29'),
+(30, 10, 9, 5, '2020-03-28 09:14:43', '2020-03-28 09:14:43');
 
 -- --------------------------------------------------------
 
@@ -18140,14 +18064,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `avatar`, `email_verified_at`, `pass
 (106, 'ANZHELIKA ARTYSHKO', 'lika.dudareva@gmail.com', '1581004168.jpg', NULL, '$2y$10$l5Eisw/yfNmepnwHJd7clOeVlljchofWtjWnz3ry2uXmq9zLjrKJa', NULL, '2020-02-03 08:04:08', '2020-02-03 08:04:08'),
 (107, 'Роман Иминов', 'iminovarts@gmail.com', NULL, '2020-02-11 08:06:18', '$2y$10$XCMQtYi8xMArrx0SCTxrzOl55OEtCLk.opVg/sGQnu9c/DJTsIsX6', NULL, '2020-02-11 07:48:06', '2020-02-11 08:06:18'),
 (108, 'Андрей Артышко', 'adad.artyshko@mail.ru', NULL, '2020-02-11 07:57:52', '$2y$10$nQpOvq/evc4nEI2jeqgGYeYHviuaAhapPO/SggFKJZeiMuG4K168u', 'kHfRnLezLkyRxqtFQyyjeC6LisWcAzesyMrgYjQPXFTTOzdSAe14y8fsuFOM', '2020-02-11 07:56:40', '2020-02-11 07:57:52'),
-(109, 'Завирюха Богдан', 'bogdan@mail.ru', NULL, NULL, '$2y$10$opf8ZV2ytYVlmUbMTcJq5OVBkNLuyMnDdDU8NQZ/78zvIjqi/B7Di', NULL, '2020-02-20 09:13:50', '2020-02-20 09:13:50'),
-(120, 'fulliton', 'xepaya5003@upcmaill.com', NULL, NULL, '$2y$10$wHsbGq/D.lfgmlhULH38GeDwosQ8RpW2miGZT3dn7mWE8WG1OuSni', 'ik9wcqtWKQ4A79CyQLMdOLzCnVjRcKICFbgSyIODLrpvAL4XNwSSZen9wspz', '2020-03-15 08:33:28', '2020-03-15 08:33:28'),
-(124, 'Тестовый Аккаунт для покупки', 'xepaya5023@upcmaill.com', NULL, NULL, '$2y$10$93d.4HKCGABd1f6bLRFcAOPwwzCI.PCASOsyw37ogWSFZKayBRXOW', NULL, '2020-03-15 08:55:38', '2020-03-15 08:55:38'),
-(125, 'fulliton', 'artyshko.andrey123123@gmail.com', NULL, NULL, '$2y$10$zkxLuNC2isZ9IoqNN.EtjuPxqn7Rz.DdgReZYNNexAWAU7YDq2pTi', 'zeFrdXolmNqae553KQCrDGqIT5ZsUydM48SMkKWp3pufHRK7M6hiVYFQucEx', '2020-03-17 02:45:08', '2020-03-17 02:45:08'),
-(127, 'fulliton', 'artyshko.andrey123123123123@gmail.com', NULL, NULL, '$2y$10$kFsp6vOD1ekvKVdygv4Os.VI7d42JmZNyq6omrMe/HQb29q.6li3G', 'wMWaaxsYmSwBYf3yxDfM5Rux8Dcux2NjsuuPHeyxydgF7ufVNNJdqjJPwzky', '2020-03-25 19:20:27', '2020-03-25 19:20:27'),
-(128, 'fulliton', 'artyshko.andrey3333333@gmail.com', NULL, NULL, '$2y$10$5qOtC9wIyUZXsBuAR9.7bOXhQ9KInU91lfOFoFDn/4KlSD2elnLoe', 'HXWo3VAY9zGU3wMQPt23UU9qde5mEgYBqcDNGFAqF1aktehBApUECyQHVL91', '2020-03-25 19:24:08', '2020-03-25 19:24:08'),
-(129, 'fulliton', 'artyshko.andrey22333@gmail.com', NULL, NULL, '$2y$10$QDjS.pmKjSLK.9DFv2tjVufjDsBuMAGCjvuOokcCIT5tvCHtw5inK', NULL, '2020-03-25 19:32:16', '2020-03-25 19:32:16'),
-(130, 'fulliton', 'artyshko.andrey@gmail.com', NULL, NULL, '$2y$10$I1JEkCWawX7pyPmTU6YeXubbDVcnNdv8u8XsOGzMPS20NTQ9.ZGd6', '8jzl4Z3Go3EUiVRP2Pgy7u2W3UEVk8HFdOmOyPy2AfQOtvMrUlHrdHQRZVcC', '2020-03-26 07:41:36', '2020-03-26 07:44:44');
+(136, 'fulliton', 'artyshko.andrey@gmail.com', NULL, NULL, '$2y$10$kQLypoVuzFyjpEYhqywS2uMIMkUcudvCwiAsMDK2I7H4.aP2i0J7.', NULL, '2020-03-29 08:18:00', '2020-03-29 08:18:00'),
+(137, 'fulliton', 'artyshko.andrey756@gmail.com', NULL, NULL, '$2y$10$n0NZJ9JHw61m018xuRer3e3eDidjIXa2ZSDIKQehZj8yRsiSLLoM2', NULL, '2020-03-29 13:11:32', '2020-03-29 13:11:32');
 
 -- --------------------------------------------------------
 
@@ -18173,13 +18091,8 @@ CREATE TABLE `user_addresses` (
 
 INSERT INTO `user_addresses` (`id`, `user_id`, `country_id`, `city_id`, `street`, `contact_phone`, `currency_id`, `created_at`, `updated_at`) VALUES
 (2, 108, 1, 1116, 'Горького 24, 25', '89029634366', 3, '2020-03-03 12:49:53', '2020-03-03 12:51:18'),
-(4, 120, 1, 1116, 'Горького 24', '89029634366', 1, '2020-03-15 08:33:28', '2020-03-15 08:33:28'),
-(6, 124, 1, 1116, 'Горького 24', '89029634366', 1, '2020-03-15 08:55:38', '2020-03-15 08:55:38'),
-(7, 125, 1, 1116, 'Горького 24', '89029634366', 1, '2020-03-17 02:45:08', '2020-03-17 02:45:08'),
-(9, 127, 1, 1, 'Горьеого', '89029634366', 1, '2020-03-25 19:20:27', '2020-03-25 19:20:27'),
-(10, 128, 82, 10451, 'Горького 24', '89029634366', 1, '2020-03-25 19:24:09', '2020-03-25 19:24:09'),
-(11, 129, 1, 10451, 'Горького 24', '89029634366', 1, '2020-03-25 19:32:16', '2020-03-25 19:48:45'),
-(12, 130, 82, 10451, 'Горького 24, 25', '89029634366', 1, '2020-03-26 07:41:36', '2020-03-26 07:41:36');
+(18, 136, 1, 1116, 'Горького 24, 25', '+7 (902) 963-43-66', 2, '2020-03-29 08:18:00', '2020-03-29 08:58:50'),
+(19, 137, 1, 1116, 'Горького 24, 25', '89029634366', 1, '2020-03-29 13:11:32', '2020-03-29 13:11:32');
 
 -- --------------------------------------------------------
 
@@ -18460,31 +18373,31 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT для таблицы `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `brands_categories`
 --
 ALTER TABLE `brands_categories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT для таблицы `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `categories_categories`
 --
 ALTER TABLE `categories_categories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `cities`
@@ -18508,13 +18421,13 @@ ALTER TABLE `countries`
 -- AUTO_INCREMENT для таблицы `coupons_brands`
 --
 ALTER TABLE `coupons_brands`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `coupons_products`
 --
 ALTER TABLE `coupons_products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `coupon_codes`
@@ -18532,13 +18445,13 @@ ALTER TABLE `currencies`
 -- AUTO_INCREMENT для таблицы `disabled_coupons_brands`
 --
 ALTER TABLE `disabled_coupons_brands`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `disabled_coupons_products`
 --
 ALTER TABLE `disabled_coupons_products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `express_companies`
@@ -18562,7 +18475,7 @@ ALTER TABLE `headers`
 -- AUTO_INCREMENT для таблицы `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT для таблицы `news`
@@ -18574,13 +18487,13 @@ ALTER TABLE `news`
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT для таблицы `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT для таблицы `pays`
@@ -18598,13 +18511,13 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT для таблицы `products_brands`
 --
 ALTER TABLE `products_brands`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `products_categories`
 --
 ALTER TABLE `products_categories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `products_image`
@@ -18616,7 +18529,7 @@ ALTER TABLE `products_image`
 -- AUTO_INCREMENT для таблицы `product_skus`
 --
 ALTER TABLE `product_skus`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT для таблицы `skuses`
@@ -18628,13 +18541,13 @@ ALTER TABLE `skuses`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=138;
 
 --
 -- AUTO_INCREMENT для таблицы `user_addresses`
 --
 ALTER TABLE `user_addresses`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT для таблицы `user_favorite_products`

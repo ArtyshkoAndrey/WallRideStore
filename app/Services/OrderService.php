@@ -41,7 +41,7 @@ class OrderService
 
             $totalAmount = 0;
             foreach ($items as $data) {
-              $sku = ProductSku::find($data['sku_id']);
+              $sku = ProductSku::find($data['productSku']['id']);
               $item = $order->items()->make([
                 'amount' => $data['amount'],
                 'price' => $sku->product->on_sale ? $sku->product->price_sale : $sku->product->price,
@@ -64,7 +64,7 @@ class OrderService
             }
             if ($coupon) {
                 $coupon->checkAvailable($user, $totalAmount);
-                $totalAmount = $coupon->getAdjustedPrice($totalAmount);
+                $totalAmount = $coupon->getAdjustedPrice($totalAmount, $items);
                 $order->couponCode()->associate($coupon);
                 if ($coupon->changeUsed() <= 0) {
                     throw new CouponCodeUnavailableException('该优惠券已被兑完');
