@@ -61,6 +61,7 @@ class OrderService
                 if ($sku->decreaseStock($data['amount']) <= 0) {
                     throw new InvalidRequestException('Товар распродан');
                 }
+                $sku->addStock($data['amount']);
             }
             if ($coupon) {
                 $coupon->checkAvailable($user, $totalAmount);

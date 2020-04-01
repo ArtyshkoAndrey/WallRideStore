@@ -26,7 +26,7 @@ class RegisterPaid extends Notification {
     return (new MailMessage)
       ->subject('Оплачен новый заказ')
       ->greeting('Здраствуйте')
-      ->line($this->order->paid_at->format('d.m.Y H:i') . ' был оплачен ваш заказ по номеру ' . $this->order->no)
+      ->line($this->order->paid_at ? ($this->order->paid_at->format('d.m.Y H:i') . ' был оплачен заказ по номеру ' . $this->order->no) : ($this->order->created_at->format('d.m.Y H:i') . ' был создан заказ по номеру ' . $this->order->no))
       ->line('Заказ оплатил ' . $this->order->user->name . '.')
       ->line('Общая стоимость заказа составляет ' . ($this->order->total_amount + (isset($this->order->ship_price) ? $this->order->ship_price : 0)) . ' тг.')
       ->action('Просмотреть статус заказа', route('admin.store.order.edit', $this->order->id))

@@ -65,9 +65,15 @@
                     <label for="description">Описание</label>
                     <textarea name="description" class="form-control" id="description" cols="30" rows="10"></textarea>
                   </div>
-                  <div class="col-12 mt-2">
+                  <div class="col-12 col-md-6 mt-2">
                     <label for="category">Категории</label>
-                    <select name="category[]" class="form-control rounded-0" multiple id="category"></select>
+                    <select name="category[]" class="form-control rounded-0" multiple id="category">
+                    </select>
+                  </div>
+                  <div class="col-12 col-md-6 mt-2">
+                    <label for="brands">Бренды</label>
+                    <select name="brands[]" class="form-control rounded-0" multiple id="brands">
+                    </select>
                   </div>
                   <div class="col-md-6 mt-2">
                     <label for="price">Цена</label>
@@ -182,6 +188,27 @@
         }
       }
     });
+    $('#brands').select2({
+      width: '100%',
+      ajax: {
+        type: "POST",
+        dataType: 'json',
+        url: function (params) {
+          return '{{ route('api.brand', '') }}' + '/' + params.term;
+        },
+        processResults: function (data) {
+          return {
+            results: data.items.map((e) => {
+              return {
+                text: e.name,
+                id: e.id
+              };
+            })
+          };
+        }
+      }
+    });
+
     Dropzone.autoDiscover = false;
     var i =0;
     var fileList = new Array;

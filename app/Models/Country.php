@@ -10,4 +10,8 @@ class Country extends Model
   {
     return $query->where($column, 'like', '%'.$value.'%');
   }
+
+  public function cities () {
+    return $this->hasMany(City::class, 'country_id', 'id');
+  }
 }

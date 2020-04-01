@@ -15,7 +15,10 @@
           <div class="box">
             <a :href="'/product/'+item.id" class="mt-4 pb-0 mb-0 name">{{ item.title }}</a>
           </div>
-          <p class="price mt-1 pt-0">{{ item.on_sale && item.price_sale ? $cost(Number(item.price_sale) * currency.ratio)  : $cost(Number(item.price) * currency.ratio) }} {{ currency.symbol }}</p>
+          <p :class="'price mt-1 pt-0 '  + (item.on_sale && item.price_sale ? 'text-center' : null)">
+            <span :class="'d-inline-flex ' + (item.on_sale && item.price_sale ? 'text-muted' : null)"><s v-if="item.on_sale && item.price_sale">{{ $cost(Number(item.price) * currency.ratio) }} {{ currency.symbol }}</s> <span v-else>{{ $cost(Number(item.price) * currency.ratio) }} {{ currency.symbol }}</span></span>
+            <span v-if="item.on_sale && item.price_sale" class="d-inline-flex text-danger">{{ $cost(Number(item.price_sale) * currency.ratio) }} {{ currency.symbol }}</span>
+          </p>
         </div>
         <div class="row px-0 mx-0">
           <div class="col-3 px-0 btn-to-cart-adaptive">
@@ -345,7 +348,7 @@ line-height: 24px;" v-model="count" readonly disabled>
     }
     p.price {
       font-weight: bold;
-      font-size: 24px;
+      font-size: 20px;
       line-height: 35px;
     }
   }

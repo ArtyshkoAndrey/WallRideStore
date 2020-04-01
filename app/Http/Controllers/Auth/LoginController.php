@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Country;
 use App\Models\Currency;
 use App\Models\UserAddress;
 use App\Services\CartService;
@@ -79,7 +80,25 @@ class LoginController extends Controller
           $currencyGlobal = Currency::find(1);
         }
       } else {
-        $currencyGlobal = Currency::find(1);
+        if (isset($_COOKIE['city'])) {
+          $ct = $_COOKIE['city'];
+          $ctr = Country::whereHas('cities', function ($q) use ($ct) {
+            $q->where('cities.id', $ct);
+          })->first();
+          if ($ctr) {
+            if ($ctr->name === 'Россия') {
+              $currencyGlobal = Currency::find(2);
+            } else if ($ctr->name === 'Казахстан') {
+              $currencyGlobal = Currency::find(1);
+            } else {
+              $currencyGlobal = Currency::find(3);
+            }
+          } else {
+            $currencyGlobal = Currency::find(3);
+          }
+        } else {
+          $currencyGlobal = Currency::find(1);
+        }
       }
       View::share('currency', $currencyGlobal);
       View::share('cartItems', $cartItems);

@@ -212,18 +212,26 @@
               swal('Не заполнены все данные', '', 'error');
             }
           } else if (this.step === 2) {
-            if (this.order.street !== '' && this.order.payment_method !== null && this.order.city !== null && this.order.country !== null ) {
-              if (this.order.payment_method === 'card') {
-                if (this.order.express_company === null) {
-                  swal('Не заполнены все данные', '', 'error');
-                } else  {
+            if (this.order.pickup === false) {
+              if (this.order.street !== '' && this.order.payment_method !== null && this.order.city !== null && this.order.country !== null) {
+                if (this.order.payment_method === 'card') {
+                  if (this.order.express_company === null) {
+                    swal('Не заполнены все данные', '', 'error');
+                  } else {
+                    this.createOrder()
+                  }
+                } else {
                   this.createOrder()
                 }
               } else {
-                this.createOrder()
+                swal('Не заполнены все данные', '', 'error');
               }
             } else {
-              swal('Не заполнены все данные', '', 'error');
+              if (this.order.street !== '' && this.order.city !== null && this.order.country !== null && this.order.payment_method !== null) {
+                this.createOrder()
+              }else {
+                swal('Не заполнены все данные', '', 'error');
+              }
             }
           }
         }

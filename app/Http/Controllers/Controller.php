@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\City;
+use App\Models\Country;
 use App\Models\Currency;
 use App\Models\UserAddress;
 use Carbon\Carbon;
@@ -65,7 +66,25 @@ class Controller extends BaseController
           $currencyGlobal = Currency::find(1);
         }
       } else {
-        $currencyGlobal = Currency::find(1);
+        if (isset($_COOKIE['city'])) {
+          $ct = $_COOKIE['city'];
+          $ctr = Country::whereHas('cities', function ($q) use ($ct) {
+            $q->where('cities.id', $ct);
+          })->first();
+          if ($ctr) {
+            if ($ctr->name === 'Россия') {
+              $currencyGlobal = Currency::find(2);
+            } else if ($ctr->name === 'Казахстан') {
+              $currencyGlobal = Currency::find(1);
+            } else {
+              $currencyGlobal = Currency::find(3);
+            }
+          } else {
+            $currencyGlobal = Currency::find(3);
+          }
+        } else {
+          $currencyGlobal = Currency::find(1);
+        }
       }
       if(Carbon::parse($currencyGlobal->updated_at)->addDay() < Carbon::now()) {
         $ar = simplexml_load_file('https://nationalbank.kz/rss/rates_all.xml');
