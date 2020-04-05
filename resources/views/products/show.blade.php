@@ -6,7 +6,7 @@
   <product-show :product="{{ $product }}" :currency="{{ $currency }}" :skus="{{$product->skus}}" :favor="{{ $favored ? 'true' : 'false' }}" inline-template>
     <div class="row mt-5">
       <div class="col-md-5">
-        <div class="slider-for">
+                <div class="slider-for d-md-block d-none">
           @if ($product->photos)
             @forelse($product->photos as $ph)
               <div class="slider-for__item ex1">
@@ -19,6 +19,24 @@
             @endforelse
           @else
             <div class="slider-for__item ex1">
+              <img src="https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png" alt="error" />
+            </div>
+          @endif
+
+        </div>
+        <div class="slider-for d-md-none d-block">
+          @if ($product->photos)
+            @forelse($product->photos as $ph)
+              <div class="slider-for__item">
+                <img src="{{ asset('storage/products/'.$ph->name) }}" alt="{{ $ph->name }}" />
+              </div>
+            @empty
+              <div class="slider-for__item">
+                <img src="https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png" alt="error" />
+              </div>
+            @endforelse
+          @else
+            <div class="slider-for__item">
               <img src="https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png" alt="error" />
             </div>
           @endif
