@@ -33,7 +33,8 @@ class PagesController extends Controller
     } else {
       setcookie('city',$city->id, time() + (86400 * 30), "/");
     }
-    setcookie('whooip', 1, time() + (86400 * 30), "/");
+    // setcookie('whooip', 1, time() + (86400 * 30), "/");
+    setcookie('whooip', 1, time() + (3600 * 24 * 30), '/');
     return redirect()->back();
   }
 }
