@@ -92,7 +92,7 @@
                 <div class="col-md-6 mt-3 mt-md-0">
                   <h5 class="font-weight-bold">Выберите службу доставки</h5>
                   <div class="btn-group btn-group-toggle" data-toggle="buttons" v-if="!order.pickup">
-                    <div v-for="(company, index) in companies" class="btn p-0 rounded-0 border-0 ml-2" :disabled="order.pickup || company.costedTransfer == null">
+                    <div v-for="(company, index) in companies" class="btn p-0 rounded-0 border-0 ml-2" :disabled="order.pickup || company.costedTransfer == null || company.enabled == false">
                       <label  class="btn-white border-0 rounded-0 p-3 mb-0" :disabled="order.pickup || company.costedTransfer == null" @click="() => { !order.pickup && company.costedTransfer !== null ? (order.express_company = company.id, order.costTransfer = company.costedTransfer) : null}">
                         <input type="radio" :value="company.id" name="express_company" autocomplete="off" :checked="order.express_company === company.id">
                         @{{ company.name }}
