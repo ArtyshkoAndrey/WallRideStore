@@ -111,8 +111,8 @@
                     <label class="btn btn-white border-0 rounded-0 p-3" @click="() => {order.payment_method = 'card'}">
                       <input type="radio" value="card" name="payment_method" id="option5" autocomplete="off" :checked="order.payment_method === 'card'"> <i class="fal fa-credit-card-front"></i> Оплатить онлайн
                     </label>
-                    <label class="btn btn-white border-0 rounded-0 p-3 ml-2" :disabled="true" @click="() => {false ? order.payment_method = 'cash' : null}">
-                      <input type="radio" value="cash" name="payment_method" id="option6" autocomplete="off" :checked="order.payment_method === 'cash'"> <i class="fad fa-coins"></i> Наличными в магазине
+                    <label class="btn btn-white border-0 rounded-0 p-3 ml-2" :disabled="false" @click="() => {order.payment_method = 'cash'}">
+                      <input type="radio" value="cash" name="payment_method" id="option6" autocomplete="off" :checked="order.payment_method === 'cash'"> <i class="fad fa-coins"></i> Наличными
                     </label>
                   </div>
                 </div>
