@@ -116,7 +116,7 @@ class OrdersController extends Controller
             $sku->decreaseStock($item->amount);
           } else if ($sku->count() > 1) {
             $sku = $sku->whereHas('skus', function ($q) use ($item) {
-              $q->where('skus.name', $item->product_sku);
+              $q->where('skuses.title', $item->product_sku);
             })->first();
 //        dd($sku);
             $sku->decreaseStock($item->amount);
