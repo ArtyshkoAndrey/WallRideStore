@@ -181,7 +181,7 @@ class OrdersController extends Controller
     $express_companies = ExpressCompany::where('name', '!=', 'Самовывоз')->get();
     $zones = ExpressZone::with('company')->whereHas('cities', function ($qq) {
       if(Auth::check()) {
-        $qq->where('cities.id', Auth()->user()->address->city_id);
+        $qq->where('cities.id', isset(Auth()->user()->address->city_id) ? Auth()->user()->address->city_id : $_COOKIE['city']);
       } else {
         $qq->where('cities.id', $_COOKIE['city']);
       }
