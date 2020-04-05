@@ -14,6 +14,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use App\Services\CartService;
+use Illuminate\Support\Facades\Cookie;
 
 class Controller extends BaseController
 {
@@ -23,13 +24,13 @@ class Controller extends BaseController
 
   public function __construct(CartService $cartService) {
     if (!isset($_COOKIE['city'])) {
-      setcookie('city', City::first()->id, time() + (86400 * 30), "/");
+      setcookie('city', City::first()->id, time() + (3600 * 24 * 30), '/');
     }
     if (!isset($_COOKIE['whooip'])) {
-      setcookie('whooip', 0, time() + (86400 * 30));
+      setcookie('whooip', 0, time() + (3600 * 24 * 30), '/');
     }
     if(!isset($_COOKIE["products"])) {
-      setcookie("products", '', time() + (3600 * 24 * 30), "/", request()->getHost());
+      setcookie("products", '', time() + (3600 * 24 * 30), '/');
     }
     $this->cartService = $cartService;
     $this->middleware(function ($request, $next) {
@@ -67,23 +68,98 @@ class Controller extends BaseController
         }
       } else {
         if (isset($_COOKIE['city'])) {
-          $ct = $_COOKIE['city'];
-          $ctr = Country::whereHas('cities', function ($q) use ($ct) {
-            $q->where('cities.id', $ct);
-          })->first();
-          if ($ctr) {
-            if ($ctr->name === 'Россия') {
-              $currencyGlobal = Currency::find(2);
-            } else if ($ctr->name === 'Казахстан') {
-              $currencyGlobal = Currency::find(1);
+            if(!isset($_COOKIE['whooip']) || (int) $_COOKIE['whooip'] === 0) {
+                $curl = curl_init();
+                curl_setopt($curl, CURLOPT_URL, 'http://pro.ipwhois.io/json/' . \Request::ip() . '?key=gFoMKlSHuw23CWwm&lang=ru');
+                curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+                curl_setopt($curl, CURLOPT_POST, 1);
+                curl_setopt($curl, CURLOPT_POSTFIELDS, []);
+                $out = curl_exec($curl);
+                curl_close($curl);
+                if(\App\Models\City::where('name',json_decode($out)->city)->first()) {
+                    $ct = \App\Models\City::where('name',json_decode($out)->city)->first();
+                    $ctr = Country::whereHas('cities', function ($q) use ($ct) {
+                        $q->where('cities.id', $ct->id);
+                    })->first();
+                } else if (\App\Models\City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first()) {
+                    $ct = \App\Models\City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first();
+                    $ctr = Country::whereHas('cities', function ($q) use ($ct) {
+                        $q->where('cities.id', $ct->id);
+                    })->first();
+                } else {
+                    $ct = \App\Models\City::find($_COOKIE['city']);
+                    $ctr = Country::whereHas('cities', function ($q) use ($ct) {
+                        $q->where('cities.id', $ct->id);
+                    })->first();
+                }
+                if ($ctr) {
+                    if ($ctr->name === 'Россия') {
+                      $currencyGlobal = Currency::find(2);
+                    } else if ($ctr->name === 'Казахстан') {
+                      $currencyGlobal = Currency::find(1);
+                    } else {
+                      $currencyGlobal = Currency::find(3);
+                    }
+                } else {
+                    $currencyGlobal = Currency::find(3);
+                }
             } else {
-              $currencyGlobal = Currency::find(3);
+                $ct = \App\Models\City::find($_COOKIE['city']);
+                $ctr = Country::whereHas('cities', function ($q) use ($ct) {
+                    $q->where('cities.id', $ct->id);
+                })->first();
+                if ($ctr) {
+                    if ($ctr->name === 'Россия') {
+                      $currencyGlobal = Currency::find(2);
+                    } else if ($ctr->name === 'Казахстан') {
+                      $currencyGlobal = Currency::find(1);
+                    } else {
+                      $currencyGlobal = Currency::find(3);
+                    }
+                } else {
+                    $currencyGlobal = Currency::find(3);
+                }
             }
-          } else {
-            $currencyGlobal = Currency::find(3);
-          }
         } else {
-          $currencyGlobal = Currency::find(1);
+            if(!isset($_COOKIE['whooip']) || (int)  $_COOKIE['whooip'] === 0) {
+                $curl = curl_init();
+                curl_setopt($curl, CURLOPT_URL, 'http://pro.ipwhois.io/json/' . \Request::ip() . '?key=gFoMKlSHuw23CWwm&lang=ru');
+                curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+                curl_setopt($curl, CURLOPT_POST, 1);
+                curl_setopt($curl, CURLOPT_POSTFIELDS, []);
+                $out = curl_exec($curl);
+                curl_close($curl);
+                if(\App\Models\City::where('name',json_decode($out)->city)->first()) {
+                    $ct = \App\Models\City::where('name',json_decode($out)->city)->first();
+                    $ctr = Country::whereHas('cities', function ($q) use ($ct) {
+                        $q->where('cities.id', $ct->id);
+                    })->first();
+                } else if (\App\Models\City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first()) {
+                    $ct = \App\Models\City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first();
+                    $ctr = Country::whereHas('cities', function ($q) use ($ct) {
+                        $q->where('cities.id', $ct->id);
+                    })->first();
+                } else {
+                    $ct = \App\Models\City::find(isset($_COOKIE['city']) ? $_COOKIE['city'] : 1);
+                    $ctr = Country::whereHas('cities', function ($q) use ($ct) {
+                        $q->where('cities.id', $ct->id);
+                    })->first();
+                }
+                if ($ctr) {
+                    if ($ctr->name === 'Россия') {
+                      $currencyGlobal = Currency::find(2);
+                    } else if ($ctr->name === 'Казахстан') {
+                      $currencyGlobal = Currency::find(1);
+                    } else {
+                      $currencyGlobal = Currency::find(3);
+                    }
+                } else {
+                    $currencyGlobal = Currency::find(3);
+                }
+            } else {
+                $currencyGlobal = Currency::find(1);
+            }
+          
         }
       }
       if(Carbon::parse($currencyGlobal->updated_at)->addDay() < Carbon::now()) {
