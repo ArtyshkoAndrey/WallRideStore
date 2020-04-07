@@ -14,8 +14,6 @@
             <p class="h5 mt-3" id="amount">{{ $amount }} шт.</p>
             <h4 class="font-weight-bold mt-4">Сумма товаров</h4>
             <p class="h5 mt-3" id="priceAmount">{{ cost(round((integer) $priceAmount * $currency->ratio, 0)) }} {{ $currency->symbol }}</p>
-{{--            {{ dd($currency->ratio) }}--}}
-            <input type="text" value="{{ auth()->user() ?  auth()->user()->name : '' }}" name="name" class="w-100 py-2 px-2 mt-2" placeholder="Имя">
           </div>
         </div>
       </div>
