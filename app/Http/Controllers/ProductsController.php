@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\InvalidRequestException;
+use App\Helpers\CollectionHelper;
 use App\Models\Category;
 use App\Models\Header;
 use App\Models\News;
@@ -10,14 +11,22 @@ use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Skus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 
 class ProductsController extends Controller {
 
-  public function search () {
+  public function search (Request $request) {
     $name = Input::get('name', '');
-    $products = Product::with('skus', 'photos')->where('title','LIKE','%'.$name.'%')->paginate(16);
+    $prodCat = Product::with('skus', 'photos')->whereHas('categories', function($q) use($name) {
+      $q->where('categories.name', 'like', '%'.$name.'%');
+    })->get()->toArray();
+    $related = new Collection();
+    $products = Product::with('skus', 'photos')->where('title','LIKE','%'.$name.'%')->get()->toArray();
+    $related = $related->merge($prodCat);
+    $related = $related->merge($products);
+    $products = CollectionHelper::paginate($related, count($related), 16); //Filter the page var
     $products->appends(['name' => $name]);
     return view('products.search', compact('products', 'name'));
   }
