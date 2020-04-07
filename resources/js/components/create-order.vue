@@ -132,7 +132,33 @@
                 });
                 html += '</div>';
                 console.log(html);
-                swal({content: $(html)[0], icon: 'error'})
+                if (error.response.data.errors.email) {
+                  swal({
+                    text: 'Пользователь с таким email уже зарегистрирован, пожалуйста войдите или укажите другой email',
+                    title: 'Пользователь уже существует.',
+                    icon: 'warning',
+                    buttons: {
+                      success:{
+                        text: "Изменить почту",
+                        value: true,
+                        className: "btn-primary"
+                      },
+                      cancle: {
+                        text: "Войти в аккаунт",
+                        value: false,
+                        className: "btn-primary"
+                      }
+                    },
+                    }).then((isConfirm) => {
+                      if (isConfirm) {
+                        
+                      } else {
+                        window.location = '/login'
+                      }
+                    })
+                } else {
+                  swal({content: $(html)[0], icon: 'error'})
+                }
               } else if (error.response.status === 403) { // Судя по статусу здесь 403
                 swal(error.response.data.msg, '', 'error');
               } else {
