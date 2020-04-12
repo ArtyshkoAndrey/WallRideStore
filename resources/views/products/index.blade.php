@@ -3,16 +3,46 @@
 
 @section('content')
   <section class="container-fluid p-0 text-white" id="slider">
-    <div class="row p-0 m-0">
-      <div class="col-12 p-0">
-        <div style="width: 100%; height: 100%; background: rgba(0,0,0,0.5); position:absolute;"></div>
-        <img class="img-fluid"  src="{{ asset('public/storage/header/' . $h->photo) }}" alt="">
+    <div id="carouselExampleCaptions" class="carousel slide" style="height: 500px;" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+        <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner h-100">
+        <div class="carousel-item h-100 active">
+          <img src="{{ asset('public/images/slide1.png') }}" class="d-block h-100 w-100" style="object-fit: cover" alt="...">
+          <div class="col-12 p-0 position-absolute text-center" style="top: 0;">
+            <h1>{{$h->h1}}</h1>
+            <h3>{{ $h->h2 }}</h3>
+            <a href="{{ $h->url }}" class="btn">{{ $h->btn_text }}</a>
+          </div>
+        </div>
+        <div class="carousel-item h-100">
+          <img src="{{ asset('public/images/slide1.png') }}" class="d-block h-100 w-100" style="object-fit: cover" alt="...">
+          <div class="col-12 p-0 position-absolute text-center" style="top: 0;">
+            <h1>{{$h->h1}}</h1>
+            <h3>{{ $h->h2 }}</h3>
+            <a href="{{ $h->url }}" class="btn">{{ $h->btn_text }}</a>
+          </div>
+        </div>
+        <div class="carousel-item h-100">
+          <img src="{{ asset('public/images/slide1.png') }}" class="d-block h-100 w-100" style="object-fit: cover" alt="...">
+          <div class="col-12 p-0 position-absolute text-center" style="top: 0;">
+            <h1>{{$h->h1}}</h1>
+            <h3>{{ $h->h2 }}</h3>
+            <a href="{{ $h->url }}" class="btn">{{ $h->btn_text }}</a>
+          </div>
+        </div>
       </div>
-      <div class="col-12 p-0 position-absolute text-center">
-        <h1>{{$h->h1}}</h1>
-        <h3>{{ $h->h2 }}</h3>
-        <a href="{{ $h->url }}" class="btn">{{ $h->btn_text }}</a>
-      </div>
+      <a class="carousel-control-prev bg-transparent" href="#carouselExampleCaptions" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next bg-transparent" href="#carouselExampleCaptions" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
     </div>
   </section>
   <section class="mt-5 pt-5 px-00">

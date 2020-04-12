@@ -124,13 +124,23 @@
         </form>
       </li>
       @guest
-      <li class="nav-item mr-0 mr-sm-4" rel="profile" style="display: flex;">
+      <li class="nav-item mr-0 mr-sm-4 d-md-flex d-none" rel="profile" style="display: flex;">
 
         <span class="d-flex align-items-center">
           <a class="nav-link p-0 mr-2 border-bottom border-white d-flex align-items-center" href="{{ route('login') }}">Войдите</a>
           или
           <a class="nav-link p-0 ml-2 border-bottom border-white d-flex align-items-center" href="{{ route('register') }}">Зарегистрируйтесь</a>
         </span>
+      </li>
+      <li class="nav-item dropdown mr-0 mr-sm-4 d-md-none d-flex" rel="profile-mobile">
+        <a class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fal fa-user fa-2x fa-fw"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" style="right: 0; width: unset!important; height: unset!important;max-width: unset!important; max-height: unset!important; min-width: unset!important; min-height: unset!important;" aria-labelledby="profile">
+          <a href="{{ route('login') }}" class="dropdown-item">Войти</a>
+          <a href="{{ route('register') }}" class="dropdown-item">Зарегестрироваться</a>
+        </div>
+      </li>
       @else
       <li class="nav-item dropdown mr-0 mr-sm-4" rel="profile">
         <a class="nav-link p-0 align-items-center" id="nav-profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -148,6 +158,18 @@
         </div>
       </li>
       @endguest
+      <li class="nav-item dropdown mr-0 mr-sm-4 d-md-none d-flex" style="position: static;" rel="search-mobile">
+        <a class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fal fa-search fa-2x fa-fw"></i>
+        </a>
+          <form action="{{ route('products.search') }}" class="dropdown-menu dropdown-menu-right" style="top: 47px;right: 0; width: 100vw!important; height: unset!important;max-width: unset!important; max-height: unset!important; min-width: unset!important; min-height: unset!important;" aria-labelledby="profile">
+            <div class="form-group">
+              <label for="exampleDropdownFormEmail2"></label>
+              <input type="text" class="form-control" id="" name="name" value="{{ isset($name) ? $name : null }}" placeholder="Что-то искали?">
+            </div>
+            <button type="submit" class="btn btn-dark rounded-0 w-100">Найти</button>
+          </form>
+      </li>
       <li class="nav-item dropdown mr-0 mr-sm-4" rel="cart">
         <a class="nav-link" id="cart" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fal fa-shopping-bag fa-2x fa-fw"></i>

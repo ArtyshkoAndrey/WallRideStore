@@ -393,7 +393,7 @@ nav.navbar {
             content: '';
             position: absolute;
             left: 130px;
-            top: 32px;
+            top: 30px;
             border: 10px solid transparent;
             border-bottom: 10px solid white;
           }
@@ -452,6 +452,22 @@ nav.navbar {
             font-weight: 500;
             border: none;
           }
+        }
+      }
+    }
+    li[rel="search-mobile"] {
+      &.show {
+        &::before, &::after {
+          right: 80px !important;
+          left: unset !important;
+        }
+      }
+    }
+    li[rel="profile-mobile"] {
+      &.show {
+        &::before, &::after {
+          left: 16px !important;
+          top: 30px !important;
         }
       }
     }
