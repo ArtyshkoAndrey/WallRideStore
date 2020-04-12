@@ -6,6 +6,7 @@ use App\Models\City;
 use App\Models\UserAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Cookie;
 
 class PagesController extends Controller
 {

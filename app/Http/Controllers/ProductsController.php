@@ -123,7 +123,7 @@ class ProductsController extends Controller {
   }
 
   public function index() {
-    $productsNew = Product::where('on_new', true)->take(5)->with('skus', 'photos')->get();
+    $productsNew = Product::where('on_new', true)->orderBy('created_at', 'desc')->take(5)->with('skus', 'photos')->get();
 
     $category = Category::withCount('products')->orderBy('products_count', 'desc')->first();
     if($category) {

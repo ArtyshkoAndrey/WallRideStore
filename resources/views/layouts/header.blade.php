@@ -198,7 +198,7 @@
         <a class="nav-link d-flex align-items-center" href="{{ route('products.all') }}">Магазин</a>
       </li>
       <li class="nav-item mr-0 mr-sm-4">
-        <a class="nav-link d-flex align-items-center" id="top-brands" style="cursor: pointer;" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link d-flex align-items-center" style="cursor: pointer;" id="top-brands" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Бренды
         </a>
         <div class="dropdown-menu border-0 m-0 rounded-0 p-0" style="left: auto; top: 50px; max-height: 300px" aria-labelledby="top-brands">
