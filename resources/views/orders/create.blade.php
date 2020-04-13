@@ -27,7 +27,7 @@
             <div class="card-body mt-2" v-else>
               <h4 class="font-weight-bold">Адрессные данные</h4>
               <div class="mt-2">
-                <select name="country" id="country" class="rounded-0 mt-2 form-control" placeholder="Страна">
+                <select name="country" id="country" v-model="order.country" class="rounded-0 mt-2 form-control" placeholder="Страна">
                   @if (auth()->user() ? auth()->user()->address !== null : $_COOKIE['city'] !== null)
                     <option value="{{ auth()->user() ? auth()->user()->address->country_id : App\Models\City::find($_COOKIE['city'])->country->id }}" selected>{{ auth()->user() ? auth()->user()->address->country->name : App\Models\City::find($_COOKIE['city'])->country->name }}</option>
                   @endif

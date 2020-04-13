@@ -35,8 +35,8 @@
     <span></span>
   </div>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav justify-content-end">
-      <li class="nav-item dropdown d-none d-sm-block" rel="city">
+    <ul class="navbar-nav">
+      <li class="nav-item dropdown d-flex" rel="city">
         <a class="nav-link d-flex align-items-center" id="city" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           @guest
             @if(!isset($_COOKIE['whooip']) || (int) $_COOKIE['whooip'] == 0)
@@ -114,7 +114,7 @@
       <li class="nav-item d-none d-lg-block position-absolute" style="display: flex; left: calc( 50vw  - 25px )">
         <a href="{{ route('root') }}"><img src="{{ asset('public/images/logo.png') }}" height="45" alt=""></a>
       </li>
-      <li class="nav-item mr-2 d-none d-sm-block ml-auto" style="display: flex;">
+      <li class="nav-item mr-2 d-none ml-auto" style="display: flex;">
         <form action="{{ route('products.search') }}" id="big-search" class="form-inline w-100">
           <div class="form-group mb-0 mr-0">
             <label class="sr-only">Что-то искали?</label>
@@ -124,7 +124,7 @@
         </form>
       </li>
       @guest
-      <li class="nav-item mr-0 mr-sm-4 d-md-flex d-none" rel="profile" style="display: flex;">
+      <li class="nav-item mr-0 mr-sm-4 d-none" rel="profile" style="display: flex;">
 
         <span class="d-flex align-items-center">
           <a class="nav-link p-0 mr-2 border-bottom border-white d-flex align-items-center" href="{{ route('login') }}">Войдите</a>
@@ -132,7 +132,7 @@
           <a class="nav-link p-0 ml-2 border-bottom border-white d-flex align-items-center" href="{{ route('register') }}">Зарегистрируйтесь</a>
         </span>
       </li>
-      <li class="nav-item dropdown mr-0 mr-sm-4 d-md-none d-flex" rel="profile-mobile">
+      <li class="nav-item dropdown mr-0 mr-sm-4 d-flex ml-auto" rel="profile-mobile">
         <a class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fal fa-user fa-2x fa-fw"></i>
         </a>
@@ -142,7 +142,7 @@
         </div>
       </li>
       @else
-      <li class="nav-item dropdown mr-0 mr-sm-4" rel="profile">
+      <li class="nav-item dropdown mr-0 mr-sm-4 ml-auto" rel="profile">
         <a class="nav-link p-0 align-items-center" id="nav-profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <img class="img-fluid rounded-circle p-0" src="{{ isset(auth()->user()->avatar) ? asset('storage/avatar/thumbnail/'.auth()->user()->avatar) : asset('public/images/person.png') }}" alt="">
           <span class="d-block ml-2">{{ auth()->user()->name }}</span>
@@ -158,11 +158,11 @@
         </div>
       </li>
       @endguest
-      <li class="nav-item dropdown mr-0 mr-sm-4 d-md-none d-flex" style="position: static;" rel="search-mobile">
+      <li class="nav-item dropdown mr-0 mr-sm-4 d-flex" style="position: static;" rel="search-mobile">
         <a class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fal fa-search fa-2x fa-fw"></i>
         </a>
-          <form action="{{ route('products.search') }}" class="dropdown-menu dropdown-menu-right" style="top: 47px;right: 0; width: 100vw!important; height: unset!important;max-width: unset!important; max-height: unset!important; min-width: unset!important; min-height: unset!important;" aria-labelledby="profile">
+          <form action="{{ route('products.search') }}" class="dropdown-menu dropdown-menu-right" style="height: unset!important;max-width: unset!important; max-height: unset!important; min-width: unset!important; min-height: unset!important;" aria-labelledby="profile">
             <div class="form-group">
               <label for="exampleDropdownFormEmail2"></label>
               <input type="text" class="form-control" id="" name="name" value="{{ isset($name) ? $name : null }}" placeholder="Что-то искали?">

@@ -3,7 +3,7 @@
     name: "create-order",
     data () {
       return {
-        test: true,
+        test: false,
         cartItems: [],
         step: 1,
         order: {
@@ -272,8 +272,8 @@
                     console.log(com, amount);
                     if (Number(com.min_cost) <= Number(amount)) { // Проверка на ограничение мин стоимости заказа
                       console.log('Покупка картой онлайн с выбранной компанией');
-                      // this.createOrder()
-                      swal('ТИПО ОПЛАЧЕНО ТЕСТ ))', '', 'success');
+                      this.createOrder()
+                      // swal('ТИПО ОПЛАЧЕНО ТЕСТ ))', '', 'success');
                     } else { // не прошла по стоимости
                       swal('Минимальная сумма заказа для ' +com.name + ' составляет: ' + Number.parseInt(Number(com.min_cost) * Number(this.currency.ratio)) + ' ' + this.currency.symbol, '', 'error');
                     }
@@ -290,8 +290,8 @@
                     console.log(com, amount);
                     if (Number(com.min_cost) <= Number(amount)) { // Проверка на ограничение мин стоимости заказа
                       console.log('Покупка наличными с выбранной компанией');
-                      // this.createOrder()
-                      swal('ТИПО ОПЛАЧЕНО ТЕСТ ))', '', 'success');
+                      this.createOrder()
+                      // swal('ТИПО ОПЛАЧЕНО ТЕСТ ))', '', 'success');
                     } else { // не прошла по стоимости
                       swal('Минимальная сумма заказа для ' +com.name + ' составляет: ' + Number.parseInt(Number(com.min_cost) * Number(this.currency.ratio)) + ' ' + this.currency.symbol, '', 'error');
                     }
@@ -302,8 +302,8 @@
               }
             } else { // самовывоз
               if (this.order.street !== '' && this.order.city !== null && this.order.country !== null && this.order.payment_method !== null) { // данные для доставки
-                // this.createOrder()
-                swal('ТИПО ОПЛАЧЕНО ТЕСТ ))', '', 'success');
+                this.createOrder()
+                // swal('ТИПО ОПЛАЧЕНО ТЕСТ ))', '', 'success');
               }else { // не прошла проверку на введённый данных
                 swal('Не заполнены все данные', '', 'error');
               }

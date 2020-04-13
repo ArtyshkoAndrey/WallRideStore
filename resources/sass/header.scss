@@ -342,6 +342,18 @@ nav.navbar {
     //li[rel="city"] {
     //  margin-right: auto;
     //}
+    li[rel="city"] {
+      position: inherit;
+      &.show {
+        &::before, &::after {
+        }
+      }
+      .dropdown-menu {
+        top: 47px;
+        left: 0;
+        height: auto !important;
+      }
+    }
     li[rel="cart"] {
       &.show {
         &::before, &::after {
@@ -456,9 +468,15 @@ nav.navbar {
       }
     }
     li[rel="search-mobile"] {
+      .dropdown-menu {
+        right: 0 ;
+        transform: translate(-30%, 0) !important;
+        width: unset!important;
+        top: 47px;
+      }
       &.show {
         &::before, &::after {
-          right: 80px !important;
+          right: 80px;
           left: unset !important;
         }
       }
@@ -471,10 +489,43 @@ nav.navbar {
         }
       }
     }
+    li[rel="profile"] {
+      &.show {
+        &::before, &::after {
+          left: 5px !important;
+        }
+      }
+    }
   }
 }
 
 @media (min-width: 768px) {
+  li[rel="city"] {
+    position: inherit;
+    &.show {
+      &::before, &::after {
+      }
+    }
+    .dropdown-menu {
+      top: 47px;
+      left: auto !important;
+      height: auto !important;
+    }
+  }
+  li[rel="search-mobile"] {
+    .dropdown-menu {
+      right: 0 !important;
+      transform: translate(-30%, 0) !important;
+      width: unset!important;
+      top: 47px;
+    }
+    &.show {
+      &::before, &::after {
+        right: 130px !important;
+        left: unset !important;
+      }
+    }
+  }
   nav.navbar ul.navbar-nav li[rel="cart"] .dropdown-menu {
     width: 516px !important;
     max-width: unset !important;
@@ -813,13 +864,13 @@ nav.navbar {
 }
 #counter {
   position: absolute;
-  top: 0;
-  right: 0;
-  height: 25px;
-  width: 25px;
+  top: 5px;
+  right: 5px;
+  height: 15px;
+  width: 15px;
   border-radius: 100%;
-  background-color: #F33C3C;
-  border: 5px solid black;
+  background-color: #f33c3c;
+  border: 0;
   text-align: center;
   span {
     margin: 0;
