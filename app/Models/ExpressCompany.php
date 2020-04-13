@@ -10,11 +10,14 @@ class ExpressCompany extends Model
     'name',
     'enabled',
     'cost_type',
-    'track_code'
+    'track_code',
+    'min_cost',
+    'enabled_cash'
   ];
 
   protected $casts = [
-    'enables'    => 'boolean'
+    'enabled' => 'boolean',
+    'enabled_cash' => 'boolean'
   ];
 
   public function zones() {

@@ -33,6 +33,10 @@
                     @endforeach
                   </select>
                 </div>
+                <div class="custom-control mb-2 custom-switch">
+                  <input type="checkbox" name="to_index" value="true" class="custom-control-input" id="customSwitch">
+                  <label class="custom-control-label" for="customSwitch">На главной странице</label>
+                </div>
                 <div class="form-group">
                   <button type="submit" class="btn bg-dark rounded-0 border-0">Добавить</button>
                 </div>
@@ -41,11 +45,18 @@
             <div class="col-md-6 category">
               <ul>
                 @foreach($categories as $category)
-                  <li><a href="{{ route('admin.production.category.edit', $category->id) }}" class="text-red">{{ $category->name }}</a> <form action="{{ route('admin.production.category.destroy', $category->id) }}" method="post">
+                  <li><a href="{{ route('admin.production.category.edit', $category->id) }}" class="text-red">{{ $category->name }}
+                      @if($category->to_index)
+                        <i style="font-size: 1.5rem" class="fal fa-home-lg-alt ml-2 text-success"></i>
+                      @endif
+                    </a>
+
+                    <form action="{{ route('admin.production.category.destroy', $category->id) }}" method="post">
                       @csrf
                       @method('delete')
                       <button class="bg-transparent border-0 rounded-0" style="color: #F33C3C" type="submit"><i style="font-size: 1.5rem" class="fal fa-trash"></i></button>
-                    </form></li>
+                    </form>
+                  </li>
                   @if($category->child()->count() > 0)
                     <ul>
                       @include('admin.layouts.categoryList', ['cat' => $category->child()->get(), 'deleted' => true])

@@ -42,8 +42,16 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
 //      dd($request);
+      $request->validate([
+        'name' => 'required|string',
+        'to_index' => $request->has('to_index') ? 'accepted' : ''
+      ]);
       $ct = new Category();
       $ct->name = $request->name;
+      $ct->to_index = $request->has('to_index');
+      if($request->has('to_index')) {
+        Category::where('to_index', true)->update(['to_index' => false]);
+      }
       $ct->save();
       $ct->parents()->sync($request->categories);
       return redirect()->route('admin.production.category.index');
@@ -81,8 +89,16 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+      $request->validate([
+        'name' => 'required|string',
+        'to_index' => $request->has('to_index') ? 'accepted' : ''
+      ]);
       $ct = Category::find($id);
       $ct->name = $request->name;
+      $ct->to_index = $request->has('to_index');
+      if($request->has('to_index')) {
+        Category::where('to_index', true)->update(['to_index' => false]);
+      }
       $ct->parents()->sync($request->categories);
       $ct->save();
       return redirect()->route('admin.production.category.index');

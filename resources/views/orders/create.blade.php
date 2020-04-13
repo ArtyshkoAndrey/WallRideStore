@@ -3,7 +3,7 @@
 
 @section('content')
   <section class="container mt-5 pt-5 mb-5" id="cart">
-    <create-order :amount="{{ $amount }}" :currency="{{ $currency }}" :express_companies="{{ json_encode($express_companies) }}" :cart_items="{{ json_encode($cartItems) }}" inline-template>
+    <create-order :amount="{{ $amount }}" :pickup="{{ $pickup }}" :currency="{{ $currency }}" :express_companies="{{ json_encode($express_companies) }}" :cart_items="{{ json_encode($cartItems) }}" inline-template>
       <div class="row">
         <div class="col-12">
           <div class="row">
@@ -84,7 +84,7 @@
                     <label class="btn btn-white border-0 rounded-0 p-3" @click="() => {order.pickup = false; order.payment_method = 'card'}">
                       <input type="radio" name="express_company_pickup" id="option1" autocomplete="off" :checked="order.pickup === false"> <i class="fal fa-truck"></i> Курьером
                     </label>
-                    <label class="btn btn-white border-0 rounded-0 p-3 ml-2" @click="() => {order.pickup = true}">
+                    <label class="btn btn-white border-0 rounded-0 p-3 ml-2" :disabled="pickup.enabled === false" @click="() => {pickup.enabled ? order.pickup = true : null}">
                       <input type="radio" name="express_company_pickup" id="option2" autocomplete="off" :checked="order.pickup === true"> <i class="fal fa-shopping-basket"></i> Самовывоз
                     </label>
                   </div>
@@ -111,7 +111,7 @@
                     <label class="btn btn-white border-0 rounded-0 p-3" @click="() => {order.payment_method = 'card'}">
                       <input type="radio" value="card" name="payment_method" id="option5" autocomplete="off" :checked="order.payment_method === 'card'"> <i class="fal fa-credit-card-front"></i> Оплатить онлайн
                     </label>
-                    <label class="btn btn-white border-0 rounded-0 p-3 ml-2" :disabled="false" @click="() => {order.payment_method = 'cash'}">
+                    <label class="btn btn-white border-0 rounded-0 p-3 ml-2" :disabled="getCompany ? getCompany.enabled_cash === false : true" @click="() => {getCompany ? getCompany.enabled_cash ? order.payment_method = 'cash' : null : null}">
                       <input type="radio" value="cash" name="payment_method" id="option6" autocomplete="off" :checked="order.payment_method === 'cash'"> <i class="fad fa-coins"></i> Наличными
                     </label>
                   </div>

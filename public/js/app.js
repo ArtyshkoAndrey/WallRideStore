@@ -1955,6 +1955,7 @@ __webpack_require__.r(__webpack_exports__);
   name: "create-order",
   data: function data() {
     return {
+      test: true,
       cartItems: [],
       step: 1,
       order: {
@@ -1989,6 +1990,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     express_companies: {
       required: true
+    },
+    pickup: {
+      required: true
     }
   },
   mounted: function mounted() {
@@ -2006,10 +2010,32 @@ __webpack_require__.r(__webpack_exports__);
         productSku: el.product_sku ? el.product_sku : el.productSku
       });
     });
+
+    if (this.test) {
+      this.order.name = "Andrey";
+      this.order.email = 'artyshko.andrey@gmail.com';
+      this.order.phone = '+79029634366';
+      this.order.street = "Горького 24, 25, 660099";
+    }
+  },
+  computed: {
+    getCompany: function getCompany() {
+      var _this2 = this;
+
+      var com = this.order.pickup ? this.pickup : this.companies.find(function (el) {
+        return el.id === _this2.order.express_company;
+      });
+
+      if (com) {
+        return com;
+      } else {
+        return false;
+      }
+    }
   },
   methods: {
     checkCoupon: function checkCoupon() {
-      var _this2 = this;
+      var _this3 = this;
 
       var code = this.order.coupon; // Если нет ввода, всплывающее окно
 
@@ -2029,7 +2055,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         // Первым параметром метода then является обратный вызов, который будет вызываться при успешном выполнении запроса
         console.log(response.data);
-        _this2.$refs.totalAmountBottom.innerText = 'Общая сумма ' + new Intl.NumberFormat('ru-RU').format((response.data.totalAmount * _this2.currency.ratio).toFixed(0)) + ' ' + _this2.currency.symbol;
+        _this3.$refs.totalAmountBottom.innerText = 'Общая сумма ' + new Intl.NumberFormat('ru-RU').format((response.data.totalAmount * _this3.currency.ratio).toFixed(0)) + ' ' + _this3.currency.symbol;
         swal('Купон применился', '', 'success');
         $('#checkCoupon').prop('disabled', true);
         $('#coupon').prop('readonly', true);
@@ -2047,7 +2073,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     createOrder: function createOrder() {
-      if (Number(this.order.city) === 10451 || Number($('select[id=country]').val()) === 1) {
+      if (Number(this.order.city) === 10451) {
         var items = [];
         this.cartItems.forEach(function (item) {
           items.push({
@@ -2130,7 +2156,7 @@ __webpack_require__.r(__webpack_exports__);
           }
         });
       } else {
-        swal('Извините, на данный момент доставка осуществляется только по городу Алматы и по России', '', 'error');
+        swal('Извините, на данный момент доставка осуществляется только по городу Алматы', '', 'error');
       }
     },
     validEmail: function validEmail(email) {
@@ -2138,6 +2164,8 @@ __webpack_require__.r(__webpack_exports__);
       return re.test(email);
     },
     ordered: function ordered() {
+      var _this4 = this;
+
       if (this.amount > 0) {
         if (this.step === 1) {
           if (this.order.name !== '' && this.order.email !== '' && this.order.phone !== '' && this.validEmail(this.order.email)) {
@@ -2206,23 +2234,76 @@ __webpack_require__.r(__webpack_exports__);
           }
         } else if (this.step === 2) {
           if (this.order.pickup === false) {
+            // не самовывоз
             if (this.order.street !== '' && this.order.payment_method !== null && this.order.city !== null && this.order.country !== null) {
+              // данные для доставки
               if (this.order.payment_method === 'card') {
+                // оплата картой
                 if (this.order.express_company === null) {
+                  // не выбрана компания доставки
                   swal('Не заполнены все данные', '', 'error');
                 } else {
-                  this.createOrder();
+                  // выбрана компания доставки
+                  var amount = 0;
+                  this.cartItems.forEach(function (item) {
+                    amount += Number(item.amount) * Number(item.productSku.product.price);
+                  });
+                  var com = this.companies.find(function (el) {
+                    return el.id === _this4.order.express_company;
+                  });
+                  console.log(com, amount);
+
+                  if (Number(com.min_cost) <= Number(amount)) {
+                    // Проверка на ограничение мин стоимости заказа
+                    console.log('Покупка картой онлайн с выбранной компанией'); // this.createOrder()
+
+                    swal('ТИПО ОПЛАЧЕНО ТЕСТ ))', '', 'success');
+                  } else {
+                    // не прошла по стоимости
+                    swal('Минимальная сумма заказа для ' + com.name + ' составляет: ' + Number.parseInt(Number(com.min_cost) * Number(this.currency.ratio)) + ' ' + this.currency.symbol, '', 'error');
+                  }
                 }
               } else {
-                this.createOrder();
+                // оплата наличными и не самовывоз
+                if (this.order.express_company === null) {
+                  // не выбрана компания доставки
+                  swal('Не заполнены все данные', '', 'error');
+                } else {
+                  // выбрана компания доставки
+                  var _amount = 0;
+                  this.cartItems.forEach(function (item) {
+                    _amount += Number(item.amount) * Number(item.productSku.product.price);
+                  });
+
+                  var _com = this.companies.find(function (el) {
+                    return el.id === _this4.order.express_company;
+                  });
+
+                  console.log(_com, _amount);
+
+                  if (Number(_com.min_cost) <= Number(_amount)) {
+                    // Проверка на ограничение мин стоимости заказа
+                    console.log('Покупка наличными с выбранной компанией'); // this.createOrder()
+
+                    swal('ТИПО ОПЛАЧЕНО ТЕСТ ))', '', 'success');
+                  } else {
+                    // не прошла по стоимости
+                    swal('Минимальная сумма заказа для ' + _com.name + ' составляет: ' + Number.parseInt(Number(_com.min_cost) * Number(this.currency.ratio)) + ' ' + this.currency.symbol, '', 'error');
+                  }
+                }
               }
             } else {
+              // не прошла проверку на введённый данных
               swal('Не заполнены все данные', '', 'error');
             }
           } else {
+            // самовывоз
             if (this.order.street !== '' && this.order.city !== null && this.order.country !== null && this.order.payment_method !== null) {
-              this.createOrder();
+              // данные для доставки
+              // this.createOrder()
+              swal('ТИПО ОПЛАЧЕНО ТЕСТ ))', '', 'success');
             } else {
+              // не прошла проверку на введённый данных
               swal('Не заполнены все данные', '', 'error');
             }
           }
@@ -2514,6 +2595,9 @@ __webpack_require__.r(__webpack_exports__);
       item: {},
       activated: []
     };
+  },
+  created: function created() {
+    this.item = this.news[0];
   },
   mounted: function mounted() {
     this.adaptiveHeight();
@@ -63624,9 +63708,9 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\OSPanel\domains\myshop\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! C:\OSPanel\domains\myshop\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! C:\OSPanel\domains\myshop\resources\sass\admin.scss */"./resources/sass/admin.scss");
+__webpack_require__(/*! D:\OSPanel\domains\myshop\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! D:\OSPanel\domains\myshop\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! D:\OSPanel\domains\myshop\resources\sass\admin.scss */"./resources/sass/admin.scss");
 
 
 /***/ })

@@ -5,35 +5,44 @@
   <section class="container-fluid p-0 text-white" id="slider">
     <div id="carouselExampleCaptions" class="carousel slide" style="height: 500px;" data-ride="carousel">
       <ol class="carousel-indicators">
-        <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-        <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-        <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+        <?php $i = 0;?>
+        @foreach($hs as$h)
+          <li data-target="#carouselExampleCaptions" data-slide-to="{{ $i }}" class="{{ $i === 0 ? 'active' : ''}}"></li>
+          <?php $i++; ?>
+        @endforeach
       </ol>
       <div class="carousel-inner h-100">
-        <div class="carousel-item h-100 active">
-          <img src="{{ asset('public/images/slide1.png') }}" class="d-block h-100 w-100" style="object-fit: cover" alt="...">
-          <div class="col-12 p-0 position-absolute text-center" style="top: 0;">
-            <h1>{{$h->h1}}</h1>
-            <h3>{{ $h->h2 }}</h3>
-            <a href="{{ $h->url }}" class="btn">{{ $h->btn_text }}</a>
+        <?php $i = 0;?>
+        @foreach($hs as$h)
+          <div class="carousel-item h-100 {{ $i === 0 ? 'active' : '' }}">
+            <div style="width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); position: absolute;"></div>
+            <img src="{{ asset('storage/header/' . $h->photo) }}" class="d-block h-100 w-100" style="object-fit: cover" alt="...">
+            <div class="col-12 p-0 position-absolute text-center" style="top: 0;">
+              <h1>{{$h->h1}}</h1>
+              <h3>{{ $h->h2 }}</h3>
+              <a href="{{ $h->url }}" class="btn">{{ $h->btn_text }}</a>
+            </div>
           </div>
-        </div>
-        <div class="carousel-item h-100">
-          <img src="{{ asset('public/images/slide1.png') }}" class="d-block h-100 w-100" style="object-fit: cover" alt="...">
-          <div class="col-12 p-0 position-absolute text-center" style="top: 0;">
-            <h1>{{$h->h1}}</h1>
-            <h3>{{ $h->h2 }}</h3>
-            <a href="{{ $h->url }}" class="btn">{{ $h->btn_text }}</a>
-          </div>
-        </div>
-        <div class="carousel-item h-100">
-          <img src="{{ asset('public/images/slide1.png') }}" class="d-block h-100 w-100" style="object-fit: cover" alt="...">
-          <div class="col-12 p-0 position-absolute text-center" style="top: 0;">
-            <h1>{{$h->h1}}</h1>
-            <h3>{{ $h->h2 }}</h3>
-            <a href="{{ $h->url }}" class="btn">{{ $h->btn_text }}</a>
-          </div>
-        </div>
+          <?php $i++; ?>
+        @endforeach
+{{--        <div class="carousel-item h-100">--}}
+{{--          <img src="{{ asset('public/images/slide1.png') }}" class="d-block h-100 w-100" style="object-fit: cover" alt="...">--}}
+{{--          <div class="col-12 p-0 position-absolute text-center" style="top: 0;">--}}
+{{--            <h1>{{$h->h1}}</h1>--}}
+{{--            <h3>{{ $h->h2 }}</h3>--}}
+{{--            <a href="{{ $h->url }}" class="btn">{{ $h->btn_text }}</a>--}}
+{{--          </div>--}}
+{{--        </div>--}}
+{{--        --}}
+{{--        <div class="carousel-item h-100">--}}
+{{--          <img src="{{ asset('public/images/slide1.png') }}" class="d-block h-100 w-100" style="object-fit: cover" alt="...">--}}
+{{--          <div class="col-12 p-0 position-absolute text-center" style="top: 0;">--}}
+{{--            <h1>{{$h->h1}}</h1>--}}
+{{--            <h3>{{ $h->h2 }}</h3>--}}
+{{--            <a href="{{ $h->url }}" class="btn">{{ $h->btn_text }}</a>--}}
+{{--          </div>--}}
+{{--        </div>--}}
+
       </div>
       <a class="carousel-control-prev bg-transparent" href="#carouselExampleCaptions" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>

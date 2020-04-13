@@ -179,6 +179,7 @@ class OrdersController extends Controller
   public function create()
   {
     $express_companies = ExpressCompany::where('name', '!=', 'Самовывоз')->get();
+    $pickup = ExpressCompany::where('name', '=', 'Самовывоз')->first();
     $zones = ExpressZone::with('company')->whereHas('cities', function ($qq) {
       if(Auth::check()) {
         $qq->where('cities.id', isset(Auth()->user()->address->city_id) ? Auth()->user()->address->city_id : $_COOKIE['city']);
@@ -232,8 +233,8 @@ class OrdersController extends Controller
         }
       }
       $amount = count($ids);
-      return view('orders.create', compact('express_companies', 'city', 'cartItems', 'priceAmount', 'amount'));
+      return view('orders.create', compact('express_companies', 'city', 'cartItems', 'priceAmount', 'amount', 'pickup'));
     }
-    return view('orders.create', compact('express_companies'));
+    return view('orders.create', compact('express_companies', 'pickup'));
   }
 }

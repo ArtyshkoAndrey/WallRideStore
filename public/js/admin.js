@@ -44027,7 +44027,7 @@ __webpack_require__(/*! admin-lte */ "./node_modules/admin-lte/dist/js/adminlte.
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\OSPanel\domains\myshop\resources\js\admin.js */"./resources/js/admin.js");
+module.exports = __webpack_require__(/*! D:\OSPanel\domains\myshop\resources\js\admin.js */"./resources/js/admin.js");
 
 
 /***/ })

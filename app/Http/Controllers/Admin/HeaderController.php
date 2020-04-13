@@ -21,8 +21,8 @@ class HeaderController extends Controller
      */
     public function index()
     {
-      $h = Header::first();
-      return view('admin.header.edit', compact('h'));
+      $hs = Header::all();
+      return view('admin.header.index', compact('hs'));
     }
 
     /**
@@ -32,7 +32,7 @@ class HeaderController extends Controller
      */
     public function create()
     {
-        //
+      return view('admin.header.create');
     }
 
     /**
@@ -43,7 +43,17 @@ class HeaderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $request->validate([
+        'url' => 'required',
+        'btn_text' => 'required',
+        'photo' => 'required',
+        'h1' => 'required',
+        'h2' => 'required',
+      ]);
+
+      $h = new Header($request->all());
+      $h->save();
+      return redirect()->route('admin.header.index');
     }
 
     /**
@@ -54,7 +64,7 @@ class HeaderController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -65,7 +75,8 @@ class HeaderController extends Controller
      */
     public function edit($id)
     {
-
+      $h = Header::find($id);
+      return view('admin.header.edit', compact('h'));
     }
 
     /**
@@ -99,7 +110,10 @@ class HeaderController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $h = Header::find($id);
+      File::delete(public_path('storage/header/') . '/' .$h->photo);
+      $h->delete();
+      return redirect()->route('admin.header.index');
     }
 
   public function photoDelete(Request $request) {
@@ -120,8 +134,10 @@ class HeaderController extends Controller
     $img->save($destinationPath.'/'.$name);
     if(isset($request->id)) {
       $n = Header::find($request->id);
-      $n->photo = $name;
-      $n->save();
+      if ($n) {
+        $n->photo = $name;
+        $n->save();
+      }
     }
     return $name;
   }

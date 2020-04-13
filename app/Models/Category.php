@@ -8,7 +8,11 @@ class Category extends Model
 {
 
   protected $fillable = [
-    'name', 'id'
+    'name', 'id', 'to_index'
+  ];
+
+  protected $casts = [
+    'to_index'    => 'boolean',
   ];
 
   public function scopeWhereLike($query, $column, $value)

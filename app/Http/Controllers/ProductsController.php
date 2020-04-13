@@ -125,20 +125,25 @@ class ProductsController extends Controller {
   public function index() {
     $productsNew = Product::where('on_new', true)->orderBy('created_at', 'desc')->take(5)->with('skus', 'photos')->get();
 
-    $category = Category::withCount('products')->orderBy('products_count', 'desc')->first();
+    $category = Category::where('to_index', true)->first();
     if($category) {
       $products = $category->products()->take(5)->with('skus', 'photos')->get();
     } else {
-      $products = [];
-      $category = null;
+      $category = Category::withCount('products')->orderBy('products_count', 'desc')->first();
+      if ($category) {
+        $products = $category->products()->take(5)->with('skus', 'photos')->get();
+      } else {
+        $products = [];
+        $category = null;
+      }
     }
     $news = News::take(3)->get();
-    $h = Header::first();
+    $hs = Header::all();
     return view('products.index', [
       'productsNew' => $productsNew,
       'products' => $products,
       'news' => $news,
-      'h' => $h,
+      'hs' => $hs,
       'category' => $category
     ]);
   }

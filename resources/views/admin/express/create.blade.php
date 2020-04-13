@@ -33,11 +33,16 @@
                 <button class="btn btn-dark rounded-0 border-0 px-3 py-2" type="submit">Создать</button>
               </div>
             </div>
-            <div class="row mt-3">
+            <div class="row mt-3 align-items-end">
               <div class="col-md-4">
                 <label for="name">Наименование</label>
                 <input type="text" name="name" id="name" class="w-100 px-2 form-control rounded-0 {{ $errors->has('name') ? ' is-invalid' : '' }}" value="{{ old('name') }}" required>
                 <span id="name-error" class="error invalid-feedback">{{ $errors->first('name') }}</span>
+              </div>
+              <div class="col-md-2">
+                <label for="min_cost">Минимальная стоимость</label>
+                <input type="number" min="0" name="min_cost" id="min_cost" class="w-100 px-2 form-control rounded-0 {{ $errors->has('min_cost') ? ' is-invalid' : '' }}" value="{{ old('min_cost') }}" required>
+                <span id="name-error" class="error invalid-feedback">{{ $errors->first('min_cost') }}</span>
               </div>
               <div class="col-md-2">
                 <label for="cost_type">Тип стоимости</label>
@@ -46,6 +51,12 @@
                   <option value="0 тг." {{ old('cost_type') == '0 тг.' ? 'selected' : null }}>0 тг.</option>
                 </select>
                 <span id="cost-error" class="error invalid-feedback">{{ $errors->first('cost_type') }}</span>
+              </div>
+              <div class="col-auto d-flex">
+                <div class="custom-control align-items-center mb-2 custom-switch">
+                  <input type="checkbox" name="enabled_cash" class="custom-control-input" id="customSwitch">
+                  <label class="custom-control-label" for="customSwitch">Наличные</label>
+                </div>
               </div>
             </div>
           </form>

@@ -55,6 +55,7 @@ class ExpressController extends Controller
     $request->validate([
       'name' => 'required|unique:express_companies,name',
       'cost_type' => 'required',
+      'min_cost' => 'required|min:0'
     ]);
 
     $express = new ExpressCompany();
@@ -98,11 +99,15 @@ class ExpressController extends Controller
     $request->validate([
       'name' => 'required|unique:express_companies,name,' . $id,
       'cost_type' => 'required',
+      'min_cost' => 'required|min:0'
     ]);
 
     $express = ExpressCompany::find($id);
+    $request['enabled'] = $express->enabled;
+    $request['enabled_cash'] = $request->has('enabled_cash');
+//    dd($request->all());
     $express->update($request->all());
-    return redirect()->route('admin.store.express.index');
+    return redirect()->route('admin.store.express.edit', $express->id);
   }
 
   /**

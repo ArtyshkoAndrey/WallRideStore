@@ -3,6 +3,7 @@
     name: "create-order",
     data () {
       return {
+        test: true,
         cartItems: [],
         step: 1,
         order: {
@@ -37,6 +38,9 @@
       },
       express_companies: {
         required: true
+      },
+      pickup: {
+        required: true
       }
     },
     mounted() {
@@ -53,6 +57,22 @@
           productSku: el.product_sku ? el.product_sku : el.productSku
         })
       })
+      if (this.test) {
+        this.order.name = "Andrey"
+        this.order.email = 'artyshko.andrey@gmail.com'
+        this.order.phone = '+79029634366'
+        this.order.street = "Горького 24, 25, 660099"
+      }
+    },
+    computed: {
+      getCompany () {
+        let com = this.order.pickup ? this.pickup : this.companies.find(el => el.id === this.order.express_company)
+        if (com) {
+          return com
+        } else {
+          return false
+        }
+      }
     },
     methods: {
       checkCoupon () {
@@ -90,7 +110,7 @@
           })
       },
       createOrder () {
-        if (Number(this.order.city ) === 10451 || Number($('select[id=country]').val()) === 1) {
+        if (Number(this.order.city) === 10451) {
           let items = [];
           this.cartItems.forEach(item => {
             items.push({
@@ -151,7 +171,7 @@
                     },
                     }).then((isConfirm) => {
                       if (isConfirm) {
-                        
+
                       } else {
                         window.location = '/login'
                       }
@@ -167,7 +187,7 @@
               }
             });
         } else {
-          swal('Извините, на данный момент доставка осуществляется только по городу Алматы и по России', '', 'error');
+          swal('Извините, на данный момент доставка осуществляется только по городу Алматы', '', 'error');
         }
       },
       validEmail (email) {
@@ -238,24 +258,53 @@
               swal('Не заполнены все данные', '', 'error');
             }
           } else if (this.step === 2) {
-            if (this.order.pickup === false) {
-              if (this.order.street !== '' && this.order.payment_method !== null && this.order.city !== null && this.order.country !== null) {
-                if (this.order.payment_method === 'card') {
-                  if (this.order.express_company === null) {
+            if (this.order.pickup === false) { // не самовывоз
+              if (this.order.street !== '' && this.order.payment_method !== null && this.order.city !== null && this.order.country !== null) { // данные для доставки
+                if (this.order.payment_method === 'card') { // оплата картой
+                  if (this.order.express_company === null) { // не выбрана компания доставки
                     swal('Не заполнены все данные', '', 'error');
-                  } else {
-                    this.createOrder()
+                  } else { // выбрана компания доставки
+                    let amount = 0;
+                    this.cartItems.forEach(item => {
+                      amount += Number(item.amount) * Number( item.productSku.product.price)
+                    });
+                    let com = this.companies.find(el => el.id === this.order.express_company)
+                    console.log(com, amount);
+                    if (Number(com.min_cost) <= Number(amount)) { // Проверка на ограничение мин стоимости заказа
+                      console.log('Покупка картой онлайн с выбранной компанией');
+                      // this.createOrder()
+                      swal('ТИПО ОПЛАЧЕНО ТЕСТ ))', '', 'success');
+                    } else { // не прошла по стоимости
+                      swal('Минимальная сумма заказа для ' +com.name + ' составляет: ' + Number.parseInt(Number(com.min_cost) * Number(this.currency.ratio)) + ' ' + this.currency.symbol, '', 'error');
+                    }
                   }
-                } else {
-                  this.createOrder()
+                } else { // оплата наличными и не самовывоз
+                  if (this.order.express_company === null) { // не выбрана компания доставки
+                    swal('Не заполнены все данные', '', 'error');
+                  } else { // выбрана компания доставки
+                    let amount = 0;
+                    this.cartItems.forEach(item => {
+                      amount += Number(item.amount) * Number( item.productSku.product.price)
+                    });
+                    let com = this.companies.find(el => el.id === this.order.express_company)
+                    console.log(com, amount);
+                    if (Number(com.min_cost) <= Number(amount)) { // Проверка на ограничение мин стоимости заказа
+                      console.log('Покупка наличными с выбранной компанией');
+                      // this.createOrder()
+                      swal('ТИПО ОПЛАЧЕНО ТЕСТ ))', '', 'success');
+                    } else { // не прошла по стоимости
+                      swal('Минимальная сумма заказа для ' +com.name + ' составляет: ' + Number.parseInt(Number(com.min_cost) * Number(this.currency.ratio)) + ' ' + this.currency.symbol, '', 'error');
+                    }
+                  }
                 }
-              } else {
+              } else { // не прошла проверку на введённый данных
                 swal('Не заполнены все данные', '', 'error');
               }
-            } else {
-              if (this.order.street !== '' && this.order.city !== null && this.order.country !== null && this.order.payment_method !== null) {
-                this.createOrder()
-              }else {
+            } else { // самовывоз
+              if (this.order.street !== '' && this.order.city !== null && this.order.country !== null && this.order.payment_method !== null) { // данные для доставки
+                // this.createOrder()
+                swal('ТИПО ОПЛАЧЕНО ТЕСТ ))', '', 'success');
+              }else { // не прошла проверку на введённый данных
                 swal('Не заполнены все данные', '', 'error');
               }
             }

@@ -61,6 +61,9 @@
         activated: []
       }
     },
+    created() {
+      this.item = this.news[0];
+    },
     mounted () {
       this.adaptiveHeight();
       window.addEventListener("resize", this.adaptiveHeight);
