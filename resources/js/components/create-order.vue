@@ -110,7 +110,7 @@
           })
       },
       createOrder () {
-        if (Number(this.order.city) === 10451) {
+        if ( Number($('select[id=country]').val()) === 82) {
           let items = [];
           this.cartItems.forEach(item => {
             items.push({
@@ -187,7 +187,7 @@
               }
             });
         } else {
-          swal('Извините, на данный момент доставка осуществляется только по городу Алматы', '', 'error');
+          swal('Извините, на данный момент доставка осуществляется только по Казахстану', '', 'error');
         }
       },
       validEmail (email) {
