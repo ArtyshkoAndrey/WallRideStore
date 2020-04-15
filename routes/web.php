@@ -11,6 +11,7 @@ Route::get('products/all', 'ProductsController@all')->name('products.all');
 Route::get('products/all-sale', 'ProductsController@allsale')->name('products.allsale');
 Route::get('products/search', 'ProductsController@search')->name('products.search'); // Главная с товарами
 Route::get('product/{product}', 'ProductsController@show')->name('products.show');
+Route::get('policy', 'PagesController@policy')->name('policy');
 Route::get('location/{city}', ['as' => 'location', 'uses' => 'PagesController@location']);
 Route::resource('news', 'NewsController')->except([
   'edit', 'create', 'destroy', 'create'

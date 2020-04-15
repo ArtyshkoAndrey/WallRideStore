@@ -21,6 +21,10 @@ class PagesController extends Controller
     return view('pages.contact');
   }
 
+  public function policy () {
+    return view('pages.policy');
+  }
+
   public function location (Request $request, $city) {
     $city = City::find($city);
     if (Auth::check()) {

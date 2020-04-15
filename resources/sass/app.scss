@@ -153,6 +153,15 @@ select[name="order"], select[name="size"], select[name="brand"], select[name="ca
   //width: 33.3% !important;
 //}
 
+#policy {
+  p {
+    margin-bottom: 0;
+  }
+  h5 {
+    margin-top: 15px;
+  }
+}
+
 #news {
   img {
     width: 100%;

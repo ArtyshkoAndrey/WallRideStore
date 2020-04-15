@@ -49,7 +49,7 @@
                   <label>
                     <input type="checkbox" data-ng-model="example.check" name="privacy" id="privacy" required>
                     <span class="box"></span>
-                    <span>Я принимаю условия политики конфиденциальности</span>
+                    <span>Я принимаю условия <a href="{{ route('policy') }}" class="c-red text-danger">политики конфиденциальности</a></span>
                   </label>
                 </div>
                 <div class="checkbox">
