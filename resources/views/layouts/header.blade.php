@@ -61,7 +61,7 @@
                 }
                 ?>
                 ?
-                <div class="d-none d-md-flex" style="background: #fff; position:absolute; padding: 10px 10px 10px 0px; border-radius: 0; margin-top: 8px; margin-left: 80px">
+                <div class="d-none d-md-flex" style="background: #fff; position:absolute; padding: 10px 10px 10px 0px; border-radius: 0; margin-top: 47px; margin-left: 80px">
                   <a href="/location/{{$ctr->id}}" class="btn btn-success rounded-0">Да</a>
                   <a href="/location/{{App\Models\City::first()->id}}" class="btn btn-danger rounded-0 ml-3">Нет</a>
                 </div>
@@ -134,7 +134,7 @@
       </li>
       <li class="nav-item dropdown mr-0 mr-sm-4 d-flex ml-auto" rel="profile-mobile">
         <a class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fal fa-user fa-2x fa-fw"></i>
+          <i class="fal fa-user fa-fw" style="font-size: 1.4em"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right" style="right: 0; width: unset!important; height: unset!important;max-width: unset!important; max-height: unset!important; min-width: unset!important; min-height: unset!important;" aria-labelledby="profile">
           <a href="{{ route('login') }}" class="dropdown-item">Войти</a>
@@ -145,7 +145,7 @@
       <li class="nav-item dropdown mr-0 mr-sm-4 ml-auto" rel="profile">
         <a class="nav-link p-0 align-items-center" id="nav-profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <img class="img-fluid rounded-circle p-0" src="{{ isset(auth()->user()->avatar) ? asset('storage/avatar/thumbnail/'.auth()->user()->avatar) : asset('public/images/person.png') }}" alt="">
-          <span class="d-block ml-2">{{ auth()->user()->name }}</span>
+          <span class="d-none d-sm-block ml-2">{{ auth()->user()->name }}</span>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profile">
           <a href="{{ route('profile.index') }}" class="dropdown-item">Мой профиль</a>
@@ -160,7 +160,7 @@
       @endguest
       <li class="nav-item dropdown mr-0 mr-sm-4 d-flex" style="position: static;" rel="search-mobile">
         <a class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fal fa-search fa-2x fa-fw"></i>
+          <i class="fal fa-search fa-fw" style="font-size: 1.4em"></i>
         </a>
           <form action="{{ route('products.search') }}" class="dropdown-menu dropdown-menu-right" style="height: unset!important;max-width: unset!important; max-height: unset!important; min-width: unset!important; min-height: unset!important;" aria-labelledby="profile">
             <div class="form-group">
@@ -172,7 +172,7 @@
       </li>
       <li class="nav-item dropdown mr-0 mr-sm-4" rel="cart">
         <a class="nav-link" id="cart" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fal fa-shopping-bag fa-2x fa-fw"></i>
+          <i class="fal fa-shopping-bag fa-fw" style="font-size: 1.4em"></i>
           <div id="counter">
             <span>@{{ amount }}</span>
           </div>

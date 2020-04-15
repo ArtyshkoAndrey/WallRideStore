@@ -97,7 +97,7 @@
                         <input type="radio" :value="company.id" name="express_company" autocomplete="off" :checked="order.express_company === company.id">
                         @{{ company.name }}
                       </label>
-                      <p class="m-0 p-0 position-absolute font-weight-bold">@{{ company.costedTransfer ? $cost(Number(company.costedTransfer)) + ' тг.' : '' }}</p>
+                      <p class="m-0 p-0 position-absolute font-weight-bold">@{{ !isNaN(company.costedTransfer) ? $cost(Number(company.costedTransfer)) + ' тг.' : '' }}</p>
                     </div>
                   </div>
 

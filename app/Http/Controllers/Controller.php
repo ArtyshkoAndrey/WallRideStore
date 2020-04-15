@@ -159,7 +159,7 @@ class Controller extends BaseController
             } else {
                 $currencyGlobal = Currency::find(1);
             }
-          
+
         }
       }
       if(Carbon::parse($currencyGlobal->updated_at)->addDay() < Carbon::now()) {

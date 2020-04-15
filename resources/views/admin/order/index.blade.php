@@ -103,7 +103,7 @@
               <td style="vertical-align: middle;">{{ $order->user->name }}</td>
               <td style="vertical-align: middle;">{{ $order->created_at->format('d.m.Y') }}</td>
               <td style="vertical-align: middle;">{{ \App\Models\Order::$shipStatusMap[$order->ship_status] }}</td>
-              <td style="vertical-align: middle;">Валюта: тенге <br> <span class="font-weight-bold h5">{{ cost($order->total_amount) }} тг.</span></td>
+              <td style="vertical-align: middle;">Валюта: тенге <br> <span class="font-weight-bold h5">{{ cost($order->total_amount + $order->ship_price) }} тг.</span></td>
               <td style="vertical-align: middle;">
                 <form action="{{ route('admin.store.order.destroy', $order->id) }}" method="post">
                   @csrf

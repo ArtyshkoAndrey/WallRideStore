@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::post('city/{city}', ['as' => 'api.city', 'uses' => 'ApiController@city']);
+Route::post('city/{city}/{country?}', ['as' => 'api.city', 'uses' => 'ApiController@city']);
 Route::post('country/{country}', ['as' => 'api.country', 'uses' => 'ApiController@country']);
 Route::post('category/{category}', ['as' => 'api.category', 'uses' => 'ApiController@category']);
 Route::post('brand/{brand}', ['as' => 'api.brand', 'uses' => 'ApiController@brand']);

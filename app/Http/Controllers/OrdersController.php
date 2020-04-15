@@ -192,10 +192,15 @@ class OrdersController extends Controller
       foreach ($zones as $z) {
         if($z->company->id === $express_companies[$i]['id']) {
           $express_companies[$i]['costedTransfer'] = $z->cost;
+          $express_companies[$i]['step_unlim'] = $z->step;
+          $express_companies[$i]['step_cost_unlim'] = $z->cost_step;
         }
       }
       if (!isset($express_companies[$i]['costedTransfer'])) {
         $express_companies[$i]['costedTransfer'] = null;
+        $express_companies[$i]['costedTransfer'] = null;
+        $express_companies[$i]['step_unlim'] = null;
+        $express_companies[$i]['step_cost_unlim'] = null;
       }
     }
     if(!Auth::check()) {

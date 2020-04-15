@@ -69,7 +69,7 @@
                                 @endif
 {{--                                RP2303403402pp <a href="#" class="c-red d-block">Отследить</a>--}}
                               </td>
-                              <td>{{ cost($order->total_amount) }} тг.</td>
+                              <td>{{ cost($order->total_amount + $order->ship_price) }} тг.</td>
                             </tr>
                           @endif
                         @empty

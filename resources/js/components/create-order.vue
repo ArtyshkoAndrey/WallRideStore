@@ -4,8 +4,10 @@
     data () {
       return {
         test: false,
+        testPay: false,
         cartItems: [],
         step: 1,
+        stepMin: 0.5,
         order: {
           name: $('input[name=username]').val(),
           phone: $('input[name=contact_phone]').val(),
@@ -22,10 +24,6 @@
       }
     },
     props: {
-      // address: {
-      //   required: true,
-      //   type: Object
-      // },
       cart_items: {
         required: true
       },
@@ -43,20 +41,38 @@
         required: true
       }
     },
-    mounted() {
+    mounted () {
       this.companies = this.express_companies;
-      setTimeout(() => {
-        $('input[name=contact_phone]').mask("+7 (999) 999-99-99");
-      }, 100)
-
-      this.cartItems = []
+      let weight = 0;
+      // console.log(this.cart_items)
       this.cart_items.forEach(el => {
         this.cartItems.push({
           amount: el.amount,
           id: el.id,
           productSku: el.product_sku ? el.product_sku : el.productSku
         })
+      });
+      this.cartItems.forEach(item => {
+        weight += Number(item.amount) * Number( item.productSku.product.weight)
+      });
+      this.express_companies.forEach(com => {
+        if ((weight - this.stepMin) > 0 && com.costedTransfer !== null) {
+          console.log('Вес ' + weight)
+          let p = weight - this.stepMin
+          let i = 0
+          console.log('Перевес на ' + p, 'Шаг перевеса ' + com.step_unlim)
+          while(p > 0) {
+            p = p - com.step_unlim
+            i++
+          }
+          console.log('Кол-во шагов перевеса ' + i);
+          com.costedTransfer = Number(com.costedTransfer) + Number(com.step_cost_unlim) * i
+          console.log('-----')
+        }
       })
+      setTimeout(() => {
+        $('input[name=contact_phone]').mask("+7 (999) 999-99-99");
+      }, 100)
       if (this.test) {
         this.order.name = "Andrey"
         this.order.email = 'artyshko.andrey@gmail.com'
@@ -72,6 +88,52 @@
         } else {
           return false
         }
+      },
+      getCostTransfer () {
+        if (this.order.pickup) {
+          return 0;
+        } else {
+          return Number(this.getCompany.costedTransfer)
+        }
+      },
+      getWeight () {
+        let weight = 0;
+        this.cartItems.forEach(item => {
+          weight += Number(item.amount) * Number(item.productSku.product.weight)
+        });
+        return weight;
+      }
+    },
+    watch: {
+      'order.country': {
+        handler: function (after, before) {
+          console.log(after, before);
+        },
+        deep: true
+      },
+      'order.express_company': {
+        handler: function (after, before) {
+          let amount = 0;
+          this.cartItems.forEach(item => {
+            amount += Number(item.amount) * Number(item.productSku.product.on_sale ? item.productSku.product.price_sale : item.productSku.product.price)
+          });
+          this.$refs.totalAmountBottom.innerText = 'Общая сумма ' +
+            new Intl.NumberFormat('ru-RU').format(((amount + this.getCostTransfer) * this.currency.ratio).toFixed(0)) +
+            ' ' + this.currency.symbol
+        },
+        deep: true
+      },
+      'order.pickup': {
+        handler: function (after, before) {
+          let amount = 0;
+          this.cartItems.forEach(item => {
+            amount += Number(item.amount) * Number(item.productSku.product.on_sale ? item.productSku.product.price_sale : item.productSku.product.price)
+          });
+          this.$refs.totalAmountBottom.innerText = 'Общая сумма ' +
+            new Intl.NumberFormat('ru-RU').format(((amount + this.getCostTransfer) * this.currency.ratio).toFixed(0)) +
+            ' ' + this.currency.symbol
+        },
+        deep: true
       }
     },
     methods: {
@@ -84,14 +146,14 @@
         }
         let amount = 0
         this.cartItems.forEach(item => {
-          amount += Number(item.amount) * Number( item.productSku.product.price)
+          amount += Number(item.amount) * Number(item.productSku.product.on_sale ? item.productSku.product.price_sale : item.productSku.product.price)
         });
         // Вызов интерфейса проверки
         axios.post('/coupon_codes/' + code, {totalAmount: amount, items: this.cartItems})
           .then((response) => {  // Первым параметром метода then является обратный вызов, который будет вызываться при успешном выполнении запроса
             console.log(response.data)
             this.$refs.totalAmountBottom.innerText = 'Общая сумма ' +
-              new Intl.NumberFormat('ru-RU').format((response.data.totalAmount * this.currency.ratio).toFixed(0)) +
+              new Intl.NumberFormat('ru-RU').format(((response.data.totalAmount + this.getCostTransfer) * this.currency.ratio).toFixed(0)) +
               ' ' + this.currency.symbol
             swal('Купон применился', '', 'success')
             $('#checkCoupon').prop('disabled', true);
@@ -190,8 +252,9 @@
           swal('Извините, на данный момент доставка осуществляется только по Казахстану', '', 'error');
         }
       },
-      validEmail (email) {
-        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      validEmail: function (email) {
+        let re;
+        re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
       },
       ordered () {
@@ -207,7 +270,11 @@
                     type: "POST",
                     dataType: 'json',
                     url: function (params) {
-                      return '/api/city/' + params.term;
+                      if (self.order.country === null) {
+                        return '/api/city/' + params.term;
+                      } else {
+                        return '/api/city/' + params.term + '/' + self.order.country
+                      }
                     },
                     processResults: function (data) {
                       console.log($('#country').val())
@@ -228,9 +295,26 @@
                   .then(response => {
                     console.log(response)
                     response.data.length > 0 ? self.companies = response.data : self.companies = []
+                    self.companies.forEach(com => {
+                      if ((self.getWeight - self.stepMin) > 0 && com.costedTransfer !== null) {
+                        console.log('Вес ' + self.getWeight)
+                        let p = self.getWeight - self.stepMin
+                        let i = 0
+                        console.log('Перевес на ' + p, 'Шаг для перевеса ' + com.step_unlim)
+                        while(p > 0) {
+                          p = p - com.step_unlim
+                          i++
+                        }
+                        console.log('Кол-во шагов перевеса ' + i);
+                        com.costedTransfer = Number(com.costedTransfer) + Number(com.step_cost_unlim) * i
+                        console.log('-----')
+                      }
+                    })
                     self.order.pickup = false
                     self.order.payment_method = null
                     self.order.express_company = null
+                    $('.btn.active').removeClass('active')
+                    ;
                   })
                 })
                 $('#country').select2({
@@ -252,7 +336,15 @@
                       };
                     }
                   }
-                });
+                }).on('change', function (e) {
+                  self.order.country = this.value
+                  self.order.pickup = false
+                  self.order.payment_method = null
+                  self.order.express_company = null
+                  self.order.city = null
+                  $('#city1').text(null).val(null)
+                  $('.btn.active').removeClass('active')
+                })
               }, 300)
             } else {
               swal('Не заполнены все данные', '', 'error');
@@ -266,14 +358,13 @@
                   } else { // выбрана компания доставки
                     let amount = 0;
                     this.cartItems.forEach(item => {
-                      amount += Number(item.amount) * Number( item.productSku.product.price)
+                      amount += Number(item.amount) * Number(item.productSku.product.on_sale ? item.productSku.product.price_sale : item.productSku.product.price)
                     });
                     let com = this.companies.find(el => el.id === this.order.express_company)
                     console.log(com, amount);
                     if (Number(com.min_cost) <= Number(amount)) { // Проверка на ограничение мин стоимости заказа
                       console.log('Покупка картой онлайн с выбранной компанией');
-                      this.createOrder()
-                      // swal('ТИПО ОПЛАЧЕНО ТЕСТ ))', '', 'success');
+                      this.testPay ? swal('ТИПО ОПЛАЧЕНО ТЕСТ ))', '', 'success') : this.createOrder()
                     } else { // не прошла по стоимости
                       swal('Минимальная сумма заказа для ' +com.name + ' составляет: ' + Number.parseInt(Number(com.min_cost) * Number(this.currency.ratio)) + ' ' + this.currency.symbol, '', 'error');
                     }
@@ -284,14 +375,13 @@
                   } else { // выбрана компания доставки
                     let amount = 0;
                     this.cartItems.forEach(item => {
-                      amount += Number(item.amount) * Number( item.productSku.product.price)
+                      amount += Number(item.amount) * Number(item.productSku.product.on_sale ? item.productSku.product.price_sale : item.productSku.product.price)
                     });
                     let com = this.companies.find(el => el.id === this.order.express_company)
                     console.log(com, amount);
                     if (Number(com.min_cost) <= Number(amount)) { // Проверка на ограничение мин стоимости заказа
                       console.log('Покупка наличными с выбранной компанией');
-                      this.createOrder()
-                      // swal('ТИПО ОПЛАЧЕНО ТЕСТ ))', '', 'success');
+                      this.testPay ? swal('ТИПО ОПЛАЧЕНО ТЕСТ ))', '', 'success') : this.createOrder()
                     } else { // не прошла по стоимости
                       swal('Минимальная сумма заказа для ' +com.name + ' составляет: ' + Number.parseInt(Number(com.min_cost) * Number(this.currency.ratio)) + ' ' + this.currency.symbol, '', 'error');
                     }
@@ -302,8 +392,7 @@
               }
             } else { // самовывоз
               if (this.order.street !== '' && this.order.city !== null && this.order.country !== null && this.order.payment_method !== null) { // данные для доставки
-                this.createOrder()
-                // swal('ТИПО ОПЛАЧЕНО ТЕСТ ))', '', 'success');
+                this.testPay ? swal('ТИПО ОПЛАЧЕНО ТЕСТ ))', '', 'success') : this.createOrder()
               }else { // не прошла проверку на введённый данных
                 swal('Не заполнены все данные', '', 'error');
               }
