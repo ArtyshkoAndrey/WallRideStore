@@ -78,40 +78,44 @@
 
             <div class="card-body mt-3 mt-sm-0" v-else>
               <div class="row p-2">
-                <div class="col-md-6">
+                <div class="col-md-6 mb-3">
                   <h5 class="font-weight-bold">Методы доставки</h5>
                   <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-white border-0 rounded-0 p-3" @click="() => {order.pickup = false; order.payment_method = 'card'}">
-                      <input type="radio" name="express_company_pickup" id="option1" autocomplete="off" :checked="order.pickup === false"> <i class="fal fa-truck"></i> Курьером
-                    </label>
-                    <label class="btn btn-white border-0 rounded-0 p-3 ml-2" :disabled="pickup.enabled === false" @click="() => {pickup.enabled ? order.pickup = true : null}">
+                    <div v-for="(company, index) in companies" v-if="!isNaN(company.costedTransfer) && company.costedTransfer !== null && company.enabled === true" class="btn p-0 rounded-0 border-0 ml-2" :disabled="company.costedTransfer == null || company.enabled == false">
+                      <label  class="btn-white border-0 rounded-0 p-3 mb-0 h-100 d-flex align-items-center justify-content-center" style="min-width: 100px;" :disabled="company.costedTransfer == null" @click="() => { !order.pickup && company.costedTransfer !== null ? (order.express_company = company.id, order.costTransfer = company.costedTransfer) : null}">
+                        <input type="radio" :value="company.id" name="express_company" autocomplete="off" :checked="order.express_company === company.id">
+                        @{{ company.name }}
+                      </label>
+                      <p class="m-0 p-0 text-center w-100 position-absolute font-weight-bold">@{{ !isNaN(company.costedTransfer) && company.costedTransfer !== null ? $cost(Number(company.costedTransfer)) + ' тг.' : '' }}</p>
+                    </div>
+                    <label class="btn btn-white border-0 rounded-0 p-3 ml-2" v-if="pickup.enabled" :disabled="pickup.enabled === false" @click="() => {pickup.enabled ? order.pickup = true : null}">
                       <input type="radio" name="express_company_pickup" id="option2" autocomplete="off" :checked="order.pickup === true"> <i class="fal fa-shopping-basket"></i> Самовывоз
                     </label>
                   </div>
                 </div>
-                <div class="col-md-6 mt-3 mt-md-0">
-                  <h5 class="font-weight-bold">Выберите службу доставки</h5>
-                  <div class="btn-group btn-group-toggle" data-toggle="buttons" v-if="!order.pickup">
-                    <div v-for="(company, index) in companies" class="btn p-0 rounded-0 border-0 ml-2" :disabled="order.pickup || company.costedTransfer == null || company.enabled == false">
-                      <label  class="btn-white border-0 rounded-0 p-3 mb-0" :disabled="order.pickup || company.costedTransfer == null" @click="() => { !order.pickup && company.costedTransfer !== null ? (order.express_company = company.id, order.costTransfer = company.costedTransfer) : null}">
-                        <input type="radio" :value="company.id" name="express_company" autocomplete="off" :checked="order.express_company === company.id">
-                        @{{ company.name }}
-                      </label>
-                      <p class="m-0 p-0 position-absolute font-weight-bold">@{{ !isNaN(company.costedTransfer) ? $cost(Number(company.costedTransfer)) + ' тг.' : '' }}</p>
-                    </div>
-                  </div>
+{{--                <div class="col-md-6 mt-3 mt-md-0">--}}
+{{--                  <h5 class="font-weight-bold">Выберите службу доставки</h5>--}}
+{{--                  <div class="btn-group btn-group-toggle" data-toggle="buttons" v-if="!order.pickup">--}}
+{{--                    <div v-for="(company, index) in companies" v-if="!isNaN(company.costedTransfer) && company.costedTransfer !== null" class="btn p-0 rounded-0 border-0 ml-2" :disabled="order.pickup || company.costedTransfer == null || company.enabled == false">--}}
+{{--                      <label  class="btn-white border-0 rounded-0 p-3 mb-0" :disabled="order.pickup || company.costedTransfer == null" @click="() => { !order.pickup && company.costedTransfer !== null ? (order.express_company = company.id, order.costTransfer = company.costedTransfer) : null}">--}}
+{{--                        <input type="radio" :value="company.id" name="express_company" autocomplete="off" :checked="order.express_company === company.id">--}}
+{{--                        @{{ company.name }}--}}
+{{--                      </label>--}}
+{{--                      <p class="m-0 p-0 position-absolute font-weight-bold">@{{ !isNaN(company.costedTransfer) && company.costedTransfer !== null ? $cost(Number(company.costedTransfer)) + ' тг.' : '' }}</p>--}}
+{{--                    </div>--}}
+{{--                  </div>--}}
 
-                  <div v-else class="mt-3">
-                    <p class="m-0 p-0 d-flex">Вы можете забрать свой заказ по адресу мкр.Самал-3, 1</p>
-                  </div>
-                </div>
+{{--                  <div v-else class="mt-3">--}}
+{{--                    <p class="m-0 p-0 d-flex">Вы можете забрать свой заказ по адресу мкр.Самал-3, 1</p>--}}
+{{--                  </div>--}}
+{{--                </div>--}}
                 <div class="col-md-8 mt-3">
                   <h5 class="font-weight-bold">Как будете платить?</h5>
-                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                  <div class="btn-group btn-group-toggle ml-2" data-toggle="buttons">
                     <label class="btn btn-white border-0 rounded-0 p-3" @click="() => {order.payment_method = 'card'}">
                       <input type="radio" value="card" name="payment_method" id="option5" autocomplete="off" :checked="order.payment_method === 'card'"> <i class="fal fa-credit-card-front"></i> Оплатить онлайн
                     </label>
-                    <label class="btn btn-white border-0 rounded-0 p-3 ml-2" :disabled="getCompany ? getCompany.enabled_cash === false : true" @click="() => {getCompany ? getCompany.enabled_cash ? order.payment_method = 'cash' : null : null}">
+                    <label class="btn btn-white border-0 rounded-0 p-3 ml-2" v-if="getCompany.enabled_cash" :disabled="getCompany ? getCompany.enabled_cash === false : true" @click="() => {getCompany ? getCompany.enabled_cash ? order.payment_method = 'cash' : null : null}">
                       <input type="radio" value="cash" name="payment_method" id="option6" autocomplete="off" :checked="order.payment_method === 'cash'"> <i class="fad fa-coins"></i> Наличными
                     </label>
                   </div>

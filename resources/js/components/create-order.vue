@@ -3,8 +3,8 @@
     name: "create-order",
     data () {
       return {
-        test: false,
-        testPay: false,
+        test: true,
+        testPay: true,
         cartItems: [],
         step: 1,
         stepMin: 0.5,
