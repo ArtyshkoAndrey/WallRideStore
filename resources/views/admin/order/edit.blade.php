@@ -52,11 +52,17 @@
                     <label for="ship_status">Стутас заказа</label>
                   </div>
                   <div class="col-12">
-                    <select name="ship_status" id="ship_status" class="form-control w-auto" required>
-                      @foreach(\App\Models\Order::SHIP_STATUS_MAP as $ship)
-                        <option value="{{ $ship }}" {{ $order->ship_status === $ship ? 'selected' : '' }}>{{ \App\Models\Order::$shipStatusMap[$ship] }}</option>
-                      @endforeach
-                    </select>
+                    @if($order->ship_status === \App\Models\Order::SHIP_STATUS_CANCEL)
+                      <select name="ship_status" id="ship_status" class="form-control w-auto" required disabled>
+                        <option value="{{ $order->ship_status }}">{{ \App\Models\Order::$shipStatusMap[$order->ship_status] }}</option>
+                      </select>
+                    @else
+                      <select name="ship_status" id="ship_status" class="form-control w-auto" required>
+                        @foreach(\App\Models\Order::SHIP_STATUS_MAP as $ship)
+                          <option value="{{ $ship }}" {{ $order->ship_status === $ship ? 'selected' : '' }}>{{ \App\Models\Order::$shipStatusMap[$ship] }}</option>
+                        @endforeach
+                      </select>
+                    @endif
                   </div>
                 </div>
 

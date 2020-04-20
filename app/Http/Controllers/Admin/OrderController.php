@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Order;
+use App\Models\ProductSku;
 use App\Services\CartService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -56,6 +57,9 @@ class OrderController extends Controller
             break;
           case Order::SHIP_STATUS_PAID:
             $orders =$orders->where('ship_status', Order::SHIP_STATUS_PAID);
+            break;
+          case Order::SHIP_STATUS_CANCEL:
+            $orders =$orders->where('ship_status', Order::SHIP_STATUS_CANCEL);
             break;
         }
       } else {
@@ -131,13 +135,14 @@ class OrderController extends Controller
       return view('admin.order.edit', compact('order'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param  int  $id
-     * @return RedirectResponse
-     */
+  /**
+   * Update the specified resource in storage.
+   *
+   * @param Request $request
+   * @param int $id
+   * @return RedirectResponse
+   * @throws \Exception
+   */
     public function update(Request $request, $id)
     {
 //      dd($request);
@@ -153,6 +158,22 @@ class OrderController extends Controller
       $order->ship_data = ['express_no' => $request->express_no];
       $order->user()->associate($request->user);
       $order->save();
+      if ($request->ship_status === Order::SHIP_STATUS_CANCEL) {
+        foreach ($order->items as $item) {
+          $sku = ProductSku::where('product_id', $item->product->id);
+          if($sku->count() === 1) {
+            $sku = $sku->first();
+            $sku->addStock($item->amount);
+          } else if ($sku->count() > 1) {
+            $sku = $sku->whereHas('skus', function ($q) use ($item) {
+              $q->where('skuses.title', $item->product_sku);
+            })->first();
+            $sku->addStock($item->amount);
+          } else {
+            throw new \Exception('Ошибка в размерах');
+          }
+        }
+      }
       return redirect()->route('admin.store.order.index');
     }
 

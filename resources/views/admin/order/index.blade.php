@@ -37,6 +37,10 @@
                 Отправленые ({{App\Models\Order::where('ship_status', \App\Models\Order::SHIP_STATUS_DELIVERED)->count()}})
               </a>
             </div>
+            <div class="col-auto"><a href="{{ route('admin.store.order.index', ['type' => \App\Models\Order::SHIP_STATUS_CANCEL]) }}" class="{{ $type === \App\Models\Order::SHIP_STATUS_CANCEL ? 'active' : ''}}">
+                Отменённые  ({{App\Models\Order::where('ship_status', \App\Models\Order::SHIP_STATUS_CANCEL)->count()}})
+              </a>
+            </div>
             <div class="col-auto ml-auto">{{ $orders->appends($filters)->render() }}</div>
           </div>
           <div class="row align-items-center">

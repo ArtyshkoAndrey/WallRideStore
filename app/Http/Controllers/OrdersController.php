@@ -108,22 +108,25 @@ class OrdersController extends Controller
         $order->ship_status = Order::SHIP_STATUS_PENDING;
         $order->closed = 0;
         $order->save();
-        foreach ($order->items as $item) {
-          $sku = ProductSku::where('product_id', $item->product->id);
-          if($sku->count() === 1) {
-            $sku = $sku->first();
-//        dd($sku);
-            $sku->decreaseStock($item->amount);
-          } else if ($sku->count() > 1) {
-            $sku = $sku->whereHas('skus', function ($q) use ($item) {
-              $q->where('skuses.title', $item->product_sku);
-            })->first();
-//        dd($sku);
-            $sku->decreaseStock($item->amount);
-          } else {
 
-          }
-        }
+//  УДАЛЕНИ КОЛ-ВО ТОВАРА ПРИ ОПЛАТЕ НАЛИЧНЫМИ
+
+//        foreach ($order->items as $item) {
+//          $sku = ProductSku::where('product_id', $item->product->id);
+//          if($sku->count() === 1) {
+//            $sku = $sku->first();
+////        dd($sku);
+//            $sku->decreaseStock($item->amount);
+//          } else if ($sku->count() > 1) {
+//            $sku = $sku->whereHas('skus', function ($q) use ($item) {
+//              $q->where('skuses.title', $item->product_sku);
+//            })->first();
+////        dd($sku);
+//            $sku->decreaseStock($item->amount);
+//          } else {
+//
+//          }
+//        }
         $admin = Admin::first();
         $admin->notify(new RegisterPaid($order));
         return route('orders.index');
@@ -141,22 +144,25 @@ class OrdersController extends Controller
     $order->ship_status = Order::SHIP_STATUS_PENDING;
     $order->closed = 0;
     $order->save();
-    foreach ($order->items as $item) {
-      $sku = ProductSku::where('product_id', $item->product->id);
-      if($sku->count() === 1) {
-        $sku = $sku->first();
-//        dd($sku);
-        $sku->decreaseStock($item->amount);
-      } else if ($sku->count() > 1) {
-        $sku = $sku->whereHas('skus', function ($q) use ($item) {
-          $q->where('skuses.title', $item->product_sku);
-        })->first();
-//        dd($sku);
-        $sku->decreaseStock($item->amount);
-      } else {
 
-      }
-    }
+//  УДАЛЕНИ КОЛ-ВО ТОВАРА ПРИ ОПЛАТЕ ОНЛАЙН
+
+//    foreach ($order->items as $item) {
+//      $sku = ProductSku::where('product_id', $item->product->id);
+//      if($sku->count() === 1) {
+//        $sku = $sku->first();
+////        dd($sku);
+//        $sku->decreaseStock($item->amount);
+//      } else if ($sku->count() > 1) {
+//        $sku = $sku->whereHas('skus', function ($q) use ($item) {
+//          $q->where('skuses.title', $item->product_sku);
+//        })->first();
+////        dd($sku);
+//        $sku->decreaseStock($item->amount);
+//      } else {
+//
+//      }
+//    }
     event(new OrderPaid($order));
     $admin = Admin::first();
     $admin->notify(new RegisterPaid($order));

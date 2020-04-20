@@ -13,12 +13,14 @@ class Order extends Model
   const SHIP_STATUS_PAID      = 'paid';
   const SHIP_STATUS_DELIVERED = 'delivered';
   const SHIP_STATUS_RECEIVED  = 'received';
+  const SHIP_STATUS_CANCEL    = 'cancel';
 
   const SHIP_STATUS_MAP = [
     self::SHIP_STATUS_PENDING,
     self::SHIP_STATUS_PAID,
     self::SHIP_STATUS_DELIVERED,
-    self::SHIP_STATUS_RECEIVED
+    self::SHIP_STATUS_RECEIVED,
+    self::SHIP_STATUS_CANCEL
   ];
 
   const PAYMENT_METHODS_CASH = 'cash';
@@ -34,6 +36,7 @@ class Order extends Model
     self::SHIP_STATUS_PENDING   => 'В обработке',
     self::SHIP_STATUS_DELIVERED => 'Отправлен',
     self::SHIP_STATUS_RECEIVED  => 'Получен',
+    self::SHIP_STATUS_CANCEL  => 'Отменён',
   ];
 
   protected $fillable = [
