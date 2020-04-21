@@ -59,6 +59,7 @@ class ExpressController extends Controller
     ]);
 
     $express = new ExpressCompany();
+    $request['enabled_cash'] = isset($request->enabled_cash);
     $express = $express->create($request->all());
 
     return redirect()->route('admin.store.express.edit', $express->id);

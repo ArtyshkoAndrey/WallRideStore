@@ -56,8 +56,9 @@
         weight += Number(item.amount) * Number( item.productSku.product.weight)
       });
       this.express_companies.forEach(com => {
-        if (typeof com.costedTransfer === "number") {
-          if ((weight - this.stepMin) > 0 && com.costedTransfer !== null) {
+        console.log(typeof com.costedTransfer)
+        if (typeof com.costedTransfer === "number" || typeof com.costedTransfer === "string") {
+          if ((weight - this.stepMin) > 0) {
             console.log('Вес ' + weight)
             let p = weight - this.stepMin
             let i = 0

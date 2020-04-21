@@ -64,18 +64,18 @@
             <div class="row align-items-end mt-2" v-for="index in step_counter">
               <div class="col-md">
                 <label :for="'weight_to['+index+']'">Вес от:</label>
-                <input type="number" min="0" step="0.1" :name="'weight_to['+index+']'" :id="'weight_to_'+index" class="form-control rounded-0" :value="step_cost_array[index - 1] ? step_cost_array[index - 1].weight_to : ''" required>
+                <input type="number" min="0" step="0.1" :name="'weight_to['+index+']'" :id="'weight_to_'+index" class="form-control rounded-0" v-model="step_cost_array[index - 1].weight_to" required>
               </div>
               <div class="col-md">
                 <label :for="'weight_from['+index+']'">Вес до:</label>
-                <input type="number" min="0" step="0.1" :name="'weight_from['+index+']'" :id="'weight_from_'+index" class="form-control rounded-0" :value="step_cost_array[index - 1] ? step_cost_array[index - 1].weight_from : ''" required>
+                <input type="number" min="0" step="0.1" :name="'weight_from['+index+']'" :id="'weight_from_'+index" class="form-control rounded-0" v-model="step_cost_array[index - 1].weight_from" required>
               </div>
               <div class="col-md">
                 <label :for="'cost['+index+']'">Цена за промежуток:</label>
-                <input type="number" min="0" :name="'cost['+index+']'" :id="'cost_'+index" class="form-control rounded-0" :value="step_cost_array[index - 1] ? step_cost_array[index - 1].cost : ''" required>
+                <input type="number" min="0" :name="'cost['+index+']'" :id="'cost_'+index" class="form-control rounded-0" v-model="step_cost_array[index - 1].cost" required>
               </div>
               <div class="col-md-auto mt-2 mt-sm-0">
-                <button type="button" @click="step_counter--" class="btn btn-danger rounded-0 w-100">Удаить</button>
+                <button type="button" @click="incStep(index - 1)" class="btn btn-danger rounded-0 w-100">Удаить</button>
               </div>
               <hr class="w-100">
             </div>
@@ -151,11 +151,32 @@
       el: '#vue-app',
       data: {
         methodCost: 'array_step',
-        step_counter: 1,
+        step_counter: step_cost_array.length > 0 ? step_cost_array : [],
         step_cost_array: step_cost_array
       },
-      created () {
-
+      create () {
+        // if (this.step_counter > 0 && this.step_cost_array.length !== this.step_counter) {
+        //
+        // }
+      },
+      methods: {
+        incStep (index) {
+          this.step_cost_array.splice(index, 1);
+          this.step_counter--
+        }
+      },
+      watch: {
+        step_counter: function (newVal, oldVal) {
+          let costs =  this.step_cost_array.length > 0 ? this.step_cost_array.slice() : []
+          if (newVal > oldVal) {
+            costs.push({
+              weight_to: null,
+              wight_from: null,
+              cost: null
+            })
+          }
+          this.step_cost_array = costs.slice()
+        }
       }
     })
   </script>
