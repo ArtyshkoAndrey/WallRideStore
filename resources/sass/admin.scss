@@ -90,3 +90,18 @@ label {
   display: flex;
   justify-content: space-between;
 }
+
+.btn-white {
+  background: #F0F0F0;
+}
+.btn-white.active {
+  background: #000;
+  color: white;
+}
+
+.active > .btn-white {
+  background: #000;
+  color: white;
+}
+
+

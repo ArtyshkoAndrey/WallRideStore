@@ -20,7 +20,8 @@ class CreateExpressZonesTable extends Migration
             $table->foreign('company_id')->references('id')->on('express_companies')->onDelete('cascade');
             $table->decimal('cost', 10, 0)->nullable();
             $table->double('step', 10, 2)->nullable();
-            $table->decimal('cost_step', 10, 0);
+            $table->decimal('cost_step', 10, 0)->nullable();
+            $table->text('step_cost_array')->nullable();
             $table->timestamps();
         });
     }

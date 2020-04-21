@@ -45,16 +45,40 @@ class ExpressZoneController extends Controller
      */
     public function store(Request $request)
     {
-      $request->validate([
-        'name' => 'required|unique:express_zones,name',
-        'cost' => 'required|numeric|min:0',
-        'step' => 'required|numeric|min:0',
-        'cost_step' => 'required|numeric|min:0',
-        'company_id' => 'required|exists:express_companies,id',
-      ]);
+//      dd($request->all());
+      if($request->method_cost === 'step_and_cost') {
+        $request->validate([
+          'name' => 'required|unique:express_zones,name',
+          'cost' => 'required|numeric|min:0',
+          'step' => 'required|numeric|min:0',
+          'cost_step' => 'required|numeric|min:0',
+          'company_id' => 'required|exists:express_companies,id',
+        ]);
 
-      $zone = new ExpressZone();
-      $zone = $zone->create($request->all());
+        $zone = new ExpressZone();
+        $zone = $zone->create($request->all());
+      } else if ($request->method_cost === 'array_step') {
+        $request->validate([
+          'name' => 'required|unique:express_zones,name',
+          'company_id' => 'required|exists:express_companies,id',
+          'weight_to' => 'required',
+          'weight_from' => 'required',
+          'cost' => 'required'
+        ]);
+        $zone = new ExpressZone();
+        $zone->name = $request->name;
+        $zone->company()->associate($request->company_id);
+//        dd($request->all());
+        $step_cost_array = array();
+        for ($i = 1; $i <= count($request->cost); $i++) {
+          $step_cost_array[$i - 1] = (object) array();
+          $step_cost_array[$i - 1]->cost = (int) $request->cost[$i];
+          $step_cost_array[$i - 1]->weight_to = (int) $request->weight_to[$i];
+          $step_cost_array[$i - 1]->weight_from = (int) $request->weight_from[$i];
+        }
+        $zone->step_cost_array = $step_cost_array;
+        $zone->save();
+      }
 
       return redirect()->route('admin.store.express-zone.edit', $zone->id);
     }
@@ -87,7 +111,7 @@ class ExpressZoneController extends Controller
      *
      * @param Request $request
      * @param  int  $id
-     * @return RedirectResponse
+     * @return array
      */
     public function update(Request $request, $id)
     {
@@ -100,16 +124,37 @@ class ExpressZoneController extends Controller
         $zone->cities()->attach($request->city_id, ['express_company_id' => $zone->company->id]);
         return ['success' => 'ok'];
       } else {
-        $zone = ExpressZone::find($id);
-        $request->validate([
-          'name' => 'required|unique:express_zones,name,' . $id,
-          'cost' => 'required|numeric|min:0',
-          'step' => 'required|numeric|min:0',
-          'cost_step' => 'required|numeric|min:0',
-          'company_id' => 'required|exists:express_zones'
-        ]);
-
-        $zone->update($request->all());
+        if ($request->method_cost === 'step_and_cost') {
+          $zone = ExpressZone::find($id);
+          $request->validate([
+            'name' => 'required|unique:express_zones,name,' . $id,
+            'cost' => 'required|numeric|min:0',
+            'step' => 'required|numeric|min:0',
+            'cost_step' => 'required|numeric|min:0',
+            'company_id' => 'required|exists:express_zones'
+          ]);
+          $zone->update($request->all());
+        } else if ($request->method_cost === 'array_step') {
+          $zone = ExpressZone::find($id);
+          $request->validate([
+            'name' => 'required|unique:express_zones,name,' . $id,
+            'company_id' => 'required|exists:express_companies,id',
+            'weight_to' => 'required',
+            'weight_from' => 'required',
+            'cost' => 'required'
+          ]);
+          $zone->name = $request->name;
+          $zone->company()->associate($request->company_id);
+          $step_cost_array = array();
+          for ($i = 1; $i <= count($request->cost); $i++) {
+            $step_cost_array[$i - 1] = (object) array();
+            $step_cost_array[$i - 1]->cost = (int) $request->cost[$i];
+            $step_cost_array[$i - 1]->weight_to = (int) $request->weight_to[$i];
+            $step_cost_array[$i - 1]->weight_from = (int) $request->weight_from[$i];
+          }
+          $zone->step_cost_array = $step_cost_array;
+          $zone->save();
+        }
         return redirect()->route('admin.store.express-zone.edit', $zone->id);
       }
     }

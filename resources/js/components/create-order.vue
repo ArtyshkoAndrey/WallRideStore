@@ -56,18 +56,30 @@
         weight += Number(item.amount) * Number( item.productSku.product.weight)
       });
       this.express_companies.forEach(com => {
-        if ((weight - this.stepMin) > 0 && com.costedTransfer !== null) {
-          console.log('Вес ' + weight)
-          let p = weight - this.stepMin
-          let i = 0
-          console.log('Перевес на ' + p, 'Шаг перевеса ' + com.step_unlim)
-          while(p > 0) {
-            p = p - com.step_unlim
-            i++
+        if (typeof com.costedTransfer === "number") {
+          if ((weight - this.stepMin) > 0 && com.costedTransfer !== null) {
+            console.log('Вес ' + weight)
+            let p = weight - this.stepMin
+            let i = 0
+            console.log('Перевес на ' + p, 'Шаг перевеса ' + com.step_unlim)
+            while(p > 0) {
+              p = p - com.step_unlim
+              i++
+            }
+            console.log('Кол-во шагов перевеса ' + i);
+            com.costedTransfer = Number(com.costedTransfer) + Number(com.step_cost_unlim) * i
+            console.log('-----')
           }
-          console.log('Кол-во шагов перевеса ' + i);
-          com.costedTransfer = Number(com.costedTransfer) + Number(com.step_cost_unlim) * i
-          console.log('-----')
+        } else if (typeof com.costedTransfer === "object") {
+          let costs = com.costedTransfer.slice()
+          com.costedTransfer = null
+          costs.some(cost => {
+            if (weight >= cost.weight_to && weight < cost.weight_from) {
+              com.costedTransfer = Number(cost.cost)
+              console.log(111111111111)
+              return false;
+            }
+          })
         }
       })
       setTimeout(() => {

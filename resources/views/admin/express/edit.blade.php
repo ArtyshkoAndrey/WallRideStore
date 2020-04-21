@@ -66,34 +66,63 @@
             </div>
             <hr>
             <div class="row table-responsive">
-              <table class="table text-nowrap">
-                <thead>
+              @if(count($express->zones) > 0 && $express->zones[0]->step_cost_array === null)
+                <table class="table text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>Название зоны</th>
+                      <th>Цена за 0.5 кг.</th>
+                      <th>Цена каждый шаг в кг.</th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($express->zones as $zone)
+                      <tr class="align-items-center">
+                        <td>{{ $zone->name }}</td>
+                        <td>{{ cost($zone->cost) }} тг.</td>
+                        <td>{{ cost($zone->cost_step) }} тг. / {{ $zone->step }} кг.</td>
+                        <td><a href="{{ route('admin.store.express-zone.edit', $zone->id) }}" class="btn btn-warning border-0 rounded-0">Редактировать</a></td>
+                        <td>
+  {{--                        <form action="{{ route('admin.store.express-zone.destroy', $zone->id) }}" method="post">--}}
+  {{--                          @csrf--}}
+  {{--                          @method('delete')--}}
+                            <button class="bg-transparent border-0 rounded-0" style="color: #F33C3C" type="button" onclick="deletedZone({{ $zone->id }})"><i style="font-size: 1.5rem" class="fal fa-trash"></i></button>
+  {{--                        </form>--}}
+                        </td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+              @else
+                <table class="table text-nowrap">
+                  <thead>
                   <tr>
                     <th>Название зоны</th>
-                    <th>Цена за 0.5 кг.</th>
-                    <th>Цена каждый шаг в кг.</th>
+                    <th>Цена певого шага</th>
                     <th></th>
                     <th></th>
                   </tr>
-                </thead>
-                <tbody>
+                  </thead>
+                  <tbody>
                   @foreach($express->zones as $zone)
                     <tr class="align-items-center">
                       <td>{{ $zone->name }}</td>
-                      <td>{{ cost($zone->cost) }} тг.</td>
-                      <td>{{ cost($zone->cost_step) }} тг. / {{ $zone->step }} кг.</td>
+                      <td>{{ cost(count($zone->step_cost_array) > 0 ? $zone->step_cost_array[0]['cost'] : 0) }} тг.</td>
                       <td><a href="{{ route('admin.store.express-zone.edit', $zone->id) }}" class="btn btn-warning border-0 rounded-0">Редактировать</a></td>
                       <td>
-{{--                        <form action="{{ route('admin.store.express-zone.destroy', $zone->id) }}" method="post">--}}
-{{--                          @csrf--}}
-{{--                          @method('delete')--}}
-                          <button class="bg-transparent border-0 rounded-0" style="color: #F33C3C" type="button" onclick="deletedZone({{ $zone->id }})"><i style="font-size: 1.5rem" class="fal fa-trash"></i></button>
-{{--                        </form>--}}
+                        {{--                        <form action="{{ route('admin.store.express-zone.destroy', $zone->id) }}" method="post">--}}
+                        {{--                          @csrf--}}
+                        {{--                          @method('delete')--}}
+                        <button class="bg-transparent border-0 rounded-0" style="color: #F33C3C" type="button" onclick="deletedZone({{ $zone->id }})"><i style="font-size: 1.5rem" class="fal fa-trash"></i></button>
+                        {{--                        </form>--}}
                       </td>
                     </tr>
                   @endforeach
-                </tbody>
-              </table>
+                  </tbody>
+                </table>
+              @endif
             </div>
           </form>
         </div>

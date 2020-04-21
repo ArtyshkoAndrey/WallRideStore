@@ -1,5 +1,7 @@
 require('sweetalert');
 window._ = require('lodash');
+window.Vue = require('vue');
+Vue.config.productionTip = false
 
 try {
   window.Popper = require('popper.js').default;
