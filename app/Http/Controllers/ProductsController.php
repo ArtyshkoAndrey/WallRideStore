@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\InvalidRequestException;
 use App\Helpers\CollectionHelper;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Header;
 use App\Models\News;
@@ -111,9 +112,14 @@ class ProductsController extends Controller {
 
   public function allsale ()
   {
-    $products = Product::query();
-    $products = $products->with('skus', 'photos')->where('on_sale', true)->paginate(16);
-    return view('products.all_sale', compact('products'));
+//    $products = Product::query();
+//    $products = $products->with('skus', 'photos')->where('on_sale', true)->paginate(16);
+
+    $brands = Brand::whereHas('products', function($q) {
+      $q->where('on_sale', true);
+    })->get();
+    $products = Product::doesntHave('brands')->where('on_sale', true)->with('skus', 'photos')->get();
+    return view('products.all_sale', compact('products', 'brands'));
   }
 
   public function allfavor ()

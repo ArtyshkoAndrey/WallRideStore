@@ -4,19 +4,13 @@
 @section('content')
   <section class="mt-5 pt-5">
     <div class="container mt-5">
-      <div class="row align-items-center px-3">
-        <div class="col-12"><h2 class="font-weight-bold d-block">Все товары со скидкой</h2></div>
-        @if ($message = Session::get('filter'))
-          <div class="col-12">
-            <h4 class="text-muted">
-              {{ $message }}
-            </h4>
-          </div>
-        @endif
+      <div class="row align-items-center mt-5 px-3">
+        <div class="col-12"><h2 class="font-weight-bold d-block">Товары со скидкой</h2></div>
       </div>
     </div>
     <div class="container">
-      <div class="row {{ count($products) === 0 ? 'justify-content-center align-items-center' : null }}">
+      @if(count($products) > 0)
+      <div class="row">
         @forelse($products as $product)
           <product :slider=false :currency="{{ $currency }}" :item="{{ $product }}"></product>
         @empty
@@ -24,10 +18,24 @@
             <h4>Нет товаров</h4>
           </div>
         @endforelse
-        <div class="col-12 d-flex justify-content-center mt-2 mb-5">
-          <div>{{ $products->render() }}</div>
-        </div>
       </div>
+      @endif
+
+      @foreach($brands as $brand)
+        <div class="row align-items-center mt-5 px-3">
+          <div class="col-12"><h2 class="font-weight-bold d-block">{{ $brand->name }}</h2></div>
+        </div>
+        <div class="row {{ $brand->products()->where('on_sale', true)->count() === 0 ? 'justify-content-center align-items-center' : null }}">
+          @forelse($brand->products()->where('on_sale', true)->with('skus', 'photos')->get() as $product)
+            <product :slider=false :currency="{{ $currency }}" :item="{{ $product }}"></product>
+          @empty
+            <div class="col-auto mt-5">
+              <h4>Нет товаров</h4>
+            </div>
+          @endforelse
+        </div>
+      @endforeach
+
     </div>
   </section>
 @endsection
