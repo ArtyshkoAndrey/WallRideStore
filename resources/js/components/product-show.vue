@@ -81,11 +81,12 @@
                 let arr = $.cookie('products').split(',')
                 console.log(arr)
                 if (arr[0] === '' || arr.length === 0) {
-                  $.cookie("products", this.size.id,{expires: 7, path: '/'});
-                  arr = [this.size.id]
+                  arr = [];
+                  arr = this.$addSkusToCart([], this.size.id, this.counter)
+                  $.cookie("products", arr.join(','),{expires: 7, path: '/'});
                 } else {
-                  arr.push(this.size.id)
-                  $.cookie("products",arr ,{expires: 7, path: '/'});
+                  arr = this.$addSkusToCart(arr, this.size.id, this.counter)
+                  $.cookie("products",arr.join(',') ,{expires: 7, path: '/'});
                 }
                 axios.post('/cart/getData', {
                   ids: arr

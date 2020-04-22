@@ -51,6 +51,13 @@ Vue.prototype.$cost = function (number) {
   return new Intl.NumberFormat('ru-RU').format((number).toFixed(0))
 }
 
+Vue.prototype.$addSkusToCart = function(mas, what, amount) {
+  let temp = new Array(amount);
+  temp.fill(what);
+  mas = mas.concat(temp)
+  return mas;
+}
+
 const app = new Vue({
   el: '#app',
   data () {

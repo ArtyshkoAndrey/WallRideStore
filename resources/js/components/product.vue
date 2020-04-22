@@ -175,11 +175,12 @@ line-height: 24px;" v-model="count" readonly disabled>
                 let arr = $.cookie('products').split(',')
                 console.log(arr)
                 if (arr[0] === '' || arr.length === 0) {
-                  $.cookie("products",this.item.skus[this.numberSize].id,{expires: 7, path: '/'});
-                  arr = [this.item.skus[this.numberSize].id]
+                  arr = [];
+                  arr = this.$addSkusToCart([], this.item.skus[this.numberSize].id, this.count)
+                  $.cookie("products", arr.join(','),{expires: 7, path: '/'});
                 } else {
-                  arr.push(this.item.skus[this.numberSize].id)
-                  $.cookie("products",arr ,{expires: 7, path: '/'});
+                  arr = this.$addSkusToCart(arr, this.item.skus[this.numberSize].id, this.count)
+                  $.cookie("products",arr.join(',') ,{expires: 7, path: '/'});
                 }
                 axios.post('/cart/getData', {
                   ids: arr
