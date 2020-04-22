@@ -182,6 +182,11 @@
 <style scoped lang="scss">
   @import "~slick-carousel/slick/slick.css";
   @import "~slick-carousel/slick/slick-theme.css";
+  @media (max-width: 768px) {
+    .btn-group-toggle-skus {
+      display: grid;
+    }
+  }
   .sku-btn {
     border: 1px solid #000000;
     box-sizing: border-box;

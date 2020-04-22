@@ -63,8 +63,8 @@
           </div>
         </div>
         <h4 class="font-weight-bold mt-1">Размер</h4>
-        <div class="btn-group btn-group-toggle">
-          <label v-for="(sku, index) in skus" :key="sku.id" :class="(index===0 ? 'mr-2' : 'mx-2') + ' btn sku-btn' + (idSku === sku.id ? ' active' : '')">
+        <div class="btn-group btn-group-toggle btn-group-toggle-skus">
+          <label v-for="(sku, index) in skus" :key="sku.id" :class="(index===0 ? 'mr-0 mr-md-2 mx-2 mx-md-0' : 'mx-2') + ' btn sku-btn mt-2 mt-md-0' + (idSku === sku.id ? ' active' : '')">
             <input type="radio" :id="'gender_' + index" autocomplete="off" name="sku_id" :value="sku.id" v-model.number='idSku'>
             @{{  sku.skus !== null ? sku.skus.title : 'One Size'}}
           </label>
