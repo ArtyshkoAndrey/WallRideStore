@@ -1,5 +1,4 @@
 /node_modules
-/public/hot
 /storage/*.key
 /vendor
 /.idea
@@ -12,7 +11,5 @@ npm-debug.log
 yarn-error.log
 .phpunit.result.cache
 /public/js/vendor
-/public/css
-/public/mix-manifest.json
+/public/css/vendor
 /public/fonts/vendor
-/resources/wechat_pay
