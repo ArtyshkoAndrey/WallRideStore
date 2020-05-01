@@ -185,7 +185,7 @@
           })
       },
       createOrder () {
-        if ( Number($('select[id=country]').val()) === 82) {
+        if ( Number($('select[id=country]').val()) === 82 ||  Number($('select[id=country]').val()) === 1) {
           let items = [];
           this.cartItems.forEach(item => {
             items.push({
@@ -262,7 +262,7 @@
               }
             });
         } else {
-          swal('Извините, на данный момент доставка осуществляется только по Казахстану', '', 'error');
+          swal('Извините, на данный момент доставка осуществляется только по Казахстану и России', '', 'error');
         }
       },
       validEmail: function (email) {
