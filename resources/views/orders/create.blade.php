@@ -22,7 +22,7 @@
               <h4 class="font-weight-bold">Контактные данные</h4>
               <input type="text" value="{{ auth()->user() ?  auth()->user()->name : '' }}" v-model="order.name" name="username" class="w-100 py-2 px-2 mt-2" placeholder="Имя">
               <input type="email" value="{{ auth()->user() ?  auth()->user()->email : '' }}" v-model="order.email" name="email" class="w-100 py-2 px-2 mt-2" placeholder="E-mail">
-              <input type="text" maxlength="14" value="{{ auth()->user() ? auth()->user()->address !== null ? auth()->user()->address->contact_phone !== null ? auth()->user()->address->contact_phone : '' : '' : '' }}" v-model="order.phone" name="contact_phone" class="w-100 py-2 px-2 mt-2" placeholder="Телефон">
+              <input type="text" maxlength="14" value="{{ auth()->user() ? auth()->user()->address !== null ? auth()->user()->address->contact_phone !== null ? auth()->user()->address->contact_phone : '' : '' : '' }}" v-model="order.phone" id="contact_phone" name="contact_phone" class="w-100 py-2 px-2 mt-2" placeholder="Телефон">
             </div>
             <div class="card-body mt-2" v-else>
               <h4 class="font-weight-bold">Адрессные данные</h4>
@@ -78,6 +78,9 @@
 
             <div class="card-body mt-3 mt-sm-0" v-else>
               <div class="row p-2">
+                <div class="col-12" v-if="Number(order.country) === 1">
+                  <p class="text-danger m-0" style="font-size: 12px;">В связи с коронавирусом, доставка осуществляется от 2-х недель</p>
+                </div>
                 <div class="col-md-6 mb-3">
                   <h5 class="font-weight-bold">Методы доставки</h5>
                   <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -93,22 +96,22 @@
                     </label>
                   </div>
                 </div>
-{{--                <div class="col-md-6 mt-3 mt-md-0">--}}
-{{--                  <h5 class="font-weight-bold">Выберите службу доставки</h5>--}}
-{{--                  <div class="btn-group btn-group-toggle" data-toggle="buttons" v-if="!order.pickup">--}}
-{{--                    <div v-for="(company, index) in companies" v-if="!isNaN(company.costedTransfer) && company.costedTransfer !== null" class="btn p-0 rounded-0 border-0 ml-2" :disabled="order.pickup || company.costedTransfer == null || company.enabled == false">--}}
-{{--                      <label  class="btn-white border-0 rounded-0 p-3 mb-0" :disabled="order.pickup || company.costedTransfer == null" @click="() => { !order.pickup && company.costedTransfer !== null ? (order.express_company = company.id, order.costTransfer = company.costedTransfer) : null}">--}}
-{{--                        <input type="radio" :value="company.id" name="express_company" autocomplete="off" :checked="order.express_company === company.id">--}}
-{{--                        @{{ company.name }}--}}
-{{--                      </label>--}}
-{{--                      <p class="m-0 p-0 position-absolute font-weight-bold">@{{ !isNaN(company.costedTransfer) && company.costedTransfer !== null ? $cost(Number(company.costedTransfer)) + ' тг.' : '' }}</p>--}}
-{{--                    </div>--}}
-{{--                  </div>--}}
+                {{--                <div class="col-md-6 mt-3 mt-md-0">--}}
+                {{--                  <h5 class="font-weight-bold">Выберите службу доставки</h5>--}}
+                {{--                  <div class="btn-group btn-group-toggle" data-toggle="buttons" v-if="!order.pickup">--}}
+                {{--                    <div v-for="(company, index) in companies" v-if="!isNaN(company.costedTransfer) && company.costedTransfer !== null" class="btn p-0 rounded-0 border-0 ml-2" :disabled="order.pickup || company.costedTransfer == null || company.enabled == false">--}}
+                {{--                      <label  class="btn-white border-0 rounded-0 p-3 mb-0" :disabled="order.pickup || company.costedTransfer == null" @click="() => { !order.pickup && company.costedTransfer !== null ? (order.express_company = company.id, order.costTransfer = company.costedTransfer) : null}">--}}
+                {{--                        <input type="radio" :value="company.id" name="express_company" autocomplete="off" :checked="order.express_company === company.id">--}}
+                {{--                        @{{ company.name }}--}}
+                {{--                      </label>--}}
+                {{--                      <p class="m-0 p-0 position-absolute font-weight-bold">@{{ !isNaN(company.costedTransfer) && company.costedTransfer !== null ? $cost(Number(company.costedTransfer)) + ' тг.' : '' }}</p>--}}
+                {{--                    </div>--}}
+                {{--                  </div>--}}
 
-{{--                  <div v-else class="mt-3">--}}
-{{--                    <p class="m-0 p-0 d-flex">Вы можете забрать свой заказ по адресу мкр.Самал-3, 1</p>--}}
-{{--                  </div>--}}
-{{--                </div>--}}
+                {{--                  <div v-else class="mt-3">--}}
+                {{--                    <p class="m-0 p-0 d-flex">Вы можете забрать свой заказ по адресу мкр.Самал-3, 1</p>--}}
+                {{--                  </div>--}}
+                {{--                </div>--}}
                 <div class="col-md-8 mt-3">
                   <h5 class="font-weight-bold">Как будете платить?</h5>
                   <div class="btn-group btn-group-toggle ml-2" data-toggle="buttons">
@@ -141,7 +144,5 @@
 @endsection
 
 @section('scriptsAfterJs')
-  <script src="{{ asset('public/js/jquery.mask.min.js') }}"></script>
-  <script !src="">
-  </script>
+
 @endsection

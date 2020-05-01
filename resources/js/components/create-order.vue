@@ -42,6 +42,11 @@
       }
     },
     mounted () {
+      this.$nextTick(function () {
+        setTimeout(function () {
+          $('#contact_phone').mask("+7 (999) 999-99-99");
+        }, 10)
+      });
       this.companies = this.express_companies;
       let weight = 0;
       // console.log(this.cart_items)
@@ -83,9 +88,6 @@
           })
         }
       })
-      setTimeout(() => {
-        $('input[name=contact_phone]').mask("+7 (999) 999-99-99");
-      }, 100)
       if (this.test) {
         this.order.name = "Andrey"
         this.order.email = 'artyshko.andrey@gmail.com'

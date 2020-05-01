@@ -21,6 +21,7 @@
 <!-- JS скрипт -->
 <script src="{{ mix('js/app.js') }}"></script>
 <script src='{{ asset('public/js/jquery-ui.min.js') }}'></script>
+<script src="{{ asset('public/js/jquery.mask.min.js') }}"></script>
 <script type="text/javascript">
   window.onload = function() {
     if(!window.matchMedia('(max-width: 768px)').matches) {

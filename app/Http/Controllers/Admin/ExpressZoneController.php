@@ -148,9 +148,9 @@ class ExpressZoneController extends Controller
           $step_cost_array = array();
           for ($i = 1; $i <= count($request->cost); $i++) {
             $step_cost_array[$i - 1] = (object) array();
-            $step_cost_array[$i - 1]->cost = (int) $request->cost[$i];
-            $step_cost_array[$i - 1]->weight_to = (int) $request->weight_to[$i];
-            $step_cost_array[$i - 1]->weight_from = (int) $request->weight_from[$i];
+            $step_cost_array[$i - 1]->cost = (double) $request->cost[$i];
+            $step_cost_array[$i - 1]->weight_to = (double) $request->weight_to[$i];
+            $step_cost_array[$i - 1]->weight_from = (double) $request->weight_from[$i];
           }
           $zone->step_cost_array = $step_cost_array;
           $zone->save();
