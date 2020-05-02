@@ -76,7 +76,7 @@
             com.costedTransfer = Number(com.costedTransfer) + Number(com.step_cost_unlim) * i
             console.log('-----')
           }
-        } else if (typeof com.costedTransfer === "object") {
+        } else if (typeof com.costedTransfer === "object" && com.costedTransfer !== null) {
           let costs = com.costedTransfer.slice()
           com.costedTransfer = null
           costs.some(cost => {
