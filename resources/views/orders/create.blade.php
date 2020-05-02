@@ -79,7 +79,7 @@
             <div class="card-body mt-3 mt-sm-0" v-else>
               <div class="row p-2">
                 <div class="col-12" v-if="Number(order.country) === 1">
-                  <p class="text-danger m-0" style="font-size: 12px;">В связи с коронавирусом, доставка осуществляется от 2-х недель</p>
+                  <p class="text-danger m-0" style="font-size: 12px;">В связи с коронавирусом, доставка осуществляется до 2-х недель</p>
                 </div>
                 <div class="col-md-6 mb-3">
                   <h5 class="font-weight-bold">Методы доставки</h5>
