@@ -12,6 +12,7 @@ use App\Services\CartService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Log;
 
 class CartController extends Controller
 {
@@ -166,6 +167,7 @@ class CartController extends Controller
             $item['amount'] = 1;
             $item['id'] = $id;
             $item['product_sku'] = $prs;
+            Log::debug(($prs->product->on_sale ? 'Включена' : 'Выключена') . ' скидка для товара ' . $prs->product->id);
             $priceAmount += $prs->product->on_sale ? $prs->product->price_sale : $prs->product->price;
             array_push($cartItems, $item);
           } else {
