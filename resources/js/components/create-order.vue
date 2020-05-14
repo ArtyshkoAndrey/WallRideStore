@@ -311,18 +311,44 @@
                     console.log(response)
                     response.data.length > 0 ? self.companies = response.data : self.companies = []
                     self.companies.forEach(com => {
-                      if ((self.getWeight - self.stepMin) > 0 && com.costedTransfer !== null) {
-                        console.log('Вес ' + self.getWeight)
-                        let p = self.getWeight - self.stepMin
-                        let i = 0
-                        console.log('Перевес на ' + p, 'Шаг для перевеса ' + com.step_unlim)
-                        while(p > 0) {
-                          p = p - com.step_unlim
-                          i++
+                      // if ((self.getWeight - self.stepMin) > 0 && com.costedTransfer !== null) {
+                      //   console.log('Вес ' + self.getWeight)
+                      //   let p = self.getWeight - self.stepMin
+                      //   let i = 0
+                      //   console.log('Перевес на ' + p, 'Шаг для перевеса ' + com.step_unlim)
+                      //   while(p > 0) {
+                      //     p = p - com.step_unlim
+                      //     i++
+                      //   }
+                      //   console.log('Кол-во шагов перевеса ' + i);
+                      //   com.costedTransfer = Number(com.costedTransfer) + Number(com.step_cost_unlim) * i
+                      //   console.log('-----')
+                      // }
+
+                      if (typeof com.costedTransfer === "number" || typeof com.costedTransfer === "string") {
+                        if ((self.getWeight - self.stepMin) > 0) {
+                          console.log('Вес ' + self.getWeight)
+                          let p = self.getWeight - self.stepMin
+                          let i = 0
+                          console.log('Перевес на ' + p, 'Шаг перевеса ' + com.step_unlim)
+                          while(p > 0) {
+                            p = p - com.step_unlim
+                            i++
+                          }
+                          console.log('Кол-во шагов перевеса ' + i);
+                          com.costedTransfer = Number(com.costedTransfer) + Number(com.step_cost_unlim) * i
+                          console.log('-----')
                         }
-                        console.log('Кол-во шагов перевеса ' + i);
-                        com.costedTransfer = Number(com.costedTransfer) + Number(com.step_cost_unlim) * i
-                        console.log('-----')
+                      } else if (typeof com.costedTransfer === "object" && com.costedTransfer !== null) {
+                        let costs = com.costedTransfer.slice()
+                        com.costedTransfer = null
+                        costs.some(cost => {
+                          if (self.getWeight >= cost.weight_to && self.getWeight < cost.weight_from) {
+                            com.costedTransfer = Number(cost.cost)
+                            console.log(111111111111)
+                            return false;
+                          }
+                        })
                       }
                     })
                     self.order.pickup = false
