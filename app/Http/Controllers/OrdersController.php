@@ -41,25 +41,28 @@ class OrdersController extends Controller
       $user = $request->user();
     } else {
       $request->validate([
-        'email' => 'required|unique:users',
+        'email' => 'required',
       ]);
+      $user = User::where('email', $request->email)->first();
+      if($user === null) {
 //      return $request->address;
-      $user = new User();
-      $user->email = $request->email;
-      $user->name = $request->address['contact_name'];
-      $address = new UserAddress();
-      $address->contact_phone = $request->address['phone'];
-      $address->country_id = $request->address['country'];
-      $address->city_id = $request->address['city'];
-      $address->currency_id = Currency::first()->id;
-      $address->street = $request->address['street'];
-      $pass = str_random(10);
-      $user->password = bcrypt($pass);
-      $user->save();
-      $user->address()->save($address);
-      $address->save();
+        $user = new User();
+        $user->email = $request->email;
+        $user->name = $request->address['contact_name'];
+        $address = new UserAddress();
+        $address->contact_phone = $request->address['phone'];
+        $address->country_id = $request->address['country'];
+        $address->city_id = $request->address['city'];
+        $address->currency_id = Currency::first()->id;
+        $address->street = $request->address['street'];
+        $pass = str_random(10);
+        $user->password = bcrypt($pass);
+        $user->save();
+        $user->address()->save($address);
+        $address->save();
+        $user->notify(new RegisterPassword($user->email, $pass));
+      }
       Auth::login($user);
-      $user->notify(new RegisterPassword($user->email, $pass));
     }
     $address = $request->address;
     $coupon = null;
