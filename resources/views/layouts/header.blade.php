@@ -242,7 +242,22 @@
             <div class="dropdown-menu border-0 m-0 rounded-0 p-0" style="left: auto; top: 50px; max-height: 300px" aria-labelledby="top-brands">
               <ul class="list-group rounded-0 d-flex p-2" id="top-drop-ul-brands" style="max-height: 300px; overflow-y:scroll; webkit-overflow-scrolling: touch;">
                 @foreach(App\Models\Category::whereHas('parents', function ($q) use ($cat) { $q->where('category_id', $cat->id); })->get() as $cat2)
-                  <li class="list-group-item rounded-0 border-0 p-2"><a href="{{ route('products.all', ['category' => $cat2->id]) }}" class="text-dark">{{ $cat2->name }}</a></li>
+                  <li class="list-group-item collapseLink rounded-0 border-0 p-2">
+                   @if (count($cat2->child) > 0)
+
+                      <a href="#" class="dropdown-toggle text-dark text-decoration">{{ $cat2->name }}</a>
+                      <div class="collapse rounded-0 border-black-fade" id="collapseExample{{$cat2->id}}">
+                        @foreach(App\Models\Category::whereHas('parents', function ($q) use ($cat2) { $q->where('category_id', $cat2->id); })->get() as $cat3)
+                          <a class="dropdown-item text-dark bg-transparent text-decoration p-1" href="{{ route('products.all', ['category' => $cat3->id]) }}"><u>{{ $cat3->name }}</u></a>
+                        @endforeach
+                      </div>
+
+                    @else
+                      <a href="{{ route('products.all', ['category' => $cat2->id]) }}" class="text-dark">{{ $cat2->name }}</a>
+                    @endif
+
+
+                  </li>
                 @endforeach
               </ul>
             </div>

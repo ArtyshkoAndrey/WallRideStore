@@ -85,6 +85,28 @@
   Menu
 */
 
+@-webkit-keyframes fadeIn {
+    from { opacity: 0; }
+      to { opacity: 1; }
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+      to { opacity: 1; }
+}
+
+
+.collapse {
+  display: none;
+}
+
+.collapseLink:hover {
+  > .collapse {
+     display: block;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+  }
+}
+
 @media (max-width: 768px) {
   #logo-leftbar {
     display: flex;
