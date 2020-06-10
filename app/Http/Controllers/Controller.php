@@ -68,102 +68,112 @@ class Controller extends BaseController
         }
       } else {
         if (isset($_COOKIE['city'])) {
-            if(!isset($_COOKIE['whooip']) || (int) $_COOKIE['whooip'] === 0) {
-                $curl = curl_init();
-                curl_setopt($curl, CURLOPT_URL, 'http://pro.ipwhois.io/json/' . \Request::ip() . '?key=gFoMKlSHuw23CWwm&lang=ru');
-                curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
-                curl_setopt($curl, CURLOPT_POST, 1);
-                curl_setopt($curl, CURLOPT_POSTFIELDS, []);
-                $out = curl_exec($curl);
-                curl_close($curl);
-                if(\App\Models\City::where('name',json_decode($out)->city)->first()) {
-                    $ct = \App\Models\City::where('name',json_decode($out)->city)->first();
-                    $ctr = Country::whereHas('cities', function ($q) use ($ct) {
-                        $q->where('cities.id', $ct->id);
-                    })->first();
-                } else if (\App\Models\City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first()) {
-                    $ct = \App\Models\City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first();
-                    $ctr = Country::whereHas('cities', function ($q) use ($ct) {
-                        $q->where('cities.id', $ct->id);
-                    })->first();
-                } else {
-                    $ct = \App\Models\City::find($_COOKIE['city']);
-                    $ctr = Country::whereHas('cities', function ($q) use ($ct) {
-                        $q->where('cities.id', $ct->id);
-                    })->first();
-                }
-                if ($ctr) {
-                    if ($ctr->name === 'Россия') {
-                      $currencyGlobal = Currency::find(2);
-                    } else if ($ctr->name === 'Казахстан') {
-                      $currencyGlobal = Currency::find(1);
-                    } else {
-                      $currencyGlobal = Currency::find(3);
-                    }
-                } else {
-                    $currencyGlobal = Currency::find(3);
-                }
+          if(!isset($_COOKIE['whooip']) || (int) $_COOKIE['whooip'] === 0) {
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_URL, 'http://pro.ipwhois.io/json/' . \Request::ip() . '?key=gFoMKlSHuw23CWwm&lang=ru');
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+            curl_setopt($curl, CURLOPT_POST, 1);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, []);
+            $out = curl_exec($curl);
+            curl_close($curl);
+            if(\App\Models\City::where('name',json_decode($out)->city)->first()) {
+              $ct = \App\Models\City::where('name',json_decode($out)->city)->first();
+              $ctr = Country::whereHas('cities', function ($q) use ($ct) {
+                $q->where('cities.id', $ct->id);
+              })->first();
+            } else if (\App\Models\City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first()) {
+              $ct = \App\Models\City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first();
+              $ctr = Country::whereHas('cities', function ($q) use ($ct) {
+                $q->where('cities.id', $ct->id);
+              })->first();
             } else {
-                $ct = \App\Models\City::find($_COOKIE['city']);
-                $ctr = Country::whereHas('cities', function ($q) use ($ct) {
-                    $q->where('cities.id', $ct->id);
-                })->first();
-                if ($ctr) {
-                    if ($ctr->name === 'Россия') {
-                      $currencyGlobal = Currency::find(2);
-                    } else if ($ctr->name === 'Казахстан') {
-                      $currencyGlobal = Currency::find(1);
-                    } else {
-                      $currencyGlobal = Currency::find(3);
-                    }
-                } else {
-                    $currencyGlobal = Currency::find(3);
-                }
+              $ct = \App\Models\City::find($_COOKIE['city']);
+              $ctr = Country::whereHas('cities', function ($q) use ($ct) {
+                $q->where('cities.id', $ct->id);
+              })->first();
             }
-        } else {
-            if(!isset($_COOKIE['whooip']) || (int)  $_COOKIE['whooip'] === 0) {
-                $curl = curl_init();
-                curl_setopt($curl, CURLOPT_URL, 'http://pro.ipwhois.io/json/' . \Request::ip() . '?key=gFoMKlSHuw23CWwm&lang=ru');
-                curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
-                curl_setopt($curl, CURLOPT_POST, 1);
-                curl_setopt($curl, CURLOPT_POSTFIELDS, []);
-                $out = curl_exec($curl);
-                curl_close($curl);
-                if(\App\Models\City::where('name',json_decode($out)->city)->first()) {
-                    $ct = \App\Models\City::where('name',json_decode($out)->city)->first();
-                    $ctr = Country::whereHas('cities', function ($q) use ($ct) {
-                        $q->where('cities.id', $ct->id);
-                    })->first();
-                } else if (\App\Models\City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first()) {
-                    $ct = \App\Models\City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first();
-                    $ctr = Country::whereHas('cities', function ($q) use ($ct) {
-                        $q->where('cities.id', $ct->id);
-                    })->first();
-                } else {
-                    $ct = \App\Models\City::find(isset($_COOKIE['city']) ? $_COOKIE['city'] : 1);
-                    $ctr = Country::whereHas('cities', function ($q) use ($ct) {
-                        $q->where('cities.id', $ct->id);
-                    })->first();
-                }
-                if ($ctr) {
-                    if ($ctr->name === 'Россия') {
-                      $currencyGlobal = Currency::find(2);
-                    } else if ($ctr->name === 'Казахстан') {
-                      $currencyGlobal = Currency::find(1);
-                    } else {
-                      $currencyGlobal = Currency::find(3);
-                    }
-                } else {
-                    $currencyGlobal = Currency::find(3);
-                }
-            } else {
+            if ($ctr) {
+              if ($ctr->name === 'Россия') {
+                $currencyGlobal = Currency::find(2);
+              } else if ($ctr->name === 'Казахстан') {
                 $currencyGlobal = Currency::find(1);
+              } else {
+                $currencyGlobal = Currency::find(3);
+              }
+            } else {
+              $currencyGlobal = Currency::find(3);
             }
+          } else {
+            $ct = \App\Models\City::find($_COOKIE['city']);
+            $ctr = Country::whereHas('cities', function ($q) use ($ct) {
+              $q->where('cities.id', $ct->id);
+            })->first();
+            if ($ctr) {
+              if ($ctr->name === 'Россия') {
+                $currencyGlobal = Currency::find(2);
+              } else if ($ctr->name === 'Казахстан') {
+                $currencyGlobal = Currency::find(1);
+              } else {
+                $currencyGlobal = Currency::find(3);
+              }
+            } else {
+              $currencyGlobal = Currency::find(3);
+            }
+          }
+        } else {
+          if(!isset($_COOKIE['whooip']) || (int)  $_COOKIE['whooip'] === 0) {
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_URL, 'http://pro.ipwhois.io/json/' . \Request::ip() . '?key=gFoMKlSHuw23CWwm&lang=ru');
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+            curl_setopt($curl, CURLOPT_POST, 1);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, []);
+            $out = curl_exec($curl);
+            curl_close($curl);
+            if(\App\Models\City::where('name',json_decode($out)->city)->first()) {
+              $ct = \App\Models\City::where('name',json_decode($out)->city)->first();
+              $ctr = Country::whereHas('cities', function ($q) use ($ct) {
+                $q->where('cities.id', $ct->id);
+              })->first();
+            } else if (\App\Models\City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first()) {
+              $ct = \App\Models\City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first();
+              $ctr = Country::whereHas('cities', function ($q) use ($ct) {
+                $q->where('cities.id', $ct->id);
+              })->first();
+            } else {
+              $ct = \App\Models\City::find(isset($_COOKIE['city']) ? $_COOKIE['city'] : 1);
+              $ctr = Country::whereHas('cities', function ($q) use ($ct) {
+                $q->where('cities.id', $ct->id);
+              })->first();
+            }
+            if ($ctr) {
+              if ($ctr->name === 'Россия') {
+                $currencyGlobal = Currency::find(2);
+              } else if ($ctr->name === 'Казахстан') {
+                $currencyGlobal = Currency::find(1);
+              } else {
+                $currencyGlobal = Currency::find(3);
+              }
+            } else {
+              $currencyGlobal = Currency::find(3);
+            }
+          } else {
+            $currencyGlobal = Currency::find(1);
+          }
 
         }
       }
       if(Carbon::parse($currencyGlobal->updated_at)->addDay() < Carbon::now()) {
-        $ar = simplexml_load_file('https://nationalbank.kz/rss/rates_all.xml');
+        $assertion_link = 'https://nationalbank.kz/rss/rates_all.xml';
+        $arrContextOptions=array(
+          "ssl"=>array(
+            "verify_peer"=>false,
+            "verify_peer_name"=>false
+          )
+        );
+        $assertion = file_get_contents($assertion_link, false, stream_context_create($arrContextOptions));
+        $ar = simplexml_load_string($assertion);
+
+        //$ar = simplexml_load_file('https://nationalbank.kz/rss/rates_all.xml');
         foreach($ar->channel->item as $item) {
           if ((string)$item->title === 'USD') {
             $currency = Currency::where('name', 'Американский доллар')->first();
