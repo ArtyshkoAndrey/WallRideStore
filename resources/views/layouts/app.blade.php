@@ -28,7 +28,7 @@
 <body class="d-flex flex-column h-100">
 <div id="app" amount="{{ $amount }}" class="{{ route_class() }}-page">
   @include('layouts.header')
-  <div id="blur-for-menu">
+  <div id="blur-for-menu" class="h-100">
     @yield('content')
   </div>
 </div>

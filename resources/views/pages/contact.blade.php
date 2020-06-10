@@ -12,8 +12,7 @@
         <h5>РК, Алматы Мкр. Самал-3,1 050059</h5>
         <h5 class="text-muted mt-3">Аль Фараби угол ул. Достык, слева от центрального входа в ТРЦ “Ритц Палас”</h5>
         <h1 class="font-weight-bold mt-4">Контактная информация</h1>
-        <h5 class="text-dark">+7 (727) 332-27-09</h5>
-        <h5 class="text-dark">+7 (727) 332-27-09</h5>
+        <h5 class="text-dark"><a href="tel:+7 (747) 556-23-83" class="text-reset">+7 (747) 556-23-83</a></h5>
         <div class="row">
           <div class="col-6 col-md-5 col-sm-6">
             <hr>
