@@ -11,14 +11,33 @@
         @endforeach
       </ul>
     </li>
-    <li class="sep dropdown" rel=1>
-      <a>Категории</a>
-      <ul class="dropdown-3 submenu-1">
-        @foreach(App\Models\Category::all() as $cat)
-          <li><a href="{{ route('products.all', ['category' => $cat->id]) }}">{{ $cat->name }}</a></li>
-        @endforeach
-      </ul>
-    </li>
+
+    @foreach(App\Models\Category::all() as $cat)
+      @if($cat->parents()->count() === 0)
+        <li class="sep dropdown" rel=1>
+          <a>{{ $cat->name }}</a>
+
+          <ul class="dropdown-2 submenu-1">
+            @foreach(App\Models\Category::whereHas('parents', function ($q) use ($cat) { $q->where('category_id', $cat->id); })->get() as $cat2)
+              <li>
+                @if (count($cat2->child) > 0)
+                  <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink{{$cat2->id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ $cat2->name }}</a>
+                  <div class="dropdown-menu p-0 rounded-0 border-black-fade" aria-labelledby="dropdownMenuLink{{$cat2->id}}">
+                    @foreach(App\Models\Category::whereHas('parents', function ($q) use ($cat2) { $q->where('category_id', $cat2->id); })->get() as $cat3)
+                      <a class="dropdown-item bg-transparent p-1" href="{{ route('products.all', ['category' => $cat3->id]) }}">{{ $cat3->name }}</a>
+                    @endforeach
+                  </div>
+                @else
+                  <a href="{{ route('products.all', ['category' => $cat2->id]) }}">{{ $cat2->name }}</a>
+                @endif
+              </li>
+            @endforeach
+          </ul>
+
+        </li>
+      @endif
+    @endforeach
+
     <li class="sep"><a href="{{ route('contact') }}">Контакты</a></li>
     <li class="sep"><a href="{{ route('about') }}">О нас</a></li>
     <li class="sep c-red"><a style="color: #F33C3C!important;" href="{{ route('products.allsale') }}">Sale</a></li>
@@ -213,24 +232,37 @@
 <nav class="navbar navbar-expand" style="position: fixed; margin-top: 50px; background: rgba(0, 0, 0, 0.58)!important; z-index: 99;width: 100vw">
   <div class="collapse navbar-collapse" id="navbarSupportedContent" style="width: 100vw;">
     <ul class="navbar-nav justify-content-center" style="width: 100vw;">
-      <li class="nav-item mr-0 mr-sm-4">
-        <a class="nav-link d-flex align-items-center" href="{{ route('root') }}">Главная</a>
-      </li>
-      <li class="nav-item mr-0 mr-sm-4">
-        <a class="nav-link d-flex align-items-center" href="{{ route('products.all') }}">Магазин</a>
-      </li>
-      <li class="nav-item mr-0 mr-sm-4">
-        <a class="nav-link d-flex align-items-center" style="cursor: pointer;" id="top-brands" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Бренды
-        </a>
-        <div class="dropdown-menu border-0 m-0 rounded-0 p-0" style="left: auto; top: 50px; max-height: 300px" aria-labelledby="top-brands">
-          <ul class="list-group rounded-0 d-flex p-2" id="top-drop-ul-brands" style="max-height: 300px; overflow-y:scroll; webkit-overflow-scrolling: touch;">
-            @foreach(App\Models\Brand::all() as $brand)
-              <li class="list-group-item rounded-0 border-0 p-2"><a href="{{ route('products.all', ['brand' => $brand->id]) }}" class="c-red">{{ $brand->name }}</a></li>
-            @endforeach
-          </ul>
-        </div>
-      </li>
+
+      @foreach(App\Models\Category::all() as $cat)
+        @if($cat->parents()->count() === 0)
+          <li class="nav-item mr-0 mr-sm-4">
+            <a class="nav-link d-flex align-items-center" style="cursor: pointer;" id="top-brands" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{ $cat->name }}
+            </a>
+            <div class="dropdown-menu border-0 m-0 rounded-0 p-0" style="left: auto; top: 50px; max-height: 300px" aria-labelledby="top-brands">
+              <ul class="list-group rounded-0 d-flex p-2" id="top-drop-ul-brands" style="max-height: 300px; overflow-y:scroll; webkit-overflow-scrolling: touch;">
+                @foreach(App\Models\Category::whereHas('parents', function ($q) use ($cat) { $q->where('category_id', $cat->id); })->get() as $cat2)
+                  <li class="list-group-item rounded-0 border-0 p-2"><a href="{{ route('products.all', ['category' => $cat2->id]) }}" class="text-dark">{{ $cat2->name }}</a></li>
+                @endforeach
+              </ul>
+            </div>
+          </li>
+        @endif
+      @endforeach
+
+        <li class="nav-item mr-0 mr-sm-4">
+          <a class="nav-link d-flex align-items-center" style="cursor: pointer;" id="top-brands" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Бренды
+          </a>
+          <div class="dropdown-menu border-0 m-0 rounded-0 p-0" style="left: auto; top: 50px; max-height: 300px" aria-labelledby="top-brands">
+            <ul class="list-group rounded-0 d-flex p-2" id="top-drop-ul-brands" style="max-height: 300px; overflow-y:scroll; webkit-overflow-scrolling: touch;">
+              @foreach(App\Models\Brand::all() as $brand)
+                <li class="list-group-item rounded-0 border-0 p-2"><a href="{{ route('products.all', ['brand' => $brand->id]) }}" class="text-dark">{{ $brand->name }}</a></li>
+              @endforeach
+            </ul>
+          </div>
+        </li>
+
       <li class="nav-item mr-0 mr-sm-4">
         <a class="nav-link d-flex align-items-center c-red" href="{{ route('products.allsale') }}">Sale</a>
       </li>

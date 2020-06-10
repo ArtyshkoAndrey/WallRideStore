@@ -17,15 +17,19 @@ Route::resource('news', 'NewsController')->except([
   'edit', 'create', 'destroy', 'create'
 ]);
 Route::get('/test', function () {
-  $curl = curl_init();
-  curl_setopt($curl, CURLOPT_URL, 'http://free.ipwhois.io/json/' . '212.154.252.19' . '?lang=ru');
-  curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
-  curl_setopt($curl, CURLOPT_POST, 1);
-  curl_setopt($curl, CURLOPT_POSTFIELDS, []);
-  $out = curl_exec($curl);
-  curl_close($curl);
-//  dd( City::where('name',json_decode($out)->city)->first());
-  dd( json_decode($out)->city);
+//  $curl = curl_init();
+//  curl_setopt($curl, CURLOPT_URL, 'http://free.ipwhois.io/json/' . '212.154.252.19' . '?lang=ru');
+//  curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+//  curl_setopt($curl, CURLOPT_POST, 1);
+//  curl_setopt($curl, CURLOPT_POSTFIELDS, []);
+//  $out = curl_exec($curl);
+//  curl_close($curl);
+////  dd( City::where('name',json_decode($out)->city)->first());
+//  dd( json_decode($out)->city);
+
+//  $test = \App\Models\Category::whereHas('child',function ($q) {
+//    $q->count()
+//  })->get();
 });
 
 Route::post('cart', 'CartController@add')->name('cart.add');

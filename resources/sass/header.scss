@@ -149,10 +149,16 @@
         ul.dropdown-1 {
           width: 100vw;
         }
+        ul.dropdown-2 {
+          width: 100vw;
+        }
         ul.dropdown-3 {
           width: 100vw;
         }
         ul.dropdown-1>li {
+          width: 100%;
+        }
+        ul.dropdown-2>li {
           width: 100%;
         }
         ul.dropdown-3>li {
@@ -273,11 +279,17 @@ nav#slide-menu {
       ul.dropdown-3 {
         width: calc(80vw - 290px);
       }
+      ul.dropdown-2 {
+        width: 25vw;
+      }
       ul.dropdown-1>li {
         width: 100%;
       }
       ul.dropdown-3>li {
         width: 32%;
+      }
+      ul.dropdown-2>li {
+        width: 50%;
       }
       >ul[class*="dropdown-"] {
         position: absolute;
@@ -635,18 +647,7 @@ nav.navbar {
           color: white!important;
           text-decoration: none;
         }
-        //&.sep {
-        //  padding-top: 10px;
-        //  padding-left: 10px;
-        //  padding-bottom: 10px;
-        //  border-bottom: 1px solid white;
-        //  &:hover {
-        //    border-bottom: 3px solid #F33C3C;
-        //    padding-bottom: 8px;
-        //  }
-        //}
         &.dropdown {
-          //Include this if you want pure CSS dropdown menus
           &.active{
             ul[class*="dropdown-"] {
               z-index: 103;
@@ -661,7 +662,13 @@ nav.navbar {
         ul.dropdown-3 {
           width: 100vw;
         }
+        ul.dropdown-2 {
+          width: 100vw;
+        }
         ul.dropdown-1>li {
+          width: 100%;
+        }
+        ul.dropdown-2>li {
           width: 100%;
         }
         ul.dropdown-3>li {

@@ -38,8 +38,10 @@
 <script src='{{ asset('public/js/jquery-ui.min.js') }}'></script>
 <script src="{{ asset('public/js/jquery.mask.min.js') }}"></script>
 <script type="text/javascript">
+
   window.onload = function() {
     if(!window.matchMedia('(max-width: 768px)').matches) {
+
       $("li.dropdown").hover(function () {
         var id = $(this).attr("rel");
         $(this).toggleClass("active");
@@ -47,12 +49,15 @@
         $('.close-submenu').hide();
         $(this).toggleClass("active");
       });
+
     } else {
+
       $("li.dropdown").click(function () {
         $('.close-submenu').show();
         $(this).toggleClass("active");
         window.setInterval(checkVisibleSubMenu, 100);
       });
+
     }
 
     $('#nav-icon3').click(function () {
