@@ -9,7 +9,14 @@
             </div>
           </div>
           <div class="col-7 py-4">
-            <h5>{{ news.title }}</h5>
+            <div class="row h-100 justify-content-between">
+              <div class="col-12">
+                <h5>{{ news.title }}</h5>
+              </div>
+              <div class="align-items-end col-12 d-flex">
+                <a :href="'/news/'+news.id" :key="2">Подробнее</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -65,9 +72,15 @@
     color: black;
     cursor: pointer;
     transition: 0.3s;
+    a {
+      color: black;
+    }
     &.active {
       background: #000000;
-      color: white;
+      color: white!important;
+      a {
+        color: white;
+      }
     }
     img {
       min-height: 100%;

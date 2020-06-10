@@ -65,9 +65,14 @@
       this.item = this.news[0];
     },
     mounted () {
-      this.adaptiveHeight();
-      window.addEventListener("resize", this.adaptiveHeight);
-
+      this.$nextTick(function() {
+        this.adaptiveHeight()
+        setTimeout(() => {
+          $('#mini-news').resize(this.adaptiveHeight.bind(this))
+          $('#mini-news').trigger('resize');
+          $(window).on("'load resize", this.adaptiveHeight.bind(this)).resize();
+        }, 1000)
+      })
       this.item = this.news[0];
       this.activated = new Array(this.news.length);
       this.activated.fill(false);
@@ -80,7 +85,8 @@
         this.activated[index] = true;
       },
       adaptiveHeight () {
-        let h = $('#mini-news').height();
+        let r = $('#mini-news').find( ".row" )[0];
+        let h = $(r).height();
         $('#big-news').height(h - this.rem(1));
       },
       rem (count) {
