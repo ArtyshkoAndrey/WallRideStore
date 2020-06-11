@@ -59,28 +59,36 @@
         <a class="nav-link d-flex align-items-center" id="city" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           @guest
             @if(!isset($_COOKIE['whooip']) || (int) $_COOKIE['whooip'] == 0)
-              <span class="d-none d-md-block">Вы находитесь в
-                <?php
-                $curl = curl_init();
-                curl_setopt($curl, CURLOPT_URL, 'http://pro.ipwhois.io/json/' . \Request::ip() . '?key=gFoMKlSHuw23CWwm&lang=ru');
-                curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
-                curl_setopt($curl, CURLOPT_POST, 1);
-                curl_setopt($curl, CURLOPT_POSTFIELDS, []);
-                $out = curl_exec($curl);
-                curl_close($curl);
-                if(App\Models\City::where('name',json_decode($out)->city)->first()) {
-                  echo App\Models\City::where('name',json_decode($out)->city)->first()->name;
-                  $ctr = App\Models\City::where('name',json_decode($out)->city)->first();
-                } else if (App\Models\City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first()) {
-                  echo App\Models\City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first()->name;
-                  $ctr = App\Models\City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first();
-                } else {
-                  $ctr = App\Models\City::first();
-                  echo $ctr->name;
-                }
-                ?>
-                ?
+              <span class="d-inline-flex">
+                <span class="d-none d-md-block">Вы находитесь в &nbsp;</span>
+                <span class="d-block d-md-none">Вы в &nbsp;</span>
+                <span>
+                  <?php
+                  $curl = curl_init();
+                  curl_setopt($curl, CURLOPT_URL, 'http://pro.ipwhois.io/json/' . \Request::ip() . '?key=gFoMKlSHuw23CWwm&lang=ru');
+                  curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+                  curl_setopt($curl, CURLOPT_POST, 1);
+                  curl_setopt($curl, CURLOPT_POSTFIELDS, []);
+                  $out = curl_exec($curl);
+                  curl_close($curl);
+                  if(App\Models\City::where('name',json_decode($out)->city)->first()) {
+                    echo App\Models\City::where('name',json_decode($out)->city)->first()->name;
+                    $ctr = App\Models\City::where('name',json_decode($out)->city)->first();
+                  } else if (App\Models\City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first()) {
+                    echo App\Models\City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first()->name;
+                    $ctr = App\Models\City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first();
+                  } else {
+                    $ctr = App\Models\City::first();
+                    echo $ctr->name;
+                  }
+                  ?>
+                  ?
+                </span>
                 <div class="d-none d-md-flex" style="background: #fff; position:absolute; padding: 10px 10px 10px 0px; border-radius: 0; margin-top: 47px; margin-left: 80px">
+                  <a href="/location/{{$ctr->id}}" class="btn btn-success rounded-0">Да</a>
+                  <a href="/location/{{App\Models\City::first()->id}}" class="btn btn-danger rounded-0 ml-3">Нет</a>
+                </div>
+                <div class="d-flex d-md-none" style="background: #fff; position:absolute; padding: 10px 10px 10px 10px; border-radius: 0; margin-top: 47px; margin-left: 0px">
                   <a href="/location/{{$ctr->id}}" class="btn btn-success rounded-0">Да</a>
                   <a href="/location/{{App\Models\City::first()->id}}" class="btn btn-danger rounded-0 ml-3">Нет</a>
                 </div>
