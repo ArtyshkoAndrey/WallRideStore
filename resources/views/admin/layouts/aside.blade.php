@@ -61,6 +61,15 @@
           </a>
         </li>
 
+        <li class="nav-item">
+          <a href="{{ route('telescope') }}" class="nav-link rounded-0">
+            <i class="fal fa-debug mr-3"></i>
+            <p>
+              Telescope
+            </p>
+          </a>
+        </li>
+
       </ul>
     </nav>
     <!-- /.sidebar-menu -->
