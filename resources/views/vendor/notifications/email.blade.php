@@ -43,20 +43,20 @@
 @if (! empty($salutation))
 {{ $salutation }}
 @else
-@lang('С уважением'),<br>{{ config('app.name') }}
+@lang('Regards'),<br>
+{{ config('app.name') }}
 @endif
 
 {{-- Subcopy --}}
 @isset($actionText)
-@component('mail::subcopy')
+@slot('subcopy')
 @lang(
-    "Если у вас возникли проблемы с нажатием \":actionText\" кнопки, скопируйте и вставьте URL ниже\n".
-    'в ваш веб-браузер: [:actionURL](:actionURL)',
+    "Если у вас возникли проблемы с нажатием \":actionText\" кнопку, скопируйте и вставьте URL ниже\n".
+    'в ваш веб-браузер:',
     [
         'actionText' => $actionText,
-        'actionURL' => $actionUrl,
     ]
-)
-@endcomponent
+) <span class="break-all">[{{ $displayableActionUrl }}]({{ $actionUrl }})</span>
+@endslot
 @endisset
 @endcomponent

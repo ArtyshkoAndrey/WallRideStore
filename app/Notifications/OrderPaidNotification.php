@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use App\Models\Order;
 
-class OrderPaidNotification extends Notification {
+class OrderPaidNotification extends Notification implements ShouldQueue {
   use Queueable;
 
   protected $order;

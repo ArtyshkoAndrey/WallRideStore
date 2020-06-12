@@ -14,12 +14,11 @@ use App\Models\Skus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
 
 class ProductsController extends Controller {
 
   public function search (Request $request) {
-    $name = Input::get('name', '');
+    $name =$request->input('name', '');
     $prodCat = Product::with('skus', 'photos')->whereHas('categories', function($q) use($name) {
       $q->where('categories.name', 'like', '%'.$name.'%');
     })->get()->toArray();
