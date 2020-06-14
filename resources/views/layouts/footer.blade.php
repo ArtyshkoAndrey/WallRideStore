@@ -9,7 +9,7 @@
         </div>
         <div class="row">
           <div class="col-12">
-            <a href="mailto:info@wallridestore.kz" target="_blank">info@wallridestore.com</a>
+            <a href="mailto:info@wallridestore.com" target="_blank">info@wallridestore.com</a>
           </div>
         </div>
         <div class="row d-md-block d-none mt-3">
@@ -43,7 +43,7 @@
     </div>
     <div class="row d-none text-white d-md-block">
       <div class="col-12 text-center">
-        <p class="small">Powered by <a href="vk.com/fulliton" class="text-danger" target="_blank">Fulliton</a></p>
+        <p class="small">Powered by <a href="https://www.vk.com/fulliton" class="text-danger" target="_blank">Fulliton</a></p>
       </div>
     </div>
   </div>
@@ -51,7 +51,7 @@
     <div class="row">
       <div class="col-12 mt-3 mt-md-0 text-center text-white">
         <p>Все права защищены (с) Wallride store 2020</p>
-        <p class="small">Powered by <a href="vk.com/fulliton" class="text-danger" target="_blank">Fulliton</a></p>
+        <p class="small">Powered by <a href="https://www.vk.com/fulliton" class="text-danger" target="_blank">Fulliton</a></p>
       </div>
     </div>
   </div>

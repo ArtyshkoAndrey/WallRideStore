@@ -40,6 +40,25 @@
 <script type="text/javascript">
 
   window.onload = function() {
+    // $('ul.navbar-nav > li > .dropdown-menu a').on('click', function (event) {
+    //   $(this).parent().parent().parent().toggleClass('show');
+    // });
+    // $('ul.navbar-nav > li').on('click', function (event) {
+    //   $(this).children('.dropdown-menu').toggleClass('show');
+    // });
+    // $('body').on('click', function (e) {
+    //   if (!$('ul.navbar-nav > li > .dropdown-menu').is(e.target)
+    //     && $('ul.navbar-nav > li > .dropdown-menu').has(e.target).length === 0
+    //     && $('.show').has(e.target).length === 0
+    //   ) {
+    //     $('ul.navbar-nav > li > .dropdown-menu').removeClass('show');
+    //   }
+    // });
+
+    $(document).on('click', 'ul.navbar-nav > li > .dropdown-menu', function (e) {
+      e.stopPropagation();
+    });
+
     if(!window.matchMedia('(max-width: 768px)').matches) {
 
       $("li.dropdown").hover(function () {

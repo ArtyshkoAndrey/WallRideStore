@@ -391,7 +391,9 @@
               swal('Не заполнены все данные', '', 'error');
             }
           } else if (this.step === 2) {
-            if (this.order.pickup === false) { // не самовывоз
+            if (!$('#privacy')[0].checked) {
+              swal('Необходимо принять условия политики конфиденциальности', '', 'error');
+            } else if (this.order.pickup === false) { // не самовывоз
               if (this.order.street !== '' && this.order.payment_method !== null && this.order.city !== null && this.order.country !== null) { // данные для доставки
                 if (this.order.payment_method === 'card') { // оплата картой
                   if (this.order.express_company === null) { // не выбрана компания доставки
