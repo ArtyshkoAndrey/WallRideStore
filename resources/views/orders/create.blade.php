@@ -28,14 +28,14 @@
               <h4 class="font-weight-bold">Адрессные данные</h4>
               <div class="mt-2">
                 <select name="country" id="country" v-model="order.country" class="rounded-0 mt-2 form-control" placeholder="Страна">
-                  @if (auth()->user() ? auth()->user()->address !== null : $_COOKIE['city'] !== null)
+                  @if (auth()->user() ? auth()->user()->address !== null : isset($_COOKIE['city']))
                     <option value="{{ auth()->user() ? auth()->user()->address->country_id : App\Models\City::find($_COOKIE['city'])->country->id }}" selected>{{ auth()->user() ? auth()->user()->address->country->name : App\Models\City::find($_COOKIE['city'])->country->name }}</option>
                   @endif
                 </select>
               </div>
               <div class="mt-2">
                 <select name="city" id="city1" class="rounded-0 mt-2 form-control" v-model="order.city" placeholder="Город">
-                  @if (auth()->user() ? auth()->user()->address !== null : $_COOKIE['city'] !== null)
+                  @if (auth()->user() ? auth()->user()->address !== null : isset($_COOKIE['city']))
                     <option value="{{ auth()->user() ?  auth()->user()->address->city_id : $_COOKIE['city'] }}" selected>{{ auth()->user() ? auth()->user()->address->city->name : App\Models\City::find($_COOKIE['city'])->name }}</option>
                   @endif
                 </select>

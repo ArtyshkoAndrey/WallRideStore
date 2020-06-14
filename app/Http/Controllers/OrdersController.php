@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\OrderPaid;
 use App\Exceptions\CouponCodeUnavailableException;
-use App\Exceptions\InvalidRequestException;
-use App\Http\Requests\ApplyRefundRequest;
 use App\Http\Requests\OrderRequest;
-use App\Http\Requests\SendReviewRequest;
 use App\Models\Admin;
 use App\Models\City;
 use App\Models\CouponCode;
@@ -19,10 +16,10 @@ use App\Models\ProductSku;
 use App\Models\User;
 use App\Models\UserAddress;
 use App\Models\Order;
-use App\Notifications\OrderPaidNotification;
 use App\Notifications\RegisterPaid;
 use App\Notifications\RegisterPassword;
 use Carbon\Carbon;
+use ErrorException;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
 use Illuminate\Support\Facades\Auth;
@@ -193,7 +190,11 @@ class OrdersController extends Controller
       if(Auth::check()) {
         $qq->where('cities.id', isset(Auth()->user()->address->city_id) ? Auth()->user()->address->city_id : $_COOKIE['city']);
       } else {
-        $qq->where('cities.id', $_COOKIE['city']);
+        try {
+          $qq->where('cities.id', $_COOKIE['city']);
+        } catch(ErrorException $e) {
+          $qq->where('cities.id', 1);
+        }
       }
     })->get();
     $express_companies = $express_companies->toArray();
@@ -224,7 +225,7 @@ class OrdersController extends Controller
       } else {
         $ids = [];
       }
-      $city = City::find($_COOKIE['city']);
+      $city = City::find(isset($_COOKIE['city']) ? $_COOKIE['city'] : 1);
       $cartItems = [];
       $priceAmount = 0;
       foreach ($ids as $k => $id) {
