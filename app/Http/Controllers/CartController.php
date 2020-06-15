@@ -149,7 +149,7 @@ class CartController extends Controller
       $priceAmount = 0;
       $amount = 0;
       foreach ($ids as $k => $id) {
-        $id = (int)$id;
+        $id = (int) $id;
         $ch = false;
         $item = [];
         $prs = ProductSku::with('product')->where('id', $id)->first();
@@ -167,9 +167,13 @@ class CartController extends Controller
             $item['amount'] = 1;
             $item['id'] = $id;
             $item['product_sku'] = $prs;
-            Log::debug(($prs->product->on_sale ? 'Включена' : 'Выключена') . ' скидка для товара ' . $prs->product->id);
-            $priceAmount += $prs->product->on_sale ? $prs->product->price_sale : $prs->product->price;
-            array_push($cartItems, $item);
+            if (isset($prs->product)) {
+              Log::debug(($prs->product->on_sale ? 'Включена' : 'Выключена') . ' скидка для товара ' . $prs->product->id);
+              $priceAmount += $prs->product->on_sale ? $prs->product->price_sale : $prs->product->price;
+              array_push($cartItems, $item);
+            } else {
+              unset($ids[$k]);
+            }
           } else {
             unset($ids[$k]);
           }
