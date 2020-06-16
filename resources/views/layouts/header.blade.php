@@ -6,7 +6,7 @@
     <li class="sep dropdown" rel=1>
       <a>Бренды</a>
       <ul class="dropdown-3 submenu-1">
-        @foreach(App\Models\Brand::all() as $brand)
+        @foreach(App\Models\Brand::orderBy('name', 'ASC')->get() as $brand)
           <li><a href="{{ route('products.all', ['brand' => $brand->id]) }}">{{ $brand->name }}</a></li>
         @endforeach
       </ul>
@@ -279,7 +279,7 @@
           </a>
           <div class="dropdown-menu border-0 m-0 rounded-0 p-0" style="left: auto; top: 50px; max-height: 300px" aria-labelledby="top-brands">
             <ul class="list-group rounded-0 d-flex p-2" id="top-drop-ul-brands" style="max-height: 300px; overflow-y:scroll; webkit-overflow-scrolling: touch;">
-              @foreach(App\Models\Brand::all() as $brand)
+              @foreach(App\Models\Brand::orderBy('name', 'ASC')->get() as $brand)
                 <li class="list-group-item rounded-0 border-0 p-2"><a href="{{ route('products.all', ['brand' => $brand->id]) }}" class="text-dark">{{ $brand->name }}</a></li>
               @endforeach
             </ul>
