@@ -105,7 +105,7 @@ line-height: 24px;" v-model="count" readonly disabled>
       }
     },
     mounted() {
-      console.log(this.item);
+      // console.log(this.item);
     },
     methods: {
       addCounter() {
@@ -116,15 +116,19 @@ line-height: 24px;" v-model="count" readonly disabled>
       },
       addNumberSize() {
         if (this.numberSize < this.item.skus.length - 1) {
-          this.numberSize++;
-          this.count = 0
+          this.numberSize++
+        } else {
+          this.numberSize = 0
         }
+        this.count = 0
       },
       removeNumberSize() {
         if (this.numberSize > 0) {
           this.numberSize--;
-          this.count = 0
+        } else {
+          this.numberSize = this.item.skus.length - 1
         }
+        this.count = 0
       },
       favored () {
         // нициируйте запрос post ajax. URL запроса генерируется функцией backend route ().
