@@ -1,5 +1,6 @@
 <script>
   import 'jquery-zoom'
+  import Intense from '../Intense';
   export default {
     name: "product-show",
     data () {
@@ -37,7 +38,7 @@
         $('.slider-for').slick({
           slidesToShow: 1,
           slidesToScroll: 1,
-          arrows: false,
+          arrows: true,
           fade: true,
           dots: true,
           draggable: false,
@@ -46,6 +47,10 @@
           adaptiveHeight: true,
         });
         $('.ex1').zoom();
+        setTimeout(() => {
+          var elements = document.querySelectorAll( '.demo-image' );
+          Intense( elements );
+        }, 1000)
       })
     },
     computed: {

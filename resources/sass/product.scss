@@ -6,3 +6,13 @@
   display: flex !important;
   align-items: stretch !important;
 }
+
+.slick-prev:before, .slick-next:before {
+  color: black!important;
+}
+
+.demo-image {
+  cursor: url("../img/plus_cursor.png") 12.5 12.5, auto;
+  background-size: cover;
+  background-position: 50% 50%;
+}
