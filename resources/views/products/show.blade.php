@@ -10,7 +10,9 @@
           @if ($product->photos)
             @forelse($product->photos as $ph)
               <div class="slider-for__item">
-                <img src="{{ asset('storage/products/'.$ph->name) }}" alt="{{ $ph->name }}" data-image="{{ asset('storage/products/'.$ph->name) }}" data-title="{{ucwords(strtolower($product->title))}}" data-caption="{{ $product->brands()->first()->name }}" class="demo-image">
+                <img src="{{ asset('storage/products/'.$ph->name) }}" alt="{{ $ph->name }}" data-image="{{ asset('storage/products/'.$ph->name) }}" data-title="{{ucwords(strtolower($product->title))}}" data-caption="{{
+                  $product->brands()->count() > 0 && $product->categories()->count() > 0 ? $product->brands()->first()->name . ' - ' . $product->categories()->first()->name : ''
+                }}" class="demo-image">
               </div>
             @empty
               <div class="slider-for__item ex1">
@@ -28,7 +30,9 @@
           @if ($product->photos)
             @forelse($product->photos as $ph)
               <div class="slider-for__item">
-                <img src="{{ asset('storage/products/'.$ph->name) }}" alt="{{ $ph->name }}" data-image="{{ asset('storage/products/'.$ph->name) }}" data-title="{{ucwords(strtolower($product->title))}}" data-caption="{{ $product->brands()->first()->name }}" class="demo-image"/>
+                <img src="{{ asset('storage/products/'.$ph->name) }}" alt="{{ $ph->name }}" data-image="{{ asset('storage/products/'.$ph->name) }}" data-title="{{ucwords(strtolower($product->title))}}" data-caption="{{
+                  $product->brands()->count() > 0 && $product->categories()->count() > 0 ? $product->brands()->first()->name . ' - ' . $product->categories()->first()->name : ''
+                }}" class="demo-image"/>
               </div>
             @empty
               <div class="slider-for__item">
