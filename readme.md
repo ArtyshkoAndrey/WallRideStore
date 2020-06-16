@@ -10,7 +10,7 @@
 
 See real examples:
 
-* <http://www.SKORO.TEST>
+* <https://wallridestore.com/products>
 
 ## Table of contents
 
