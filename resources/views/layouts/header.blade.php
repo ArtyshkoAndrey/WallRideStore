@@ -1,50 +1,79 @@
-<nav id="slide-menu">
-  <ul>
-    <li class="close-submenu" style="display: none;" onclick="closeSubMenu()"> <i class="fas fa-long-arrow-alt-left"></i> Назад</li>
-    <li class="sep"><a href="{{ route('root') }}">Главная</a></li>
-    <li class="sep"><a href="{{ route('products.all') }}">Магазин</a></li>
-    <li class="sep dropdown" rel=1>
-      <a>Бренды</a>
-      <ul class="dropdown-3 submenu-1">
-        @foreach(App\Models\Brand::orderBy('name', 'ASC')->get() as $brand)
-          <li><a href="{{ route('products.all', ['brand' => $brand->id]) }}">{{ $brand->name }}</a></li>
-        @endforeach
-      </ul>
-    </li>
+<div class="left-menu" id="slide-menu">
+  <div class="accordion">
+
+    <div class="section">
+      <label><span><a href="{{ route('root') }}">Главная</a></span></label>
+      <div class="content"></div>
+    </div>
+
+    <div class="section">
+      <input type="radio" name="accordion-1" id="section-1"/>
+      <label for="section-1"><span>Бренды</span><span class="caret fa fa-angle-right"></span></label>
+      <div class="content">
+        <ul>
+          @foreach(App\Models\Brand::orderBy('name', 'ASC')->get() as $brand)
+            <li><span><a href="{{ route('products.all', ['brand' => $brand->id]) }}">{{ $brand->name }}</a></span></li>
+          @endforeach
+        </ul>
+      </div>
+    </div>
 
     @foreach(App\Models\Category::all() as $cat)
       @if($cat->parents()->count() === 0)
-        <li class="sep dropdown" rel=1>
-          <a>{{ $cat->name }}</a>
 
-          <ul class="dropdown-2 submenu-1">
-            @foreach(App\Models\Category::whereHas('parents', function ($q) use ($cat) { $q->where('category_id', $cat->id); })->orderBy('name', 'ASC')->get() as $cat2)
-              <li>
+        <div class="section">
+          <input type="radio" name="accordion-1" id="section-cat-{{$cat->id}}"/>
+          <label for="section-cat-{{$cat->id}}"><span>{{ $cat->name }}</span><span class="caret fa fa-angle-right"></span></label>
+          <div class="content">
+            <ul>
+              @foreach(App\Models\Category::whereHas('parents', function ($q) use ($cat) { $q->where('category_id', $cat->id); })->orderBy('name', 'ASC')->get() as $cat2)
                 @if (count($cat2->child) > 0)
-                  <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink{{$cat2->id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ $cat2->name }}</a>
-                  <div class="dropdown-menu p-0 rounded-0 border-black-fade" aria-labelledby="dropdownMenuLink{{$cat2->id}}">
-                    @foreach(App\Models\Category::whereHas('parents', function ($q) use ($cat2) { $q->where('category_id', $cat2->id); })->orderBy('name', 'ASC')->get() as $cat3)
-                      <a class="dropdown-item bg-transparent p-1" href="{{ route('products.all', ['category' => $cat3->id]) }}">{{ $cat3->name }}</a>
-                    @endforeach
-                  </div>
-                @else
-                  <a href="{{ route('products.all', ['category' => $cat2->id]) }}">{{ $cat2->name }}</a>
-                @endif
-              </li>
-            @endforeach
-          </ul>
 
-        </li>
+                  <div class="section">
+                    <input type="radio" name="accordion-2" id="section-cat2-{{$cat2->id}}"/>
+                    <label for="section-cat2-{{$cat2->id}}"><span>{{ $cat2->name }}</span><span class="caret fa fa-angle-right"></span></label>
+                    <div class="content">
+                      <ul>
+                        @foreach(App\Models\Category::whereHas('parents', function ($q) use ($cat2) { $q->where('category_id', $cat2->id); })->orderBy('name', 'ASC')->get() as $cat3)
+                          <li><span><a href="{{ route('products.all', ['category' => $cat3->id]) }}">{{ $cat3->name }}</a></span></li>
+                        @endforeach
+                      </ul>
+                    </div>
+                  </div>
+
+                @else
+                  <li><span><a href="{{ route('products.all', ['category' => $cat2->id]) }}">{{ $cat2->name }}</a></span></li>
+                @endif
+              @endforeach
+            </ul>
+          </div>
+        </div>
+
       @endif
     @endforeach
 
-    <li class="sep"><a href="{{ route('contact') }}">Контакты</a></li>
-    <li class="sep"><a href="{{ route('about') }}">О нас</a></li>
-    <li class="sep c-red"><a style="color: #F33C3C!important;" href="{{ route('products.allsale') }}">Sale</a></li>
-    <li class="sep"><a href="{{ route('products.favorites') }}">Избранное</a></li>
-    <li style="width: 100vw; margin-left: -20px" id="logo-leftbar"><img src="{{ asset('public/images/logo.png') }}" class="img-fluid mr-auto ml-auto mt-5 position-absolute" style="width: 20vw;bottom: 35px; left: calc(50% - 10vw);" alt=""></li>
-  </ul>
-</nav>
+    <div class="section">
+      <label><span><a href="{{ route('contact') }}">Контакты</a></span></label>
+      <div class="content"></div>
+    </div>
+
+    <div class="section">
+      <label><span><a href="{{ route('about') }}">О нас</a></span></label>
+      <div class="content"></div>
+    </div>
+
+    <div class="section">
+      <label><span><a class="c-red" href="{{ route('products.allsale') }}">Sale</a></span></label>
+      <div class="content"></div>
+    </div>
+
+    <div class="section">
+      <label><span><a href="{{ route('products.favorites') }}">Избранное</a></span></label>
+      <div class="content"></div>
+    </div>
+  </div>
+</div>
+
 <!-- Content panel -->
 <nav class="navbar navbar-expand">
   <div id="nav-icon3">

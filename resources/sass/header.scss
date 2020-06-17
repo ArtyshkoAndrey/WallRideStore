@@ -17,10 +17,6 @@
   }
 }
 
-#logo-leftbar {
-  display: none;
-}
-
 #nav-icon3 span{
   display: block;
   position: absolute;
@@ -108,9 +104,6 @@
 }
 
 @media (max-width: 768px) {
-  #logo-leftbar {
-    display: flex;
-  }
   nav.navbar ul.navbar-nav .dropdown-menu {
     width: 100vw!important;
     height: 100vh!important;
@@ -133,233 +126,225 @@
       color: black!important;
     }
   }
-  nav#slide-menu {
-     > ul {
-      display: flex;
-      flex-direction: column;
-      margin-left: 20px;
-      padding: 0;
-      list-style: none;
-      opacity: 0.5;
-      -moz-transition: all 300ms;
-      -webkit-transition: all 300ms;
-      transition: all 300ms;
-      > li {
-        font-size: 14px;
-        color: white;
-        cursor: pointer;
-        //&.sep {
-        //  padding-top: 10px;
-        //  padding-left: 10px;
-        //  padding-bottom: 10px;
-        //  border-bottom: 1px solid white;
-        //  &:hover {
-        //    border-bottom: 3px solid #F33C3C;
-        //    padding-bottom: 8px;
-        //  }
-        //}
-        &.dropdown {
-          //Include this if you want pure CSS dropdown menus
-          &.active{
-            ul[class*="dropdown-"] {
-              z-index: 103;
-              visibility: visible;
-              opacity: 1;
-            }
-          }
-        }
-        ul.dropdown-1 {
-          width: 100vw;
-        }
-        ul.dropdown-2 {
-          width: 100vw;
-        }
-        ul.dropdown-3 {
-          width: 100vw;
-        }
-        ul.dropdown-1>li {
-          width: 100%;
-        }
-        ul.dropdown-2>li {
-          width: 100%;
-        }
-        ul.dropdown-3>li {
-          width: 100%;
-        }
-        ul[class*="dropdown-"] {
-          overflow-y: scroll;
-          height: calc(100vh - 90px)!important;
-          position: fixed;
-          left: 0;
-          top: 90px;
-          margin-top: 0 !important;
-          background: white;
-          visibility: hidden;
-          float: none;
-          opacity: 0;
-          list-style-type: none;
-          -moz-transition: all 300ms;
-          -webkit-transition: all 300ms;
-          transition: all 300ms;
-          &::before, &::after {
-            content: '';
-            position: absolute;
-            left: -30px;
-            top: 10px;
-            border: 15px solid transparent;
-            border-right: 15px solid white;
-          }
-          li {
-            float: left;
-            z-index: 104;
-            &.close-submenu {
-              color: red;
-              font-size: 14px;
-              margin: 10px 0;
-              -moz-transition: all 300ms;
-              -webkit-transition: all 300ms;
-              transition: all 300ms;
-            }
-            a {
-              font-size: 14px;
-              font-weight: 500;
-              padding-top: 10px;
-              padding-bottom: 10px;
-              color: black;
-              text-decoration: none;
-              &:hover {
-                color: red;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
 }
 
-nav#slide-menu {
+#slide-menu {
   z-index: 100;
   background-color: black;
   position: fixed;
-  top: 49px;
   left: -290px;
-  bottom: 0;
   display: block;
   float: left;
   width: 290px;
   height: calc(100vh - 49px);
+}
 
-  -moz-transition: all 300ms;
-  -webkit-transition: all 300ms;
-  transition: all 300ms;
+.left-menu {
+  -webkit-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  -ms-transition: all 0.4s;
+  transition: all 0.4s;
+  width: 290px;
+  top: 49px;
+  bottom: 0;
+  overflow: auto;
+}
 
-  > ul {
-    display: block;
-    margin-left: 20px;
-    padding: 0;
-    list-style: none;
-    opacity: 0.5;
+.accordion {
+  color: #FFF;
+  width: 100%;
+  padding-left: 20px;
+}
+.accordion .section {
+  width: 100%;
+}
+.accordion .section input[type='radio'] {
+  display: none;
+}
+.accordion .section .content input[type='radio']:checked + label {
+  background: white;
+  color: red;
+  border-bottom: 2px solid red;
+}
 
-    -moz-transition: all 300ms;
-    -webkit-transition: all 300ms;
-    transition: all 300ms;
+.accordion .section .content ul li {
+  border-bottom: 2px solid white;
+  color: black;
+  transition: .3s;
+}
 
-    > li {
-      font-size: 14px;
-      color: white!important;
-      cursor: pointer;
-      &.sep {
-        > a {
-          color: white!important;
-          text-decoration: none;
-          padding-top: 10px;
-          padding-left: 10px;
-          padding-bottom: 10px;
-          border-bottom: 1px solid white;
-          display: block;
-          &:hover {
-            border-bottom: 3px solid #F33C3C;
-            padding-bottom: 8px;
-          }
-        }
-      }
-      &.dropdown {
-        &.active{
-          ul[class*="dropdown-"] {
-            -moz-transition: all 300ms;
-            -webkit-transition: all 300ms;
-            transition: all 300ms;
-            visibility: visible;
-            opacity: 1;
-          }
-        }
-      }
-      ul.dropdown-1 {
-        width: 25vw;
-      }
-      ul.dropdown-3 {
-        width: calc(80vw - 290px);
-      }
-      ul.dropdown-2 {
-        width: 25vw;
-      }
-      ul.dropdown-1>li {
-        width: 100%;
-      }
-      ul.dropdown-3>li {
-        width: 32%;
-      }
-      ul.dropdown-2>li {
-        width: 50%;
-      }
-      >ul[class*="dropdown-"] {
-        position: absolute;
-        padding: 20px;
-        left: 270px;
-        margin-top: -50px;
-        background: white;
-        visibility: hidden;
-        float: left;
-        opacity: 0;
-        list-style-type:none;
-        &::before, &::after {
-          content: '';
-          position: absolute;
-          left: -30px;
-          top: 10px;
-          border: 15px solid transparent;
-          border-right: 15px solid white;
-        }
-        li {
-          float: left;
-        }
-        a {
-          font-size: 14px;
-          font-weight: 500;
-          padding-top: 10px;
-          padding-bottom: 10px;
-          color: black;
-          text-decoration: none;
-          &:hover {
-            color: red;
-          }
-        }
-      }
-    }
+.accordion .section .content ul li:hover {
+  border-bottom: 2px solid red;
+  color: red;
+}
+
+.accordion .section input[type='radio']:checked + label .caret {
+  transform: rotate(90deg);
+  -webkit-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  -ms-transition: all 0.4s;
+  transition: all 0.4s;
+}
+.accordion .section input[type='radio']:checked ~ .content {
+  max-height: 300px;
+  opacity: 1;
+  z-index: 10;
+}
+.accordion .section input[type='radio']:checked ~ .content.hidden {
+  max-height: 0;
+}
+.accordion .section label {
+  position: relative;
+  color: white;
+  border-bottom: 2px solid white;
+  cursor: pointer;
+  padding: 10px;
+  white-space: nowrap;
+  display: table;
+  background: black;
+  width: 100%;
+  overflow: hidden;
+  -webkit-transition: background 0.3s ease-in-out;
+  -moz-transition: background 0.3s ease-in-out;
+  -ms-transition: background 0.3s ease-in-out;
+  transition: background 0.3s ease-in-out;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+
+  margin-bottom: 0!important;
+}
+.accordion .section .content label {
+  background: white;
+  color: black;
+  transition: .3s;
+  margin-bottom: 0;
+}
+//.accordion .section label:before {
+//  content: " ";
+//  width: 100%;
+//  position: absolute;
+//  left: 0;
+//  top: 0;
+//  height: 1px;
+//}
+.accordion .section label:hover {
+  color: red;
+  border-bottom: 2px solid red;
+}
+.accordion .section label span {
+  -webkit-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  -ms-transition: all 0.4s;
+  transition: all 0.4s;
+  overflow: hidden;
+  display: block;
+}
+.accordion .section .content {
+  max-height: 0;
+  -webkit-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  -ms-transition: all 0.4s;
+  transition: all 0.4s;
+  opacity: 0;
+  position: relative;
+  overflow-y: auto;
+  background-color: white;
+  color:black;
+}
+
+.accordion .section .content::-webkit-scrollbar {
+  width: 10px;
+  background: rgba(255,255,255,.7);
+  border-radius: 16px;
+}
+.accordion .section .content::-webkit-scrollbar-thumb {
+  border-radius: 16px;
+  background-color: #000;
+}
+.accordion .section .content::-webkit-scrollbar-track {
+  border-radius: 16px;
+  width: 3px;
+}
+.caret {
+  position: absolute;
+  right: 15px;
+  top: 13px;
+  -webkit-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  -ms-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.left-menu a {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+}
+.left-menu::-webkit-scrollbar {
+  width: 10px;
+  background: rgba(255,255,255,.7);
+  border-radius: 16px;
+}
+.left-menu::-webkit-scrollbar-thumb {
+  border-radius: 16px;
+  background-color: #000;
+}
+.left-menu::-webkit-scrollbar-track {
+  border-radius: 16px;
+  width: 3px;
+}
+
+.accordion {
+  font-size: 16px;
+}
+.accordion .section input[type='checkbox'] {
+  display: none;
+}
+.accordion .section input[type='checkbox']:checked ~ .content {
+  padding: 15px;
+}
+
+.left-menu ul {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.left-menu ul li {
+  padding: 10px;
+  border-bottom: 2px solid white
+}
+.left-menu ul li i {
+  font-size: 13px;
+  width: 15px;
+  margin-right: 15px;
+}
+.left-menu ul li:hover {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .left-menu {
+    width: 100vw;
+    left: -100vw;
   }
 }
+
 .c-red {
   color: $red!important;
 }
 
-body.menu-active nav#slide-menu {
-  left: 0;
-}
-
-body.menu-active nav#slide-menu ul {
-  left: 0;
-  opacity: 1;
+body.menu-active #slide-menu {
+  left: 0!important;
 }
 
 nav.navbar {
@@ -637,116 +622,6 @@ nav.navbar {
   body.menu-active {
     overflow: hidden;
   }
-  nav#slide-menu {
-    z-index: 100;
-    background-color: black;
-    position: fixed;
-    top: 49px;
-    left: -100vw;
-    bottom: 0;
-    display: block;
-    float: left;
-    width: 100vw;
-    height: calc(100vh - 49px);
-    -moz-transition: all 300ms;
-    -webkit-transition: all 300ms;
-    transition: all 300ms;
-
-    > ul {
-      display: flex;
-      flex-direction: column;
-      margin-left: 20px;
-      padding: 0;
-      list-style: none;
-      opacity: 0.5;
-      -moz-transition: all 300ms;
-      -webkit-transition: all 300ms;
-      transition: all 300ms;
-      > li {
-        font-size: 14px;
-        color: white!important;
-        cursor: pointer;
-        > a {
-          color: white!important;
-          text-decoration: none;
-        }
-        &.dropdown {
-          &.active{
-            ul[class*="dropdown-"] {
-              z-index: 103;
-              visibility: visible;
-              opacity: 1;
-            }
-          }
-        }
-        ul.dropdown-1 {
-          width: 100vw;
-        }
-        ul.dropdown-3 {
-          width: 100vw;
-        }
-        ul.dropdown-2 {
-          width: 100vw;
-        }
-        ul.dropdown-1>li {
-          width: 100%;
-        }
-        ul.dropdown-2>li {
-          width: 100%;
-        }
-        ul.dropdown-3>li {
-          width: 100%;
-        }
-        ul[class*="dropdown-"] {
-          overflow-y: scroll;
-          height: calc(100vh - 90px)!important;
-          position: fixed;
-          left: 0;
-          top: 90px;
-          margin-top: 0 !important;
-          background: white;
-          visibility: hidden;
-          float: none;
-          opacity: 0;
-          list-style-type: none;
-          -moz-transition: all 300ms;
-          -webkit-transition: all 300ms;
-          transition: all 300ms;
-          &::before, &::after {
-            content: '';
-            position: absolute;
-            left: -30px;
-            top: 10px;
-            border: 15px solid transparent;
-            border-right: 15px solid white;
-          }
-          li {
-            float: left;
-            z-index: 104;
-            &.close-submenu {
-              color: red;
-              font-size: 14px;
-              margin: 10px 0;
-              -moz-transition: all 300ms;
-              -webkit-transition: all 300ms;
-              transition: all 300ms;
-            }
-            a {
-              font-size: 14px;
-              font-weight: 500;
-              padding-top: 10px;
-              padding-bottom: 10px;
-              color: black;
-              text-decoration: none;
-              &:hover {
-                color: red;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
 }
 
 .material_input {
@@ -962,4 +837,3 @@ footer {
     background-color: #000;
   }
 }
-
