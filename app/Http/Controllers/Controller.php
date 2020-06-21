@@ -28,30 +28,40 @@ class Controller extends BaseController
     if (!isset($_COOKIE['city'])) {
       setcookie('city', City::first()->id, time() + (3600 * 24 * 30), '/');
     }
+//    if (!isset($_COOKIE['stock_counter'])) {
+//      setcookie('stock_counter', 10, time() + (3600 * 24 * 30), '/');
+//    }
     if (!isset($_COOKIE['whooip'])) {
       setcookie('whooip', 0, time() + (3600 * 24 * 30), '/');
     }
     if(!isset($_COOKIE["products"])) {
       setcookie("products", '', time() + (3600 * 24 * 30), '/');
     }
+    $stock = null;
+//    if (isset($_COOKIE['stock_counter'])) {
+//      if ((int)$_COOKIE['stock_counter'] > 5 && (int)$_COOKIE['stock_counter'] !== 0) {
+//        $r = explode('/',url()->current());
+        if (explode('/', Request()->route()->getPrefix())[0] !== 'admin' || end($r) !== 'getData' || end($r) !== 'favicon.ico') {
+          $sts = Stock::all();
+          foreach ($sts as $st) {
+            if (!isset($_COOKIE['stock_' . $st->id])) {
+              $stock = $st;
+              break;
+            }
+          }
+//          setcookie('stock_counter', 0, time() + (3600 * 24 * 30), '/');
+        }
+//      } else {
+//        dd(Cookie::get('stock_counter'));
+//        setcookie('stock_counter', $_COOKIE['stock_counter'] + 1, time() + (3600 * 24 * 30), '/');
+//        Cookie::queue(Cookie::make('stock_counter', Cookie::get('stock_counter') + 1, 60 * 24 * 30));
+//      }
+//    }
     $this->cartService = $cartService;
-    $this->middleware(function ($request, $next) {
+    $this->middleware(function ($request, $next) use($stock) {
       $cartItems = [];
-//      dd(explode('/', $request->route()->getPrefix())[0]);
       $priceAmount = 0;
       $amount = 0;
-      $stock = null;
-      if (explode('/', $request->route()->getPrefix())[0] !== 'admin') {
-        $sts = Stock::all();
-        foreach ($sts as $st) {
-          if (!isset($_COOKIE['stock_' . $st->id])) {
-            $stock = $st;
-//            setcookie('stock_' . $st->id, 1, time() + (3600 * 24 * 30), '/');
-            break;
-          }
-//          $stock = $st;
-        }
-      }
       if (Auth::check() && explode('/', $request->route()->getPrefix())[0] !== 'admin') {
         if(isset($_COOKIE["products"])) {
           if (count(explode(',', $_COOKIE["products"])) > 0) {
@@ -209,7 +219,7 @@ class Controller extends BaseController
       View::share('priceAmount', $priceAmount);
       View::share('amount', $amount);
       View::share('stocksToView', $stock);
-      View::share('stocksToView', null);
+//      View::share('stocksToView', null);
       return $next($request);
     });
   }

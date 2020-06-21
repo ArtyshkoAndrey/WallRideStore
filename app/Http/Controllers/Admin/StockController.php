@@ -51,8 +51,12 @@ class StockController extends Controller
   {
     $request->validate([
       'title' => 'required',
-      'image' => 'required',
+      'view' => 'required',
+      'description' => 'required',
+      'link' => 'required',
+      'text_to_link' => 'required'
     ]);
+//    dd($request->all());
     $st = Stock::create($request->all());
     return redirect()->route('admin.store.stock.index');
   }
@@ -91,7 +95,10 @@ class StockController extends Controller
   {
     $request->validate([
       'title' => 'required',
-      'image' => 'required',
+      'view' => 'required',
+      'description' => 'required',
+      'link' => 'required',
+      'text_to_link' => 'required'
     ]);
     $st = Stock::find($id);
     $st->update($request->all());

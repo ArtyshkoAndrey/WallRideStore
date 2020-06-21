@@ -36,7 +36,7 @@
             @forelse($stocks as $stock)
               <tr class="align-items-center">
                 <td style="vertical-align: middle">
-                  <img src="{{ asset('storage/stocks/'.$stock->image) }}" alt="{{ $stock->title }}" style="height: 100px; width: auto">
+                  <img src="{{ $stock->getImage() }}" alt="{{ $stock->title }}" style="height: 100px; width: auto">
                 </td>
 
                 <td style="vertical-align: middle"><a href="{{ route('admin.store.stock.edit', $stock->id) }}" class="text-red">{{ $stock->title }}</a></td>

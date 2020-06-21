@@ -16,6 +16,73 @@
       margin-left: auto;
       margin-right: auto;
     }
+    #checker_images ul {
+      list-style-type: none;
+    }
+
+    #checker_images li {
+      display: inline-block;
+    }
+
+    #checker_images input[type="radio"][id^="cb"] {
+      display: none;
+    }
+
+    #checker_images label {
+      border: 1px solid #fff;
+      padding: 10px;
+      display: block;
+      position: relative;
+      margin: 10px;
+      cursor: pointer;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    #checker_images label::before {
+      background-color: white;
+      color: white;
+      content: " ";
+      display: block;
+      border-radius: 50%;
+      border: 1px solid grey;
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      width: 25px;
+      height: 25px;
+      text-align: center;
+      line-height: 28px;
+      transition-duration: 0.4s;
+      transform: scale(0);
+    }
+
+    #checker_images label img {
+      height: 200px;
+      width: auto;
+      transition-duration: 0.2s;
+      transform-origin: 50% 50%;
+    }
+
+    #checker_images :checked+label {
+      border-color: #ddd;
+    }
+
+    #checker_images :checked+label::before {
+      content: "✓";
+      background-color: grey;
+      transform: scale(1);
+    }
+
+    #checker_images :checked+label img {
+      transform: scale(0.9);
+      box-shadow: 0 0 5px #333;
+      z-index: -1;
+    }
   </style>
 @endsection
 @section('content')
@@ -60,10 +127,29 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-8">
-                    <label for="description">Ссылка</label>
+                  <div class="col-md-4">
+                    <label for="description">Cсылки</label>
                     <input name="link" id="link" class="w-100 px-2 form-control rounded-0 {{ $errors->has('link') ? ' is-invalid' : '' }}" value="{{ old('link') ? old('link') : null }}">
                     <span id="link-error" class="error invalid-feedback">{{ $errors->first('link') }}</span>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="description">Текст ссылки</label>
+                    <input name="text_to_link" id="text_to_link" class="w-100 px-2 form-control rounded-0 {{ $errors->has('text_to_link') ? ' is-invalid' : '' }}" value="{{ old('text_to_link') ? old('text_to_link') : '' }}">
+                    <span id="text_to_link-error" class="error invalid-feedback">{{ $errors->first('text_to_link') }}</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-8" id="checker_images">
+
+                    <ul>
+                      <li><input type="radio" name="view" value="1" id="cb1" {{ old('view') === 1 || old('view') === null ? 'checked' : '' }}/>
+                        <label for="cb1"><img src="{{ asset('images/modal_1.png') }}" /></label>
+                      </li>
+                      <li><input type="radio" name="view" value="2" id="cb2" {{ old('view') === 2 ? 'checked' : '' }} />
+                        <label for="cb2"><img src="{{ asset('images/modal_2.png') }}" /></label>
+                      </li>
+                    </ul>
+
                   </div>
                 </div>
               </div>
