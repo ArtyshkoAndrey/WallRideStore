@@ -20,66 +20,7 @@ class CartController extends Controller
 
   public function __construct(CartService $cartService)
   {
-    $this->cartService = $cartService;
-    $this->middleware(function ($request, $next) {
-      $cartItems = [];
-      $priceAmount = 0;
-      $amount = 0;
-      if (Auth::check() && explode('/', $request->route()->getPrefix())[0] !== 'admin') {
-        if(isset($_COOKIE["products"])) {
-          if (count(explode(',', $_COOKIE["products"])) > 0) {
-            $arr = explode(',', $_COOKIE["products"]);
-            if ($arr[0] !== "") {
-              foreach ($arr as $id) {
-                $this->cartService->add((int) $id, 1);
-              }
-              setcookie("products", '', time() - 3600);
-            }
-          }
-        }
-        $cartItems = $this->cartService->get();
-        $priceAmount = $this->cartService->priceAmount();
-        $amount = $this->cartService->amount();
-        $address = UserAddress::where('user_id', auth()->user()->id)->first();
-        if(isset($address)) {
-          if ($address->currency_id !== null) {
-            $currencyGlobal = $address->currency;
-          } else {
-            $currency = Currency::find(1);
-            $address->currency()->associate($currency);
-            $address->save();
-            $currencyGlobal = $address->currency;
-          }
-        } else {
-          $currencyGlobal = Currency::find(1);
-        }
-      } else {
-        if (isset($_COOKIE['city'])) {
-          $ct = $_COOKIE['city'];
-          $ctr = Country::whereHas('cities', function ($q) use ($ct) {
-            $q->where('cities.id', $ct);
-          })->first();
-          if ($ctr) {
-            if ($ctr->name === 'Россия') {
-              $currencyGlobal = Currency::find(2);
-            } else if ($ctr->name === 'Казахстан') {
-              $currencyGlobal = Currency::find(1);
-            } else {
-              $currencyGlobal = Currency::find(3);
-            }
-          } else {
-            $currencyGlobal = Currency::find(3);
-          }
-        } else {
-          $currencyGlobal = Currency::find(1);
-        }
-      }
-      View::share('currency', $currencyGlobal);
-      View::share('cartItems', $cartItems);
-      View::share('priceAmount', $priceAmount);
-      View::share('amount', $amount);
-      return $next($request);
-    });
+    parent::__construct($cartService);
   }
 
   public function index(Request $request)

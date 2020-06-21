@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', 'Магазин - Новости')
+@section('title', 'Магазин - Акции')
 @section('css')
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.0/min/dropzone.min.css">
   <style>
@@ -22,11 +22,8 @@
   <div class="container-fluid pt-5 px-4">
     <div class="row">
       <div class="col-12">
-        <h2>Новости</h2>
+        <h2>Акции</h2>
       </div>
-    </div>
-    <div class="row mt-2" style="z-index: 100">
-      <div class="col-sm-auto ml-0 pl-0 col-6 px-0 pr-sm-2"><a href="{{ route('admin.news.index') }}" class="bg-black px-3 py-2 d-block">Все</a></div>
     </div>
     <div class="row mt-0 pt-0">
       <div class="card border-0 w-100 rounded-0" style="z-index: 90;box-shadow: 0 18px 19px rgba(0, 0, 0, 0.25)">
@@ -38,9 +35,9 @@
           </div>
         </div>
         <div class="card-body">
-          <form action="{{ route('admin.news.store') }}" method="post">
+          <form action="{{ route('admin.store.stock.store') }}" method="post">
             @csrf
-            <input type="hidden" name="photo" value="{{ old('photo') }}">
+            <input type="hidden" name="image" value="{{ old('image') ? old('image') : null }}">
             <div class="row justify-content-end">
               <div class="col-auto">
                 <button class="btn btn-dark rounded-0 border-0 px-3 py-2" type="submit">Создать</button>
@@ -50,16 +47,23 @@
               <div class="col-md-12">
                 <div class="row">
                   <div class="col-md-8">
-                    <label for="title">Наименование</label>
-                    <input type="text" name="title" id="title" class="w-100 px-2 form-control rounded-0 {{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{ old('title') }}" required>
+                    <label for="title">Заголовок*</label>
+                    <input type="text" name="title" id="title" class="w-100 px-2 form-control rounded-0 {{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{ old('title') ? old('title') : null }}" required>
                     <span id="name-error" class="error invalid-feedback">{{ $errors->first('title') }}</span>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-md-8">
-                    <label for="content">Контент</label>
-                    <textarea name="content" id="content" class="w-100 px-2 form-control rounded-0 {{ $errors->has('content') ? ' is-invalid' : '' }}">{!! old('content') !!}</textarea>
-                    <span id="content-error" class="error invalid-feedback">{{ $errors->first('content') }}</span>
+                    <label for="description">Описание</label>
+                    <input name="description" id="description" class="w-100 px-2 form-control rounded-0 {{ $errors->has('description') ? ' is-invalid' : '' }}" value="{{ old('description') ? old('description') : null }}">
+                    <span id="description-error" class="error invalid-feedback">{{ $errors->first('description') }}</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-8">
+                    <label for="description">Ссылка</label>
+                    <input name="link" id="link" class="w-100 px-2 form-control rounded-0 {{ $errors->has('link') ? ' is-invalid' : '' }}" value="{{ old('link') ? old('link') : null }}">
+                    <span id="link-error" class="error invalid-feedback">{{ $errors->first('link') }}</span>
                   </div>
                 </div>
               </div>
@@ -67,7 +71,7 @@
           </form>
           <div class="row mt-3">
             <div class="col-md-8">
-              <form id="upload-widget" method="post" action="{{route('admin.news.photoCreate')}}" class="dropzone"></form>
+              <form id="upload-widget" method="post" action="{{route('admin.store.stock.photoCreate')}}" class="dropzone"></form>
             </div>
           </div>
         </div>
@@ -77,13 +81,9 @@
 @endsection
 
 @section('js')
-  <script src='https://cdn.tiny.cloud/1/z826n1n5ayf774zeqdphsta5v2rflavdm2kvy7xtmczyokv3/tinymce/5/tinymce.min.js' referrerpolicy="origin"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.0/min/dropzone.min.js"></script>
 
-  <script !src="">
-    tinymce.init({
-      selector: '#content'
-    });
+  <script>
 
     Dropzone.autoDiscover = false;
     var fileList = {};
@@ -97,20 +97,20 @@
         this.on("success", function (file, serverFileName) {
           fileList = {"serverFileName": file.upload.filename, "fileName": file.name};
           serverFileName = file.upload.filename;
-            $('input[name="photo"]').val(serverFileName)
+          $('input[name="image"]').val(serverFileName)
         });
         this.on("removedfile", function(file) {
           var rmvFile = fileList.serverFileName;
-              $('input[name="photo"]').val(null)
+          $('input[name="image"]').val(null)
 
           if (rmvFile){
             console.log(rmvFile)
-            axios.post("{{route('admin.news.photoDelete')}}", {
+            axios.post("{{route('admin.store.stock.photoDelete')}}", {
               name: rmvFile
             })
-            .then(response => {
-              console.log(response)
-            })
+              .then(response => {
+                console.log(response)
+              })
           }
         });
       },
@@ -121,7 +121,7 @@
         'x-csrf-token': document.querySelectorAll('meta[name=csrf-token]')[0].getAttributeNode('content').value,
       },
       acceptedFiles: 'image/*',
-      url: "{{route('admin.news.photoCreate')}}",
+      url: "{{route('admin.store.stock.photoCreate')}}",
       renameFile: function (file) {
         let newName = new Date().getTime() + '_' + file.name;
         return newName;
@@ -129,11 +129,11 @@
       addRemoveLinks: true,
     });
 
-    @if(old('photo'))
-      fileList = {"serverFileName": '{{ old('photo') }}', "fileName": '{{ old('photo') }}'};
-      var mockFile = { name: '{{ old('photo') }}', size: 0 };
+    @if(old('image'))
+      fileList = {"serverFileName": '{{ old('image') }}', "fileName": '{{ old('image') }}'};
+      var mockFile = { name: '{{ old('image') }}', size: 0 };
       uploader.emit("addedfile", mockFile);
-      uploader.emit("thumbnail", mockFile, '{{ asset('storage/news/') . '/' . old('photo') }}');
+      uploader.emit("thumbnail", mockFile, '{{ asset('storage/stocks/') . '/' . old('image') }}');
       uploader.emit("complete", mockFile);
       uploader.files.push(mockFile)
     @endif

@@ -16,21 +16,6 @@ Route::get('location/{city}', ['as' => 'location', 'uses' => 'PagesController@lo
 Route::resource('news', 'NewsController')->except([
   'edit', 'create', 'destroy', 'create'
 ]);
-Route::get('/test', function () {
-//  $curl = curl_init();
-//  curl_setopt($curl, CURLOPT_URL, 'http://free.ipwhois.io/json/' . '212.154.252.19' . '?lang=ru');
-//  curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
-//  curl_setopt($curl, CURLOPT_POST, 1);
-//  curl_setopt($curl, CURLOPT_POSTFIELDS, []);
-//  $out = curl_exec($curl);
-//  curl_close($curl);
-////  dd( City::where('name',json_decode($out)->city)->first());
-//  dd( json_decode($out)->city);
-
-//  $test = \App\Models\Category::whereHas('child',function ($q) {
-//    $q->count()
-//  })->get();
-});
 
 Route::post('cart', 'CartController@add')->name('cart.add');
 Route::post('cart/minus', 'CartController@minus')->name('cart.minus');
@@ -53,18 +38,15 @@ Route::group(['middleware' => ['auth']], function() {
   Route::post('products/{product}/favorite', 'ProductsController@favor')->name('products.favor');
   Route::delete('products/{product}/favorite', 'ProductsController@disfavor')->name('products.disfavor');
   Route::get('products/favorites', 'ProductsController@allfavor')->name('products.favorites');
-
   Route::get('orders', 'OrdersController@index')->name('orders.index');
 });
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
   Route::get('login', ['as' => 'admin.auth.login', 'uses' => 'Auth\LoginController@showLoginForm']);
   Route::post('login', ['as' => 'admin.auth.login', 'uses' => 'Auth\LoginController@login']);
-
 // Password Reset Routes...
   Route::post('password/email', ['as' => 'admin.auth.password.email', 'uses' => 'Auth\ForgotPasswordController@sendResetLinkEmail']);
   Route::get('password/email', ['as' => 'admin.auth.password.email', 'uses' => 'Auth\ForgotPasswordController@showLinkRequestForm']);
-
   Route::post('password/reset', ['as' => 'admin.auth.password.reset', 'uses' => 'Auth\ResetPasswordController@reset']);
   Route::get('password/reset/{token?}', ['as' => 'admin.auth.password.reset', 'uses' => 'Auth\ResetPasswordController@showResetForm']);
 });
@@ -85,13 +67,15 @@ Route::group(['prefix' => 'admin', 'guard' => 'admin', 'namespace' => 'Admin', '
   Route::post('/products/{id}/photo-delete', 'ProductsController@photoDelete')->name('admin.production.products.photoDelete');
   Route::post('/products/photo-delete-create', 'ProductsController@photoDeleteCreate')->name('admin.production.products.photoDeleteCreate');
 
-
   Route::post('/news/photo-create', 'NewsController@photoCreate')->name('admin.news.photoCreate');
   Route::post('/news/photo-delete', 'NewsController@photoDelete')->name('admin.news.photoDelete');
   Route::post('/news/restore/{id}', 'NewsController@restore')->name('admin.news.restore');
 
   Route::post('/header/photo-create', 'HeaderController@photoCreate')->name('admin.header.photoCreate');
   Route::post('/header/photo-delete', 'HeaderController@photoDelete')->name('admin.header.photoDelete');
+
+  Route::post('/stock/photo-create', 'StockController@photoCreate')->name('admin.store.stock.photoCreate');
+  Route::post('/stock/photo-delete', 'StockController@photoDelete')->name('admin.store.stock.photoDelete');
 
   Route::get('/reports', 'ReportsController@index')->name('admin.store.reports.index');
   Route::resource('/order', 'OrderController', ['as' => 'admin.store']);
@@ -108,4 +92,5 @@ Route::group(['prefix' => 'admin', 'guard' => 'admin', 'namespace' => 'Admin', '
   Route::resource('/news', 'NewsController', ['as' => 'admin']);
   Route::resource('/pay', 'PayController', ['as' => 'admin.store']);
   Route::resource('/header', 'HeaderController', ['as' => 'admin']);
+  Route::resource('/stock', 'StockController', ['as' => 'admin.store']);
 });

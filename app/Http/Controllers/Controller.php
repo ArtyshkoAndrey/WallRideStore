@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Currency;
+use App\Models\Stock;
 use App\Models\UserAddress;
 use Carbon\Carbon;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -23,6 +24,7 @@ class Controller extends BaseController
   protected $cartService;
 
   public function __construct(CartService $cartService) {
+
     if (!isset($_COOKIE['city'])) {
       setcookie('city', City::first()->id, time() + (3600 * 24 * 30), '/');
     }
@@ -38,6 +40,18 @@ class Controller extends BaseController
 //      dd(explode('/', $request->route()->getPrefix())[0]);
       $priceAmount = 0;
       $amount = 0;
+      $stock = null;
+      if (explode('/', $request->route()->getPrefix())[0] !== 'admin') {
+        $sts = Stock::all();
+        foreach ($sts as $st) {
+          if (!isset($_COOKIE['stock_' . $st->id])) {
+            $stock = $st;
+//            setcookie('stock_' . $st->id, 1, time() + (3600 * 24 * 30), '/');
+            break;
+          }
+//          $stock = $st;
+        }
+      }
       if (Auth::check() && explode('/', $request->route()->getPrefix())[0] !== 'admin') {
         if(isset($_COOKIE["products"])) {
           if (count(explode(',', $_COOKIE["products"])) > 0) {
@@ -194,6 +208,8 @@ class Controller extends BaseController
       View::share('cartItems', $cartItems);
       View::share('priceAmount', $priceAmount);
       View::share('amount', $amount);
+      View::share('stocksToView', $stock);
+      View::share('stocksToView', null);
       return $next($request);
     });
   }

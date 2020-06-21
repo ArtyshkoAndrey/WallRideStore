@@ -242,3 +242,16 @@ select[name="order"], select[name="size"], select[name="brand"], select[name="ca
   background: #000;
   color: white;
 }
+
+@media screen and (max-width: 768px) {
+  #stock .img-fluid {
+    max-height: 45vh !important;
+    min-width: 100%;
+  }
+}
+
+#stock .img-fluid {
+  min-height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
