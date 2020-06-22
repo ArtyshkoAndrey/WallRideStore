@@ -115,16 +115,35 @@
                       </div>
                       <div class="col-12">
                         <div class="row">
-                          {{--                          {{ dd($product->skus()->where('skus_id', 3)->first()->skus) }}--}}
+
                           <? $ch = 'disabled'; ?>
-                          @foreach(App\Models\Skus::all() as $sku)
-                            <div class="col-12">
-                              <div class="row mt-2">
-                                <label for="skus[{{ $sku->id }}]" class="col-12">{{ $sku->title }}</label>
-                                <input type="number" min="0" class="form-control col-12 skus" id="skus-{{ $sku->id }}" name="skus[{{ $sku->id }}]" {{ $ch }} value="">
+                          <div class="accordion col-12" id="sc">
+                            @foreach(App\Models\SkusCategory::all() as $sc)
+                            <div class="card">
+                              <div class="card-header" id="heading-{{ $sc->id }}">
+                                <h5 class="mb-0">
+                                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-{{$sc->id}}" aria-expanded="true" aria-controls="collapse-{{$sc->id}}">
+                                    {{ $sc->name }}
+                                  </button>
+                                </h5>
+                              </div>
+                              <div id="collapse-{{$sc->id}}" class="collapse" aria-labelledby="heading-{{ $sc->id }}" data-parent="#sc">
+                                <div class="card-body">
+                                  <div class="row">
+                                    @foreach($sc->skuses as $sku)
+                                    <div class="col-12">
+                                      <div class="row mt-2">
+                                        <label for="skus[{{ $sku->id }}]" class="col-12">{{ $sku->title }}</label>
+                                        <input type="number" min="0" class="form-control col-12 skus" id="skus-{{ $sku->id }}" name="skus[{{ $sku->id }}]" {{ $ch }} value="">
+                                      </div>
+                                    </div>
+                                    @endforeach
+                                  </div>
+                                </div>
                               </div>
                             </div>
-                          @endforeach
+                            @endforeach
+                          </div>
                         </div>
                       </div>
                       <input type="hidden" name="photo[0]" value="">
@@ -142,11 +161,6 @@
             </div>
             <div class="col-12">
               <p class="small">Рекомендуем использовать раличные наименования файлов перед отправкой</p>
-            </div>
-          </div>
-          <div class="row mt-3 justify-content-end">
-            <div class="col-auto">
-              {{--              <button class="btn btn-dark rounded-0 border-0 px-3 py-2" type="submit">Создать</button>--}}
             </div>
           </div>
         </div>

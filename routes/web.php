@@ -2,6 +2,11 @@
 // Для всех
 use App\Models\Product;
 
+Route::get('/test', function () {
+  $sc = \App\Models\Skus::first()->category;
+  dd($sc);
+});
+
 Route::redirect('/', '/products')->name('root'); // Главаня
 Route::get('/about', 'PagesController@about')->name('about'); // Главаня
 Route::get('/contact', 'PagesController@contact')->name('contact'); // Главаня
@@ -93,6 +98,7 @@ Route::group(['prefix' => 'admin', 'guard' => 'admin', 'namespace' => 'Admin', '
 
   Route::resource('/products', 'ProductsController', ['as' => 'admin.production']);
   Route::resource('/attr', 'SkusController', ['as' => 'admin.production']);
+  Route::resource('/skus-category', 'SkusCategoriesController', ['as' => 'admin.production']);
   Route::resource('/category', 'CategoryController', ['as' => 'admin.production']);
   Route::resource('/brand', 'BrandController', ['as' => 'admin.production']);
   Route::resource('/currency', 'CurrencyController', ['as' => 'admin']);

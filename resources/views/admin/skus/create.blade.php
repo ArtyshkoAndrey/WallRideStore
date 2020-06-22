@@ -29,8 +29,22 @@
             <div class="row mt-3">
               <div class="col-md-4">
                 <label for="name">Наименование</label>
-                <input type="text" name="title" id="title" class="w-100 px-2 form-control rounded-0 {{ $errors->has('title') ? 'is-invalid' : null }}" value="{{ old('title') ? old('title') : null }}" required>
+                <input type="text" name="title" id="title" class="w-100 px-2 form-control rounded-0 {{ $errors->has('title') ? 'is-invalid' : null }}" value="{{ old('title', null) }}" required>
                 <span id="name-error" class="error invalid-feedback">{{ $errors->first('title') }}</span>
+              </div>
+              <div class="col-md-4">
+                <label for="skus_category_id">Категория</label>
+                <select name="skus_category_id" id="skus_category_id"  class="w-100 px-2 form-control rounded-0 {{ $errors->has('skus_category_id') ? 'is-invalid' : null }}" required>
+                  @foreach(App\Models\SkusCategory::all() as $sc)
+                    <option value="{{ $sc->id }}" {{ old('skus_category_id') === $sc->id ? 'selected' : null }}>{{ $sc->name }}</option>
+                  @endforeach
+                </select>
+                <span id="name-error" class="error invalid-feedback">{{ $errors->first('skus_category_id') }}</span>
+              </div>
+              <div class="col-md-4">
+                <label for="name">Вес (порядок)</label>
+                <input type="number" name="weight" id="weight" class="w-100 px-2 form-control rounded-0 {{ $errors->has('weight') ? 'is-invalid' : null }}" value="{{ old('weight', null) }}" required>
+                <span id="name-error" class="error invalid-feedback">{{ $errors->first('weight') }}</span>
               </div>
             </div>
           </form>

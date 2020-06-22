@@ -14,9 +14,12 @@ class CreateSkusesTable extends Migration
     public function up()
     {
         Schema::create('skuses', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('title');
-            $table->timestamps();
+          $table->increments('id');
+          $table->string('title');
+          $table->integer('weight');
+          $table->unsignedInteger('skus_category_id');
+          $table->foreign('skus_category_id')->references('id')->on('skus_categories')->onDelete('cascade');
+          $table->timestamps();
         });
     }
 

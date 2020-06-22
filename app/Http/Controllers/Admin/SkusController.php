@@ -71,14 +71,16 @@ class SkusController extends Controller
   public function store(Request $request)
   {
     $request->validate([
-      'title' => 'required|unique:skuses,title'
+      'title' => 'required|unique:skuses,title',
+      'skus_category_id' => 'required|exists:skus_categories,id',
+      'weight' => 'required|unique:skuses,weight,null,id,skus_category_id,'.$request->skus_category_id
     ]);
 
     $sku = new Skus();
-    $sku->title = $request->title;
-    $sku->save();
+    $sku->create($request->all());
 
-    return redirect()->route('admin.production.attr.index');
+//    return redirect()->route('admin.production.attr.index');
+    return redirect()->route('admin.production.skus-category.edit', $request->skus_category_id);
   }
 
     /**
@@ -114,14 +116,18 @@ class SkusController extends Controller
     public function update(Request $request, $id)
     {
       $request->validate([
-        'title' => 'required|unique:skuses,title,' . $id
+        'title' => 'required|unique:skuses,title,' . $id,
+        'skus_category_id' => 'required|exists:skus_categories,id',
+        'weight' => 'required|unique:skuses,weight,'.$id.',id,skus_category_id,'.$request->skus_category_id
       ]);
 
       $sku = Skus::find($id);
-      $sku->title = $request->title;
+      $sku->update($request->all());
+//      dd($request->all());
       $sku->save();
 
-      return redirect()->route('admin.production.attr.index');
+//      return redirect()->route('admin.production.attr.index');
+      return redirect()->route('admin.production.skus-category.edit', $sku->category->id);
     }
 
   /**
@@ -133,7 +139,10 @@ class SkusController extends Controller
    */
     public function destroy($id)
     {
-      Skus::destroy($id);
-      return redirect()->route('admin.production.attr.index');
+      $sc = Skus::find($id);
+      $s = $sc->skus_category_id;
+      $sc->delete();
+//      return redirect()->route('admin.production.attr.index');
+      return redirect()->route('admin.production.skus-category.edit', $s);
     }
 }

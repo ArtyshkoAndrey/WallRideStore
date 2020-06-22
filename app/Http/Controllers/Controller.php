@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use App\Services\CartService;
 use Illuminate\Support\Facades\Cookie;
+use Symfony\Component\Debug\Exception\FatalThrowableError;
 
 class Controller extends BaseController
 {
@@ -38,25 +39,29 @@ class Controller extends BaseController
       setcookie("products", '', time() + (3600 * 24 * 30), '/');
     }
     $stock = null;
+    try {
 //    if (isset($_COOKIE['stock_counter'])) {
 //      if ((int)$_COOKIE['stock_counter'] > 5 && (int)$_COOKIE['stock_counter'] !== 0) {
 //        $r = explode('/',url()->current());
-        if (explode('/', Request()->route()->getPrefix())[0] !== 'admin' || end($r) !== 'getData' || end($r) !== 'favicon.ico') {
-          $sts = Stock::all();
-          foreach ($sts as $st) {
-            if (!isset($_COOKIE['stock_' . $st->id])) {
-              $stock = $st;
-              break;
-            }
+      if (explode('/', Request()->route()->getPrefix())[0] !== 'admin' || end($r) !== 'getData' || end($r) !== 'favicon.ico') {
+        $sts = Stock::all();
+        foreach ($sts as $st) {
+          if (!isset($_COOKIE['stock_' . $st->id])) {
+            $stock = $st;
+            break;
           }
-//          setcookie('stock_counter', 0, time() + (3600 * 24 * 30), '/');
         }
+//          setcookie('stock_counter', 0, time() + (3600 * 24 * 30), '/');
+      }
 //      } else {
 //        dd(Cookie::get('stock_counter'));
 //        setcookie('stock_counter', $_COOKIE['stock_counter'] + 1, time() + (3600 * 24 * 30), '/');
 //        Cookie::queue(Cookie::make('stock_counter', Cookie::get('stock_counter') + 1, 60 * 24 * 30));
 //      }
 //    }
+    } catch (\Throwable $e) {
+      $stock = null;
+    }
     $this->cartService = $cartService;
     $this->middleware(function ($request, $next) use($stock) {
       $cartItems = [];

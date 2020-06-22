@@ -123,19 +123,37 @@
                       </div>
                       <div class="col-12">
                         <div class="row">
-{{--                          {{ dd($product->skus()->where('skus_id', 3)->first()->skus) }}--}}
+
                           <? $ch = $product->skus->count() >= 1 &&  $product->skus->first()->skus_id !== null ? null : 'disabled'; ?>
-                          @foreach(App\Models\Skus::all() as $sku)
-                            <div class="col-12">
-                              <div class="row mt-2">
-                                <div class="col-12">
-                                  <label for="skus[{{ $sku->id }}]">{{ $sku->title }}</label>
-                                  <input type="number" min="0" class="form-control skus rounded-0" id="skus-{{ $sku->id }}" name="skus[{{ $sku->id }}]" {{ $ch }} value="{{ $product->skus()->where('skus_id', $sku->id)->first() ? $product->skus()->where('skus_id', $sku->id)->first()->stock : null }}">
+                          <div class="accordion col-12" id="sc">
+                            @foreach(App\Models\SkusCategory::all() as $sc)
+                              <div class="card">
+                                <div class="card-header" id="heading-{{ $sc->id }}">
+                                  <h5 class="mb-0">
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-{{$sc->id}}" aria-expanded="true" aria-controls="collapse-{{$sc->id}}">
+                                      {{ $sc->name }}
+                                    </button>
+                                  </h5>
+                                </div>
+                                <div id="collapse-{{$sc->id}}" class="collapse" aria-labelledby="heading-{{ $sc->id }}" data-parent="#sc">
+                                  <div class="card-body">
+                                    <div class="row">
+                                      @foreach($sc->skuses as $sku)
+                                        <div class="col-12">
+                                          <div class="row mt-2">
+                                            <label for="skus[{{ $sku->id }}]" class="col-12">{{ $sku->title }}</label>
+                                            <input type="number" min="0" class="form-control col-12 skus rounded-0" id="skus-{{ $sku->id }}" name="skus[{{ $sku->id }}]" {{ $ch }} value="{{ $product->skus()->where('skus_id', $sku->id)->first() ? $product->skus()->where('skus_id', $sku->id)->first()->stock : null }}">
+                                          </div>
+                                        </div>
+                                      @endforeach
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          @endforeach
+                            @endforeach
+                          </div>
                         </div>
+
                       </div>
                     </div>
                   </div>

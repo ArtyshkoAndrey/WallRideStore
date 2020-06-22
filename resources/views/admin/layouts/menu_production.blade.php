@@ -9,6 +9,6 @@
     <a href="{{ route('admin.production.brand.index') }}" class="{{ Route::currentRouteNamed('admin.production.brand.*') ? 'bg-white' : 'bg-dark' }} px-3 py-2 d-block">Бренды</a>
   </div>
   <div class="col-sm-auto col-6 px-0 px-sm-2">
-    <a href="{{ route('admin.production.attr.index') }}" class="{{ Route::currentRouteNamed('admin.production.attr.*') ? 'bg-white' : 'bg-dark' }} px-3 py-2 d-block">Атрибуты</a>
+    <a href="{{ route('admin.production.skus-category.index') }}" class="{{ Route::currentRouteNamed('admin.production.attr.*') || Route::currentRouteNamed('admin.production.skus-category.*')  ? 'bg-white' : 'bg-dark' }} px-3 py-2 d-block">Атрибуты</a>
   </div>
 </div>
