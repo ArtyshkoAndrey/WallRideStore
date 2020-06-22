@@ -1,7 +1,6 @@
 <?php
 // Для всех
-// Продукты переписать под ресурс
-use App\Models\City;
+use App\Models\Product;
 
 Route::redirect('/', '/products')->name('root'); // Главаня
 Route::get('/about', 'PagesController@about')->name('about'); // Главаня
@@ -52,6 +51,14 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
 });
 
 Route::group(['prefix' => 'admin', 'guard' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth:admin']], function () {
+  Route::get('/test', function () {
+    $p = Product::with('skus')->zeroSkus()->get();
+    $p = $p->reject(function ($ps) {
+      return $ps->skus->sum('stock') > 0;
+    });
+    dump(count($p));
+    Product::whereIn('id', $p->pluck('id'))->delete();
+  });
   Route::get('logout', 'Auth\LoginController@logout')->name('admin.auth.logout');
   Route::delete('/order/all', 'OrderController@collectionsDestroy')->name('admin.store.order.collectionsDestroy');
   Route::delete('/coupon/all', 'CouponCodesController@collectionsDestroy')->name('admin.store.coupon.collectionsDestroy');

@@ -31,7 +31,6 @@ class Product extends Model
       $counter += $sku->stock;
     }
     return (boolean) $counter > 0;
-//    return $counter;
   }
 
   public function categories() {
@@ -44,5 +43,12 @@ class Product extends Model
 
   public function photos() {
     return $this->hasMany(Photo::class, 'product_id', 'id');
+  }
+
+  public function scopeZeroSkus($query)
+  {
+    return $query->whereHas('skus', function ($voteQuery) {
+      $voteQuery->where('stock', '=', 0);
+    });
   }
 }

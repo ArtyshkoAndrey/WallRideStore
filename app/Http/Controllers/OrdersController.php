@@ -12,6 +12,7 @@ use App\Models\Currency;
 use App\Models\ExpressCompany;
 use App\Models\ExpressZone;
 use App\Models\Pay;
+use App\Models\Product;
 use App\Models\ProductSku;
 use App\Models\User;
 use App\Models\UserAddress;
@@ -139,7 +140,7 @@ class OrdersController extends Controller
 
   public function success($no)
   {
-    $order = Order::where('no', $no)->first();
+    $order = Order::with('items.product')->where('no', $no)->first();
     $order->paid_at = Carbon::now();
     $order->ship_status = Order::SHIP_STATUS_PENDING;
     $order->closed = 0;
@@ -166,7 +167,11 @@ class OrdersController extends Controller
     event(new OrderPaid($order));
     $admin = Admin::first();
     $admin->notify(new RegisterPaid($order));
-
+    $ids = [];
+    foreach ($order->items as $item) {
+      !$item->product->available() ? array_push($ids, $item->product_id) : null;
+    }
+    Product::destroy($ids);
     return redirect()->route('orders.index')->with('status', 'Ваш заказ оплачен и в обработке');
   }
 

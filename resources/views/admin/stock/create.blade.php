@@ -134,7 +134,7 @@
                   </div>
                   <div class="col-md-4">
                     <label for="description">Текст ссылки</label>
-                    <input name="text_to_link" id="text_to_link" class="w-100 px-2 form-control rounded-0 {{ $errors->has('text_to_link') ? ' is-invalid' : '' }}" value="{{ old('text_to_link') ? old('text_to_link') : '' }}">
+                    <input name="text_to_link" id="text_to_link" class="w-100 px-2 form-control rounded-0 {{ $errors->has('text_to_link') ? ' is-invalid' : '' }}" value="{{ old('text_to_link') ? old('text_to_link') : ' ' }}">
                     <span id="text_to_link-error" class="error invalid-feedback">{{ $errors->first('text_to_link') }}</span>
                   </div>
                 </div>
