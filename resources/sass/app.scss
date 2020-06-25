@@ -255,3 +255,18 @@ select[name="order"], select[name="size"], select[name="brand"], select[name="ca
   object-fit: cover;
   object-position: center;
 }
+
+#sale-all .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  color: #fff;
+  background-color: #000000;
+}
+
+#sale-all .nav-pills .nav-link {
+  border-radius: 0;
+  color: #000000;
+}
+
+#v-pills-tab {
+  position: sticky;
+  top: 150px;
+}
