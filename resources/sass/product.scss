@@ -17,3 +17,8 @@
   background-position: 50% 50%;
   border-radius: 10px;
 }
+
+.products-allsale-page button.btn-link:not(.collapsed) {
+  background-color: #000000;
+  color: white!important;
+}
