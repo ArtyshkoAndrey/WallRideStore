@@ -91,11 +91,11 @@
 }
 
 
-#slide-menu .collapse {
+#navbarSupportedContent .collapse {
   display: none;
 }
 
-#slide-menu .collapseLink:hover {
+#navbarSupportedContent .collapseLink:hover {
   > .collapse {
      display: block;
     -webkit-animation: fadeIn 1s;
