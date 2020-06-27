@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Models\Currency;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -141,23 +142,17 @@ class ProfileController extends Controller
     } else if ($request->metadata === 'photo') {
       $image = $request->file('photo');
 
-      $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
+      $imageName = time().'.'.$image->getClientOriginalExtension();
 
       $destinationPath = public_path('storage/avatar/thumbnail');
 
       $img = Image::make($image->getRealPath());
-      $image = $img;
       $img->resize(200, 200, function ($constraint) {
-
         $constraint->aspectRatio();
+      })->save($destinationPath . '/' . $imageName);
+      File::delete($destinationPath . '/' . $user->avatar);
 
-      })->save($destinationPath.'/'.$input['imagename']);
-
-      /*After Resize Add this Code to Upload Image*/
-//      $destinationPath = public_path('storeage/avatar');
-//      $image->save($destinationPath.'/'.$input['imagename']);
-//      $image->move($destinationPath, $input['imagename']);
-      $user->avatar = $input['imagename'];
+      $user->avatar = $imageName;
       $user->save();
       return redirect()->route('profile.index')->with('status', 'Фотография обновлена');
     } else {

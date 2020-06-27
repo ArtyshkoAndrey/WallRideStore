@@ -1,11 +1,21 @@
 <?php
 // Для всех
 use App\Models\Product;
+//use App\Models\User;
+//use Illuminate\Support\Facades\File;
 
-Route::get('/test', function () {
-  $sc = \App\Models\Skus::first()->category;
-  dd($sc);
-});
+//Route::get('/test', function () {
+//  $dir = public_path('storage/avatar/thumbnail');
+//  $files = File::files($dir);
+//  foreach($files as $f) {
+//    if (ends_with($f, ['.png', '.jpg', '.jpeg', '.gif'])) {
+//      $name = $f->getRelativePathname();
+//      if (User::where('avatar', $name)->first() === null) {
+//        File::delete($dir . '/' . $name);
+//      }
+//    }
+//  }
+//});
 
 Route::redirect('/', '/products')->name('root'); // Главаня
 Route::get('/about', 'PagesController@about')->name('about'); // Главаня
