@@ -66,29 +66,9 @@
       e.stopPropagation();
     });
 
-    if(!window.matchMedia('(max-width: 768px)').matches) {
-
-      $("li.dropdown").hover(function () {
-        var id = $(this).attr("rel");
-        $(this).toggleClass("active");
-      }, function () {
-        $('.close-submenu').hide();
-        $(this).toggleClass("active");
-      });
-
-    } else {
-
-      $("li.dropdown").click(function () {
-        $('.close-submenu').show();
-        $(this).toggleClass("active");
-        window.setInterval(checkVisibleSubMenu, 100);
-      });
-
-    }
-
     $('#nav-icon3').click(function () {
       $(this).toggleClass('open');
-      console.log('Меню ' + (checkToggableMenu(true) ? 'открыто' : 'закрыто'))
+      checkToggableMenu(true)
     });
 
     $('#blur-for-menu').click(() => {
@@ -97,10 +77,8 @@
         checkToggableMenu(true);
       }
     });
-
-
-
   };
+
   function resetListCity () {
     let param = $("input[name='location_city']").val()
 
@@ -118,20 +96,9 @@
     })
   }
 
-  function closeSubMenu() {
-    $('.close-submenu').hide();
-    $('li.dropdown').filter('.active').toggleClass("active")
-  }
-
-  function checkVisibleSubMenu() {
-    if($('li.dropdown').filter('.active').length < 1) {
-      closeSubMenu()
-    }
-  }
   function checkToggableMenu(toggle = false) {
     let $body = document.body;
     if (toggle) {
-      closeSubMenu()
       $body.className = ($body.className === 'menu-active d-flex flex-column h-100') ? 'd-flex flex-column h-100' : 'menu-active d-flex flex-column h-100';
     }
     return $body.className === 'menu-active d-flex flex-column h-100';
