@@ -66,11 +66,12 @@
       <label><span><a class="c-red" href="{{ route('products.allsale') }}">Sale</a></span></label>
       <div class="content"></div>
     </div>
-
-    <div class="section">
-      <label><span><a href="{{ route('products.favorites') }}">Избранное</a></span></label>
-      <div class="content"></div>
-    </div>
+    @auth
+      <div class="section">
+        <label><span><a href="{{ route('products.favorites') }}">Избранное</a></span></label>
+        <div class="content"></div>
+      </div>
+    @endauth
   </div>
 </div>
 
