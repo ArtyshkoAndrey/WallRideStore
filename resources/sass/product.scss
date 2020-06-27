@@ -19,6 +19,10 @@
 }
 
 .products-allsale-page button.btn-link:not(.collapsed) {
-  background-color: #000000;
+  background-color: #000000!important;
   color: white!important;
+}
+.products-allsale-page button.btn-link.collapsed {
+  background-color: #F8F8F8;
+  text-decoration: underline;
 }

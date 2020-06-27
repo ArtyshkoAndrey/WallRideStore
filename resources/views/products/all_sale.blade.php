@@ -136,10 +136,10 @@
 {{--          </div>--}}
 {{--        </div>--}}
 
-        <div class="accordion w-100 p-3" id="accordionExample">
+        <div class="accordion w-100" id="accordionExample">
 
           @foreach($brands as $index => $brand)
-            <div class="card rounded-0" style="background-color: inherit;">
+            <div class="card border-0 rounded-0" style="background-color: inherit;">
               <div class="card-header p-0 rounded-0" id="heading-brand-{{$brand->id}}">
                 <h5 class="m-0">
                   <button class="btn btn-link p-0 collapsed m-0 btn-block rounded-0 text-dark font-weight-bold" style="font-size: 22px!important;" onclick="$('html, body').animate({ scrollTop: (50 + {{(int)$index * 40}}) }, 1000)" type="button" data-toggle="collapse" data-target="#collapse-brand-{{$brand->id}}" aria-expanded="false" aria-controls="collapse-brand-{{$brand->id}}">
@@ -164,7 +164,7 @@
             </div>
           @endforeach
           @if(count($products) > 0)
-            <div class="card rounded-0" style="background-color: inherit;">
+            <div class="card border-0 rounded-0" style="background-color: inherit;">
               <div class="card-header p-0 rounded-0" id="heading-brand-no">
                 <h5 class="m-0">
                   <button class="btn btn-link p-0 collapsed m-0 btn-block rounded-0 text-dark font-weight-bold" style="font-size: 22px!important;" onclick="$('html, body').animate({ scrollTop: (50 + {{count($brands) * 40}}) }, 1000)" type="button" data-toggle="collapse" data-target="#collapse-brand-no" aria-expanded="false" aria-controls="collapse-brand-no">
