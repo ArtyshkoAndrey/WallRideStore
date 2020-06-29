@@ -72,20 +72,6 @@
       e.stopPropagation();
     });
 
-    // $('#cart').click(function () {
-    //   setTimeout(()=> {
-    //     if($('[aria-labelledby="cart"]').isActive()) {
-    //       $('body').css("overflow","hidden");
-    //     } else {
-    //       $('body').css("overflow","auto");
-    //     }
-    //   }, 300)
-    //
-    // });
-
-    // $('[rel="cart"]').first().on('show', function () {
-    //   alert('Come on lets show the dropdown!!');
-    // });
     $('#firstNav').on('show.bs.dropdown', function () {
       setTimeout(() => {checkOpenCart()}, 100)
     })
