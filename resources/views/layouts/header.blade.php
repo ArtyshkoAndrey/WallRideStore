@@ -84,7 +84,7 @@
     <span></span>
   </div>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav">
+    <ul class="navbar-nav" id="firstNav">
       <li class="nav-item dropdown d-flex" rel="city">
         <a class="nav-link d-flex align-items-center" id="city" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           @guest
@@ -154,7 +154,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="city">
           <div class="material_input">
-            <input type="text" name="location_city" autocomplete="off" onkeyup="resetListCity()" readonly onfocus="this.removeAttribute('readonly');">
+            <input type="text" name="location_city" autocomplete="off" onkeyup="resetListCity()">
             <span class="highlight"></span>
             <span class="bar"></span>
             <label id="mla">Начните печатать</label>
@@ -235,7 +235,7 @@
           </div>
         </a>
         <header-cart :cartitems="{{ json_encode($cartItems) }}" :currency="{{ $currency }}" :priceamount="{{ $priceAmount }}" inline-template>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="cart">
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="cart" id="cart-dropdown">
             <mini-cart-item v-for="item in $parent.cartItems" :key="item.id" :item="item" :currency="{{ $currency }}" :id="item.product_sku.id" inline-template>
               <div class="row align-items-center m-0">
                 <div class="col-md-3 col-6 h-100">

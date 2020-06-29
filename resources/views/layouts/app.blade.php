@@ -55,6 +55,12 @@
 <script src="{{ asset('public/js/jquery.mask.min.js') }}"></script>
 <script src="{{ asset('public/js/menu.js') }}"></script>
 <script type="text/javascript">
+  (function($){
+    $.fn.isActive = function(){
+      console.log(this)
+      return $(this.get(0)).hasClass('show')
+    }
+  })(jQuery)
 
   window.onload = function() {
     // ПРОВЕРКА ЧТО БЫ ОТКРЫТЬ ОКНО АКЦИЙ
@@ -65,6 +71,28 @@
     $(document).on('click', 'ul.navbar-nav > li > .dropdown-menu', function (e) {
       e.stopPropagation();
     });
+
+    // $('#cart').click(function () {
+    //   setTimeout(()=> {
+    //     if($('[aria-labelledby="cart"]').isActive()) {
+    //       $('body').css("overflow","hidden");
+    //     } else {
+    //       $('body').css("overflow","auto");
+    //     }
+    //   }, 300)
+    //
+    // });
+
+    // $('[rel="cart"]').first().on('show', function () {
+    //   alert('Come on lets show the dropdown!!');
+    // });
+    $('#firstNav').on('show.bs.dropdown', function () {
+      setTimeout(() => {checkOpenCart()}, 100)
+    })
+
+    $('#firstNav').on('hidden.bs.dropdown', function () {
+      setTimeout(() => {checkOpenCart()}, 100)
+    })
 
     $('#nav-icon3').click(function () {
       $(this).toggleClass('open');
@@ -78,6 +106,14 @@
       }
     });
   };
+
+  function checkOpenCart() {
+    if($('[aria-labelledby="cart"]').isActive()) {
+      $('body').css("overflow","hidden");
+    } else {
+      $('body').css("overflow","auto");
+    }
+  }
 
   function resetListCity () {
     let param = $("input[name='location_city']").val()
