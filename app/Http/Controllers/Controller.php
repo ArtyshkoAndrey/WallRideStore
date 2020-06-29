@@ -13,6 +13,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
 use App\Services\CartService;
 use Illuminate\Support\Facades\Cookie;
@@ -199,25 +200,29 @@ class Controller extends BaseController
             "verify_peer_name"=>false
           )
         );
-        $assertion = file_get_contents($assertion_link, false, stream_context_create($arrContextOptions));
-        $ar = simplexml_load_string($assertion);
+        try {
+          $assertion = file_get_contents($assertion_link, false, stream_context_create($arrContextOptions));
+          $ar = simplexml_load_string($assertion);
 
-        //$ar = simplexml_load_file('https://nationalbank.kz/rss/rates_all.xml');
-        foreach($ar->channel->item as $item) {
-          if ((string)$item->title === 'USD') {
-            $currency = Currency::where('name', 'Американский доллар')->first();
-            $currency->ratio = 1/$item->description;
-            $currency->save();
-          } else if ((string)$item->title === 'RUB') {
-            $currency = Currency::where('name', 'Российский рубль')->first();
-            $currency->ratio = 1/$item->description;
-            $currency->save();
+          //$ar = simplexml_load_file('https://nationalbank.kz/rss/rates_all.xml');
+          foreach ($ar->channel->item as $item) {
+            if ((string)$item->title === 'USD') {
+              $currency = Currency::where('name', 'Американский доллар')->first();
+              $currency->ratio = 1 / $item->description;
+              $currency->save();
+            } else if ((string)$item->title === 'RUB') {
+              $currency = Currency::where('name', 'Российский рубль')->first();
+              $currency->ratio = 1 / $item->description;
+              $currency->save();
+            }
           }
+          $currency = Currency::where('name', 'Тенге')->first();
+          $currency->updated_at = Carbon::now();
+          $currency->save();
+          header("Refresh: 0;");
+        } catch (\ErrorException $e) {
+          Log::info($e);
         }
-        $currency = Currency::where('name', 'Тенге')->first();
-        $currency->updated_at = Carbon::now();
-        $currency->save();
-        header("Refresh: 0;");
       }
       View::share('currency', $currencyGlobal);
       View::share('cartItems', $cartItems);
