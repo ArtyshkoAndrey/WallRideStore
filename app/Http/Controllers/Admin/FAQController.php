@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\News;
-use App\Models\Stock;
+use App\Models\FAQ;
+use App\Services\CartService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -12,14 +12,12 @@ use Illuminate\Support\Facades\File;
 use Illuminate\View\View;
 use Intervention\Image\ImageManagerStatic as Image;
 
-class StockController extends Controller
-{
+class FAQController extends Controller {
 
-  public function __construct()
+  public function __construct(CartService $cartService)
   {
-//    parent::__construct($cartService);
-  }
 
+  }
   /**
    * Display a listing of the resource.
    *
@@ -27,8 +25,8 @@ class StockController extends Controller
    */
   public function index()
   {
-    $stocks = Stock::all();
-    return view('admin.stock.index', compact('stocks'));
+    $faqs = FAQ::all();
+    return view('admin.faq.index', compact('faqs'));
   }
 
   /**
@@ -38,7 +36,7 @@ class StockController extends Controller
    */
   public function create()
   {
-    return view('admin.stock.create');
+    return view('admin.faq.create');
   }
 
   /**
@@ -51,14 +49,11 @@ class StockController extends Controller
   {
     $request->validate([
       'title' => 'required',
-      'view' => 'required',
-      'description' => 'required',
-      'link' => 'required',
-      'text_to_link' => 'required'
+      'image' => 'required',
+      'content' => 'required'
     ]);
-//    dd($request->all());
-    $st = Stock::create($request->all());
-    return redirect()->route('admin.store.stock.index');
+    FAQ::create($request->all());
+    return redirect()->route('admin.store.faqs.index');
   }
 
   /**
@@ -80,8 +75,8 @@ class StockController extends Controller
    */
   public function edit($id)
   {
-    $st = Stock::find($id);
-    return view('admin.stock.edit', compact('st'));
+    $f = FAQ::find($id);
+    return view('admin.faq.edit', compact('f'));
   }
 
   /**
@@ -95,15 +90,13 @@ class StockController extends Controller
   {
     $request->validate([
       'title' => 'required',
-      'view' => 'required',
-      'description' => 'required',
-      'link' => 'required',
-      'text_to_link' => 'required'
+      'image' => 'required',
+      'content' => 'required'
     ]);
-    $st = Stock::find($id);
-    $st->update($request->all());
-    $st->save();
-    return redirect()->route('admin.store.stock.index');
+    $f = FAQ::find($id);
+    $f->update($request->all());
+    $f->save();
+    return redirect()->route('admin.store.faqs.index');
   }
 
   /**
@@ -114,32 +107,32 @@ class StockController extends Controller
    */
   public function destroy($id)
   {
-    $st = Stock::find($id);
-    if($st->image) {
-      File::delete(public_path('storage/stocks/') . '/' . $st->image);
+    $f = FAQ::find($id);
+    if($f->image) {
+      File::delete(public_path('storage/faq/') . '/' . $f->image);
     }
-    $st->delete();
+    $f->delete();
     return redirect()->back();
   }
 
   public function photoDelete(Request $request) {
-    $st = Stock::where('image', $request->name)->first();
-    if($st) {
-      $st->image = null;
-      $st->save();
+    $f = FAQ::where('image', $request->name)->first();
+    if($f) {
+      $f->image = 'no image';
+      $f->save();
     }
-    File::delete(public_path('storage/stocks/') . '/' .$request->name);
+    File::delete(public_path('storage/faq/') . '/' .$request->name);
     return $request->name;
   }
 
   public function photoCreate(Request $request) {
     $image = $request->file('file');
-    $destinationPath = public_path('storage/stocks/');
+    $destinationPath = public_path('storage/faq/');
     $name = $request->file('file')->getClientOriginalName();
     $img = Image::make($image->getRealPath());
     $img->save($destinationPath.'/'.$name);
     if(isset($request->id)) {
-      $st = Stock::find($request->id);
+      $st = FAQ::find($request->id);
       $st->image = $name;
       $st->save();
     }

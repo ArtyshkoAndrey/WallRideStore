@@ -1,14 +1,14 @@
 @extends('admin.layouts.app')
-@section('title', 'Магазин - Акции')
+@section('title', 'Магазин - FAQ')
 
 @section('content')
   <div class="container-fluid pt-5 px-4">
     <div class="row">
       <div class="col-12 col-md-auto">
-        <h2>Акции</h2>
+        <h2>FAQ</h2>
       </div>
       <div class="col-12 col-md-auto">
-        <a href="{{ route('admin.store.stock.create') }}" class="btn btn-dark rounded-0 border-0">Добавить новую</a>
+        <a href="{{ route('admin.store.faqs.create') }}" class="btn btn-dark rounded-0 border-0">Добавить новый</a>
       </div>
     </div>
     @include('admin.layouts.menu_store')
@@ -17,7 +17,7 @@
         <div class="card-header">
           <div class="row align-items-end">
             <div class="col-auto ml-auto mt-2 mt-md-0">
-              <p class="mb-0">Всего {{ count($stocks) }} акций</p>
+              <p class="mb-0">Всего {{ count($faqs) }} вопросов</p>
             </div>
           </div>
         </div>
@@ -27,25 +27,23 @@
             <tr>
               <th style="text-align: center;" class=""><i class="fa fa-camera"></i></th>
               <th>Заголовок</th>
-              <th>Описание</th>
               <th>Дата</th>
               <th></th>
             </tr>
             </thead>
             <tbody>
-            @forelse($stocks as $stock)
+            @forelse($faqs as $f)
               <tr class="align-items-center">
                 <td style="vertical-align: middle">
-                  <img src="{{ $stock->getImage() }}" alt="{{ $stock->title }}" style="height: 100px; width: auto">
+                  <img src="{{ $f->getImage() }}" alt="{{ $f->title }}" style="height: 100px; width: auto">
                 </td>
 
-                <td style="vertical-align: middle"><a href="{{ route('admin.store.stock.edit', $stock->id) }}" class="text-red">{{ $stock->title }}</a></td>
-                <td style="vertical-align: middle"><span class="text-truncate d-block" style="width: 300px;">{{ $stock->description }}</span></td>
+                <td style="vertical-align: middle"><a href="{{ route('admin.store.faqs.edit', $f->id) }}" class="text-red">{{ $f->title }}</a></td>
                 <td style="vertical-align: middle">
-                  {{ $stock->created_at->format('d.m.Y') }}
+                  {{ $f->created_at->format('d.m.Y') }}
                 </td>
                 <td style="vertical-align: middle">
-                  <form action="{{ route('admin.store.stock.destroy', $stock->id) }}" method="post">
+                  <form action="{{ route('admin.store.faqs.destroy', $f->id) }}" method="post">
                     @csrf
                     @method('delete')
                     <button class="bg-transparent border-0 rounded-0" style="color: #F33C3C" type="submit"><i style="font-size: 1.5rem" class="fal fa-trash"></i></button>
@@ -53,7 +51,7 @@
               </tr>
             @empty
               <tr>
-                <td colspan="5" class="text-center">Нет акций</td>
+                <td colspan="4" class="text-center">Нет вопросов</td>
               </tr>
             @endforelse
             </tbody>

@@ -17,4 +17,7 @@
   <div class="col-sm-auto col-6 px-0 px-sm-2">
     <a href="{{ route('admin.store.stock.index') }}" class="{{ Route::currentRouteNamed('admin.store.stock.*') ? 'bg-white' : 'bg-dark' }} px-3 py-2 d-block">Акции</a>
   </div>
+  <div class="col-sm-auto col-12 px-0 px-sm-2">
+    <a href="{{ route('admin.store.faqs.index') }}" class="{{ Route::currentRouteNamed('admin.store.faqs.*') ? 'bg-white' : 'bg-dark' }} px-3 py-2 d-block">FAQ</a>
+  </div>
 </div>

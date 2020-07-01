@@ -28,7 +28,10 @@ Route::get('product/{product}', 'ProductsController@show')->name('products.show'
 Route::get('policy', 'PagesController@policy')->name('policy');
 Route::get('location/{city}', ['as' => 'location', 'uses' => 'PagesController@location']);
 Route::resource('news', 'NewsController')->except([
-  'edit', 'create', 'destroy', 'create'
+  'edit', 'create', 'destroy', 'update'
+]);
+Route::resource('faqs', 'FAQController')->except([
+  'edit', 'create', 'destroy', 'update'
 ]);
 
 Route::post('cart', 'CartController@add')->name('cart.add');
@@ -98,6 +101,8 @@ Route::group(['prefix' => 'admin', 'guard' => 'admin', 'namespace' => 'Admin', '
 
   Route::post('/stock/photo-create', 'StockController@photoCreate')->name('admin.store.stock.photoCreate');
   Route::post('/stock/photo-delete', 'StockController@photoDelete')->name('admin.store.stock.photoDelete');
+  Route::post('/faqs/photo-create', 'FAQController@photoCreate')->name('admin.store.faqs.photoCreate');
+  Route::post('/faqs/photo-delete', 'FAQController@photoDelete')->name('admin.store.faqs.photoDelete');
 
   Route::get('/reports', 'ReportsController@index')->name('admin.store.reports.index');
   Route::resource('/order', 'OrderController', ['as' => 'admin.store']);
@@ -116,4 +121,5 @@ Route::group(['prefix' => 'admin', 'guard' => 'admin', 'namespace' => 'Admin', '
   Route::resource('/pay', 'PayController', ['as' => 'admin.store']);
   Route::resource('/header', 'HeaderController', ['as' => 'admin']);
   Route::resource('/stock', 'StockController', ['as' => 'admin.store']);
+  Route::resource('/faqs', 'FAQController', ['as' => 'admin.store']);
 });

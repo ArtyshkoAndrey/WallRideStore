@@ -72,6 +72,10 @@
         <div class="content"></div>
       </div>
     @endauth
+    <div class="section d-md-none">
+      <label><span><a href="{{ route('faqs.index') }}">FAQ</a></span></label>
+      <div class="content"></div>
+    </div>
   </div>
 </div>
 
@@ -319,6 +323,10 @@
       <li class="nav-item mr-0 mr-sm-4">
         <a class="nav-link d-flex align-items-center c-red" href="{{ route('products.allsale') }}">Sale</a>
       </li>
+      <li class="nav-item mr-0 mr-sm-4 d-none d-md-flex">
+        <a class="nav-link d-flex align-items-center" href="{{ route('faqs.index') }}">FAQ</a>
+      </li>
+
     </ul>
   </div>
 </nav>
