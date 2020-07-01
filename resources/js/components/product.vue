@@ -105,7 +105,9 @@ line-height: 24px;" v-model="count" readonly disabled>
       }
     },
     mounted() {
-      // console.log(this.item);
+      while (this.item.skus[this.numberSize].stock <= 0) {
+        this.removeNumberSize()
+      }
     },
     methods: {
       addCounter() {
@@ -117,16 +119,28 @@ line-height: 24px;" v-model="count" readonly disabled>
       addNumberSize() {
         if (this.numberSize < this.item.skus.length - 1) {
           this.numberSize++
+          if (this.item.skus[this.numberSize].stock <= 0) {
+            this.addNumberSize()
+          }
         } else {
           this.numberSize = 0
+          if (this.item.skus[this.numberSize].stock <= 0) {
+            this.addNumberSize()
+          }
         }
         this.count = 0
       },
       removeNumberSize() {
         if (this.numberSize > 0) {
           this.numberSize--;
+          if (this.item.skus[this.numberSize].stock <= 0) {
+            this.removeNumberSize()
+          }
         } else {
           this.numberSize = this.item.skus.length - 1
+          if (this.item.skus[this.numberSize].stock <= 0) {
+            this.removeNumberSize()
+          }
         }
         this.count = 0
       },

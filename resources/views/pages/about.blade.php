@@ -25,8 +25,8 @@
       </div>
       <div class="col-12 text-center mt-5">
         <h2>Соц. сети</h2>
-        <a href="#" target="_blank" class="mx-3 mt-2 d-inline-flex text-dark text-decoration-none"><i class="fab fa-instagram fa-3x"></i></a>
-        <a href="#" target="_blank" class="mx-3 mt-2 d-inline-flex text-dark text-decoration-none"><i class="fab fa-vk fa-3x"></i></a>
+        <a href="https://www.instagram.com/wallride_store/" target="_blank" class="mx-3 mt-2 d-inline-flex text-dark text-decoration-none"><i class="fab fa-instagram fa-3x"></i></a>
+        <a href="https://vk.com/wrstore" target="_blank" class="mx-3 mt-2 d-inline-flex text-dark text-decoration-none"><i class="fab fa-vk fa-3x"></i></a>
       </div>
     </div>
   </section>

@@ -18,8 +18,8 @@
             <hr>
           </div>
         </div>
-        <a href="#" target="_blank" class="mx-3 mt-2 d-inline-flex text-dark text-decoration-none"><i class="fab fa-instagram fa-2x"></i></a>
-        <a href="#" target="_blank" class="mx-3 mt-2 d-inline-flex text-dark text-decoration-none"><i class="fab fa-vk fa-2x"></i></a>
+        <a href="https://www.instagram.com/wallride_store/" target="_blank" class="mx-3 mt-2 d-inline-flex text-dark text-decoration-none"><i class="fab fa-instagram fa-2x"></i></a>
+        <a href="https://vk.com/wrstore" target="_blank" class="mx-3 mt-2 d-inline-flex text-dark text-decoration-none"><i class="fab fa-vk fa-2x"></i></a>
       </div>
     </div>
   </section>

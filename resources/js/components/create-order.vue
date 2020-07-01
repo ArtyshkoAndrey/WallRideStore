@@ -132,6 +132,8 @@
           this.cartItems.forEach(item => {
             amount += Number(item.amount) * Number(item.productSku.product.on_sale ? item.productSku.product.price_sale : item.productSku.product.price)
           });
+          $('#checkCoupon').prop('disabled', false);
+          $('#coupon').prop('readonly', false);
           this.$refs.totalAmountBottom.innerText = 'Общая сумма ' +
             new Intl.NumberFormat('ru-RU').format(((amount + this.getCostTransfer) * this.currency.ratio).toFixed(0)) +
             ' ' + this.currency.symbol
@@ -168,7 +170,7 @@
           .then((response) => {  // Первым параметром метода then является обратный вызов, который будет вызываться при успешном выполнении запроса
             console.log(response.data)
             this.$refs.totalAmountBottom.innerText = 'Общая сумма ' +
-              new Intl.NumberFormat('ru-RU').format(((response.data.totalAmount + this.getCostTransfer) * this.currency.ratio).toFixed(0)) +
+              new Intl.NumberFormat('ru-RU').format(((response.data.totalAmount + (this.getCostTransfer? this.getCostTransfer : 0)) * this.currency.ratio).toFixed(0)) +
               ' ' + this.currency.symbol
             swal('Купон применился', '', 'success')
             $('#checkCoupon').prop('disabled', true);

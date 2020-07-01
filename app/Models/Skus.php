@@ -18,4 +18,9 @@ class Skus extends Model
   {
     return $this->belongsTo(SkusCategory::class, 'skus_category_id', 'id', 'skus_categories');
   }
+
+  public function pskus()
+  {
+    return $this->hasMany(ProductSku::class);
+  }
 }
