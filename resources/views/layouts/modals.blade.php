@@ -1,7 +1,7 @@
 @if (isset($stock))
   @if ($stock->view === 1)
     <div class="modal fade" id="stock" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="LabelStock" aria-hidden="true">
-      <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content rounded-0">
           <div class="modal-body p-0">
             <button type="button" class="close position-absolute text-dark" style="right: 10px; top: 10px; font-size: 1.9rem; z-index: 900" data-dismiss="modal" aria-label="Close">
@@ -31,7 +31,7 @@
     </div>
   @elseif($stock->view === 2)
     <div class="modal" id="stock" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="LabelStock" aria-hidden="true">
-      <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content rounded-0">
           <div class="modal-body p-0">
             <button type="button" class="close position-absolute text-dark" style="right: 10px; top: 10px; font-size: 1.9rem; z-index: 900" data-dismiss="modal" aria-label="Close">

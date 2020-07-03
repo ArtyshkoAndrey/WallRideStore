@@ -51,4 +51,57 @@ class Product extends Model
       $voteQuery->where('stock', '=', 0);
     });
   }
+
+  public function promotions () {
+    return $this->belongsToMany(Promotion::class, 'products_promotions', 'product_id', 'promotion_id');
+  }
+
+  static function getProducts ($ids) {
+    $products = [];
+    $promotions = [];
+    foreach ($ids as $k => $id) {
+      $productSku = ProductSku::with('product')->find((int) $id);
+      array_push($products, $productSku);
+      foreach(Promotion::all() as $pr) {
+        if ($pr->products()->where('product_id', $productSku->product->id)->exists()) {
+          if (isset($promotions[$pr->id])) {
+            array_push($promotions[$pr->id], $productSku);
+          } else {
+            $promotions[$pr->id] = [];
+            array_push($promotions[$pr->id], $productSku);
+          }
+        }
+      }
+    }
+    if (isset($promotions[1])) {
+      $minCost = $promotions[1][0]->product->price;
+      $p = $promotions[1][0];
+      if (($countFromFirst = (int)(count($promotions[1]) / 3)) > 0) {
+        while ($countFromFirst > 0) {
+          foreach ($promotions[1] as $productSku) {
+            $price = (int)$productSku->product->price;
+            if ($minCost < $price) {
+              $minCost = $productSku->product->price;
+              $p = $productSku;
+            }
+          }
+          for ($i = 0; $i < count($products); $i++) {
+            if ($products[$i] == $p) {
+              $productSku = (object)$products[$i]->toArray();
+              $productSku->product = (object)$productSku->product;
+              for ($j = 0; $j < count($productSku->product->photos); $j++) {
+                $productSku->product->photos[$j] = (object)$productSku->product->photos[$j];
+              }
+              $productSku->product->price = (int)$productSku->product->price - (int)$productSku->product->price * 10 / 100;
+              $products[$i] = $productSku;
+              break;
+            }
+          }
+          $countFromFirst--;
+        }
+      }
+    }
+    return $products;
+
+  }
 }

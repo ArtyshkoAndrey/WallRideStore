@@ -1,12 +1,10 @@
 <?php
 // Для всех
 use App\Models\Product;
-//use App\Models\User;
-//use Illuminate\Support\Facades\File;
 //
-//Route::get('/test', function () {
-//  dd(App\Models\Skus::first()->pskus);
-//});
+Route::get('/test', function () {
+  dd(App\Models\Promotion::first()->products);
+});
 
 Route::redirect('/', '/products')->name('root'); // Главаня
 Route::get('/about', 'PagesController@about')->name('about'); // Главаня

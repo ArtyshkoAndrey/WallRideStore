@@ -115,8 +115,7 @@
                       </div>
                       <div class="col-12">
                         <div class="row">
-
-                          <? $ch = 'disabled'; ?>
+                          <?php $ch = 'disabled'; ?>
                           <div class="accordion col-12" id="sc">
                             @foreach(App\Models\SkusCategory::all() as $sc)
                             <div class="card">
@@ -143,6 +142,33 @@
                               </div>
                             </div>
                             @endforeach
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="accordion col-12" id="pr">
+                            <div class="card">
+                              <div class="card-header" id="heading-pr">
+                                <h5 class="mb-0">
+                                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-pr" aria-expanded="true" aria-controls="collapse-pr-">
+                                    Акции
+                                  </button>
+                                </h5>
+                              </div>
+                              <div id="collapse-pr" class="collapse" aria-labelledby="heading-pr" data-parent="#pr">
+                                <div class="card-body">
+                                  <div class="row">
+                                    @foreach(App\Models\Promotion::all() as $pr)
+                                      <div class="col-12">
+                                        <div class="form-group form-check">
+                                          <input type="checkbox" class="form-check-input" id="pr-{{$pr->id}}" name="promotions[]" value="{{ $pr->id }}">
+                                          <label class="form-check-label" for="pr-{{$pr->id}}">{{ $pr->name}}</label>
+                                        </div>
+                                      </div>
+                                    @endforeach
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>

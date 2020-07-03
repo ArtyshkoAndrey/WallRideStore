@@ -2,11 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\City;
-use App\Models\Country;
-use App\Models\Currency;
-use App\Models\Stock;
-use App\Models\UserAddress;
+
 use Carbon\Carbon;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
@@ -16,8 +12,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
 use App\Services\CartService;
-use Illuminate\Support\Facades\Cookie;
-use Symfony\Component\Debug\Exception\FatalThrowableError;
+use App\Models\City;
+use App\Models\Country;
+use App\Models\Currency;
+use App\Models\Stock;
+use App\Models\UserAddress;
+use App\Models\User;
 
 class Controller extends BaseController
 {
@@ -26,7 +26,6 @@ class Controller extends BaseController
   protected $cartService;
 
   public function __construct(CartService $cartService) {
-
     if (!isset($_COOKIE['city'])) {
       setcookie('city', City::first()->id, time() + (3600 * 24 * 30), '/');
     }
@@ -106,18 +105,18 @@ class Controller extends BaseController
             curl_setopt($curl, CURLOPT_POSTFIELDS, []);
             $out = curl_exec($curl);
             curl_close($curl);
-            if(\App\Models\City::where('name',json_decode($out)->city)->first()) {
-              $ct = \App\Models\City::where('name',json_decode($out)->city)->first();
+            if(City::where('name',json_decode($out)->city)->first()) {
+              $ct = City::where('name',json_decode($out)->city)->first();
               $ctr = Country::whereHas('cities', function ($q) use ($ct) {
                 $q->where('cities.id', $ct->id);
               })->first();
-            } else if (\App\Models\City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first()) {
-              $ct = \App\Models\City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first();
+            } else if (City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first()) {
+              $ct = City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first();
               $ctr = Country::whereHas('cities', function ($q) use ($ct) {
                 $q->where('cities.id', $ct->id);
               })->first();
             } else {
-              $ct = \App\Models\City::find($_COOKIE['city']);
+              $ct = City::find($_COOKIE['city']);
               $ctr = Country::whereHas('cities', function ($q) use ($ct) {
                 $q->where('cities.id', $ct->id);
               })->first();
@@ -134,7 +133,7 @@ class Controller extends BaseController
               $currencyGlobal = Currency::find(3);
             }
           } else {
-            $ct = \App\Models\City::find($_COOKIE['city']);
+            $ct = City::find($_COOKIE['city']);
             $ctr = Country::whereHas('cities', function ($q) use ($ct) {
               $q->where('cities.id', $ct->id);
             })->first();
@@ -159,18 +158,18 @@ class Controller extends BaseController
             curl_setopt($curl, CURLOPT_POSTFIELDS, []);
             $out = curl_exec($curl);
             curl_close($curl);
-            if(\App\Models\City::where('name',json_decode($out)->city)->first()) {
-              $ct = \App\Models\City::where('name',json_decode($out)->city)->first();
+            if(City::where('name',json_decode($out)->city)->first()) {
+              $ct = City::where('name',json_decode($out)->city)->first();
               $ctr = Country::whereHas('cities', function ($q) use ($ct) {
                 $q->where('cities.id', $ct->id);
               })->first();
-            } else if (\App\Models\City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first()) {
-              $ct = \App\Models\City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first();
+            } else if (City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first()) {
+              $ct = City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first();
               $ctr = Country::whereHas('cities', function ($q) use ($ct) {
                 $q->where('cities.id', $ct->id);
               })->first();
             } else {
-              $ct = \App\Models\City::find(isset($_COOKIE['city']) ? $_COOKIE['city'] : 1);
+              $ct = City::find(isset($_COOKIE['city']) ? $_COOKIE['city'] : 1);
               $ctr = Country::whereHas('cities', function ($q) use ($ct) {
                 $q->where('cities.id', $ct->id);
               })->first();
@@ -203,8 +202,6 @@ class Controller extends BaseController
         try {
           $assertion = file_get_contents($assertion_link, false, stream_context_create($arrContextOptions));
           $ar = simplexml_load_string($assertion);
-
-          //$ar = simplexml_load_file('https://nationalbank.kz/rss/rates_all.xml');
           foreach ($ar->channel->item as $item) {
             if ((string)$item->title === 'USD') {
               $currency = Currency::where('name', 'Американский доллар')->first();

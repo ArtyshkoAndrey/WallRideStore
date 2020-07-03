@@ -124,7 +124,7 @@
                       <div class="col-12">
                         <div class="row">
 
-                          <? $ch = $product->skus->count() >= 1 &&  $product->skus->first()->skus_id !== null ? null : 'disabled'; ?>
+                          <?php $ch = $product->skus->count() >= 1 &&  $product->skus->first()->skus_id !== null ? null : 'disabled'; ?>
                           <div class="accordion col-12" id="sc">
                             @foreach(App\Models\SkusCategory::all() as $sc)
                               <div class="card">
@@ -151,6 +151,33 @@
                                 </div>
                               </div>
                             @endforeach
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="accordion col-12" id="pr">
+                              <div class="card">
+                                <div class="card-header" id="heading-pr">
+                                  <h5 class="mb-0">
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-pr" aria-expanded="true" aria-controls="collapse-pr-">
+                                      Акции
+                                    </button>
+                                  </h5>
+                                </div>
+                                <div id="collapse-pr" class="collapse" aria-labelledby="heading-pr" data-parent="#pr">
+                                  <div class="card-body">
+                                    <div class="row">
+                                      @foreach(App\Models\Promotion::all() as $pr)
+                                        <div class="col-12">
+                                          <div class="form-group form-check">
+                                            <input type="checkbox" class="form-check-input" id="pr-{{$pr->id}}" name="promotions[]" value="{{ $pr->id }}" {{ $pr->products()->where('product_id', $product->id)->exists() ? 'checked' : null }}>
+                                            <label class="form-check-label" for="pr-{{$pr->id}}">{{ $pr->name}}</label>
+                                          </div>
+                                        </div>
+                                      @endforeach
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
                           </div>
                         </div>
 
@@ -180,8 +207,7 @@
 @section('js')
   <script src='https://cdn.tiny.cloud/1/z826n1n5ayf774zeqdphsta5v2rflavdm2kvy7xtmczyokv3/tinymce/5/tinymce.min.js' referrerpolicy="origin"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.0/min/dropzone.min.js"></script>
-  <script !src="">
-    // let editor = new FroalaEditor('textarea')
+  <script>
     tinymce.init({
       selector: 'textarea'
     });
@@ -239,7 +265,6 @@
 
         this.on("success", function (file, serverFileName) {
           fileList[i] = {"serverFileName": serverFileName, "fileName": file.name, "fileId": i};
-          //console.log(fileList);
           i++;
         });
         this.on("removedfile", function(file) {
@@ -273,8 +298,7 @@
       acceptedFiles: 'image/*',
       url: "{{route('admin.production.products.photo', $product->id)}}",
       renameFile: function (file) {
-        let newName = new Date().getTime() + '_' + file.name;
-        return newName;
+        return new Date().getTime() + '_' + file.name;
       },
       addRemoveLinks: true,
     });
@@ -285,7 +309,7 @@
       $('.select2-selection').css('border-radius','0px')
       $('.fr-toolbar').css('border-radius','0px')
       $('.second-toolbar').css('border-radius','0px')
-      <? $i = 0;?>
+      <?php $i = 0;?>
       @foreach($product->photos as $photo)
       var mockFile = { name: '{{ $photo->name }}', size: 0 };
       uploader.emit("addedfile", mockFile);
@@ -293,7 +317,7 @@
       uploader.emit("complete", mockFile);
       uploader.files.push(mockFile)
       fileList.push({"serverFileName": '{{ $photo->name }}', "fileName":'{{ $photo->name }}', "fileId": {{ $i }}});
-      <? $i++?>
+      <?php $i++?>
       @endforeach
 
       $('#new').iCheck({

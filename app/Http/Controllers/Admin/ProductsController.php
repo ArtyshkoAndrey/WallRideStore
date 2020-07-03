@@ -126,6 +126,10 @@ class ProductsController extends Controller {
         $ph->save();
       }
     }
+
+    if (count($request->promotions) > 0) {
+      $product->promotions()->attach($request->promotions);
+    }
     return redirect()->route('admin.production.products.index');
   }
 
@@ -198,6 +202,11 @@ class ProductsController extends Controller {
     }
 
     $product->save();
+    if (isset($request->promotions)) {
+      $product->promotions()->attach($request->promotions);
+    } else {
+      $product->promotions()->detach();
+    }
     return redirect()->route('admin.production.products.edit', $id);
   }
 

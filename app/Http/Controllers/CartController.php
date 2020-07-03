@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Country;
 use App\Models\Currency;
+use App\Models\Product;
 use App\Models\UserAddress;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddCartRequest;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\Debug\Exception\FatalThrowableError;
 
 class CartController extends Controller
 {
@@ -88,35 +90,32 @@ class CartController extends Controller
       $ids = $request->ids;
       $cartItems = [];
       $priceAmount = 0;
-      $amount = 0;
-      foreach ($ids as $k => $id) {
-        $id = (int) $id;
+      $productsSku = Product::getProducts($ids);
+      foreach ($productsSku as $k => $productSku) {
+
         $ch = false;
-        $item = [];
-        $prs = ProductSku::with('product')->where('id', $id)->first();
         foreach ($cartItems as $key => $item) {
-          if ($item['product_sku']['id'] === $id) {
+          if (($item['id'] === $productSku->id) && ($item['product_sku']->product->price === $productSku->product->price)) {
             $ch = true;
             $cartItems[$key]['amount'] = $item['amount'] + 1;
-            $priceAmount += $prs->product->on_sale ? $prs->product->price_sale : $prs->product->price;
+            $priceAmount += $productSku->product->on_sale ? $productSku->product->price_sale : $productSku->product->price;
             break;
           }
         }
         if (!$ch) {
-          if (isset($prs)) {
+          if (isset($productSku)) {
             $item = [];
             $item['amount'] = 1;
-            $item['id'] = $id;
-            $item['product_sku'] = $prs;
-            if (isset($prs->product)) {
-              Log::debug(($prs->product->on_sale ? 'Включена' : 'Выключена') . ' скидка для товара ' . $prs->product->id);
-              $priceAmount += $prs->product->on_sale ? $prs->product->price_sale : $prs->product->price;
+            $item['id'] = (int)$productSku->id;
+            $item['product_sku'] = $productSku;
+            if (isset($productSku->product)) {
+              $priceAmount += $productSku->product->on_sale ? $productSku->product->price_sale : $productSku->product->price;
               array_push($cartItems, $item);
             } else {
-              unset($ids[$k]);
+              unset($productsSku[$k]);
             }
           } else {
-            unset($ids[$k]);
+            unset($productsSku[$k]);
           }
         }
       }
