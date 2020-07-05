@@ -76,11 +76,11 @@ class Product extends Model
     if (isset($promotions[1])) {
       $minCost = $promotions[1][0]->product->price;
       $p = $promotions[1][0];
-      if (($countFromFirst = (int)(count($promotions[1]) / 3)) > 0) {
+      if (($countFromFirst = (int)(count($promotions[1]) / 2)) > 0) {
         while ($countFromFirst > 0) {
           foreach ($promotions[1] as $productSku) {
             $price = (int)$productSku->product->price;
-            if ($minCost < $price) {
+            if ($minCost > $price) {
               $minCost = $productSku->product->price;
               $p = $productSku;
             }
