@@ -73,16 +73,19 @@ class Product extends Model
         }
       }
     }
-    if (isset($promotions[1])) {
-      $minCost = $promotions[1][0]->product->price;
-      $p = $promotions[1][0];
+//    Код для акции где скидка на второй товар.
+    if (isset($promotions[1]) && ($promotion = Promotion::find(1))->status === true) {
+      $p = null;
       if (($countFromFirst = (int)(count($promotions[1]) / 2)) > 0) {
         while ($countFromFirst > 0) {
+          $minCost = PHP_INT_MAX;
           foreach ($promotions[1] as $productSku) {
             $price = (int)$productSku->product->price;
-            if ($minCost > $price) {
+
+            if ($minCost > $price && !isset($productSku->product->isPromotion)) {
               $minCost = $productSku->product->price;
               $p = $productSku;
+              $productSku->product->isPromotion = true;
             }
           }
           for ($i = 0; $i < count($products); $i++) {
@@ -92,7 +95,8 @@ class Product extends Model
               for ($j = 0; $j < count($productSku->product->photos); $j++) {
                 $productSku->product->photos[$j] = (object)$productSku->product->photos[$j];
               }
-              $productSku->product->price = (int)$productSku->product->price - (int)$productSku->product->price * 10 / 100;
+              $productSku->product->price = (int)$productSku->product->price - (int)$productSku->product->price * (int)$promotion->sale / 100;
+              $productSku->product->isPromotion = true;
               $products[$i] = $productSku;
               break;
             }
