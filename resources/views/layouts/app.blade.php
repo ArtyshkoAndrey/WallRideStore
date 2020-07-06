@@ -8,6 +8,7 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>@yield('title', 'WallRidestore') - WallRidestore</title>
   <!-- стиль -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simptip@1.0.4/simptip.min.css">
   <link href="{{ mix('css/app.css') }}" rel="stylesheet">
   @if (env('METRICS', true))
     <!— Global site tag (gtag.js) - Google Analytics —>

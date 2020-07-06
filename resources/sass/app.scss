@@ -301,3 +301,14 @@ select[name="order"], select[name="size"], select[name="brand"], select[name="ca
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",endColorstr="#ffffff",GradientType=1);
   display:inline-block;
 }
+
+[data-tooltip]:after {
+  height: auto;
+  padding: 13px 13px 13px 13px;
+  font-size: 14px;
+  line-height: 15px;
+  content: attr(data-tooltip);
+  white-space: normal;
+  max-width: 150px;
+  min-width: 100px;
+}

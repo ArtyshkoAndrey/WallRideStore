@@ -3,9 +3,12 @@
     <div class="card h-100">
       <div class="card-body px-0 pb-0 justify-content-between d-flex flex-column">
         <div>
-<!--          <div class="position-absolute px-4 py-1" id="event" v-if="item.on_new">-->
-<!--            <span class="text-uppercase font-weight-bold text-white" v-if="item.on_new">new</span>-->
-<!--          </div>-->
+          <div class="position-absolute px-4 py-1" style="top:0;left:0" id="event" v-if="!item.on_sale ? item.promotions.some(elem => elem.status) : item.promotions.some(elem => elem.status && elem.sale_status)">
+            <div class="position-relative d-inline-flex">
+              <span class="font-weight-bold text-white">Акция</span>
+              <div class="position-relative d-block px-2 mt-1 text-white simptip-position-bottom" :data-tooltip="promotionsText"><i class="fal fa-info-circle"></i></div>
+            </div>
+          </div>
           <div class="position-absolute px-4 py-1" id="like">
             <button class="bg-transparent border-0 m-0 p-0" @click="favored" v-if="!favor" style="transition: 1s;"><i class="fal fa-heart"></i></button>
             <button class="bg-transparent border-0 m-0 p-0" v-else style="transition: 1s;"><i class="fas fa-heart"></i></button>
@@ -107,6 +110,32 @@ line-height: 24px;" v-model="count" readonly disabled>
     mounted() {
       while (this.item.skus[this.numberSize].stock <= 0) {
         this.removeNumberSize()
+      }
+    },
+    computed: {
+      promotionsText: function() {
+        let t = ''
+        console.log(this.item.promotions)
+        this.item.promotions.forEach((pr, index) => {
+          if (!this.item.on_sale) {
+            if (index === 0 || index === this.item.promotions.length && pr.status) {
+              t += pr.name
+              console.log(pr)
+            } else if (index !== this.item.promotions.length && pr.status) {
+              t += ', ' + pr.name + ', '
+              console.log(pr)
+            }
+          } else if (pr.sale_status) {
+            if (index === 0 || index === this.item.promotions.length && pr.status) {
+              t += pr.name
+              console.log(pr)
+            } else if (index !== this.item.promotions.length && pr.status) {
+              t += ', ' + pr.name + ', '
+              console.log(pr)
+            }
+          }
+        })
+        return t;
       }
     },
     methods: {
@@ -295,14 +324,16 @@ line-height: 24px;" v-model="count" readonly disabled>
     border-radius: 15px;
     .card-body {
       #event {
-        background-color: #F33C3C;
-        box-shadow: 0 4px 20px rgba(247, 7, 7, 0.43);
-        border-radius: 32px;
+        background-color: #000;
+        /*box-shadow: 0 4px 20px rgba(247, 7, 7, 0.43);*/
+        border-top-left-radius: 15px;
         left: -15px;
+        cursor: pointer;
         span {
           font-size: 18px;
           line-height: 35px;
         }
+
       }
       > div {
         padding: 0 23px;
