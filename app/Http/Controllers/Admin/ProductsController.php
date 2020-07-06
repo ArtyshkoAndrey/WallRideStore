@@ -128,7 +128,7 @@ class ProductsController extends Controller {
     }
 
     if (count($request->promotions) > 0) {
-      $product->promotions()->attach($request->promotions);
+      $product->promotions()->sync($request->promotions);
     }
     return redirect()->route('admin.production.products.index');
   }
@@ -203,7 +203,7 @@ class ProductsController extends Controller {
 
     $product->save();
     if (isset($request->promotions)) {
-      $product->promotions()->attach($request->promotions);
+      $product->promotions()->sync($request->promotions);
     } else {
       $product->promotions()->detach();
     }
