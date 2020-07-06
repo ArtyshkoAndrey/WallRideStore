@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Product;
 use Auth;
 use App\Models\CartItem;
 
@@ -9,7 +10,36 @@ class CartService
 {
   public function get()
   {
-    return Auth::user()->cartItems()->with(['productSku.product'])->get();
+    $cartItems = Auth::user()->cartItems()->with(['productSku.product'])->get();
+    $ids = [];
+    foreach ($cartItems as $item) {
+      $ids += array_fill(count($ids), $item->amount, $item->product_sku_id);
+    }
+    $productsSku = Product::getProducts($ids);
+    $priceAmount = 0;
+    $cartItems = [];
+    foreach ($productsSku as $k => $productSku) {
+      $id = (int)$productSku->id;
+      $ch = false;
+      $item = [];
+
+      foreach ($cartItems as $key => $item) {
+        if (($item['id'] === $productSku->id) && ($item['product_sku']->product->price === $productSku->product->price)) {
+          $ch = true;
+          $cartItems[$key]['amount'] = $item['amount'] + 1;
+          $priceAmount += $productSku->product->on_sale ? $productSku->product->price_sale : $productSku->product->price;
+          break;
+        }
+      }
+      if (!$ch) {
+        $item['amount'] = 1;
+        $item['id'] = $id;
+        $item['product_sku'] = $productSku;
+        $priceAmount += $productSku->product->on_sale ? $productSku->product->price_sale : $productSku->product->price;
+        array_push($cartItems, $item);
+      }
+    }
+    return ['amount'=> count($ids), 'priceAmount' => $priceAmount, 'cartItems' => $cartItems];
   }
 
   public function add($skuId, $amount)
@@ -36,9 +66,15 @@ class CartService
   {
     $user = Auth::user();
     if ($item = $user->cartItems()->where('product_sku_id', $skuId)->first()) {
-      $item->update([
-        'amount' => $amount,
-      ]);
+      if ($amount <= 0) {
+        $item->update([
+          'amount' => $item->amount - 1
+        ]);
+      } else {
+        $item->update([
+          'amount' => $amount,
+        ]);
+      }
     } else {
       // 否则创建一个新的购物车记录
       $item = new CartItem(['amount' => $amount]);

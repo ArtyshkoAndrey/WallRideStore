@@ -240,7 +240,7 @@
         </a>
         <header-cart :cartitems="{{ json_encode($cartItems) }}" :currency="{{ $currency }}" :priceamount="{{ $priceAmount }}" inline-template>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="cart" id="cart-dropdown">
-            <mini-cart-item v-for="item in $parent.cartItems" :key="item.id" :item="item" :currency="{{ $currency }}" :id="item.product_sku.id" inline-template>
+            <mini-cart-item v-for="(item, index) in $parent.cartItems" :key="item.id + '-' + index" :item="item" :currency="{{ $currency }}" :id="item.product_sku.id" inline-template>
               <div class="row align-items-center m-0">
                 <div class="col-md-3 col-6 h-100">
                   <img :src="item.product_sku.product.photos !== null && item.product_sku.product.photos.length > 0  ? '/public/storage/products/' + item.product_sku.product.photos[0].name : 'https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png'" alt="t-short" class="img-fluid">
@@ -253,6 +253,9 @@
                     <span class="col-md-9 col-9 p-0 cart-price">@{{ item.amount }} х @{{ item.product_sku.product.on_sale && item.product_sku.product.price_sale ? $cost(Number(item.product_sku.product.price_sale) * currency.ratio)  : $cost(Number(item.product_sku.product.price) * currency.ratio) }} @{{currency.symbol}}</span>
                     <button class="btn btn-default col-md-3 col-3 p-0" @click="deleteItem"><i class="fal fa-times fa-fw fa-lg text-dark"></i></button>
                   </div>
+                </div>
+                <div class="col-12" v-if="item.product_sku.product.isPromotion === true">
+                  По акции: @{{  item.product_sku.product.namePromotion }}
                 </div>
               </div>
             </mini-cart-item>

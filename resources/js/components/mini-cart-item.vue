@@ -25,7 +25,7 @@
     methods: {
       postServe () {
         axios.post('/cart/minus', {
-          sku_id: this.cartItem.product_sku ? this.cartItem.product_sku.id : this.cartItem.productSku.id,
+          sku_id: this.cartItem.product_sku.id,
           amount: this.cartItem.amount,
           type: this.type
         })
@@ -33,6 +33,7 @@
             // swal('Значение изменено', '', 'success')
             console.log(response.data);
             let data = response.data;
+            console.log(data.cartItems)
             this.$parent.cartItems = data.cartItems
             this.$parent.priceAmount = data.priceAmount
             this.$parent.amount = data.amount
@@ -62,7 +63,7 @@
           })
       },
       addCounter() {
-        if (this.cartItem.product_sku ? this.cartItem.product_sku.stock : this.cartItem.productSku.stock > this.cartItem.amount) {
+        if (this.cartItem.product_sku.stock > this.cartItem.amount) {
           this.cartItem.amount++;
           this.type = 'pluses'
           this.postServe()
@@ -70,11 +71,11 @@
       },
       removeCounter() {
         console.log(this.cartItem.amount);
-        if (this.cartItem.amount > 1) {
+        // if (this.cartItem.amount > 1) {
           this.cartItem.amount--
           this.type='minus'
           this.postServe();
-        }
+        // }
       },
       deleteItem () {
         swal({

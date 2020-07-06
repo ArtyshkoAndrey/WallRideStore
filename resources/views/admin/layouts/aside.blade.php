@@ -8,6 +8,14 @@
     <nav>
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
         <li class="nav-item">
+          <a href="{{ route('admin.root') }}" class="nav-link rounded-0 {{ Route::currentRouteNamed('admin.root') ? 'active' : '' }}">
+            <i class="fas fa-tachometer-slowest mr-3"></i>
+            <p>
+              Главная
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
           <a href="{{ route('admin.store.order.index') }}" class="nav-link rounded-0 {{ Route::currentRouteNamed('admin.store.*') ? 'active' : '' }}">
             <i class="fal fa-store mr-3"></i>
             <p>

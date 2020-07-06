@@ -2,7 +2,6 @@
 @section('title', 'Магазин - Товары')
 
 @section('css')
-  <link href="https://cdn.jsdelivr.net/npm/froala-editor@3.0.6/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.0/min/dropzone.min.css">
   <style>
     .dz-image > img {

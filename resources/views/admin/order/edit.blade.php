@@ -159,6 +159,19 @@
                     <p id="total_amount" class="text-muted">{{ cost($order->total_amount) }} тг.</p>
                   </div>
                 </div>
+
+                <div class="row">
+                  <div class="col-12">
+                    <label for="total_amount">Акции</label>
+                  </div>
+                  <div class="col-12">
+                    @forelse($order->promotions as $index => $pr)
+                      <p id="total_amount-{{$pr->id}}" class="text-muted">{{ $index + 1 . '. '}} <span class="text-bold">{{ $pr->name }}</span></p>
+                    @empty
+                      <p id="total_amount" class="text-muted">Нет акций</p>
+                    @endforelse
+                  </div>
+                </div>
               </div>
             </div>
             <div class="row mt-3">

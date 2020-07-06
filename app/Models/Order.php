@@ -92,6 +92,11 @@ class Order extends Model
       return $this->hasMany(OrderItem::class);
   }
 
+  public function promotions()
+  {
+    return $this->belongsToMany(Promotion::class, 'orders_promotions', 'order_id', 'promotion_id');
+  }
+
   public function couponCode()
   {
       return $this->belongsTo(CouponCode::class);

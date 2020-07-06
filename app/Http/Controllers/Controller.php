@@ -79,9 +79,10 @@ class Controller extends BaseController
             }
           }
         }
-        $cartItems = $this->cartService->get();
-        $priceAmount = $this->cartService->priceAmount();
-        $amount = $this->cartService->amount();
+        $dataItems = $this->cartService->get();
+        $amount = $dataItems['amount'];
+        $priceAmount = $dataItems['priceAmount'];
+        $cartItems = $dataItems['cartItems'];
         $address = UserAddress::where('user_id', auth()->user()->id)->first();
         if(isset($address)) {
           if ($address->currency_id !== null) {

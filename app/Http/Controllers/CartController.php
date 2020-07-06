@@ -32,35 +32,38 @@ class CartController extends Controller
     $address = [];
     $cartItems = [];
     if(Auth::check()) {
-      $cartItems = $this->cartService->get();
-      $amount =$this->cartService->amount();
-      $priceAmount = $this->cartService->priceAmount();
+      $dataItems = $this->cartService->get();
+      $amount = $dataItems['amount'];
+      $priceAmount = $dataItems['priceAmount'];
+      $cartItems = $dataItems['cartItems'];
+
       $address = $request->user()->address;
+
     } else {
       if(isset($_COOKIE["products"])) {
         $arr = explode(',',$_COOKIE["products"]);
+        $productsSku = Product::getProducts($arr);
         $cartItems = [];
         $amount = count($arr);
         if ($arr[0] !== "") {
-          foreach ($arr as $id) {
-            $id = (int)$id;
+          foreach ($productsSku as $k => $productSku) {
+            $id = (int)$productSku->id;
             $ch = false;
             $item = [];
 
-            $prs = ProductSku::with('product')->where('id', $id)->first();
             foreach ($cartItems as $key => $item) {
-              if ($item['id'] === $id) {
+              if (($item['id'] === $productSku->id) && ($item['product_sku']->product->price === $productSku->product->price)) {
                 $ch = true;
                 $cartItems[$key]['amount'] = $item['amount'] + 1;
-                $priceAmount += $prs->product->on_sale ? $prs->product->price_sale : $prs->product->price;
+                $priceAmount += $productSku->product->on_sale ? $productSku->product->price_sale : $productSku->product->price;
                 break;
               }
             }
             if (!$ch) {
               $item['amount'] = 1;
               $item['id'] = $id;
-              $item['productSku'] = $prs;
-              $priceAmount += $prs->product->on_sale ? $prs->product->price_sale : $prs->product->price;
+              $item['product_sku'] = $productSku;
+              $priceAmount += $productSku->product->on_sale ? $productSku->product->price_sale : $productSku->product->price;
               array_push($cartItems, $item);
             }
           }
@@ -74,9 +77,10 @@ class CartController extends Controller
   {
     if(Auth::check()) {
       $this->cartService->add($request->input('sku_id'), $request->input('amount'));
-      $cartItems = $this->cartService->get();
-      $amount =$this->cartService->amount();
-      $priceAmount = $this->cartService->priceAmount();
+      $dataItems = $this->cartService->get();
+      $amount = $dataItems['amount'];
+      $priceAmount = $dataItems['priceAmount'];
+      $cartItems = $dataItems['cartItems'];
       return ['cartItems' => $cartItems, 'amount' => $amount, 'priceAmount' => $priceAmount, 'type' => 'auth'];
     } else {
         return ['type' => 'web'];
@@ -128,9 +132,10 @@ class CartController extends Controller
   {
     if(Auth::check()) {
       $this->cartService->minusAmount($request->input('sku_id'), (int) $request->input('amount'));
-      $cartItems = $this->cartService->get();
-      $amount = $this->cartService->amount();
-      $priceAmount = $this->cartService->priceAmount();
+      $dataItems = $this->cartService->get();
+      $amount = $dataItems['amount'];
+      $priceAmount = $dataItems['priceAmount'];
+      $cartItems = $dataItems['cartItems'];
 
       return ['cartItems' => $cartItems, 'amount' => $amount, 'priceAmount' => $priceAmount];
     } else {
@@ -149,29 +154,26 @@ class CartController extends Controller
       }
       $cartItems = [];
       $priceAmount = 0;
-      foreach ($ids as $id) {
-        $id = (int) $id;
+      $productsSku = Product::getProducts($ids);
+      foreach ($productsSku as $productSku) {
         $ch = false;
         $item = [];
-        $prs = ProductSku::with('product')->where('id', $id)->first();
         foreach ($cartItems as $key => $item) {
-          if($item['product_sku']['id'] === $id) {
+          if(($item['id'] === $productSku->id) && ($item['product_sku']->product->price === $productSku->product->price)) {
             $ch = true;
             $cartItems[$key]['amount'] = $item['amount'] + 1;
-            $priceAmount += $prs->product->on_sale ? $prs->product->price_sale : $prs->product->price;
+            $priceAmount += $productSku->product->on_sale ? $productSku->product->price_sale : $productSku->product->price;
             break;
           }
         }
         if (!$ch) {
           $item['amount'] = 1;
-          $item['id'] = $id;
-          $item['product_sku'] = $prs;
-          $priceAmount += $prs->product->on_sale ? $prs->product->price_sale : $prs->product->price;
+          $item['id'] = $productSku->id;
+          $item['product_sku'] = $productSku;
+          $priceAmount += $productSku->product->on_sale ? $productSku->product->price_sale : $productSku->product->price;
           array_push($cartItems, $item);
         }
       }
-//      return implode(",", $ids);
-//      setcookie("products", implode(",", $ids), time() + (3600 * 24 * 30), "/", request()->getHost());
       return ['cartItems' => $cartItems, 'amount' => count($ids), 'priceAmount' => $priceAmount, 'ids' => implode(",", $ids) ];
     }
 

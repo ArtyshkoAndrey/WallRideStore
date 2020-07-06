@@ -67,15 +67,15 @@
               @forelse($cartItems as $item)
                 <div class="row mt-3 justify-content-center align-items-center">
                   <div class="col-md-2 offset-md-1 col-4">
-                    <img src="{{ $item->productSku->product->photos()->get()->toArray() ?  asset('storage/products/' . $item->productSku->product->photos()->first()->name) : 'https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png' }}" class="img-fluid" alt="{{ $item->productSku->product->title }}">
+                    <img src="{{ $item['product_sku']->product->photos ?  asset('storage/products/' . $item['product_sku']->product->photos[0]->name) : 'https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png' }}" class="img-fluid" alt="{{ $item['product_sku']->product->title }}">
                   </div>
                   <div class="col-4 col-md-4">
-                    {{ ucwords(strtolower($item->productSku->product->title)) }}
+                    {{ ucwords(strtolower($item['product_sku']->product->title)) }}
                     <br>
-                    <p class="text-muted font-small">Размер: {{ $item->productSku->skus ? $item->productSku->skus->title : 'One Size' }}</p>
+                    <p class="text-muted font-small">Размер: {{ isset($item['product_sku']->skus) ? $item['product_sku']->skus->title : 'One Size' }}</p>
                   </div>
                   <div class="col-4 col-md text-center font-weight-bold">
-                    {{ cost(round(($item->productSku->product->on_sale ? $item->productSku->product->price_sale : $item->productSku->product->price) * $currency->ratio, 0)) }} {{ $currency->symbol }} X {{ $item->amount }}
+                    {{ cost(round(($item['product_sku']->product->on_sale ? $item['product_sku']->product->price_sale : $item['product_sku']->product->price) * $currency->ratio, 0)) }} {{ $currency->symbol }} X {{ $item['amount'] }}
                   </div>
                 </div>
               @empty

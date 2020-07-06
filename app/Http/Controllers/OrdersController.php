@@ -14,6 +14,7 @@ use App\Models\ExpressZone;
 use App\Models\Pay;
 use App\Models\Product;
 use App\Models\ProductSku;
+use App\Models\Promotion;
 use App\Models\User;
 use App\Models\UserAddress;
 use App\Models\Order;
@@ -75,8 +76,18 @@ class OrdersController extends Controller
       }
     }
     $order = $orderService->store($user, $address, $request->items, $payment_method, $express_company, $cost_transfer, $coupon);
-//    return $order;
     setcookie("products", '', time() + (3600 * 24 * 30), "/", request()->getHost());
+    $items = $request->items;
+    $promotionsName = [];
+    foreach ($items as $item) {
+      if (isset($item['productSku']['product']['isPromotion'])) {
+        if (!in_array($item['productSku']['product']['namePromotion'], $promotionsName, TRUE)) {
+          array_push($promotionsName, $item['productSku']['product']['namePromotion']);
+          $order->promotions()->attach(Promotion::where('name', $item['productSku']['product']['namePromotion'])->first()->id);
+        }
+      }
+    }
+    $order->save();
     if ($payment_method === 'card') {
       $p = Pay::first();
       $request = [
@@ -99,6 +110,7 @@ class OrdersController extends Controller
       $request['pg_sig'] = md5(implode(';', $request));
       unset($request[0], $request[1]);
       $query = http_build_query($request);
+
       if ($order->no) {
         return $p->url . $query;
       } else {
@@ -109,7 +121,6 @@ class OrdersController extends Controller
         $order->ship_status = Order::SHIP_STATUS_PENDING;
         $order->closed = 0;
         $order->save();
-
 //  УДАЛЕНИ КОЛ-ВО ТОВАРА ПРИ ОПЛАТЕ НАЛИЧНЫМИ
 
 //        foreach ($order->items as $item) {
@@ -233,28 +244,26 @@ class OrdersController extends Controller
       $city = City::find(isset($_COOKIE['city']) ? $_COOKIE['city'] : 1);
       $cartItems = [];
       $priceAmount = 0;
-      foreach ($ids as $k => $id) {
-        $id = (int) $id;
+      $productsSku = Product::getProducts($ids);
+      foreach ($productsSku as $k => $productSku) {
         $ch = false;
-        $item = (object) array();
-        $prs = ProductSku::with('product')->where('id', $id)->first();
         foreach ($cartItems as $key => $item) {
-          if ($item->productSku->id === $id) {
+          if (($item['id'] === $productSku->id) && ($item['product_sku']->product->price === $productSku->product->price)) {
             $ch = true;
-            $cartItems[$key]->amount = $item->amount + 1;
-            $priceAmount += $prs->product->on_sale ? $prs->product->price_sale : $prs->product->price;
+            $cartItems[$key]['amount'] = $item['amount'] + 1;
+            $priceAmount += $productSku->product->on_sale ? $productSku->product->price_sale : $productSku->product->price;
           }
         }
         if (!$ch) {
-          if (isset($prs)) {
-            $item = (object)array();
-            $item->amount = 1;
-            $item->id = $id;
-            $item->productSku = $prs;
-            $priceAmount += $prs->product->on_sale ? $prs->product->price_sale : $prs->product->price;
+          if (isset($productSku)) {
+            $item = array();
+            $item['amount'] = 1;
+            $item['id'] = $productSku->id;
+            $item['product_sku'] = $productSku;
+            $priceAmount += $productSku->product->on_sale ? $productSku->product->price_sale : $productSku->product->price;
             array_push($cartItems, $item);
           } else {
-            unset($ids[$k]);
+            unset($productsSku[$k]);
           }
         }
       }
