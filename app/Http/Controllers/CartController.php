@@ -123,7 +123,7 @@ class CartController extends Controller
           }
         }
       }
-      $amount = count($ids);
+      $amount = count($productsSku);
       return ['cartItems' => $cartItems, 'amount' => $amount, 'priceAmount' => $priceAmount, 'type' => 'web'];
     }
   }
