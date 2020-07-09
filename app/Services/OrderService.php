@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\City;
 use App\Models\Country;
+use App\Models\Product;
 use App\Models\User;
 use App\Models\UserAddress;
 use App\Models\Order;
@@ -40,6 +41,15 @@ class OrderService
             $order->save();
 
             $totalAmount = 0;
+            $ids = [];
+            foreach ($items as $data) {
+              array_push($ids, $data['productSku']['id']);
+            }
+            $productsSku = Product::getProducts($ids);
+            $priceAmount = 0;
+            foreach ($productsSku as $k => $productSku) {
+              $priceAmount += $productSku->product->on_sale ? $productSku->product->price_sale : $productSku->product->price;
+            }
             foreach ($items as $data) {
               $sku = ProductSku::find($data['productSku']['id']);
               $item = $order->items()->make([
@@ -53,25 +63,19 @@ class OrderService
                 $item->product_sku = 'One Size';
               }
                 $item->save();
-                $totalAmount += ($sku->product->on_sale ? $sku->product->price_sale : $sku->product->price) * $data['amount'];
-                // throw new \Exception($sku->);
-                // return $sku->decreaseStock($data['amount']);
-                // dd($sku->decreaseStock($data['amount']))
-                // return $sku->decreaseStock($data['amount']);
                 if ($sku->decreaseStock($data['amount']) <= 0) {
                     throw new InvalidRequestException('Товар распродан');
                 }
-//                $sku->addStock($data['amount']);
             }
             if ($coupon) {
-                $coupon->checkAvailable($user, $totalAmount);
-                $totalAmount = $coupon->getAdjustedPrice($totalAmount, $items);
+                $coupon->checkAvailable($user, $priceAmount);
+                $totalAmount = $coupon->getAdjustedPrice($priceAmount, $items);
                 $order->couponCode()->associate($coupon);
                 if ($coupon->changeUsed() <= 0) {
                     throw new CouponCodeUnavailableException('该优惠券已被兑完');
                 }
             }
-            $order->update(['total_amount' => $totalAmount]);
+            $order->update(['total_amount' => $priceAmount]);
 
             $skuIds = collect($items)->pluck('sku_id')->all();
             app(CartService::class)->remove($skuIds);
