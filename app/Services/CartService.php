@@ -18,8 +18,10 @@ class CartService
     $productsSku = Product::getProducts($ids);
     $priceAmount = 0;
     $cartItems = [];
+    $amount = 0;
     foreach ($productsSku as $k => $productSku) {
       $id = (int)$productSku->id;
+      $amount++;
       $ch = false;
       $item = [];
 
@@ -39,7 +41,7 @@ class CartService
         array_push($cartItems, $item);
       }
     }
-    return ['amount'=> count($ids), 'priceAmount' => $priceAmount, 'cartItems' => $cartItems];
+    return ['amount'=> $amount, 'priceAmount' => $priceAmount, 'cartItems' => $cartItems];
   }
 
   public function add($skuId, $amount)

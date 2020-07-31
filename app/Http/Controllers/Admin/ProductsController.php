@@ -127,7 +127,7 @@ class ProductsController extends Controller {
       }
     }
 
-    if (count($request->promotions) > 0) {
+    if (isset($request->promotions) && count($request->promotions) > 0) {
       $product->promotions()->sync($request->promotions);
     }
     return redirect()->route('admin.production.products.index');

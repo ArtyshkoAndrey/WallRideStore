@@ -137,6 +137,8 @@
           this.$refs.totalAmountBottom.innerText = 'Общая сумма ' +
             new Intl.NumberFormat('ru-RU').format(((amount + this.getCostTransfer) * this.currency.ratio).toFixed(0)) +
             ' ' + this.currency.symbol
+
+          this.checkCoupon(false);
         },
         deep: true
       },
@@ -154,10 +156,10 @@
       }
     },
     methods: {
-      checkCoupon () {
+      checkCoupon (swalable = true) {
         let code = this.order.coupon;
         // Если нет ввода, всплывающее окно
-        if(!code) {
+        if(!code && swalable) {
           swal('Пожалуйста, введите код скидки', '', 'warning');
           return;
         }
@@ -172,7 +174,9 @@
             this.$refs.totalAmountBottom.innerText = 'Общая сумма ' +
               new Intl.NumberFormat('ru-RU').format(((response.data.totalAmount + (this.getCostTransfer? this.getCostTransfer : 0)) * this.currency.ratio).toFixed(0)) +
               ' ' + this.currency.symbol
-            swal('Купон применился', '', 'success')
+            if (swalable) {
+              swal('Купон применился', '', 'success')
+            }
             $('#checkCoupon').prop('disabled', true);
             $('#coupon').prop('readonly', true);
           }, (error) => {

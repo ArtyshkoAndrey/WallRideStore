@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\CartService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
@@ -67,7 +68,13 @@ class Product extends Model
       foreach ($ids as $k => $id) {
         $productSku = ProductSku::with('product', 'skus')->find((int)$id);
         if (!Auth::check()) {
-          if (!isset($productSku) || !isset($productSku->product)) {
+          if (!isset($productSku)  || !isset($productSku->product)) {
+            unset($ids[$k]);
+            break;
+          }
+        } else {
+          if(!$productSku || !$productSku->product || $productSku === null) {
+            app(CartService::class)->remove($id);
             unset($ids[$k]);
             break;
           }
@@ -134,6 +141,7 @@ class Product extends Model
         }
       }
     }
+//    dd($products);
     return $products;
 
   }

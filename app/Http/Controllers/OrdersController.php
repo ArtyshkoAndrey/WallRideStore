@@ -75,6 +75,7 @@ class OrdersController extends Controller
         throw new CouponCodeUnavailableException('Данного купона не существует');
       }
     }
+//    dd($coupon);
     $order = $orderService->store($user, $address, $request->items, $payment_method, $express_company, $cost_transfer, $coupon);
     setcookie("products", '', time() + (3600 * 24 * 30), "/", request()->getHost());
     $items = $request->items;
