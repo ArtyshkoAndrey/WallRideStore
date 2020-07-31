@@ -159,7 +159,7 @@
       checkCoupon (swalable = true) {
         let code = this.order.coupon;
         // Если нет ввода, всплывающее окно
-        if(!code && swalable) {
+        if((!code || code === '' || code === null) && swalable) {
           swal('Пожалуйста, введите код скидки', '', 'warning');
           return;
         }
@@ -180,15 +180,17 @@
             $('#checkCoupon').prop('disabled', true);
             $('#coupon').prop('readonly', true);
           }, (error) => {
-            // Если код возврата 404, купон не существует
-            if(error.response.status === 404) {
-              swal('Код купона не существует', '', 'error');
-            } else if (error.response.status === 403) {
-              // Если код возврата 403, другие условия не выполняются
-              swal(error.response.data.msg, '', 'error');
-            } else {
-              // Другие ошибки
-              swal('Внутренняя ошибка системы', '', 'error');
+            if (swalable) {
+              // Если код возврата 404, купон не существует
+              if (error.response.status === 404) {
+                swal('Код купона не существует', '', 'error');
+              } else if (error.response.status === 403) {
+                // Если код возврата 403, другие условия не выполняются
+                swal(error.response.data.msg, '', 'error');
+              } else {
+                // Другие ошибки
+                swal('Внутренняя ошибка системы', '', 'error');
+              }
             }
           })
       },

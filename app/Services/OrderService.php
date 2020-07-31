@@ -41,14 +41,16 @@ class OrderService
             $order->save();
 
             $totalAmount = 0;
-            $ids = [];
+            $ids = array();
             foreach ($items as $data) {
-              array_push($ids, $data['productSku']['id']);
+              for($i = 0; $i < $data['amount']; $i++) {
+                array_push($ids, $data['productSku']['id']);
+              }
             }
             $productsSku = Product::getProducts($ids);
             $priceAmount = 0;
             foreach ($productsSku as $k => $productSku) {
-              $priceAmount += $productSku->product->on_sale ? $productSku->product->price_sale : $productSku->product->price;
+              $priceAmount += $productSku->product->on_sale ? (int)$productSku->product->price_sale : (int)$productSku->product->price;
             }
             foreach ($items as $data) {
               $sku = ProductSku::find($data['productSku']['id']);
@@ -62,11 +64,12 @@ class OrderService
               } else {
                 $item->product_sku = 'One Size';
               }
-                $item->save();
-                if ($sku->decreaseStock($data['amount']) <= 0) {
-                    throw new InvalidRequestException('Товар распродан');
-                }
+              $item->save();
+              if ($sku->decreaseStock($data['amount']) <= 0) {
+                throw new InvalidRequestException('Товар распродан');
+              }
             }
+            $totalAmount = $priceAmount;
             if ($coupon) {
                 $coupon->checkAvailable($user, $priceAmount);
                 $totalAmount = $coupon->getAdjustedPrice($priceAmount, $items);
@@ -76,6 +79,7 @@ class OrderService
                     throw new CouponCodeUnavailableException('该优惠券已被兑完');
                 }
             }
+//            dd($totalAmount);
             $order->update(['total_amount' => $totalAmount]);
 
             $skuIds = collect($items)->pluck('sku_id')->all();
