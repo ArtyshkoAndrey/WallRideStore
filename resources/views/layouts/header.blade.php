@@ -66,12 +66,6 @@
       <label><span><a class="c-red" href="{{ route('products.allsale') }}">Sale</a></span></label>
       <div class="content"></div>
     </div>
-    @auth
-      <div class="section">
-        <label><span><a href="{{ route('products.favorites') }}">Избранное</a></span></label>
-        <div class="content"></div>
-      </div>
-    @endauth
     <div class="section d-md-none">
       <label><span><a href="{{ route('faqs.index') }}">FAQ</a></span></label>
       <div class="content"></div>
@@ -199,7 +193,7 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right" style="right: 0; width: unset!important; height: unset!important;max-width: unset!important; max-height: unset!important; min-width: unset!important; min-height: unset!important;" aria-labelledby="profile">
           <a href="{{ route('login') }}" class="dropdown-item">Войти</a>
-          <a href="{{ route('register') }}" class="dropdown-item">Зарегестрироваться</a>
+          <a href="{{ route('register') }}" class="dropdown-item">Зарегистрироваться</a>
         </div>
       </li>
       @else
@@ -211,6 +205,7 @@
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profile">
           <a href="{{ route('profile.index') }}" class="dropdown-item">Мой профиль</a>
           <a href="{{ route('orders.index') }}" class="dropdown-item">Мои заказы</a>
+          <a href="{{ route('products.favorites') }}" class="dropdown-item">Избранное</a>
           <a class="dropdown-item" id="logout" href="#"
              onclick="event.preventDefault();document.getElementById('logout-form').submit();">Выйти</a>
           <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
