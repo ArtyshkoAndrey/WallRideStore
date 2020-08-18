@@ -5,10 +5,12 @@ use App\Models\Product;
 
 if ((new App\Models\Settings)->statusSite()) {
 
-  Route::redirect('/', '/products')->name('root'); // Главаня
-  Route::get('/about', 'PagesController@about')->name('about'); // Главаня
-  Route::get('/contact', 'PagesController@contact')->name('contact'); // Главаня
-  Route::get('products', 'ProductsController@index')->name('products.index'); // Главная с товарами
+  Route::redirect('/products', '/')->name('root'); // Главаня
+  Route::get('/', 'ProductsController@index')->name('products.index'); // Главная с товарами
+
+  Route::get('/about', 'PagesController@about')->name('about'); // О нас
+  Route::get('/contact', 'PagesController@contact')->name('contact'); // Контакты
+
   Route::get('products/all', 'ProductsController@all')->name('products.all');
   Route::get('products/all-sale', 'ProductsController@allsale')->name('products.allsale');
   Route::get('products/search', 'ProductsController@search')->name('products.search'); // Главная с товарами
@@ -65,14 +67,6 @@ function getAdminRoute()
   });
 
   Route::group(['prefix' => 'admin', 'guard' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth:admin']], function () {
-    Route::get('/test', function () {
-      $p = Product::with('skus')->zeroSkus()->get();
-      $p = $p->reject(function ($ps) {
-        return $ps->skus->sum('stock') > 0;
-      });
-      dump(count($p));
-      Product::whereIn('id', $p->pluck('id'))->delete();
-    });
     Route::get('logout', 'Auth\LoginController@logout')->name('admin.auth.logout');
     Route::delete('/order/all', 'OrderController@collectionsDestroy')->name('admin.store.order.collectionsDestroy');
     Route::delete('/coupon/all', 'CouponCodesController@collectionsDestroy')->name('admin.store.coupon.collectionsDestroy');
