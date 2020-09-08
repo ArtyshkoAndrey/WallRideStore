@@ -10,6 +10,7 @@ use App\Models\Header;
 use App\Models\News;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\Promotion;
 use App\Models\Skus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -119,6 +120,12 @@ class ProductsController extends Controller {
     })->get();
     $products = Product::doesntHave('brands')->where('on_sale', true)->with('skus', 'photos')->get();
     return view('products.all_sale', compact('products', 'brands'));
+  }
+
+  public function allactions ()
+  {
+    $promotions = Promotion::with('products')->get();
+    return view('products.all_actions', compact('promotions'));
   }
 
   public function allfavor ()

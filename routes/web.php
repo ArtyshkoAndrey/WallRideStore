@@ -13,6 +13,7 @@ if ((new App\Models\Settings)->statusSite()) {
 
   Route::get('products/all', 'ProductsController@all')->name('products.all');
   Route::get('products/all-sale', 'ProductsController@allsale')->name('products.allsale');
+  Route::get('products/all-actions', 'ProductsController@allactions')->name('products.allactions');
   Route::get('products/search', 'ProductsController@search')->name('products.search'); // Главная с товарами
   Route::get('product/{product}', 'ProductsController@show')->name('products.show');
   Route::get('policy', 'PagesController@policy')->name('policy');
@@ -54,8 +55,7 @@ if ((new App\Models\Settings)->statusSite()) {
     return view('pages.site');
   })->where('all', '.*');
 }
-function getAdminRoute()
-{
+function getAdminRoute() {
   Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::get('login', ['as' => 'admin.auth.login', 'uses' => 'Auth\LoginController@showLoginForm']);
     Route::post('login', ['as' => 'admin.auth.login', 'uses' => 'Auth\LoginController@login']);

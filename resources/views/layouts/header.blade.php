@@ -322,7 +322,7 @@
         <a class="nav-link d-flex align-items-center c-red" href="{{ route('products.allsale') }}">Sale</a>
       </li>
       <li class="nav-item mr-0 mr-sm-4 d-none d-md-flex">
-        <a class="nav-link d-flex align-items-center" href="{{ route('faqs.index') }}">FAQ</a>
+        <a class="nav-link d-flex align-items-center" href="{{ route('products.allactions') }}">Акции</a>
       </li>
 
     </ul>

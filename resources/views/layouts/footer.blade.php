@@ -29,6 +29,11 @@
             <a href="{{ route('policy') }}" target="_blank">Доставка и оплата</a>
           </div>
         </div>
+        <div class="row">
+          <div class="col-12">
+            <a href="{{ route('faqs.index') }}" target="_blank">FAQ</a>
+          </div>
+        </div>
       </div>
       <div class="col-12 mt-3 mt-md-0 justify-content-center align-items-center d-flex col-md text-white">
         <div class="row">
