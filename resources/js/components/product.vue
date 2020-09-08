@@ -101,7 +101,7 @@ line-height: 24px;" v-model="count" readonly disabled>
     },
     data() {
       return {
-        count: 0,
+        count: 1,
         numberSize: 0,
         cart: false,
         favor: false
@@ -171,7 +171,7 @@ line-height: 24px;" v-model="count" readonly disabled>
             this.removeNumberSize()
           }
         }
-        this.count = 0
+        this.count = 1
       },
       favored () {
         // нициируйте запрос post ajax. URL запроса генерируется функцией backend route ().
@@ -238,14 +238,14 @@ line-height: 24px;" v-model="count" readonly disabled>
                   this.$parent.cartItems = data.cartItems
                   this.$parent.priceAmount = data.priceAmount
                   this.$parent.amount = data.amount
-                  swal('Товар добавлен в корзину', '', 'success')
-                    .then(() => {
-                      this.cart = true
-                      setTimeout(() => {
-                        this.cart = false
-                      }, 2000)
-                      // location.href = '/cart';
-                    });
+                  // swal('Товар добавлен в корзину', '', 'success')
+                  //   .then(() => {
+                  //     this.cart = true
+                  //     setTimeout(() => {
+                  //       this.cart = false
+                  //     }, 2000)
+                  //     // location.href = '/cart';
+                  //   });
                 })
               }
             }, function (error) { // Запрос не смог выполнить этот обратный вызов
