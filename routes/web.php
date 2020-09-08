@@ -89,6 +89,9 @@ function getAdminRoute() {
     Route::post('/header/photo-create', 'HeaderController@photoCreate')->name('admin.header.photoCreate');
     Route::post('/header/photo-delete', 'HeaderController@photoDelete')->name('admin.header.photoDelete');
 
+    Route::post('/header-mobile/photo-create', 'HeaderMobileController@photoCreate')->name('admin.header-mobile.photoCreate');
+    Route::post('/header-mobile/photo-delete', 'HeaderMobileController@photoDelete')->name('admin.header-mobile.photoDelete');
+
     Route::post('/stock/photo-create', 'StockController@photoCreate')->name('admin.store.stock.photoCreate');
     Route::post('/stock/photo-delete', 'StockController@photoDelete')->name('admin.store.stock.photoDelete');
     Route::post('/faqs/photo-create', 'FAQController@photoCreate')->name('admin.store.faqs.photoCreate');
@@ -111,6 +114,7 @@ function getAdminRoute() {
     Route::resource('/news', 'NewsController', ['as' => 'admin']);
     Route::resource('/pay', 'PayController', ['as' => 'admin.store']);
     Route::resource('/header', 'HeaderController', ['as' => 'admin']);
+    Route::resource('/header-mobile', 'HeaderMobileController', ['as' => 'admin']);
     Route::resource('/stock', 'StockController', ['as' => 'admin.store']);
     Route::resource('/faqs', 'FAQController', ['as' => 'admin.store']);
     Route::resource('/promotions', 'PromotionController', ['as' => 'admin.production']);

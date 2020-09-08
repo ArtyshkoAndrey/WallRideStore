@@ -15,6 +15,7 @@ use App\Models\Skus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use App\Models\HeaderMobile;
 
 class ProductsController extends Controller {
 
@@ -151,12 +152,14 @@ class ProductsController extends Controller {
     }
     $news = News::take(3)->get();
     $hs = Header::all();
+    $hsm = HeaderMobile::all();
     return view('products.index', [
       'productsNew' => $productsNew,
       'products' => $products,
       'news' => $news,
       'hs' => $hs,
-      'category' => $category
+      'category' => $category,
+      'hsm' => $hsm
     ]);
   }
 

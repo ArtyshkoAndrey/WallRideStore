@@ -51,6 +51,7 @@
           </a>
         </li>
 
+
         <li class="nav-item">
           <a href="{{ route('admin.news.index') }}" class="nav-link rounded-0 {{ Route::currentRouteNamed('admin.news.*') ? 'active' : '' }}">
             <i class="fas fa-newspaper mr-3"></i>
@@ -60,13 +61,31 @@
           </a>
         </li>
 
-        <li class="nav-item">
-          <a href="{{ route('admin.header.index') }}" class="nav-link rounded-0 {{ Route::currentRouteNamed('admin.header.*') ? 'active' : '' }}">
+        <li class="nav-item has-treeview {{ Route::currentRouteNamed('admin.header-mobile.*') || Route::currentRouteNamed('admin.header.*') ? 'menu-open' : '' }}">
+          <a href="#" class="nav-link">
             <i class="fas fa-cog mr-3"></i>
-            <p>
-              Настройки
-            </p>
+            <p>Настройки</p>
+            <i class="fas fa-angle-left right"></i>
           </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{ route('admin.header.index') }}" class="nav-link rounded-0 {{ Route::currentRouteNamed('admin.header.*') ? 'active' : '' }}">
+                <i class="fas fa-cog mr-3"></i>
+                <p>
+                  Настройки шапки
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="{{ route('admin.header-mobile.index') }}" class="nav-link rounded-0 {{ Route::currentRouteNamed('admin.header-mobile.*') ? 'active' : '' }}">
+                <i class="fas fa-cog mr-3"></i>
+                <p>
+                  Настройки (mobile)
+                </p>
+              </a>
+            </li>
+          </ul>
         </li>
 
         <li class="nav-item">

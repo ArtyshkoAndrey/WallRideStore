@@ -4,14 +4,15 @@
 @section('content')
   <section class="container-fluid p-0 text-white" id="slider">
     <div id="carouselExampleCaptions" class="carousel slide" style="height: 500px;" data-ride="carousel">
-      <ol class="carousel-indicators">
+
+      <ol class="carousel-indicators d-none d-md-flex">
         <?php $i = 0;?>
         @foreach($hs as$h)
           <li data-target="#carouselExampleCaptions" data-slide-to="{{ $i }}" class="{{ $i === 0 ? 'active' : ''}}"></li>
           <?php $i++; ?>
         @endforeach
       </ol>
-      <div class="carousel-inner h-100">
+      <div class="carousel-inner h-100 d-none d-md-block">
         <?php $i = 0;?>
         @foreach($hs as$h)
           <div class="carousel-item h-100 {{ $i === 0 ? 'active' : '' }}">
@@ -25,25 +26,31 @@
           </div>
           <?php $i++; ?>
         @endforeach
-{{--        <div class="carousel-item h-100">--}}
-{{--          <img src="{{ asset('public/images/slide1.png') }}" class="d-block h-100 w-100" style="object-fit: cover" alt="...">--}}
-{{--          <div class="col-12 p-0 position-absolute text-center" style="top: 0;">--}}
-{{--            <h1>{{$h->h1}}</h1>--}}
-{{--            <h3>{{ $h->h2 }}</h3>--}}
-{{--            <a href="{{ $h->url }}" class="btn">{{ $h->btn_text }}</a>--}}
-{{--          </div>--}}
-{{--        </div>--}}
-{{--        --}}
-{{--        <div class="carousel-item h-100">--}}
-{{--          <img src="{{ asset('public/images/slide1.png') }}" class="d-block h-100 w-100" style="object-fit: cover" alt="...">--}}
-{{--          <div class="col-12 p-0 position-absolute text-center" style="top: 0;">--}}
-{{--            <h1>{{$h->h1}}</h1>--}}
-{{--            <h3>{{ $h->h2 }}</h3>--}}
-{{--            <a href="{{ $h->url }}" class="btn">{{ $h->btn_text }}</a>--}}
-{{--          </div>--}}
-{{--        </div>--}}
-
       </div>
+
+      <ol class="carousel-indicators d-flex d-md-none">
+        <?php $i = 0;?>
+        @foreach($hsm as$h)
+          <li data-target="#carouselExampleCaptions" data-slide-to="{{ $i }}" class="{{ $i === 0 ? 'active' : ''}}"></li>
+          <?php $i++; ?>
+        @endforeach
+      </ol>
+      <div class="carousel-inner h-100 d-block d-md-none">
+        <?php $i = 0;?>
+        @foreach($hsm as$h)
+          <div class="carousel-item h-100 {{ $i === 0 ? 'active' : '' }}">
+            <div style="width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); position: absolute;"></div>
+            <img src="{{ asset('storage/header-mobile/' . $h->photo) }}" class="d-block h-100 w-100" style="object-fit: cover" alt="...">
+            <div class="col-12 p-0 position-absolute text-center" style="top: 0;">
+              <h1>{{$h->h1}}</h1>
+              <h3>{{ $h->h2 }}</h3>
+              <a href="{{ $h->url }}" class="btn">{{ $h->btn_text }}</a>
+            </div>
+          </div>
+          <?php $i++; ?>
+        @endforeach
+      </div>
+
       <a class="carousel-control-prev bg-transparent" href="#carouselExampleCaptions" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
