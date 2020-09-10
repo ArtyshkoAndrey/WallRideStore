@@ -7,21 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
-//add this line
-
 class Product extends Model
 {
   use SoftDeletes;
   protected $fillable = [
     'title', 'description', 'on_sale',
-    'price_sale', 'sold_count', 'price'
+    'price_sale', 'sold_count', 'price',
+    'meta'
   ];
   protected $casts = [
     'on_sale' => 'boolean',
-    'on_new' => 'boolean'
+    'on_new'  => 'boolean',
+    'meta'    => 'object'
   ];
 
-  protected $with = ['photos', 'promotions', 'skus'];
+  protected $with  = ['photos', 'promotions', 'skus'];
   protected $dates = ['deleted_at'];
 
   public function skus ()
@@ -62,7 +62,7 @@ class Product extends Model
 
   static function getProducts ($ids)
   {
-    $products = [];
+    $products   = [];
     $promotions = [];
     if (count($ids) > 0 && $ids[0] !== '') {
       foreach ($ids as $k => $id) {
@@ -110,28 +110,28 @@ class Product extends Model
             while ($countFromFirst > 0) {
               $minCost = PHP_INT_MAX;
               foreach ($promotions[$promotion->id] as $productSku) {
-                $price =  $productSku->product->on_sale ? (int)$productSku->product->price_sale : (int)$productSku->product->price;
+                $price = $productSku->product->on_sale ? (int)$productSku->product->price_sale : (int)$productSku->product->price;
 
                 if ($minCost > $price && !isset($productSku->product->isPromotion)) {
                   $minCost = $price;
-                  $p = $productSku;
+                  $p       = $productSku;
                 }
               }
               for ($i = 0; $i < count($products); $i++) {
                 if ($products[$i] == $p) {
-                  $productSku = (object)$products[$i]->toArray();
-                  $productSku->product = (object)$productSku->product;
+                  $productSku          = (object) $products[$i]->toArray();
+                  $productSku->product = (object) $productSku->product;
                   if ($productSku->skus !== null)
-                    $productSku->skus = (object)$productSku->skus;
+                    $productSku->skus = (object) $productSku->skus;
 
                   for ($j = 0; $j < count($productSku->product->photos); $j++) {
-                    $productSku->product->photos[$j] = (object)$productSku->product->photos[$j];
+                    $productSku->product->photos[$j] = (object) $productSku->product->photos[$j];
                   }
-                  $productSku->product->price = (int)$productSku->product->price - (int)$productSku->product->price * (int)$promotion->sale / 100;
-                  $productSku->product->price_sale = (int)$productSku->product->price_sale - (int)$productSku->product->price_sale * (int)$promotion->sale / 100;
-                  $productSku->product->isPromotion = true;
+                  $productSku->product->price         = (int) $productSku->product->price - (int) $productSku->product->price * (int)$promotion->sale / 100;
+                  $productSku->product->price_sale    = (int) $productSku->product->price_sale - (int) $productSku->product->price_sale * (int)$promotion->sale / 100;
+                  $productSku->product->isPromotion   = true;
                   $productSku->product->namePromotion = $promotion->name;
-                  $products[$i] = $productSku;
+                  $products[$i]                       = $productSku;
                   break;
                 }
               }
@@ -141,8 +141,6 @@ class Product extends Model
         }
       }
     }
-//    dd($products);
     return $products;
-
   }
 }

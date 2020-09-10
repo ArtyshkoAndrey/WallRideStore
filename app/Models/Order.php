@@ -36,7 +36,7 @@ class Order extends Model
     self::SHIP_STATUS_PENDING   => 'В обработке',
     self::SHIP_STATUS_DELIVERED => 'Отправлен',
     self::SHIP_STATUS_RECEIVED  => 'Получен',
-    self::SHIP_STATUS_CANCEL  => 'Отменён',
+    self::SHIP_STATUS_CANCEL    => 'Отменён',
   ];
 
   protected $fillable = [
@@ -55,76 +55,76 @@ class Order extends Model
   ];
 
   protected $casts = [
-      'closed'    => 'boolean',
-      'reviewed'  => 'boolean',
-      'address'   => 'json',
-      'ship_data' => 'json',
+    'closed'    => 'boolean',
+    'reviewed'  => 'boolean',
+    'address'   => 'json',
+    'ship_data' => 'json',
   ];
 
   protected $dates = [
-      'paid_at',
+    'paid_at',
   ];
 
   protected static function boot()
   {
-      parent::boot();
-      // Слушайте события создания модели и запускайте ее перед записью в базу данных.
-      static::creating(function ($model) {
-          // Если в модели нет поля пусто
-          if (!$model->no) {
-              // Вызовите findAvailableNo для создания серийного номера заказа
-              $model->no = static::findAvailableNo();
-              // Если генерация не удалась, завершите создание заказа
-              if (!$model->no) {
-                  return false;
-              }
-          }
-      });
+    parent::boot();
+    // Слушайте события создания модели и запускайте ее перед записью в базу данных.
+    static::creating(function ($model) {
+      // Если в модели нет поля пусто
+      if (!$model->no) {
+        // Вызовите findAvailableNo для создания серийного номера заказа
+        $model->no = static::findAvailableNo();
+        // Если генерация не удалась, завершите создание заказа
+        if (!$model->no) {
+          return false;
+        }
+      }
+    });
   }
 
-  public function user()
+  public function user ()
   {
-      return $this->belongsTo(User::class);
+    return $this->belongsTo(User::class);
   }
 
-  public function items()
+  public function items ()
   {
-      return $this->hasMany(OrderItem::class);
+    return $this->hasMany(OrderItem::class);
   }
 
-  public function promotions()
+  public function promotions ()
   {
     return $this->belongsToMany(Promotion::class, 'orders_promotions', 'order_id', 'promotion_id');
   }
 
-  public function couponCode()
+  public function couponCode ()
   {
-      return $this->belongsTo(CouponCode::class);
+    return $this->belongsTo(CouponCode::class);
   }
 
-  public function expressCompany()
+  public function expressCompany ()
   {
-      return $this->belongsTo(ExpressCompany::class, 'id_express_company', 'id');
+    return $this->belongsTo(ExpressCompany::class, 'id_express_company', 'id');
   }
 
-  public static function findAvailableNo()
+  public static function findAvailableNo ()
   {
     // Префикс серийного номера заказа
     $prefix = date('YmdHis');
     for ($i = 0; $i < 10; $i++) {
-        // Случайно сгенерированный 6-значный номер
-        $no = $prefix.str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
-        // Определите, существует ли он уже
-        if (!static::query()->where('no', $no)->exists()) {
-            return $no;
-        }
+      // Случайно сгенерированный 6-значный номер
+      $no = $prefix.str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+      // Определите, существует ли он уже
+      if (!static::query()->where('no', $no)->exists()) {
+        return $no;
+      }
     }
     \Log::warning('find order no failed');
 
     return false;
   }
 
-  public static function getAvailableRefundNo()
+  public static function getAvailableRefundNo ()
   {
     do {
       // Класс Uuid может быть использован для генерации уникальных строк с высокой вероятностью

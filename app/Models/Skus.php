@@ -9,17 +9,17 @@ class Skus extends Model
 {
   protected $fillable = ['title', 'skus_category_id', 'weight'];
 
-  public function products()
+  public function products ()
   {
     return $this->belongsToMany(Product::class, 'product_skus', 'skus_id', 'product_id');
   }
 
-  public function category()
+  public function category ()
   {
     return $this->belongsTo(SkusCategory::class, 'skus_category_id', 'id', 'skus_categories');
   }
 
-  public function pskus()
+  public function pskus ()
   {
     return $this->hasMany(ProductSku::class);
   }

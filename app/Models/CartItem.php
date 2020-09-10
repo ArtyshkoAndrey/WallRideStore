@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class CartItem extends Model
 {
     protected $fillable = ['amount'];
-    public $timestamps = false;
+    public $timestamps  = false;
 
     public function user()
     {

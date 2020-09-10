@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 class CouponCode extends Model
 {
   // Постоянно определяйте поддерживаемые типы купонов
-  const TYPE_FIXED = 'fixed';
+  const TYPE_FIXED   = 'fixed';
   const TYPE_PERCENT = 'percent';
 
   public static $typeMap = [
@@ -34,16 +34,16 @@ class CouponCode extends Model
     'disabled_other_coupons'
   ];
   protected $casts = [
-    'enabled' => 'boolean',
+    'enabled'                => 'boolean',
     'disabled_other_coupons' => 'boolean',
-    'disabled_other_sales' => 'boolean'
+    'disabled_other_sales'   => 'boolean'
   ];
   // указывает, что эти два поля являются типами даты
   protected $dates = ['not_before', 'not_after', ];
 
   protected $appends = ['description'];
 
-  public function getDescriptionAttribute()
+  public function getDescriptionAttribute ()
   {
     $str = '';
 
@@ -57,7 +57,7 @@ class CouponCode extends Model
     return $str.'до '.str_replace('.00', '', $this->value) . ' тг. скидка';
   }
 
-  public function checkAvailable(User $user = null, $orderAmount = null)
+  public function checkAvailable (User $user = null, $orderAmount = null)
   {
     if (!$this->enabled) {
       throw new CouponCodeUnavailableException('Купон не существует');
@@ -80,7 +80,7 @@ class CouponCode extends Model
     }
   }
 
-  public function getAdjustedPrice($orderAmount, $items)
+  public function getAdjustedPrice ($orderAmount, $items)
   {
     // фиксированная сумма
     $price = 0;
@@ -131,7 +131,7 @@ class CouponCode extends Model
     }
   }
 
-  public static function findAvailableCode($length = 16)
+  public static function findAvailableCode ($length = 16)
   {
     do {
       // Создать случайную строку указанной длины и преобразовать ее в верхний регистр

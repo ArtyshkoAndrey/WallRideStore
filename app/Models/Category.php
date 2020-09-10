@@ -12,7 +12,7 @@ class Category extends Model
   ];
 
   protected $casts = [
-    'to_index'    => 'boolean',
+    'to_index' => 'boolean',
   ];
 
   public function scopeWhereLike($query, $column, $value)

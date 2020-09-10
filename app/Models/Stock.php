@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class Stock extends Model {
+  
   protected $fillable = ['title', 'image', 'description', 'link', 'text_to_link', 'view'];
 
   public function getImage() {

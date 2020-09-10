@@ -8,10 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class ProductSku extends Model
 {
   protected $fillable = ['price', 'stock'];
-
-  protected $casts =['product'];
-
-  protected $with = ['skus'];
+  protected $casts    = ['product'];
+  protected $with     = ['skus'];
 
   public function skus()
   {

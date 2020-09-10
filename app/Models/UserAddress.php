@@ -11,23 +11,23 @@ class UserAddress extends Model
     'contact_phone',
   ];
 
-  public function getFullAddressAttribute() {
+  public function getFullAddressAttribute () {
     return "{$this->country->name}, {$this->city->name}, {$this->street}";
   }
 
-  public function user() {
+  public function user () {
     return $this->belongsTo(User::class);
   }
 
-  public function currency() {
+  public function currency () {
     return $this->belongsTo(Currency::class);
   }
 
-  public function city() {
+  public function city () {
     return $this->belongsTo(City::class);
   }
 
-  public function country() {
+  public function country () {
     return $this->belongsTo(Country::class);
   }
 }

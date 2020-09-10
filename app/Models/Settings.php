@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Settings extends Model
 {
   protected $fillable = ['key', 'meta'];
-
-  protected $casts = ['meta' => 'string', 'key' => 'string'];
+  protected $casts    = ['meta' => 'string', 'key' => 'string'];
 
   public function statusSite ($status = null) {
     if ($status === null)

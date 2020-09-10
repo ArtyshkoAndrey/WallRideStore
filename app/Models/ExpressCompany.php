@@ -16,7 +16,7 @@ class ExpressCompany extends Model
   ];
 
   protected $casts = [
-    'enabled' => 'boolean',
+    'enabled'      => 'boolean',
     'enabled_cash' => 'boolean'
   ];
 
