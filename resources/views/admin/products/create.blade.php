@@ -87,6 +87,18 @@
                     <label for="weight">Вес товара (кг)</label>
                     <input type="number" min="0" name="weight" step="0.01" class="form-control rounded-0" id="weight" value="0">
                   </div>
+
+                  {{-- Meta --}}
+
+                  <div class="col-md-6 mt-2">
+                    <label for="meta-description">Meta Description</label>
+                    <input type="text" name="meta[description]" class="form-control rounded-0" id="meta-description">
+                  </div>
+
+                  <div class="col-md-6 mt-2">
+                    <label for="meta-keywords">Meta Keywords</label>
+                    <input type="text" name="meta[keywords]" class="form-control rounded-0" id="meta-keywords">
+                  </div>
                 </div>
               </div>
 
@@ -132,7 +144,7 @@
                                     <div class="col-12">
                                       <div class="row mt-2">
                                         <label for="skus[{{ $sku->id }}]" class="col-12">{{ $sku->title }}</label>
-                                        <input type="number" min="0" class="form-control col-12 skus" id="skus-{{ $sku->id }}" name="skus[{{ $sku->id }}]" {{ $ch }} value="">
+                                        <input type="number" min="0" class="form-control col-12 skus rounded-0" id="skus-{{ $sku->id }}" name="skus[{{ $sku->id }}]" {{ $ch }} value="">
                                       </div>
                                     </div>
                                     @endforeach
@@ -346,4 +358,15 @@
     });
 
   </script>
+  {{-- <script>
+    $('#title').val('Test')
+    $('#description').val('Test')
+    $('#category').val(23)
+    $('#brands').val(35)
+    $('#price').val(100)
+    $('#stock').val(10)
+    $('#weight').val(1)
+    $('#meta-description').val('Meta Desc')
+    $('#meta-keywords').val('Meta Key')
+  </script> --}}
 @endsection

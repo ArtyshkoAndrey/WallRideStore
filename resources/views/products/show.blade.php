@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('title', $product->title)
+@section('meta-description', isset($product->meta->description) ? $product->meta->description : '')
+@section('meta-keywords', isset($product->meta->keywords) ? $product->meta->keywords : '')
 
 @section('content')
 <section class="container pt-5 my-5">

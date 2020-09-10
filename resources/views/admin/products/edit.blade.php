@@ -96,6 +96,18 @@
                     <label for="weight">Вес товара (кг)</label>
                     <input type="number" min="0" name="weight" step="0.01" class="form-control rounded-0" id="weight" value="{{ $product->weight }}">
                   </div>
+
+                  {{-- Meta --}}
+
+                  <div class="col-md-6 mt-2">
+                    <label for="meta-description">Meta Description</label>
+                  <input type="text" name="meta[description]" class="form-control rounded-0" id="meta-description" value="{{ isset($product->meta->description) ? $product->meta->description : '' }}">
+                  </div>
+
+                  <div class="col-md-6 mt-2">
+                    <label for="meta-keywords">Meta Keywords</label>
+                    <input type="text" name="meta[keywords]" class="form-control rounded-0" id="meta-keywords" value="{{ isset($product->meta->keywords) ? $product->meta->keywords : '' }}">
+                  </div>
                 </div>
               </div>
 
