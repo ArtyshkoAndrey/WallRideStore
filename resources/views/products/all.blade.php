@@ -55,7 +55,7 @@
     <div class="container">
       <div class="row">
         @foreach($products as $product)
-          <product :slider=false :currency="{{ $currency }}" :item="{{ $product }}"></product>
+          <product :slider=false :currency="{{ $currency }}" :item_not_soted="{{ $product }}"></product>
         @endforeach
         <div class="col-12 d-flex justify-content-center mt-2 mb-5">
           <div>{{ $products->appends($filters)->render() }}</div>

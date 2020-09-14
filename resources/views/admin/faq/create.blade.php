@@ -79,7 +79,10 @@
 
   <script>
     tinymce.init({
-      selector: '#content'
+      selector: '#content',
+      plugins : "paste",
+      paste_text_sticky: true,
+      paste_text_sticky_default: true
     });
 
     Dropzone.autoDiscover = false;

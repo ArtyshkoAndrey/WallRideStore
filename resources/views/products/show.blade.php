@@ -5,7 +5,7 @@
 
 @section('content')
 <section class="container pt-5 my-5">
-  <product-show :product="{{ $product }}" :currency="{{ $currency }}" :skus="{{$product->skus}}" :favor="{{ $favored ? 'true' : 'false' }}" inline-template>
+  <product-show :product="{{ $product }}" :currency="{{ $currency }}" :skus_not_order="{{ $product->skus }}" :favor="{{ $favored ? 'true' : 'false' }}" inline-template>
     <div class="row justify-content-center justify-content-md-around mt-5">
       <div class="col-md-5 col-10">
         <div class="slider-for d-md-block mx-3 d-none">
@@ -113,7 +113,7 @@
   </div>
   <div class="row">
     @foreach($products as $prod)
-      <product :slider=false :currency="{{ $currency }}" :item="{{ $prod }}"></product>
+      <product :slider=false :currency="{{ $currency }}" :item_not_soted="{{ $prod }}"></product>
     @endforeach
   </div>
 </section>

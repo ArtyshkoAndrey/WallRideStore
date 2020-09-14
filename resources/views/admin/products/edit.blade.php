@@ -221,7 +221,10 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.0/min/dropzone.min.js"></script>
   <script>
     tinymce.init({
-      selector: 'textarea'
+      selector: 'textarea',
+      plugins : "paste",
+      paste_text_sticky: true,
+      paste_text_sticky_default: true
     });
 
     $('#category').select2({

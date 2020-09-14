@@ -18,7 +18,7 @@
     <div class="container">
       <div class="row {{ count($products) === 0 ? 'justify-content-center align-items-center' : null }}">
         @forelse($products as $product)
-          <product :slider=false :currency="{{ $currency }}" :item="{{ $product }}"></product>
+          <product :slider=false :currency="{{ $currency }}" :item_not_soted="{{ $product }}"></product>
         @empty
           <div class="col-auto mt-5">
             <h4>Нет товаров</h4>

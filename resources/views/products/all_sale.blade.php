@@ -59,7 +59,7 @@
                 <div class="row {{ $brand->products()->where('on_sale', true)->count() === 0 ? 'justify-content-center align-items-center' : null }}">
                   <div class="col-12"><h2 class="font-weight-bold d-block">{{ $brand->name }}</h2></div>
                   @forelse($brand->products()->where('on_sale', true)->with('skus', 'photos')->get() as $product)
-                    <product :slider=false :currency="{{ $currency }}" :item="{{ $product }}"></product>
+                    <product :slider=false :currency="{{ $currency }}" :item_not_soted="{{ $product }}"></product>
                   @empty
                     <div class="col-auto mt-5">
                       <h4>Нет товаров</h4>
@@ -73,7 +73,7 @@
                 <div class="row">
                   <div class="col-12"><h2 class="font-weight-bold d-block">Без бренда</h2></div>
                   @forelse($products as $product)
-                    <product :slider=false :currency="{{ $currency }}" :item="{{ $product }}"></product>
+                    <product :slider=false :currency="{{ $currency }}" :item_not_soted="{{ $product }}"></product>
                   @empty
                     <div class="col-auto mt-5">
                       <h4>Нет товаров</h4>
@@ -152,7 +152,7 @@
                 <div class="card-body">
                   <div class="row p-0">
                     @forelse($brand->products()->where('on_sale', true)->with('skus', 'photos')->get() as $product)
-                      <product :slider=false :currency="{{ $currency }}" :item="{{ $product }}" :class="'col-12 offset-0 ml-0'"></product>
+                      <product :slider=false :currency="{{ $currency }}" :item_not_soted="{{ $product }}" :class="'col-12 offset-0 ml-0'"></product>
                     @empty
                       <div class="col-auto mt-5">
                         <h4>Нет товаров</h4>
@@ -177,7 +177,7 @@
                 <div class="card-body">
                   <div class="row p-0">
                     @forelse($products as $product)
-                      <product :slider=false :currency="{{ $currency }}" :item="{{ $product }}" :class="'col-12 offset-0 ml-0'"></product>
+                      <product :slider=false :currency="{{ $currency }}" :item_not_soted="{{ $product }}" :class="'col-12 offset-0 ml-0'"></product>
                     @empty
                       <div class="col-auto mt-5">
                         <h4>Нет товаров</h4>

@@ -6,7 +6,7 @@
     <div class="container">
       <div class="row">
       @forelse($products as $product)
-        <product :slider=false :currency="{{ $currency }}" :item="{{ json_encode($product) }}"></product>
+        <product :slider=false :currency="{{ $currency }}" :item_not_soted="{{ json_encode($product) }}"></product>
       @empty
         <div class="col-12 mt-4">
           <h3 class="font-weight-bold text-center">Не найдено ни одной позиции</h3>

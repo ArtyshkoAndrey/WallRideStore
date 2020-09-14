@@ -20,7 +20,7 @@
                   <div class="col-12"><h2 class="font-weight-bold d-block">{{ $promotion->name }}</h2></div>
                   @forelse($promotion->products as $product)
                     @if ($product->on_sale === false)
-                      <product :slider=false :currency="{{ $currency }}" :item="{{ $product }}"></product>
+                      <product :slider=false :currency="{{ $currency }}" :item_not_soted="{{ $product }}"></product>
                     @endif
                   @empty
                     <div class="col-auto mt-5">
@@ -55,7 +55,7 @@
                   <div class="row p-0">
                     @forelse($promotion->products as $product)
                       @if($product->on_sale === false)
-                        <product :slider=false :currency="{{ $currency }}" :item="{{ $product }}" :class="'col-12 offset-0 ml-0'"></product>
+                        <product :slider=false :currency="{{ $currency }}" :item_not_soted="{{ $product }}" :class="'col-12 offset-0 ml-0'"></product>
                       @endif
                     @empty
                       <div class="col-auto mt-5">

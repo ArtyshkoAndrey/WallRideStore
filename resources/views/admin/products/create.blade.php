@@ -212,7 +212,10 @@
   <script !src="">
     // let editor = new FroalaEditor('textarea')
     tinymce.init({
-      selector: 'textarea'
+      selector: 'textarea',
+      plugins : "paste",
+      paste_text_sticky: true,
+      paste_text_sticky_default: true
     });
     $('#category').select2({
       width: '100%',

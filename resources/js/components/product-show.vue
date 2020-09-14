@@ -8,7 +8,8 @@
         idSku: null,
         counter: 0,
         favoredData: false,
-        cart: false
+        cart: false,
+        skus: []
       }
     },
     props: {
@@ -16,7 +17,7 @@
         type: Object,
         required: true
       },
-      skus: {
+      skus_not_order: {
         type: Array,
         required: true
       },
@@ -31,8 +32,19 @@
     },
     created () {
       console.log("show");
+      this.skus = this.skus_not_order.sort(function (a, b) {
+        if (a.skus.weight > b.skus.weight) {
+          return 1;
+        }
+        if (a.skus.weight < b.skus.weight) {
+          return -1;
+        }
+        return 0;
+      })
       this.idSku = this.skus[0].id
       this.favoredData = this.favor
+    
+      console.log(this.skus)
       this.$nextTick(() => {
         // SLICK
         $('.slider-for').slick({

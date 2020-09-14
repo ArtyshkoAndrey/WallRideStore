@@ -72,7 +72,7 @@
       <div class="row px-md-5 px-2">
         @if(count($productsNew) > 0)
           @foreach($productsNew as $product)
-            <product :slider=true :currency="{{ $currency }}" :item="{{ $product }}"></product>
+            <product :slider=true :currency="{{ $currency }}" :item_not_soted="{{ $product }}"></product>
           @endforeach
             @for($i = 0; $i < 5 - $productsNew->count(); $i++)
               <div class="col-lg"></div>
@@ -95,7 +95,7 @@
       <div class="row px-md-5 px-2">
         @if(count($products) > 0)
           @foreach($products as $product)
-            <product :slider=true :currency="{{ $currency }}" :item="{{ $product }}"></product>
+            <product :slider=true :currency="{{ $currency }}" :item_not_soted="{{ $product }}"></product>
           @endforeach
           @for($i = 0; $i < 5 - $products->count(); $i++)
           <div class="col-lg"></div>

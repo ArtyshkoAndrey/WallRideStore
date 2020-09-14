@@ -89,7 +89,7 @@ line-height: 24px;" v-model="count" readonly disabled>
       currency: {
         required: true
       },
-      item: {
+      item_not_soted: {
         type: Object,
         required: false,
         default: false
@@ -104,10 +104,25 @@ line-height: 24px;" v-model="count" readonly disabled>
         count: 1,
         numberSize: 0,
         cart: false,
-        favor: false
+        favor: false,
+        item: {}
       }
     },
+    created() {
+      this.item = this.item_not_soted
+      this.item.skus = this.item_not_soted.skus.sort(function (a, b) {
+        if (a.skus.weight > b.skus.weight) {
+          return 1;
+        }
+        if (a.skus.weight < b.skus.weight) {
+          return -1;
+        }
+        return 0;
+      })
+    },
     mounted() {
+      
+      console.log(this.item.promotions.some(elem => elem.status && elem.sale_status))
       while (this.item.skus[this.numberSize].stock <= 0) {
         this.removeNumberSize()
       }
@@ -157,7 +172,7 @@ line-height: 24px;" v-model="count" readonly disabled>
             this.addNumberSize()
           }
         }
-        this.count = 0
+        this.count = 1
       },
       removeNumberSize() {
         if (this.numberSize > 0) {
