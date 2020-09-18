@@ -123,6 +123,11 @@
                       <input type="checkbox" name="on_sale" id="sale" {{ $product->on_sale ? 'checked' : null }}>
                       SALE
                     </label>
+
+                    <label class="ml-3">
+                      <input type="checkbox" name="on_top" id="top" {{ $product->on_top ? 'checked' : null }}>
+                      Хит продаж
+                    </label>
                   </div>
                   <div class="col-md-11 offset-md-1 mt-4">
                     <h4 class="font-weight-bold">Атрибуты</h4>
@@ -340,6 +345,10 @@
         radioClass: 'iradio_minimal',
       });
       $('#sale').iCheck({
+        checkboxClass: 'icheckbox_minimal',
+        radioClass: 'iradio_minimal',
+      });
+      $('#top').iCheck({
         checkboxClass: 'icheckbox_minimal',
         radioClass: 'iradio_minimal',
       });

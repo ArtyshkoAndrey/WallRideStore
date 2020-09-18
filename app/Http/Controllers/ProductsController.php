@@ -137,7 +137,7 @@ class ProductsController extends Controller {
 
   public function index() {
     $productsNew = Product::where('on_new', true)->orderBy('created_at', 'desc')->take(5)->with('skus', 'photos')->get();
-
+    $productsTop = (new \App\Models\Product)->getTop();
     $category = Category::where('to_index', true)->first();
     if($category) {
       $products = $category->products()->take(5)->with('skus', 'photos')->get();
@@ -159,7 +159,8 @@ class ProductsController extends Controller {
       'news' => $news,
       'hs' => $hs,
       'category' => $category,
-      'hsm' => $hsm
+      'hsm' => $hsm,
+      'productsTop' => $productsTop
     ]);
   }
 

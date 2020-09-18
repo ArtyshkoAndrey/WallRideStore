@@ -2,10 +2,10 @@
 @section('title', 'Панель администратора')
 
 @section('content')
-  <div class="container-fluid pt-5 px-4">
+  <div class="container-fluid px-4">
     <div class="row">
-      <div class="col-lg-4 col-md-6 col-12">
-        <div class="card border-0 w-100 rounded-0" style="z-index: 90;box-shadow: 0 18px 19px rgba(0, 0, 0, 0.25)">
+      <div class="col-lg-4 col-md-6 col-12 mt-5">
+        <div class="card h-100 border-0 w-100 rounded-0" style="z-index: 90;box-shadow: 0 18px 19px rgba(0, 0, 0, 0.25)">
           <div class="card-header">
             Работа сайта
           </div>
@@ -25,6 +25,18 @@
                 </div>
               </div>
             </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 col-12 mt-5">
+        <div class="card h-100 border-0 w-100 rounded-0" style="z-index: 90;box-shadow: 0 18px 19px rgba(0, 0, 0, 0.25)">
+          <div class="card-header">
+            Карта сайта
+          </div>
+          <div class="card-body">
+            <p>Для лучшего SEO, необходимо в роботах поисковика указать Sitemap ссылку:</p>
+            <a href="{{ route('sitemap') }}" target="_blank">{{ route('sitemap') }} </a>
           </div>
         </div>
       </div>

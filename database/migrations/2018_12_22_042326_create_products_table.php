@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
       $table->text('description');
       $table->boolean('on_sale')->default(true);
       $table->boolean('on_new')->default(true);
+      $table->boolean('on_top')->default(false);
       $table->unsignedInteger('sold_count')->default(0);
       $table->decimal('price', 10, 0);
       $table->decimal('price_sale', 10, 0)->nullable();

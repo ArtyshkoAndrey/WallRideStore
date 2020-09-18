@@ -84,7 +84,7 @@
                   <a href="{{ route('admin.production.products.edit', $product->id) }}" class="text-red">{{ $product->title }}</a>
                 </td>
                 <td style="vertical-align: middle;">
-                  {!! $product->available() ? '<span style="color: #04B900">В наличии</span>' : '<span style="color: #F33C3C">Нет в наличии</span>' !!}
+                  {!! $product->available() ? '<span style="color: #04B900">В наличии</span>' : '<span style="color: #F33C3C">Нет в наличии</span>' !!} {!! $product->on_top ? '<span style="color: #04B900">, Хит продаж</span>' : null !!}
                 </td>
                 <td style="vertical-align: middle;">
                   {{ cost($product->price) }} тг.

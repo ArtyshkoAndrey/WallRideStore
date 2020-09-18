@@ -114,6 +114,11 @@
                       <input type="checkbox" name="on_sale" id="sale">
                       SALE
                     </label>
+
+                    <label class="ml-3">
+                      <input type="checkbox" name="on_top" id="top">
+                      Хит продаж
+                    </label>
                   </div>
                   <div class="col-md-11 offset-md-1 mt-4">
                     <h4 class="font-weight-bold">Атрибуты</h4>
@@ -339,6 +344,10 @@
         radioClass: 'iradio_minimal',
       });
       $('#sale').iCheck({
+        checkboxClass: 'icheckbox_minimal',
+        radioClass: 'iradio_minimal',
+      });
+      $('#top').iCheck({
         checkboxClass: 'icheckbox_minimal',
         radioClass: 'iradio_minimal',
       });

@@ -43,7 +43,7 @@
       })
       this.idSku = this.skus[0].id
       this.favoredData = this.favor
-    
+
       console.log(this.skus)
       this.$nextTick(() => {
         // SLICK
@@ -60,7 +60,7 @@
         });
         $('.ex1').zoom();
         setTimeout(() => {
-          var elements = document.querySelectorAll( '.demo-image' );
+          let elements = document.querySelectorAll( '.demo-image' );
           Intense( elements );
         }, 1000)
       })
@@ -81,14 +81,14 @@
           })
             .then((response) => { // Запрос успешно выполнил этот обратный вызов
               if (response.data.type === 'auth') {
-                swal('Товар добавлен в корзину', '', 'success')
-                  .then(() => {
-                    this.cart = true
-                    setTimeout(() => {
-                      this.cart = false
-                    }, 2000)
+                // swal('Товар добавлен в корзину', '', 'success')
+                //   .then(() => {
+                this.cart = true
+                setTimeout(() => {
+                  this.cart = false
+                }, 2000)
                     // location.href = '/cart';
-                  });
+                  // });
                 let data = response.data
                 this.$parent.cartItems = data.cartItems
                 this.$parent.priceAmount = data.priceAmount
@@ -114,14 +114,14 @@
                     this.$parent.cartItems = data.cartItems
                     this.$parent.priceAmount = data.priceAmount
                     this.$parent.amount = data.amount
-                    swal('Товар добавлен в корзину', '', 'success')
-                      .then(() => {
-                        this.cart = true
-                        setTimeout(() => {
-                          this.cart = false
-                        }, 2000)
+                    // swal('Товар добавлен в корзину', '', 'success')
+                    //   .then(() => {
+                    this.cart = true
+                    setTimeout(() => {
+                      this.cart = false
+                    }, 2000)
                         // location.href = '/cart';
-                      });
+                      // });
                   })
               }
             }, function (error) { // Запрос не смог выполнить этот обратный вызов
@@ -130,7 +130,7 @@
                 swal('Пожалуйста, войдите сначала', '', 'error');
               } else if (error.response.status === 422) {
                 // Код состояния http: 422, что указывает на сбой проверки ввода пользователя.--}}
-                var html = '<div>';
+                let html = '<div>';
                 _.each(error.response.data.errors, function (errors) {
                   _.each(errors, function (error) {
                     html += error + '<br>';
@@ -162,7 +162,7 @@
         // нициируйте запрос post ajax. URL запроса генерируется функцией backend route ().
         axios.post('/products/' + this.product.id + '/favorite')
         .then(() => {
-          swal('Операция прошла успешно', '', 'success')
+          swal('Товар добавлен в избранные', '', 'success')
             .then(() => { // здесь добавлен метод then ()
               this.favoredData = true
             });
@@ -182,7 +182,7 @@
       disFavored () {
         axios.delete('/products/'+ this.product.id +'/favorite')
         .then(() => {
-          swal('Операция прошла успешно', '', 'success')
+          swal('Товар удалён из избранных', '', 'success')
           .then(() => {
             this.favoredData = false
           });
@@ -218,7 +218,7 @@
   .btn-angle {
     background: #000;
     color: white;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
   }
   #btn-add-to-cart {
     background: #000;

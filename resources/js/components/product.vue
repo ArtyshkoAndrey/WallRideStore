@@ -192,7 +192,7 @@ line-height: 24px;" v-model="count" readonly disabled>
         // нициируйте запрос post ajax. URL запроса генерируется функцией backend route ().
         axios.post('/products/' + this.item.id + '/favorite')
           .then(() => {
-            swal('Операция прошла успешно', '', 'success')
+            swal('Товар добавлен в избранные', '', 'success')
               .then(() => { // здесь добавлен метод then ()
                 this.favor = true
                 setTimeout(() => {
@@ -222,10 +222,10 @@ line-height: 24px;" v-model="count" readonly disabled>
               if (response.data.type === 'auth') {
                 // swal('Товар добавлен в корзину', '', 'success')
                 //   .then(() => {
-                //     this.cart = true
-                //     setTimeout(() => {
-                //       this.cart = false
-                //     }, 2000)
+                this.cart = true
+                setTimeout(() => {
+                  this.cart = false
+                }, 2000)
                 //     // location.href = '/cart';
                 //   });
                 let data = response.data
@@ -255,12 +255,12 @@ line-height: 24px;" v-model="count" readonly disabled>
                   this.$parent.amount = data.amount
                   // swal('Товар добавлен в корзину', '', 'success')
                   //   .then(() => {
-                  //     this.cart = true
-                  //     setTimeout(() => {
-                  //       this.cart = false
-                  //     }, 2000)
-                  //     // location.href = '/cart';
-                  //   });
+                  this.cart = true
+                  setTimeout(() => {
+                    this.cart = false
+                  }, 2000)
+                      // location.href = '/cart';
+                    // });
                 })
               }
             }, function (error) { // Запрос не смог выполнить этот обратный вызов

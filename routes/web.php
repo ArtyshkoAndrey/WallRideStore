@@ -6,7 +6,7 @@ use App\Models\Product;
 if ((new App\Models\Settings)->statusSite()) {
 
   /* Sitemap */
-  Route::get('/sitemap', 'SitemapController@index');
+  Route::get('/sitemap', 'SitemapController@index')->name('sitemap');
 
 
   Route::redirect('/products', '/')->name('root'); // Главаня

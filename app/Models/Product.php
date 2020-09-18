@@ -13,11 +13,12 @@ class Product extends Model
   protected $fillable = [
     'title', 'description', 'on_sale',
     'price_sale', 'sold_count', 'price',
-    'meta'
+    'meta', 'on_top', 'on_new'
   ];
   protected $casts = [
     'on_sale' => 'boolean',
     'on_new'  => 'boolean',
+    'on_top'  => 'boolean',
     'meta'    => 'object'
   ];
 
@@ -27,6 +28,15 @@ class Product extends Model
   public function skus ()
   {
     return $this->hasMany(ProductSku::class);
+  }
+
+  public function getTop () {
+    $pr = $this->where('on_top', true)->orderBy('created_at', 'desc')->take(5)->with('skus', 'photos')->get();
+    if ($pr->count() > 0) {
+      return $pr;
+    }
+    $pr = $this->orderBy('sold_count', 'desc')->take(5)->with('skus', 'photos')->get();
+    return $pr;
   }
 
   public function available () {
