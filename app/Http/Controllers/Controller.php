@@ -26,23 +26,17 @@ class Controller extends BaseController
   protected $cartService;
 
   public function __construct(CartService $cartService) {
-    if (!isset($_COOKIE['city'])) {
-      setcookie('city', City::first()->id, time() + (3600 * 24 * 30), '/');
-    }
-//    if (!isset($_COOKIE['stock_counter'])) {
-//      setcookie('stock_counter', 10, time() + (3600 * 24 * 30), '/');
-//    }
-    if (!isset($_COOKIE['whooip'])) {
-      setcookie('whooip', 0, time() + (3600 * 24 * 30), '/');
+    $isCrCoockie = true;
+    if (!isset($_COOKIE['cr'])) {
+      setcookie('cr', Currency::find(1)->id, time() + (3600 * 24 * 30), '/');
+      $isCrCoockie = false;
     }
     if(!isset($_COOKIE["products"])) {
       setcookie("products", '', time() + (3600 * 24 * 30), '/');
+
     }
     $stock = null;
     try {
-//    if (isset($_COOKIE['stock_counter'])) {
-//      if ((int)$_COOKIE['stock_counter'] > 5 && (int)$_COOKIE['stock_counter'] !== 0) {
-//        $r = explode('/',url()->current());
       if (explode('/', Request()->route()->getPrefix())[0] !== 'admin' || end($r) !== 'getData' || end($r) !== 'favicon.ico') {
         $sts = Stock::all();
         foreach ($sts as $st) {
@@ -51,19 +45,12 @@ class Controller extends BaseController
             break;
           }
         }
-//          setcookie('stock_counter', 0, time() + (3600 * 24 * 30), '/');
       }
-//      } else {
-//        dd(Cookie::get('stock_counter'));
-//        setcookie('stock_counter', $_COOKIE['stock_counter'] + 1, time() + (3600 * 24 * 30), '/');
-//        Cookie::queue(Cookie::make('stock_counter', Cookie::get('stock_counter') + 1, 60 * 24 * 30));
-//      }
-//    }
     } catch (\Throwable $e) {
       $stock = null;
     }
     $this->cartService = $cartService;
-    $this->middleware(function ($request, $next) use($stock) {
+    $this->middleware(function ($request, $next) use($stock, $isCrCoockie) {
       $cartItems = [];
       $priceAmount = 0;
       $amount = 0;
@@ -92,105 +79,17 @@ class Controller extends BaseController
             $address->currency()->associate($currency);
             $address->save();
             $currencyGlobal = $address->currency;
+            setcookie('cr', $currencyGlobal->id, time() + (3600 * 24 * 30), '/');
           }
         } else {
           $currencyGlobal = Currency::find(1);
+          setcookie('cr', $currencyGlobal->id, time() + (3600 * 24 * 30), '/');
         }
+      } else if ($isCrCoockie) {
+        $currencyGlobal = Currency::find($_COOKIE['cr']);
       } else {
-        if (isset($_COOKIE['city'])) {
-          if(!isset($_COOKIE['whooip']) || (int) $_COOKIE['whooip'] === 0) {
-            $curl = curl_init();
-            curl_setopt($curl, CURLOPT_URL, 'http://pro.ipwhois.io/json/' . \Request::ip() . '?key=gFoMKlSHuw23CWwm&lang=ru');
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
-            curl_setopt($curl, CURLOPT_POST, 1);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, []);
-            $out = curl_exec($curl);
-            curl_close($curl);
-            if(City::where('name',json_decode($out)->city)->first()) {
-              $ct = City::where('name',json_decode($out)->city)->first();
-              $ctr = Country::whereHas('cities', function ($q) use ($ct) {
-                $q->where('cities.id', $ct->id);
-              })->first();
-            } else if (City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first()) {
-              $ct = City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first();
-              $ctr = Country::whereHas('cities', function ($q) use ($ct) {
-                $q->where('cities.id', $ct->id);
-              })->first();
-            } else {
-              $ct = City::find($_COOKIE['city']);
-              $ctr = Country::whereHas('cities', function ($q) use ($ct) {
-                $q->where('cities.id', $ct->id);
-              })->first();
-            }
-            if ($ctr) {
-              if ($ctr->name === 'Россия') {
-                $currencyGlobal = Currency::find(2);
-              } else if ($ctr->name === 'Казахстан') {
-                $currencyGlobal = Currency::find(1);
-              } else {
-                $currencyGlobal = Currency::find(3);
-              }
-            } else {
-              $currencyGlobal = Currency::find(3);
-            }
-          } else {
-            $ct = City::find($_COOKIE['city']);
-            $ctr = Country::whereHas('cities', function ($q) use ($ct) {
-              $q->where('cities.id', $ct->id);
-            })->first();
-            if ($ctr) {
-              if ($ctr->name === 'Россия') {
-                $currencyGlobal = Currency::find(2);
-              } else if ($ctr->name === 'Казахстан') {
-                $currencyGlobal = Currency::find(1);
-              } else {
-                $currencyGlobal = Currency::find(3);
-              }
-            } else {
-              $currencyGlobal = Currency::find(3);
-            }
-          }
-        } else {
-          if(!isset($_COOKIE['whooip']) || (int)  $_COOKIE['whooip'] === 0) {
-            $curl = curl_init();
-            curl_setopt($curl, CURLOPT_URL, 'http://pro.ipwhois.io/json/' . \Request::ip() . '?key=gFoMKlSHuw23CWwm&lang=ru');
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
-            curl_setopt($curl, CURLOPT_POST, 1);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, []);
-            $out = curl_exec($curl);
-            curl_close($curl);
-            if(City::where('name',json_decode($out)->city)->first()) {
-              $ct = City::where('name',json_decode($out)->city)->first();
-              $ctr = Country::whereHas('cities', function ($q) use ($ct) {
-                $q->where('cities.id', $ct->id);
-              })->first();
-            } else if (City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first()) {
-              $ct = City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first();
-              $ctr = Country::whereHas('cities', function ($q) use ($ct) {
-                $q->where('cities.id', $ct->id);
-              })->first();
-            } else {
-              $ct = City::find(isset($_COOKIE['city']) ? $_COOKIE['city'] : 1);
-              $ctr = Country::whereHas('cities', function ($q) use ($ct) {
-                $q->where('cities.id', $ct->id);
-              })->first();
-            }
-            if ($ctr) {
-              if ($ctr->name === 'Россия') {
-                $currencyGlobal = Currency::find(2);
-              } else if ($ctr->name === 'Казахстан') {
-                $currencyGlobal = Currency::find(1);
-              } else {
-                $currencyGlobal = Currency::find(3);
-              }
-            } else {
-              $currencyGlobal = Currency::find(3);
-            }
-          } else {
-            $currencyGlobal = Currency::find(1);
-          }
-
-        }
+        $currencyGlobal = Currency::find(1);
+        setcookie('cr', $currencyGlobal->id, time() + (3600 * 24 * 30), '/');
       }
       if(Carbon::parse($currencyGlobal->updated_at)->addDay() < Carbon::now()) {
         $assertion_link = 'https://nationalbank.kz/rss/rates_all.xml';
@@ -227,7 +126,6 @@ class Controller extends BaseController
       View::share('priceAmount', $priceAmount);
       View::share('amount', $amount);
       View::share('stocksToView', $stock);
-//      View::share('stocksToView', null);
       return $next($request);
     });
   }

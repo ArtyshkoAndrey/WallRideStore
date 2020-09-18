@@ -28,15 +28,19 @@
               <h4 class="font-weight-bold">Адрессные данные</h4>
               <div class="mt-2">
                 <select name="country" id="country" v-model="order.country" class="rounded-0 mt-2 form-control" placeholder="Страна">
-                  @if (auth()->user() ? auth()->user()->address !== null : isset($_COOKIE['city']))
-                    <option value="{{ auth()->user() ? auth()->user()->address->country_id : App\Models\City::find($_COOKIE['city'])->country->id }}" selected>{{ auth()->user() ? auth()->user()->address->country->name : App\Models\City::find($_COOKIE['city'])->country->name }}</option>
+                  @if (auth()->user())
+                    @if (auth()->user()->address !== null)
+                      <option value="{{ auth()->user()->address->country_id }}" selected>{{ auth()->user()->address->country->name}}</option>
+                    @endif
                   @endif
                 </select>
               </div>
               <div class="mt-2">
                 <select name="city" id="city1" class="rounded-0 mt-2 form-control" v-model="order.city" placeholder="Город">
-                  @if (auth()->user() ? auth()->user()->address !== null : isset($_COOKIE['city']))
-                    <option value="{{ auth()->user() ?  auth()->user()->address->city_id : $_COOKIE['city'] }}" selected>{{ auth()->user() ? auth()->user()->address->city->name : App\Models\City::find($_COOKIE['city'])->name }}</option>
+                  @if (auth()->user())
+                    @if (auth()->user()->address !== null)
+                      <option value="{{auth()->user()->address->city_id }}" selected>{{ auth()->user()->address->city->name }}</option>
+                    @endif
                   @endif
                 </select>
               </div>
@@ -103,22 +107,6 @@
                     </label>
                   </div>
                 </div>
-                {{--                <div class="col-md-6 mt-3 mt-md-0">--}}
-                {{--                  <h5 class="font-weight-bold">Выберите службу доставки</h5>--}}
-                {{--                  <div class="btn-group btn-group-toggle" data-toggle="buttons" v-if="!order.pickup">--}}
-                {{--                    <div v-for="(company, index) in companies" v-if="!isNaN(company.costedTransfer) && company.costedTransfer !== null" class="btn p-0 rounded-0 border-0 ml-2" :disabled="order.pickup || company.costedTransfer == null || company.enabled == false">--}}
-                {{--                      <label  class="btn-white border-0 rounded-0 p-3 mb-0" :disabled="order.pickup || company.costedTransfer == null" @click="() => { !order.pickup && company.costedTransfer !== null ? (order.express_company = company.id, order.costTransfer = company.costedTransfer) : null}">--}}
-                {{--                        <input type="radio" :value="company.id" name="express_company" autocomplete="off" :checked="order.express_company === company.id">--}}
-                {{--                        @{{ company.name }}--}}
-                {{--                      </label>--}}
-                {{--                      <p class="m-0 p-0 position-absolute font-weight-bold">@{{ !isNaN(company.costedTransfer) && company.costedTransfer !== null ? $cost(Number(company.costedTransfer)) + ' тг.' : '' }}</p>--}}
-                {{--                    </div>--}}
-                {{--                  </div>--}}
-
-                {{--                  <div v-else class="mt-3">--}}
-                {{--                    <p class="m-0 p-0 d-flex">Вы можете забрать свой заказ по адресу мкр.Самал-3, 1</p>--}}
-                {{--                  </div>--}}
-                {{--                </div>--}}
                 <div class="col-md-8 mt-3">
                   <h5 class="font-weight-bold">Как будете платить?</h5>
                   <div class="btn-group btn-group-toggle ml-2" data-toggle="buttons">

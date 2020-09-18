@@ -1,5 +1,8 @@
 @extends('layouts.app')
-@section('title', 'Список товаров')
+@section('title', 'Список товаров' .
+    ($filters['category'] ? ' - Категории ' . App\Models\Category::find($filters['category'])->name : '') .
+    ($filters['brand'] ? ' - Бренда ' . App\Models\Brand::find($filters['brand'])->name : '')
+)
 
 @section('content')
 {{--    {{ dd($products) }}--}}

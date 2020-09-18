@@ -85,82 +85,15 @@
     <ul class="navbar-nav" id="firstNav">
       <li class="nav-item dropdown d-flex" rel="city">
         <a class="nav-link d-flex align-items-center" id="city" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          @guest
-            @if(!isset($_COOKIE['whooip']) || (int) $_COOKIE['whooip'] == 0)
-              <span class="d-inline-flex">
-                <span class="d-none d-md-block">Вы находитесь в &nbsp;</span>
-                <span class="d-block d-md-none">Вы в &nbsp;</span>
-                <span>
-                  <?php
-                  $curl = curl_init();
-                  curl_setopt($curl, CURLOPT_URL, 'http://pro.ipwhois.io/json/' . \Request::ip() . '?key=gFoMKlSHuw23CWwm&lang=ru');
-                  curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
-                  curl_setopt($curl, CURLOPT_POST, 1);
-                  curl_setopt($curl, CURLOPT_POSTFIELDS, []);
-                  $out = curl_exec($curl);
-                  curl_close($curl);
-                  if(App\Models\City::where('name',json_decode($out)->city)->first()) {
-                    echo App\Models\City::where('name',json_decode($out)->city)->first()->name;
-                    $ctr = App\Models\City::where('name',json_decode($out)->city)->first();
-                  } else if (App\Models\City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first()) {
-                    echo App\Models\City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first()->name;
-                    $ctr = App\Models\City::where('name', 'LIKE', '%'.json_decode($out)->city . '%')->first();
-                  } else {
-                    $ctr = App\Models\City::first();
-                    echo $ctr->name;
-                  }
-                  ?>
-                  ?
-                </span>
-                <div class="d-none d-md-flex" style="background: #fff; position:absolute; padding: 10px 10px 10px 0px; border-radius: 0; margin-top: 47px; margin-left: 80px">
-                  <a href="/location/{{$ctr->id}}" class="btn btn-success rounded-0">Да</a>
-                  <a href="/location/{{App\Models\City::first()->id}}" class="btn btn-danger rounded-0 ml-3">Нет</a>
-                </div>
-                <div class="d-flex d-md-none" style="background: #fff; position:absolute; padding: 10px 10px 10px 10px; border-radius: 0; margin-top: 47px; margin-left: 0px">
-                  <a href="/location/{{$ctr->id}}" class="btn btn-success rounded-0">Да</a>
-                  <a href="/location/{{App\Models\City::first()->id}}" class="btn btn-danger rounded-0 ml-3">Нет</a>
-                </div>
-              </span>
-            @elseif(!isset($_COOKIE['city']))
-              <? setcookie('city', App\Models\City::first()->id, time() + (86400 * 30), "/"); ?>
-              <span class="d-none d-md-block">Вы находитесь в: г. Москва</span>
-              <span class="d-block d-md-none">г. Москва</span>
-              <i class="fal fa-angle-down fa-fw"></i>
-            @else
-              <span class="d-none d-md-block">Вы находитесь в: г. {{ App\Models\City::find($_COOKIE['city'])->name }}</span>
-              <span class="d-block d-md-none">г. {{ App\Models\City::find($_COOKIE['city'])->name }}</span>
-              <i class="fal fa-angle-down fa-fw"></i>
-            @endif
-          @else
-            @if(isset(auth()->user()->address))
-              <span class="d-none d-md-block">Вы находитесь в: г. {{ auth()->user()->address->city->name }}</span>
-              <span class="d-block d-md-none">г. {{ auth()->user()->address->city->name }}</span>
-              <i class="fal fa-angle-down fa-fw"></i>
-            @else
-              @if(!isset($_COOKIE['city']))
-                <? setcookie('city', App\Models\City::first()->id, time() + (86400 * 30), "/"); ?>
-                <span class="d-none d-md-block">Вы находитесь в: г. Москва</span>
-                <span class="d-block d-md-none">г. Москва</span>
-                  <i class="fal fa-angle-down fa-fw"></i>
-              @else
-                <span class="d-none d-md-block">Вы находитесь в: г. {{ App\Models\City::find($_COOKIE['city'])->name }}</span>
-                <span class="d-block d-md-none">г. {{ App\Models\City::find($_COOKIE['city'])->name }}</span>
-                <i class="fal fa-angle-down fa-fw"></i>
-              @endif
-            @endif
-          @endguest
+          <span class="d-inline-flex">
+            <span>{{ $currency->short_name }} ({{ $currency->symbol }}) <i style="font-size: 15px" class="fas fa-fw fa-chevron-down"></i></span>
+          </span>
         </a>
         <div class="dropdown-menu" aria-labelledby="city">
-          <div class="material_input">
-            <input type="text" name="location_city" autocomplete="off" onkeyup="resetListCity()">
-            <span class="highlight"></span>
-            <span class="bar"></span>
-            <label id="mla">Начните печатать</label>
-          </div>
           <div class="list-group" id="list-city">
-            @foreach(App\Models\City::paginate(10) as $city)
-              <a href="/location/{{$city->id}}" class="list-group-item list-group-item-action">
-                {{ $city->name }}
+            @foreach(App\Models\Currency::all() as $cr)
+              <a href="/currency/change/{{$cr->id}}" class="list-group-item list-group-item-action">
+                {{ $cr->name }}
               </a>
             @endforeach
           </div>

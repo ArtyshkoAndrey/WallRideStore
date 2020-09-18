@@ -5,6 +5,10 @@ use App\Models\Product;
 
 if ((new App\Models\Settings)->statusSite()) {
 
+  /* Sitemap */
+  Route::get('/sitemap', 'SitemapController@index');
+
+
   Route::redirect('/products', '/')->name('root'); // Главаня
   Route::get('/', 'ProductsController@index')->name('products.index'); // Главная с товарами
 
@@ -17,7 +21,7 @@ if ((new App\Models\Settings)->statusSite()) {
   Route::get('products/search', 'ProductsController@search')->name('products.search'); // Главная с товарами
   Route::get('product/{product}', 'ProductsController@show')->name('products.show');
   Route::get('policy', 'PagesController@policy')->name('policy');
-  Route::get('location/{city}', ['as' => 'location', 'uses' => 'PagesController@location']);
+  Route::get('currency/change/{currency}', ['as' => 'currency-change', 'uses' => 'PagesController@currency']);
   Route::resource('news', 'NewsController')->except([
     'edit', 'create', 'destroy', 'update'
   ]);

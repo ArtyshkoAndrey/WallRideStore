@@ -121,7 +121,7 @@ line-height: 24px;" v-model="count" readonly disabled>
       })
     },
     mounted() {
-      
+
       console.log(this.item.promotions.some(elem => elem.status && elem.sale_status))
       while (this.item.skus[this.numberSize].stock <= 0) {
         this.removeNumberSize()
@@ -220,14 +220,14 @@ line-height: 24px;" v-model="count" readonly disabled>
           })
             .then((response) => { // Запрос успешно выполнил этот обратный вызов
               if (response.data.type === 'auth') {
-                swal('Товар добавлен в корзину', '', 'success')
-                  .then(() => {
-                    this.cart = true
-                    setTimeout(() => {
-                      this.cart = false
-                    }, 2000)
-                    // location.href = '/cart';
-                  });
+                // swal('Товар добавлен в корзину', '', 'success')
+                //   .then(() => {
+                //     this.cart = true
+                //     setTimeout(() => {
+                //       this.cart = false
+                //     }, 2000)
+                //     // location.href = '/cart';
+                //   });
                 let data = response.data
                 this.$parent.cartItems = data.cartItems
                 this.$parent.priceAmount = data.priceAmount

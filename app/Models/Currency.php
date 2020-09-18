@@ -9,7 +9,8 @@ class Currency extends Model
   protected $fillable = [
     'name',
     'ratio',
-    'symbol'
+    'symbol',
+    'short_name'
   ];
 
 }

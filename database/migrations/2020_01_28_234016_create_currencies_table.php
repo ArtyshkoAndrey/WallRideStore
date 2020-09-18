@@ -18,6 +18,7 @@ class CreateCurrenciesTable extends Migration
             $table->string('name');
             $table->float('ratio');
             $table->string('symbol');
+            $table->string('short_name');
             $table->timestamps();
         });
     }

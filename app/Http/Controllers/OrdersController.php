@@ -204,14 +204,10 @@ class OrdersController extends Controller
     $express_companies = ExpressCompany::where('name', '!=', 'Самовывоз')->get();
     $pickup = ExpressCompany::where('name', '=', 'Самовывоз')->first();
     $zones = ExpressZone::with('company')->whereHas('cities', function ($qq) {
-      if(Auth::check()) {
-        $qq->where('cities.id', isset(Auth()->user()->address->city_id) ? Auth()->user()->address->city_id : $_COOKIE['city']);
+      if(Auth::check() && isset(Auth()->user()->address->city_id)) {
+        $qq->where('cities.id', Auth()->user()->address->city_id);
       } else {
-        try {
-          $qq->where('cities.id', $_COOKIE['city']);
-        } catch(ErrorException $e) {
-          $qq->where('cities.id', 1);
-        }
+        $qq->where('cities.id', 1);
       }
     })->get();
     $express_companies = $express_companies->toArray();
@@ -242,7 +238,7 @@ class OrdersController extends Controller
       } else {
         $ids = [];
       }
-      $city = City::find(isset($_COOKIE['city']) ? $_COOKIE['city'] : 1);
+      $city = City::find(1);
       $cartItems = [];
       $priceAmount = 0;
       $productsSku = Product::getProducts($ids);
