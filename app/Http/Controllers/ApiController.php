@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\ProductSku;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\ExpressCompany;
 use App\Models\ExpressZone;
 use Illuminate\Support\Facades\Auth;
+use App\Services\OrderService;
 
 class ApiController extends Controller {
 
@@ -67,5 +70,15 @@ class ApiController extends Controller {
       }
     }
     return $express_companies;
+  }
+
+  public function delete_orders (OrderService $orderService) {
+    $date = Carbon::now();
+    dump($date);
+    dump($date->subHours(2));
+    $orders = Order::where('ship_status', Order::SHIP_STATUS_PAID)->where('created_at','<', $date)->get();
+    foreach ($orders as $order) {
+      $orderService->cancled($order);
+    }
   }
 }

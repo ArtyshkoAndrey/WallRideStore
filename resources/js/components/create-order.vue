@@ -60,7 +60,7 @@
       this.cartItems.forEach(item => {
         weight += Number(item.amount) * Number( item.productSku.product.weight)
       });
-      this.express_companies.forEach(com => {
+      this.companies.forEach(com => {
         console.log(typeof com.costedTransfer)
         if (typeof com.costedTransfer === "number" || typeof com.costedTransfer === "string") {
           if ((weight - this.stepMin) > 0) {
@@ -86,6 +86,12 @@
               return false;
             }
           })
+        }
+      })
+      this.companies.forEach(com => {
+        if (com.costedTransfer === 0) {
+          this.companies = []
+          this.companies.push(com)
         }
       })
       if (this.test) {
@@ -312,27 +318,12 @@
                     }
                   }
                 }).on('change', function (e) {
-                  $.cookie("city", this.value ,{expires: 7, path: '/'});
                   self.order.city = this.value
                   axios.post('/api/companies', {city: this.value})
                   .then(response => {
                     console.log(response)
                     response.data.length > 0 ? self.companies = response.data : self.companies = []
                     self.companies.forEach(com => {
-                      // if ((self.getWeight - self.stepMin) > 0 && com.costedTransfer !== null) {
-                      //   console.log('Вес ' + self.getWeight)
-                      //   let p = self.getWeight - self.stepMin
-                      //   let i = 0
-                      //   console.log('Перевес на ' + p, 'Шаг для перевеса ' + com.step_unlim)
-                      //   while(p > 0) {
-                      //     p = p - com.step_unlim
-                      //     i++
-                      //   }
-                      //   console.log('Кол-во шагов перевеса ' + i);
-                      //   com.costedTransfer = Number(com.costedTransfer) + Number(com.step_cost_unlim) * i
-                      //   console.log('-----')
-                      // }
-
                       if (typeof com.costedTransfer === "number" || typeof com.costedTransfer === "string") {
                         if ((self.getWeight - self.stepMin) > 0) {
                           console.log('Вес ' + self.getWeight)
@@ -359,11 +350,16 @@
                         })
                       }
                     })
+                    self.companies.forEach(com => {
+                      if (com.costedTransfer === 0) {
+                        self.companies = []
+                        self.companies.push(com)
+                      }
+                    })
                     self.order.pickup = false
                     self.order.payment_method = null
                     self.order.express_company = null
                     $('.btn.active').removeClass('active')
-                    ;
                   })
                 })
                 $('#country').select2({

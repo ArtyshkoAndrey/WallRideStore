@@ -11,6 +11,7 @@ use App\Models\Order;
 use App\Models\ProductSku;
 use App\Exceptions\InvalidRequestException;
 use App\Jobs\CloseOrder;
+use App\Notifications\OrderCancledNotification;
 use Carbon\Carbon;
 use App\Models\CouponCode;
 use App\Exceptions\CouponCodeUnavailableException;
@@ -91,5 +92,26 @@ class OrderService
         // dispatch(new CloseOrder($order, config('app.order_ttl')));
 
         return $order;
+    }
+
+    public function cancled(Order $order) {
+//      Order::SHIP_STATUS_CANCEL
+      $order->ship_status = Order::SHIP_STATUS_CANCEL;
+      $order->save();
+      $order->user->notify(new OrderCancledNotification($order));
+      foreach ($order->items as $item) {
+        $sku = ProductSku::where('product_id', $item->product->id);
+        if($sku->count() === 1) {
+          $sku = $sku->first();
+          $sku->addStock($item->amount);
+        } else if ($sku->count() > 1) {
+          $sku = $sku->whereHas('skus', function ($q) use ($item) {
+            $q->where('skuses.title', $item->product_sku);
+          })->first();
+          $sku->addStock($item->amount);
+        } else {
+          throw new \Exception('Ошибка в размерах');
+        }
+      }
     }
 }
