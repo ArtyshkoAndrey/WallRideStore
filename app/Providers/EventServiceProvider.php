@@ -18,13 +18,17 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        Registered::class => [
-            SendEmailVerificationNotification::class,
-        ],
-        OrderPaid::class => [
-            UpdateProductSoldCount::class,
-            SendOrderPaidMail::class,
-        ],
+      Registered::class => [
+        SendEmailVerificationNotification::class,
+      ],
+      OrderPaid::class => [
+        UpdateProductSoldCount::class,
+        SendOrderPaidMail::class,
+      ],
+      \SocialiteProviders\Manager\SocialiteWasCalled::class => [
+        // ... other providers
+      'SocialiteProviders\\VKontakte\\VKontakteExtendSocialite@handle',
+      ],
     ];
 
     /**

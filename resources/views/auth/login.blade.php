@@ -40,6 +40,11 @@
                     </label>
                   </div>
                   <button type="submit" class="btn d-block w-100 btn-dark m-0">Войти</button>
+                  <div class="row justify-content-center">
+                    <a href="{{ route('vk.redirect') }}" id="vk-auth" class="btn text-white mx-0 px-3 mt-2"><i class="fab fa-2x fa-vk"></i></a>
+                    <a href="{{ route('vk.redirect') }}" id="google-auth" class="btn text-white mx-0 px-3 mt-2 ml-2"><i class="fab fa-2x fa-google-plus-g"></i></a>
+                    <a href="{{ route('vk.redirect') }}" id="vk-auth" class="btn text-white mx-0 px-4 mt-2 ml-2"><i class="fab fa-2x fa-facebook-f"></i></a>
+                  </div>
                 </form>
               </div>
             </div>

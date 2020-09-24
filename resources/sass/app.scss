@@ -173,6 +173,24 @@ select[name="order"], select[name="size"], select[name="brand"], select[name="ca
   }
 }
 
+#vk-auth {
+  color: white !important;
+  background: #4A76A8;
+}
+
+#vk-auth:hover, #google-auth:hover {
+  color: white !important;
+  text-decoration: none;
+  -webkit-filter: brightness(70%);
+  filter: brightness(70%);
+}
+
+#google-auth {
+  color: white !important;
+  background: red;
+}
+
+
 #cart {
   #offer-payment {
     font-size: 18px;
