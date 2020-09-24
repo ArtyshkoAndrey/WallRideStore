@@ -3,6 +3,7 @@
     name: "create-order",
     data () {
       return {
+        cost: 0,
         test: false,
         testPay: false,
         cartItems: [],
@@ -49,7 +50,6 @@
       });
       this.companies = this.express_companies;
       let weight = 0;
-      // console.log(this.cart_items)
       this.cart_items.forEach(el => {
         this.cartItems.push({
           amount: el.amount,
@@ -59,9 +59,9 @@
       });
       this.cartItems.forEach(item => {
         weight += Number(item.amount) * Number( item.productSku.product.weight)
+        this.cost += Number(item.amount) * Number(item.productSku.product.on_sale ? item.productSku.product.price_sale : item.productSku.product.price)
       });
       this.companies.forEach(com => {
-        console.log(typeof com.costedTransfer)
         if (typeof com.costedTransfer === "number" || typeof com.costedTransfer === "string") {
           if ((weight - this.stepMin) > 0) {
             console.log('Вес ' + weight)
@@ -82,18 +82,12 @@
           costs.some(cost => {
             if (weight >= cost.weight_to && weight < cost.weight_from) {
               com.costedTransfer = Number(cost.cost)
-              console.log(111111111111)
               return false;
             }
           })
         }
       })
-      this.companies.forEach(com => {
-        if (com.costedTransfer === 0) {
-          this.companies = []
-          this.companies.push(com)
-        }
-      })
+      this.getExistCompany();
       if (this.test) {
         this.order.name = "Andrey"
         this.order.email = 'artyshko.andrey@gmail.com'
@@ -162,6 +156,15 @@
       }
     },
     methods: {
+      getExistCompany () {
+        let companies = [...this.companies]
+        this.companies = []
+        companies.forEach(com => {
+          if ((com.costedTransfer === 0 && (Number(com.min_cost) <= Number(this.cost))) || (Number(com.min_cost) <= Number(this.cost))) {
+            this.companies.push(com)
+          }
+        })
+      },
       checkCoupon (swalable = true) {
         let code = this.order.coupon;
         // Если нет ввода, всплывающее окно
@@ -321,7 +324,6 @@
                   self.order.city = this.value
                   axios.post('/api/companies', {city: this.value})
                   .then(response => {
-                    console.log(response)
                     response.data.length > 0 ? self.companies = response.data : self.companies = []
                     self.companies.forEach(com => {
                       if (typeof com.costedTransfer === "number" || typeof com.costedTransfer === "string") {
@@ -344,18 +346,12 @@
                         costs.some(cost => {
                           if (self.getWeight >= cost.weight_to && self.getWeight < cost.weight_from) {
                             com.costedTransfer = Number(cost.cost)
-                            console.log(111111111111)
                             return false;
                           }
                         })
                       }
                     })
-                    self.companies.forEach(com => {
-                      if (com.costedTransfer === 0) {
-                        self.companies = []
-                        self.companies.push(com)
-                      }
-                    })
+                    self.getExistCompany();
                     self.order.pickup = false
                     self.order.payment_method = null
                     self.order.express_company = null

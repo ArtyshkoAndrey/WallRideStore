@@ -71,7 +71,7 @@
               @forelse($cartItems as $item)
                 <div class="row mt-3 justify-content-center align-items-center">
                   <div class="col-md-2 offset-md-1 col-4">
-                    <img src="{{ $item['product_sku']->product->photos ?  asset('storage/products/' . $item['product_sku']->product->photos[0]->name) : 'https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png' }}" class="img-fluid" alt="{{ $item['product_sku']->product->title }}">
+                    <img src="{{ $item['product_sku']->product->photos && count($item['product_sku']->product->photos) > 0 ? asset('storage/products/' . $item['product_sku']->product->photos[0]->name) : 'https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png' }}" class="img-fluid" alt="{{ $item['product_sku']->product->title }}">
                   </div>
                   <div class="col-4 col-md-4">
                     {{ ucwords(strtolower($item['product_sku']->product->title)) }}
