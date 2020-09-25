@@ -202,7 +202,7 @@
   </div>
 </nav>
 
-<nav class="navbar navbar-expand" style="position: fixed; margin-top: 50px; background: rgba(0, 0, 0, 0.58)!important; z-index: 99;width: 100vw">
+<nav class="navbar navbar-expand p-0" style="position: fixed; margin-top: 50px; background: rgba(0, 0, 0, 0.58)!important; z-index: 99;width: 100vw">
   <div class="collapse navbar-collapse" id="navbarSupportedContent" style="width: 100vw;">
     <ul class="navbar-nav justify-content-center" style="width: 100vw;">
 
@@ -254,7 +254,7 @@
       <li class="nav-item mr-0 mr-sm-4">
         <a class="nav-link d-flex align-items-center c-red" href="{{ route('products.allsale') }}">Sale</a>
       </li>
-      <li class="nav-item mr-0 mr-sm-4 d-none d-md-flex">
+      <li class="nav-item mr-0 mr-sm-4">
         <a class="nav-link d-flex align-items-center" href="{{ route('products.allactions') }}">Акции</a>
       </li>
 
