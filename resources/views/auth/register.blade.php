@@ -1,6 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
+  @if(session('status') === 'Error')
+    <div class="modal fade" id="error" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="LabelStock" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content rounded-0">
+          <div class="modal-body">
+            <button type="button" class="close position-absolute text-dark" style="right: 10px; top: 10px; font-size: 1.9rem; z-index: 900" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="row">
+              <div class="col-12">
+                <p class="text-bold h4">Вы были перенаправлены на страницу регистрации</p>
+                <p class="h5">{{ session('message') }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  @endif
+
 <auth-login inline-template>
   <section id="auth">
     <div class="container vh-100">
@@ -16,7 +36,7 @@
               <form class="needs-validation" novalidate method="POST" action="{{ route('register') }}">
                 @csrf
                 <div class="md-form md-outline form-lg">
-                  <input id="name" name="name" class="form-control form-control-lg {{ $errors->has('name') ? ' is-invalid' : '' }}" type="text" value="{{ old('name') }}" required autofocus>
+                  <input id="name" name="name" class="form-control form-control-lg {{ $errors->has('name') ? ' is-invalid' : '' }}" type="text" value="{{ session('name') ? session('name') : old('name') }}" required autofocus>
                   <label for="name">Имя</label>
                   <div class="invalid-feedback">
                     {{ $errors->first('name') }}
@@ -72,4 +92,9 @@
 
 @section('scriptsAfterJs')
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/js/mdb.min.js"></script>
+  @if(session('status') === 'Error')
+    <script>
+      $('#error').modal('toggle')
+    </script>
+  @endif
 @endsection

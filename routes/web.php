@@ -6,6 +6,7 @@ use App\Notifications\RegisterPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManagerStatic as Image;
+use Laravel\Socialite\Facades\Socialite;
 
 //
 
@@ -17,10 +18,15 @@ if ((new App\Models\Settings)->statusSite()) {
   Route::get('/auth/vk/redirect', function () {
     return Socialite::driver('vkontakte')->redirect();
   })->name('vk.redirect');
+  Route::get('/auth/google/redirect', function () {
+    return Socialite::driver('google')->redirect();
+  })->name('google.redirect');
 
   Route::get('/auth/vk', function (Request $request) {
+    Auth::logout();
     try {
-      if ($user = Socialite::driver('vkontakte')->user()) {
+      $user = Socialite::driver('vkontakte')->user();
+      if ($user->email) {
         $userM = User::where('email', $user->email)->first();
         if ($userM) {
           Auth::login($userM, true);
@@ -39,14 +45,50 @@ if ((new App\Models\Settings)->statusSite()) {
           $userM->password = bcrypt($pass);
           $userM->save();
           $userM->notify(new RegisterPassword($userM->email, $pass));
-          Auth::login($userM);
+          Auth::login($userM, true);
         }
+      } else {
+        return redirect()->route('register')->with(['name' => $user->name, 'status' => 'Error', 'message' => 'В дальнейшем необходимо привязать свою почту в профиле Вконтакте']);
       }
     } catch (GuzzleHttp\Exception\ClientException $e) {
       return redirect()->route('vk.redirect');
     }
     return redirect()->route('profile.index');
   })->name('vk.auth');
+
+  Route::get('/auth/google', function (Request $request) {
+    Auth::logout();
+    try {
+      $user = Socialite::driver('google')->user();
+      if ($user->email) {
+        $userM = User::where('email', $user->email)->first();
+        if ($userM) {
+          Auth::login($userM, true);
+        } else {
+          $userM = new User();
+          $userM->email = $user->email;
+          $userM->name = $user->name;
+
+          $url = $user->avatar;
+          $imageName = $userM->name . '-' . $user->id . '.jpg';
+          $destinationPath = public_path('storage/avatar/thumbnail') . '/' . $imageName;
+          file_put_contents($destinationPath, file_get_contents($url));
+
+          $userM->avatar = $imageName;
+          $pass = str_random(10);
+          $userM->password = bcrypt($pass);
+          $userM->save();
+          $userM->notify(new RegisterPassword($userM->email, $pass));
+          Auth::login($userM, true);
+        }
+      } else {
+        return redirect()->route('register')->with(['name' => $user->name, 'status' => 'Error', 'message' => 'В дальнейшем необходимо привязать свою почту в профиле Google']);
+      }
+    } catch (GuzzleHttp\Exception\ClientException $e) {
+      return redirect()->route('login');
+    }
+    return redirect()->route('profile.index');
+  })->name('google.auth');
 
   Route::redirect('/products', '/')->name('root'); // Главаня
   Route::get('/', 'ProductsController@index')->name('products.index'); // Главная с товарами

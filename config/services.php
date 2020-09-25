@@ -47,9 +47,9 @@ return [
   ],
 
   'google' => [
-    'client_id'     => env('GOOGLE_CLIENT_ID'),
-    'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-    'redirect'      => env('GOOGLE_REDIRECT')
+    'client_id'     => '400445959195-jjdvmtsmt45fas5g8rg3l8ib5tr75t37.apps.googleusercontent.com',
+    'client_secret' => '_CjK3wtfRlSm-fHEsHD2PlIn',
+    'redirect'      =>  url('auth/google')
   ],
 
 ];

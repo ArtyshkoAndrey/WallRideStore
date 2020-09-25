@@ -107,23 +107,6 @@
     }
   }
 
-  function resetListCity () {
-    let param = $("input[name='location_city']").val()
-
-    $.ajax({
-      url: '{{ route('api.city', '') }}' + '/' + param,
-      method: 'POST',
-      success: function(data){
-        $('#list-city').html('')
-        data.items.forEach( city => {
-          $('#list-city').append(
-            '<a href="/location/' + city.id + '" class="list-group-item list-group-item-action">' + city.name + '</a>'
-          )
-        })
-      }
-    })
-  }
-
   function checkToggableMenu(toggle = false) {
     let $body = document.body;
     if (toggle) {
