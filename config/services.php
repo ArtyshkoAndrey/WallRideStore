@@ -43,7 +43,7 @@ return [
   'vkontakte' => [
     'client_id' => 7607907,
     'client_secret' => 'nphGP18552tewyPVRbe3',
-    'redirect' => 'http://myshop/auth/vk'
+    'redirect' => url('auth/vk')
   ],
 
   'google' => [
