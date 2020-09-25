@@ -1,11 +1,7 @@
 <?php
 // Для всех
-use App\Models\Product;
 use App\Models\User;
 use App\Notifications\RegisterPassword;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
-use Intervention\Image\ImageManagerStatic as Image;
 use Laravel\Socialite\Facades\Socialite;
 
 //
@@ -22,7 +18,7 @@ if ((new App\Models\Settings)->statusSite()) {
     return Socialite::driver('google')->redirect();
   })->name('google.redirect');
 
-  Route::get('/auth/vk', function (Request $request) {
+  Route::get('/auth/vk', function () {
     Auth::logout();
     try {
       $user = Socialite::driver('vkontakte')->user();
@@ -56,7 +52,7 @@ if ((new App\Models\Settings)->statusSite()) {
     return redirect()->route('profile.index');
   })->name('vk.auth');
 
-  Route::get('/auth/google', function (Request $request) {
+  Route::get('/auth/google', function () {
     Auth::logout();
     try {
       $user = Socialite::driver('google')->user();
@@ -202,6 +198,7 @@ function getAdminRoute() {
     Route::resource('/header-mobile', 'HeaderMobileController', ['as' => 'admin']);
     Route::resource('/stock', 'StockController', ['as' => 'admin.store']);
     Route::resource('/faqs', 'FAQController', ['as' => 'admin.store']);
+    Route::post('/faqs/upload/tiny/image', 'FAQController@tinyUploadImage')->name('admin.store.faqs.upload.tiny.image');
     Route::resource('/promotions', 'PromotionController', ['as' => 'admin.production']);
   });
 }

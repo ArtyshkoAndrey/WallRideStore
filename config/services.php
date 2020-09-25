@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\URL;
 return [
 
   /*
@@ -43,13 +43,13 @@ return [
   'vkontakte' => [
     'client_id' => 7607907,
     'client_secret' => 'nphGP18552tewyPVRbe3',
-    'redirect' => url('auth/vk')
+    'redirect' => 'auth/vk'
   ],
 
   'google' => [
     'client_id'     => '400445959195-jjdvmtsmt45fas5g8rg3l8ib5tr75t37.apps.googleusercontent.com',
     'client_secret' => '_CjK3wtfRlSm-fHEsHD2PlIn',
-    'redirect'      =>  url('auth/google')
+    'redirect'      =>  'auth/google'
   ],
 
 ];
