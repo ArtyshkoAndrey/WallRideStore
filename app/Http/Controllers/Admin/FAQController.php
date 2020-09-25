@@ -138,4 +138,9 @@ class FAQController extends Controller {
     }
     return $name;
   }
+
+  public function tinyUploadImage(Request $request) {
+    $imgpath = $request->file('file')->store('/faq/txt', 'public');
+    return response()->json(['location' => url('storage/'.$imgpath)]);
+  }
 }

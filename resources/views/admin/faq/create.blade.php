@@ -35,7 +35,7 @@
           </div>
         </div>
         <div class="card-body">
-          <form action="{{ route('admin.store.faqs.store') }}" method="post">
+          <form action="{{ route('admin.store.faqs.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="image" value="{{ old('image', null) }}">
             <div class="row justify-content-end">
@@ -80,9 +80,50 @@
   <script>
     tinymce.init({
       selector: '#content',
-      plugins : "paste",
+      // plugins : "paste",
+      height: 500,
       paste_text_sticky: true,
-      paste_text_sticky_default: true
+      paste_text_sticky_default: true,
+      setup: function (editor) {
+        editor.on('init change', function () {
+          editor.save();
+        });
+      },
+      plugins: [
+        "advlist autolink lists link image charmap print preview anchor",
+        "searchreplace visualblocks code fullscreen",
+        "insertdatetime media table contextmenu paste imagetools",
+        "paste"
+      ],
+      toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+      content_css: [
+        '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+        '//www.tinymce.com/css/codepen.min.css'
+      ],
+      image_title: true,
+      automatic_uploads: true,
+      images_upload_url: '{{ route('admin.store.faqs.upload.tiny.image') }}',
+      file_picker_types: 'image',
+      file_picker_callback: function(cb, value, meta) {
+        let input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('accept', 'image/*');
+        input.onchange = function() {
+          let file = this.files[0];
+
+          let reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = function () {
+            let id = 'blobid' + (new Date()).getTime();
+            let blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+            let base64 = reader.result.split(',')[1];
+            let blobInfo = blobCache.create(id, file, base64);
+            blobCache.add(blobInfo);
+            cb(blobInfo.blobUri(), { title: file.name });
+          };
+        };
+        input.click();
+      }
     });
 
     Dropzone.autoDiscover = false;
@@ -115,7 +156,6 @@
         });
       },
       paramName: 'file',
-      maxFiles: 1,
       dictDefaultMessage: 'Drag an image here to upload, or click to select one',
       headers: {
         'x-csrf-token': document.querySelectorAll('meta[name=csrf-token]')[0].getAttributeNode('content').value,

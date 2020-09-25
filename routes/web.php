@@ -198,6 +198,7 @@ function getAdminRoute() {
     Route::resource('/header-mobile', 'HeaderMobileController', ['as' => 'admin']);
     Route::resource('/stock', 'StockController', ['as' => 'admin.store']);
     Route::resource('/faqs', 'FAQController', ['as' => 'admin.store']);
+    Route::post('/faqs/upload/tiny/image', 'FAQController@tinyUploadImage')->name('admin.store.faqs.upload.tiny.image');
     Route::resource('/promotions', 'PromotionController', ['as' => 'admin.production']);
   });
 }
