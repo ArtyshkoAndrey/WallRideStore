@@ -106,7 +106,7 @@ class ProductsController extends Controller {
       'category'  => $category,
       'size'      => $size
     ];
-    $products = $products->with('skus', 'photos')->paginate(16);
+    $products = $products->with('skus', 'photos')->orderBy('on_sale', 'asc')->paginate(16);
 //    dd($products);
     return view('products.all', compact('products', 'filters', 'attributes', 'categories'));
   }
