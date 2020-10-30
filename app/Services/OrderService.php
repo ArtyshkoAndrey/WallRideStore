@@ -29,9 +29,9 @@ class OrderService
 
       $order   = new Order([
         'address'      => [
-          'address'       => ''.Country::find($address['country'])->name.','.City::find($address['city'])->name.','. $address['street'],
-          'contact_name'  => $address['contact_name'],
-          'contact_phone' => $address['phone'],
+            'address'       => ''.Country::find($address['country'])->name.','.City::find($address['city'])->name.','. $address['street'],
+            'contact_name'  => $address['contact_name'],
+            'contact_phone' => $address['phone'],
         ],
         'total_amount' => 0,
         'id_express_company' => $express_company,
@@ -74,55 +74,53 @@ class OrderService
       if ($coupon) {
         $coupon->checkAvailable($user, $priceAmount);
         $totalAmount = $coupon->getAdjustedPrice($priceAmount, $items);
-//                dd($totalAmount);
+  //                dd($totalAmount);
         $order->couponCode()->associate($coupon);
         if ($coupon->changeUsed() <= 0) {
           throw new CouponCodeUnavailableException('该优惠券已被兑完');
         }
       }
-//            dd($totalAmount);
+  //            dd($totalAmount);
       $order->update(['total_amount' => $totalAmount]);
 
       $skuIds = collect($items)->pluck('sku_id')->all();
       app(CartService::class)->remove($skuIds);
-
       return $order;
     });
 
-    // dispatch(new CloseOrder($order, config('app.order_ttl')));
-
+  // dispatch(new CloseOrder($order, config('app.order_ttl')));
     return $order;
   }
 
-  public function cancled(Order $order) {
+    public function cancled(Order $order) {
 //      Order::SHIP_STATUS_CANCEL
-    $order->ship_status = Order::SHIP_STATUS_CANCEL;
-    $order->save();
-    $order->user->notify(new OrderCancledNotification($order));
-    foreach ($order->items as $item) {
-      if (Product::find($item->product->id)) {
-        $sku = ProductSku::where('product_id', $item->product->id);
-        if($sku->count() === 1) {
-          $sku = $sku->first();
-          $sku->addStock($item->amount);
-        } else if ($sku->count() > 1) {
-          $sku = $sku->whereHas('skus', function ($q) use ($item) {
-            $q->where('skuses.title', $item->product_sku);
-          })->first();
-          if ($sku) {
+      $order->ship_status = Order::SHIP_STATUS_CANCEL;
+      $order->save();
+      $order->user->notify(new OrderCancledNotification($order));
+      foreach ($order->items as $item) {
+        if (Product::find($item->product->id)) {
+          $sku = ProductSku::where('product_id', $item->product->id);
+          if($sku->count() === 1) {
+            $sku = $sku->first();
             $sku->addStock($item->amount);
-          } else {
-            $sku        = new ProductSku();
-            $sku->stock = $item->amount;
-            $sku->product()->associate($item->product->id);
-            $sku->skus()->associate(Skus::where('title', $item->product_sku)->first());
-            $sku->save();
-          }
+          } else if ($sku->count() > 1) {
+            $sku = $sku->whereHas('skus', function ($q) use ($item) {
+              $q->where('skuses.title', $item->product_sku);
+            })->first();
+            if ($sku) {
+              $sku->addStock($item->amount);
+            } else {
+              $sku        = new ProductSku();
+              $sku->stock = $item->amount;
+              $sku->product()->associate($item->product->id);
+              $sku->skus()->associate(Skus::where('title', $item->product_sku)->first());
+              $sku->save();
+            }
 
-        } else {
-          throw new \Exception('Ошибка в размерах');
+          } else {
+            throw new \Exception('Ошибка в размерах');
+          }
         }
       }
     }
-  }
 }
