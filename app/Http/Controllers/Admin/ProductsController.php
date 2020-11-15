@@ -7,6 +7,8 @@ use App\Models\Photo;
 use App\Models\Product;
 use App\Models\ProductSku;
 use App\Models\Skus;
+use App\Services\CartService;
+use App\Services\PhotoService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,8 +17,12 @@ use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\File;
 
 class ProductsController extends Controller {
-  public function __construct() {
 
+  protected $photoService;
+
+  public function __construct(PhotoService $photoService)
+  {
+    $this->photoService = $photoService;
   }
 
   /**
@@ -160,10 +166,10 @@ class ProductsController extends Controller {
    * Update the specified resource in storage.
    *
    * @param Request $request
-   * @param  int  $id
+   * @param int $id
    * @return RedirectResponse
    */
-  public function update(Request $request, $id)
+  public function update(Request $request, int $id)
   {
     $product              = Product::withTrashed()->find($id);
     $product->title       = $request->title;
@@ -240,46 +246,30 @@ class ProductsController extends Controller {
   }
 
   public function photo(Request $request, $id) {
-    // read image from temporary file
-    $image           = $request->file('file');
-    $destinationPath = public_path('storage/products/');
-    $name            = $request->file('file')->getClientOriginalName();
-    $img             = Image::make($image->getRealPath());
-    $ph              = new Photo();
-    $ph['name']      = $name;
-    $pr              = Product::withTrashed()->find($id);
-    $img->save($destinationPath.'/'.$name);
-
-    $ph->product()->associate($pr);
-    $ph->save();
-    echo $name;
+    $file = $request->file('file');
+    $name = $this->photoService->create($file, public_path('storage/products/'), true, 900);
+    $ph = new Photo(['name' => $name]);
+    $ph->product()->associate($id)
+      ->save();
+    return response($name, 200);
   }
-  public function photoDelete(Request $request, $id) {
-    // read image from temporary file
-    echo $request->name;
-    File::delete(public_path('storage/products/') . '/' .$request->name);
-    $ph = Photo::where('name', $request->name)->first();
-    $ph->delete();
+
+  public function photoDelete(Request $request) {
+    $name = $request->name;
+    $path = public_path('storage/products/') . '/' .$name;
+    if ($this->photoService->delete($path) || !File::exists($path)) {
+      Photo::where('name', $name)->first()->delete();
+      return response($name, 200);
+    } else {
+      return response('Фотографию невозможно удалить', 500);
+    }
   }
 
   public function photoCreate(Request $request) {
-    // read image from temporary file
-    $image = $request->file('file');
-    $destinationPath = public_path('storage/products/');
-    $name            = $request->file('file')->getClientOriginalName();
-    $img             = Image::make($image->getRealPath());
-    $ph              = new Photo();
-    $ph['name']      = $name;
-    $img->save($destinationPath.'/'.$name);
+    $file = $request->file('file');
+    $name = $this->photoService->create($file, public_path('storage/products/'), true, 900);
+    $ph = new Photo(['name' => $name]);
     $ph->save();
-    echo $name;
-  }
-
-  public function photoDeleteCreate(Request $request) {
-    // read image from temporary file
-    echo $request->name;
-    File::delete(public_path('storage/products/') . '/' .$request->name);
-    $ph = Photo::where('name', $request->name)->first();
-    $ph->delete();
+    return response($name, 200);
   }
 }
