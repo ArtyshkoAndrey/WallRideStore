@@ -13,3 +13,4 @@ yarn-error.log
 /public/js/vendor
 /public/css/vendor
 /public/fonts/vendor
+.env
