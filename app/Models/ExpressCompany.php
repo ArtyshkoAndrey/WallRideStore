@@ -23,4 +23,8 @@ class ExpressCompany extends Model
   public function zones() {
     return $this->hasMany(ExpressZone::class, 'company_id', 'id');
   }
+
+  public function cities () {
+    return $this->belongsToMany(City::class, 'city_expresses', 'express_company_id', 'city_id');
+  }
 }

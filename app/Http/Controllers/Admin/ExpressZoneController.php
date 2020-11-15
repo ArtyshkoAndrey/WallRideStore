@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\City;
+use App\Models\Country;
+use App\Models\ExpressCompany;
 use App\Models\ExpressZone;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -111,11 +114,27 @@ class ExpressZoneController extends Controller
      *
      * @param Request $request
      * @param  int  $id
-     * @return array
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, $id)
     {
-      if (isset($request->city_id)) {
+      if (isset($request->cities_delete)) {
+        $zone = ExpressZone::find($id);
+        $zone->cities()->sync([]);
+        return redirect()->route('admin.store.express-zone.edit', $zone->id);
+      }else if (isset($request->country_id)) {
+        $zone = ExpressZone::find($id);
+        $company = ExpressCompany::find($zone->company->id);
+        $country = Country::find($request->country_id);
+        $cities = [];
+        foreach ($country->cities as $city) {
+          if (!$company->cities->contains($city->id)) {
+            array_push($cities, $city);
+            $zone->cities()->attach($city->id, ['express_company_id' => $zone->company->id]);
+          }
+        }
+        return response()->json(['success' => 'ok', 'cities' => $cities]);
+      } else if (isset($request->city_id)) {
         $zone = ExpressZone::find($id);
         $request->validate([
           'city_id' => 'required|unique:city_expresses,city_id,'.$request->city_id.',id,express_company_id,'.$zone->company->id

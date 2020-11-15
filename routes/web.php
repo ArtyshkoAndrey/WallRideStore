@@ -1,5 +1,6 @@
 <?php
 // Для всех
+use App\Models\Product;
 use App\Models\User;
 use App\Notifications\RegisterPassword;
 use Laravel\Socialite\Facades\Socialite;
@@ -17,6 +18,12 @@ if ((new App\Models\Settings)->statusSite()) {
   Route::get('/auth/google/redirect', function () {
     return Socialite::driver('google')->redirect();
   })->name('google.redirect');
+
+  Route::get('/facebook/items', function () {
+    $products = Product::all();
+
+    return response()->view('sitemap.items', compact('products'))->header('Content-Type', 'text/xml');
+  });
 
   Route::get('/auth/vk', function () {
     Auth::logout();
@@ -158,6 +165,7 @@ function getAdminRoute() {
     Route::post('/products/{id}/destroy', 'ExpressZoneController@destroyCity')->name('admin.store.express-zone.destroyCity');
     Route::put('/express/enabled/{id}', 'ExpressController@enabled')->name('admin.store.express.enabled');
     Route::post('/express-zone/{id}/destroy', 'ExpressZoneController@destroyCity')->name('admin.store.express-zone.destroyCity');
+
     Route::post('/products/{id}/photo', 'ProductsController@photo')->name('admin.production.products.photo');
     Route::post('/products/photo-create', 'ProductsController@photoCreate')->name('admin.production.products.photoCreate');
     Route::post('/products/{id}/photo-delete', 'ProductsController@photoDelete')->name('admin.production.products.photoDelete');

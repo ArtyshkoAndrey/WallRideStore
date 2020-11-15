@@ -72,12 +72,21 @@
               </div>
             </div>
 
-            <div class="row">
-              <div class="col-md-4">
+            <div class="row mt-2">
+              <div class="col-md-2">
                 <select name="city" id="city" class="form-control w-100" placeholder="Город"></select>
               </div>
-              <div class="col-md-4 mt-2 mt-md-0">
+              <div class="col-md-2 mt-2 mt-md-0">
                 <button class="btn bg-dark rounded-0 d-block w-100" onclick="addColumn()" type="button">Добавить</button>
+              </div>
+              <div class="col-md-2 ml-3">
+                <select name="country" id="country" class="form-control w-100" placeholder="Страна"></select>
+              </div>
+              <div class="col-md-2 mt-2 mt-md-0">
+                <button class="btn bg-dark rounded-0 d-block w-100" onclick="addCountry()" type="button">Добавить</button>
+              </div>
+              <div class="col-md-2 ml-auto mt-2 mt-md-0">
+                <button type="button" onclick="document.getElementById('cities_delete').submit()" class="btn bg-danger rounded-0 d-block w-100">Удалить все города</button>
               </div>
             </div>
             <hr>
@@ -105,8 +114,18 @@
             </div>
           </form>
 
-          @else
+          <form action="{{ route('admin.store.express-zone.update', $zone->id) }}" method="post" style="display: none" id="cities_delete">
+            @csrf
+            @method('PUT')
+            <input type="text" name="cities_delete" value="1">
+          </form>
 
+          @else
+          <form action="{{ route('admin.store.express-zone.update', $zone->id) }}" method="post" style="display: none" id="cities_delete">
+            @csrf
+            @method('PUT')
+            <input type="text" name="cities_delete" value="1">
+          </form>
           <form action="{{ route('admin.store.express-zone.update', $zone->id) }}" method="post">
             @csrf
             @method('PUT')
@@ -149,11 +168,20 @@
             </div>
             <hr>
             <div class="row">
-              <div class="col-md-4">
+              <div class="col-md-2">
                 <select name="city" id="city" class="form-control w-100" placeholder="Город"></select>
               </div>
-              <div class="col-md-4 mt-2 mt-md-0">
+              <div class="col-md-2 mt-2 mt-md-0">
                 <button class="btn bg-dark rounded-0 d-block w-100" onclick="addColumn()" type="button">Добавить</button>
+              </div>
+              <div class="col-md-2 ml-3">
+                <select name="country" id="country" class="form-control w-100" placeholder="Страна"></select>
+              </div>
+              <div class="col-md-2 mt-2 mt-md-0">
+                <button class="btn bg-dark rounded-0 d-block w-100" onclick="addCountry()" type="button">Добавить</button>
+              </div>
+              <div class="col-md-2 ml-auto mt-2 mt-md-0">
+                <button type="button" onclick="document.getElementById('cities_delete').submit()" class="btn bg-danger rounded-0 d-block w-100">Удалить все города</button>
               </div>
             </div>
             <hr>
@@ -224,6 +252,39 @@
         });
     }
 
+    function addCountry() {
+      swal({title: 'Список городов очень велик.', text: 'Разрешено не ожидать появление городов в списке. Перезагрузите страницу для обновления списка. Добавление городов в базу даннызх работает в отдельном потоке.'});
+      axios.put('{{ route('admin.store.express-zone.update', $zone->id) }}',
+        {
+          country_id: $('#country').val()
+        })
+        .then((response) => {
+          console.log(response)
+          if (response.data.success === 'ok') {
+            response.data.cities.forEach(city => {
+              $('#tbody').prepend(
+                '<tr class="align-items-center" id="city-' + city.id + '">\n' +
+                '                    <td>\n' +
+                '                      ' + city.name + '\n' +
+                '                    </td>\n' +
+                '                    <td>\n' +
+                '                        <button class="bg-transparent border-0 rounded-0" style="color: #F33C3C"onclick="onDelete(' + city.id + ')" type="button"><i style="font-size: 1.5rem" class="fal fa-trash"></i></button>\n' +
+                '                    </td>\n' +
+                '                  </tr>'
+              )
+            })
+
+            $('#country').val('')
+            $('#country').text('')
+          } else {
+            swal(response, '', 'error');
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+
     function onDelete(index) {
       console.log(index)
       axios.post('{{ route("admin.store.express-zone.destroyCity", $zone->id) }}',
@@ -254,6 +315,26 @@
           dataType: 'json',
           url: function (params) {
             return '{{ route('api.city', '') }}' + '/' + params.term;
+          },
+          processResults: function (data) {
+            return {
+              results: data.items.map((e) => {
+                return {
+                  text: e.name,
+                  id: e.id
+                };
+              })
+            };
+          }
+        }
+      });
+      $('#country').select2({
+        placeholder: 'Страна',
+        ajax: {
+          type: "POST",
+          dataType: 'json',
+          url: function (params) {
+            return '{{ route('api.country', '') }}' + '/' + params.term;
           },
           processResults: function (data) {
             return {
