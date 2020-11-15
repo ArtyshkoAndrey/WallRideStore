@@ -86,7 +86,7 @@ return [
 
     'username' => env('MAIL_USERNAME', 'order@wallridestore.com'),
 
-    'password' => env('MAIL_PASSWORD', 'H7m823ko9!'),
+    'password' => env('MAIL_PASSWORD', 'qwerty123456'),
 
     /*
     |--------------------------------------------------------------------------
