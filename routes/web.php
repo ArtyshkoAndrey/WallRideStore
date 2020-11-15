@@ -167,8 +167,7 @@ function getAdminRoute() {
 
     Route::post('/products/{id}/photo', 'ProductsController@photo')->name('admin.production.products.photo');
     Route::post('/products/photo-create', 'ProductsController@photoCreate')->name('admin.production.products.photoCreate');
-    Route::post('/products/{id}/photo-delete', 'ProductsController@photoDelete')->name('admin.production.products.photoDelete');
-    Route::post('/products/photo-delete-create', 'ProductsController@photoDeleteCreate')->name('admin.production.products.photoDeleteCreate');
+    Route::post('/products/photo-delete', 'ProductsController@photoDelete')->name('admin.production.products.photoDelete');
 
     Route::post('/news/photo-create', 'NewsController@photoCreate')->name('admin.news.photoCreate');
     Route::post('/news/photo-delete', 'NewsController@photoDelete')->name('admin.news.photoDelete');
