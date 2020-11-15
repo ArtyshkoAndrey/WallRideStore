@@ -264,8 +264,8 @@
     });
 
     Dropzone.autoDiscover = false;
-    var i =0;
-    var fileList = new Array;
+    let i =0;
+    let fileList = [];
     const uploader = new Dropzone('#upload-widget', {
       init: function() {
 
@@ -273,8 +273,7 @@
         $(this.element).addClass("dropzone");
 
         this.on("success", function (file, serverFileName) {
-          fileList[i] = {"serverFileName": file.upload.filename, "fileName": file.name, "fileId": i};
-          serverFileName = file.upload.filename;
+          fileList[i] = {"serverFileName": serverFileName, "fileName": file.name, "fileId": i};
           if ($('input[name="photo['+ i +']"]').val() === '') {
             $('input[name="photo[' + i + ']"]').val(serverFileName)
           } else {
@@ -291,10 +290,10 @@
           i++;
         });
         this.on("removedfile", function(file) {
-          var rmvFile = "";
+          let rmvFile = "";
           for(let f=0;f<fileList.length;f++){
 
-            if(fileList[f].fileName == file.name)
+            if(fileList[f].fileName === file.name)
             {
               rmvFile = fileList[f].serverFileName;
               fileList.splice(f, 1);
@@ -308,12 +307,19 @@
 
           if (rmvFile){
             console.log(rmvFile)
-            axios.post("{{route('admin.production.products.photoDeleteCreate')}}", {
+            axios.post("{{ route('admin.production.products.photoDelete') }}", {
               name: rmvFile
             })
-              .then(response => {
-                console.log(response)
+            .then(response => {
+              console.log(response)
+            })
+            .catch(error => {
+              swal({
+                title: "Ошибка",
+                text: error.response.data,
+                icon: "error",
               })
+            })
           }
         });
       },
@@ -325,10 +331,6 @@
       },
       acceptedFiles: 'image/*',
       url: "{{route('admin.production.products.photoCreate')}}",
-      renameFile: function (file) {
-        let newName = new Date().getTime() + '_' + file.name;
-        return newName;
-      },
       addRemoveLinks: true,
     });
 
