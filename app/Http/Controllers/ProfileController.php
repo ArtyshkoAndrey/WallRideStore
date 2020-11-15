@@ -147,9 +147,7 @@ class ProfileController extends Controller
       $destinationPath = public_path('storage/avatar/thumbnail');
 
       $img = Image::make($image->getRealPath());
-      $img->resize(200, 200, function ($constraint) {
-        $constraint->aspectRatio();
-      })->save($destinationPath . '/' . $imageName);
+      $img->fit(200)->save($destinationPath . '/' . $imageName);
       File::delete($destinationPath . '/' . $user->avatar);
 
       $user->avatar = $imageName;
