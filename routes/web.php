@@ -162,7 +162,6 @@ function getAdminRoute() {
     Route::delete('/products/all', 'ProductsController@collectionsDestroy')->name('admin.production.products.collectionsDestroy');
     Route::post('/products/all', 'ProductsController@collectionsRestore')->name('admin.production.products.collectionsRestore');
 
-    Route::post('/products/{id}/destroy', 'ExpressZoneController@destroyCity')->name('admin.store.express-zone.destroyCity');
     Route::put('/express/enabled/{id}', 'ExpressController@enabled')->name('admin.store.express.enabled');
     Route::post('/express-zone/{id}/destroy', 'ExpressZoneController@destroyCity')->name('admin.store.express-zone.destroyCity');
 
