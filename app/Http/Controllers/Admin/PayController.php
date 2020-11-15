@@ -63,14 +63,14 @@ class PayController extends Controller
       return view('admin.pay.edit', compact('p'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function update(Request $request, $id)
+  /**
+   * Update the specified resource in storage.
+   *
+   * @param \Illuminate\Http\Request $request
+   * @param int $id
+   * @return \Illuminate\Http\RedirectResponse
+   */
+    public function update(Request $request, int $id)
     {
       $request->validate([
         'pg_merchant_id' => 'required',
