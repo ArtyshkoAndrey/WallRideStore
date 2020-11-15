@@ -1,12 +1,16 @@
 # WallRidestore Online Store
 
+## Last update 15.11.2020
+* Added class PhotoService
+* Refactor code in Admin\ProductController
+
 ## About
 
 * Online store for the sale of clothing.
 * Project status: working
 * PHP 7.3.9 support
 * MySQL 5.7 support
-* Laravel 5.7
+* Laravel 6.18
 
 See real examples:
 
@@ -61,9 +65,8 @@ Build options:
 * NaN
 
 ## Resources (Documentation and other links)
-1. [Laravel-admin](https://laravel-admin.org/docs/#/)
-2. [Laravel](https://laravel.com/docs/5.7/releases)
-3. [laravel-shop](https://github.com/summerblue/laravel-shop/tree/L05_5.7)
+1. [Laravel](https://laravel.com/docs/5.7/releases)
+2. [laravel-shop](https://github.com/summerblue/laravel-shop/tree/L05_5.7)
 
 ## License
 
