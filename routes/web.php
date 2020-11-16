@@ -121,7 +121,7 @@ if ((new App\Models\Settings)->statusSite()) {
 
   Route::get('orders/create', 'OrdersController@create')->name('orders.create');
   Route::post('orders', 'OrdersController@store')->name('orders.store');
-  Route::post('orders/success/{no}', 'OrdersController@success')->name('orders.success');
+  Route::get('orders/success/{id}', 'OrdersController@success')->name('orders.success');
   Route::post('coupon_codes/{code}', 'CouponCodesController@show')->name('coupon_codes.show');
   Auth::routes();
 

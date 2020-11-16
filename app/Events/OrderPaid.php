@@ -13,17 +13,17 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 class OrderPaid
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+  use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    protected $order;
+  protected $order;
 
-    public function __construct(Order $order)
-    {
-        $this->order = $order;
-    }
+  public function __construct(Order $order)
+  {
+    $this->order = $order;
+  }
 
-    public function getOrder()
-    {
-        return $this->order;
-    }
+  public function getOrder()
+  {
+    return $this->order;
+  }
 }
