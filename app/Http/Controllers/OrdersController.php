@@ -13,7 +13,6 @@ use App\Models\ExpressCompany;
 use App\Models\ExpressZone;
 use App\Models\Pay;
 use App\Models\Product;
-use App\Models\ProductSku;
 use App\Models\Promotion;
 use App\Models\User;
 use App\Models\UserAddress;
@@ -21,10 +20,10 @@ use App\Models\Order;
 use App\Notifications\RegisterPaid;
 use App\Notifications\RegisterPassword;
 use Carbon\Carbon;
-use ErrorException;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
 use Illuminate\Support\Facades\Auth;
+use Paybox\Pay\Facade as Paybox;
 
 class OrdersController extends Controller
 {
@@ -91,29 +90,23 @@ class OrdersController extends Controller
     $order->save();
     if ($payment_method === 'card') {
       $p = Pay::first();
-      $request = [
-        'pg_merchant_id' => (int) $p->pg_merchant_id,
-        'pg_testing_mode' => (int) $p->pg_testing_mode,
-        'pg_user_contact_email' => $user->email,
-        'pg_currency' => 'KZT',
-        'pg_amount' => $order->total_amount + $order->ship_price,
-        'pg_salt' => 'randomStringForProfessionModel',
-        'pg_order_id' => $order->no,
-        'pg_success_url_method' => 'POST',
-        'pg_user_phone' => implode('', $this->multiexplode(array('-', '+', '(', ')', ' ',), $address['phone'])),
-        'pg_description' => $p->pg_description,
-        'pg_success_url' => route('orders.success', ['no' => $order->no]),
-        'pg_result_url' => route('orders.index')
-      ];
-      ksort($request); //sort alphabetically
-      array_unshift($request, 'payment.php');
-      array_push($request, $p->code);
-      $request['pg_sig'] = md5(implode(';', $request));
-      unset($request[0], $request[1]);
-      $query = http_build_query($request);
+      $paybox = new Paybox();
+      $paybox->merchant->id = $p->pg_merchant_id;
+      $paybox->merchant->secretKey = $p->code;
+      $paybox->order->id = $order->id;
+      $paybox->order->description = $p->pg_description;
+      $paybox->order->amount = $order->total_amount + $order->ship_price;
+      $paybox->config->isTestingMode = (bool) $p->pg_testing_mode;
+      $paybox->customer->userEmail = $user->email;
+      $paybox->customer->id = $user->id;
+      $paybox->config->successUrlMethod = 'GET';
+      $paybox->config->successUrl = route('orders.index');
+      $paybox->config->resultUrl = route('orders.success', $order->id);
+      $paybox->config->requestMethod = 'GET';
 
-      if ($order->no) {
-        return $p->url . $query;
+      if ($order->no && $paybox->init()) {
+//        return $p->url . $query;
+        return $paybox->redirectUrl;
       } else {
         return 'Ошибка';
       }
@@ -150,41 +143,24 @@ class OrdersController extends Controller
 
   }
 
-  public function success($no)
+  public function success(Request $request, int $id)
   {
-    $order = Order::with('items.product')->where('no', $no)->first();
-    $order->paid_at = Carbon::now();
-    $order->ship_status = Order::SHIP_STATUS_PENDING;
-    $order->closed = 0;
-    $order->save();
 
-//  УДАЛЕНИ КОЛ-ВО ТОВАРА ПРИ ОПЛАТЕ ОНЛАЙН
-
-//    foreach ($order->items as $item) {
-//      $sku = ProductSku::where('product_id', $item->product->id);
-//      if($sku->count() === 1) {
-//        $sku = $sku->first();
-////        dd($sku);
-//        $sku->decreaseStock($item->amount);
-//      } else if ($sku->count() > 1) {
-//        $sku = $sku->whereHas('skus', function ($q) use ($item) {
-//          $q->where('skuses.title', $item->product_sku);
-//        })->first();
-////        dd($sku);
-//        $sku->decreaseStock($item->amount);
-//      } else {
-//
-//      }
-//    }
-    event(new OrderPaid($order));
-    $admin = Admin::first();
-    $admin->notify(new RegisterPaid($order));
-    $ids = [];
-    foreach ($order->items as $item) {
-      !$item->product->available() ? array_push($ids, $item->product_id) : null;
+    if ((int) $request->pg_result === 1) {
+      $order = Order::with('items.product')->find($id);
+      $order->ship_status = Order::SHIP_STATUS_PENDING;
+      $order->paid_at = Carbon::now();
+      $order->closed = 0;
+      $order->save();
+      event(new OrderPaid($order));
+      $admin = Admin::first();
+      $admin->notify(new RegisterPaid($order));
+      $ids = [];
+      foreach ($order->items as $item) {
+        !$item->product->available() ? array_push($ids, $item->product_id) : null;
+      }
+      Product::destroy($ids);
     }
-    Product::destroy($ids);
-    return redirect()->route('orders.index')->with('status', 'Ваш заказ оплачен и в обработке');
   }
 
   public function index(Request $request)
