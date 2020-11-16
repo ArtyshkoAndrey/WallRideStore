@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use App\Models\HeaderMobile;
+use function foo\func;
 
 class ProductsController extends Controller {
 
@@ -136,7 +137,9 @@ class ProductsController extends Controller {
   }
 
   public function index() {
-    $productsNew = Product::where('on_new', true)->orderBy('created_at', 'desc')->take(5)->with('skus', 'photos')->get();
+    $productsNew = Product::where('on_new', true)->orderBy('created_at', 'desc')->with('skus', 'photos')->whereHas('skus', function($sku) {
+      return $sku->where('stock', '>', '0');
+    })->take(5)->get();
     $productsTop = (new \App\Models\Product)->getTop();
     $category = Category::where('to_index', true)->first();
     if($category) {
