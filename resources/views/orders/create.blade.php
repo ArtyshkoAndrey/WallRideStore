@@ -129,7 +129,7 @@
             </div>
             <div class="col-sm-auto col-12 mt-2 mt-sm-0">
               <button v-if="step === 1" class="btn btn-dark rounded-0" @click="ordered" id="offer-payment">Следующий шаг</button>
-              <button v-else class="btn btn-dark rounded-0" @click="ordered" id="offer-payment">Завершить оформление заказа и оплатить</button>
+              <button v-else class="btn btn-dark rounded-0"  id="offer-payment">Завершить оформление заказа и оплатить</button>
             </div>
           </div>
         </div>

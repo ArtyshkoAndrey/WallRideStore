@@ -64,6 +64,7 @@ class OrdersController extends Controller
     }
     $address = $request->address;
     $coupon = null;
+    $service = $request->service;
     $payment_method = $request->payment_method;
     $express_company = $request->express_company;
     $cost_transfer = (int) $request->cost_transfer !== null && isset($request->cost_transfer) ? $request->cost_transfer : 0;
@@ -89,26 +90,10 @@ class OrdersController extends Controller
     }
     $order->save();
     if ($payment_method === 'card') {
-      $p = Pay::first();
-      $paybox = new Paybox();
-      $paybox->merchant->id = $p->pg_merchant_id;
-      $paybox->merchant->secretKey = $p->code;
-      $paybox->order->id = $order->id;
-      $paybox->order->description = $p->pg_description;
-      $paybox->order->amount = $order->total_amount + $order->ship_price;
-      $paybox->config->isTestingMode = (bool) $p->pg_testing_mode;
-      $paybox->customer->userEmail = $user->email;
-      $paybox->customer->id = $user->id;
-      $paybox->config->successUrlMethod = 'GET';
-      $paybox->config->successUrl = route('orders.index');
-      $paybox->config->resultUrl = route('orders.success', $order->id);
-      $paybox->config->requestMethod = 'GET';
+      if ($service === 'Paybox') {
+        return $orderService->paybox($order, $user, $cost_transfer + $order->ship_price);
+      } else if ($service === 'CloudPayment') {
 
-      if ($order->no && $paybox->init()) {
-//        return $p->url . $query;
-        return $paybox->redirectUrl;
-      } else {
-        return 'Ошибка';
       }
     } else {
       if ($order->no) {
@@ -241,8 +226,12 @@ class OrdersController extends Controller
         }
       }
       $amount = count($ids);
-      return view('orders.create', compact('express_companies', 'city', 'cartItems', 'priceAmount', 'amount', 'pickup'));
+      return view('orders.create_2', compact('express_companies', 'city', 'cartItems', 'priceAmount', 'amount', 'pickup'));
     }
-    return view('orders.create', compact('express_companies', 'pickup'));
+    return view('orders.create_2', compact('express_companies', 'pickup'));
+  }
+
+  public function cloudpayment () {
+    return view('orders.cloud-payment');
   }
 }

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\City;
 use App\Models\Country;
+use App\Models\Pay;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\UserAddress;
@@ -15,6 +16,7 @@ use App\Notifications\OrderCancledNotification;
 use Carbon\Carbon;
 use App\Models\CouponCode;
 use App\Exceptions\CouponCodeUnavailableException;
+use Paybox\Pay\Facade as Paybox;
 
 class OrderService
 {
@@ -92,35 +94,58 @@ class OrderService
     return $order;
   }
 
-    public function cancled(Order $order) {
+  public function cancled(Order $order) {
 //      Order::SHIP_STATUS_CANCEL
-      $order->ship_status = Order::SHIP_STATUS_CANCEL;
-      $order->save();
-      $order->user->notify(new OrderCancledNotification($order));
-      foreach ($order->items as $item) {
-        if (Product::find($item->product->id)) {
-          $sku = ProductSku::where('product_id', $item->product->id);
-          if($sku->count() === 1) {
-            $sku = $sku->first();
+    $order->ship_status = Order::SHIP_STATUS_CANCEL;
+    $order->save();
+    $order->user->notify(new OrderCancledNotification($order));
+    foreach ($order->items as $item) {
+      if (Product::find($item->product->id)) {
+        $sku = ProductSku::where('product_id', $item->product->id);
+        if($sku->count() === 1) {
+          $sku = $sku->first();
+          $sku->addStock($item->amount);
+        } else if ($sku->count() > 1) {
+          $sku = $sku->whereHas('skus', function ($q) use ($item) {
+            $q->where('skuses.title', $item->product_sku);
+          })->first();
+          if ($sku) {
             $sku->addStock($item->amount);
-          } else if ($sku->count() > 1) {
-            $sku = $sku->whereHas('skus', function ($q) use ($item) {
-              $q->where('skuses.title', $item->product_sku);
-            })->first();
-            if ($sku) {
-              $sku->addStock($item->amount);
-            } else {
-              $sku        = new ProductSku();
-              $sku->stock = $item->amount;
-              $sku->product()->associate($item->product->id);
-              $sku->skus()->associate(Skus::where('title', $item->product_sku)->first());
-              $sku->save();
-            }
-
           } else {
-            throw new \Exception('Ошибка в размерах');
+            $sku        = new ProductSku();
+            $sku->stock = $item->amount;
+            $sku->product()->associate($item->product->id);
+            $sku->skus()->associate(Skus::where('title', $item->product_sku)->first());
+            $sku->save();
           }
+
+        } else {
+          throw new \Exception('Ошибка в размерах');
         }
       }
     }
+  }
+
+  public function paybox ($order, $user, $cost) {
+    $p = Pay::first();
+    $paybox = new Paybox();
+    $paybox->merchant->id = $p->pg_merchant_id;
+    $paybox->merchant->secretKey = $p->code;
+    $paybox->order->id = $order->id;
+    $paybox->order->description = $p->pg_description;
+    $paybox->order->amount = $cost;
+    $paybox->config->isTestingMode = (bool) $p->pg_testing_mode;
+    $paybox->customer->userEmail = $user->email;
+    $paybox->customer->id = $user->id;
+    $paybox->config->successUrlMethod = 'GET';
+    $paybox->config->successUrl = route('orders.index');
+    $paybox->config->resultUrl = route('orders.success', $order->id);
+    $paybox->config->requestMethod = 'GET';
+    if ($paybox->init()) {
+      return $paybox->redirectUrl;
+    } else {
+      return 'Ошибка';
+    }
+  }
+
 }
