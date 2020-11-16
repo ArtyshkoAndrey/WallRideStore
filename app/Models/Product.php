@@ -31,11 +31,15 @@ class Product extends Model
   }
 
   public function getTop () {
-    $pr = $this->where('on_top', true)->orderBy('created_at', 'desc')->take(5)->with('skus', 'photos')->get();
+    $pr = $this->where('on_top', true)->orderBy('created_at', 'desc')->with('skus', 'photos')->whereHas('skus', function($sku) {
+      return $sku->where('stock', '>', '0');
+    })->take(5)->get();
     if ($pr->count() > 0) {
       return $pr;
     }
-    $pr = $this->orderBy('sold_count', 'desc')->take(5)->with('skus', 'photos')->get();
+    $pr = $this->orderBy('sold_count', 'desc')->with('skus', 'photos')->whereHas('skus', function($sku) {
+      return $sku->where('stock', '>', '0');
+    })->take(5)->get();
     return $pr;
   }
 
