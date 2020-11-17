@@ -75,7 +75,7 @@
           let companies = [...this.companies]
           this.companies = []
           companies.forEach(com => {
-            if ( com.costedTransfer >= 0 && Number(com.min_cost) <= Number(this.cost) && com.enabled && (com.enabled_cash || com.enabled_card) ) {
+            if ( com.costedTransfer !== null && com.costedTransfer >= 0 && Number(com.min_cost) <= Number(this.cost) && com.enabled && (com.enabled_cash || com.enabled_card) ) {
               console.log(com.enabled_cash || com.enabled_card)
               this.companies.push(com)
             }
@@ -250,16 +250,16 @@
               coupon: this.order.coupon,
               payment_method: this.order.payment_method,
               express_company: this.order.express_company,
-              cost_transfer: this.order.costTransfer,
+              cost_transfer: this.getCostCompany,
               service: this.order.service
             })
               .then((response) => {
                 console.log(response);
-                // swal('\n' + 'Заказ успешно создан', '', 'success')
-                //   .then(() => {
-                //     $.cookie("products", '', {expires: 7, path: '/'});
-                //     window.location = response.data
-                //   });
+                swal('\n' + 'Заказ успешно создан', '', 'success')
+                  .then(() => {
+                    $.cookie("products", '', {expires: 7, path: '/'});
+                    window.location = response.data
+                  });
               })
               .catch(error => {
 

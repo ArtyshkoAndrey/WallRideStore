@@ -26,6 +26,10 @@ class PagesController extends Controller
     return view('pages.policy');
   }
 
+  public function payment () {
+    return view('pages.payment');
+  }
+
   public function currency (Request $request, $cr) {
     if (Auth::check()) {
       $address = UserAddress::where('user_id', auth()->id())->first();

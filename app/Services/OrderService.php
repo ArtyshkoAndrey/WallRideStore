@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\City;
 use App\Models\Country;
+use App\Models\Currency;
 use App\Models\Pay;
 use App\Models\Product;
 use App\Models\User;
@@ -17,6 +18,22 @@ use Carbon\Carbon;
 use App\Models\CouponCode;
 use App\Exceptions\CouponCodeUnavailableException;
 use Paybox\Pay\Facade as Paybox;
+use PayPal\Rest\ApiContext;
+use PayPal\Auth\OAuthTokenCredential;
+use PayPal\Api\Agreement;
+use PayPal\Api\Payer;
+use PayPal\Api\Plan;
+use PayPal\Api\PaymentDefinition;
+use PayPal\Api\PayerInfo;
+use PayPal\Api\Item;
+use PayPal\Api\ItemList;
+use PayPal\Api\Amount;
+use PayPal\Api\Transaction;
+use PayPal\Api\RedirectUrls;
+use PayPal\Api\Payment;
+use PayPal\Api\PaymentExecution;
+use Redirect;
+use URL;
 
 class OrderService
 {
@@ -36,14 +53,13 @@ class OrderService
             'contact_phone' => $address['phone'],
         ],
         'total_amount' => 0,
-        'id_express_company' => $express_company,
+        'id_express_company' => $express_company['id'],
         'payment_method' => $payment_method,
         'ship_price' => $cost_transfer
       ]);
       $order->user()->associate($user);
       $order->save();
 
-      $totalAmount = 0;
       $ids = array();
       foreach ($items as $data) {
         for($i = 0; $i < $data['amount']; $i++) {
@@ -144,8 +160,67 @@ class OrderService
     if ($paybox->init()) {
       return $paybox->redirectUrl;
     } else {
-      return 'Ошибка';
+      return response('Ошибка подключения к Paybox', 500);
     }
+  }
+
+  public function paypal ($order) {
+
+    $currency = Currency::where('short_name', 'USD')->first();
+    /** PayPal api context **/
+    $paypal_conf = config('paypal');
+    $_api_context = new ApiContext(new OAuthTokenCredential(
+        $paypal_conf['client_id'],
+        $paypal_conf['secret'])
+    );
+    $_api_context->setConfig($paypal_conf['settings']);
+    $amountToBePaid = ($order->ship_price + $order->total_amount) * $currency->ratio;
+    $payer = new Payer();
+    $payer->setPaymentMethod('paypal');
+
+    $amount = new Amount();
+    $amount->setCurrency('USD')
+      ->setTotal($amountToBePaid);
+
+    $redirect_urls = new RedirectUrls();
+    /** Укажите обратный URL **/
+    $redirect_urls->setReturnUrl(route('orders.statusPaypal'))
+      ->setCancelUrl(route('orders.statusPaypal'));
+
+    $transaction = new Transaction();
+    $transaction->setAmount($amount)
+      ->setDescription('Оплата заказа в wallridestore.com');
+
+    $payment = new Payment();
+    $payment->setIntent('Sale')
+      ->setPayer($payer)
+      ->setRedirectUrls($redirect_urls)
+      ->setTransactions(array($transaction));
+    try {
+      $payment->create($_api_context);
+    } catch (\PayPal\Exception\PayPalConnectionException $ex) {
+      if (config('app.debug')) {
+        return response('Ошибка подключения к PayPal', 500);
+      } else {
+        return response('Ошибка подключения к PayPal', 500);;
+      }
+    }
+
+    foreach ($payment->getLinks() as $link) {
+      if ($link->getRel() == 'approval_url') {
+        $redirect_url = $link->getHref();
+        break;
+      }
+    }
+    /** добавляем ID платежа в сессию **/
+    session(['paypal_payment_id' => $payment->getId()]);
+    session(['order_id' => $order->id]);
+
+    if (isset($redirect_url)) {
+      /** редиректим в paypal **/
+      return $redirect_url;
+    }
+    return 'Ошибка';
   }
 
 }

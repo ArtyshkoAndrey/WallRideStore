@@ -23,18 +23,23 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
 use Illuminate\Support\Facades\Auth;
-use Paybox\Pay\Facade as Paybox;
+use Illuminate\Support\Facades\Validator;
+use PayPal\Api\Payment;
+use PayPal\Api\PaymentExecution;
+use PayPal\Auth\OAuthTokenCredential;
+use PayPal\Rest\ApiContext;
 
 class OrdersController extends Controller
 {
+
+
   function multiexplode ($delimiters,$string) {
     $ready = str_replace($delimiters, $delimiters[0], $string);
     $launch = explode($delimiters[0], $ready);
     return  $launch;
   }
 
-  public function store(OrderRequest $request, OrderService $orderService)
-  {
+  public function store (OrderRequest $request, OrderService $orderService) {
     if(Auth::check()) {
       $user = $request->user();
     } else {
@@ -67,7 +72,7 @@ class OrdersController extends Controller
     $service = $request->service;
     $payment_method = $request->payment_method;
     $express_company = $request->express_company;
-    $cost_transfer = (int) $request->cost_transfer !== null && isset($request->cost_transfer) ? $request->cost_transfer : 0;
+    $cost_transfer = (int) $request->cost_transfer;
 
     if ($code = $request->input('coupon')) {
       $coupon = CouponCode::where('code', $code)->first();
@@ -75,7 +80,6 @@ class OrdersController extends Controller
         throw new CouponCodeUnavailableException('Данного купона не существует');
       }
     }
-//    dd($coupon);
     $order = $orderService->store($user, $address, $request->items, $payment_method, $express_company, $cost_transfer, $coupon);
     setcookie("products", '', time() + (3600 * 24 * 30), "/", request()->getHost());
     $items = $request->items;
@@ -91,41 +95,24 @@ class OrdersController extends Controller
     $order->save();
     if ($payment_method === 'card') {
       if ($service === 'Paybox') {
-        return $orderService->paybox($order, $user, $cost_transfer + $order->ship_price);
+        return $orderService->paybox($order, $user, $order->total_amount + $order->ship_price);
       } else if ($service === 'CloudPayment') {
-
+        return route('orders.cloudpayment', ['userEmail' => $user->email, 'userName' => $user->name, 'orderId' => $order->id, 'cost' => ($order->total_amount + $order->ship_price)]);
+      } else if ($service === 'PayPal') {
+        return $orderService->paypal($order);
       }
     } else {
       if ($order->no) {
         $order->ship_status = Order::SHIP_STATUS_PENDING;
         $order->closed = 0;
         $order->save();
-//  УДАЛЕНИ КОЛ-ВО ТОВАРА ПРИ ОПЛАТЕ НАЛИЧНЫМИ
-
-//        foreach ($order->items as $item) {
-//          $sku = ProductSku::where('product_id', $item->product->id);
-//          if($sku->count() === 1) {
-//            $sku = $sku->first();
-////        dd($sku);
-//            $sku->decreaseStock($item->amount);
-//          } else if ($sku->count() > 1) {
-//            $sku = $sku->whereHas('skus', function ($q) use ($item) {
-//              $q->where('skuses.title', $item->product_sku);
-//            })->first();
-////        dd($sku);
-//            $sku->decreaseStock($item->amount);
-//          } else {
-//
-//          }
-//        }
         $admin = Admin::first();
         $admin->notify(new RegisterPaid($order));
         return route('orders.index');
       } else {
-        return 'Ошибка';
+        return response('Ошибка создания заказа', 500);;
       }
     }
-
   }
 
   public function success(Request $request, int $id)
@@ -162,44 +149,12 @@ class OrdersController extends Controller
 
   public function create()
   {
-    $express_companies = ExpressCompany::where('name', '!=', 'Самовывоз')->get();
-    $pickup = ExpressCompany::where('name', '=', 'Самовывоз')->first();
-    $zones = ExpressZone::with('company')->whereHas('cities', function ($qq) {
-      if(Auth::check() && isset(Auth()->user()->address->city_id)) {
-        $qq->where('cities.id', Auth()->user()->address->city_id);
-      } else {
-        $qq->where('cities.id', 1);
-      }
-    })->get();
-    $express_companies = $express_companies->toArray();
-    for($i=0;$i<count($express_companies); $i++) {
-      foreach ($zones as $z) {
-        if($z->company->id === $express_companies[$i]['id']) {
-          if ($z->step_cost_array !== null) {
-            $express_companies[$i]['costedTransfer'] = $z->step_cost_array;
-            $express_companies[$i]['step_unlim'] = null;
-            $express_companies[$i]['step_cost_unlim'] = null;
-          } else {
-            $express_companies[$i]['costedTransfer'] = $z->cost;
-            $express_companies[$i]['step_unlim'] = $z->step;
-            $express_companies[$i]['step_cost_unlim'] = $z->cost_step;
-          }
-        }
-      }
-      if (!isset($express_companies[$i]['costedTransfer'])) {
-        $express_companies[$i]['costedTransfer'] = null;
-        $express_companies[$i]['costedTransfer'] = null;
-        $express_companies[$i]['step_unlim'] = null;
-        $express_companies[$i]['step_cost_unlim'] = null;
-      }
-    }
     if(!Auth::check()) {
       if (isset($_COOKIE["products"])) {
         $ids = explode(',', $_COOKIE["products"]);
       } else {
         $ids = [];
       }
-      $city = City::find(1);
       $cartItems = [];
       $priceAmount = 0;
       $productsSku = Product::getProducts($ids);
@@ -226,12 +181,102 @@ class OrdersController extends Controller
         }
       }
       $amount = count($ids);
-      return view('orders.create_2', compact('express_companies', 'city', 'cartItems', 'priceAmount', 'amount', 'pickup'));
+      return view('orders.create_2', compact( 'cartItems', 'priceAmount', 'amount'));
     }
-    return view('orders.create_2', compact('express_companies', 'pickup'));
+    return view('orders.create_2');
   }
 
-  public function cloudpayment () {
-    return view('orders.cloud-payment');
+  public function cloudpayment (Request $request) {
+    $validator = Validator::make($request->all(), [
+      'cost' => 'required|integer',
+      'userName' => 'required|string',
+      'userEmail' => 'required|string|exists:users,email',
+      'orderId' => 'required|exists:orders,id'
+    ]);
+    if ($validator->fails())
+      return redirect('/');
+    $order = Order::find($request->orderId);
+    $data = $request->all();
+    return view('orders.cloud-payment', compact('order', 'data'));
+  }
+
+  public function closeCloudpayment (int $id, OrderService $orderService) {
+    $validator = Validator::make(['id' => $id], [
+      'id' => 'required|integer|exists:orders,id',
+    ]);
+    if ($validator->fails())
+      return response(['error'], 500);
+    $order = Order::find($id);
+    $orderService->cancled($order);
+    return response(['success']);
+  }
+
+  public function successCloudpayment (int $id) {
+    $validator = Validator::make(['id' => $id], [
+      'id' => 'required|exists:orders,id',
+    ]);
+    if ($validator->fails())
+      return response(['error'], 500);
+    $order = Order::find($id);
+    $order->ship_status = Order::SHIP_STATUS_PENDING;
+    $order->paid_at = Carbon::now();
+    $order->closed = 0;
+    $order->save();
+    event(new OrderPaid($order));
+    $admin = Admin::first();
+    $admin->notify(new RegisterPaid($order));
+    $ids = [];
+    foreach ($order->items as $item) {
+      !$item->product->available() ? array_push($ids, $item->product_id) : null;
+    }
+    Product::destroy($ids);
+    return response(['success']);
+  }
+
+  public function paypalStatus(Request $request)
+  {
+    /** PayPal api context **/
+    $paypal_conf = config('paypal');
+    $order_id = session('order_id');
+    $_api_context = new ApiContext(new OAuthTokenCredential(
+        $paypal_conf['client_id'],
+        $paypal_conf['secret'])
+    );
+    $_api_context->setConfig($paypal_conf['settings']);
+    /** Получаем ID платежа до очистки сессии **/
+    $payment_id = session('paypal_payment_id');
+    if (empty($request->PayerID) || empty($request->token)) {
+      session()->flash('error', 'Payment failed');
+      return redirect()->route('orders.index')->with(['status' => 'Платеж не прошел']);
+    }
+
+    $payment = Payment::get($payment_id, $_api_context);
+    $execution = new PaymentExecution();
+    $execution->setPayerId($request->PayerID);
+
+    /** Выполняем платёж **/
+    $result = $payment->execute($execution, $_api_context);
+
+    if ($result->getState() == 'approved') {
+
+      $order = Order::find($order_id);
+      $order->ship_status = Order::SHIP_STATUS_PENDING;
+      $order->paid_at = Carbon::now();
+      $order->closed = 0;
+      $order->save();
+      event(new OrderPaid($order));
+      $admin = Admin::first();
+      $admin->notify(new RegisterPaid($order));
+      $ids = [];
+      foreach ($order->items as $item) {
+        !$item->product->available() ? array_push($ids, $item->product_id) : null;
+      }
+      Product::destroy($ids);
+
+      return redirect()->route('orders.index')->with(['status' => 'Заказ оплачен']);
+    }
+
+    return redirect()->route('orders.index')->with(['status' => 'Платеж не прошел']);
   }
 }
+// http://myshop/orders/paypal/status?paymentId=PAYID-L6Z64XY87N141225X051071A&token=EC-2TB94664SA8431513&PayerID=U862F6WDQQU42.

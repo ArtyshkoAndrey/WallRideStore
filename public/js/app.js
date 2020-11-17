@@ -2046,7 +2046,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
         this.companies = [];
         companies.forEach(function (com) {
-          if (com.costedTransfer >= 0 && Number(com.min_cost) <= Number(_this2.cost) && com.enabled && (com.enabled_cash || com.enabled_card)) {
+          if (com.costedTransfer !== null && com.costedTransfer >= 0 && Number(com.min_cost) <= Number(_this2.cost) && com.enabled && (com.enabled_cash || com.enabled_card)) {
             console.log(com.enabled_cash || com.enabled_card);
 
             _this2.companies.push(com);
@@ -2222,14 +2222,17 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
             coupon: this.order.coupon,
             payment_method: this.order.payment_method,
             express_company: this.order.express_company,
-            cost_transfer: this.order.costTransfer,
+            cost_transfer: this.getCostCompany,
             service: this.order.service
           }).then(function (response) {
-            console.log(response); // swal('\n' + 'Заказ успешно создан', '', 'success')
-            //   .then(() => {
-            //     $.cookie("products", '', {expires: 7, path: '/'});
-            //     window.location = response.data
-            //   });
+            console.log(response);
+            swal('\n' + 'Заказ успешно создан', '', 'success').then(function () {
+              $.cookie("products", '', {
+                expires: 7,
+                path: '/'
+              });
+              window.location = response.data;
+            });
           })["catch"](function (error) {});
         }
       } else {
