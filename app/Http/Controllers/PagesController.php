@@ -44,4 +44,9 @@ class PagesController extends Controller
     };
     return redirect()->back();
   }
+
+  public function language (Request $request, $lang) {
+    setcookie('language', $lang, time() + (86400 * 30), "/");
+    return redirect()->back();
+  }
 }

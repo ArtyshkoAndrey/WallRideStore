@@ -107,6 +107,7 @@ if ((new App\Models\Settings)->statusSite()) {
   Route::get('policy', 'PagesController@policy')->name('policy');
   Route::get('payment', 'PagesController@payment')->name('payment');
   Route::get('currency/change/{currency}', ['as' => 'currency-change', 'uses' => 'PagesController@currency']);
+  Route::get('language/change/{lang}', ['as' => 'language-change', 'uses' => 'PagesController@language']);
   Route::resource('news', 'NewsController')->except([
     'edit', 'create', 'destroy', 'update'
   ]);
