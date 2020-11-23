@@ -26,7 +26,7 @@
         </div>
         <div class="row">
           <div class="col-12">
-            <a href="{{ route('policy') }}" target="_blank">Доставка и оплата</a>
+            <a href="{{ route('payment') }}" target="_blank">Доставка и оплата</a>
           </div>
         </div>
         <div class="row">
