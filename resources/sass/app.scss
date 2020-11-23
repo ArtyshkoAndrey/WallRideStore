@@ -93,6 +93,13 @@ body {
   background: #000;
 }
 
+.company-item {
+  border: 1px solid transparent;
+  &.active {
+    border: 1px solid #aaa
+  }
+}
+
 #app.register-page #auth {
   background-image: linear-gradient(0deg, rgba(0,0,0,0.804359243697479) 0%, rgba(0,0,0,0.7371323529411764) 50%, rgba(0,0,0,0.3617822128851541) 100%), url('../img/register-image.jpg');
 }

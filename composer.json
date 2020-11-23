@@ -1,11 +1,11 @@
 {
-  "name": "WallRide",
+  "name": "fulliton/wallride",
   "type": "project",
-  "description": "Ecommerce Shop",
+  "description": "ecommerce shop",
   "keywords": [
-    "framework",
-    "laravel",
-    "wallride"
+    "shop",
+    "wallride",
+    "kazahstan"
   ],
   "license": "MIT",
   "require": {
@@ -20,6 +20,8 @@
     "laravel/telescope": "^3.5",
     "laravel/tinker": "^1.0",
     "overtrue/laravel-lang": "^3.0",
+    "payboxmoney/pay": "^1.2",
+    "paypal/rest-api-sdk-php": "^1.14",
     "predis/predis": "^1.1",
     "socialiteproviders/vkontakte": "^4.1"
   },

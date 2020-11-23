@@ -54,6 +54,12 @@
                   <label class="custom-control-label" for="customSwitch">Наличные</label>
                 </div>
               </div>
+              <div class="col-auto d-flex">
+                <div class="custom-control align-items-center mb-2 custom-switch">
+                  <input type="checkbox" name="enabled_card" {{ $express->enabled_card ? 'checked' : '' }} class="custom-control-input" id="customSwitchcard">
+                  <label class="custom-control-label" for="customSwitchcard">Картой</label>
+                </div>
+              </div>
               <div class="col-md-3 align-items-end d-flex">
                 <a href="{{ route('admin.store.express-zone.create') }}" class="btn bg-dark rounded-0">Создать зону</a>
               </div>

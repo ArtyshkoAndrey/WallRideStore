@@ -65,7 +65,7 @@
   <section class="mt-5 pt-5 px-0">
     <div class="container-fluid">
       <div class="row align-items-center px-5">
-        <h2 class="font-weight-bold">Хиты продаж</h2>
+        <h2 class="font-weight-bold">{{ __("Хиты продаж") }}</h2>
       </div>
     </div>
     <div class="container-fluid" id="sliderList1">

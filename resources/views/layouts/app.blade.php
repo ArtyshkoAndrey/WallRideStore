@@ -15,6 +15,7 @@
   <!-- стиль -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simptip@1.0.4/simptip.min.css">
   <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+  @yield('headerScript')
   @if (env('METRICS', true))
     <!— Global site tag (gtag.js) - Google Analytics —>
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-167190105-1"></script>
