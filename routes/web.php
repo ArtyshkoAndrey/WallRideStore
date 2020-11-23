@@ -105,7 +105,9 @@ if ((new App\Models\Settings)->statusSite()) {
   Route::get('products/search', 'ProductsController@search')->name('products.search'); // Главная с товарами
   Route::get('product/{product}', 'ProductsController@show')->name('products.show');
   Route::get('policy', 'PagesController@policy')->name('policy');
+  Route::get('payment', 'PagesController@payment')->name('payment');
   Route::get('currency/change/{currency}', ['as' => 'currency-change', 'uses' => 'PagesController@currency']);
+  Route::get('language/change/{lang}', ['as' => 'language-change', 'uses' => 'PagesController@language']);
   Route::resource('news', 'NewsController')->except([
     'edit', 'create', 'destroy', 'update'
   ]);
@@ -120,6 +122,12 @@ if ((new App\Models\Settings)->statusSite()) {
   Route::delete('cart/{sku}', 'CartController@remove')->name('cart.remove');
 
   Route::get('orders/create', 'OrdersController@create')->name('orders.create');
+  Route::get('orders/cloudpayment', 'OrdersController@cloudpayment')->name('orders.cloudpayment');
+
+  Route::get('orders/paypal/status', 'OrdersController@paypalStatus')->name('orders.statusPaypal');
+
+  Route::post('orders/success/{id}', 'OrdersController@successCloudpayment');
+  Route::post('orders/close/{id}', 'OrdersController@closeCloudpayment');
   Route::post('orders', 'OrdersController@store')->name('orders.store');
   Route::get('orders/success/{id}', 'OrdersController@success')->name('orders.success');
   Route::post('coupon_codes/{code}', 'CouponCodesController@show')->name('coupon_codes.show');

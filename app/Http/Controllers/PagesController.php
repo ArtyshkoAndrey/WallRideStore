@@ -26,6 +26,10 @@ class PagesController extends Controller
     return view('pages.policy');
   }
 
+  public function payment () {
+    return view('pages.payment');
+  }
+
   public function currency (Request $request, $cr) {
     if (Auth::check()) {
       $address = UserAddress::where('user_id', auth()->id())->first();
@@ -38,6 +42,11 @@ class PagesController extends Controller
     } else {
       setcookie('cr',$cr, time() + (86400 * 30), "/");
     };
+    return redirect()->back();
+  }
+
+  public function language (Request $request, $lang) {
+    setcookie('language', $lang, time() + (86400 * 30), "/");
     return redirect()->back();
   }
 }

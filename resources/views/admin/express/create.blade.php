@@ -52,6 +52,12 @@
                   <label class="custom-control-label" for="customSwitch">Наличные</label>
                 </div>
               </div>
+              <div class="col-auto d-flex">
+                <div class="custom-control align-items-center mb-2 custom-switch">
+                  <input type="checkbox" name="enabled_card" class="custom-control-input" id="customSwitchcard">
+                  <label class="custom-control-label" for="customSwitchcard">Картой</label>
+                </div>
+              </div>
             </div>
           </form>
         </div>

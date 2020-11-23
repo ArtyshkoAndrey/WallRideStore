@@ -43,7 +43,7 @@ class ApiController extends Controller {
   }
 
   public function companies(Request $request) {
-    $express_companies = ExpressCompany::where('name', '!=', 'Самовывоз')->get();
+    $express_companies = ExpressCompany::get();
     $zones = ExpressZone::with('company')->whereHas('cities', function ($qq) use ($request) {
       $qq->where('cities.id', $request->city);
     })->get();

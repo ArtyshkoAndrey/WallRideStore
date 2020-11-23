@@ -99,6 +99,23 @@
           </div>
         </div>
       </li>
+      <li class="nav-item dropdown d-flex" rel="profile">
+        <a class="nav-link d-flex align-items-center" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="d-inline-flex">
+            <span>{{ isset($_COOKIE['language']) ? $_COOKIE['language'] == 'ru' ? 'RUS' : 'ENG' : 'RUS' }} <i style="font-size: 15px" class="fas fa-fw fa-chevron-down"></i></span>
+          </span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="city">
+          <div class="list-group" id="list-city">
+            <a href="{{ url('/language/change/ru') }}" class="list-group-item list-group-item-action">
+              Russian
+            </a>
+            <a href="{{ url('language/change/en') }}" class="list-group-item list-group-item-action">
+              English
+            </a>
+          </div>
+        </div>
+      </li>
       <li class="nav-item d-none d-lg-block position-absolute" style="display: flex; left: calc( 50vw  - 25px )">
         <a href="{{ route('root') }}"><img src="{{ asset('public/images/logo.png') }}" height="45" alt=""></a>
       </li>

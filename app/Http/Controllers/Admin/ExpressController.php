@@ -60,6 +60,7 @@ class ExpressController extends Controller
 
     $express = new ExpressCompany();
     $request['enabled_cash'] = isset($request->enabled_cash);
+    $request['enabled_card'] = isset($request->enabled_card);
     $express = $express->create($request->all());
 
     return redirect()->route('admin.store.express.edit', $express->id);
@@ -106,6 +107,7 @@ class ExpressController extends Controller
     $express = ExpressCompany::find($id);
     $request['enabled'] = $express->enabled;
     $request['enabled_cash'] = $request->has('enabled_cash');
+    $request['enabled_card'] = $request->has('enabled_card');
 //    dd($request->all());
     $express->update($request->all());
     return redirect()->route('admin.store.express.edit', $express->id);
