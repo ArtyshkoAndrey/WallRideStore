@@ -55,17 +55,25 @@ class ProductsController extends Controller {
       }
     }
     if ($brand = $request->input('brand', null)) {
-      $products = $products->whereHas('brands', function ($query) use ($brand) {
-        return $query->where('brands.id', $brand);
-      });
+      if (Brand::where('id', $brand)->exists()) {
+        $products = $products->whereHas('brands', function ($query) use ($brand) {
+          return $query->where('brands.id', $brand);
+        });
+      } else {
+        $brand = null;
+      }
     }
     if ($category = $request->input('category', null)) {
-      $products = $products->whereHas('categories', function ($query) use ($category) {
-        $query->whereHas('parents', function ($query) use ($category) {
-          $query->where('laravel_reserved_0.id', $category);
-        })
-          ->orWhere('categories.id', $category);
-      });
+      if (Category::where('id', $category)->exists()) {
+        $products = $products->whereHas('categories', function ($query) use ($category) {
+          $query->whereHas('parents', function ($query) use ($category) {
+            $query->where('laravel_reserved_0.id', $category);
+          })
+            ->orWhere('categories.id', $category);
+        });
+      } else {
+        $category = null;
+      }
     }
 
     if ($size = $request->input('size', null)) {
