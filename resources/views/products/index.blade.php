@@ -65,6 +65,29 @@
   <section class="mt-5 pt-5 px-0">
     <div class="container-fluid">
       <div class="row align-items-center px-5">
+        <h2 class="font-weight-bold">{{ __("Новые товары") }}</h2>
+        <a class="ml-auto text-dark" href="{{ route('products.all', ['order' => 'new_desc']) }}">Смотреть все</a>
+      </div>
+    </div>
+    <div class="container-fluid" id="sliderList1">
+      <div class="row px-md-5 px-2">
+        @if(count($productsNew) > 0)
+          @foreach($productsNew as $product)
+            <product :slider=true :currency="{{ $currency }}" :item_not_soted="{{ $product }}"></product>
+          @endforeach
+          @for($i = 0; $i < 5 - $productsNew->count(); $i++)
+            <div class="col-lg"></div>
+          @endfor
+        @else
+          <h3 class="text-center mt-5 pb-5">Нет данных товаров</h3>
+        @endif
+      </div>
+    </div>
+  </section>
+
+  <section class="mt-5 pt-5 px-0">
+    <div class="container-fluid">
+      <div class="row align-items-center px-5">
         <h2 class="font-weight-bold">{{ __("Хиты продаж") }}</h2>
       </div>
     </div>
@@ -84,28 +107,6 @@
     </div>
   </section>
 
-  <section class="mt-5 pt-5 px-0">
-    <div class="container-fluid">
-      <div class="row align-items-center px-5">
-        <h2 class="font-weight-bold">Новые товары</h2>
-        <a class="ml-auto text-dark" href="{{ route('products.all', ['order' => 'new_desc']) }}">Смотреть все</a>
-      </div>
-    </div>
-    <div class="container-fluid" id="sliderList1">
-      <div class="row px-md-5 px-2">
-        @if(count($productsNew) > 0)
-          @foreach($productsNew as $product)
-            <product :slider=true :currency="{{ $currency }}" :item_not_soted="{{ $product }}"></product>
-          @endforeach
-          @for($i = 0; $i < 5 - $productsNew->count(); $i++)
-            <div class="col-lg"></div>
-          @endfor
-        @else
-          <h3 class="text-center mt-5 pb-5">Нет данных товаров</h3>
-        @endif
-      </div>
-    </div>
-  </section>
   @if($category)
   <section class="mt-5 mb-5 px-0">
     <div class="container-fluid">
