@@ -38,6 +38,7 @@
         "tempusdominus-core": "^5.0.3",
         "vue-long-press-directive": "^1.0.2",
         "vue-owl-carousel": "^2.0.3",
-        "watch": "^1.0.2"
+        "watch": "^1.0.2",
+        "zooming": "^2.1.1"
     }
 }

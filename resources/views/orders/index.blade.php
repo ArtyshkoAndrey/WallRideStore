@@ -63,7 +63,9 @@
                               <td>
                                 @if(isset($order->ship_data['express_no']))
                                   {{ $order->ship_data['express_no'] }}
-                                  <a href="#" class="c-red d-block">Отследить</a>
+                                  @if(isset($order->expressCompany->track_code))
+                                    <a href="{{ $order->expressCompany->track_code . $order->ship_data['express_no'] }}" target="_blank" class="c-red d-block">Отследить</a>
+                                  @endif
                                 @else
                                   Ожидайте
                                 @endif

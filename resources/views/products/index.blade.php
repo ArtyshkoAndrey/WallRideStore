@@ -3,7 +3,7 @@
 
 @section('content')
   <section class="container-fluid p-0 text-white" id="slider">
-    <div id="carouselExampleCaptions" class="carousel slide" style="height: 500px;" data-ride="carousel">
+    <div id="carouselExampleCaptions" class="carousel slide d-none d-md-block" style="height: 500px;" data-ride="carousel">
 
       <ol class="carousel-indicators d-none d-md-flex">
         <?php $i = 0;?>
@@ -27,7 +27,16 @@
           <?php $i++; ?>
         @endforeach
       </div>
-
+      <a class="carousel-control-prev bg-transparent" href="#carouselExampleCaptions" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next bg-transparent" href="#carouselExampleCaptions" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+    <div id="carouselExampleCaptions-mobile" class="carousel slide d-md-none" style="height: 500px;" data-ride="carousel">
       <ol class="carousel-indicators d-flex d-md-none">
         <?php $i = 0;?>
         @foreach($hsm as$h)
@@ -51,11 +60,11 @@
         @endforeach
       </div>
 
-      <a class="carousel-control-prev bg-transparent" href="#carouselExampleCaptions" role="button" data-slide="prev">
+      <a class="carousel-control-prev bg-transparent" href="#carouselExampleCaptions-mobile" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
       </a>
-      <a class="carousel-control-next bg-transparent" href="#carouselExampleCaptions" role="button" data-slide="next">
+      <a class="carousel-control-next bg-transparent" href="#carouselExampleCaptions-mobile" role="button" data-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
       </a>

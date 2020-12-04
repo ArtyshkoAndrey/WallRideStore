@@ -14,6 +14,7 @@ use App\Models\ExpressZone;
 use App\Models\Pay;
 use App\Models\Product;
 use App\Models\Promotion;
+use App\Models\Settings;
 use App\Models\User;
 use App\Models\UserAddress;
 use App\Models\Order;
@@ -149,6 +150,8 @@ class OrdersController extends Controller
 
   public function create()
   {
+    $settings = Settings::where('key', 'pay')->first();
+    $pays = json_decode($settings->meta)->pays;
     if(!Auth::check()) {
       if (isset($_COOKIE["products"])) {
         $ids = explode(',', $_COOKIE["products"]);
@@ -181,9 +184,9 @@ class OrdersController extends Controller
         }
       }
       $amount = count($ids);
-      return view('orders.create_2', compact( 'cartItems', 'priceAmount', 'amount'));
+      return view('orders.create_2', compact( 'cartItems', 'priceAmount', 'amount', 'pays'));
     }
-    return view('orders.create_2');
+    return view('orders.create_2', compact('pays'));
   }
 
   public function cloudpayment (Request $request) {
