@@ -210,6 +210,8 @@ function getAdminRoute() {
     Route::resource('/pay', 'PayController', ['as' => 'admin.store']);
     Route::resource('/header', 'HeaderController', ['as' => 'admin']);
     Route::resource('/header-mobile', 'HeaderMobileController', ['as' => 'admin']);
+    Route::get('/pay-setting', 'PaySettingController@index', ['as' => 'admin'])->name('admin.pay-setting.index');
+    Route::post('/pay-setting', 'PaySettingController@update', ['as' => 'admin'])->name('admin.pay-setting.update');
     Route::resource('/stock', 'StockController', ['as' => 'admin.store']);
     Route::resource('/faqs', 'FAQController', ['as' => 'admin.store']);
     Route::post('/faqs/upload/tiny/image', 'FAQController@tinyUploadImage')->name('admin.store.faqs.upload.tiny.image');

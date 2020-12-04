@@ -85,6 +85,15 @@
                 </p>
               </a>
             </li>
+
+            <li class="nav-item">
+              <a href="{{ route('admin.pay-setting.index') }}" class="nav-link rounded-0 {{ Route::currentRouteNamed('admin.pay-setting.*') ? 'active' : '' }}">
+                <i class="fas fa-cog mr-3"></i>
+                <p>
+                  Системы оплаты
+                </p>
+              </a>
+            </li>
           </ul>
         </li>
 

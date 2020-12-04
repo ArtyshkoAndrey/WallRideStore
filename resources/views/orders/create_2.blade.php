@@ -2,9 +2,8 @@
 @section('title', 'Оформление заказа')
 
 @section('content')
-
   <section class="container mt-5 pt-5 mb-5" id="cart">
-    <create-order :amount="{{ $amount }}" :currency="{{ $currency }}" :cart_items="{{ json_encode($cartItems) }}" inline-template>
+    <create-order :amount="{{ $amount }}" :currency="{{ $currency }}" :cart_items="{{ json_encode($cartItems) }}" :pays="{{ json_encode((array) $pays) }}" inline-template>
       <div class="row">
         <div class="col-12">
           <div class="row">
@@ -74,8 +73,8 @@
             <div class="card-body">
               @if(count($cartItems) > 0)
                 @php($item = $cartItems[0])
-                <div class="row mt-3 justify-content-center align-items-center">
-                  <div class="col-md-2 offset-md-1 col-4">
+                <div class="row mt-3 justify-content-between align-items-center">
+                  <div class="col-md-2 col-4">
                     <img src="{{ $item['product_sku']->product->photos && count($item['product_sku']->product->photos) > 0 ? asset('storage/products/' . $item['product_sku']->product->photos[0]->name) : 'https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png' }}" class="img-fluid" alt="{{ $item['product_sku']->product->title }}">
                   </div>
                   <div class="col-4 col-md-4">
@@ -83,7 +82,7 @@
                     <br>
                     <p class="text-muted font-small">Размер: {{ isset($item['product_sku']->skus) ? $item['product_sku']->skus->title : 'One Size' }}</p>
                   </div>
-                  <div class="col-4 col-md text-center font-weight-bold">
+                  <div class="col col-md text-right font-weight-bold">
                     {{ cost(round(($item['product_sku']->product->on_sale ? $item['product_sku']->product->price_sale : $item['product_sku']->product->price) * $currency->ratio, 0)) }} {{ $currency->symbol }} X {{ $item['amount'] }}
                   </div>
                 </div>
@@ -93,7 +92,7 @@
               <div class="collapse multi-collapse" id="multiCollapseExample1">
                 @foreach($cartItems as $index => $item)
                   @if ($index >= 1)
-                    <div class="row mt-3 justify-content-center align-items-center">
+                    <div class="row mt-3 justify-content-between align-items-center">
                       <div class="col-md-2 offset-md-1 col-4">
                         <img src="{{ $item['product_sku']->product->photos && count($item['product_sku']->product->photos) > 0 ? asset('storage/products/' . $item['product_sku']->product->photos[0]->name) : 'https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png' }}" class="img-fluid" alt="{{ $item['product_sku']->product->title }}">
                       </div>
@@ -102,7 +101,7 @@
                         <br>
                         <p class="text-muted font-small">Размер: {{ isset($item['product_sku']->skus) ? $item['product_sku']->skus->title : 'One Size' }}</p>
                       </div>
-                      <div class="col-4 col-md text-center font-weight-bold">
+                      <div class="col col-md text-right font-weight-bold">
                         {{ cost(round(($item['product_sku']->product->on_sale ? $item['product_sku']->product->price_sale : $item['product_sku']->product->price) * $currency->ratio, 0)) }} {{ $currency->symbol }} X {{ $item['amount'] }}
                       </div>
                     </div>
@@ -118,15 +117,11 @@
 
               @endif
 
-              <div class="row p-2">
-                <p class="text-danger m-0" style="font-size: 12px;">В связи с коронавирусом, доставка осуществляется до 2-х недель</p>
-              </div>
-
               <div class="row">
-                <div class="col-md-6 mb-3">
+                <div class="col-md-6 mb-3 mx-0">
                   <h5 class="font-weight-bold">Методы доставки</h5>
                   <div class="btn-group">
-                    <div v-for="(company) in getCompanies" class="btn p-0 rounded-0 border-0 ml-2">
+                    <div v-for="(company) in getCompanies" class="btn p-0 rounded-0 border-0 mr-2">
                       <label  :class="'company-item btn-white rounded-0 p-3 mb-0 h-100 d-flex align-items-center justify-content-center ' +  (getCompany === company ? 'active' : '')" @click="setCompany(company)" style="min-width: 100px;">
                         @{{ company.name }}
                       </label>
@@ -136,11 +131,11 @@
                 </div>
                 <div class="col-md-8 mt-3">
                   <h5 class="font-weight-bold">Как будете платить?</h5>
-                  <div class="btn-group btn-group-toggle ml-2" data-toggle="buttons" v-if="getCompany !== null">
+                  <div class="btn-group btn-group-toggle mr-2" data-toggle="buttons" v-if="getCompany !== null">
                     <label v-if="getCompany.enabled_card" :class="'btn btn-white border-0 rounded-0 p-3 ' + (getMethod === 'card' ? 'active' : '')" @click="setMethod('card')">
                       <input type="radio" value="card" name="payment_method" id="option5" autocomplete="off"> <i class="fal fa-credit-card-front"></i> Оплатить онлайн
                     </label>
-                    <label v-if="getCompany.enabled_cash" :class="'btn btn-white border-0 rounded-0 p-3 ml-2 ' + (getMethod === 'cash' ? 'active' : '')" @click="setMethod('cash')">
+                    <label v-if="getCompany.enabled_cash" :class="'btn btn-white border-0 rounded-0 p-3 mr-2 ' + (getMethod === 'cash' ? 'active' : '')" @click="setMethod('cash')">
                       <input type="radio" value="cash" name="payment_method" id="option6" autocomplete="off"> <i class="fad fa-coins"></i> Наличными
                     </label>
                   </div>
@@ -148,16 +143,16 @@
 
                 <div class="col-md-8 mt-3" v-if="getMethod === 'card'">
                   <h5 class="font-weight-bold">Сервис оплаты?</h5>
-                  <div class="btn-group btn-group-toggle ml-2" data-toggle="buttons" v-if="getCompany !== null">
-                    <label :class="'btn btn-white border-0 rounded-0 p-3 ' + (getService === 'Paybox' ? 'active' : '')" @click="setService('Paybox')">
+                  <div class="btn-group btn-group-toggle mr-2" data-toggle="buttons" v-if="getCompany !== null">
+                    <label v-if="pays.paybox.enabled" :class="'btn btn-white border-0 rounded-0 p-3 ' + (getService === 'Paybox' ? 'active' : '')" @click="setService('Paybox')">
                       <input type="radio" value="card" name="payment_method" id="option5" autocomplete="off"> Paybox
                     </label>
 
-                    <label :class="'btn btn-white border-0 rounded-0 p-3 ml-2 ' + (getService === 'PayPal' ? 'active' : '')" @click="setService('PayPal')">
+                    <label v-if="pays.cloudpayment.enabled" :class="'btn btn-white border-0 rounded-0 p-3 mr-2 ' + (getService === 'PayPal' ? 'active' : '')" @click="setService('PayPal')">
                       <input type="radio" value="cash" name="payment_method" id="option6" autocomplete="off"> PayPal
                     </label>
 
-                    <label :class="'btn btn-white border-0 rounded-0 p-3 ml-2 ' + (getService === 'CloudPayment' ? 'active' : '')" @click="setService('CloudPayment')">
+                    <label v-if="pays.paypal.enabled" :class="'btn btn-white border-0 rounded-0 p-3 mr-2 ' + (getService === 'CloudPayment' ? 'active' : '')" @click="setService('CloudPayment')">
                       <input type="radio" value="cash" name="payment_method" id="option6" autocomplete="off"> CloudPayment
                     </label>
                   </div>

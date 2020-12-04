@@ -31,9 +31,18 @@
             </div>
             <div class="row mt-3 align-items-end">
               <div class="col-md-3">
-                <label for="name">Наименование</label>
-                <input type="text" name="name" id="name" class="w-100 px-2 form-control rounded-0 {{ $errors->has('name') ? ' is-invalid' : '' }}" value="{{ $express->name }}" required>
-                <span id="name-error" class="error invalid-feedback">{{ $errors->first('name') }}</span>
+                <div class="row">
+                  <div class="col-12">
+                    <label for="name">Наименование</label>
+                    <input type="text" name="name" id="name" class="w-100 px-2 form-control rounded-0 {{ $errors->has('name') ? ' is-invalid' : '' }}" value="{{ $express->name }}" required>
+                    <span id="name-error" class="error invalid-feedback">{{ $errors->first('name') }}</span>
+                  </div>
+                  <div class="col-12">
+                    <label for="track_code">Ссылка на отслеживание (на конеце '/')</label>
+                    <input type="text" name="track_code" id="track_code" class="w-100 px-2 form-control rounded-0 {{ $errors->has('track_code') ? ' is-invalid' : '' }}" value="{{ old('track_code', $express->track_code) }}" required>
+                    <span id="track_code-error" class="error invalid-feedback">{{ $errors->first('track_code') }}</span>
+                  </div>
+                </div>
               </div>
               <div class="col-md-2">
                 <label for="min_cost">Минимальная стоимость</label>

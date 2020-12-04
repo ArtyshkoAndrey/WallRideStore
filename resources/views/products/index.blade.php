@@ -3,7 +3,7 @@
 
 @section('content')
   <section class="container-fluid p-0 text-white" id="slider">
-    <div id="carouselExampleCaptions" class="carousel slide" style="height: 500px;" data-ride="carousel">
+    <div id="carouselExampleCaptions" class="carousel slide d-none d-md-block" style="height: 500px;" data-ride="carousel">
 
       <ol class="carousel-indicators d-none d-md-flex">
         <?php $i = 0;?>
@@ -27,7 +27,16 @@
           <?php $i++; ?>
         @endforeach
       </div>
-
+      <a class="carousel-control-prev bg-transparent" href="#carouselExampleCaptions" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next bg-transparent" href="#carouselExampleCaptions" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+    <div id="carouselExampleCaptions-mobile" class="carousel slide d-md-none" style="height: 500px;" data-ride="carousel">
       <ol class="carousel-indicators d-flex d-md-none">
         <?php $i = 0;?>
         @foreach($hsm as$h)
@@ -51,14 +60,37 @@
         @endforeach
       </div>
 
-      <a class="carousel-control-prev bg-transparent" href="#carouselExampleCaptions" role="button" data-slide="prev">
+      <a class="carousel-control-prev bg-transparent" href="#carouselExampleCaptions-mobile" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
       </a>
-      <a class="carousel-control-next bg-transparent" href="#carouselExampleCaptions" role="button" data-slide="next">
+      <a class="carousel-control-next bg-transparent" href="#carouselExampleCaptions-mobile" role="button" data-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
       </a>
+    </div>
+  </section>
+
+  <section class="mt-5 pt-5 px-0">
+    <div class="container-fluid">
+      <div class="row align-items-center px-5">
+        <h2 class="font-weight-bold">{{ __("Новые товары") }}</h2>
+        <a class="ml-auto text-dark" href="{{ route('products.all', ['order' => 'new_desc']) }}">Смотреть все</a>
+      </div>
+    </div>
+    <div class="container-fluid" id="sliderList1">
+      <div class="row px-md-5 px-2">
+        @if(count($productsNew) > 0)
+          @foreach($productsNew as $product)
+            <product :slider=true :currency="{{ $currency }}" :item_not_soted="{{ $product }}"></product>
+          @endforeach
+          @for($i = 0; $i < 5 - $productsNew->count(); $i++)
+            <div class="col-lg"></div>
+          @endfor
+        @else
+          <h3 class="text-center mt-5 pb-5">Нет данных товаров</h3>
+        @endif
+      </div>
     </div>
   </section>
 
@@ -84,28 +116,6 @@
     </div>
   </section>
 
-  <section class="mt-5 pt-5 px-0">
-    <div class="container-fluid">
-      <div class="row align-items-center px-5">
-        <h2 class="font-weight-bold">Новые товары</h2>
-        <a class="ml-auto text-dark" href="{{ route('products.all', ['order' => 'new_desc']) }}">Смотреть все</a>
-      </div>
-    </div>
-    <div class="container-fluid" id="sliderList1">
-      <div class="row px-md-5 px-2">
-        @if(count($productsNew) > 0)
-          @foreach($productsNew as $product)
-            <product :slider=true :currency="{{ $currency }}" :item_not_soted="{{ $product }}"></product>
-          @endforeach
-          @for($i = 0; $i < 5 - $productsNew->count(); $i++)
-            <div class="col-lg"></div>
-          @endfor
-        @else
-          <h3 class="text-center mt-5 pb-5">Нет данных товаров</h3>
-        @endif
-      </div>
-    </div>
-  </section>
   @if($category)
   <section class="mt-5 mb-5 px-0">
     <div class="container-fluid">

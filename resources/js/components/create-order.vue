@@ -32,6 +32,9 @@
         type: Number,
         required: true
       },
+      pays: {
+        required: true
+      }
     },
     beforeMount() {
       this.order.country = $('select[id=country]').val()
@@ -215,7 +218,7 @@
                 swal(error.response.data.msg, '', 'error');
               } else {
                 // Другие ошибки
-                swal('Внутренняя ошибка системы', '', 'error');
+                swal('Попробуйте перезагрузить страницу или напишите в тех поддержку', '', 'error');
               }
             }
           })
