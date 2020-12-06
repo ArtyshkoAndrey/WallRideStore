@@ -97,6 +97,11 @@ class CartService
       Auth::user()->cartItems()->whereIn('product_sku_id', $skuIds)->delete();
   }
 
+  public function removeAll()
+  {
+    Auth::user()->cartItems()->delete();
+  }
+
   public function amount ()
   {
     $user = Auth::user();

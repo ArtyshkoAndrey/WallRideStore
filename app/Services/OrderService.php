@@ -92,17 +92,17 @@ class OrderService
       if ($coupon) {
         $coupon->checkAvailable($user, $priceAmount);
         $totalAmount = $coupon->getAdjustedPrice($priceAmount, $items);
-  //                dd($totalAmount);
+
         $order->couponCode()->associate($coupon);
         if ($coupon->changeUsed() <= 0) {
           throw new CouponCodeUnavailableException('该优惠券已被兑完');
         }
       }
-  //            dd($totalAmount);
+
       $order->update(['total_amount' => $totalAmount]);
 
       $skuIds = collect($items)->pluck('sku_id')->all();
-      app(CartService::class)->remove($skuIds);
+      app(CartService::class)->removeAll();
       return $order;
     });
 

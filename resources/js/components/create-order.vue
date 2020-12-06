@@ -180,10 +180,11 @@
       },
       setMethod (methodPay) {
         this.order.payment_method = methodPay
-        this.setService(null)
       },
       setService (service) {
         this.order.service = service
+        if (this.getMethod !== 'card')
+          this.setMethod('card')
       },
       checkCoupon (swalable = true) {
         let code = this.order.coupon;
