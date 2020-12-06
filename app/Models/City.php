@@ -58,13 +58,13 @@ class City extends Model
       'Абхазия'];
 
     $filenames = [
-//      '2534-4788-cities_en.json',
-//      '4789-6825-cities_en.json',
-//      '6826-8876-cities_en.json',
-      '8877-11139-cities_en.json',
-      '11140-13331-cities_en.json',
-      '13332-15643-cities_en.json',
-      '15644-17589-cities_en.json'
+      '2534-4788-cities_en.json',
+      '4789-6825-cities_en.json',
+      '6826-8876-cities_en.json',
+//      '8877-11139-cities_en.json',
+//      '11140-13331-cities_en.json',
+//      '13332-15643-cities_en.json',
+//      '15644-17589-cities_en.json'
     ];
     foreach ($filenames as $filename) {
       $fh = fopen(public_path('storage/' . $filename), "r");
