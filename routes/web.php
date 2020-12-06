@@ -7,6 +7,11 @@ use Laravel\Socialite\Facades\Socialite;
 
 //
 
+Route::get('/test', function () {
+  \App\Models\Country::translateToEn();
+  \App\Models\City::translateToEn();
+});
+
 if ((new App\Models\Settings)->statusSite()) {
 
   /* Sitemap */
