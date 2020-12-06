@@ -1,6 +1,17 @@
 <div class="left-menu" id="slide-menu">
   <div class="accordion">
 
+    <div class="section d-block d-md-none mb-2">
+      <input type="radio" name="accordion-1" id="section-1"/>
+      <label for="section-1"><span>Язык сайта: {{ isset($_COOKIE['language']) ? $_COOKIE['language'] == 'ru' ? 'RUS' : 'ENG' : 'RUS' }} </span><span class="caret fa fa-angle-right"></span></label>
+      <div class="content">
+        <ul>
+          <li><span><a href="{{ url('/language/change/ru') }}">Russian</a></span></li>
+          <li><span><a href="{{ url('language/change/en') }}">English</a></span></li>
+        </ul>
+      </div>
+    </div>
+
     <div class="section">
       <label><span><a href="{{ route('root') }}">Главная</a></span></label>
       <div class="content"></div>
@@ -99,7 +110,7 @@
           </div>
         </div>
       </li>
-      <li class="nav-item dropdown d-flex" rel="profile">
+      <li class="nav-item dropdown d-md-flex d-none" rel="profile">
         <a class="nav-link d-flex align-items-center" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <span class="d-inline-flex">
             <span>{{ isset($_COOKIE['language']) ? $_COOKIE['language'] == 'ru' ? 'RUS' : 'ENG' : 'RUS' }} <i style="font-size: 15px" class="fas fa-fw fa-chevron-down"></i></span>
