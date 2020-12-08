@@ -7,31 +7,23 @@ use App\Models\Country;
 use App\Models\Currency;
 use App\Models\Pay;
 use App\Models\Product;
+use App\Models\Skus;
 use App\Models\User;
-use App\Models\UserAddress;
 use App\Models\Order;
 use App\Models\ProductSku;
 use App\Exceptions\InvalidRequestException;
-use App\Jobs\CloseOrder;
 use App\Notifications\OrderCancledNotification;
-use Carbon\Carbon;
 use App\Models\CouponCode;
 use App\Exceptions\CouponCodeUnavailableException;
+use DB;
 use Paybox\Pay\Facade as Paybox;
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
-use PayPal\Api\Agreement;
 use PayPal\Api\Payer;
-use PayPal\Api\Plan;
-use PayPal\Api\PaymentDefinition;
-use PayPal\Api\PayerInfo;
-use PayPal\Api\Item;
-use PayPal\Api\ItemList;
 use PayPal\Api\Amount;
 use PayPal\Api\Transaction;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Payment;
-use PayPal\Api\PaymentExecution;
 use Redirect;
 use URL;
 
@@ -41,10 +33,10 @@ class OrderService
   {
     // 如果传入了优惠券，则先检查是否可用
     if ($coupon) {
-      $coupon->checkAvailable($user);
+      $coupon->checkAvailable();
     }
     // 开启一个数据库事务
-    $order = \DB::transaction(function () use ($user, $address, $items, $coupon, $payment_method, $express_company, $cost_transfer) {
+    return DB::transaction(function () use ($user, $address, $items, $coupon, $payment_method, $express_company, $cost_transfer) {
 
       $order   = new Order([
         'address'      => [
@@ -90,8 +82,13 @@ class OrderService
       }
       $totalAmount = $priceAmount;
       if ($coupon) {
-        $coupon->checkAvailable($user, $priceAmount);
-        $totalAmount = $coupon->getAdjustedPrice($priceAmount, $items);
+        try {
+          $coupon->checkAvailable($priceAmount);
+        } catch (\Exception $e) {
+          $this->cancled($order);
+        }
+
+        $totalAmount = $coupon->getAdjustedPrice($items);
 
         $order->couponCode()->associate($coupon);
         if ($coupon->changeUsed() <= 0) {
@@ -101,13 +98,9 @@ class OrderService
 
       $order->update(['total_amount' => $totalAmount]);
 
-      $skuIds = collect($items)->pluck('sku_id')->all();
       app(CartService::class)->removeAll();
       return $order;
     });
-
-  // dispatch(new CloseOrder($order, config('app.order_ttl')));
-    return $order;
   }
 
   public function cancled(Order $order) {
@@ -202,7 +195,7 @@ class OrderService
       if (config('app.debug')) {
         return response('Ошибка подключения к PayPal', 500);
       } else {
-        return response('Ошибка подключения к PayPal', 500);;
+        return response('Ошибка подключения к PayPal', 500);
       }
     }
 

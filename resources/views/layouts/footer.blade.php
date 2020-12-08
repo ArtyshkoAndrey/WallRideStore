@@ -4,7 +4,7 @@
       <div class="col-12 col-md text-white">
         <div class="row">
           <div class="col-12">
-            <a href="tel:+77475562383" target="_blank">+7(747) 556-23-83</a>
+            <a href="tel:+77475562383" target="_blank">+7 (747) 556-23-83</a>
           </div>
         </div>
         <div class="row">
