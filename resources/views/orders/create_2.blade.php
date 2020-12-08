@@ -136,13 +136,14 @@
                       <input type="radio" value="card" name="payment_method" id="option5" autocomplete="off"> Paybox
                     </label>
 
+                    <label v-if="pays.paypal.enabled" :class="'btn btn-white border-0 rounded-0 p-3 mr-2 ' + (getService === 'CloudPayment' ? 'active' : '')" @click="setService('CloudPayment')">
+                      <input type="radio" value="cash" name="payment_method" id="option6" autocomplete="off"> Оплатить картой
+                    </label>
+
                     <label v-if="pays.cloudpayment.enabled" :class="'btn btn-white border-0 rounded-0 p-3 mr-2 ' + (getService === 'PayPal' ? 'active' : '')" @click="setService('PayPal')">
                       <input type="radio" value="cash" name="payment_method" id="option6" autocomplete="off"> PayPal
                     </label>
 
-                    <label v-if="pays.paypal.enabled" :class="'btn btn-white border-0 rounded-0 p-3 mr-2 ' + (getService === 'CloudPayment' ? 'active' : '')" @click="setService('CloudPayment')">
-                      <input type="radio" value="cash" name="payment_method" id="option6" autocomplete="off"> Оплатить картой
-                    </label>
                     <label v-if="getCompany.enabled_cash" :class="'btn btn-white border-0 rounded-0 p-3 mr-2 ' + (getMethod === 'cash' ? 'active' : '')" @click="setMethod('cash')">
                       <input type="radio" value="cash" name="payment_method" id="option6" autocomplete="off"> <i class="fad fa-coins"></i> Наличными
                     </label>
