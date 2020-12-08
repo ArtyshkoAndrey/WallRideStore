@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Exceptions\CouponCodeUnavailableException;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany as BelongsToManyAlias;
 use Illuminate\Support\Str;
 
 class CouponCode extends Model
@@ -43,7 +44,7 @@ class CouponCode extends Model
 
   protected $appends = ['description'];
 
-  public function getDescriptionAttribute ()
+  public function getDescriptionAttribute (): string
   {
     $str = '';
 
@@ -57,7 +58,7 @@ class CouponCode extends Model
     return $str.'до '.str_replace('.00', '', $this->value) . ' тг. скидка';
   }
 
-  public function checkAvailable (User $user = null, $orderAmount = null)
+  public function checkAvailable ($orderAmount = null)
   {
     if (!$this->enabled) {
       throw new CouponCodeUnavailableException('Купон не существует');
@@ -80,7 +81,7 @@ class CouponCode extends Model
     }
   }
 
-  public function getAdjustedPrice ($orderAmount, $items)
+  public function getAdjustedPrice ($items): int
   {
     // фиксированная сумма
     $price = 0;
@@ -120,7 +121,7 @@ class CouponCode extends Model
     }
   }
 
-  public function changeUsed($increase = true)
+  public function changeUsed($increase = true): int
   {
     // Передайте в true, чтобы увеличить использование, иначе уменьшите использование
     if ($increase) {
@@ -131,7 +132,7 @@ class CouponCode extends Model
     }
   }
 
-  public static function findAvailableCode ($length = 16)
+  public static function findAvailableCode ($length = 16): string
   {
     do {
       // Создать случайную строку указанной длины и преобразовать ее в верхний регистр
@@ -141,19 +142,33 @@ class CouponCode extends Model
     return $code;
   }
 
-  public function productsEnabled () {
+  public function productsEnabled (): BelongsToManyAlias
+  {
     return $this->belongsToMany('App\Models\Product', 'coupons_products', 'coupon_id', 'product_id');
   }
 
-  public function brandsEnabled () {
+  public function brandsEnabled (): BelongsToManyAlias
+  {
     return $this->belongsToMany('App\Models\Brand', 'coupons_brands', 'coupon_id', 'brand_id');
   }
 
-   public function productsDisabled () {
+  public function categoriesEnabled (): BelongsToManyAlias
+  {
+    return $this->belongsToMany('App\Models\Category', 'coupons_categories', 'coupon_id', 'category_id');
+  }
+
+   public function productsDisabled (): BelongsToManyAlias
+   {
     return $this->belongsToMany('App\Models\Product', 'disabled_coupons_products', 'coupon_id', 'product_id');
   }
 
-  public function brandsDisabled () {
+  public function brandsDisabled (): BelongsToManyAlias
+  {
     return $this->belongsToMany('App\Models\Brand', 'disabled_coupons_brands', 'coupon_id', 'brand_id');
+  }
+
+  public function categoriesDisabled()
+  {
+    return $this->belongsToMany('App\Models\Category', 'disabled_coupons_categories', 'coupon_id', 'category_id');
   }
 }

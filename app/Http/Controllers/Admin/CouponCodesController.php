@@ -7,6 +7,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
 use Illuminate\View\View;
 use Carbon\Carbon;
 
@@ -17,11 +18,13 @@ class CouponCodesController extends Controller
   {
 //    parent::__construct($cartService);
   }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Factory|View
-     */
+
+  /**
+   * Display a listing of the resource.
+   *
+   * @param Request $request
+   * @return Factory|View
+   */
     public function index(Request $request)
     {
       $type = $request->type;
@@ -72,10 +75,10 @@ class CouponCodesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
       $request->validate([
         'code' => 'required|unique:coupon_codes,code',
@@ -103,17 +106,19 @@ class CouponCodesController extends Controller
       $coupon->productsDisabled()->sync($request->disabled_products);
       $coupon->brandsEnabled()->sync($request->brands);
       $coupon->brandsDisabled()->sync($request->disabled_brands);
-      // dd($request->disabled_category);
+      $coupon->categoriesEnabled()->sync($request->categories);
+      $coupon->categoriesDisabled()->sync($request->disabled_categories);
+
       return redirect()->route('admin.store.coupon.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @return Response
      */
-    public function show($id)
+    public function show(int $id): Response
     {
         //
     }
@@ -121,10 +126,10 @@ class CouponCodesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return Factory|View
      */
-    public function edit($id)
+    public function edit (int $id)
     {
       $coupon = CouponCode::find($id);
       return view('admin.coupon.edit', compact('coupon'));
@@ -134,11 +139,11 @@ class CouponCodesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param Request $request
+     * @param  int $id
      * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update (Request $request, int $id): RedirectResponse
     {
       $request->validate([
         'code' => 'required|unique:coupon_codes,code,'.$id,
@@ -166,7 +171,8 @@ class CouponCodesController extends Controller
       $coupon->productsDisabled()->sync($request->disabled_products);
       $coupon->brandsEnabled()->sync($request->brands);
       $coupon->brandsDisabled()->sync($request->disabled_brands);
-
+      $coupon->categoriesEnabled()->sync($request->categories);
+      $coupon->categoriesDisabled()->sync($request->disabled_categories);
       // dd($request->disabled_category);
       return redirect()->route('admin.store.coupon.edit', $id);
     }
@@ -174,10 +180,10 @@ class CouponCodesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy (int $id): RedirectResponse
     {
       $coupon = CouponCode::find($id);
       $coupon->enabled = 0;
@@ -185,7 +191,8 @@ class CouponCodesController extends Controller
       return redirect()->route('admin.store.coupon.index');
     }
 
-  public function collectionsDestroy(Request $request) {
+  public function collectionsDestroy (Request $request): array
+  {
     $coupons = CouponCode::find($request->id);
     foreach ($coupons as $coupon) {
       $coupon->enabled = 0;

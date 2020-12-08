@@ -117,32 +117,20 @@
 
               @endif
 
-              <div class="row">
+              <div class="row" style="margin-top: 30px">
                 <div class="col-md-6 mb-3 mx-0">
-                  <h5 class="font-weight-bold">Методы доставки</h5>
+                  <h5 class="font-weight-bold" size="ma" style="margin-bottom: 10px">Методы доставки</h5>
                   <div class="btn-group">
                     <div v-for="(company) in getCompanies" class="btn p-0 rounded-0 border-0 mr-2">
                       <label  :class="'company-item btn-white rounded-0 p-3 mb-0 h-100 d-flex align-items-center justify-content-center ' +  (getCompany === company ? 'active' : '')" @click="setCompany(company)" style="min-width: 100px;">
-                        @{{ company.name }}
+                        @{{ company.name }} - @{{ $cost(company.costedTransfer * currency.ratio) + ' ' + currency.symbol }}
                       </label>
-                      <p class="m-0 p-0 text-center w-100 position-absolute font-weight-bold">@{{ $cost(company.costedTransfer * currency.ratio) + ' ' + currency.symbol }}</p>
                     </div>
                   </div>
                 </div>
-{{--                <div class="col-md-8 mt-3">--}}
-{{--                  <h5 class="font-weight-bold">Как будете платить?</h5>--}}
-{{--                  <div class="btn-group btn-group-toggle mr-2" data-toggle="buttons" v-if="getCompany !== null">--}}
-{{--                    <label v-if="getCompany.enabled_card" :class="'btn btn-white border-0 rounded-0 p-3 ' + (getMethod === 'card' ? 'active' : '')" @click="setMethod('card')">--}}
-{{--                      <input type="radio" value="card" name="payment_method" id="option5" autocomplete="off"> <i class="fal fa-credit-card-front"></i> Оплатить онлайн--}}
-{{--                    </label>--}}
-{{--                    <label v-if="getCompany.enabled_cash" :class="'btn btn-white border-0 rounded-0 p-3 mr-2 ' + (getMethod === 'cash' ? 'active' : '')" @click="setMethod('cash')">--}}
-{{--                      <input type="radio" value="cash" name="payment_method" id="option6" autocomplete="off"> <i class="fad fa-coins"></i> Наличными--}}
-{{--                    </label>--}}
-{{--                  </div>--}}
-{{--                </div>--}}
 
-                <div class="col-md-8 mt-3">
-                  <h5 class="font-weight-bold">Сервис оплаты?</h5>
+                <div class="col-md-8 mt-3" style="margin-top: 30px">
+                  <h5 class="font-weight-bold" style="margin-bottom: 10px">Методы оплаты?</h5>
                   <div class="btn-group btn-group-toggle mr-2" data-toggle="buttons" v-if="getCompany !== null">
                     <label v-if="pays.paybox.enabled" :class="'btn btn-white border-0 rounded-0 p-3 ' + (getService === 'Paybox' ? 'active' : '')" @click="setService('Paybox')">
                       <input type="radio" value="card" name="payment_method" id="option5" autocomplete="off"> Paybox
@@ -153,7 +141,7 @@
                     </label>
 
                     <label v-if="pays.paypal.enabled" :class="'btn btn-white border-0 rounded-0 p-3 mr-2 ' + (getService === 'CloudPayment' ? 'active' : '')" @click="setService('CloudPayment')">
-                      <input type="radio" value="cash" name="payment_method" id="option6" autocomplete="off"> CloudPayment
+                      <input type="radio" value="cash" name="payment_method" id="option6" autocomplete="off"> Оплатить картой
                     </label>
                     <label v-if="getCompany.enabled_cash" :class="'btn btn-white border-0 rounded-0 p-3 mr-2 ' + (getMethod === 'cash' ? 'active' : '')" @click="setMethod('cash')">
                       <input type="radio" value="cash" name="payment_method" id="option6" autocomplete="off"> <i class="fad fa-coins"></i> Наличными

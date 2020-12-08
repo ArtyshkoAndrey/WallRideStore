@@ -106,7 +106,7 @@
 @media (max-width: 768px) {
   nav.navbar ul.navbar-nav .dropdown-menu {
     width: 100vw!important;
-    height: calc(100vh - 50px)!important;
+    height: calc(100vh - 80px);
     right: 0rem;
     left: auto;
     min-width: 100vw!important;
@@ -521,6 +521,8 @@ nav.navbar {
 }
 
 @media (min-width: 768px) {
+  #nav-bar-category .nav-item .dropdown-menu{ display: none; }
+  #nav-bar-category .nav-item:hover .dropdown-menu{ display: block; }
   li[rel="city"] {
     position: inherit;
     &.show {

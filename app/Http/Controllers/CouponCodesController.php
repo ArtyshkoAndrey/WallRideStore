@@ -15,18 +15,24 @@ class CouponCodesController extends Controller
       if (!$record = CouponCode::where('code', $code)->first()) {
         throw new CouponCodeUnavailableException('Данного купона не существует');
       }
-      $record->checkAvailable(Auth::check() ? $request->user() : null);
+      $record->checkAvailable();
       $items = $request->items;
       foreach ($items as $item) {
         $pr = Product::find($item['productSku']['product']['id']);
         $countBrandsEnabled = $record->brandsEnabled()->count();
         $countProductsEnabled = $record->productsEnabled()->count();
+        $countCategoriesEnabled = $record->categoriesEnabled()->count();
         if ($record->productsDisabled()->where('product_id', $pr->id)->exists()) {
           throw new CouponCodeUnavailableException('Купон не распространяеться на данный товар: ' . $item['productSku']['product']['title']);
         }
         if ($record->brandsDisabled()->whereIn('brand_id', $pr->brands)->exists()) {
           throw new CouponCodeUnavailableException('Купон не распространяеться на бренд товара: ' . $item['productSku']['product']['title']);
         }
+
+        if ($record->categoriesDisabled()->whereIn('category_id', $pr->categories)->exists()) {
+          throw new CouponCodeUnavailableException('Купон не распространяеться на категорию товара: ' . $item['productSku']['product']['title']);
+        }
+
         if ($countBrandsEnabled > 0) {
           if (!$record->brandsEnabled()->whereIn('brand_id', $pr->brands)->exists()) {
             $msg = '';
@@ -45,7 +51,17 @@ class CouponCodesController extends Controller
             throw new CouponCodeUnavailableException('Купон распространяеться только на товар(ы): ' . $msg);
           }
         }
+
+        if ($countCategoriesEnabled > 0) {
+          if (!$record->categoriesEnabled()->whereIn('category_id', $pr->categories)->exists()) {
+            $msg = '';
+            foreach($record->categoriesEnabled()->get() as $ct) {
+              $msg .= $ct->name . ', ';
+            }
+            throw new CouponCodeUnavailableException('Купон распространяеться только на категории: ' . $msg);
+          }
+        }
       }
-      return ['record' => $record, 'totalAmount' => (int) $record->getAdjustedPrice($request->totalAmount, $request->items)];
+      return ['record' => $record, 'totalAmount' => (int) $record->getAdjustedPrice($request->items)];
     }
 }
