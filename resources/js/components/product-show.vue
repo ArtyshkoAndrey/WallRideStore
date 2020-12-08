@@ -60,6 +60,7 @@
         new Zooming({
           onBeforeOpen: () => {
             $('.slider-for').slick('unslick');
+            $('body').css('overflow','hidden')
           },
           onBeforeClose: () => {
             $('.slider-for').slick({
@@ -73,8 +74,11 @@
               touchMove: false,
               adaptiveHeight: true,
             })
+            $('body').css('overflow','auto')
           },
-          scaleBase: 2.3,
+          scaleBase: 1.5,
+          scaleExtra: 2,
+          scrollThreshold: 99999
         }).listen('.slider-for__item img');
       })
     },
