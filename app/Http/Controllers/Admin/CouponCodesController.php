@@ -99,6 +99,8 @@ class CouponCodesController extends Controller
         $coupon->disabled_other_coupons = true;
       if (isset($request->disabled_other_sales))
         $coupon->disabled_other_sales = true;
+
+      $coupon->notification = isset($request->notification);
       $coupon->not_after = Carbon::parse($request->not_after);
       // $coupon->categoriesDisabled()->detach();
       $coupon->save();
@@ -164,6 +166,7 @@ class CouponCodesController extends Controller
         $coupon->disabled_other_coupons = true;
       if (isset($request->disabled_other_sales))
         $coupon->disabled_other_sales = true;
+      $coupon->notification = isset($request->notification);
       $coupon->not_after = Carbon::parse($request->not_after);
       // $coupon->categoriesDisabled()->detach();
       $coupon->save();

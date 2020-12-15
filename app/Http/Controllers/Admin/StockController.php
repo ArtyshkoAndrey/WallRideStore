@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\ListenerStockUser;
 use App\Models\News;
 use App\Models\Stock;
 use Illuminate\Contracts\View\Factory;
@@ -49,15 +50,25 @@ class StockController extends Controller
    */
   public function store(Request $request)
   {
+//    TODO: Допилить валидацию новых полей
     $request->validate([
       'title' => 'required',
       'view' => 'required',
       'description' => 'required',
-      'link' => 'required',
       'text_to_link' => 'required'
     ]);
 //    dd($request->all());
-    $st = Stock::create($request->all());
+    $data = $request->all();
+    if ($data['view'] != 3) {
+      $request->validate([
+        'link' => 'required'
+      ]);
+    }
+    $data['on_auth'] = isset($request->on_auth);
+    $st = Stock::create($data);
+    if ($st->on_auth) {
+      ListenerStockUser::dispatch($st, (int) $request->delay);
+    }
     return redirect()->route('admin.store.stock.index');
   }
 
@@ -97,10 +108,22 @@ class StockController extends Controller
       'title' => 'required',
       'view' => 'required',
       'description' => 'required',
-      'link' => 'required',
       'text_to_link' => 'required'
     ]);
     $st = Stock::find($id);
+    $data = $request->all();
+    $data['on_auth'] = isset($request->on_auth);
+    if ($data['view'] != 3) {
+      $request->validate([
+        'link' => 'required'
+      ]);
+    }
+    if ($data['on_auth']) {
+      $st->delete();
+      $st = Stock::create($data);
+      ListenerStockUser::dispatch($st, (int) $request->delay);
+      return redirect()->route('admin.store.stock.index');
+    }
     $st->update($request->all());
     $st->save();
     return redirect()->route('admin.store.stock.index');

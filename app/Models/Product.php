@@ -74,6 +74,15 @@ class Product extends Model
     return $this->belongsToMany(Promotion::class, 'products_promotions', 'product_id', 'promotion_id');
   }
 
+  public function getAvatar (): string
+  {
+    if (count($this->photos) > 0) {
+      return asset('storage/products/' . $this->photos[0]->name);
+    } else {
+      return asset('images/person.png');
+    }
+  }
+
   static function getProducts ($ids)
   {
     $products   = [];

@@ -35,25 +35,29 @@ class Controller extends BaseController
       setcookie("products", '', time() + (3600 * 24 * 30), '/');
 
     }
-    $stock = null;
-    try {
-      if (explode('/', Request()->route()->getPrefix())[0] !== 'admin' || end($r) !== 'getData' || end($r) !== 'favicon.ico') {
-        $sts = Stock::all();
-        foreach ($sts as $st) {
-          if (!isset($_COOKIE['stock_' . $st->id])) {
-            $stock = $st;
-            break;
-          }
-        }
-      }
-    } catch (\Throwable $e) {
-      $stock = null;
-    }
+
     $this->cartService = $cartService;
-    $this->middleware(function ($request, $next) use($stock, $isCrCoockie) {
+    $this->middleware(function ($request, $next) use($isCrCoockie) {
       $cartItems = [];
       $priceAmount = 0;
       $amount = 0;
+      $stock = null;
+      try {
+        if (explode('/', Request()->route()->getPrefix())[0] !== 'admin' || end($r) !== 'getData' || end($r) !== 'favicon.ico') {
+          if (auth()->user())
+            $sts = Stock::where('on_auth', false)->where('view', '!=', 3)->get();
+          else
+            $sts = Stock::where('on_auth', false)->get();
+          foreach ($sts as $st) {
+            if (!isset($_COOKIE['stock_' . $st->id])) {
+              $stock = $st;
+              break;
+            }
+          }
+        }
+      } catch (\Throwable $e) {
+        $stock = null;
+      }
       if (Auth::check() && explode('/', $request->route()->getPrefix())[0] !== 'admin') {
         if(isset($_COOKIE["products"])) {
           if (count(explode(',', $_COOKIE["products"])) > 0) {

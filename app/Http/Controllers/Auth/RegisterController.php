@@ -7,6 +7,7 @@ use App\Models\Currency;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Models\UserAddress;
+use App\Notifications\UserCouponCodeNotification;
 use App\Services\CartService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -52,7 +53,7 @@ class RegisterController extends Controller
    * @param  array  $data
    * @return \Illuminate\Contracts\Validation\Validator
    */
-  protected function validator(array $data)
+  protected function validator(array $data): \Illuminate\Contracts\Validation\Validator
   {
     return Validator::make($data, [
       'name' => ['required', 'string', 'max:255'],
@@ -65,14 +66,21 @@ class RegisterController extends Controller
    * Create a new user instance after a valid registration.
    *
    * @param  array  $data
-   * @return \App\Models\User
+   * @return User
    */
-  protected function create(array $data)
+  protected function create(array $data): User
   {
-    return User::create([
+    $user = User::create([
       'name' => $data['name'],
       'email' => $data['email'],
+      'notification' => isset($data['email_notifications']),
+      'old_notification' => isset($data['email_notifications']),
       'password' => Hash::make($data['password']),
     ]);
+
+    if ($user->notification) {
+      $user->notify(new UserCouponCodeNotification($user));
+    }
+    return $user;
   }
 }

@@ -129,14 +129,29 @@
                 </div>
                 <div class="row">
                   <div class="col-md-4">
-                    <label for="description">Ссылка</label>
+                    <label for="link">Ссылка</label>
                     <input name="link" id="link" class="w-100 px-2 form-control rounded-0 {{ $errors->has('link') ? ' is-invalid' : '' }}" value="{{ old('link') ? old('link') : $st->link }}">
                     <span id="link-error" class="error invalid-feedback">{{ $errors->first('link') }}</span>
+                    <small class="form-text text-muted">"/notification/subscribe/auth" - для подписки на рассылку</small>
                   </div>
                   <div class="col-md-4">
-                    <label for="description">Текст ссылки</label>
+                    <label for="text_to_link">Текст ссылки</label>
                     <input name="text_to_link" id="text_to_link" class="w-100 px-2 form-control rounded-0 {{ $errors->has('text_to_link') ? ' is-invalid' : '' }}" value="{{ old('text_to_link') ? old('text_to_link') : $st->text_to_link }}">
                     <span id="text_to_link-error" class="error invalid-feedback">{{ $errors->first('text_to_link') }}</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <label for="delay">Промежуток показа (секунды, если для зарегестрированых)</label>
+
+                    <input name="delay" id="delay" type="number" class="w-100 px-2 form-control rounded-0 {{ $errors->has('delay') ? ' is-invalid' : '' }}" value="{{ old('delay', $st->delay) }}">
+                    <span id="delay-error" class="error invalid-feedback">{{ $errors->first('delay') }}</span>
+                  </div>
+
+                  <div class="col-md-12 mt-2 mb-2">
+                    <input name="on_auth" type="checkbox" id="on_auth" class="p-5 rounded-0 {{ $errors->has('on_auth') ? ' is-invalid' : '' }}" @if(old('on_auth', $st->on_auth)) checked @endif>
+                    <label for="on_auth">Только для зарегестрированных пользователей</label>
+                    <span id="on_auth-error" class="error invalid-feedback">{{ $errors->first('on_auth') }}</span>
                   </div>
                 </div>
                 <div class="row">
@@ -148,6 +163,9 @@
                       </li>
                       <li><input type="radio" name="view" value="2" id="cb2" {{ old('view') === 2 ? 'checked' :  $st->view === 2 ? 'checked' : ''  }} />
                         <label for="cb2"><img src="{{ asset('images/modal_2.png') }}" /></label>
+                      </li>
+                      <li><input type="radio" name="view" value="3" id="cb3" {{ old('view') === 3 ? 'checked' :  $st->view === 3 ? 'checked' : ''  }} />
+                        <label for="cb3"><img src="{{ asset('images/modal_3.png') }}" /></label>
                       </li>
                     </ul>
 

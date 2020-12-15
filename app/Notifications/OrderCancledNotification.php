@@ -18,16 +18,15 @@ class OrderCancledNotification extends Notification implements ShouldQueue {
     $this->order = $order;
   }
 
-  public function via($notifiable) {
+  public function via($notifiable): array
+  {
     return ['mail'];
   }
 
-  public function toMail($notifiable) {
+  public function toMail($notifiable): MailMessage
+  {
     return (new MailMessage)
-      ->subject('Ваш заказ был отменён за неуплату в течении 3 часов')
-      ->greeting('Здраствуйте ' . $this->order->user->name)
-      ->line(Carbon::now()->format('d.m.Y H:i') . ' был отменён ваш заказ по номеру ' . $this->order->no)
-      ->action('Просмотреть статус заказа', route('orders.index'))
-      ->success();
+      ->subject('Заказ № ' . $this->order->no . ' отменён' )
+      ->view('emails.order-cancled', ['order' => $this->order]);
   }
 }

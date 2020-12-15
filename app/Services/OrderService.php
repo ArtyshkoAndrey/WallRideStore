@@ -107,7 +107,6 @@ class OrderService
 //      Order::SHIP_STATUS_CANCEL
     $order->ship_status = Order::SHIP_STATUS_CANCEL;
     $order->save();
-    $order->user->notify(new OrderCancledNotification($order));
     foreach ($order->items as $item) {
       if (Product::find($item->product->id)) {
         $sku = ProductSku::where('product_id', $item->product->id);

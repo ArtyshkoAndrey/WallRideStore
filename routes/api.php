@@ -23,4 +23,5 @@ Route::post('country/{country}', ['as' => 'api.country', 'uses' => 'ApiControlle
 Route::post('category/{category}', ['as' => 'api.category', 'uses' => 'ApiController@category']);
 Route::post('brand/{brand}', ['as' => 'api.brand', 'uses' => 'ApiController@brand']);
 Route::post('companies', ['as' => 'api.companies', 'uses' => 'ApiController@companies']);
-Route::get('delete-orders', ['as' => 'api.delete_orders', 'uses' => 'ApiController@delete_orders']);
+
+Route::post('check/email', 'ApiController@checkEmail')->name('api.check.email');

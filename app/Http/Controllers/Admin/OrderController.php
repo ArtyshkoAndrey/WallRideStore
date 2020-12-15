@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Order;
 use App\Models\ProductSku;
+use App\Notifications\OrderEditNotification;
 use App\Services\CartService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -153,6 +154,9 @@ class OrderController extends Controller
         'express_no' => 'nullable'
       ]);
       $order = Order::find($id);
+      if ($order->ship_status !== $request->ship_status) {
+        $order->user->notify(new OrderEditNotification($order, Order::$shipStatusMap[$request->ship_status]));
+      }
       $order->created_at = Carbon::parse($request->created_at);
       $order->ship_status = $request->ship_status;
       $order->ship_data = ['express_no' => $request->express_no];
