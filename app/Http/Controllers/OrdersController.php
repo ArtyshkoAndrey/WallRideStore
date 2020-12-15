@@ -24,6 +24,7 @@ use App\Notifications\OrderCreateNotification;
 use App\Notifications\OrderEditNotification;
 use App\Notifications\RegisterPaid;
 use App\Notifications\RegisterPassword;
+use App\Notifications\UserCouponCodeNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
@@ -63,12 +64,27 @@ class OrdersController extends Controller
         $address->city_id = $request->address['city'];
         $address->currency_id = Currency::first()->id;
         $address->street = $request->address['street'];
+        $user->notification = $request->notification;
+        if ($request->notification) {
+          $request->old_notification = true;
+        }
         $pass = str_random(10);
         $user->password = bcrypt($pass);
         $user->save();
+        if ($request->notification)
+          $user->notify(new UserCouponCodeNotification($user));
         $user->address()->save($address);
         $address->save();
         $user->notify(new RegisterPassword($user->email, $pass));
+      } else {
+        if ($request->notification) {
+          $user->notification = true;
+          if(!$user->old_notification) {
+            $user->old_notification = true;
+            $user->notify(new UserCouponCodeNotification($user));
+          }
+          $user->save();
+        }
       }
       Auth::login($user);
     }

@@ -57,6 +57,13 @@
               </div>
               <div class="checkbox mt-3">
                 <label>
+                  <input type="checkbox" data-ng-model="example.check" name="notification" id="notification">
+                  <span class="box"></span>
+                  <span>Подписаться на рссылку новостей</span>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
                   <input type="checkbox" data-ng-model="example.check" name="privacy" id="privacy" required>
                   <span class="box"></span>
                   <span>Я принимаю условия <a href="{{ route('policy') }}" target="_blank" class="c-red text-danger">политики конфиденциальности</a></span>
