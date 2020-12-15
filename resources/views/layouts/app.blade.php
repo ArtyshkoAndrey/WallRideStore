@@ -135,7 +135,7 @@
     @if(isset($stocksToView))
       setTimeout(() => {
         $('#stock').modal('toggle')
-      }, 10)
+      }, 1000)
 
     @endif
 
