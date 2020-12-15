@@ -23,6 +23,27 @@
           @include('admin.layouts.aside')
         </div>
         <div class="content-wrapper">
+          @if (session()->has('success'))
+            @foreach (session('success') as $message)
+              <div class="alert alert-info alert-dismissible position-absolute rounded-0 mt-3 mr-3" style="z-index: 100; right: 0;">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4><i class="icon fa fa-info"></i> Успешно</h4>
+                {{ $message }}
+              </div>
+            @endforeach
+          @endif
+
+          @if($errors->any())
+            @foreach ($errors->all() as $error)
+              <div class="alert alert-danger alert-dismissible position-absolute rounded-0 mt-3 mr-3" style="z-index: 100; right: 0;">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4><i class="fas fa-exclamation"></i> Ошибка</h4>
+                {{ $error }}
+                {{-- Lorem ipsum dolor sit amet. --}}
+              </div>
+            @endforeach
+          @endif
+
           @yield('content')
         </div>
       </div>

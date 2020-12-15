@@ -21,6 +21,8 @@ class CreateStocksTable extends Migration
             $table->text('link')->nullable();
             $table->text('text_to_link')->nullable();
             $table->integer('view')->default(1);
+            $table->boolean('on_auth')->default(0);
+            $table->integer('delay')->nullable();
             $table->timestamps();
         });
     }

@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\ProductSku;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\City;
@@ -72,13 +73,7 @@ class ApiController extends Controller {
     return $express_companies;
   }
 
-  public function delete_orders (OrderService $orderService) {
-    $date = Carbon::now();
-    dump($date);
-    dump($date->subHours(2));
-    $orders = Order::where('ship_status', Order::SHIP_STATUS_PAID)->where('created_at','<', $date)->get();
-    foreach ($orders as $order) {
-      $orderService->cancled($order);
-    }
+  public function checkEmail (Request $request) {
+    return response()->json(['status'=> !!User::whereEmail($request->email)->first()]);
   }
 }

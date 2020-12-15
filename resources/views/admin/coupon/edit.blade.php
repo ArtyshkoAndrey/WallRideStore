@@ -140,6 +140,16 @@
                           </div>
                         </div>
                       </div>
+                      <div class="col-md-12 mt-md-2 mt-2">
+                        <div class="row">
+                          <div class="col-12">
+                            <label>
+                              <input type="checkbox" {{ $coupon->notification ? 'checked' : null }} name="notification">
+                              Только для пользователей с подпиской на рассылку
+                            </label>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

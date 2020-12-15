@@ -48,13 +48,33 @@
 <div id="app" amount="{{ $amount }}" class="{{ route_class() }}-page">
   @include('layouts.header')
   <div id="blur-for-menu" class="h-100">
+    @if (session()->has('success'))
+      @foreach (session('success') as $message)
+        <div class="alert alert-success alert-dismissible position-absolute d-table" style="right:0; z-index: 101;" role="alert">
+          <button type="button" class="close mt-2" data-dismiss="alert">×</button>
+          <h5 class="mt-2"><strong>{{ $message }}</strong></h5>
+        </div>
+      @endforeach
+    @endif
     @yield('content')
   </div>
 </div>
 
 {{--МОДАЛЬНОЕ ОКНО АКЦИЙ--}}
+@if($stocksToView)
+  @include('layouts.modals', ['stock' => $stocksToView, 'coockie' => true])
+@elseif(auth()->user())
+  @foreach(\App\Models\Stock::where('on_auth', true)->get() as $stock)
+    @if(!auth()->user()->checkedStockView($stock))
+      @php
+        $stocksToView = $stock;
+        break;
+      @endphp
+    @endif
+  @endforeach
+  @include('layouts.modals', ['stock' => $stocksToView, 'coockie' => false])
+@endif
 
-@include('layouts.modals', ['stock' => $stocksToView])
 @include('layouts.footer')
 <!-- JS скрипт -->
 <script src="{{ mix('js/app.js') }}"></script>
@@ -62,6 +82,38 @@
 <script src="{{ asset('public/js/jquery.mask.min.js') }}"></script>
 <script src="{{ asset('public/js/menu.js') }}"></script>
 <script type="text/javascript">
+
+  function subscribe() {
+    let email = $('#email-notify').val()
+    let name = $('#name-notify').val()
+    if (email !== '' && name !== '') {
+      axios.post('{{ route('notification.subscribe.not-auth') }}', {email: email, name: name})
+        .then((response) => {
+          if (response.data.status) {
+            location.reload();
+          } else {
+            alert('Ошибка')
+          }
+        })
+    } else if (email !== '') {
+      axios.post('{{ route('api.check.email') }}', {email: email})
+        .then((response) => {
+          if (!response.data.status) {
+            $('#name-block-notify').removeClass('d-none')
+          } else {
+            axios.post('{{ route('notification.subscribe.not-auth-email') }}', {email: email})
+              .then((response) => {
+                if (response.data.status) {
+                  location.reload();
+                } else {
+                  alert('Ошибка')
+                }
+              })
+          }
+        })
+    }
+  }
+
   (function($){
     $.fn.isActive = function(){
       console.log(this)
@@ -78,6 +130,7 @@
   })(jQuery)
 
   window.onload = function() {
+
     // ПРОВЕРКА ЧТО БЫ ОТКРЫТЬ ОКНО АКЦИЙ
     @if(isset($stocksToView))
       $('#stock').modal('toggle')

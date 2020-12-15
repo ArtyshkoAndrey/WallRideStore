@@ -7,6 +7,9 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use App\Models\Order;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\HtmlString;
+use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
 class OrderPaidNotification extends Notification implements ShouldQueue {
   use Queueable;
@@ -17,16 +20,16 @@ class OrderPaidNotification extends Notification implements ShouldQueue {
     $this->order = $order;
   }
 
-  public function via($notifiable) {
+  public function via($notifiable): array
+  {
     return ['mail'];
   }
 
-  public function toMail($notifiable) {
+  public function toMail($notifiable): MailMessage
+  {
+
     return (new MailMessage)
-      ->subject('Ваш заказ успешно оплачен')
-      ->greeting('Здраствуйте ' . $this->order->user->name)
-      ->line($this->order->paid_at->format('d.m.Y H:i') . ' был оплачен ваш заказ по номеру ' . $this->order->no)
-      ->action('Просмотреть статус заказа', route('orders.index'))
-      ->success();
+      ->subject('Оплата заказа № ' . $this->order->no )
+      ->view('emails.order-pay', ['order' => $this->order]);
   }
 }

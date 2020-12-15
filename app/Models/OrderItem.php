@@ -8,7 +8,6 @@ class OrderItem extends Model
 {
   protected $fillable   = ['amount', 'price', 'rating', 'review', 'reviewed_at', 'product_sku'];
   protected $dates      = ['reviewed_at'];
-  public    $timestamps = false;
 
   public function product() {
     return $this->belongsTo(Product::class)->withTrashed();

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Events\OrderPaid;
 use App\Exceptions\CouponCodeUnavailableException;
 use App\Http\Requests\OrderRequest;
+use App\Jobs\CloseOrder;
+use App\Jobs\ProcessOrderMailer;
 use App\Models\Admin;
 use App\Models\City;
 use App\Models\CouponCode;
@@ -18,6 +20,8 @@ use App\Models\Settings;
 use App\Models\User;
 use App\Models\UserAddress;
 use App\Models\Order;
+use App\Notifications\OrderCreateNotification;
+use App\Notifications\OrderEditNotification;
 use App\Notifications\RegisterPaid;
 use App\Notifications\RegisterPassword;
 use Carbon\Carbon;
@@ -94,7 +98,12 @@ class OrdersController extends Controller
       }
     }
     $order->save();
+    $order->user->notify(new OrderCreateNotification($order));
     if ($payment_method === 'card') {
+      ProcessOrderMailer::dispatch($order, now()->addMinutes(10));
+//      TODO: Изменить время addHourse(3)
+      CloseOrder::dispatch($order, now()->addMinute());
+
       if ($service === 'Paybox') {
         return $orderService->paybox($order, $user, $order->total_amount + $order->ship_price);
       } else if ($service === 'CloudPayment') {
@@ -105,8 +114,10 @@ class OrdersController extends Controller
     } else {
       if ($order->no) {
         $order->ship_status = Order::SHIP_STATUS_PENDING;
+        $order->paid_at = now();
         $order->closed = 0;
         $order->save();
+        $order->user->notify(new OrderEditNotification($order, Order::$shipStatusMap[Order::SHIP_STATUS_PENDING]));
         $admin = Admin::first();
         $admin->notify(new RegisterPaid($order));
         return route('orders.index');
@@ -210,7 +221,10 @@ class OrdersController extends Controller
     if ($validator->fails())
       return response(['error'], 500);
     $order = Order::find($id);
-    $orderService->cancled($order);
+
+//      TODO: Изменить время addHourse(3)
+    CloseOrder::dispatch($order, now());
+
     return response(['success']);
   }
 

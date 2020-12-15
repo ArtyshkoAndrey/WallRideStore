@@ -1,11 +1,11 @@
 <?php
 // Для всех
+use App\Jobs\NotificationMail;
 use App\Models\Product;
 use App\Models\User;
+use App\Notifications\InfoUsersNotification;
 use App\Notifications\RegisterPassword;
 use Laravel\Socialite\Facades\Socialite;
-
-//
 
 if ((new App\Models\Settings)->statusSite()) {
 
@@ -92,6 +92,12 @@ if ((new App\Models\Settings)->statusSite()) {
     }
     return redirect()->route('profile.index');
   })->name('google.auth');
+
+  Route::get('/notification/subscribe', 'NotificationController@subscribe')->name('notification.subscribe');
+  Route::get('/notification/subscribe/auth', 'NotificationController@subscribeAuth')->name('notification.subscribe.auth');
+  Route::post('/notification/subscribe/not-auth', 'NotificationController@subscribeNotAuth')->name('notification.subscribe.not-auth');
+  Route::post('/notification/subscribe/not-auth-email', 'NotificationController@subscribeNotAuthEmail')->name('notification.subscribe.not-auth-email');
+  Route::get('/notification/unsubscribe', 'NotificationController@unsubscribe')->name('notification.unsubscribe');
 
   Route::redirect('/products', '/')->name('root'); // Главаня
   Route::get('/', 'ProductsController@index')->name('products.index'); // Главная с товарами
@@ -194,6 +200,7 @@ function getAdminRoute() {
 
     Route::get('/reports', 'ReportsController@index')->name('admin.store.reports.index');
     Route::resource('/order', 'OrderController', ['as' => 'admin.store']);
+    Route::resource('/user', 'UserController', ['as' => 'admin']);
     Route::resource('/express-zone', 'ExpressZoneController', ['as' => 'admin.store']);
     Route::resource('/express', 'ExpressController', ['as' => 'admin.store']);
     Route::resource('/coupon', 'CouponCodesController', ['as' => 'admin.store']);
@@ -216,5 +223,10 @@ function getAdminRoute() {
     Route::resource('/faqs', 'FAQController', ['as' => 'admin.store']);
     Route::post('/faqs/upload/tiny/image', 'FAQController@tinyUploadImage')->name('admin.store.faqs.upload.tiny.image');
     Route::resource('/promotions', 'PromotionController', ['as' => 'admin.production']);
+
+    Route::get('/notification', 'NotificationController@index')->name('admin.notification.index');
+    Route::post('/notification', 'NotificationController@create')->name('admin.notification.create');
+    Route::post('/notification/photo-create', 'NotificationController@photoCreate')->name('admin.notification.photoCreate');
+    Route::post('/notification/photo-delete', 'NotificationController@photoDelete')->name('admin.notification.photoDelete');
   });
 }

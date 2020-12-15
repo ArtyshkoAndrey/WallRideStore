@@ -22,7 +22,7 @@ class OrderPaid
     $this->order = $order;
   }
 
-  public function getOrder()
+  public function getOrder(): Order
   {
     return $this->order;
   }

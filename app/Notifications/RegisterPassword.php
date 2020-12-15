@@ -24,12 +24,7 @@ class RegisterPassword extends Notification{
 
   public function toMail($notifiable) {
     return (new MailMessage)
-      ->subject('Новый аккаунт')
-      ->greeting('Здраствуйте')
-      ->line('Вы успешно зарегестрировались')
-      ->line('Ваш логин: ' . $this->email)
-      ->line('Ваш пароль: ' . $this->password)
-      ->action('Просмотреть новые товары', route('products.all', ['order' => 'new_desc']))
-      ->success();
+      ->subject('Ваш аккаунт успешно создан')
+      ->view('emails.register', ['email' => $this->email, 'password' => $this->password]);
   }
 }

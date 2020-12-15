@@ -32,12 +32,14 @@ class CouponCode extends Model
     'not_after',
     'enabled',
     'disabled_other_sales',
-    'disabled_other_coupons'
+    'disabled_other_coupons',
+    'notification'
   ];
   protected $casts = [
     'enabled'                => 'boolean',
     'disabled_other_coupons' => 'boolean',
-    'disabled_other_sales'   => 'boolean'
+    'disabled_other_sales'   => 'boolean',
+    'notification'           => 'boolean'
   ];
   // указывает, что эти два поля являются типами даты
   protected $dates = ['not_before', 'not_after', ];

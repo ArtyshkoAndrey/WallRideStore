@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Jobs\ProcessOrderMailer;
+use App\Models\Order;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 

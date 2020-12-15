@@ -76,8 +76,15 @@
                       <input type="hidden" value="password" name="metadata">
                       <input type="password" name="password" class="form-control mb-4" placeholder="Новый пароль">
                       <input type="password" name="password_confirmation" class="form-control mb-4" placeholder="Повторите пароль">
-                      <button type="submit" class="btn btn-dark m-0">Сохранить</button>
+                      <button type="submit" class="btn btn-dark w-100 text-center m-0">Сохранить</button>
                     </form>
+                  </div>
+                  <div class="col-12 mt-2">
+                    @if(auth()->user()->notification)
+                      <a href="{{ route('notification.unsubscribe', ['email' => auth()->user()->email, 'back' => 1]) }}" class="btn btn-dark m-0">Отказаться от расссылки</a>
+                    @else
+                      <a href="{{ route('notification.subscribe', ['email' => auth()->user()->email, 'back' => 1]) }}" class="btn btn-dark m-0">Подписаться на расссылку</a>
+                    @endif
                   </div>
                 </div>
               </div>

@@ -15,6 +15,15 @@ class CouponCodesController extends Controller
       if (!$record = CouponCode::where('code', $code)->first()) {
         throw new CouponCodeUnavailableException('Данного купона не существует');
       }
+
+      if ($record->notification && Auth::check()) {
+        if (!auth()->user()->notification) {
+          throw new CouponCodeUnavailableException('Купон распотроняется только пользователей с подпиской на рассылку новостей');
+        }
+      } elseif ($record->notification && !Auth::check()) {
+        throw new CouponCodeUnavailableException('Необходимо войти в аккаунт для использования данныного промокода');
+      }
+
       $record->checkAvailable();
       $items = $request->items;
       foreach ($items as $item) {
