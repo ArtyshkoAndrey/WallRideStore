@@ -65,7 +65,7 @@
   @include('layouts.modals', ['stock' => $stocksToView, 'coockie' => true])
 @elseif(auth()->user())
   @foreach(\App\Models\Stock::where('on_auth', true)->get() as $stock)
-    @if(!auth()->user()->checkedStockView($stock))
+    @if(!auth()->user()->checkedStockView($stock) && !auth()->user()->notification)
       @php
         $stocksToView = $stock;
         break;
