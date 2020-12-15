@@ -133,7 +133,10 @@
 
     // ПРОВЕРКА ЧТО БЫ ОТКРЫТЬ ОКНО АКЦИЙ
     @if(isset($stocksToView))
-      $('#stock').modal('toggle')
+      setTimeout(() => {
+        $('#stock').modal('toggle')
+      }, 10)
+
     @endif
 
     $(document).on('click', 'ul.navbar-nav > li > .dropdown-menu', function (e) {
