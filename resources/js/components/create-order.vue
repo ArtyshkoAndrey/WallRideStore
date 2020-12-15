@@ -255,7 +255,8 @@
               payment_method: this.order.payment_method,
               express_company: this.order.express_company,
               cost_transfer: this.getCostCompany,
-              service: this.order.service
+              service: this.order.service,
+              notification: $('#notification').is(':checked')
             })
               .then((response) => {
                 console.log(response);
@@ -266,7 +267,48 @@
                   });
               })
               .catch(error => {
-
+                if (error.response.status === 422) {
+                  // Код состояния http: 422, что указывает на сбой проверки ввода пользователя
+                  var html = '<div>';
+                  _.each(error.response.data.errors, function (errors) {
+                    _.each(errors, function (error) {
+                      html += error + '<br>';
+                    })
+                  });
+                  html += '</div>';
+                  console.log(html);
+                  if (error.response.data.errors.email) {
+                    swal({
+                      text: 'Пользователь с таким email уже зарегистрирован, пожалуйста войдите или укажите другой email',
+                      title: 'Пользователь уже существует.',
+                      icon: 'warning',
+                      buttons: {
+                        success:{
+                          text: "Изменить почту",
+                          value: true,
+                          className: "btn-primary"
+                        },
+                        cancle: {
+                          text: "Войти в аккаунт",
+                          value: false,
+                          className: "btn-primary"
+                        }
+                      },
+                    }).then((isConfirm) => {
+                      if (isConfirm) {
+                      } else {
+                        window.location = '/login'
+                      }
+                    })
+                  } else {
+                    swal({content: $(html)[0], icon: 'error'})
+                  }
+                } else if (error.response.status === 403) { // Судя по статусу здесь 403
+                  swal(error.response.data.msg, '', 'error');
+                } else {
+                  // В других случаях система должна зависать
+                  swal('Системная ошибка', '', 'error');
+                }
               })
           }
         } else {
