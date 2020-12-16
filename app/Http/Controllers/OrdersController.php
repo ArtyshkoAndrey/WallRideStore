@@ -117,8 +117,7 @@ class OrdersController extends Controller
     $order->user->notify(new OrderCreateNotification($order));
     if ($payment_method === 'card') {
       ProcessOrderMailer::dispatch($order, now()->addMinutes(10));
-//      TODO: Изменить время addHourse(3)
-      CloseOrder::dispatch($order, now()->addMinute());
+      CloseOrder::dispatch($order, now()->addHours(3));
 
       if ($service === 'Paybox') {
         return $orderService->paybox($order, $user, $order->total_amount + $order->ship_price);
@@ -238,7 +237,6 @@ class OrdersController extends Controller
       return response(['error'], 500);
     $order = Order::find($id);
 
-//      TODO: Изменить время addHourse(3)
     CloseOrder::dispatch($order, now());
 
     return response(['success']);
