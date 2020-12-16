@@ -51,7 +51,7 @@
                       @endforeach
                     </div>
                     <div class="col-12 mt-5">
-                      <button class="btn btn-dark rounded-0" onclick="pay()">Оплатить через CloudPayment</button>
+                      <button class="btn btn-dark rounded-0" onclick="pay()">Оплатить картой</button>
                       <small class="d-block">Если после нажатия кнопки выйдите из оплаты не доконца оплачивая товар. то Ваш заказ отмениться</small>
                     </div>
                   </div>
