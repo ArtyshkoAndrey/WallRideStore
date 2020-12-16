@@ -3,7 +3,7 @@
 
     <div class="section d-block d-md-none mb-2">
       <input type="radio" name="accordion-language" id="section-language"/>
-      <label for="section-1"><span>Язык сайта: {{ isset($_COOKIE['language']) ? $_COOKIE['language'] == 'ru' ? 'RUS' : 'ENG' : 'RUS' }} </span><span class="caret fa fa-angle-right"></span></label>
+      <label for="section-language"><span>Язык сайта: {{ isset($_COOKIE['language']) ? $_COOKIE['language'] == 'ru' ? 'RUS' : 'ENG' : 'RUS' }} </span><span class="caret fa fa-angle-right"></span></label>
       <div class="content">
         <ul>
           <li><span><a href="{{ url('/language/change/ru') }}">Russian</a></span></li>
