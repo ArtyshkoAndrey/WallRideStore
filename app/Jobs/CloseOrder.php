@@ -27,7 +27,7 @@ class CloseOrder implements ShouldQueue
 
   public function handle()
   {
-    if (!isset($this->order->paid_at) || $this->order->ship_status !== Order::SHIP_STATUS_CANCEL) {
+    if (!isset($this->order->paid_at) && $this->order->ship_status !== Order::SHIP_STATUS_CANCEL) {
       (new OrderService)->cancled($this->order);
       $this->order->user->notify(new OrderCancledNotification($this->order));
     }
