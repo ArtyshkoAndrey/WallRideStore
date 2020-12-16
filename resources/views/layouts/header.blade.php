@@ -2,7 +2,7 @@
   <div class="accordion">
 
     <div class="section d-block d-md-none mb-2">
-      <input type="radio" name="accordion-language" id="section-language"/>
+      <input type="radio" name="accordion-1" id="section-language"/>
       <label for="section-language"><span>Язык сайта: {{ isset($_COOKIE['language']) ? $_COOKIE['language'] == 'ru' ? 'RUS' : 'ENG' : 'RUS' }} </span><span class="caret fa fa-angle-right"></span></label>
       <div class="content">
         <ul>
