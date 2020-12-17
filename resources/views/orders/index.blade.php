@@ -56,6 +56,13 @@
                               <th scope="row">{{ $order->no }}</th>
                               <td style="color: {{ $order->ship_status == \App\Models\Order::SHIP_STATUS_PENDING ? '#D0D0D0' : '#04B900'}}">
                                 {{ \App\Models\Order::$shipStatusMap[$order->ship_status] }}
+                                @if($order->ship_status === 'paid')
+                                  <a class="c-red" href="{{ route('orders.cloudpayment', [
+                                  'cost' => $order->total_amount + $order->ship_price,
+                                  'userName' => auth()->user()->name,
+                                  'userEmail' => auth()->user()->email,
+                                  'orderId' => $order->id]) }}">Оплатить</a>
+                                @endif
                               </td>
                               <td>{{ \App\Models\Order::$paymentMethodsMap[$order->payment_method] }}</td>
                               <td>{{ $order->expressCompany ? $order->expressCompany->name : 'Компания больше не доступна' }}</td>
