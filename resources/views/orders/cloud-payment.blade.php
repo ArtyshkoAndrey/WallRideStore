@@ -68,8 +68,8 @@
 @section('scriptsAfterJs')
   <script>
 
-    let widget = new cp.CloudPayments();
     let pay = function () {
+      let widget = new cp.CloudPayments();
       widget.pay('charge', // или 'charge'
         { //options
           publicId: 'pk_4180963d51ddacba2982452f72f00', //id из личного кабинета
@@ -110,24 +110,29 @@
           onFail: function (reason, options) { // fail
             console.log('fail')
             console.log(reason, options)
-            axios.post('/orders/close/' + {{ $order->id}})
-            .then(response => {
-              swal({
-                icon: 'error',
-                title: 'Упс...',
-                text: 'Вы не оплатили заказ, и он бы отменён',
-              })
-                .then(() => {
-                  window.location = "{{ route('orders.index') }}"
-                });
+            swal({
+              icon: 'warning',
+              title: 'Упс...',
+              text: 'Вы не оплатили заказ. Попробуйте ещё раз',
             })
-            .catch(error => {
-              swal({
-                icon: 'error',
-                title: 'Упс...',
-                text: 'Произошла ошибка, обратитесь к администратору',
-              })
-            })
+            {{--axios.post('/orders/close/' + {{ $order->id}})--}}
+            {{--.then(response => {--}}
+            {{--  swal({--}}
+            {{--    icon: 'error',--}}
+            {{--    title: 'Упс...',--}}
+            {{--    text: 'Вы не оплатили заказ. Вы будите ',--}}
+            {{--  })--}}
+            {{--    .then(() => {--}}
+            {{--      window.location = "{{ route('orders.index') }}"--}}
+            {{--    });--}}
+            {{--})--}}
+            {{--.catch(error => {--}}
+            {{--  swal({--}}
+            {{--    icon: 'error',--}}
+            {{--    title: 'Упс...',--}}
+            {{--    text: 'Произошла ошибка, обратитесь к администратору',--}}
+            {{--  })--}}
+            {{--})--}}
           },
           onComplete: function (paymentResult, options) { //Вызывается как только виджет получает от api.cloudpayments ответ с результатом транзакции.
             //например вызов вашей аналитики Facebook Pixel
