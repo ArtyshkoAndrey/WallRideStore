@@ -57,6 +57,9 @@ class NotificationController extends Controller
   }
 
   public function subscribeNotAuth (Request $request) {
+    if ($user = User::whereEmail($request->email)->first()) {
+      return $this->subscribeNotAuthEmail($request);
+    }
     $pass = str_random(10);
     $user = User::create([
       'name' => $request->name,

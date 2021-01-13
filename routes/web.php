@@ -1,9 +1,7 @@
 <?php
 // Для всех
-use App\Jobs\NotificationMail;
 use App\Models\Product;
 use App\Models\User;
-use App\Notifications\InfoUsersNotification;
 use App\Notifications\RegisterPassword;
 use Laravel\Socialite\Facades\Socialite;
 

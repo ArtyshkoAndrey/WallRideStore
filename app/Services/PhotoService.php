@@ -23,7 +23,7 @@ class PhotoService
    */
   public function resize ($file, bool $box = false ,int $width = null, int $height = null) : \Intervention\Image\Image
   {
-    $img = Image::make($file->getRealPath())->encode('webp', 75);
+    $img = Image::make($file->getRealPath())->encode('jpg', 80);
 
     if ($box) {
       $img->fit($width ?? $height ?? 600);
@@ -50,7 +50,7 @@ class PhotoService
   {
 
     try {
-      $name = $name ? $name . '.webp' : pathinfo($file, PATHINFO_FILENAME) . '_' . microtime() . '.webp';
+      $name = $name ? $name . '.jpg' : pathinfo($file, PATHINFO_FILENAME) . '_' . microtime() . '.jpg';
       $this->resize($file, $box, $width, $height)
         ->save($path . '/' . $name);
       return $name;
