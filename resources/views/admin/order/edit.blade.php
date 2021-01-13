@@ -65,7 +65,7 @@
                     <label for="user">Клиент</label>
                   </div>
                   <div class="col-12">
-                    <select name="user" id="user" class="form-control w-auto" required>
+                    <select name="user" id="user" class="form-control" required>
                       @foreach(\App\Models\User::all() as $user)
                         <option value="{{ $user->id }}" {{ $order->user->id === $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
                       @endforeach
@@ -78,7 +78,7 @@
                     <label for="express_no">Трек номер</label>
                   </div>
                   <div class="col-12">
-                    <input type="text" name="express_no" id="express_no" class="form-control" value="{{ $order->ship_data['express_no'] ? $order->ship_data['express_no'] : '' }}">
+                    <input type="text" name="express_no" id="express_no" class="form-control" value="{{$order->ship_data['express_no'] ?? null }}">
                   </div>
                 </div>
               </div>
@@ -179,13 +179,13 @@
               <div class="col-12 px-md-4 px-0 mt-3">
                 <table class="table text-nowrap table-responsive">
                   <thead align="center">
-                    <tr>
-                      <th class="border-top-0"></th>
-                      <th class="border-top-0">Товар</th>
-                      <th class="border-top-0">Цена</th>
-                      <th class="border-top-0">Кол-во</th>
-                      <th class="border-top-0">Итого</th>
-                    </tr>
+                  <tr>
+                    <th class="border-top-0"></th>
+                    <th class="border-top-0">Товар</th>
+                    <th class="border-top-0">Цена</th>
+                    <th class="border-top-0">Кол-во</th>
+                    <th class="border-top-0">Итого</th>
+                  </tr>
                   </thead>
                   <tbody>
                   @foreach($order->items as $item)
