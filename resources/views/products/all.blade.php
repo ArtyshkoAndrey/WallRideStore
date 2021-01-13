@@ -5,9 +5,8 @@
 )
 
 @section('content')
-{{--    {{ dd($products) }}--}}
   <section class="container mt-5 pt-5">
-    <form action="{{ route('products.all') }}" class="mt-3">
+    <form action="{{ route('products.all') }}" method="GET" class="mt-3">
       <div class="row">
         <div class="col-md col-6 mt-4 mt-md-0">
           <select name="order" class="form-control js-example-basic" placeholder="Сортировать">
