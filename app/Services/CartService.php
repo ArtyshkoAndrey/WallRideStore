@@ -68,7 +68,7 @@ class CartService
   {
     $user = Auth::user();
     if ($item = $user->cartItems()->where('product_sku_id', $skuId)->first()) {
-      if ($amount <= 0) {
+      if ($amount < 0) {
         $item->update([
           'amount' => $item->amount - 1
         ]);

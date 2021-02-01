@@ -339,7 +339,7 @@ line-height: 24px;" v-model="count" readonly disabled>
     border-radius: 15px;
     .card-body {
       #event {
-        background-color: #000;
+        background-color: #1D1E23;
         /*box-shadow: 0 4px 20px rgba(247, 7, 7, 0.43);*/
         border-top-left-radius: 15px;
         left: -15px;
@@ -357,7 +357,7 @@ line-height: 24px;" v-model="count" readonly disabled>
         font-size: 14px;
       }
       #btn-add-to-cart {
-        background: #000;
+        background: #1D1E23;
         color: white;
         border-radius: 0 15px 0 15px;
         &:focus {
@@ -380,7 +380,7 @@ line-height: 24px;" v-model="count" readonly disabled>
       }
       .btn-angle {
         background-color: white;
-        color: #000;
+        color: #1D1E23;
         height: 15px;
         display: block;
         border: none !important;

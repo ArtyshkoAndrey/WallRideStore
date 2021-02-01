@@ -144,8 +144,9 @@ class CartController extends Controller
         if ((int) $id === (int) $request->sku_id) {
           if ($request->type === 'minus') {
             unset($ids[$key]);
-            sort($ids);
-            break;
+//            sort($ids);
+            if(((int) $request->amount) !== 0)
+              break;
           } else if ($request->type === 'pluses') {
             array_push($ids, $request->sku_id);
             break;
@@ -154,6 +155,7 @@ class CartController extends Controller
       }
       $cartItems = [];
       $priceAmount = 0;
+//      dump($ids);
       $productsSku = Product::getProducts($ids);
       foreach ($productsSku as $productSku) {
         $ch = false;
