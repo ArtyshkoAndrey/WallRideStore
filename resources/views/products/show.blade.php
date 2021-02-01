@@ -48,19 +48,34 @@
         </div>
       </div>
       <div class="col-md-7 mt-5 mt-md-0">
+        <div class="col-12 px-0">
+          <?php
+            $categoriesProduct = [];
+            $childCategory = $product->categories->last();
+            //            array_unshift($categoriesProduct, $catP);
+            if ($childCategory) {
+              while($catP = $childCategory->parents()->first()) {
+                array_unshift($categoriesProduct, $catP);
+                $childCategory = $catP;
+              }
+            }
+            array_push($categoriesProduct, $product->categories->last());
+          ?>
+          <ol class="breadcrumb bg-transparent mb-0 text-black px-0">
+            <li class="breadcrumb-item px-0"><a href="{{ route('products.all') }}" class="c-red pr-1">Магазин</a></li>
+            @foreach($categoriesProduct as $c)
+              <li class="breadcrumb-item px-0"><a href="{{ route('products.all', ['category' => $c->id]) }}" class="c-red px-1">{{ $c->name }} </a></li>
+            @endforeach
+            <li class="breadcrumb-item active px-0" aria-current="page"><span class="px-1">{{ ucwords(strtolower($product->title)) }}</span></li>
+          </ol>
+        </div>
         <h3 style="line-height: 35px;">{{ $product->title }}</h3>
         <div class="col-12 px-0">
           @foreach($product->brands()->get() as $brand)
             <a href="{{ route('products.all', ['brand' => $brand->id]) }}" class="btn btn-default border-dark rounded-0 mr-2">{{ $brand->name }}</a>
           @endforeach
         </div>
-        <div class="col-12 px-0">
-          <ol class="breadcrumb bg-transparent text-black px-0">
-            <li class="breadcrumb-item px-0"><a href="{{ route('products.all') }}" class="text-dark">Магазин</a></li>
-            <li class="breadcrumb-item active px-0" aria-current="page">{{ ucwords(strtolower($product->title)) }}</li>
-          </ol>
-        </div>
-        <h1 class="font-weight-bold text-uppercase">@{{ product.on_sale && product.price_sale ? $cost(Number(product.price_sale) * currency.ratio)  : $cost(Number(product.price) * currency.ratio) }} @{{ currency.symbol }}</h1>
+        <h1 class="font-weight-bold mt-4 text-uppercase">@{{ product.on_sale && product.price_sale ? $cost(Number(product.price_sale) * currency.ratio)  : $cost(Number(product.price) * currency.ratio) }} @{{ currency.symbol }}</h1>
         <div class="row mt-2">
           <div class="col-12">
             {!! $product->description !!}
