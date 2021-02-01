@@ -78,21 +78,21 @@
         // }
       },
       deleteItem () {
-        swal({
-          title: "\n" + "Вы уверены, что хотите удалить этот товар?",
-          icon: "warning",
-          buttons: ['Отменить', 'Удалить'],
-          dangerMode: true,
-        })
-        .then((willDelete) => {
-          // Пользователь нажимает кнопку ОК, значение willDelete будет истинным, иначе ложным
-          if (!willDelete) {
-            return;
-          }
+        // swal({
+        //   title: "\n" + "Вы уверены, что хотите удалить этот товар?",
+        //   icon: "warning",
+        //   buttons: ['Отменить', 'Удалить'],
+        //   dangerMode: true,
+        // })
+        // .then((willDelete) => {
+        //   // Пользователь нажимает кнопку ОК, значение willDelete будет истинным, иначе ложным
+        //   if (!willDelete) {
+        //     return;
+        //   }
           this.cartItem.amount = 0
           this.type='minus'
           this.postServe();
-        });
+        // });
       }
     }
   }
