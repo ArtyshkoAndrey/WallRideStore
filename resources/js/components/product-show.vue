@@ -46,7 +46,8 @@
       console.log(this.skus)
       this.$nextTick(() => {
         // SLICK
-        $('.slider-for').slick({
+        let $slider = $('.slider-for')
+        $slider.slick({
           slidesToShow: 1,
           slidesToScroll: 1,
           arrows: true,
@@ -57,29 +58,39 @@
           touchMove: false,
           adaptiveHeight: true,
         });
-        new Zooming({
-          onBeforeOpen: () => {
-            $('.slider-for').slick('unslick');
-            $('body').css('overflow','hidden')
-          },
-          onBeforeClose: () => {
-            $('.slider-for').slick({
-              slidesToShow: 1,
-              slidesToScroll: 1,
-              arrows: true,
-              fade: true,
-              dots: true,
-              draggable: false,
-              swipe: false,
-              touchMove: false,
-              adaptiveHeight: true,
-            })
-            $('body').css('overflow','auto')
-          },
-          scaleBase: 1.5,
-          scaleExtra: 2,
-          scrollThreshold: 99999
-        }).listen('.slider-for__item img');
+
+        let $bigSlider = $('.slider-for-big')
+
+        $bigSlider.slick({
+          autoplay:false,
+          autoplaySpeed:10000,
+          speed:800,
+          slidesToShow:1,
+          slidesToScroll:1,
+          pauseOnHover:false,
+          dots:false,
+          pauseOnDotsHover:false,
+          cssEase:'linear',
+          // fade:true,
+          draggable:false,
+          prevArrow:'<button class="PrevArrow"></button>',
+          nextArrow:'<button class="NextArrow"></button>',
+        })
+        $('img.zoom')
+          .css('display', 'block')
+          .parent()
+          .zoom({magnify: 1.2, on: 'grab'});
+
+        $bigSlider.css("opacity", "0").css("z-index", "-1")
+
+        $('.slider-for img').on('click', () => {
+          $bigSlider.css("opacity", "1").css("z-index", "9999")
+          $('body').css('overflow', 'hidden')
+        })
+
+        $slider.on('afterChange', (event, slick, currentSlide) => {
+          $bigSlider.slick('slickGoTo', currentSlide)
+        });
       })
     },
     computed: {
@@ -279,4 +290,69 @@
       outline:0 !important;
     }
   }
+
+  .img-fill{
+    width: 100%;
+    display: block;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    align-self: center;
+  }
+
+  .img-fill img {
+    height: 100%;
+    width: auto;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  *,
+  *:before,
+  *:after {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.04);
+  }
+
+  .blocks-box,
+  .slick-slider {
+    margin: 0;
+    padding: 0!important;
+  }
+
+  .slick-slide {
+    float: left /* If RTL Make This Right */ ;
+    padding: 0;
+  }
+
+  .slider-for-big .item .img-fill{
+    height:100vh;
+    background:#fff;
+  }
+  .slider-for-big .item.slick-active{
+    animation:Slick-FastSwipeIn 1s both;
+  }
+
+  /* ==== Slider Image Transition === */
+  @keyframes Slick-FastSwipeIn{
+    0%{transform:scale(0.8)  perspective(400px);}
+    100%{transform:scale(1) perspective(400px);}
+  }
+
+  .slick-slider{position:relative;display:block;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-touch-callout:none;-khtml-user-select:none;-ms-touch-action:pan-y;touch-action:pan-y;-webkit-tap-highlight-color:transparent}
+  .slick-list{position:relative;display:block;overflow:hidden;margin:0;padding:0}
+  .slick-list:focus{outline:none}.slick-list.dragging{cursor:hand}
+  .slick-slider .slick-track,.slick-slider .slick-list{-webkit-transform:translate3d(0,0,0);-ms-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}
+  .slick-track{position:relative;top:0;left:0;display:block}
+  .slick-track:before,.slick-track:after{display:table;content:''}.slick-track:after{clear:both}
+  .slick-loading .slick-track{visibility:hidden}
+  .slick-slide{display:none;float:left /* If RTL Make This Right */ ;height:100%;min-height:1px}
+  .slick-slide.dragging img{pointer-events:none}
+  .slick-initialized .slick-slide{display:block}
+  .slick-loading .slick-slide{visibility:hidden}
+  .slick-vertical .slick-slide{display:block;height:auto;border:1px solid transparent}
 </style>

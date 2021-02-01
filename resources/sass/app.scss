@@ -341,3 +341,37 @@ select[name="order"], select[name="size"], select[name="brand"], select[name="ca
   max-width: 150px;
   min-width: 100px;
 }
+
+.slider-for-big .NextArrow{
+  position:absolute;
+  top:50%;
+  right:0;
+  width:45px;
+  height:45px;
+  background:rgba(0,0,0,.50);
+  border:0 none;
+  margin-top:-22.5px;
+  text-align:center;
+  font:20px/45px FontAwesome;
+  color:#FFF;
+  z-index:1000;
+}
+
+.slider-for-big .NextArrow:before{content:'\f105';}
+
+.slider-for-big .PrevArrow{
+  position:absolute;
+  top:50%;
+  left:0;
+  width:45px;
+  height:45px;
+  background:rgba(0,0,0,.50);
+  border:0 none;
+  margin-top:-22.5px;
+  text-align:center;
+  font:20px/45px FontAwesome;
+  color:#FFF;
+  z-index:1000;
+}
+
+.slider-for-big .PrevArrow:before{content:'\f104';}

@@ -8,11 +8,11 @@
   <product-show :product="{{ $product }}" :currency="{{ $currency }}" :skus_not_order="{{ $product->skus }}" :favor="{{ $favored ? 'true' : 'false' }}" inline-template>
     <div class="row justify-content-center justify-content-md-around mt-5">
       <div class="col-md-5 col-10">
-        <div class="slider-for d-md-block mx-3 d-none">
+        <div class="slider-for mx-3">
           @if ($product->photos)
             @forelse($product->photos as $ph)
               <div class="slider-for__item">
-                <img src="{{ asset('storage/products/'.$ph->name) }}" alt="{{ $ph->name }}" data-original="{{ asset('storage/products/'.$ph->name) }}">
+                <img src="{{ asset('storage/products/'.$ph->name) }}" alt="{{ $ph->name }}">
               </div>
             @empty
               <div class="slider-for__item">
@@ -26,26 +26,7 @@
           @endif
 
         </div>
-        <div class="slider-for d-md-none d-block">
-          @if ($product->photos)
-            @forelse($product->photos as $ph)
-              <div class="slider-for__item">
-                <img src="{{ asset('storage/products/'.$ph->name) }}" alt="{{ $ph->name }}" data-image="{{ asset('storage/products/'.$ph->name) }}" data-title="{{ucwords(strtolower($product->title))}}" data-caption="{{
-                  $product->brands()->count() > 0 && $product->categories()->count() > 0 ? $product->brands()->first()->name . ' - ' . $product->categories()->first()->name : ''
-                }}" class="demo-image"/>
-              </div>
-            @empty
-              <div class="slider-for__item">
-                <img src="https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png" alt="error" />
-              </div>
-            @endforelse
-          @else
-            <div class="slider-for__item">
-              <img src="https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png" alt="error" />
-            </div>
-          @endif
 
-        </div>
       </div>
       <div class="col-md-7 mt-5 mt-md-0">
         <div class="col-12 px-0">
@@ -115,7 +96,34 @@
           </div>
         </div>
       </div>
+
+      <div class="slider-for-big position-absolute" style="top: 0; left: 0; width: 100vw; height: 100vh">
+        @if ($product->photos)
+          @forelse($product->photos as $ph)
+            <div class="item">
+              <div class="img-fill">
+                <img src="{{ asset('storage/products/'.$ph->name) }}" class="zoom" alt="{{ $ph->name }}">
+              </div>
+            </div>
+          @empty
+            <div class="item">
+              <div class="img-fill">
+                <img class="zoom" src="https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png" alt="error" />
+              </div>
+            </div>
+          @endforelse
+        @else
+          <div class="item">
+            <div class="img-fill">
+              <img class="zoom" src="https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png" alt="error" />
+            </div>
+          </div>
+        @endif
+
+      </div>
+
     </div>
+
   </product-show>
 </section>
 <section class="container mb-5">
