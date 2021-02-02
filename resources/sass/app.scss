@@ -2,6 +2,7 @@
 @import "fonts";
 @import 'variables';
 @import "~select2/src/scss/core";
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap');
 
 // Bootstrap
 
@@ -57,8 +58,8 @@ body {
     color: white;
     text-decoration: none;
     padding: 10px 20px;
-    background-color: #000;
-    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.12);
+    background-color: $custom-black;
+    box-shadow: 0 4px 40px $custom-black;
   }
   input:focus, button:focus{
     outline:none !important;
@@ -90,7 +91,7 @@ body {
 }
 
 .bg-black {
-  background: #000;
+  background: $custom-black;
 }
 
 .company-item {
@@ -255,11 +256,14 @@ select[name="order"], select[name="size"], select[name="brand"], select[name="ca
     }
   }
 }
+.bg-dark {
+  background-color: $custom-black !important;
+}
 .btn-white {
   background: #F0F0F0;
 }
 .btn-white.active {
-  background: #000;
+  background: $custom-black;
   color: white;
 }
 
@@ -336,4 +340,55 @@ select[name="order"], select[name="size"], select[name="brand"], select[name="ca
   white-space: normal;
   max-width: 150px;
   min-width: 100px;
+}
+
+.slider-for-big .NextArrow{
+  position:absolute;
+  top:50%;
+  right:0;
+  width:45px;
+  height:45px;
+  background:rgba(0,0,0,.50);
+  border:0 none;
+  margin-top:-22.5px;
+  text-align:center;
+  font:20px/45px 'Font Awesome 5 Pro';
+  font-weight: 400;
+  color:#FFF;
+  z-index:1000;
+}
+
+.slider-for-big .NextArrow:before{content:'\f061';}
+
+.slider-for-big .PrevArrow{
+  position:absolute;
+  top:50%;
+  left:0;
+  width:45px;
+  height:45px;
+  background:rgba(0,0,0,.50);
+  border:0 none;
+  margin-top:-22.5px;
+  text-align:center;
+  font:20px/45px 'Font Awesome 5 Pro';
+  color:#FFF;
+  font-weight: 400;
+  z-index:1000;
+}
+
+.slider-for-big .PrevArrow:before{content:'\f060';}
+
+.PrevArrow:active, .PrevArrow:focus, .NextArrow:active, .NextArrow:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.slider-for-big .slick-active .item img{
+  animation:Slick-FastSwipeIn 1s both;
+}
+
+/* ==== Slider Image Transition === */
+@keyframes Slick-FastSwipeIn{
+  0%{transform:scale(0.5)  perspective(400px);}
+  100%{transform:scale(1) perspective(400px);}
 }

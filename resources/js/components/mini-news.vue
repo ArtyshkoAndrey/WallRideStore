@@ -76,7 +76,7 @@
       color: black;
     }
     &.active {
-      background: #000000;
+      background: #1D1E23;
       color: white!important;
       a {
         color: white;

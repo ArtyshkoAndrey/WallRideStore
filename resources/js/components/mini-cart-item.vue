@@ -34,12 +34,12 @@
             console.log(response.data);
             let data = response.data;
             console.log(data.cartItems)
-            this.$parent.cartItems = data.cartItems
-            this.$parent.priceAmount = data.priceAmount
-            this.$parent.amount = data.amount
-            if (response.data.ids) {
+            this.$root.cartItems = data.cartItems
+            this.$root.priceAmount = data.priceAmount
+            this.$root.amount = data.amount
+            // if (response.data.ids) {
+              console.log('ids:', response.data.ids)
               $.cookie("products", response.data.ids, {expires: 7, path: '/'});
-            }
             $('#amount').text(data.amount + ' шт.')
             $('#priceAmount').text((data.priceAmount * this.currency.ratio).toFixed(0) + ' ' + this.currency.symbol)
           }, function (error) { // Запрос не смог выполнить этот обратный вызов
@@ -78,26 +78,21 @@
         // }
       },
       deleteItem () {
-        swal({
-          title: "\n" + "Вы уверены, что хотите удалить этот товар?",
-          icon: "warning",
-          buttons: ['Отменить', 'Удалить'],
-          dangerMode: true,
-        })
-        .then((willDelete) => {
-          // Пользователь нажимает кнопку ОК, значение willDelete будет истинным, иначе ложным
-          if (!willDelete) {
-            return;
-          }
-          axios.delete('/cart/' + this.id)
-          .then((response) => {
-            if (response.data.ids === '' || response.data.ids) {
-              console.log(response.data.ids)
-              $.cookie("products", response.data.ids, {expires: 7, path: '/'});
-            }
-            location.reload();
-          })
-        });
+        // swal({
+        //   title: "\n" + "Вы уверены, что хотите удалить этот товар?",
+        //   icon: "warning",
+        //   buttons: ['Отменить', 'Удалить'],
+        //   dangerMode: true,
+        // })
+        // .then((willDelete) => {
+        //   // Пользователь нажимает кнопку ОК, значение willDelete будет истинным, иначе ложным
+        //   if (!willDelete) {
+        //     return;
+        //   }
+          this.cartItem.amount = 0
+          this.type='minus'
+          this.postServe();
+        // });
       }
     }
   }

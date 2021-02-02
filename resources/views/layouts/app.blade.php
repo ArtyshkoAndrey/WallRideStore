@@ -143,6 +143,10 @@
       e.stopPropagation();
     });
 
+    $(document).on('click', '.dropdown-menu btn', function (e) {
+      e.stopPropagation();
+    });
+
     $('#firstNav').on('show.bs.dropdown', function () {
       setTimeout(() => {checkOpenCart()}, 100)
     })

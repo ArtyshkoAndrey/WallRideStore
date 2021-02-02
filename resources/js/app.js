@@ -1,6 +1,7 @@
 require('./bootstrap');
 window.Vue = require('vue');
 import kebabCase from 'lodash/kebabCase'
+require('jquery-zoom');
 
 const longpress = require('vue-long-press-directive');
 

@@ -128,7 +128,7 @@
         </div>
       </li>
       <li class="nav-item d-none d-lg-block position-absolute" style="display: flex; left: calc( 50vw  - 25px )">
-        <a href="{{ route('root') }}"><img src="{{ asset('public/images/logo.png') }}" height="45" alt=""></a>
+        <a href="{{ route('root') }}"><img src="{{ asset('public/images/logo-header.svg') }}" height="45" alt=""></a>
       </li>
       <li class="nav-item mr-2 d-none ml-auto" style="display: flex;">
         <form action="{{ route('products.search') }}" id="big-search" class="form-inline w-100">
@@ -275,7 +275,7 @@
                 <div class="col-12">
                   <hr>
                 </div>
-                <div class="col-12">
+                <div class="col-12 mb-5 mb-md-0">
                   <a href="{{ route('products.all', ['category' => $cat->id]) }}" class="btn btn-dark rounded-0">Просмотреть все товары</a>
                 </div>
               </div>
@@ -339,7 +339,7 @@
                 <div class="col-12">
                   <hr>
                 </div>
-                <div class="col-12">
+                <div class="col-12 mb-5 mb-md-0">
                   <a href="{{ route('products.all') }}" class="btn btn-dark rounded-0">Просмотреть все товары</a>
                 </div>
               </div>
