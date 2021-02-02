@@ -98,7 +98,7 @@
         });
         $('#close-big-slider').on('click', () => {
           $('#wrapper-big-slider').css("opacity", "0").css("z-index", "-1")
-          $('body').css('overflow', 'auto')
+          $('body').css('overflow-y', 'auto')
         })
       })
     },
