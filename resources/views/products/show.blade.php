@@ -97,30 +97,35 @@
         </div>
       </div>
 
-      <div class="slider-for-big position-absolute" style="top: 0; left: 0; width: 100vw; height: 100vh">
-        @if ($product->photos)
-          @forelse($product->photos as $ph)
-            <div class="item">
-              <div class="img-fill">
-                <img src="{{ asset('storage/products/'.$ph->name) }}" class="zoom" alt="{{ $ph->name }}">
+      <div id="wrapper-big-slider" style="top: 0; left: 0; width: 100vw; height: 100vh; position: absolute; opacity: 0">
+        <button id="close-big-slider" class="btn rounded-circle position-absolute text-black" style="right: 10px; top: 10px; z-index: 1000"><i class="far fa-times h1"></i></button>
+        <div class="slider-for-big">
+
+          @if ($product->photos)
+            @forelse($product->photos as $ph)
+              <div class="item">
+                <div class="img-fill">
+                  <img src="{{ asset('storage/products/'.$ph->name) }}" class="zoom" alt="{{ $ph->name }}">
+                </div>
               </div>
-            </div>
-          @empty
+            @empty
+              <div class="item">
+                <div class="img-fill">
+                  <img class="zoom" src="https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png" alt="error" />
+                </div>
+              </div>
+            @endforelse
+          @else
             <div class="item">
               <div class="img-fill">
                 <img class="zoom" src="https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png" alt="error" />
               </div>
             </div>
-          @endforelse
-        @else
-          <div class="item">
-            <div class="img-fill">
-              <img class="zoom" src="https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png" alt="error" />
-            </div>
-          </div>
-        @endif
+          @endif
 
+        </div>
       </div>
+
 
     </div>
 

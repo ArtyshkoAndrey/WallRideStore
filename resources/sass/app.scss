@@ -352,12 +352,13 @@ select[name="order"], select[name="size"], select[name="brand"], select[name="ca
   border:0 none;
   margin-top:-22.5px;
   text-align:center;
-  font:20px/45px FontAwesome;
+  font:20px/45px 'Font Awesome 5 Pro';
+  font-weight: 400;
   color:#FFF;
   z-index:1000;
 }
 
-.slider-for-big .NextArrow:before{content:'\f105';}
+.slider-for-big .NextArrow:before{content:'\f061';}
 
 .slider-for-big .PrevArrow{
   position:absolute;
@@ -369,9 +370,25 @@ select[name="order"], select[name="size"], select[name="brand"], select[name="ca
   border:0 none;
   margin-top:-22.5px;
   text-align:center;
-  font:20px/45px FontAwesome;
+  font:20px/45px 'Font Awesome 5 Pro';
   color:#FFF;
+  font-weight: 400;
   z-index:1000;
 }
 
-.slider-for-big .PrevArrow:before{content:'\f104';}
+.slider-for-big .PrevArrow:before{content:'\f060';}
+
+.PrevArrow:active, .PrevArrow:focus, .NextArrow:active, .NextArrow:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.slider-for-big .slick-active .item img{
+  animation:Slick-FastSwipeIn 1s both;
+}
+
+/* ==== Slider Image Transition === */
+@keyframes Slick-FastSwipeIn{
+  0%{transform:scale(0.5)  perspective(400px);}
+  100%{transform:scale(1) perspective(400px);}
+}
