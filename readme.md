@@ -1,73 +1,16 @@
-# WallRidestore Online Store
+<!--suppress ALL -->
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
-## Last update 15.11.2020
-* Added class PhotoService
-* Refactor code in Admin\ProductController
+<p align="center">
+<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
-## About
-
-* Online store for the sale of clothing.
-* Project status: working
-* PHP 7.3.9 support
-* MySQL 5.7 support
-* Laravel 6.18
-
-See real examples:
-
-* <https://wallridestore.com/products>
-
-## Table of contents
-
-> * [WallRidestore Online Store](#wallRidestore-online-store)
->   * [About](#about)
->   * [Table of contents](#table-of-contents)
->   * [Installation](#installation)
->   * [Usage](#usage)
->     * [Screenshots](#screenshots)
->   * [Code](#code)
->     * [Content](#content)
->     * [Build](#build)
->   * [Resources (Documentation and other links)](#resources-documentation-and-other-links)
->   * [License](#license)
-
-## Installation
-
-Sample:
-
-* From the Marketplace: install [OpenServer](https://ospanel.io/).
-* From the command line: `composer install`
-* From the command line: `php artisan 
-* Import data of db: `Project/public/db.sql`
-
-## Usage
-After some manipulations with the installation of the project, you need to click on the link to the `localhost:8000` store itself.
-By the link `/admin` contains the administrative panel. The panel is a multiple functional tabbed into me. IMPORTANT: without the permissions prescribed in the database, you will not be able to enter the administrative panel
-
-### Screenshots
-##### TODO
+## Информация
+ - Перед комитами, проверять на pull
+ - В консоле прописать `php artisan migrate:fresh`
+ - В консоле прописать `php artisan db:seed`
 
 
-## Code
-
-[![Build Status](https://camo.githubusercontent.com/a9c21aed014621d8a6c93cf7ebea1a106b83ebf5/687474703a2f2f696d672e736869656c64732e696f2f62616467652f6275696c642d70617373696e672d627269676874677265656e2e737667)](https://github.com/ArtyshkoAndrey/WallRidestore_laravel_shop)
-[![Build Status](https://camo.githubusercontent.com/890acbdcb87868b382af9a4b1fac507b9659d9bf/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f6c6963656e73652d4d49542d626c75652e737667)](https://github.com/ArtyshkoAndrey/WallRidestore_laravel_shop)
-
-### Content
-
-Vue, Laravel, Laravel-admin, Bootstrap, Admin-LTE, jQuery
-
-### Build
-
-    composer install
-
-Build options:
-
-* NaN
-
-## Resources (Documentation and other links)
-1. [Laravel](https://laravel.com/docs/5.7/releases)
-2. [laravel-shop](https://github.com/summerblue/laravel-shop/tree/L05_5.7)
-
-## License
-
-[MIT](https://opensource.org/licenses/MIT)

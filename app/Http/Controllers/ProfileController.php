@@ -1,171 +1,86 @@
 <?php
+/*
+ * Copyright (c) 2021. Данный файл является интелектуальной собственостью Fulliton.
+ * Я буду рад если вы будите вносить улучшения, всегда жду ваших пул реквестов
+ */
 
 namespace App\Http\Controllers;
 
-use App\Models\City;
-use App\Models\Country;
+
 use App\Models\User;
-use App\Models\UserAddress;
-use Illuminate\Contracts\View\Factory;
+use File;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Models\Currency;
-use Illuminate\Http\Response;
-use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\View\View;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class ProfileController extends Controller
 {
-  /**
-  * Display a listing of the resource.
-  *
-  * @return Factory|View
-  */
-  public function index()
+
+  public function index ()
   {
-    $address = UserAddress::where('user_id', auth()->id())->first();
-    $currencies = Currency::all();
-    return view('profile.index', compact('address', 'currencies'));
+    return view('user.profile.index');
   }
 
   /**
-   * Show the form for creating a new resource.
-   *
-   * @return void
-   */
-  public function create()
-  {
-      //
-  }
-
-  /**
-   * Store a newly created resource in storage.
-   *
    * @param Request $request
-   * @return void
+   * @return RedirectResponse
    */
-  public function store(Request $request)
+  public function data (Request $request): RedirectResponse
   {
-      //
+    $request->validate([
+      'currency'  => 'required|exists:currencies,id',
+      'name'      => 'required|string',
+      'phone'     => 'required|string',
+      'email'     => 'required|unique:users,email,' . auth()->user()->id,
+      'address'   => 'required|string',
+      'country'   => 'required|exists:countries,id',
+      'city'      => 'required|exists:cities,id'
+
+    ]);
+    $user = User::find(auth()->user()->id);
+    $user->update($request->all());
+    $user->currency()
+      ->associate($request->currency);
+    $user->city()
+      ->associate($request->city);
+    $user->country()
+      ->associate($request->country);
+    $user->save();
+
+    return redirect()->route('profile.index')->with('success', ['Данные профиля обновились']);
   }
 
-  /**
-   * Display the specified resource.
-   *
-   * @param int $id
-   * @return void
-   */
-  public function show($id)
+  public function photo (Request $request): RedirectResponse
   {
-      //
-  }
+    $user = auth()->user();
+    $image = $request->file('photo');
 
-  /**
-   * Show the form for editing the specified resource.
-   *
-   * @param int $id
-   * @return void
-   */
-  public function edit($id)
-  {
-      //
-  }
+    $imageName = time().'.'.$image->getClientOriginalExtension();
 
-  /**
-   * Update the specified resource in storage.
-   *
-   * @param Request $request
-   * @param  int  $id
-   * @return RedirectResponse|Redirector
-   */
-  public function update(Request $request, $id)
-  {
-    $user = User::find($id);
-    if ($request->metadata === 'address') {
-      if ($user->email != $request->email) {
-        $request->validate([
-          'country' => 'required|exists:countries,id',
-          'city' => 'required|exists:cities,id',
-          'street' => 'required|max:255',
-          'contact_phone' => 'required|max:255',
-          'currency' => 'required',
-          'name' => 'required',
-          'email' => 'required', 'string', 'email', 'max:255', 'unique:users'
-        ]);
-      } else {
-        $request->validate([
-          'country' => 'required|exists:countries,id',
-          'city' => 'required|exists:cities,id',
-          'street' => 'required|max:255',
-          'contact_phone' => 'required|max:255',
-          'currency' => 'required',
-          'name' => 'required'
-        ]);
-      }
-      if ($user->address == null) {
-        $address = new UserAddress();
-        $address['street'] = $request->street;
-        $address['contact_phone'] = $request->contact_phone;
-        $currency = Currency::find($request->currency);
-        $address->currency()->associate($currency);
-        $address->city()->associate(City::find($request->city));
-        $address->country()->associate(Country::find($request->country));
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->address()->save($address);
-        $user->save();
-      } else {
-        $user->address->update([
-          'street' => $request->street,
-          'contact_phone' => $request->contact_phone
-        ]);
-        $currency = Currency::find($request->currency);
-        $user->address->currency()->associate($currency);
-        $user->address->city()->associate(City::find($request->city));
-        $user->address->country()->associate(Country::find($request->country));
-        $user->address->save();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->save();
-      }
-      return redirect()->route('profile.index')->with('status', 'Данные профиля обновлены');
-    } else if ($request->metadata === 'password') {
-      $request->validate([
-        'password' => 'required|confirmed'
-      ]);
-      $user->password = Hash::make($request->password);
-      $user->save();
-      return redirect()->route('profile.index')->with('status', 'Пароль изменён');
-    } else if ($request->metadata === 'photo') {
-      $image = $request->file('photo');
+    $destinationPath = public_path('storage/avatar');
 
-      $imageName = time().'.'.$image->getClientOriginalExtension();
-
-      $destinationPath = public_path('storage/avatar/thumbnail');
-
-      $img = Image::make($image->getRealPath());
-      $img->fit(200)->save($destinationPath . '/' . $imageName);
+    $img = Image::make($image->getRealPath());
+    $img
+      ->fit(200)
+      ->save($destinationPath . '/' . $imageName);
+    if($user->avatar)
       File::delete($destinationPath . '/' . $user->avatar);
 
-      $user->avatar = $imageName;
-      $user->save();
-      return redirect()->route('profile.index')->with('status', 'Фотография обновлена');
-    } else {
-      return redirect()->route('root');
-    }
+    $user->avatar = $imageName;
+    $user->save();
+    return redirect()->route('profile.index')->with('success', ['Фотография обновлена']);
   }
 
-  /**
-   * Remove the specified resource from storage.
-   *
-   * @param int $id
-   * @return void
-   */
-  public function destroy($id)
+  public function password(Request $request): RedirectResponse
   {
-      //
+    $user = auth()->user();
+    $request->validate([
+      'password' => 'required|confirmed'
+    ]);
+    $user->password = Hash::make($request->password);
+    $user->save();
+    return redirect()->route('profile.index')->with('success', ['Пароль изменён']);
   }
+
 }

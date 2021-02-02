@@ -2,48 +2,156 @@
 
 namespace App\Models;
 
-use App\Services\CartService;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
 
+/**
+ * App\Models\Product
+ *
+ * @property int $id
+ * @property string $title
+ * @property string $description
+ * @property bool $on_sale
+ * @property bool $on_new
+ * @property bool $on_top
+ * @property int $sold_count
+ * @property string $price
+ * @property string|null $price_sale
+ * @property string $weight
+ * @property object $meta
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ * @property-read Collection|Brand[] $brands
+ * @property-read int|null $brands_count
+ * @property-read Collection|Category[] $categories
+ * @property-read int|null $categories_count
+ * @property-read Collection|Photo[] $photos
+ * @property-read int|null $photos_count
+ * @property-read Collection|ProductSkus[] $productSkuses
+ * @property-read int|null $product_skuses_count
+ * @property-read Collection|Skus[] $skuses
+ * @property-read int|null $skuses_count
+ * @method static Builder|Product newModelQuery()
+ * @method static Builder|Product newQuery()
+ * @method static \Illuminate\Database\Query\Builder|Product onlyTrashed()
+ * @method static Builder|Product query()
+ * @method static Builder|Product whereCreatedAt($value)
+ * @method static Builder|Product whereDeletedAt($value)
+ * @method static Builder|Product whereDescription($value)
+ * @method static Builder|Product whereId($value)
+ * @method static Builder|Product whereMeta($value)
+ * @method static Builder|Product whereOnNew($value)
+ * @method static Builder|Product whereOnSale($value)
+ * @method static Builder|Product whereOnTop($value)
+ * @method static Builder|Product wherePrice($value)
+ * @method static Builder|Product wherePriceSale($value)
+ * @method static Builder|Product whereSoldCount($value)
+ * @method static Builder|Product whereTitle($value)
+ * @method static Builder|Product whereUpdatedAt($value)
+ * @method static Builder|Product whereWeight($value)
+ * @method static \Illuminate\Database\Query\Builder|Product withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Product withoutTrashed()
+ * @mixin Eloquent
+ * @property string $sex
+ * @property int|null $brand_id
+ * @property int|null $category_id
+ * @property-read \App\Models\Brand|null $brand
+ * @property-read \App\Models\Category|null $category
+ * @property-read Collection|\App\Models\Order[] $orders
+ * @property-read int|null $orders_count
+ * @method static Builder|Product whereBrandId($value)
+ * @method static Builder|Product whereCategoryId($value)
+ * @method static Builder|Product whereSex($value)
+ * @property-read string $thumbnail_jpg
+ * @property-read string $thumbnail_webp
+ */
 class Product extends Model
 {
+  use HasFactory;
   use SoftDeletes;
+
+  /**
+   * The attributes that are mass assignable.
+   *
+   * @var array
+   */
   protected $fillable = [
-    'title', 'description', 'on_sale',
-    'price_sale', 'sold_count', 'price',
-    'meta', 'on_top', 'on_new'
+    'title',
+    'description',
+    'on_sale',
+    'on_new',
+    'on_top',
+    'sold_count',
+    'price',
+    'price_sale',
+    'weight',
+    'meta',
+    'sex'
   ];
+
+  /**
+   * The attributes that should be cast to native types.
+   *
+   * @var array
+   */
   protected $casts = [
     'on_sale' => 'boolean',
-    'on_new'  => 'boolean',
-    'on_top'  => 'boolean',
-    'meta'    => 'object'
+    'on_new' => 'boolean',
+    'on_top' => 'boolean',
+    'meta' => 'object',
   ];
 
-  protected $with  = ['photos', 'promotions', 'skus'];
+//  protected $with  = ['photos', 'promotions', 'skus'];
+
   protected $dates = ['deleted_at'];
 
-  public function skus ()
+  /**
+   * The model's default values for attributes.
+   *
+   * @var array
+   */
+  protected $attributes = [
+    'meta' => '{
+      "description": "",
+      "title": ""
+    }'
+  ];
+
+  protected $appends =[
+    'thumbnail_webp',
+    'thumbnail_jpg'
+  ];
+
+  const SEX_MALE    = 'male';
+  const SEX_FEMALE  = 'female';
+  const SEX_UNISEX  = 'unisex';
+  const SEX_CHILD   = 'child';
+
+  const SEX_MAP = [
+    self::SEX_MALE,
+    self::SEX_FEMALE,
+    self::SEX_UNISEX,
+    self::SEX_CHILD
+  ];
+
+  public static array $sexMap = [
+    self::SEX_UNISEX  => 'Унисекс',
+    self::SEX_FEMALE  => 'Женский',
+    self::SEX_MALE    => 'Мужской',
+    self::SEX_CHILD   => 'Детский'
+  ];
+
+  public function available (): bool
   {
-    return $this->hasMany(ProductSku::class);
-  }
-
-  public function getTop () {
-    $pr = $this->where('on_top', true)->orderBy('created_at', 'desc')->with('skus', 'photos')->whereHas('skus', function($sku) {
-      return $sku->where('stock', '>', '0');
-    })->take(5)->get();
-    if ($pr->count() > 0) {
-      return $pr;
-    }
-    $pr = $this->orderBy('sold_count', 'desc')->with('skus', 'photos')->whereHas('skus', function($sku) {
-      return $sku->where('stock', '>', '0');
-    })->take(5)->get();
-    return $pr;
-  }
-
-  public function available () {
     $counter = 0;
     foreach ($this->skus as $sku) {
       $counter += $sku->stock;
@@ -51,119 +159,63 @@ class Product extends Model
     return (boolean) $counter > 0;
   }
 
-  public function categories() {
-    return $this->belongsToMany(Category::class, 'products_categories', 'product_id', 'category_id');
+  public function category(): BelongsTo
+  {
+    return $this->belongsTo(Category::class, 'category_id', 'id');
   }
 
-  public function brands() {
-    return $this->belongsToMany(Brand::class, 'products_brands', 'product_id', 'brand_id');
+  public function brand(): BelongsTo
+  {
+    return $this->belongsTo(Brand::class, 'brand_id', 'id');
   }
 
-  public function photos() {
+  public function photos(): HasMany
+  {
     return $this->hasMany(Photo::class, 'product_id', 'id');
   }
 
-  public function scopeZeroSkus($query)
+  public function skuses(): BelongsToMany
   {
-    return $query->whereHas('skus', function ($voteQuery) {
-      $voteQuery->where('stock', '=', 0);
-    });
+    return $this->belongsToMany(Skus::class, 'product_skuses', 'product_id', 'skus_id')->withPivot('stock', 'id');
   }
 
-  public function promotions () {
-    return $this->belongsToMany(Promotion::class, 'products_promotions', 'product_id', 'promotion_id');
+  public function productSkuses(): HasMany
+  {
+    return $this->hasMany(ProductSkus::class, 'product_id', 'id');
   }
 
-  public function getAvatar (): string
+  public function orders(): BelongsToMany
   {
-    if (count($this->photos) > 0) {
-      return asset('storage/products/' . $this->photos[0]->name);
+    return $this->belongsToMany(Order::class, 'order_items', 'product_id', 'order_id')->withPivot(['amount']);
+  }
+
+  public function getThumbnailWebpAttribute (): string
+  {
+    if ($this->photos->count() > 0) {
+      return $this->photos->first()->thumbnail_url_webp;
     } else {
-      return asset('images/person.png');
+      return asset('images/product.jpg');
     }
   }
 
-  static function getProducts ($ids)
+  public function getThumbnailJpgAttribute (): string
   {
-    $products   = [];
-    $promotions = [];
-    if (count($ids) > 0 && $ids[0] !== '') {
-      foreach ($ids as $k => $id) {
-        $productSku = ProductSku::with('product', 'skus')->find((int)$id);
-        if (!Auth::check()) {
-          if (!isset($productSku)  || !isset($productSku->product)) {
-            unset($ids[$k]);
-            break;
-          }
-        } else {
-          if(!$productSku || !$productSku->product || $productSku === null) {
-            app(CartService::class)->remove($id);
-            unset($ids[$k]);
-            break;
-          }
-        }
-        array_push($products, $productSku);
-        foreach (Promotion::all() as $pr) {
-          if ($pr->products()->where('product_id', $productSku->product->id)->exists()) {
-            if ($productSku->product->on_sale) {
-              if ($productSku->product->on_sale && $pr->sale_status) {
-                if (isset($promotions[$pr->id])) {
-                  array_push($promotions[$pr->id], $productSku);
-                } else {
-                  $promotions[$pr->id] = [];
-                  array_push($promotions[$pr->id], $productSku);
-                }
-              }
-            } else {
-              if (isset($promotions[$pr->id])) {
-                array_push($promotions[$pr->id], $productSku);
-              } else {
-                $promotions[$pr->id] = [];
-                array_push($promotions[$pr->id], $productSku);
-              }
-            }
-          }
-        }
-      }
-      //    Код для акции где скидка на второй товар.
-      foreach (Promotion::all() as $promotion) {
-        if (isset($promotions[$promotion->id]) && $promotion->status === true) {
-          $p = null;
-          if (($countFromFirst = (int)(count($promotions[$promotion->id]) / $promotion->count_product)) > 0) {
-            while ($countFromFirst > 0) {
-              $minCost = PHP_INT_MAX;
-              foreach ($promotions[$promotion->id] as $productSku) {
-                $price = $productSku->product->on_sale ? (int)$productSku->product->price_sale : (int)$productSku->product->price;
-
-                if ($minCost > $price && !isset($productSku->product->isPromotion)) {
-                  $minCost = $price;
-                  $p       = $productSku;
-                }
-              }
-              for ($i = 0; $i < count($products); $i++) {
-                if ($products[$i] == $p) {
-                  $productSku          = (object) $products[$i]->toArray();
-                  $productSku->product = (object) $productSku->product;
-                  if ($productSku->skus !== null)
-                    $productSku->skus = (object) $productSku->skus;
-
-                  for ($j = 0; $j < count($productSku->product->photos); $j++) {
-                    $productSku->product->photos[$j] = (object) $productSku->product->photos[$j];
-                  }
-                  $productSku->product->price         = (int) $productSku->product->price - (int) $productSku->product->price * (int)$promotion->sale / 100;
-                  $productSku->product->price_sale    = (int) $productSku->product->price_sale - (int) $productSku->product->price_sale * (int)$promotion->sale / 100;
-                  $productSku->product->isPromotion   = true;
-                  $productSku->product->namePromotion = $promotion->name;
-                  $products[$i]                       = $productSku;
-                  break;
-                }
-              }
-              $countFromFirst--;
-            }
-          }
-        }
-      }
+    if ($this->photos->count() > 0) {
+      return $this->photos->first()->thumbnail_url_jpg;
+    } else {
+      return asset('images/product.jpg');
     }
-    return $products;
+  }
+
+  protected static function booted()
+  {
+    parent::boot();
+    static::deleting(function ($product) {
+      if ($product->isForceDeleting()) {
+        foreach ($product->photos as $photo) {
+          $photo->delete();
+        }
+      }
+    });
   }
 }

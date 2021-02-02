@@ -4,76 +4,60 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Models\Category;
-use App\Models\Order;
-use App\Models\ProductSku;
-use App\Models\User;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use App\Models\City;
 use App\Models\Country;
-use App\Models\ExpressCompany;
-use App\Models\ExpressZone;
+use Illuminate\Http\JsonResponse;
+use \Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Services\OrderService;
 
 class ApiController extends Controller {
-
-  public function city ($city, $country = null) {
-    if ($country === null)
-      $cities = City::whereLike('name', $city)->take(20)->get();
-    else
-      $cities = City::whereHas('country', function ($q) use($country) {
-        $q->where('countries.id', $country);
-      })->whereLike('name', $city)->take(20)->get();
-    return ['items' => $cities];
-  }
-
-  public function country ($country) {
-    $countries = Country::whereLike('name', $country)->get();
-    return ['items' => $countries];
-  }
-
-  public function category ($category) {
-    $categories = Category::whereLike('name', $category)->get();
-    return ['items' => $categories];
-  }
-
-  public function brand ($brand) {
-    $brands = Brand::whereLike('name', $brand)->get();
-    return ['items' => $brands];
-  }
-
-  public function companies(Request $request) {
-    $express_companies = ExpressCompany::get();
-    $zones = ExpressZone::with('company')->whereHas('cities', function ($qq) use ($request) {
-      $qq->where('cities.id', $request->city);
-    })->get();
-    $express_companies = $express_companies->toArray();
-    for($i=0;$i<count($express_companies); $i++) {
-      foreach ($zones as $z) {
-        if($z->company->id === $express_companies[$i]['id']) {
-          if ($z->step_cost_array !== null) {
-            $express_companies[$i]['costedTransfer'] = $z->step_cost_array;
-            $express_companies[$i]['step_unlim'] = null;
-            $express_companies[$i]['step_cost_unlim'] = null;
-          } else {
-            $express_companies[$i]['costedTransfer'] = $z->cost;
-            $express_companies[$i]['step_unlim'] = $z->step;
-            $express_companies[$i]['step_cost_unlim'] = $z->cost_step;
-          }
-        }
-      }
-      if (!isset($express_companies[$i]['costedTransfer'])) {
-        $express_companies[$i]['costedTransfer'] = null;
-        $express_companies[$i]['costedTransfer'] = null;
-        $express_companies[$i]['step_unlim'] = null;
-        $express_companies[$i]['step_cost_unlim'] = null;
-      }
+  public function countries (Request $request): JsonResponse
+  {
+    if ($name = $request->get('name', null)) {
+      $countries = Country::where('name', 'like', '%'.$name.'%')->limit(5)->get();
+    } else {
+      $countries = Country::limit(5)->get();
     }
-    return $express_companies;
+    return response()->json(['countries'=> $countries], 200);
   }
 
-  public function checkEmail (Request $request) {
-    return response()->json(['status'=> !!User::whereEmail($request->email)->first()]);
+  public function categories (Request $request): JsonResponse
+  {
+    if ($name = $request->get('name', null)) {
+      $categories = Category::where('name', 'like', '%'.$name.'%')->limit(5)->get();
+    } else {
+      $categories = Category::limit(5)->get();
+    }
+    return response()->json(['categories'=> $categories], 200);
+  }
+
+  public function cities (Request $request): JsonResponse
+  {
+    if ($name = $request->get('name', null)) {
+      $cities = City::where('name', 'like', '%'.$name.'%')->limit(5)->get();
+    } else {
+      $cities = City::limit(5)->get();
+    }
+    return response()->json(['cities'=> $cities], 200);
+  }
+
+  public function brands (Request $request): JsonResponse
+  {
+    $name = $request->get('name', null);
+    if ($name && $name !== '') {
+      $brands = Brand::where('name', 'like', '%'.$name.'%')->limit(5)->get();
+    } else {
+      $brands = Brand::limit(5)->get();
+    }
+    return response()->json(['brands'=> $brands], 200);
+  }
+
+  public function check (): JsonResponse
+  {
+    $data = (object) [
+      'auth' => Auth::check(),
+      'user' => Auth::user()
+    ];
+    return response()->json($data, 200);
   }
 }

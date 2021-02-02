@@ -1,61 +1,65 @@
 @extends('admin.layouts.app')
-@section('title', 'Редактирование атрибута')
+
+@section('title', 'Docku - Редактирова размера $skus->title')
 
 @section('content')
-  <div class="container-fluid pt-5 px-4">
-    <div class="row">
+  <div class="container-fluid mt-20 mb-20">
+    <div class="row row-eq-spacing justify-content-center">
       <div class="col-12">
-        <h2>Атрибуты</h2>
+        <nav aria-label="Breadcrumb navigation example">
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('admin.skus.index') }}">Размеры</a></li>
+            <li class="breadcrumb-item">{{ $skus->category->name . ': ' . $skus->title }}</li>
+          </ul>
+        </nav>
       </div>
-    </div>
-    @include('admin.layouts.menu_production')
-    <div class="row mt-0 pt-0">
-      <div class="card border-0 w-100 rounded-0" style="z-index: 90;box-shadow: 0 18px 19px rgba(0, 0, 0, 0.25)">
-        <div class="card-header">
+
+      <div class="col-12">
+        <div class="card m-0 p-10">
           <div class="row">
-            <div class="col-auto">
-              <a href="{{ url()->previous() }}" class="h4 d-flex align-content-center"><i class="fal fa-long-arrow-left mr-2"></i> Назад</a>
+            <div class="col-md-6">
+              <form action="{{ route('admin.skus.update', $skus) }}" method="POST">
+                @csrf
+                @method('PUT')
+
+                <div class="form-group {{ $errors->has('title') ? 'is-invalid' : '' }}">
+                  <label for="title" class="required">Наименование</label>
+                  <div class="invalid-feedback">
+                    {{ $errors->first('title') }}
+                  </div>
+                  <input type="text" class="form-control" name="title" id="title" value="{{ old('title', $skus->title) }}">
+                </div>
+
+                <div class="form-group {{ $errors->has('weight') ? 'is-invalid' : '' }}">
+                  <label for="weight" class="required">Вес</label>
+                  <div class="invalid-feedback">
+                    {{ $errors->first('weight') }}
+                  </div>
+                  <input type="number" class="form-control" name="weight" id="weight" value="{{ old('weight', $skus->weight) }}">
+                  <div class="form-text font-size-9 border-0">
+                    Если вес будет занятым другим размером, то произойдёт обмен
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+              </form>
+            </div>
+            <div class="col-md-6 pl-md-20 pt-10">
+              <ul>
+                @foreach($skuses as $sk)
+                  <li><a href="{{ route('admin.skus.edit', $sk) }}" class="text-danger">Размер: {{ $sk->title }} <span class="text-white-dm text-dark-lm">Вес: {{ $sk->weight }}</span></a></li>
+                @endforeach
+              </ul>
             </div>
           </div>
-        </div>
-        <div class="card-body">
-          <form action="{{ route('admin.production.attr.update', $sku->id) }}" method="post">
-            @csrf
-            @method('PUT')
-            <div class="row justify-content-end">
-              <div class="col-auto">
-                <button class="btn btn-dark rounded-0 border-0 px-3 py-2" type="submit">Обновить</button>
-              </div>
-            </div>
-            <div class="row mt-3">
-              <div class="col-md-4">
-                <label for="name">Наименование</label>
-                <input type="text" name="title" id="title" class="w-100 px-2 form-control rounded-0 {{ $errors->has('title') ? 'is-invalid' : null }}" value="{{ old('title') ? old('title') : $sku->title }}" required>
-                <span id="name-error" class="error invalid-feedback">{{ $errors->first('title') }}</span>
-              </div>
-              <div class="col-md-4">
-                <label for="skus_category_id">Категория</label>
-                <select name="skus_category_id" id="skus_category_id"  class="w-100 px-2 form-control rounded-0 {{ $errors->has('skus_category_id') ? 'is-invalid' : null }}" required>
-                  @foreach(App\Models\SkusCategory::all() as $sc)
-                    <option value="{{ $sc->id }}" {{ old('skus_category_id', $sku->category->id) === $sc->id ? 'selected' : null }}>{{ $sc->name }}</option>
-                  @endforeach
-                </select>
-                <span id="name-error" class="error invalid-feedback">{{ $errors->first('skus_category_id') }}</span>
-              </div>
-              <div class="col-md-4">
-                <label for="name">Вес (порядок)</label>
-                <input type="number" name="weight" id="weight" class="w-100 px-2 form-control rounded-0 {{ $errors->has('weight') ? 'is-invalid' : null }}" value="{{ old('weight',$sku->weight) }}" required>
-                <span id="name-error" class="error invalid-feedback">{{ $errors->first('weight') }}</span>
-              </div>
-            </div>
-          </form>
         </div>
       </div>
     </div>
   </div>
 @endsection
 
-@section('js')
-  <script !src="">
+
+@section('script')
+  <script>
+
   </script>
 @endsection

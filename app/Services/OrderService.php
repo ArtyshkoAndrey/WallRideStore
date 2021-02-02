@@ -1,218 +1,77 @@
 <?php
 
+
 namespace App\Services;
 
-use App\Models\City;
-use App\Models\Country;
-use App\Models\Currency;
-use App\Models\Pay;
-use App\Models\Product;
-use App\Models\Skus;
-use App\Models\User;
-use App\Models\Order;
-use App\Models\ProductSku;
-use App\Exceptions\InvalidRequestException;
-use App\Notifications\OrderCancledNotification;
+
 use App\Models\CouponCode;
-use App\Exceptions\CouponCodeUnavailableException;
-use DB;
-use Paybox\Pay\Facade as Paybox;
-use PayPal\Rest\ApiContext;
-use PayPal\Auth\OAuthTokenCredential;
-use PayPal\Api\Payer;
-use PayPal\Api\Amount;
-use PayPal\Api\Transaction;
-use PayPal\Api\RedirectUrls;
-use PayPal\Api\Payment;
-use Redirect;
-use URL;
+use App\Models\Order;
+use App\Models\Product;
+use App\Models\ProductSkus;
+use App\Models\User;
+use Carbon\Carbon;
 
 class OrderService
 {
-  public function store(User $user, $address, $items, $payment_method, $express_company, $cost_transfer, CouponCode $coupon = null)
+  public function store(User $user, array $items, string $method_pay, array $transfer, string $price, string $sale, string $code = null)
   {
-    // 如果传入了优惠券，则先检查是否可用
-    if ($coupon) {
-      $coupon->checkAvailable();
-    }
-    // 开启一个数据库事务
-    return DB::transaction(function () use ($user, $address, $items, $coupon, $payment_method, $express_company, $cost_transfer) {
+
+    return \DB::transaction(function () use ($user, $items, $method_pay, $transfer, $price, $sale, $code) {
 
       $order   = new Order([
         'address'      => [
-            'address'       => ''.Country::find($address['country'])->name.','.City::find($address['city'])->name.','. $address['street'],
-            'contact_name'  => $address['contact_name'],
-            'contact_phone' => $address['phone'],
+          'address'       => $user->full_Address,
+          'contact_name'  => $user->name,
+          'contact_phone' => $user->phone,
         ],
-        'total_amount' => 0,
-        'id_express_company' => $express_company['id'],
-        'payment_method' => $payment_method,
-        'ship_price' => $cost_transfer
+        'price' => $price,
+        'transfer' => $transfer['name'],
+        'payment_method' => $method_pay,
+        'ship_price' => $transfer['price'],
+        'paid_at' => $method_pay === Order::PAYMENT_METHODS_CASH ? Carbon::now() : null,
+        'sale' => $sale,
+        'ship_status' => $method_pay === Order::PAYMENT_METHODS_CARD ? Order::SHIP_STATUS_PAID : Order::SHIP_STATUS_PENDING
       ]);
       $order->user()->associate($user);
+      $order->couponCode()->associate(CouponCode::firstWhere('code', $code));
       $order->save();
 
-      $ids = array();
-      foreach ($items as $data) {
-        for($i = 0; $i < $data['amount']; $i++) {
-          array_push($ids, $data['productSku']['id']);
-        }
-      }
-      $productsSku = Product::getProducts($ids);
-      $priceAmount = 0;
-      foreach ($productsSku as $k => $productSku) {
-        $priceAmount += $productSku->product->on_sale ? (int)$productSku->product->price_sale : (int)$productSku->product->price;
-      }
-      foreach ($items as $data) {
-        $sku = ProductSku::find($data['productSku']['id']);
-        $item = $order->items()->make([
-          'amount' => $data['amount'],
-          'price' => $sku->product->on_sale ? $sku->product->price_sale : $sku->product->price,
+      foreach ($items as $item) {
+        $orderItem = $order->items()->make([
+          'price' => $item['on_sale'] ? $item['price_sale'] : $item['price'],
+          'amount' => $item['item']['amount']
         ]);
-        $item->product()->associate($sku->product_id);
-        if (isset($sku->skus->title)) {
-          $item->product_sku = $sku->skus->title;
-        } else {
-          $item->product_sku = 'One Size';
-        }
-        $item->save();
-        if ($sku->decreaseStock($data['amount']) <= 0) {
-          throw new InvalidRequestException('Товар распродан');
-        }
-      }
-      $totalAmount = $priceAmount;
-      if ($coupon) {
-        try {
-          $coupon->checkAvailable($priceAmount);
-        } catch (\Exception $e) {
-          $this->cancled($order);
-        }
+        $ps = ProductSkus::find($item['item']['id']);
+        $ps->stock = $ps->stock - $item['item']['amount'];
+        $ps->save();
+        $orderItem->product()->associate($item['id']);
+        $orderItem->skus()->associate($item['skus']['skus']['id']);
+        $orderItem->save();
 
-        $totalAmount = $coupon->getAdjustedPrice($items);
-
-        $order->couponCode()->associate($coupon);
-        if ($coupon->changeUsed() <= 0) {
-          throw new CouponCodeUnavailableException('该优惠券已被兑完');
+        $pss = ProductSkus::where('product_id', $item['id'])->get();
+        if($pss->pluck('stock')->sum() < 1) {
+          Product::find($item['id'])->delete();
         }
       }
 
-      $order->update(['total_amount' => $totalAmount]);
-
-      app(CartService::class)->removeAll();
       return $order;
     });
   }
 
-  public function cancled(Order $order) {
-//      Order::SHIP_STATUS_CANCEL
+  public function canceled (Order $order) {
+    foreach ($order->items as $orderItem) {
+      if(($product = $orderItem->product)->trashed()) {
+        $product->restore();
+      }
+      $ps = ProductSkus::where('product_id', $orderItem->product->id)
+        ->where('skus_id', $orderItem->skus->id)
+        ->first();
+      if($ps) {
+        $ps->stock = $ps->stock + $orderItem->amount;
+        $ps->save();
+      }
+    }
     $order->ship_status = Order::SHIP_STATUS_CANCEL;
     $order->save();
-    foreach ($order->items as $item) {
-      if (Product::find($item->product->id)) {
-        $sku = ProductSku::where('product_id', $item->product->id);
-        if($sku->count() === 1) {
-          $sku = $sku->first();
-          $sku->addStock($item->amount);
-        } else if ($sku->count() > 1) {
-          $sku = $sku->whereHas('skus', function ($q) use ($item) {
-            $q->where('skuses.title', $item->product_sku);
-          })->first();
-          if ($sku) {
-            $sku->addStock($item->amount);
-          } else {
-            $sku        = new ProductSku();
-            $sku->stock = $item->amount;
-            $sku->product()->associate($item->product->id);
-            $sku->skus()->associate(Skus::where('title', $item->product_sku)->first());
-            $sku->save();
-          }
-
-        } else {
-          throw new \Exception('Ошибка в размерах');
-        }
-      }
-    }
   }
-
-  public function paybox ($order, $user, $cost) {
-    $p = Pay::first();
-    $paybox = new Paybox();
-    $paybox->merchant->id = $p->pg_merchant_id;
-    $paybox->merchant->secretKey = $p->code;
-    $paybox->order->id = $order->id;
-    $paybox->order->description = $p->pg_description;
-    $paybox->order->amount = $cost;
-    $paybox->config->isTestingMode = (bool) $p->pg_testing_mode;
-    $paybox->customer->userEmail = $user->email;
-    $paybox->customer->id = $user->id;
-    $paybox->config->successUrlMethod = 'GET';
-    $paybox->config->successUrl = route('orders.index');
-    $paybox->config->resultUrl = route('orders.success', $order->id);
-    $paybox->config->requestMethod = 'GET';
-    if ($paybox->init()) {
-      return $paybox->redirectUrl;
-    } else {
-      return response('Ошибка подключения к Paybox', 500);
-    }
-  }
-
-  public function paypal ($order) {
-
-    $currency = Currency::where('short_name', 'USD')->first();
-    /** PayPal api context **/
-    $paypal_conf = config('paypal');
-    $_api_context = new ApiContext(new OAuthTokenCredential(
-        $paypal_conf['client_id'],
-        $paypal_conf['secret'])
-    );
-    $_api_context->setConfig($paypal_conf['settings']);
-    $amountToBePaid = ($order->ship_price + $order->total_amount) * $currency->ratio;
-    $payer = new Payer();
-    $payer->setPaymentMethod('paypal');
-
-    $amount = new Amount();
-    $amount->setCurrency('USD')
-      ->setTotal($amountToBePaid);
-
-    $redirect_urls = new RedirectUrls();
-    /** Укажите обратный URL **/
-    $redirect_urls->setReturnUrl(route('orders.statusPaypal'))
-      ->setCancelUrl(route('orders.statusPaypal'));
-
-    $transaction = new Transaction();
-    $transaction->setAmount($amount)
-      ->setDescription('Оплата заказа в wallridestore.com');
-
-    $payment = new Payment();
-    $payment->setIntent('Sale')
-      ->setPayer($payer)
-      ->setRedirectUrls($redirect_urls)
-      ->setTransactions(array($transaction));
-    try {
-      $payment->create($_api_context);
-    } catch (\PayPal\Exception\PayPalConnectionException $ex) {
-      if (config('app.debug')) {
-        return response('Ошибка подключения к PayPal', 500);
-      } else {
-        return response('Ошибка подключения к PayPal', 500);
-      }
-    }
-
-    foreach ($payment->getLinks() as $link) {
-      if ($link->getRel() == 'approval_url') {
-        $redirect_url = $link->getHref();
-        break;
-      }
-    }
-    /** добавляем ID платежа в сессию **/
-    session(['paypal_payment_id' => $payment->getId()]);
-    session(['order_id' => $order->id]);
-
-    if (isset($redirect_url)) {
-      /** редиректим в paypal **/
-      return $redirect_url;
-    }
-    return 'Ошибка';
-  }
-
 }

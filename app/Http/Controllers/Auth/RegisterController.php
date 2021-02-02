@@ -2,18 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\Country;
-use App\Models\Currency;
-use App\Models\User;
 use App\Http\Controllers\Controller;
-use App\Models\UserAddress;
-use App\Notifications\UserCouponCodeNotification;
-use App\Services\CartService;
-use Illuminate\Support\Facades\Auth;
+use App\Providers\RouteServiceProvider;
+use App\Models\User;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\View;
 
 class RegisterController extends Controller
 {
@@ -35,16 +29,16 @@ class RegisterController extends Controller
    *
    * @var string
    */
-  protected $redirectTo = '/';
-  protected $cartService;
+  protected string $redirectTo = RouteServiceProvider::HOME;
 
   /**
    * Create a new controller instance.
    *
-   * @param CartService $cartService
+   * @return void
    */
-  public function __construct(CartService $cartService) {
-    parent::__construct($cartService);
+  public function __construct()
+  {
+    $this->middleware('guest');
   }
 
   /**
@@ -58,7 +52,7 @@ class RegisterController extends Controller
     return Validator::make($data, [
       'name' => ['required', 'string', 'max:255'],
       'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-      'password' => ['required', 'string', 'min:6', 'confirmed'],
+      'password' => ['required', 'string', 'min:8', 'confirmed'],
     ]);
   }
 
@@ -70,17 +64,15 @@ class RegisterController extends Controller
    */
   protected function create(array $data): User
   {
-    $user = User::create([
-      'name' => $data['name'],
-      'email' => $data['email'],
-      'notification' => isset($data['email_notifications']),
-      'old_notification' => isset($data['email_notifications']),
-      'password' => Hash::make($data['password']),
+    return User::create([
+        'name' => $data['name'],
+        'email' => $data['email'],
+        'password' => Hash::make($data['password']),
     ]);
+  }
 
-    if ($user->notification) {
-      $user->notify(new UserCouponCodeNotification($user));
-    }
-    return $user;
+  public function showRegistrationForm ()
+  {
+    return view('user.auth.register');
   }
 }

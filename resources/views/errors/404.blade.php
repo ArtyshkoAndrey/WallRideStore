@@ -1,65 +1,28 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title>{{__('Not Found')}}</title>
-
-  <!-- Fonts -->
-  <link rel="dns-prefetch" href="//fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-  <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
-  <!-- Styles -->
-  <style>
-    html, body {
-      background-color: #fff;
-      color: #636b6f;
-      font-family: 'Nunito', sans-serif;
-      font-weight: 100;
-      height: 100vh;
-      margin: 0;
-    }
-
-    .full-height {
-      height: 100vh;
-    }
-
-    .flex-center {
-      align-items: center;
-      display: flex;
-      justify-content: center;
-    }
-
-    .position-ref {
-      position: relative;
-    }
-
-    .code {
-      border-right: 2px solid;
-      font-size: 26px;
-      padding: 0 15px 0 15px;
-      text-align: center;
-    }
-
-    .message {
-      font-size: 18px;
-      text-align: center;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+  <title>DOCKU | Резултаты поиска</title>
 </head>
 <body>
-  <div class="container-fluid vh-100">
-    <div class="row justify-content-center vh-100 align-content-center">
-      <div class="code col-12">
-        404 | {{ __('Not Found') }}
-      </div>
-      <div class="message col-12" style="padding: 10px;">
-        <a class="btn btn-dark rounded-0" href="{{ route('root') }}">На главную</a>
+  <section class="container-fluid not-found-page">
+    <div class="row h-100">
+      <div class="col-2 d-none d-md-block"></div>
+      <div class="col-md-6 wrapper">
+        <div>
+          <h1 class="title">Страница<br>не найдена :(</h1>
+          <span class="subtitle">Возможно, вы ошиблись в адресе<br>или страница была перемешена</span>
+          <a href="{{ route('index') }}" class="preview">Вернуться на главную <i class="bx bx-sm bx-run"></i></a>
+        </div>
+        <div class="d-flex justify-content-center justify-content-md-start">
+          <img src="{{ asset('images/not-found-logo.svg') }}" alt="error-image">
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 </body>
 </html>
-

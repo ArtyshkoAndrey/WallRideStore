@@ -3,24 +3,55 @@
 namespace App\Models;
 
 use App\Exceptions\CouponCodeUnavailableException;
-use Carbon\Carbon;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany as BelongsToManyAlias;
-use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Carbon;
 
+/**
+ * App\Models\CouponCode
+ *
+ * @property int $id
+ * @property string $code
+ * @property string $type
+ * @property string $value
+ * @property int $total
+ * @property int $used
+ * @property string $min_amount
+ * @property string $max_amount
+ * @property bool $disabled_other_sales
+ * @property Carbon $not_before
+ * @property Carbon $not_after
+ * @property bool $enabled
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read string $description
+ * @method static Builder|CouponCode newModelQuery()
+ * @method static Builder|CouponCode newQuery()
+ * @method static Builder|CouponCode query()
+ * @method static Builder|CouponCode whereCode($value)
+ * @method static Builder|CouponCode whereCreatedAt($value)
+ * @method static Builder|CouponCode whereDisabledOtherSales($value)
+ * @method static Builder|CouponCode whereEnabled($value)
+ * @method static Builder|CouponCode whereId($value)
+ * @method static Builder|CouponCode whereMaxAmount($value)
+ * @method static Builder|CouponCode whereMinAmount($value)
+ * @method static Builder|CouponCode whereNotAfter($value)
+ * @method static Builder|CouponCode whereNotBefore($value)
+ * @method static Builder|CouponCode whereTotal($value)
+ * @method static Builder|CouponCode whereType($value)
+ * @method static Builder|CouponCode whereUpdatedAt($value)
+ * @method static Builder|CouponCode whereUsed($value)
+ * @method static Builder|CouponCode whereValue($value)
+ * @mixin Eloquent
+ */
 class CouponCode extends Model
 {
-  // Постоянно определяйте поддерживаемые типы купонов
-  const TYPE_FIXED   = 'fixed';
-  const TYPE_PERCENT = 'percent';
-
-  public static $typeMap = [
-    self::TYPE_FIXED   => 'Фиксированная сумма',
-    self::TYPE_PERCENT => 'Процентная',
-  ];
+  use HasFactory;
 
   protected $fillable = [
-    'name',
     'code',
     'type',
     'value',
@@ -28,21 +59,31 @@ class CouponCode extends Model
     'used',
     'min_amount',
     'max_amount',
+    'disabled_other_sales',
     'not_before',
     'not_after',
-    'enabled',
-    'disabled_other_sales',
-    'disabled_other_coupons',
-    'notification'
+    'enabled'
   ];
+
   protected $casts = [
-    'enabled'                => 'boolean',
-    'disabled_other_coupons' => 'boolean',
+    'enabled' => 'boolean',
     'disabled_other_sales'   => 'boolean',
-    'notification'           => 'boolean'
   ];
-  // указывает, что эти два поля являются типами даты
-  protected $dates = ['not_before', 'not_after', ];
+
+  // Постоянно определяйте поддерживаемые типы купонов
+  const TYPE_FIXED   = 'fixed';
+  const TYPE_PERCENT = 'percent';
+
+  const TYPE_MAP = [
+    self::TYPE_FIXED,
+    self::TYPE_PERCENT
+  ];
+
+  public static array $typeMap = [
+    self::TYPE_FIXED   => 'Фиксированная сумма',
+    self::TYPE_PERCENT => 'Процентная',
+  ];
+  protected $dates = ['not_before', 'not_after'];
 
   protected $appends = ['description'];
 
@@ -60,14 +101,18 @@ class CouponCode extends Model
     return $str.'до '.str_replace('.00', '', $this->value) . ' тг. скидка';
   }
 
-  public function checkAvailable ($orderAmount = null)
+  /**
+   * @param int|null $price
+   * @throws CouponCodeUnavailableException
+   */
+  public function checkAvailable (int $price = null)
   {
     if (!$this->enabled) {
       throw new CouponCodeUnavailableException('Купон не существует');
     }
 
     if ($this->total - $this->used <= 0) {
-      throw new CouponCodeUnavailableException('Купон был выкуплен');
+      throw new CouponCodeUnavailableException('Все купоны были истрачены');
     }
 
     if ($this->not_before && $this->not_before->gt(Carbon::now())) {
@@ -78,99 +123,38 @@ class CouponCode extends Model
       throw new CouponCodeUnavailableException('Срок действия этого купона истек');
     }
 
-    if (!is_null($orderAmount) && $orderAmount < $this->min_amount) {
+    if (!is_null($price) && $price < $this->min_amount) {
       throw new CouponCodeUnavailableException('Сумма заказа не соответствует минимальной сумме купона');
     }
   }
 
-  public function getAdjustedPrice ($items): int
+  public function productsEnabled (): BelongsToMany
   {
-    // фиксированная сумма
-    $price = 0;
-//    disabled_other_sales
-//    return (int) number_format($orderAmount * (100 - $this->value) / 100, 2, '.', '');
-    if ($this->type === self::TYPE_PERCENT) {
-      // Чтобы обеспечить надежность системы, нам необходимо сумма заказа не менее 0,01 юаня
-//      return (int) max(0.01, $orderAmount - $this->value);
-      foreach($items as $item) {
-        // Проверка что купон делает скидку на скидочные товары и товар со скидкой
-        if ($item['productSku']['product']['on_sale'] && !$this->disabled_other_sales) {
-          $price += (int) ( (int) $item['productSku']['product']['price_sale'] * (int) $item['amount'] * ((100 - $this->value) / 100) );
-        } else if($item['productSku']['product']['on_sale'] && $this->disabled_other_sales) {
-          $price += (int) $item['productSku']['product']['price_sale'] * (int) $item['amount'];
-        } else {
-          $price += (int) ( (int) $item['productSku']['product']['price'] * (int) $item['amount'] * ((100 - $this->value) / 100) );
-        }
-      }
-      return (int) $price;
-    }
-
-    if ($this->type === self::TYPE_FIXED) {
-      // Чтобы обеспечить надежность системы, нам необходимо сумма заказа не менее 0,01 юаня
-//      return (int) max(0.01, $orderAmount - $this->value);
-      foreach($items as $item) {
-
-        // Проверка что купон делает скидку на скидочные товары и товар со скидкой
-        if ($item['productSku']['product']['on_sale'] && !$this->disabled_other_sales) {
-          $price += max(100 , (int) $item['productSku']['product']['price_sale'] * (int) $item['amount'] - $this->value);
-        } else if($item['productSku']['product']['on_sale'] && $this->disabled_other_sales) {
-          $price += max(100 , (int) $item['productSku']['product']['price_sale'] * (int) $item['amount']);
-        } else {
-          $price += max(100 , (int) $item['productSku']['product']['price'] * (int) $item['amount'] - $this->value);
-        }
-      }
-      return (int) $price;
-    }
+    return $this->belongsToMany(Product::class, 'coupons_products', 'coupon_id', 'product_id');
   }
 
-  public function changeUsed($increase = true): int
+  public function brandsEnabled (): BelongsToMany
   {
-    // Передайте в true, чтобы увеличить использование, иначе уменьшите использование
-    if ($increase) {
-      // Аналогично проверке инвентаря SKU, здесь необходимо проверить, превысило ли текущее использование общее количество
-      return $this->newQuery()->where('id', $this->id)->where('used', '<', $this->total)->increment('used');
-    } else {
-      return $this->decrement('used');
-    }
+    return $this->belongsToMany(Brand::class, 'coupons_brands', 'coupon_id', 'brand_id');
   }
 
-  public static function findAvailableCode ($length = 16): string
+  public function categoriesEnabled (): BelongsToMany
   {
-    do {
-      // Создать случайную строку указанной длины и преобразовать ее в верхний регистр
-      $code = strtoupper(Str::random($length));
-      // Продолжить цикл, если сгенерированный код уже существует
-    } while (self::query()->where('code', $code)->exists());
-    return $code;
+    return $this->belongsToMany(Category::class, 'coupons_categories', 'coupon_id', 'category_id');
   }
 
-  public function productsEnabled (): BelongsToManyAlias
+  public function productsDisabled (): BelongsToMany
   {
-    return $this->belongsToMany('App\Models\Product', 'coupons_products', 'coupon_id', 'product_id');
+    return $this->belongsToMany(Product::class, 'disabled_coupons_products', 'coupon_id', 'product_id');
   }
 
-  public function brandsEnabled (): BelongsToManyAlias
+  public function brandsDisabled (): BelongsToMany
   {
-    return $this->belongsToMany('App\Models\Brand', 'coupons_brands', 'coupon_id', 'brand_id');
+    return $this->belongsToMany(Brand::class, 'disabled_coupons_brands', 'coupon_id', 'brand_id');
   }
 
-  public function categoriesEnabled (): BelongsToManyAlias
+  public function categoriesDisabled(): BelongsToMany
   {
-    return $this->belongsToMany('App\Models\Category', 'coupons_categories', 'coupon_id', 'category_id');
-  }
-
-   public function productsDisabled (): BelongsToManyAlias
-   {
-    return $this->belongsToMany('App\Models\Product', 'disabled_coupons_products', 'coupon_id', 'product_id');
-  }
-
-  public function brandsDisabled (): BelongsToManyAlias
-  {
-    return $this->belongsToMany('App\Models\Brand', 'disabled_coupons_brands', 'coupon_id', 'brand_id');
-  }
-
-  public function categoriesDisabled()
-  {
-    return $this->belongsToMany('App\Models\Category', 'disabled_coupons_categories', 'coupon_id', 'category_id');
+    return $this->belongsToMany(Category::class, 'disabled_coupons_categories', 'coupon_id', 'category_id');
   }
 }

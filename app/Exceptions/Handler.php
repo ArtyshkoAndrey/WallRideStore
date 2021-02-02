@@ -2,11 +2,8 @@
 
 namespace App\Exceptions;
 
-use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Auth\AuthenticationException;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Throwable;
 
 class Handler extends ExceptionHandler
 {
@@ -16,8 +13,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        InvalidRequestException::class,
-        CouponCodeUnavailableException::class,
+        //
     ];
 
     /**
@@ -30,49 +26,15 @@ class Handler extends ExceptionHandler
         'password_confirmation',
     ];
 
-  protected function unauthenticated($request, AuthenticationException $exception){
-    if ($request->expectsJson()) {
-      return response()->json(['error' => 'Unauthenticated.'], 401);
-    }
-
-
-    $guard = array_get($exception->guards(), 0);
-
-    switch ($guard){
-      case 'admin':
-        $login = 'admin.auth.login';
-        break;
-
-      default:
-        $login = 'login';
-        break;
-    }
-
-    return redirect()->guest(route($login));
-
-  }
-
-  /**
-   * Report or log an exception.
-   *
-   * @param Exception $exception
-   * @return void
-   * @throws Exception
-   */
-    public function report(Exception $exception)
-    {
-        parent::report($exception);
-    }
-
     /**
-     * Render an exception into an HTTP response.
+     * Register the exception handling callbacks for the application.
      *
-     * @param  Request  $request
-     * @param  Exception  $exception
-     * @return Response
+     * @return void
      */
-    public function render($request, Exception $exception)
+    public function register()
     {
-        return parent::render($request, $exception);
+        $this->reportable(function (Throwable $e) {
+            //
+        });
     }
 }

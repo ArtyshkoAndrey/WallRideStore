@@ -2,139 +2,116 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Order;
-use App\Models\ProductSku;
-use App\Notifications\OrderEditNotification;
-use App\Services\CartService;
+use App\Notifications\ChangeOrderUser;
+use App\Services\OrderService;
+use Exception;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Carbon;
-use Illuminate\View\View;
+use Illuminate\Http\Response;
+use Swift_TransportException;
 
 class OrderController extends Controller
 {
 
-  public function __construct()
+  protected OrderService $orderService;
+
+  public function __construct(OrderService $orderService)
   {
-//    parent::__construct($cartService);
+    $this->orderService = $orderService;
   }
 
   /**
-   * Display a listing of the resource.
+   * Просмотр всех заказов, так же фильтрация.
    *
    * @param Request $request
-   * @return Factory|View
+   * @return Application|Factory|View|Response
    */
-    public function index(Request $request)
-    {
-      $type = $request->type;
-      $time = $request->time;
-      $search = $request->search;
-      $orders = Order::query()->with('user');
-      if (isset($search)) {
-        $orders = $orders->orWhereHas('user', function($q) use ($search) {
-            $q->where(function($q) use ($search) {
-              $q->where('name', 'LIKE', '%' . $search . '%');
-            });
-          })
-          ->orWhere('no', 'LIKE', '%'.$search.'%')
-          ->orWhere('created_at', 'LIKE', '%'.$search.'%')
-          ->orWhere('ship_data', 'LIKE', '%'.$search.'%');
-      } else {
-        $search = '';
+  public function index(Request $request)
+  {
+    $name = $request->get('user_name');
+    $email = $request->get('user_email');
+    $type = $request->get('type');
+    $no = $request->get('no');
+    $orders = Order::query()->orderBy('id', 'desc');
+    if ($type) {
+      foreach (Order::SHIP_STATUS_MAP as $status) {
+        if ($status === $type)
+          $orders = $orders->whereShipStatus($status);
       }
-      if (isset($type)) {
-        switch ($type) {
-          case Order::SHIP_STATUS_RECEIVED:
-            $orders =$orders->where('ship_status', Order::SHIP_STATUS_RECEIVED);
-            break;
-          case Order::SHIP_STATUS_PENDING:
-            $orders =$orders->where('ship_status', Order::SHIP_STATUS_PENDING);
-            break;
-          case Order::SHIP_STATUS_DELIVERED:
-            $orders =$orders->where('ship_status', Order::SHIP_STATUS_DELIVERED);
-            break;
-          case Order::SHIP_STATUS_PAID:
-            $orders =$orders->where('ship_status', Order::SHIP_STATUS_PAID);
-            break;
-          case Order::SHIP_STATUS_CANCEL:
-            $orders =$orders->where('ship_status', Order::SHIP_STATUS_CANCEL);
-            break;
-        }
-      } else {
-        $type = 'all';
-      }
-      if (isset($time)) {
-        switch ($time) {
-          case 'year':
-            $orders =$orders->where('created_at', '<', Carbon::now())->where('created_at', '>', Carbon::now()->subYear(1));
-            break;
-          case 'month':
-            $orders =$orders->where('created_at', '<', Carbon::now())->where('created_at', '>',  Carbon::now()->subMonth(1));
-            break;
-          case 'week':
-            $orders =$orders->where('created_at', '<', Carbon::now())->where('created_at', '>',  Carbon::now()->subWeek(1));
-            break;
-        }
-      } else {
-        $time = 'all';
-      }
-      $orders = $orders->orderByDesc('created_at')->with('items.product');
-      $orders = $orders->paginate(20);
-      $filters = [
-        'type'  => $type,
-        'time'  => $time,
-        'search'=> $search
-      ];
-
-      return view('admin.order.index', compact('orders', 'type', 'filters'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    if ($no) {
+      $orders = $orders->where('no', 'like', '%' . $no . '%');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    if ($name) {
+      $orders = $orders->whereHas('user', function ($q) use($name) {
+        $q->where('name', 'like', '%' . $name . '%');
+      });
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+    if ($email) {
+      $orders = $orders->whereHas('user', function ($q) use($email) {
+        $q->where('email', 'like', '%' . $email . '%');
+      });
     }
+    $orders = $orders->paginate(10);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Factory|View
-     */
-    public function edit($id)
-    {
-      $order = Order::find($id);
-      return view('admin.order.edit', compact('order'));
-    }
+    $filter = [
+      'user_name'   => $name,
+      'user_email'  => $email,
+      'no'          => $no,
+      'type'        => $type
+    ];
+    $orders->appends($filter);
+    return view('admin.order.index', compact('orders', 'filter'));
+  }
+
+  /**
+   * Форма создания заказа
+   *
+   * @return Response
+   */
+  public function create()
+  {
+      //
+  }
+
+  /**
+   * Store a newly created resource in storage.
+   *
+   * @param Request $request
+   * @return Response
+   */
+  public function store(Request $request)
+  {
+      //
+  }
+
+  /**
+   * Display the specified resource.
+   *
+   * @param int $id
+   * @return Response
+   */
+  public function show(int $id)
+  {
+      //
+  }
+
+  /**
+   * Show the form for editing the specified resource.
+   *
+   * @param int $id
+   * @return Application|Factory|View|Response
+   */
+  public function edit(int $id)
+  {
+    $order = Order::find($id);
+    return view('admin.order.edit', compact('order'));
+  }
 
   /**
    * Update the specified resource in storage.
@@ -142,59 +119,53 @@ class OrderController extends Controller
    * @param Request $request
    * @param int $id
    * @return RedirectResponse
-   * @throws \Exception
    */
-    public function update(Request $request, $id)
-    {
-//      dd($request);
-      $request->validate([
-        'created_at' => 'required|date',
-        'ship_status' => 'required',
-        'user' => 'required|exists:users,id',
-        'express_no' => 'nullable'
-      ]);
-      $order = Order::find($id);
-      if ($order->ship_status !== $request->ship_status) {
-        $order->user->notify(new OrderEditNotification($order, Order::$shipStatusMap[$request->ship_status]));
-      }
-      $order->created_at = Carbon::parse($request->created_at);
-      $order->ship_status = $request->ship_status;
-      $order->ship_data = ['express_no' => $request->express_no];
-      $order->user()->associate($request->user);
-      $order->save();
-      if ($request->ship_status === Order::SHIP_STATUS_CANCEL) {
-        foreach ($order->items as $item) {
-          $sku = ProductSku::where('product_id', $item->product->id);
-          if($sku->count() === 1) {
-            $sku = $sku->first();
-            $sku->addStock($item->amount);
-          } else if ($sku->count() > 1) {
-            $sku = $sku->whereHas('skus', function ($q) use ($item) {
-              $q->where('skuses.title', $item->product_sku);
-            })->first();
-            $sku->addStock($item->amount);
-          } else {
-            throw new \Exception('Ошибка в размерах');
-          }
-        }
-      }
-      return redirect()->route('admin.store.order.index');
+  public function update(Request $request, int $id): RedirectResponse
+  {
+    $request->validate([
+      'ship_status' => 'required|string'
+    ]);
+    $data = $request->all();
+    if (!in_array($data['ship_status'], Order::SHIP_STATUS_MAP)) {
+      return redirect()->back()->withInput($data)->withErrors('Не правильно выбран статус');
+    }
+    $order = Order::find($id);
+    $order->ship_status = $data['ship_status'];
+    if (isset($data['track'])) {
+      $order->ship_data = (object) ['track' => $data['track']];
+    } else {
+      $order->ship_data = (object) [];
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return RedirectResponse
-     */
-  public function destroy($id) {
-    $order = Order::find($id);
-    $order->delete();
-    return redirect()->route('admin.store.order.index');
+    $order->save();
+
+    if ($data['ship_status'] === Order::SHIP_STATUS_CANCEL) {
+      $this->orderService->canceled($order);
+    }
+
+    try {
+      $order->user->notify(new ChangeOrderUser($order));
+    } catch (Swift_TransportException $exception) {
+      $errors = $exception->getMessage();
+    }
+
+
+    return redirect()->route('admin.order.edit', $order)->with('success', ['Заказ успешно обновлён'])->withErrors($errors ?? null);
   }
 
-  public function collectionsDestroy(Request $request) {
-    Order::destroy($request->id);
-    return ['status' => 'success'];
+  /**
+   * Remove the specified resource from storage.
+   *
+   * @param int $id
+   * @return RedirectResponse
+   * @throws Exception
+   */
+  public function destroy(int $id): RedirectResponse
+  {
+    $order = Order::find($id);
+    if ($order->delete()) {
+      return redirect()->route('admin.order.index')->with('success',['Заказ был удалён']);
+    }
+    return redirect()->route('admin.order.index')->withErrors(['Ошибка при удалении, обратитесь к администратору']);
   }
 }

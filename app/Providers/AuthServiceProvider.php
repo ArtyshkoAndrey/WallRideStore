@@ -2,30 +2,29 @@
 
 namespace App\Providers;
 
-use App\Models\Order;
-use App\Models\UserAddress;
-use App\Policies\OrderPolicy;
-use App\Policies\UserAddressPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
-  /**
-   * The policy mappings for the application.
-   *
-   * @var array
-   */
-  protected $policies = [
-    UserAddress::class => UserAddressPolicy::class,
-    Order::class       => OrderPolicy::class,
-  ];
+    /**
+     * The policy mappings for the application.
+     *
+     * @var array
+     */
+    protected $policies = [
+        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+    ];
 
-  /**
-   * Register any authentication / authorization services.
-   *
-   * @return void
-   */
-  public function boot() {
-    $this->registerPolicies();
-  }
+    /**
+     * Register any authentication / authorization services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $this->registerPolicies();
+
+        //
+    }
 }

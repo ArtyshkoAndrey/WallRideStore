@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Notifications\ChangeOrderUser;
 use App\Notifications\OrderCancledNotification;
 use App\Services\OrderService;
 use Carbon\Carbon;
@@ -17,19 +18,21 @@ class CloseOrder implements ShouldQueue
 {
   use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-  protected $order;
+  protected Order $order;
+  protected OrderService $orderService;
 
-  public function __construct(Order $order, Carbon $delay)
+  public function __construct(Order $order, Carbon $delay, OrderService $orderService)
   {
-      $this->order = $order;
-      $this->delay($delay);
+    $this->order = $order;
+    $this->delay($delay);
+    $this->orderService = $orderService;
   }
 
   public function handle()
   {
-    if (!isset($this->order->paid_at) && $this->order->ship_status !== Order::SHIP_STATUS_CANCEL) {
-      (new OrderService)->cancled($this->order);
-      $this->order->user->notify(new OrderCancledNotification($this->order));
+    if (!isset($this->order->paid_at) && $this->order->ship_status === Order::SHIP_STATUS_PAID) {
+      $this->orderService->canceled($this->order);
+      $this->order->user->notify(new ChangeOrderUser($this->order));
     }
   }
 }

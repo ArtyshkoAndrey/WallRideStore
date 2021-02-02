@@ -3,16 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Country;
-use App\Models\Currency;
-use App\Models\UserAddress;
-use App\Services\CartService;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -34,39 +27,20 @@ class LoginController extends Controller
    *
    * @var string
    */
-  protected $redirectTo = '/';
-  protected $cartService;
+  protected $redirectTo = RouteServiceProvider::HOME;
 
   /**
    * Create a new controller instance.
    *
    * @return void
    */
-  public function __construct(CartService $cartService)
+  public function __construct()
   {
-    parent::__construct($cartService);
+    $this->middleware('guest')->except('logout');
   }
 
-  public function login(Request $request)
+  public function showLoginForm()
   {
-    // validate the form data
-    $this->validate($request, [
-      'email' => 'required|email|exists:users,email',
-      'password' => 'required|min:3'
-    ]);
-    if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-
-      // if successful -> redirect forward
-      return redirect()->intended('/');
-    }
-
-    // if unsuccessful -> redirect back
-    return Redirect::back()
-      ->withInput()
-      ->withErrors(
-        [
-          'password' => 'Неверный пароль',
-        ]
-      );
+    return view('user.auth.login');
   }
 }

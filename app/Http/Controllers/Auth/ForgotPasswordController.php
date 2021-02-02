@@ -3,12 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Currency;
-use App\Models\UserAddress;
-use App\Services\CartService;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\View;
+use Illuminate\Http\Request;
 
 class ForgotPasswordController extends Controller
 {
@@ -24,14 +20,9 @@ class ForgotPasswordController extends Controller
   */
 
   use SendsPasswordResetEmails;
-  protected $cartService;
-  /**
-   * Create a new controller instance.
-   *
-   * @return void
-   */
-  public function __construct(CartService $cartService)
+
+  public function showLinkRequestForm ()
   {
-    parent::__construct($cartService);
+    return view('user.auth.passwords.email');
   }
 }

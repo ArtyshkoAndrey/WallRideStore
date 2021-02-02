@@ -1,66 +1,70 @@
 <?php
+/*
+ * Copyright (c) 2021. Данный файл является интелектуальной собственостью Fulliton.
+ * Я буду рад если вы будите вносить улучшения, всегда жду ваших пул реквестов
+ */
 
 namespace App\Services;
-
-use Intervention\Image\Exception\NotWritableException;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\File;
 
-/**
- * Class PhotoService Для работы с фотографиями
- * @package App\Services
- */
+
 class PhotoService
 {
+  protected static array $type = [
+    'jpg',
+    'webp'
+  ];
 
   /**
-   * Измененеие размера фотографии
-   * @param $file
-   * @param int|null $width
-   * @param int|null $height
-   * @param bool $box
-   * @return \Intervention\Image\Image
-   */
-  public function resize ($file, bool $box = false ,int $width = null, int $height = null) : \Intervention\Image\Image
-  {
-    $img = Image::make($file->getRealPath())->encode('jpg', 80);
-
-    if ($box) {
-      $img->fit($width ?? $height ?? 600);
-    } else {
-      $img->resize($width, $height, function ($constraint) {
-        $constraint->aspectRatio();
-        $constraint->upsize();
-      });
-    }
-    return $img;
-  }
-
-  /**
-   * Сохранение фотографии по параметрам
-   * @param $file
+   * @param $image
    * @param string $path
-   * @param bool $box
+   * @param bool $cube
+   * @param int $quality
    * @param int|null $width
    * @param int|null $height
-   * @param string|null $name
    * @return string
    */
-  public function create ($file, string $path, bool $box = false, int $width = null, int $height = null, string $name = null) : string
+  public static function create ($image , string $path, bool $cube, int $quality, int $width = null, int $height = null): string
   {
-
-    try {
-      $name = $name ? $name . '.jpg' : pathinfo($file, PATHINFO_FILENAME) . '_' . microtime() . '.jpg';
-      $this->resize($file, $box, $width, $height)
-        ->save($path . '/' . $name);
-      return $name;
-    } catch (NotWritableException $e) {
-      return redirect()->back()->withErrors(['Ошибка сохранения фотографии']);
+    $file = $image->getClientOriginalName();
+    $destinationPath = public_path($path);
+    $originalName = pathinfo($file, PATHINFO_FILENAME);
+    foreach (PhotoService::$type as $type) {
+      $name = $originalName . '.' . $type;
+      $img = Image::make($image->getRealPath())->encode($type, $quality);
+      if ($cube) {
+        $img->fit($width, $width, function ($constraint) {
+          $constraint->aspectRatio();
+          $constraint->upsize();
+        });
+      } else {
+        $img->resize($width, $height, function ($constraint) {
+          $constraint->aspectRatio();
+          $constraint->upsize();
+        });
+      }
+      $img->save($destinationPath.'/'.$name);
     }
+
+    return $originalName;
   }
 
-  public function delete(string $path) : bool
+  /**
+   * Delete Files by name
+   *
+   * @param $name
+   * @return bool
+   */
+  public static  function delete ($name): bool
   {
-    return File::delete($path);
+    foreach (PhotoService::$type as $type) {
+      if (file_exists(public_path('storage/products/photos/' . $name . '.' . $type)))
+        File::delete(public_path('storage/products/photos/' . $name . '.' . $type));
+      if (file_exists(public_path('storage/products/thumbnails/' . $name . '.' . $type)))
+        File::delete(public_path('storage/products/thumbnails/' . $name . '.' . $type));
+    }
+    return true;
   }
+
 }

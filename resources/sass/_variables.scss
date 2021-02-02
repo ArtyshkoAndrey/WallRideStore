@@ -1,23 +1,124 @@
-$bg-gradient-variant: false;
-// Body
-$body-bg: #F8F8F8;
+// Montserrat font
 
-// Typography
-$font-family-sans-serif: "Circle", sans-serif;
-$font-size-base: 0.9rem;
-$line-height-base: 1.6;
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/public/fonts/OpenSans/OpenSans-ExtraBold.ttf');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/public/fonts/OpenSans/OpenSans-ExtraBoldItalic.ttf');
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/public/fonts/OpenSans/OpenSans-Bold.ttf');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/public/fonts/OpenSans/OpenSans-BoldItalic.ttf');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/public/fonts/OpenSans/OpenSans-SemiBold.ttf');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/public/fonts/OpenSans/OpenSans-SemiBoldItalic.ttf');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/public/fonts/OpenSans/OpenSans-Regular.ttf');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/public/fonts/OpenSans/OpenSans-Italic.ttf');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/public/fonts/OpenSans/OpenSans-Light.ttf');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/public/fonts/OpenSans/OpenSans-LightItalic.ttf');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
 
 // Colors
 $blue: #3490dc;
 $indigo: #6574cd;
 $purple: #9561e2;
-$pink: #f66D9b;
+$pink: #f66d9b;
 $orange: #f6993f;
 $yellow: #ffed4a;
 $green: #38c172;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
-$black: #000;
-$red: #F33C3C;
 
-$custom-black: #1D1E23;
+$dark: #1D1E23;
+$light: #93979C;
+$red: #F33C3C;
+$white: #FFFFFF;
+$gray: #656565;
+
+// Breakpoints
+$grid-breakpoints: ( xs: 0, xsm: 300px, sm: 576px, md: 768px, lg: 992px, xl: 1200px, xxl:
+1400px );
+
+/// Mixin to manage responsive breakpoints
+/// @author Fulliton
+/// @param {String} $breakpoint - Breakpoint name
+/// @require $breakpoints
+@mixin respond-to($breakpoint) {
+  // If the key exists in the map
+  @if map-has-key($grid-breakpoints, $breakpoint) {
+    // Prints a media query based on the value
+    @media (min-width: map-get($grid-breakpoints, $breakpoint)) {
+      @content;
+    }
+  }
+
+    // If the key doesn't exist in the map
+  @else {
+    @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+        + "Available breakpoints are: #{map-keys($grid-breakpoints)}.";
+  }
+}

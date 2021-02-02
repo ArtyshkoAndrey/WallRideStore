@@ -2,147 +2,148 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Exception;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Skus;
+use App\Models\SkusCategory;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\View\View;
+use Illuminate\Routing\Redirector;
+use Mockery\Exception;
+use Illuminate\Support\Facades\Validator;
 
 class SkusController extends Controller
 {
-  public function __construct() {
-
-  }
-
   /**
    * Display a listing of the resource.
    *
-   * @param Request $request
-   * @return Factory|View
+   * @return Application|Factory|View|Response
    */
-  public function index(Request $request)
+  public function index()
   {
-    $type = $request->type;
-    $search = $request->search;
-    $skus = Skus::query();
-    if (isset($search)) {
-      $skus = $skus->where('title', 'LIKE', '%' . $search . '%')
-        ->orWhere('created_at', 'LIKE', '%'.$search.'%');
-    } else {
-      $search = '';
-    }
-    if (isset($type)) {
-      switch ($type) {
-        case 'all':
-        case 'published':
-          $skus = $skus;
-          break;
-      }
-    } else {
-      $type = 'all';
-    }
-    $filters = [
-      'search' => $search,
-      'type' => $type
-    ];
-    $skus = $skus->paginate(10);
-    return view('admin.skus.index', compact('skus', 'filters'));
+    $skus_categories = SkusCategory::with('skuses')->get();
+    return view('admin.skus.index', compact('skus_categories'));
   }
 
   /**
    * Show the form for creating a new resource.
    *
-   * @return Factory|View
+   * @return Response
    */
   public function create()
   {
-    return view('admin.skus.create');
+    //
   }
 
   /**
    * Store a newly created resource in storage.
    *
    * @param Request $request
-   * @return RedirectResponse
+   * @return Application|RedirectResponse|Response|Redirector
    */
   public function store(Request $request)
   {
     $request->validate([
-      'title' => 'required|unique:skuses,title',
-      'skus_category_id' => 'required|exists:skus_categories,id',
-      'weight' => 'required|unique:skuses,weight,null,id,skus_category_id,'.$request->skus_category_id
+      'title' => 'required|string',
+      'sk'  => 'required|exists:skus_categories,id',
+      'weight' => 'required|unique:skuses,weight,null,id,skus_category_id,'.$request->sk
     ]);
 
-    $sku = new Skus();
-    $sku->create($request->all());
+    $skus = new Skus($request->all());
+    $sk = SkusCategory::find($request->sk);
+    $sk->skuses()->save($skus);
 
-//    return redirect()->route('admin.production.attr.index');
-    return redirect()->route('admin.production.skus-category.edit', $request->skus_category_id);
+    return redirect('admin/skus#modal-skus-' . $sk->id)->with('success', ['Размер успешно создан']);
   }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-  public function show($id)
+  /**
+   * Display the specified resource.
+   *
+   * @return RedirectResponse
+   */
+  public function show(): RedirectResponse
   {
-
+    return redirect()->back();
   }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Factory|View
-     */
-    public function edit($id)
-    {
-      $sku = Skus::find($id);
-      return view('admin.skus.edit', compact('sku'));
+  /**
+   * Show the form for editing the specified resource.
+   *
+   * @param int $id
+   * @return RedirectResponse|View
+   */
+  public function edit(int $id)
+  {
+    $validator = Validator::make(['id'=>$id], $this->rules());
+    if ($validator->fails()) {
+      return redirect()->route('admin.skus.index')->withErrors($validator);
     }
+    $skus = Skus::find($id);
+    $skuses = $skus->category->skuses;
+    return view('admin.skus.edit', compact('skus', 'skuses'));
+  }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param  int  $id
-     * @return RedirectResponse
-     */
-    public function update(Request $request, $id)
-    {
-      $request->validate([
-        'title' => 'required|unique:skuses,title,' . $id,
-        'skus_category_id' => 'required|exists:skus_categories,id',
-        'weight' => 'required|unique:skuses,weight,'.$id.',id,skus_category_id,'.$request->skus_category_id
-      ]);
+  /**
+   * Update the specified resource in storage.
+   *
+   * @param Request $request
+   * @param  int $id
+   * @return RedirectResponse
+   */
+  public function update(Request $request, int $id): RedirectResponse
+  {
+    $request->validate([
+      'title' => 'required|string',
+      'weight' => 'required|integer'
+    ]);
 
-      $sku = Skus::find($id);
-      $sku->update($request->all());
-//      dd($request->all());
-      $sku->save();
-
-//      return redirect()->route('admin.production.attr.index');
-      return redirect()->route('admin.production.skus-category.edit', $sku->category->id);
+    $skus = Skus::find($id);
+    if ($skus->weight !== $request->get('weight')) {
+      $oldWeight = $skus->weight;
+//      dump($skus->weight !== $request->get('weight'));
+      $secondSkus = Skus::whereHas('category', function ($q) use ($skus) {
+        $q->whereId($skus->category->id);
+      })->whereWeight($request->get('weight'))->first();
+      if ($secondSkus) {
+//        dump($secondSkus);
+        $secondSkus->weight = $oldWeight;
+//        dd($secondSkus->weight, $oldWeight);
+        $secondSkus->save();
+//        dd($secondSkus->weight);
+      }
     }
+    $skus->update($request->all());
+    return redirect()->back()->with('success', ['Размер успешно обнавлён']);
+  }
 
   /**
    * Remove the specified resource from storage.
    *
    * @param int $id
-   * @return RedirectResponse
-   * @throws Exception
+   * @return Application|RedirectResponse|Redirector
+   * @throws \Exception
    */
-    public function destroy($id)
-    {
-      $sc = Skus::find($id);
-      $s = $sc->skus_category_id;
-      $sc->delete();
-//      return redirect()->route('admin.production.attr.index');
-      return redirect()->route('admin.production.skus-category.edit', $s);
+  public function destroy(int $id)
+  {
+    $skus = Skus::with('category')->find($id);
+    $sk_id = $skus->category->id;
+    try {
+      $skus->delete();
+      return redirect('admin/skus#modal-skus-' . $sk_id)->with('success', ['Размер успешно удалён']);
+    } catch (Exception $exception) {
+      return redirect('admin/skus#modal-skus-' . $sk_id)->withErrors([$exception->getMessage()]);
     }
+
+  }
+
+  public function rules(): array
+  {
+    return [
+      'id' => 'required|integer|exists:skuses,id',
+    ];
+
+  }
 }

@@ -1,0 +1,56 @@
+/*!
+ * Copyright (c) 2020. Данный файл является интелектуальной собственостью Fulliton.
+ * Я буду рад если вы будите вносить улучшения, всегда жду ваших пул реквестов
+ */
+
+// Bootstrap
+
+@import 'resources/sass/variables';
+
+@import '../fontAwesomePro/fontawesome';
+@import 'bootstrap';
+
+@import './header';
+
+// Body
+$body-bg: #F8F8F8;
+$body-color: $dark;
+
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+*:active, *:hover {
+  outline: none;
+}
+
+body {
+  font-family: "OpenSans", sans-serif;
+  background: $body-bg;
+}
+
+p {
+  color: $gray!important;
+}
+
+#login-page, #register-page,
+#password-request-page,
+#password-reset-page {
+  footer {
+    display: none;
+  }
+}
+
+/* Анимации появления и исчезновения могут иметь */
+/* различные продолжительности и динамику.       */
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+  /* .slide-fade-leave-active до версии 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
+
