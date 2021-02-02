@@ -243,7 +243,7 @@
     }
   }
   .sku-btn {
-    border: 1px solid #000000;
+    border: 1px solid #1D1E23;
     box-sizing: border-box;
     border-radius: 5px!important;
 
@@ -253,12 +253,12 @@
     }
   }
   .btn-angle {
-    background: #000;
+    background: #1D1E23;
     color: white;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
   }
   #btn-add-to-cart {
-    background: #000;
+    background: #1D1E23;
     color: white;
     &:focus {
       outline:0 !important;
