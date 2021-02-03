@@ -1,3 +1,131 @@
-header {
+@import "colors";
+@import "navbar-toggler";
+@import "left-menu";
 
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: $dark;
+  z-index: 2;
+
+  .navbar {
+    background: $dark;
+  }
+
+  .logo {
+    height: 50px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-self: center;
+    margin: 0 0.5em;
+    font-size: 1em;
+
+
+  }
+
+  .divider {
+    display: flex;
+    align-self: center;
+    border-left: 1px solid $gray-2;
+    height: 30px;
+    margin: 0 0.5em;
+  }
+
+  #main-menu {
+
+    .dropdown-menu {
+      top: 58px;
+      border-radius: 0;
+      left: -20px;
+      min-width: 6rem;
+
+      &.full-width {
+        overflow-y: auto;
+        height: calc(100vh - 72px);
+        width: 100vw;
+        padding-bottom: 50px;
+        min-width: auto;
+
+        @include respond-to(lg) {
+          min-width: 656px;
+          height: auto!important;
+          width: auto!important;
+          left: auto!important;
+        }
+      }
+
+      &.dropdown-menu-end {
+        left: auto!important;
+        right: -20px;
+      }
+
+      .dropdown-item {
+        background: $white;
+        color: $gray-1;
+
+        &.active {
+         color: $dark;
+          background: $white;
+        }
+      }
+    }
+
+    .dropdown-toggle {
+
+      &:after {
+        font-family: "Font Awesome 5 Pro", serif;
+        content: "\f078";
+        border: none;
+        text-align: center;
+        display: flex;
+        align-self: center;
+        padding: 0 0 0 5px;
+        margin: 0;
+        color: #fff;
+        font-size: .8em;
+      }
+    }
+
+
+    .nav-link {
+      text-decoration: none;
+      font-weight: 400;
+      color: $white;
+      display: flex;
+
+      > i {
+        line-height: 1.6!important;
+      }
+      > .badge-notification {
+        margin-left: 0.5rem;
+        border: 1px solid $dark;
+        color: $white!important;
+      }
+
+      &.show {
+        &:before {
+          content: "";
+          width: 30px;
+          height: 30px;
+          background: #fff;
+          transform: rotate(45deg);
+          position: absolute;
+          bottom: -40px;
+          margin-left: 20px;
+        }
+      }
+
+      &.nav-link-end {
+        &.show {
+          &:before {
+
+            margin-left: -10px;
+          }
+        }
+      }
+    }
+  }
 }

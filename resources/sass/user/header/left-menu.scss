@@ -1,0 +1,204 @@
+#left-menu {
+  z-index: 3;
+  background-color: $dark;
+  position: fixed;
+  left: -100vw;
+  display: block;
+  float: left;
+  width: 100vw;
+  height: calc(100vh - 75px);
+
+  webkit-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  -ms-transition: all 0.4s;
+  transition: all 0.4s;
+  top: 75px;
+  bottom: 0;
+  overflow: auto;
+
+  .accordion {
+    color: $white;
+    width: 100%;
+    padding-left: 20px;
+    font-size: 16px;
+
+    .section {
+      width: 100%;
+
+      input[type='checkbox'] {
+        display: none;
+
+        &:checked {
+          ~ .content {
+            padding: 15px;
+          }
+        }
+
+      }
+
+      input[type='radio'] {
+        display: none;
+
+        &:checked {
+
+          + label {
+
+            .caret {
+              transform: rotate(90deg);
+              -webkit-transition: all 0.4s;
+              -moz-transition: all 0.4s;
+              -ms-transition: all 0.4s;
+              transition: all 0.4s;
+            }
+          }
+
+          ~ .content {
+            max-height: 300px;
+            opacity: 1;
+            z-index: 4;
+
+            &.hidden {
+              max-height: 0;
+            }
+          }
+        }
+      }
+
+      .content {
+
+        max-height: 0;
+        -webkit-transition: all 0.4s;
+        -moz-transition: all 0.4s;
+        -ms-transition: all 0.4s;
+        transition: all 0.4s;
+        opacity: 0;
+        position: relative;
+        overflow-y: auto;
+        background-color: $white;
+        color: $dark;
+
+        input[type='radio'] {
+
+          &:checked {
+
+            + label {
+              border-bottom: 1px solid $white;
+              color: $red;
+            }
+
+          }
+
+        }
+
+        ul {
+
+          li {
+
+            border-bottom: 1px solid $white;
+            color: $dark;
+            transition: .3s;
+
+            &:hover {
+              border-bottom: 1px solid $red;
+              color: $red;
+            }
+          }
+        }
+
+        label {
+          background: $white;
+          color: black;
+          transition: .3s;
+          margin-bottom: 0;
+
+          span {
+            -webkit-transition: all 0.4s;
+            -moz-transition: all 0.4s;
+            -ms-transition: all 0.4s;
+            transition: all 0.4s;
+            overflow: hidden;
+            display: block;
+          }
+
+          &:hover {
+            color: $red;
+            border-bottom: 1px solid $red;
+          }
+        }
+      }
+
+      label {
+        position: relative;
+        color: $white;
+        border-bottom: 1px solid $white;
+        cursor: pointer;
+        padding: 10px;
+        white-space: nowrap;
+        display: table;
+        background: $dark;
+        width: 100%;
+        overflow: hidden;
+        -webkit-transition: background 0.3s ease-in-out;
+        -moz-transition: background 0.3s ease-in-out;
+        -ms-transition: background 0.3s ease-in-out;
+        transition: background 0.3s ease-in-out;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -o-user-select: none;
+        user-select: none;
+
+        margin-bottom: 0!important;
+      }
+    }
+
+    .caret {
+      position: absolute;
+      right: 15px;
+      top: 13px;
+      -webkit-transition: all 0.4s;
+      -moz-transition: all 0.4s;
+      -ms-transition: all 0.4s;
+      transition: all 0.4s;
+    }
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    display: block;
+  }
+
+  ul {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+    li {
+      padding: 10px;
+      border-bottom: 2px solid $white;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      i {
+        font-size: 13px;
+        width: 15px;
+        margin-right: 15px;
+      }
+    }
+  }
+
+  &.open {
+    left: 0;
+  }
+}
+
+@include respond-to(lg) {
+  #left-menu {
+    left: -290px;
+    width: 290px;
+  }
+}

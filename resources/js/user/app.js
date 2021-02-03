@@ -10,8 +10,8 @@
  */
 
 require('./bootstrap.js')
+require('./header.js')
 import store from "./store";
-
 window.Vue = require('vue')
 
 
@@ -71,7 +71,7 @@ const app = new Vue({
         this.test ? console.log('Server return currency', response.data) : null
       })
       .catch(error => {
-        alert(error.response.data.error)
+        // alert(error.response.data.error)
       })
 
     await window.axios.post('/api/products', {
@@ -101,7 +101,7 @@ const app = new Vue({
 
       })
       .catch(error => {
-        alert(error.response.data)
+        // alert(error.response.data)
       })
 
     this.cartLoader = false

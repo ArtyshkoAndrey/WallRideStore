@@ -1,1 +1,553 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[0],{"2UL2":function(e,t){Element.prototype.matches||(Element.prototype.matches=Element.prototype.msMatchesSelector||Element.prototype.webkitMatchesSelector),Element.prototype.closest||(Element.prototype.closest=function(e){var t=this;do{if(t.matches(e))return t;t=t.parentElement||t.parentNode}while(null!==t&&1===t.nodeType);return null}),"document"in self&&("classList"in document.createElement("_")&&(!document.createElementNS||"classList"in document.createElementNS("http://www.w3.org/2000/svg","g"))||function(e){"use strict";if("Element"in e){var t="classList",a="prototype",s=e.Element[a],o=Object,i=String[a].trim||function(){return this.replace(/^\s+|\s+$/g,"")},n=Array[a].indexOf||function(e){for(var t=0,a=this.length;a>t;t++)if(t in this&&this[t]===e)return t;return-1},r=function(e,t){this.name=e,this.code=DOMException[e],this.message=t},d=function(e,t){if(""===t)throw new r("SYNTAX_ERR","The token must not be empty.");if(/\s/.test(t))throw new r("INVALID_CHARACTER_ERR","The token must not contain space characters.");return n.call(e,t)},l=function(e){for(var t=i.call(e.getAttribute("class")||""),a=t?t.split(/\s+/):[],s=0,o=a.length;o>s;s++)this.push(a[s]);this._updateClassName=function(){e.setAttribute("class",this.toString())}},c=l[a]=[],m=function(){return new l(this)};if(r[a]=Error[a],c.item=function(e){return this[e]||null},c.contains=function(e){return~d(this,e+"")},c.add=function(){var e,t=arguments,a=0,s=t.length,o=!1;do{e=t[a]+"",~d(this,e)||(this.push(e),o=!0)}while(++a<s);o&&this._updateClassName()},c.remove=function(){var e,t,a=arguments,s=0,o=a.length,i=!1;do{for(e=a[s]+"",t=d(this,e);~t;)this.splice(t,1),i=!0,t=d(this,e)}while(++s<o);i&&this._updateClassName()},c.toggle=function(e,t){var a=this.contains(e),s=a?!0!==t&&"remove":!1!==t&&"add";return s&&this[s](e),!0===t||!1===t?t:!a},c.replace=function(e,t){var a=d(e+"");~a&&(this.splice(a,1,t),this._updateClassName())},c.toString=function(){return this.join(" ")},o.defineProperty){var u={get:m,enumerable:!0,configurable:!0};try{o.defineProperty(s,t,u)}catch(e){void 0!==e.number&&-2146823252!==e.number||(u.enumerable=!1,o.defineProperty(s,t,u))}}else o[a].__defineGetter__&&s.__defineGetter__(t,m)}}(self),function(){"use strict";var e=document.createElement("_");if(e.classList.add("c1","c2"),!e.classList.contains("c2")){var t=function(e){var t=DOMTokenList.prototype[e];DOMTokenList.prototype[e]=function(e){var a,s=arguments.length;for(a=0;s>a;a++)e=arguments[a],t.call(this,e)}};t("add"),t("remove")}if(e.classList.toggle("c3",!1),e.classList.contains("c3")){var a=DOMTokenList.prototype.toggle;DOMTokenList.prototype.toggle=function(e,t){return 1 in arguments&&!this.contains(e)==!t?t:a.call(this,e)}}"replace"in document.createElement("_").classList||(DOMTokenList.prototype.replace=function(e,t){var a=this.toString().split(" "),s=a.indexOf(e+"");~s&&(a=a.slice(s),this.remove.apply(this,a),this.add(t),this.add.apply(this,a.slice(1)))}),e=null}());var a={pageWrapper:document.getElementsByClassName("page-wrapper")[0],stickyAlerts:document.getElementsByClassName("sticky-alerts")[0],darkModeOn:!1,createCookie:function(e,t,a){var s;if(a){var o=new Date;o.setTime(o.getTime()+24*a*60*60*1e3),s="; expires="+o.toGMTString()}else s="";document.cookie=e+"="+t+s+"; path=/"},readCookie:function(e){for(var t=e+"=",a=document.cookie.split(";"),s=0;s<a.length;s++){for(var o=a[s];" "===o.charAt(0);)o=o.substring(1,o.length);if(0===o.indexOf(t))return o.substring(t.length,o.length)}return null},eraseCookie:function(e){this.createCookie(e,"",-1)},toggleDarkMode:function(){document.body.classList.contains("dark-mode")?(document.body.classList.remove("dark-mode"),this.darkModeOn=!1,this.createCookie("halfmoon_preferredMode","light-mode",365)):(document.body.classList.add("dark-mode"),this.darkModeOn=!0,this.createCookie("halfmoon_preferredMode","dark-mode",365))},getPreferredMode:function(){return this.readCookie("halfmoon_preferredMode")?this.readCookie("halfmoon_preferredMode"):"not-set"},toggleSidebar:function(){this.pageWrapper&&(this.pageWrapper.getAttribute("data-sidebar-hidden")?this.pageWrapper.removeAttribute("data-sidebar-hidden"):this.pageWrapper.setAttribute("data-sidebar-hidden","hidden"))},deactivateAllDropdownToggles:function(){for(var e=document.querySelectorAll("[data-toggle='dropdown'].active"),t=0;t<e.length;t++)e[t].classList.remove("active"),e[t].closest(".dropdown").classList.remove("show")},toggleModal:function(e){var t=document.getElementById(e);t&&t.classList.toggle("show")},makeId:function(e){for(var t="",a="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",s=a.length,o=0;o<e;o++)t+=a.charAt(Math.floor(Math.random()*s));return t},toastAlert:function(e,t){var a=document.getElementById(e);if(void 0===t&&(t=5e3),!a.classList.contains("show")){a.classList.contains("alert-block")||a.classList.add("alert-block"),setTimeout((function(){a.classList.add("show")}),250);var s=t+250;setTimeout((function(){a.classList.add("fade")}),s),setTimeout((function(){a.classList.remove("alert-block"),a.classList.remove("show"),a.classList.remove("fade")}),s+500)}},initStickyAlert:function(e){var t="content"in e?e.content:"",a="title"in e?e.title:"",s="alertType"in e?e.alertType:"",o="fillType"in e?e.fillType:"",i=!("hasDismissButton"in e)||e.hasDismissButton,n="timeShown"in e?e.timeShown:5e3,r=document.createElement("div");r.setAttribute("id",this.makeId(6)),a&&(t="<h4 class='alert-heading'>"+a+"</h4>"+t),r.classList.add("alert"),s&&r.classList.add(s),o&&r.classList.add(o),i&&(t="<button class='close' data-dismiss='alert' type='button' aria-label='Close'><span aria-hidden='true'>&times;</span></button>"+t),r.innerHTML=t,this.stickyAlerts.insertBefore(r,this.stickyAlerts.childNodes[0]),this.toastAlert(r.getAttribute("id"),n)},clickHandler:function(e){},keydownHandler:function(e){}};a.onDOMContentLoaded=function(){a.pageWrapper||(a.pageWrapper=document.getElementsByClassName("page-wrapper")[0]),a.stickyAlerts||(a.stickyAlerts=document.getElementsByClassName("sticky-alerts")[0]),a.readCookie("halfmoon_preferredMode")?"dark-mode"==a.readCookie("halfmoon_preferredMode")?a.darkModeOn=!0:a.darkModeOn=!1:window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches||document.body.classList.contains("dark-mode")?a.darkModeOn=!0:a.darkModeOn=!1,(document.body.getAttribute("data-set-preferred-mode-onload")||document.body.getAttribute("data-set-preferred-theme-onload"))&&(a.darkModeOn?document.body.classList.contains("dark-mode")||document.body.classList.add("dark-mode"):document.body.classList.contains("dark-mode")&&document.body.classList.remove("dark-mode")),document.documentElement.clientWidth<=768?a.pageWrapper&&(a.pageWrapper.getAttribute("data-show-sidebar-onload-sm-and-down")||a.pageWrapper.setAttribute("data-sidebar-hidden","hidden")):a.pageWrapper&&"overlayed-all"===a.pageWrapper.getAttribute("data-sidebar-type")&&a.pageWrapper.setAttribute("data-sidebar-hidden","hidden"),document.addEventListener("click",(function(e){var t=e,s=e.target;if(s.matches("[data-toggle='dropdown']")||s.matches("[data-toggle='dropdown'] *")?(s.matches("[data-toggle='dropdown'] *")&&(s=s.closest("[data-toggle='dropdown']")),s.classList.contains("active")?(s.classList.remove("active"),s.closest(".dropdown").classList.remove("show")):(a.deactivateAllDropdownToggles(),s.classList.add("active"),s.closest(".dropdown").classList.add("show"))):s.matches(".dropdown-menu *")||a.deactivateAllDropdownToggles(),(s.matches(".alert [data-dismiss='alert']")||s.matches(".alert [data-dismiss='alert'] *"))&&(s.matches(".alert [data-dismiss='alert'] *")&&(s=s.closest(".alert [data-dismiss='alert']")),s.parentNode.classList.add("dispose")),s.matches("[data-toggle='modal']")||s.matches("[data-toggle='modal'] *")){s.matches("[data-toggle='modal'] *")&&(s=s.closest("[data-toggle='modal']"));var o=document.getElementById(s.getAttribute("data-target"));o&&o.classList.contains("modal")&&a.toggleModal(s.getAttribute("data-target"))}if((s.matches(".modal [data-dismiss='modal']")||s.matches(".modal [data-dismiss='modal'] *"))&&(s.matches(".modal [data-dismiss='modal'] *")&&(s=s.closest(".modal [data-dismiss='modal']")),s.closest(".modal").classList.remove("show")),s.matches(".modal-dialog")){var i=s.closest(".modal");i.getAttribute("data-overlay-dismissal-disabled")||(i.classList.contains("show")?i.classList.remove("show"):window.location.hash="#")}a.clickHandler(t)}),!1),document.addEventListener("keydown",(function(e){var t=e;if(!(document.querySelector("input:focus")||document.querySelector("textarea:focus")||document.querySelector("select:focus")||(e=e||window.event).ctrlKey||e.metaKey)){if(document.body.getAttribute("data-sidebar-shortcut-enabled")&&e.shiftKey&&83==e.which){var s=!1;if(window.location.hash){var o=window.location.hash.substring(1);(i=document.getElementById(o))&&i.classList.contains("modal")&&(s=!0)}document.querySelector(".modal.show")&&(s=!0),s||(a.toggleSidebar(),e.preventDefault())}document.body.getAttribute("data-dm-shortcut-enabled")&&e.shiftKey&&68==e.which&&(a.toggleDarkMode(),e.preventDefault())}if(27===e.which)if(document.querySelector("[data-toggle='dropdown'].active")){(i=document.querySelector("[data-toggle='dropdown'].active")).classList.remove("active"),i.closest(".dropdown").classList.remove("show"),e.preventDefault()}else{if(window.location.hash){o=window.location.hash.substring(1);(i=document.getElementById(o))&&i.classList.contains("modal")&&(i.getAttribute("data-esc-dismissal-disabled")||(window.location.hash="#",e.preventDefault()))}var i;if(document.querySelector(".modal.show"))(i=document.querySelector(".modal.show")).getAttribute("data-esc-dismissal-disabled")||(i.classList.remove("show"),e.preventDefault())}a.keydownHandler(t)}));for(var e=document.querySelectorAll(".custom-file input"),t=0;t<e.length;t++){var s=e[t],o=document.createElement("div");o.classList.add("file-names");var i=s.getAttribute("data-default-value");o.innerHTML=i||"No file chosen",s.parentNode.appendChild(o),s.addEventListener("change",(function(e){o=e.target.parentNode.querySelector(".file-names"),1===e.target.files.length?o.innerHTML=e.target.files[0].name:e.target.files.length>1?o.innerHTML=e.target.files.length+" files":o.innerHTML="No file chosen"}))}a.pageWrapper&&a.pageWrapper.classList.add("with-transitions")},e.exports=a},4:function(e,t,a){e.exports=a("hloy")},hloy:function(e,t,a){var s=a("2UL2");e.exports=s}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["/js/admin"],{
+
+/***/ "./node_modules/halfmoon/index.js":
+/*!****************************************!*\
+  !*** ./node_modules/halfmoon/index.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var halfmoon = __webpack_require__(/*! ./js/halfmoon-module */ "./node_modules/halfmoon/js/halfmoon-module.js");
+
+module.exports = halfmoon;
+
+/***/ }),
+
+/***/ "./node_modules/halfmoon/js/halfmoon-module.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/halfmoon/js/halfmoon-module.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/*
+* -----------------------------------------------------------------------------
+* Halfmoon JS (module)
+* Version: 1.1.1
+* https://www.gethalfmoon.com
+* Copyright, Halfmoon UI
+* Licensed under MIT (https://www.gethalfmoon.com/license)
+* -----------------------------------------------------------------------------
+* The above notice must be included in its entirety when this file is used.
+*/
+
+/* Start polyfills */
+
+// Polyfill for Element.matches()
+if (!Element.prototype.matches) {
+    Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+}
+
+// Polyfill for Element.closest()
+if (!Element.prototype.closest) {
+    Element.prototype.closest = function(s) {
+        var el = this;
+        do {
+            if (el.matches(s)) return el;
+            el = el.parentElement || el.parentNode;
+        } while (el !== null && el.nodeType === 1);
+        return null;
+    };
+}
+
+// Polyfill for Element.classList (http://purl.eligrey.com/github/classList.js/blob/master/classList.js)
+"document"in self&&("classList"in document.createElement("_")&&(!document.createElementNS||"classList"in document.createElementNS("http://www.w3.org/2000/svg","g"))||!function(t){"use strict";if("Element"in t){var e="classList",n="prototype",i=t.Element[n],s=Object,r=String[n].trim||function(){return this.replace(/^\s+|\s+$/g,"")},o=Array[n].indexOf||function(t){for(var e=0,n=this.length;n>e;e++)if(e in this&&this[e]===t)return e;return-1},c=function(t,e){this.name=t,this.code=DOMException[t],this.message=e},a=function(t,e){if(""===e)throw new c("SYNTAX_ERR","The token must not be empty.");if(/\s/.test(e))throw new c("INVALID_CHARACTER_ERR","The token must not contain space characters.");return o.call(t,e)},l=function(t){for(var e=r.call(t.getAttribute("class")||""),n=e?e.split(/\s+/):[],i=0,s=n.length;s>i;i++)this.push(n[i]);this._updateClassName=function(){t.setAttribute("class",this.toString())}},u=l[n]=[],h=function(){return new l(this)};if(c[n]=Error[n],u.item=function(t){return this[t]||null},u.contains=function(t){return~a(this,t+"")},u.add=function(){var t,e=arguments,n=0,i=e.length,s=!1;do t=e[n]+"",~a(this,t)||(this.push(t),s=!0);while(++n<i);s&&this._updateClassName()},u.remove=function(){var t,e,n=arguments,i=0,s=n.length,r=!1;do for(t=n[i]+"",e=a(this,t);~e;)this.splice(e,1),r=!0,e=a(this,t);while(++i<s);r&&this._updateClassName()},u.toggle=function(t,e){var n=this.contains(t),i=n?e!==!0&&"remove":e!==!1&&"add";return i&&this[i](t),e===!0||e===!1?e:!n},u.replace=function(t,e){var n=a(t+"");~n&&(this.splice(n,1,e),this._updateClassName())},u.toString=function(){return this.join(" ")},s.defineProperty){var f={get:h,enumerable:!0,configurable:!0};try{s.defineProperty(i,e,f)}catch(p){void 0!==p.number&&-2146823252!==p.number||(f.enumerable=!1,s.defineProperty(i,e,f))}}else s[n].__defineGetter__&&i.__defineGetter__(e,h)}}(self),function(){"use strict";var t=document.createElement("_");if(t.classList.add("c1","c2"),!t.classList.contains("c2")){var e=function(t){var e=DOMTokenList.prototype[t];DOMTokenList.prototype[t]=function(t){var n,i=arguments.length;for(n=0;i>n;n++)t=arguments[n],e.call(this,t)}};e("add"),e("remove")}if(t.classList.toggle("c3",!1),t.classList.contains("c3")){var n=DOMTokenList.prototype.toggle;DOMTokenList.prototype.toggle=function(t,e){return 1 in arguments&&!this.contains(t)==!e?e:n.call(this,t)}}"replace"in document.createElement("_").classList||(DOMTokenList.prototype.replace=function(t,e){var n=this.toString().split(" "),i=n.indexOf(t+"");~i&&(n=n.slice(i),this.remove.apply(this,n),this.add(e),this.add.apply(this,n.slice(1)))}),t=null}());
+
+/* End polyfills */
+
+
+/* Halfmoon JS core */
+
+var halfmoon = {
+    // Getting the required elements
+    // Re-initialized once the DOM is loaded (to avoid issues with virtual DOM)
+    pageWrapper: document.getElementsByClassName("page-wrapper")[0],
+    stickyAlerts: document.getElementsByClassName("sticky-alerts")[0],
+
+    darkModeOn: false, // Also re-initialized once the DOM is loaded (see below)
+
+    // Create cookie
+    createCookie: function(name, value, days) {
+        var expires;
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toGMTString();
+        }
+        else {
+            expires = "";
+        }
+        document.cookie = name + "=" + value + expires + "; path=/";
+    },
+
+    // Read cookie
+    readCookie: function(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(";");
+        for(var i=0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) === " ") {
+                c = c.substring(1, c.length);
+            }
+            if (c.indexOf(nameEQ) === 0) {
+                return c.substring(nameEQ.length,c.length);
+            }
+        }
+        return null;
+    },
+
+    // Erase cookie
+    eraseCookie: function(name) {
+        this.createCookie(name, "", -1);
+    },
+
+    // Toggle light/dark mode 
+    toggleDarkMode: function() {
+        if (document.body.classList.contains("dark-mode")) {
+            document.body.classList.remove("dark-mode");
+            this.darkModeOn = false;
+            this.createCookie("halfmoon_preferredMode", "light-mode", 365);
+        } else {
+            document.body.classList.add("dark-mode");
+            this.darkModeOn = true;
+            this.createCookie("halfmoon_preferredMode", "dark-mode", 365);
+        }
+    },
+
+    // Get preferred mode
+    getPreferredMode: function() {
+        if (this.readCookie("halfmoon_preferredMode")) {
+            return this.readCookie("halfmoon_preferredMode");
+        } else {
+            return "not-set";
+        }
+    },
+
+    // Toggles sidebar
+    toggleSidebar: function() {
+        if (this.pageWrapper) {
+            if (this.pageWrapper.getAttribute("data-sidebar-hidden")) {
+                this.pageWrapper.removeAttribute("data-sidebar-hidden");
+            } else {
+                this.pageWrapper.setAttribute("data-sidebar-hidden", "hidden");
+            }
+        }
+    },
+
+    // Deactivate all the dropdown toggles when another one is active
+    deactivateAllDropdownToggles: function() {
+        var activeDropdownToggles = document.querySelectorAll("[data-toggle='dropdown'].active");
+        for (var i = 0; i < activeDropdownToggles.length; i++) {
+            activeDropdownToggles[i].classList.remove("active");
+            activeDropdownToggles[i].closest(".dropdown").classList.remove("show");
+        }
+    },
+
+    // Toggle modal (using Javascript)
+    toggleModal: function(modalId) {
+        var modal = document.getElementById(modalId);
+
+        if (modal) {
+            modal.classList.toggle("show");
+        }
+    },
+
+    /* Code block for handling sticky alerts */
+
+    // Make an ID for an element
+    makeId: function(length) {
+        var result = "";
+        var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+    },
+
+    // Toast an alert (show, fade, dispose)
+    toastAlert: function(alertId, timeShown) {
+        var alertElement = document.getElementById(alertId);
+
+        // Setting the default timeShown
+        if (timeShown === undefined) {
+            timeShown = 5000;
+        }
+
+        // Alert is only toasted if it does not have the .show class
+        if (!alertElement.classList.contains("show")) {
+            // Add .alert-block class if it does not exist
+            if (!alertElement.classList.contains("alert-block")) {
+                alertElement.classList.add("alert-block");
+            }
+
+            // Show the alert
+            // The 0.25 seconds delay is for the animation
+            setTimeout(function() {
+                alertElement.classList.add("show");
+            }, 250);
+
+            // Wait some time (timeShown + 250) and fade out the alert
+            var timeToFade = timeShown + 250;
+            setTimeout(function() {
+                alertElement.classList.add("fade");
+            }, timeToFade);
+
+            // Wait some more time (timeToFade + 500) and dispose the alert (by removing the .alert-block class)
+            // Again, the extra delay is for the animation
+            // Remove the .show and .fade classes (so the alert can be toasted again)
+            var timeToDestroy = timeToFade + 500;
+            setTimeout(function() {
+                alertElement.classList.remove("alert-block");
+                alertElement.classList.remove("show");
+                alertElement.classList.remove("fade");
+            }, timeToDestroy);
+        }
+    },
+
+    // Create a sticky alert, display it, and then remove it
+    initStickyAlert: function(param) {
+        // Setting the variables from the param
+        var content = ("content" in param) ? param.content: "";
+        var title = ("title" in param) ? param.title: "";
+        var alertType = ("alertType" in param) ? param.alertType: "";
+        var fillType = ("fillType" in param) ? param.fillType: "";
+        var hasDismissButton = ("hasDismissButton" in param) ? param.hasDismissButton: true;
+        var timeShown = ("timeShown" in param) ? param.timeShown: 5000;
+
+        // Create the alert element
+        var alertElement = document.createElement("div");
+
+        // Set ID to the alert element
+        alertElement.setAttribute("id", this.makeId(6));
+
+        // Add the title
+        if (title) {
+            content = "<h4 class='alert-heading'>" + title + "</h4>" + content;
+        }
+
+        // Add the classes to the alert element
+        alertElement.classList.add("alert");
+        if (alertType) {
+            alertElement.classList.add(alertType);
+        }
+        if (fillType) {
+            alertElement.classList.add(fillType);
+        }
+
+        // Add the close button to the content (if required)
+        if (hasDismissButton) {
+            content = "<button class='close' data-dismiss='alert' type='button' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" + content;
+        }
+
+        // Add the content to the alert element
+        alertElement.innerHTML = content;
+
+        // Append the alert element to the sticky alerts
+        this.stickyAlerts.insertBefore(alertElement, this.stickyAlerts.childNodes[0]);
+
+        // Toast the alert
+        this.toastAlert(alertElement.getAttribute("id"), timeShown);
+    },
+
+    /* End code block for handling sticky alerts */
+
+    // Click handler that can be overridden by users if needed
+    clickHandler: function(event) {},
+
+    // Keydown handler that can be overridden by users if needed
+    keydownHandler: function(event) {},
+}
+
+
+/* Things done once the DOM is loaded */
+
+function halfmoonOnDOMContentLoaded() {
+    // Re-initializing the required elements (to avoid issues with virtual DOM)
+    if (!halfmoon.pageWrapper) {
+        halfmoon.pageWrapper = document.getElementsByClassName("page-wrapper")[0];
+    }
+    if (!halfmoon.stickyAlerts) {
+        halfmoon.stickyAlerts = document.getElementsByClassName("sticky-alerts")[0];
+    }
+
+    // Handle the cookie and variable for dark mode
+    // 1. First preference is given to the cookie if it exists
+    if (halfmoon.readCookie("halfmoon_preferredMode")) {
+        if (halfmoon.readCookie("halfmoon_preferredMode") == "dark-mode") {
+            halfmoon.darkModeOn = true;
+        } else {
+            halfmoon.darkModeOn = false;
+        }
+    } else {
+        // 2. If cookie does not exist, next preference is for the dark mode setting
+        if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            halfmoon.darkModeOn = true;
+        } else {
+            // 3. If all else fails, re-initialize the dark mode preference depending on the .dark-mode class
+            if (document.body.classList.contains("dark-mode")) {
+                halfmoon.darkModeOn = true;
+            } else {
+                halfmoon.darkModeOn = false;
+            }
+        }
+    }
+
+    // Automatically set preferred theme
+    // But only if one of the data-attribute is provided
+    if (document.body.getAttribute("data-set-preferred-mode-onload") || document.body.getAttribute("data-set-preferred-theme-onload")) {
+        if (halfmoon.darkModeOn) {
+            if (!document.body.classList.contains("dark-mode")) {
+                document.body.classList.add("dark-mode");
+            }
+        } else {
+            if (document.body.classList.contains("dark-mode")) {
+                document.body.classList.remove("dark-mode");
+            }
+        }
+    }
+
+    // Hiding sidebar on first load on small screens (unless data-attribute provided)
+    // Or on larger screens when sidebar type is overlayed-all
+    if (document.documentElement.clientWidth <= 768) {
+        if (halfmoon.pageWrapper) {
+            if (!halfmoon.pageWrapper.getAttribute("data-show-sidebar-onload-sm-and-down")) {
+                halfmoon.pageWrapper.setAttribute("data-sidebar-hidden", "hidden");
+            }
+        }
+    } else {
+        if (halfmoon.pageWrapper) {
+            if (halfmoon.pageWrapper.getAttribute("data-sidebar-type") === "overlayed-all") {
+                halfmoon.pageWrapper.setAttribute("data-sidebar-hidden", "hidden");
+            }
+        }
+    }
+
+    // Adding the click event listener
+    document.addEventListener(
+        "click",
+        function(event) {
+            var eventCopy = event;
+            var target = event.target;
+
+            // Handle clicks on dropdown toggles
+            if (target.matches("[data-toggle='dropdown']") || target.matches("[data-toggle='dropdown'] *")) {
+                if (target.matches("[data-toggle='dropdown'] *")) {
+                    target = target.closest("[data-toggle='dropdown']");
+                }
+                if (target.classList.contains("active")) {
+                    target.classList.remove("active");
+                    target.closest(".dropdown").classList.remove("show");
+                } else {
+                    halfmoon.deactivateAllDropdownToggles();
+                    target.classList.add("active");
+                    target.closest(".dropdown").classList.add("show");
+                }
+            } else {
+                if (!target.matches(".dropdown-menu *")) {
+                    halfmoon.deactivateAllDropdownToggles();
+                }
+            }
+
+            // Handle clicks on alert dismiss buttons
+            if (target.matches(".alert [data-dismiss='alert']") || target.matches(".alert [data-dismiss='alert'] *")) {
+                if (target.matches(".alert [data-dismiss='alert'] *")) {
+                    target = target.closest(".alert [data-dismiss='alert']");
+                }
+                target.parentNode.classList.add("dispose");
+            }
+
+            // Handle clicks on modal toggles
+            if (target.matches("[data-toggle='modal']") || target.matches("[data-toggle='modal'] *")) {
+                if (target.matches("[data-toggle='modal'] *")) {
+                    target = target.closest("[data-toggle='modal']");
+                }
+                var targetModal = document.getElementById(target.getAttribute("data-target"));
+                if (targetModal) {
+                    if (targetModal.classList.contains("modal")) {
+                        halfmoon.toggleModal(target.getAttribute("data-target"));
+                    }
+                }
+            }
+
+            // Handle clicks on modal dismiss buttons
+            if (target.matches(".modal [data-dismiss='modal']") || target.matches(".modal [data-dismiss='modal'] *")) {
+                if (target.matches(".modal [data-dismiss='modal'] *")) {
+                    target = target.closest(".modal [data-dismiss='modal']");
+                }
+                target.closest(".modal").classList.remove("show");
+            }
+
+            // Handle clicks on modal overlays
+            if (target.matches(".modal-dialog")) {
+                var parentModal = target.closest(".modal");
+
+                if (!parentModal.getAttribute("data-overlay-dismissal-disabled")) {
+                    if (parentModal.classList.contains("show")) {
+                        parentModal.classList.remove("show");
+                    } else {
+                        window.location.hash = "#";
+                    }
+                }
+            }
+
+            // Call the click handler method to handle any logic set by the user in their projects to handle clicks
+            halfmoon.clickHandler(eventCopy);
+        }, 
+        false
+    );
+
+    // Adding the key down event listener (for shortcuts and accessibility)
+    document.addEventListener(
+        "keydown",
+        function(event) {
+            var eventCopy = event;
+
+            // Shortcuts are triggered only if no input, textarea, or select has focus,
+            // If the control key or command key is not pressed down,
+            // And if the enabling data attribute is present on the DOM's body
+            if (!(document.querySelector("input:focus") || document.querySelector("textarea:focus") || document.querySelector("select:focus"))) {
+                event = event || window.event;
+
+                if (!(event.ctrlKey || event.metaKey)) {
+                    // Toggle sidebar when [shift] + [S] keys are pressed
+                    if (document.body.getAttribute("data-sidebar-shortcut-enabled")) {
+                        if (event.shiftKey && event.which == 83) {
+                            // Variable to store whether a modal is open or not
+                            var modalOpen = false;
+
+                            // Hash exists, so we check if it belongs to a modal
+                            if (window.location.hash) {
+                                var hash = window.location.hash.substring(1);
+                                var elem = document.getElementById(hash);
+                                if (elem) {
+                                    if (elem.classList.contains("modal")) {
+                                        modalOpen = true;
+                                    }
+                                }
+                            }
+                            // Check for a modal with the .show class
+                            if (document.querySelector(".modal.show")) {
+                                modalOpen = true;
+                            }
+
+                            // This shortcut works only if no modal is open
+                            if (!modalOpen) {
+                                halfmoon.toggleSidebar();
+                                event.preventDefault();
+                            }
+                        }
+                    }
+
+                    // Toggle dark mode when [shift] + [D] keys are pressed
+                    if (document.body.getAttribute("data-dm-shortcut-enabled")) {
+                        if (event.shiftKey && event.which == 68) {
+                            halfmoon.toggleDarkMode();
+                            event.preventDefault();
+                        }
+                    }
+                }
+            }
+
+            // Handling other keydown events
+            if (event.which === 27) {
+                // Close dropdown menu (if one is open) when [esc] key is pressed
+                if (document.querySelector("[data-toggle='dropdown'].active")) {
+                    var elem = document.querySelector("[data-toggle='dropdown'].active");
+                    elem.classList.remove("active");
+                    elem.closest(".dropdown").classList.remove("show");
+                    event.preventDefault();
+                }
+                // Close modal (if one is open, and if no dropdown menu is open) when [esc] key is pressed
+                // Conditional on dropdowns so that dropdowns on modals can be closed with the keyboard without closing the modal
+                else {
+                    // Hash exists, so we check if it belongs to a modal
+                    if (window.location.hash) {
+                        var hash = window.location.hash.substring(1);
+                        var elem = document.getElementById(hash);
+                        if (elem) {
+                            if (elem.classList.contains("modal")) {
+                                if (!elem.getAttribute("data-esc-dismissal-disabled")) {
+                                    window.location.hash = "#";
+                                    event.preventDefault();
+                                }
+                            }
+                        }
+                    }
+                    // Check for a modal with the .show class
+                    if (document.querySelector(".modal.show")) {
+                        var elem = document.querySelector(".modal.show");
+                        if (!elem.getAttribute("data-esc-dismissal-disabled")) {
+                            elem.classList.remove("show");
+                            event.preventDefault();
+                        }
+                    }
+                }
+            }
+
+            // Call the keydown handler method to handle any logic set by the user in their projects to handle keydown events
+            halfmoon.keydownHandler(eventCopy);
+        }
+    );
+
+    // Handling custom file inputs
+    var halfmoonCustomFileInputs = document.querySelectorAll(".custom-file input");
+    for (var i = 0; i < halfmoonCustomFileInputs.length; i++) {
+        var customFile = halfmoonCustomFileInputs[i];
+        // Create file name container element, add the class name, and set default value
+        // Append it to the custom file element
+        var fileNamesContainer = document.createElement("div");
+        fileNamesContainer.classList.add("file-names");
+        var dataDefaultValue = customFile.getAttribute("data-default-value");
+        if (dataDefaultValue) {
+            fileNamesContainer.innerHTML = dataDefaultValue;
+        } else {
+            fileNamesContainer.innerHTML = "No file chosen";
+        }
+        customFile.parentNode.appendChild(fileNamesContainer);
+
+        // Add the event listener that will update the contents of the file name container element on change
+        customFile.addEventListener(
+            "change",
+            function(event) {
+                fileNamesContainer = event.target.parentNode.querySelector(".file-names");
+                if (event.target.files.length === 1) {
+                    fileNamesContainer.innerHTML = event.target.files[0].name;
+                } else if (event.target.files.length > 1) {
+                    fileNamesContainer.innerHTML = event.target.files.length + " files";
+                } else {
+                    fileNamesContainer.innerHTML = "No file chosen";
+                }
+            }
+        );
+    }
+
+    // Adding the .with-transitions class to the page-wrapper so that transitions are enabled
+    // This way, the weird bug on Chrome is avoided, where the transitions run on load
+    if (halfmoon.pageWrapper) {
+        halfmoon.pageWrapper.classList.add("with-transitions");
+    }
+}
+
+// Add the halfmoonOnDOMContentLoaded to the main halfmoon object
+// And export the halfmoon object as a module
+halfmoon.onDOMContentLoaded = halfmoonOnDOMContentLoaded;
+module.exports = halfmoon;
+
+
+/***/ }),
+
+/***/ 4:
+/*!**********************!*\
+  !*** multi halfmoon ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! halfmoon */"./node_modules/halfmoon/index.js");
+
+
+/***/ })
+
+}]);
+//# sourceMappingURL=admin.js.map

@@ -8,8 +8,9 @@
 @import 'resources/sass/variables';
 
 @import '../fontAwesomePro/fontawesome';
-@import 'bootstrap';
-
+//@import 'bootstrap';
+@import '~mdb-ui-kit/src/scss/mdb.core';
+@import '~mdb-ui-kit/src/scss/mdb.free';
 @import './header';
 
 // Body
@@ -23,13 +24,31 @@ $line-height-base: 1.6;
   outline: none;
 }
 
+*::-webkit-scrollbar {
+  width: 10px;
+  background: rgba(255,255,255,.7);
+  border-radius: 16px;
+}
+*::-webkit-scrollbar-thumb {
+  border-radius: 16px;
+  background-color: $dark;
+}
+*::-webkit-scrollbar-track {
+  border-radius: 16px;
+  width: 3px;
+}
+
 body {
   font-family: "OpenSans", sans-serif;
   background: $body-bg;
+  color: $dark!important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-p {
-  color: $gray!important;
+#app > .container {
+  transition: .5s;
+  margin-top: 76px;
 }
 
 #login-page, #register-page,
@@ -38,6 +57,17 @@ p {
   footer {
     display: none;
   }
+}
+
+.not-after {
+  &:after {
+    content: none!important;
+    display: none!important;
+  }
+}
+
+.bg-red {
+  background: $red;
 }
 
 /* Анимации появления и исчезновения могут иметь */

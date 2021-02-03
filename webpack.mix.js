@@ -13,20 +13,27 @@ let productionSourceMaps = false;
 
 mix.options({processCssUrls: false})
 
-mix.extract([
-  'jquery', 'vue', 'axios', // Common dependencies (all)
-], 'public/js/vendors.js');
+// mix.extract([
+//   'jquery', 'vue', 'axios', // Common dependencies (all)
+// ], 'public/js/vendor.js');
+//
+// mix.extract([
+//   'popper.js', 'sweetalert2', 'mdb-ui-kit', 'vuex', // Common dependencies (user)
+// ], 'public/js/user.js');
+//
+// mix.extract([
+//   'halfmoon', // Common dependencies (admin)
+// ], 'public/js/admin.js');
+//
+// mix.autoload({
+//   jquery: ['$', 'window.jQuery', 'jQuery', 'jquery'],
+//   vue: ['window.Vue', 'Vue']
+// })
 
-mix.extract([
-  'popper.js', 'sweetalert2', 'bootstrap', 'vuex', // Common dependencies (user)
-], 'public/js/user.js');
-
-mix.extract([
-  'halfmoon', // Common dependencies (admin)
-], 'public/js/admin.js');
 
 mix.js('resources/js/user/app.js', 'public/js')
   .sass('resources/sass/user/app.scss', 'public/css')
+
 
 mix.js('resources/js/admin/app.js', 'public/js/admin')
   .sass('resources/sass/admin/app.scss', 'public/css/admin')

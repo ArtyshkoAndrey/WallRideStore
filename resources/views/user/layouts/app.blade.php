@@ -45,11 +45,13 @@
 <body id="{{ str_replace('.', '-', Route::currentRouteName()) . '-page' }}">
   <div id="app">
     @include('user.layouts.header.header')
-    @yield('content')
+    <div class="container"  style="height: 3000px">
+      @yield('content')
+    </div>
   </div>
-
-  <script src="{{ mix('js/vendors.js') }}"></script>
-  <script src="{{ mix('js/user.js') }}"></script>
+{{--  <script src="{{ mix('js/admin/manifest.js') }}"></script>--}}
+{{--  <script src="{{ mix('js/vendor.js') }}"></script>--}}
+{{--  <script src="{{ mix('js/user.js') }}"></script>--}}
   <script src="{{ mix('js/app.js') }}"></script>
 </body>
 </html>
