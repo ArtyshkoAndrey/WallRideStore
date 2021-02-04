@@ -83,7 +83,7 @@
 
             + label {
               border-bottom: 1px solid $white;
-              color: $red;
+              color: $danger;
             }
 
           }
@@ -99,8 +99,8 @@
             transition: .3s;
 
             &:hover {
-              border-bottom: 1px solid $red;
-              color: $red;
+              border-bottom: 1px solid $danger;
+              color: $danger;
             }
           }
         }
@@ -121,8 +121,8 @@
           }
 
           &:hover {
-            color: $red;
-            border-bottom: 1px solid $red;
+            color: $danger;
+            border-bottom: 1px solid $danger;
           }
         }
       }

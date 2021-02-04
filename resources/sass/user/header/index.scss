@@ -36,6 +36,28 @@ header {
 
   #main-menu {
 
+    .product-name {
+      font-size: .875em;
+
+      @include respond-to(md) {
+        font-size: 1.2em;
+      }
+    }
+
+    .product-price {
+      font-size: 1.05rem;
+    }
+
+    form {
+      .form-notch-trailing {
+        border-radius: 0;
+      }
+      button {
+        border-top-right-radius: 0.25rem;
+        border-bottom-right-radius: 0.25rem;
+      }
+    }
+
     .dropdown-menu {
       top: 58px;
       border-radius: 0;
@@ -46,14 +68,17 @@ header {
         overflow-y: auto;
         height: calc(100vh - 72px);
         width: 100vw;
-        padding-bottom: 50px;
+        padding-bottom: 60px !important;
         min-width: auto;
+        max-height: calc(100vh - 72px);
 
         @include respond-to(lg) {
           min-width: 656px;
           height: auto!important;
           width: auto!important;
           left: auto!important;
+          max-height: 400px;
+          padding-bottom: 1.5rem!important
         }
       }
 
@@ -63,12 +88,12 @@ header {
       }
 
       .dropdown-item {
-        background: $white;
-        color: $gray-1;
+        background: $white!important;
+        color: $gray-1!important;
 
-        &.active {
-         color: $dark;
-          background: $white;
+        &.active, &:hover, a:hover {
+         color: $dark!important;
+          background: $white!important;
         }
       }
     }

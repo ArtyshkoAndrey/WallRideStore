@@ -66,8 +66,17 @@ body {
   }
 }
 
-.bg-red {
-  background: $red;
+.bg-danger {
+  background: $danger;
+}
+
+.btn {
+  border-radius: 0;
+}
+
+
+.text-gray-1 {
+  color: $gray-1;
 }
 
 /* Анимации появления и исчезновения могут иметь */
