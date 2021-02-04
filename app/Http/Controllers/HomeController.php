@@ -8,6 +8,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 
@@ -30,5 +31,16 @@ class HomeController extends Controller
 //      ->get();
 //    return view('user.index', compact('categories', 'newProducts', 'hitProducts'));
     return view('user.index');
+  }
+
+  /**
+   * Смена языка сайта
+   * @param string $locale
+   * @return RedirectResponse
+   */
+  public function language (string $locale): RedirectResponse
+  {
+    setcookie('language', $locale, time() + (86400 * 30), "/");
+    return redirect()->route('index');
   }
 }

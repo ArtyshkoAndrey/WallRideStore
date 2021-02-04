@@ -51,21 +51,23 @@
               data-mdb-toggle="dropdown"
               aria-expanded="false"
             >
-              RUS
+              {{ isset($_COOKIE['language']) ? $_COOKIE['language'] == 'ru' ? 'RUS' : 'ENG' : 'RUS' }}
             </a>
             <ul class="dropdown-menu p-4" aria-labelledby="languageDropdown">
               <li>
-                <button
-                  class="dropdown-item px-0 active">
-                  Русский
-                </button>
+                <a
+                  class="dropdown-item px-0 active"
+                  href="{{ url('/language/change/ru') }}">
+                  {{ __('Русский') }}
+                </a>
               </li>
 
               <li>
-                <button
-                  class="dropdown-item px-0">
-                  English
-                </button>
+                <a
+                  class="dropdown-item px-0"
+                  href="{{ url('/language/change/en') }}">
+                  {{ __('English') }}
+                </a>
               </li>
             </ul>
           </li>
@@ -89,7 +91,7 @@
                   @csrf
                   <div class="row h-100 m-0">
                     <div class="col-9 offset-1 px-0">
-                      <input type="text" id="search" name="search" class="w-100" placeholder="Название товара, бренд категория" />
+                      <input type="text" id="search" name="search" class="w-100" placeholder="{{ __('Название товара, бренд категория') }}" />
                     </div>
                     <div class="col-1 px-0">
                       <button class="btn btn-dark shadow-none w-100 h-100 h4"><i class="far fa-search"></i></button>
@@ -120,10 +122,10 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-end p-4" aria-labelledby="userDropdown">
               <li class="dropdown-item px-0">
-                <a href="{{ route('login') }}" class="text-gray-1">Вход</a>
+                <a href="{{ route('login') }}" class="text-gray-1">{{ __('Вход') }}</a>
               </li>
               <li class="dropdown-item px-0">
-                <a href="{{ route('register') }}" class="text-gray-1">Регистрация</a>
+                <a href="{{ route('register') }}" class="text-gray-1">{{ __('Регистрация') }}</a>
               </li>
             </ul>
           </li>
@@ -200,13 +202,13 @@
                       <p class="h5 font-weight-bold mb-1"> 999 000 Р</p>
                     </div>
                     <div class="col-12 d-flex justify-content-start p-0">
-                      <button class="bg-transparent border-0 text-decoration-none p-0">Очистить корзину</button>
+                      <button class="bg-transparent border-0 text-decoration-none p-0">{{ __('Очистить корзину') }}</button>
                     </div>
                   </div>
                 </div>
 
                 <div class="col-12 col-md-5 d-flex align-items-end align-self-start p-0">
-                  <a href="https://dockuboardhouse.com/cart" class="btn btn-dark py-3 w-100">Перейти в корзину</a>
+                  <a href="{{ route('cart.index') }}" class="btn btn-dark py-3 w-100">{{ __('Перейти в корзину') }}</a>
                 </div>
               </div>
 
