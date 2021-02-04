@@ -72,7 +72,7 @@
 
           <li class="divider d-none d-lg-block"></li>
 
-          <li class="nav-item dropdown d-none d-lg-flex">
+          <li class="nav-item dropdown d-none d-lg-flex" id="search-nav-item">
             <a
               class="nav-link dropdown-toggle not-after"
               href="#"
@@ -84,18 +84,15 @@
               <i class="far fa-search d-block"></i>
             </a>
             <ul class="dropdown-menu p-4" aria-labelledby="searchDropdown">
-              <li class="dropdown-item px-0" style="width: 400px;">
-                <form action="" method="POST">
+              <li class="dropdown-item px-0">
+                <form action="" class="h-100" method="POST">
                   @csrf
-                  <div class="row m-0">
-                    <div class="col-10 px-0">
-                      <div class="form-outline">
-                        <input type="text" id="search" name="search" class="form-control" />
-                        <label class="form-label" for="search">Поиск</label>
-                      </div>
+                  <div class="row h-100 m-0">
+                    <div class="col-9 offset-1 px-0">
+                      <input type="text" id="search" name="search" class="w-100" placeholder="Название товара, бренд категория" />
                     </div>
-                    <div class="col-2 px-0">
-                      <button class="btn btn-dark shadow-none"><i class="far fa-search"></i></button>
+                    <div class="col-1 px-0">
+                      <button class="btn btn-dark shadow-none w-100 h-100 h4"><i class="far fa-search"></i></button>
                     </div>
                   </div>
                 </form>

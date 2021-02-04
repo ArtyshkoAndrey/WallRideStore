@@ -23,7 +23,36 @@ header {
     margin: 0 0.5em;
     font-size: 1em;
 
+    &#search-nav-item {
+      position: unset;
 
+      .dropdown-menu {
+        left: 0;
+        width: 100vw;
+        padding: 0!important;
+        top: 74px;
+
+        .dropdown-item {
+          padding: 0;
+          height: 50px;
+
+          input {
+            border-radius: 0;
+            border: 0;
+            height: 100%;
+            padding-left: 15px;
+
+            &:focus {
+              outline: none;
+            }
+          }
+
+          .btn {
+            font-size: 1em;
+          }
+        }
+      }
+    }
   }
 
   .divider {
@@ -53,13 +82,13 @@ header {
         border-radius: 0;
       }
       button {
-        border-top-right-radius: 0.25rem;
-        border-bottom-right-radius: 0.25rem;
+        //border-top-right-radius: 0.25rem;
+        //border-bottom-right-radius: 0.25rem;
       }
     }
 
     .dropdown-menu {
-      top: 58px;
+      top: 56px;
       border-radius: 0;
       left: -20px;
       min-width: 6rem;
