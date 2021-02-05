@@ -17,8 +17,8 @@ class CreateSkusesTable extends Migration
       $table->id();
       $table->string('title');
       $table->integer('weight');
-      $table->foreignId('skus_category_id')
-        ->constrained('skus_categories')
+      $table->foreignId('skuscategory_id')
+        ->constrained('skuscategories')
         ->onUpdate('cascade')
         ->onDelete('cascade');;
       $table->timestamps();
@@ -32,6 +32,6 @@ class CreateSkusesTable extends Migration
    */
   public function down()
   {
-      Schema::dropIfExists('skuses');
+    Schema::dropIfExists('skuses');
   }
 }

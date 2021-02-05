@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddTransferToOrder extends Migration
+class CreateSkuscategoriesTable extends Migration
 {
   /**
    * Run the migrations.
@@ -13,8 +13,9 @@ class AddTransferToOrder extends Migration
    */
   public function up()
   {
-    Schema::table('orders', function (Blueprint $table) {
-      $table->string('transfer');
+    Schema::create('skuscategories', function (Blueprint $table) {
+        $table->id();
+        $table->timestamps();
     });
   }
 
@@ -25,8 +26,6 @@ class AddTransferToOrder extends Migration
    */
   public function down()
   {
-    Schema::table('orders', function (Blueprint $table) {
-      $table->dropColumn('transfer');
-    });
+    Schema::dropIfExists('skuscategories');
   }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CategoriesCategories extends Migration
+class CreateCitiesTable extends Migration
 {
   /**
    * Run the migrations.
@@ -13,14 +13,13 @@ class CategoriesCategories extends Migration
    */
   public function up()
   {
-    Schema::create('categories_categories', function (Blueprint $table) {
+    Schema::create('cities', function (Blueprint $table) {
       $table->id();
-      $table->foreignId('category_id')
-        ->constrained('categories')
-        ->onUpdate('cascade')
-        ->onDelete('cascade');
-      $table->foreignId('child_category_id')
-        ->constrained('categories')
+      $table->string('name');
+      $table->boolean('pickup')
+        ->default(0);
+      $table->foreignId('country_id')
+        ->constrained()
         ->onUpdate('cascade')
         ->onDelete('cascade');
       $table->timestamps();
@@ -34,6 +33,6 @@ class CategoriesCategories extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('categories_categories');
+    Schema::dropIfExists('cities');
   }
 }

@@ -33,9 +33,10 @@ class EventServiceProvider extends ServiceProvider
    */
   public function boot()
   {
-    Photo::observe(PhotoObserver::class);
+//    TODO: Удаления фоток
+//    Photo::observe(PhotoObserver::class);
     User::observe(UserObserver::class);
-    Product::observe(ProductObserver::class);
+//    Product::observe(ProductObserver::class);
 
   }
 }

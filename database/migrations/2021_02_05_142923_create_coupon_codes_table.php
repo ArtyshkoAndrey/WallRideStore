@@ -26,6 +26,7 @@ class CreateCouponCodesTable extends Migration
       $table->datetime('not_before')->default(DB::raw('CURRENT_TIMESTAMP'));
       $table->datetime('not_after');
       $table->boolean('enabled')->default(1);
+      $table->boolean('notification')->default(0);
       $table->timestamps();
     });
   }

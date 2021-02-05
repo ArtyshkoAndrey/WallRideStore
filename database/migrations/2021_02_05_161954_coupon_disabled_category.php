@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class DisabledCouponsCategories extends Migration
+class CouponDisabledCategory extends Migration
 {
   /**
    * Run the migrations.
@@ -15,8 +15,15 @@ class DisabledCouponsCategories extends Migration
   {
     Schema::create('disabled_coupons_categories', function (Blueprint $table) {
       $table->id();
-      $table->foreignId('category_id')->constrained('categories')->onDelete('cascade')->onUpdate('cascade');
-      $table->foreignId('coupon_id')->constrained('coupon_codes')->onDelete('cascade')->onUpdate('cascade');
+      $table->foreignId('category_id')
+        ->constrained('categories')
+        ->onDelete('cascade')
+        ->onUpdate('cascade');
+
+      $table->foreignId('coupon_id')
+        ->constrained('coupon_codes')
+        ->onDelete('cascade')
+        ->onUpdate('cascade');
     });
   }
 

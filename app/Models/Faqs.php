@@ -7,20 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 
-class Category extends Model implements TranslatableContract
+class Faqs extends Model implements TranslatableContract
 {
   use HasFactory;
   use Translatable;
 
   public array $translatedAttributes = [
-    'name',
+    'title', 'content',
   ];
 
   protected $fillable = [
-    'to_menu'
-  ];
-
-  protected $casts = [
-    'to_menu' => 'boolean'
+    'image'
   ];
 }

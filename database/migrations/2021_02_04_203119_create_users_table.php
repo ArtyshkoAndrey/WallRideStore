@@ -16,24 +16,33 @@ class CreateUsersTable extends Migration
     Schema::create('users', function (Blueprint $table) {
       $table->id();
       $table->string('name');
-      $table->text('avatar')->nullable();
-      $table->string('email')->unique();
-      $table->timestamp('email_verified_at')->nullable();
+      $table->text('avatar')
+        ->nullable();
+      $table->string('email')
+        ->unique();
+      $table->timestamp('email_verified_at')
+        ->nullable();
       $table->string('password');
-      $table->text('address')->nullable();
-      $table->string('post_code')->nullable();
-      $table->string('phone')->nullable();
-      $table->foreignId('country_id')
-        ->nullable()
-        ->constrained()
-        ->onUpdate('cascade')
-        ->onDelete('set null');
+      $table->text('address')
+        ->nullable();
+      $table->string('post_code')
+        ->nullable();
+      $table->string('phone')
+        ->nullable();
 
-      $table->foreignId('city_id')
-        ->nullable()
-        ->constrained()
-        ->onUpdate('cascade')
-        ->onDelete('set null');
+      $table->boolean('notification')->default(false);
+      $table->boolean('old_notification')->default(false);
+//      $table->foreignId('country_id')
+//        ->nullable()
+//        ->constrained()
+//        ->onUpdate('cascade')
+//        ->onDelete('set null');
+//
+//      $table->foreignId('city_id')
+//        ->nullable()
+//        ->constrained()
+//        ->onUpdate('cascade')
+//        ->onDelete('set null');
 
       $table->foreignId('currency_id')
         ->nullable()

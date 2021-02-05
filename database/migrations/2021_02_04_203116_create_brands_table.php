@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSkusCategoriesTable extends Migration
+class CreateBrandsTable extends Migration
 {
   /**
    * Run the migrations.
@@ -13,9 +13,8 @@ class CreateSkusCategoriesTable extends Migration
    */
   public function up()
   {
-    Schema::create('skus_categories', function (Blueprint $table) {
+    Schema::create('brands', function (Blueprint $table) {
       $table->id();
-      $table->string('name')->unique();
       $table->timestamps();
     });
   }
@@ -27,6 +26,6 @@ class CreateSkusCategoriesTable extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('skus_categories');
+    Schema::dropIfExists('brands');
   }
 }
