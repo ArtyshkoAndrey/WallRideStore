@@ -35,21 +35,21 @@ class Photo extends Model
 
   public function getUrlWebpAttribute(): string
   {
-    return asset('storage/images/photos/' . str_replace(" ", "%20", $this->name)  . '.webp');
+    return asset('storage/photos/products/photos/' . str_replace(" ", "%20", $this->name)  . '.webp');
   }
 
   public function getThumbnailUrlWebpAttribute(): string
   {
-    return asset('storage/images/thumbnails/' . str_replace(" ", "%20", $this->name)  . '.webp');
+    return asset('storage/photos/products/thumbnails/' . str_replace(" ", "%20", $this->name)  . '.webp');
   }
 
   public function getUrlJpgAttribute(): string
   {
-    return asset('storage/images/photos/' . str_replace(" ", "%20", $this->name)  . '.jpg');
+    return asset('storage/photos/products/photos/' . str_replace(" ", "%20", $this->name)  . '.jpg');
   }
 
   public function getThumbnailUrlJpgAttribute(): string
   {
-    return asset('storage/images/thumbnails/' .  str_replace(" ", "%20", $this->name) . '.jpg');
+    return asset('storage/photos/products/thumbnails/' .  str_replace(" ", "%20", $this->name) . '.jpg');
   }
 }

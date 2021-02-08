@@ -22,7 +22,6 @@ class CreateBrandTranslationsTable extends Migration
       $table->string('locale')
         ->index();
 
-      $table->string('name');
       $table->text('description');
       $table->unique(['brand_id', 'locale']);
     });

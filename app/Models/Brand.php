@@ -13,11 +13,10 @@ class Brand extends Model implements TranslatableContract
   use Translatable;
 
   public array $translatedAttributes = [
-    'name',
     'description'
   ];
 
   protected $fillable = [
-
+    'name'
   ];
 }

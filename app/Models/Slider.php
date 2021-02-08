@@ -22,6 +22,20 @@ class Slider extends Model implements TranslatableContract
     'url',
     'photo',
     'mobile_photo',
-    ''
   ];
+
+  protected $appends = [
+    'photo_url',
+    'photo_mobile_url'
+  ];
+
+  public function getPhotoUrlAttribute (): string
+  {
+    return storage_path('storage/slider/photos/' . $this->photo);
+  }
+
+  public function getPhotoMobileUrlAttribute (): string
+  {
+    return storage_path('storage/slider/mobile/' . $this->mobile_photo);
+  }
 }

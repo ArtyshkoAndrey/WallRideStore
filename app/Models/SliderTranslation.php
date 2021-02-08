@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class SliderTranslation extends Model
 {
-    use HasFactory;
+  use HasFactory;
+
+  protected $fillable = [
+    'h1',
+    'h2',
+    'btn_text'
+  ];
 }
