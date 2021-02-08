@@ -33,6 +33,10 @@ return [
 
   'metrika' => env('METRIKA', false),
 
+  'cache' => [
+    'db' => 600,
+  ],
+
   /*
   |--------------------------------------------------------------------------
   | Application Environment
@@ -196,6 +200,7 @@ return [
 //    Barryvdh\Debugbar\ServiceProvider::class,
 //    TODO: Коментить для Прод
 //    Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+    App\Providers\WidgetServiceProvider::class,
 
   ],
 

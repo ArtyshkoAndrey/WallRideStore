@@ -6,14 +6,17 @@ header {
   position: fixed;
   top: 0;
   width: 100%;
-  background: $dark;
   z-index: 2;
 
-  .navbar {
-    background: $dark;
-  }
+  //.navbar {
+  //  background: $dark;
+  //}
 
   .logo {
+    height: 50px;
+  }
+
+  #sub-header {
     height: 50px;
   }
 
@@ -61,6 +64,67 @@ header {
     border-left: 1px solid $gray-2;
     height: 30px;
     margin: 0 0.5em;
+  }
+
+  #main-menu, #sub-header {
+    .nav-item {
+      position: inherit!important;
+
+      > a {
+        color: $white;
+      }
+    }
+  }
+
+  #sub-header {
+
+    .dropdown-menu {
+      top: 65px;
+      border-radius: 0;
+      width: 100vw;
+      left: 0!important;
+
+      @include respond-to(md) {
+        width: 576px;
+        left: auto!important;
+      }
+    }
+
+    .nav-item.dropdown{
+      &:last-child, &:nth-last-child(2) {
+        .dropdown-menu {
+          left: unset;
+          right: auto;
+          transform: none;
+
+          @include respond-to(md) {
+            transform: translate(-85%, 0);
+          }
+        }
+      }
+    }
+
+
+
+    .dropdown-toggle::after {
+      content: none;
+      display: none;
+    }
+
+    .nav-link {
+      &.show {
+        &:before {
+          content: "";
+          width: 30px;
+          height: 30px;
+          background: #fff;
+          transform: rotate(45deg);
+          position: absolute;
+          bottom: -25px;
+          margin-left: 20px;
+        }
+      }
+    }
   }
 
   #main-menu {

@@ -4,7 +4,7 @@
     <div class="section mb-2">
       <input type="radio" name="accordion-1" id="section-language"/>
       <label for="section-language">
-        <span>Язык сайта: RUS</span>
+        <span>{{ __('Язык сайта') }}: {{ isset($_COOKIE['language']) ? $_COOKIE['language'] == 'ru' ? 'RUS' : 'ENG' : 'RUS' }}</span>
         <span class="caret fa fa-angle-right"></span>
       </label>
 
@@ -12,12 +12,12 @@
         <ul>
           <li>
             <span>
-              <a href="#">Russian</a>
+              <a href="{{ url('/language/change/ru') }}">Russian</a>
             </span>
           </li>
           <li>
             <span>
-              <a href="#">English</a>
+              <a href="{{ url('/language/change/en') }}">English</a>
             </span>
           </li>
         </ul>
@@ -27,7 +27,7 @@
     <div class="section">
       <label>
         <span>
-          <a href="{{ route('index') }}">Главная</a>
+          <a href="{{ route('index') }}">{{ __('Главная') }}</a>
         </span>
       </label>
       <div class="content"></div>
@@ -36,15 +36,14 @@
     <div class="section">
       <input type="radio" name="accordion-1" id="section-1"/>
       <label for="section-1">
-        <span>Бренды</span>
+        <span>{{ __('Бренды') }}</span>
         <span class="caret fa fa-angle-right"></span>
       </label>
 
       <div class="content">
         <ul>
-{{--          TODO: У бренда имя без перевода--}}
-          @foreach(App\Models\Brand::orderByTranslation('name', 'ASC')->get() as $brand)
-            <li><span><a href="{{ route('product.all', ['brand' => $brand->id]) }}">{{ $brand->name }}</a></span></li>
+          @foreach($brands as $brand)
+            <li><span><a href="{{ route('product.all', ['brand' => $brand->id]) }}">{{ $brand->name }} {{ $brand->translate(App::getLocale())->description }}</a></span></li>
           @endforeach
         </ul>
       </div>

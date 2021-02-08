@@ -1,6 +1,6 @@
 <header>
 
-  @include('user.layouts.header.left-menu')
+  @widget('left-menu')
 
   <nav class="navbar navbar-expand navbar-light bg-dark">
     <div class="container-fluid">
@@ -219,4 +219,6 @@
       </div>
     </div>
   </nav>
+
+  @widget('sub-header')
 </header>

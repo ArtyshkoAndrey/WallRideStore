@@ -52,7 +52,7 @@ return [
   | $useTranslationFallback when defined
   |
   */
-  'use_fallback' => 'ru',
+  'use_fallback' => 'en',
 
   /*
   |--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
   | is used first. So "es" will be checked before "es_MX".
   |
   */
-  'fallback_locale' => 'ru',
+  'fallback_locale' => 'en',
 
   /*
   |--------------------------------------------------------------------------
@@ -92,7 +92,7 @@ return [
   | set this to 'App\Translations'.
   |
   */
-  'translation_model_namespace' => null,
+  'translation_model_namespace' => 'App\Models',
 
   /*
   |--------------------------------------------------------------------------

@@ -70,6 +70,10 @@ body {
   background: $danger;
 }
 
+.bg-dark-transparent {
+  background: $dark-transparent;
+}
+
 .btn {
   border-radius: 0;
 }
@@ -77,6 +81,10 @@ body {
 
 .text-gray-1 {
   color: $gray-1;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
 }
 
 /* Анимации появления и исчезновения могут иметь */

@@ -38,7 +38,7 @@ $(function() {
   function blur () {
     content
       .css('cursor', 'pointer')
-      .css('filter', 'blur(2px)')
+      // .css('filter', 'blur(2px)')
 
     $('body').css('overflow', 'hidden')
   }
@@ -46,7 +46,7 @@ $(function() {
   function unBlur () {
     content
       .css('cursor', 'default')
-      .css('filter', 'none')
+      // .css('filter', 'none')
 
     $('body').css('overflow-y', 'auto')
   }
