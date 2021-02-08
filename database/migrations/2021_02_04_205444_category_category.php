@@ -13,7 +13,7 @@ class CategoryCategory extends Migration
    */
   public function up()
   {
-    Schema::table('category_categories', function (Blueprint $table) {
+    Schema::create('category_categories', function (Blueprint $table) {
       $table->id();
       $table->foreignId('category_id')
         ->constrained('categories')

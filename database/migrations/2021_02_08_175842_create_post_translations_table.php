@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBrandTranslationsTable extends Migration
+class CreatePostTranslationsTable extends Migration
 {
   /**
    * Run the migrations.
@@ -13,18 +13,18 @@ class CreateBrandTranslationsTable extends Migration
    */
   public function up()
   {
-    Schema::create('brand_translations', function (Blueprint $table) {
+    Schema::create('post_translations', function (Blueprint $table) {
       $table->id();
-      $table->foreignId('brand_id')
-        ->constrained('brands')
+      $table->foreignId('post_id')
+        ->constrained('posts')
         ->onDelete('cascade');
 
       $table->string('locale')
         ->index();
 
-      $table->string('name');
-      $table->text('description');
-      $table->unique(['brand_id', 'locale']);
+      $table->string('title');
+      $table->text('content');
+      $table->unique(['post_id', 'locale']);
     });
   }
 
@@ -35,6 +35,6 @@ class CreateBrandTranslationsTable extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('brand_translations');
+    Schema::dropIfExists('post_translations');
   }
 }

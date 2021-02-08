@@ -42,7 +42,7 @@
 
       <div class="content">
         <ul>
-          @foreach(App\Models\Brand::orderBy('name', 'ASC')->get() as $brand)
+          @foreach(App\Models\Brand::orderByTranslation('name', 'ASC')->get() as $brand)
             <li><span><a href="{{ route('product.all', ['brand' => $brand->id]) }}">{{ $brand->name }}</a></span></li>
           @endforeach
         </ul>

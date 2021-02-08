@@ -7,17 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 
-class Brand extends Model implements TranslatableContract
+class Slider extends Model implements TranslatableContract
 {
   use HasFactory;
   use Translatable;
 
   public array $translatedAttributes = [
-    'name',
-    'description'
+    'h1',
+    'h2',
+    'btn_text'
   ];
 
   protected $fillable = [
-
+    'url',
+    'photo',
+    'mobile_photo',
+    ''
   ];
 }

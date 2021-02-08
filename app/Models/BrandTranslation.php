@@ -11,5 +11,6 @@ class BrandTranslation extends Model
 
   protected $fillable = [
     'name',
+    'description'
   ];
 }
