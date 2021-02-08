@@ -42,6 +42,7 @@
 
       <div class="content">
         <ul>
+{{--          TODO: У бренда имя без перевода--}}
           @foreach(App\Models\Brand::orderByTranslation('name', 'ASC')->get() as $brand)
             <li><span><a href="{{ route('product.all', ['brand' => $brand->id]) }}">{{ $brand->name }}</a></span></li>
           @endforeach
