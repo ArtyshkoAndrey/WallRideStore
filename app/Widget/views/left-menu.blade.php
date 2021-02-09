@@ -43,7 +43,7 @@
       <div class="content">
         <ul>
           @foreach($brands as $brand)
-            <li><span><a href="{{ route('product.all', ['brand' => $brand->id]) }}">{{ $brand->name }} {{ $brand->translate(App::getLocale())->description }}</a></span></li>
+            <li><span><a href="{{ route('product.all', ['brand' => $brand->id]) }}">{{ $brand->name }} {{ $brand->translateOrDefault(App::getLocale())->description }}</a></span></li>
           @endforeach
         </ul>
       </div>

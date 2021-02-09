@@ -5,6 +5,45 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\CouponCode
+ *
+ * @property int $id
+ * @property string $code
+ * @property string $type
+ * @property string $value
+ * @property int $total
+ * @property int $used
+ * @property string $min_amount
+ * @property string $max_amount
+ * @property bool $disabled_other_sales
+ * @property \Illuminate\Support\Carbon $not_before
+ * @property \Illuminate\Support\Carbon $not_after
+ * @property bool $enabled
+ * @property bool $notification
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read string $description
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponCode newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponCode newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponCode query()
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponCode whereCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponCode whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponCode whereDisabledOtherSales($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponCode whereEnabled($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponCode whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponCode whereMaxAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponCode whereMinAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponCode whereNotAfter($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponCode whereNotBefore($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponCode whereNotification($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponCode whereTotal($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponCode whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponCode whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponCode whereUsed($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponCode whereValue($value)
+ * @mixin \Eloquent
+ */
 class CouponCode extends Model
 {
   use HasFactory;

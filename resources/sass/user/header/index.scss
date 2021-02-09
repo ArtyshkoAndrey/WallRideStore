@@ -37,7 +37,7 @@ header {
 
         .dropdown-item {
           padding: 0;
-          height: 50px;
+          height: 68px;
 
           input {
             border-radius: 0;
@@ -66,13 +66,15 @@ header {
     margin: 0 0.5em;
   }
 
-  #main-menu, #sub-header {
+  #sub-header {
     .nav-item {
       position: inherit!important;
+    }
+  }
 
-      > a {
-        color: $white;
-      }
+  #sub-header, #main-menu {
+    .nav-item > a {
+      color: $white;
     }
   }
 
@@ -82,29 +84,23 @@ header {
       top: 65px;
       border-radius: 0;
       width: 100vw;
+      height: calc(100vh - 76px - 52px);
       left: 0!important;
+
+      a {
+        &:hover {
+          color: $danger;
+        }
+      }
 
       @include respond-to(md) {
         width: 576px;
+        height: auto;
+        max-height: 300px;
         left: auto!important;
+        transform: translate(-50%, 0) !important;
       }
     }
-
-    .nav-item.dropdown{
-      &:last-child, &:nth-last-child(2) {
-        .dropdown-menu {
-          left: unset;
-          right: auto;
-          transform: none;
-
-          @include respond-to(md) {
-            transform: translate(-85%, 0);
-          }
-        }
-      }
-    }
-
-
 
     .dropdown-toggle::after {
       content: none;

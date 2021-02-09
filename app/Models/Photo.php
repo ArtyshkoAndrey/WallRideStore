@@ -6,6 +6,29 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * App\Models\Photo
+ *
+ * @property int $id
+ * @property int|null $product_id
+ * @property string $name
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read string $thumbnail_url_jpg
+ * @property-read string $thumbnail_url_webp
+ * @property-read string $url_jpg
+ * @property-read string $url_webp
+ * @property-read \App\Models\Product|null $product
+ * @method static \Illuminate\Database\Eloquent\Builder|Photo newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Photo newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Photo query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Photo whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Photo whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Photo whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Photo whereProductId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Photo whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Photo extends Model
 {
   use HasFactory;

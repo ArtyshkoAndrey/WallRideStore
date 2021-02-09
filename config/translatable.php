@@ -11,8 +11,8 @@ return [
   |
   */
   'locales' => [
-    'en',
     'ru',
+    'en',
   ],
 
   /*
@@ -39,7 +39,7 @@ return [
   | and never fallback to the translator one.
   |
   */
-  'locale' => 'ru',
+  'locale' => 'en',
 
   /*
   |--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ return [
   | $useTranslationFallback when defined
   |
   */
-  'use_fallback' => 'en',
+  'use_fallback' => 'ru',
 
   /*
   |--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
   | is used first. So "es" will be checked before "es_MX".
   |
   */
-  'fallback_locale' => 'en',
+  'fallback_locale' => 'ru',
 
   /*
   |--------------------------------------------------------------------------

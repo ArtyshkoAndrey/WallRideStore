@@ -78,6 +78,9 @@ body {
   border-radius: 0;
 }
 
+.text-gray-2 {
+  color: $gray-2;
+}
 
 .text-gray-1 {
   color: $gray-1;
@@ -85,6 +88,10 @@ body {
 
 .overflow-x-auto {
   overflow-x: auto;
+}
+
+.text-right {
+  text-align: right;
 }
 
 /* Анимации появления и исчезновения могут иметь */
