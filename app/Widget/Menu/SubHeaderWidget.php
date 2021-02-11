@@ -9,11 +9,11 @@ use Cache;
 class SubHeaderWidget
 {
   public function execute(){
-    $categories = Cache::remember('categories-sub-header', config('app.cache.bd'), function () {
+    $categories = Cache::remember('categories-menu', config('app.cache.bd'), function () {
       return Category::withTranslation()->whereDoesntHave('parents')->with('child')->get();
     });
 
-    $brands = Cache::remember('brands-left-menu', config('app.cache.bd'), function () {
+    $brands = Cache::remember('brands-menu', config('app.cache.bd'), function () {
       return Brand::withTranslation()->orderBy('name', 'ASC')->get();
     });
 

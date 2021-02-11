@@ -4,6 +4,28 @@ $(function() {
   let toggle = $('#nav-toggle')
   let leftMenu = $('#left-menu')
   let content = $('#app > .container')
+  let radioButtons = document.getElementsByName('accordion-1');
+  let currentlyCheckedRadio = null;
+
+  for(let i = 0; i < radioButtons.length; i++) {
+    radioButtons[i].addEventListener('click', function() {
+      // loop through 4 possible states
+      // if submenu is open and slide menu is open
+      if (currentlyCheckedRadio === this) {
+        currentlyCheckedRadio = null;
+        this.checked = false;
+
+        // if submenu is closed and slide menu is open
+      } else if (currentlyCheckedRadio !== this) {
+        this.checked = true;
+        currentlyCheckedRadio = this;
+
+        // if submenu is closed and slide menu is closed
+      } else {
+        console.log('error')
+      }
+    });
+  }
 
   setTimeout(() => {
     $('.alert').alert('close')

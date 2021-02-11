@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="row context mt-auto">
-      <div class="col-5 d-flex flex-column justify-content-center p-0">
+      <div class="col-md-5 col-12 d-flex flex-column justify-content-center p-0">
 {{--        @if($item->on_sale)--}}
           <span class="old-price">123 000 @{{ $store.state.currency.symbol }}</span>
           <span class="price">120 000 @{{ $store.state.currency.symbol }}</span>
@@ -29,7 +29,7 @@
 {{--          <span class="price">123 000 @{{ $store.state.currency.symbol }}</span>--}}
 {{--        @endif--}}
       </div>
-      <div class="col-7 p-0">
+      <div class="col-md-7 col-12 p-0">
 {{--        @if($item->skuses()->count() >=  2)--}}
           <a href="#" class="btn btn-dark h-100 w-100 d-block btn-to-cart">
             <span class="pe-2">{{ __('Выбрать') }}</span>

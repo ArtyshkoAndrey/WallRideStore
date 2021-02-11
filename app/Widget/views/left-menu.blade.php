@@ -33,9 +33,33 @@
       <div class="content"></div>
     </div>
 
+    @foreach($categories as $category)
+      <div class="section">
+        <input type="radio" name="accordion-1" id="section-category-{{$category->id}}"/>
+        <label for="section-category-{{$category->id}}">
+          <span>{{ $category->translate(App::getLocale(), true)->name }}</span>
+          <span class="caret fa fa-angle-right"></span>
+        </label>
+
+        <div class="content">
+          <ul>
+            @foreach($category->child as $ct)
+              <li>
+                <span>
+                  <a href="{{ route('product.all', ['category' => $ct->id]) }}">
+                    {{ $ct->translate(App::getLocale(), true)->name }}
+                  </a>
+                </span>
+              </li>
+            @endforeach
+          </ul>
+        </div>
+      </div>
+    @endforeach
+
     <div class="section">
-      <input type="radio" name="accordion-1" id="section-1"/>
-      <label for="section-1">
+      <input type="radio" name="accordion-1" id="section-brands"/>
+      <label for="section-brands">
         <span>{{ __('Бренды') }}</span>
         <span class="caret fa fa-angle-right"></span>
       </label>
@@ -43,10 +67,43 @@
       <div class="content">
         <ul>
           @foreach($brands as $brand)
-            <li><span><a href="{{ route('product.all', ['brand' => $brand->id]) }}">{{ $brand->name }} {{ $brand->translateOrDefault(App::getLocale())->description }}</a></span></li>
+            <li>
+              <span>
+                <a href="{{ route('product.all', ['brand' => $brand->id]) }}">
+                  {{ $brand->name }}
+                </a>
+              </span>
+            </li>
           @endforeach
         </ul>
       </div>
+    </div>
+
+    <div class="section">
+      <label>
+        <span>
+          <a href="{{ route('index') }}">{{ __('FAQ') }}</a>
+        </span>
+      </label>
+      <div class="content"></div>
+    </div>
+
+    <div class="section">
+      <label>
+        <span>
+          <a href="{{ route('index') }}">{{ __('Новости') }}</a>
+        </span>
+      </label>
+      <div class="content"></div>
+    </div>
+
+    <div class="section">
+      <label>
+        <span>
+          <a href="{{ route('index') }}" class="text-danger">{{ __('Sale') }}</a>
+        </span>
+      </label>
+      <div class="content"></div>
     </div>
 
   </div>
