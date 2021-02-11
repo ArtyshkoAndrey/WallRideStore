@@ -20,7 +20,11 @@ header {
     display: flex;
     align-self: center;
     margin: 0 0.5em;
-    font-size: 1em;
+    font-size: .8em;
+
+    @include respond-to(md) {
+      font-size: 1em;
+    }
 
     &#search-nav-item {
       position: unset;
