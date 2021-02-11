@@ -1,0 +1,74 @@
+@import '~mdb-ui-kit/src/scss/mdb.core';
+@import '~mdb-ui-kit/src/scss/mdb.free';
+@import "fonts";
+@import "variables";
+@import "colors";
+
+*:active, *:hover {
+  outline: none;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  background: rgba(255,255,255,.7);
+  border-radius: 16px;
+}
+*::-webkit-scrollbar-thumb {
+  border-radius: 16px;
+  background-color: $dark;
+}
+*::-webkit-scrollbar-track {
+  border-radius: 16px;
+  width: 3px;
+}
+
+body {
+  font-family: "OpenSans", sans-serif;
+  background: $body-bg;
+  color: $dark!important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.not-after {
+  &:after {
+    content: none!important;
+    display: none!important;
+  }
+}
+
+.btn {
+  border-radius: 0;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
+}
+
+.text-right {
+  text-align: right;
+}
+
+body > #app > #main {
+  margin-top: 77px;
+  transition: .5s;
+}
+
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+  /* .slide-fade-leave-active до версии 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
+
+@import './header';
+@import 'alert';
+
+@import "./index/index";
+@import "product";
+

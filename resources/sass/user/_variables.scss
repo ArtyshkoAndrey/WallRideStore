@@ -1,0 +1,51 @@
+// Colors
+$blue: #3490dc;
+$indigo: #6574cd;
+$purple: #9561e2;
+$pink: #f66d9b;
+$orange: #f6993f;
+$yellow: #ffed4a;
+$green: #38c172;
+$teal: #4dc0b5;
+$cyan: #6cb2eb;
+
+$dark: #1D1E23;
+$dark-transparent: #1D1E23bb;
+$light: #93979C;
+$danger: #F33C3C;
+$white: #FFFFFF;
+$gray: #8B8D96;
+$gray-1: #575A67;
+$gray-2: #444447;
+
+// Body color and bg
+$body-bg: #F8F8F8;
+$body-color: $dark;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+$slider-height: 600px;
+$slider-3xl-height: 900px;
+
+// Breakpoints
+$grid-breakpoints: ( xs: 0, xsm: 300px, sm: 576px, md: 768px, lg: 992px, xl: 1200px, xxl: 1400px, xxxl: 2560px );
+
+/// Mixin to manage responsive breakpoints
+/// @author Fulliton
+/// @param {String} $breakpoint - Breakpoint name
+/// @require $breakpoints
+@mixin respond-to($breakpoint) {
+  // If the key exists in the map
+  @if map-has-key($grid-breakpoints, $breakpoint) {
+    // Prints a media query based on the value
+    @media (min-width: map-get($grid-breakpoints, $breakpoint)) {
+      @content;
+    }
+  }
+
+    // If the key doesn't exist in the map
+  @else {
+    @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+        + "Available breakpoints are: #{map-keys($grid-breakpoints)}.";
+  }
+}

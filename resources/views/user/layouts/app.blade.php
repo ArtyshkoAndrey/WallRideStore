@@ -44,8 +44,12 @@
 </head>
 <body id="{{ str_replace('.', '-', Route::currentRouteName()) . '-page' }}">
   <div id="app">
+
+    @include('user.layouts.header.alerts')
+
     @include('user.layouts.header.header')
-    <div class="container"  style="height: 3000px; margin-top: 170px">
+
+    <div id="main">
       @yield('content')
     </div>
   </div>

@@ -5,6 +5,10 @@ $(function() {
   let leftMenu = $('#left-menu')
   let content = $('#app > .container')
 
+  setTimeout(() => {
+    $('.alert').alert('close')
+  }, 1500)
+
   const buttons = document.querySelectorAll('.btn')
   buttons.forEach((button) => {
     new mdb.Button(button)

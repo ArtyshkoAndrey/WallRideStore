@@ -3,5 +3,55 @@
 @section('title', 'Главаня страница')
 
 @section('content')
-  <h1>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid blanditiis, consectetur consequuntur corporis distinctio doloremque dolorum ea earum eos, eum facere id maxime nulla quae recusandae sequi tempora tempore. Ab amet architecto autem corporis culpa debitis deserunt dignissimos distinctio dolor doloremque ea eius ex fugiat fugit id iste itaque iusto laborum laudantium libero maiores molestiae molestias mollitia natus necessitatibus neque nisi quaerat quasi quis, recusandae reiciendis repellat saepe sequi sint, ut voluptas voluptatibus? Corporis culpa cum distinctio dolor fuga minima quia totam ut? Aspernatur assumenda dolores eos hic itaque molestiae mollitia nisi ratione sequi voluptatem. Aliquam inventore itaque velit voluptate.</h1>
+
+  <div class="container-fluid p-0">
+    <div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-mdb-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carouselExampleCaptions" :data-slide-to="i-1" :class="i === 1 ? 'active' : ''" v-for="i in 1"></li>
+      </ol>
+      <div class="carousel-inner">
+
+        <div class="carousel-item" :class="i === 1 ? 'active' : ''" v-for="i in 1">
+          <div class="image">
+            <img src="{{ asset('storage/slider/photos/slider.jpg') }}" class="d-block d-lg-none w-100" alt="...">
+
+            <img src="{{ asset('storage/slider/photos/slider1.jpg') }}" class="d-lg-block d-none w-100" alt="...">
+          </div>
+          <div class="carousel-caption">
+            <h4 class="text-uppercase">Vans</h4>
+            <p>“OF THE WALL”</p>
+            <a href="#" class="btn btn-dark">Перейти в магазин</a>
+          </div>
+        </div>
+
+      </div>
+{{--      <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-mdb-slide="prev">--}}
+{{--        <span class="carousel-control-prev-icon" aria-hidden="true"></span>--}}
+{{--        <span class="sr-only">Previous</span>--}}
+{{--      </a>--}}
+{{--      <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-mdb-slide="next">--}}
+{{--        <span class="carousel-control-next-icon" aria-hidden="true"></span>--}}
+{{--        <span class="sr-only">Next</span>--}}
+{{--      </a>--}}
+    </div>
+  </div>
+
+  <section class="container mt-5 mb-5">
+    <div class="row">
+      <div class="col-6">
+        <h4 class="font-weight-bolder">{{ __('Новые товары') }}</h4>
+      </div>
+
+      <div class="col-6">
+        <a href="#" class="text-dark d-block text-right">{{ __('Перейти в каталог') }}</a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-3 col-md-4 col-6" v-for="i in 8">
+        @include('user.layouts.item')
+      </div>
+    </div>
+  </section>
+
 @endsection

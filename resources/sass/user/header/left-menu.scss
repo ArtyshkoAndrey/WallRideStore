@@ -1,6 +1,8 @@
+@import "colors";
+
 #left-menu {
   z-index: 3;
-  background-color: $dark;
+  background-color: $left-menu-bg;
   position: fixed;
   left: -100vw;
   display: block;
@@ -17,7 +19,7 @@
   overflow: auto;
 
   .accordion {
-    color: $white;
+    color: $left-menu-item-color;
     width: 100%;
     padding-left: 20px;
     font-size: 16px;
@@ -74,16 +76,16 @@
         opacity: 0;
         position: relative;
         overflow-y: auto;
-        background-color: $white;
-        color: $dark;
+        background-color: $left-menu-content-bg;
+        color: $left-menu-content-color;
 
         input[type='radio'] {
 
           &:checked {
 
             + label {
-              border-bottom: 1px solid $white;
-              color: $danger;
+              border-bottom: 1px solid $left-menu-content-bg;
+              color: $left-menu-label-contents;
             }
 
           }
@@ -94,20 +96,20 @@
 
           li {
 
-            border-bottom: 1px solid $white;
-            color: $dark;
+            border-bottom: 1px solid $left-menu-content-checked-border-color;
+            color: $left-menu-content-color;
             transition: .3s;
 
             &:hover {
-              border-bottom: 1px solid $danger;
-              color: $danger;
+              border-bottom: 1px solid $left-menu-item-border-color;
+              color: $left-menu-items-hover-color;
             }
           }
         }
 
         label {
-          background: $white;
-          color: black;
+          background: $left-menu-content-bg;
+          color: $left-menu-content-color;
           transition: .3s;
           margin-bottom: 0;
 
@@ -121,8 +123,8 @@
           }
 
           &:hover {
-            color: $danger;
-            border-bottom: 1px solid $danger;
+            color: $left-menu-items-hover-color;
+            border-bottom: 1px solid $left-menu-content-checked-border-color;
           }
         }
       }

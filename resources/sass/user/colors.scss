@@ -1,0 +1,25 @@
+@import "variables";
+
+.bg-danger {
+  background: $danger;
+}
+
+.bg-dark-transparent {
+  background: $dark-transparent;
+}
+
+.text-gray-2 {
+  color: $gray-2;
+}
+
+.text-gray-1 {
+  color: $gray-1;
+}
+
+.text-dark {
+  color: $dark!important;
+
+  &:hover {
+    color: $danger!important;
+  }
+}

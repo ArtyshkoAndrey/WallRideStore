@@ -1,3 +1,5 @@
+@import "colors.scss";
+
 header {
   #nav-toggle {
     width: 20px;
@@ -19,7 +21,7 @@ header {
       position: absolute;
       height: 2px;
       width: 100%;
-      background: $white;
+      background: $toggle-bg;
       border-radius: 2px;
       opacity: 1;
       left: 0;
@@ -49,7 +51,7 @@ header {
     }
 
     &.open span {
-      background: $danger;
+      background: $toggle-open;
 
       &:nth-child(2), &:nth-child(1) {
         -webkit-transform: rotate(45deg);

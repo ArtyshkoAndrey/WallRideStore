@@ -6,11 +6,7 @@ header {
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 2;
-
-  //.navbar {
-  //  background: $dark;
-  //}
+  z-index: 4;
 
   .logo {
     height: 50px;
@@ -93,7 +89,7 @@ header {
         }
       }
 
-      @include respond-to(md) {
+      @include respond-to(lg) {
         width: 576px;
         height: auto;
         max-height: 300px;
@@ -128,7 +124,7 @@ header {
     .product-name {
       font-size: .875em;
 
-      @include respond-to(md) {
+      @include respond-to(lg) {
         font-size: 1.2em;
       }
     }
@@ -140,10 +136,6 @@ header {
     form {
       .form-notch-trailing {
         border-radius: 0;
-      }
-      button {
-        //border-top-right-radius: 0.25rem;
-        //border-bottom-right-radius: 0.25rem;
       }
     }
 

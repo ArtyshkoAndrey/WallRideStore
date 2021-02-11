@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('index');
-
 Route::get('language/change/{locale}', [\App\Http\Controllers\HomeController::class, 'language']);
 
 Route::prefix('product')->name('product.')->group( function () {
