@@ -942,16 +942,16 @@
         },
         {
             "name": "enlightn/enlightn",
-            "version": "v1.11.0",
+            "version": "v1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/enlightn/enlightn.git",
-                "reference": "78d0d3fcc003c679c58dce6d93f9d0a66cd37f38"
+                "reference": "656e15272a064de11a3a2e644216a39b0840a539"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/enlightn/enlightn/zipball/78d0d3fcc003c679c58dce6d93f9d0a66cd37f38",
-                "reference": "78d0d3fcc003c679c58dce6d93f9d0a66cd37f38",
+                "url": "https://api.github.com/repos/enlightn/enlightn/zipball/656e15272a064de11a3a2e644216a39b0840a539",
+                "reference": "656e15272a064de11a3a2e644216a39b0840a539",
                 "shasum": ""
             },
             "require": {
@@ -960,7 +960,7 @@
                 "guzzlehttp/guzzle": "^5.0|^6.0|^7.0",
                 "laravel/framework": "^6.0|^7.0|^8.0",
                 "nikic/php-parser": "^4.0",
-                "nunomaduro/larastan": "^0.6.11",
+                "nunomaduro/larastan": "^0.6.11|^0.7",
                 "php": "^7.2|^8.0",
                 "phpstan/phpstan": "^0.12.59",
                 "symfony/finder": "^4.0|^5.0"
@@ -968,6 +968,7 @@
             "require-dev": {
                 "barryvdh/laravel-ide-helper": "^2.8",
                 "brianium/paratest": "^6.1",
+                "friendsofphp/php-cs-fixer": "^2.18",
                 "mockery/mockery": "^1.3",
                 "orchestra/testbench": "^4.0|^5.0|^6.0",
                 "phpunit/phpunit": "^7.5|^8.0|^9.0",
@@ -1017,22 +1018,22 @@
             "support": {
                 "docs": "https://www.laravel-enlightn.com/docs/",
                 "issues": "https://github.com/enlightn/enlightn/issues",
-                "source": "https://github.com/enlightn/enlightn/tree/v1.11.0"
+                "source": "https://github.com/enlightn/enlightn/tree/v1.13.0"
             },
-            "time": "2021-02-06T19:22:39+00:00"
+            "time": "2021-02-10T17:44:48+00:00"
         },
         {
             "name": "enlightn/security-checker",
-            "version": "v1.4",
+            "version": "v1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/enlightn/security-checker.git",
-                "reference": "378b2493cb3bc7961c836ad164b3393c33a20754"
+                "reference": "85ada478c641a304112ddd43e0c67dd18ce7c51e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/enlightn/security-checker/zipball/378b2493cb3bc7961c836ad164b3393c33a20754",
-                "reference": "378b2493cb3bc7961c836ad164b3393c33a20754",
+                "url": "https://api.github.com/repos/enlightn/security-checker/zipball/85ada478c641a304112ddd43e0c67dd18ce7c51e",
+                "reference": "85ada478c641a304112ddd43e0c67dd18ce7c51e",
                 "shasum": ""
             },
             "require": {
@@ -1081,9 +1082,9 @@
             ],
             "support": {
                 "issues": "https://github.com/enlightn/security-checker/issues",
-                "source": "https://github.com/enlightn/security-checker/tree/v1.4"
+                "source": "https://github.com/enlightn/security-checker/tree/v1.5.0"
             },
-            "time": "2021-02-01T13:49:38+00:00"
+            "time": "2021-02-09T10:28:00+00:00"
         },
         {
             "name": "facade/flare-client-php",
@@ -1981,16 +1982,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.26.1",
+            "version": "v8.27.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "275c78c97e007e4a9d771d4d1caa1c77ebfdcf94"
+                "reference": "a6680d98f9dadaa363aa7d5218517a08706cee64"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/275c78c97e007e4a9d771d4d1caa1c77ebfdcf94",
-                "reference": "275c78c97e007e4a9d771d4d1caa1c77ebfdcf94",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/a6680d98f9dadaa363aa7d5218517a08706cee64",
+                "reference": "a6680d98f9dadaa363aa7d5218517a08706cee64",
                 "shasum": ""
             },
             "require": {
@@ -2145,20 +2146,20 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-02-02T14:07:24+00:00"
+            "time": "2021-02-09T15:14:54+00:00"
         },
         {
             "name": "laravel/telescope",
-            "version": "v4.4.1",
+            "version": "v4.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/telescope.git",
-                "reference": "c21b0e38c3e1e7f12a391eb97f092de1d1f2bdd8"
+                "reference": "bb2b733a8ac5c8e5da8a935e15db5624ed998de9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/telescope/zipball/c21b0e38c3e1e7f12a391eb97f092de1d1f2bdd8",
-                "reference": "c21b0e38c3e1e7f12a391eb97f092de1d1f2bdd8",
+                "url": "https://api.github.com/repos/laravel/telescope/zipball/bb2b733a8ac5c8e5da8a935e15db5624ed998de9",
+                "reference": "bb2b733a8ac5c8e5da8a935e15db5624ed998de9",
                 "shasum": ""
             },
             "require": {
@@ -2207,9 +2208,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/telescope/issues",
-                "source": "https://github.com/laravel/telescope/tree/v4.4.1"
+                "source": "https://github.com/laravel/telescope/tree/v4.4.2"
             },
-            "time": "2021-01-26T20:11:13+00:00"
+            "time": "2021-02-09T16:47:39+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -2759,16 +2760,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.44.0",
+            "version": "2.45.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "e6ef33cb1f67a4bed831ed6d0f7e156739a5d8cd"
+                "reference": "528783b188bdb853eb21239b1722831e0f000a8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/e6ef33cb1f67a4bed831ed6d0f7e156739a5d8cd",
-                "reference": "e6ef33cb1f67a4bed831ed6d0f7e156739a5d8cd",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/528783b188bdb853eb21239b1722831e0f000a8d",
+                "reference": "528783b188bdb853eb21239b1722831e0f000a8d",
                 "shasum": ""
             },
             "require": {
@@ -2848,7 +2849,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-26T20:46:41+00:00"
+            "time": "2021-02-11T18:30:17+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -2996,16 +2997,16 @@
         },
         {
             "name": "nunomaduro/larastan",
-            "version": "v0.6.13",
+            "version": "v0.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/larastan.git",
-                "reference": "7a047f7974e6e16d04ee038d86e2c5e6c59e9dfe"
+                "reference": "179d7565674d4e264e60296d1b5b75413b7461b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/larastan/zipball/7a047f7974e6e16d04ee038d86e2c5e6c59e9dfe",
-                "reference": "7a047f7974e6e16d04ee038d86e2c5e6c59e9dfe",
+                "url": "https://api.github.com/repos/nunomaduro/larastan/zipball/179d7565674d4e264e60296d1b5b75413b7461b6",
+                "reference": "179d7565674d4e264e60296d1b5b75413b7461b6",
                 "shasum": ""
             },
             "require": {
@@ -3020,7 +3021,7 @@
                 "illuminate/support": "^6.0 || ^7.0 || ^8.0 || ^9.0",
                 "mockery/mockery": "^0.9 || ^1.0",
                 "php": "^7.2 || ^8.0",
-                "phpstan/phpstan": "^0.12.65",
+                "phpstan/phpstan": "^0.12.70",
                 "symfony/process": "^4.3 || ^5.0"
             },
             "require-dev": {
@@ -3069,7 +3070,7 @@
             ],
             "support": {
                 "issues": "https://github.com/nunomaduro/larastan/issues",
-                "source": "https://github.com/nunomaduro/larastan/tree/v0.6.13"
+                "source": "https://github.com/nunomaduro/larastan/tree/v0.7.0"
             },
             "funding": [
                 {
@@ -3089,7 +3090,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2021-01-22T12:51:26+00:00"
+            "time": "2021-02-01T22:08:11+00:00"
         },
         {
             "name": "opis/closure",
@@ -3282,16 +3283,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.73",
+            "version": "0.12.75",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "a08c2759d132b4247b32e03066401c3232ad99b7"
+                "reference": "2e4738cd67e0163861a065180eff7eb5c8417d6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/a08c2759d132b4247b32e03066401c3232ad99b7",
-                "reference": "a08c2759d132b4247b32e03066401c3232ad99b7",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/2e4738cd67e0163861a065180eff7eb5c8417d6e",
+                "reference": "2e4738cd67e0163861a065180eff7eb5c8417d6e",
                 "shasum": ""
             },
             "require": {
@@ -3322,7 +3323,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.73"
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.75"
             },
             "funding": [
                 {
@@ -3338,7 +3339,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-02-07T16:26:54+00:00"
+            "time": "2021-02-11T13:58:47+00:00"
         },
         {
             "name": "psr/container",

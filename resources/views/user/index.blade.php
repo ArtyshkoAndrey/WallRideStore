@@ -18,7 +18,7 @@
             <img src="{{ asset('storage/slider/photos/slider1.jpg') }}" class="d-lg-block d-none w-100" alt="...">
           </div>
           <div class="carousel-caption">
-            <h4 class="text-uppercase">Vans</h4>
+            <h2 class="text-uppercase">Vans</h2>
             <p>“OF THE WALL”</p>
             <a href="#" class="btn btn-dark">Перейти в магазин</a>
           </div>
@@ -39,7 +39,7 @@
   <section class="container mt-5 mb-5">
     <div class="row">
       <div class="col-6">
-        <h4 class="font-weight-bolder">{{ __('Новые товары') }}</h4>
+        <h3 class="font-weight-bolder">{{ __('Новые товары') }}</h3>
       </div>
 
       <div class="col-6">
@@ -50,6 +50,62 @@
     <div class="row">
       <div class="col-lg-3 col-md-4 col-6" v-for="i in 8">
         @include('user.layouts.item')
+      </div>
+    </div>
+  </section>
+
+  <section class="container mb-5" id="brands-section">
+    <div class="row m-0">
+      <div class="col-lg-4 col-md-6 col-12 bg-white py-4 px-5 mb-3 mb-md-0">
+        <div class="row align-self-end h-100">
+          <div class="col-12">
+            <h4 class="h3 font-weight-bolder">Заголовок про <br/> бренды</h4>
+            <p class="text-gray-1 d-block">Наш скейтшоп находится в чудесном городе Алма-Ата, на высоте 900 метров над уровнем моря. Иногда мы сравниваем ландшафт города </p>
+          </div>
+          <div class="col-12 mt-auto">
+            <a href="#" class="btn btn-dark d-block py-3 my-auto mb-0">Смотреть все бренды</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-8 col-md-6 col-12 p-0 ps-md-3">
+        <div class="row">
+          <div class="col-lg-6 col-md-6">
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-4 mb-3 position-relative">
+                <img src="{{ asset('images/product.jpg') }}" class="w-100 h-100 object-fit-cover dark-image-25" alt="...">
+                <p class="text-white text-center position-absolute">Dime</p>
+              </div>
+
+              <div class="col-lg-6 col-md-12 col-4 mb-3 mb-lg-0 position-relative">
+                <img src="{{ asset('images/product.jpg') }}" class="w-100 h-100 object-fit-cover dark-image-25" alt="...">
+                <p class="text-white text-center position-absolute">Dime</p>
+              </div>
+              <div class="col-lg-6 col-md-12 col-4 mb-3 mb-lg-0 position-relative">
+                <img src="{{ asset('images/product.jpg') }}" class="w-100 h-100 object-fit-cover dark-image-25" alt="...">
+                <p class="text-white text-center position-absolute">Dime</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6">
+            <div class="row">
+              <div class="col-lg-6 col-md-12 col-4 mb-3 position-relative">
+                <img src="{{ asset('images/product.jpg') }}" class="w-100 h-100 object-fit-cover dark-image-25" alt="...">
+                <p class="text-white text-center position-absolute">Dime</p>
+              </div>
+              <div class="col-lg-6 col-md-12 col-4 mb-3 position-relative">
+                <img src="{{ asset('images/product.jpg') }}" class="w-100 h-100 object-fit-cover dark-image-25" alt="...">
+                <p class="text-white text-center position-absolute">Dime</p>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-4 mb-3 mb-lg-0 position-relative">
+                <img src="{{ asset('images/product.jpg') }}" class="w-100 h-100 object-fit-cover dark-image-25" alt="...">
+                <p class="text-white text-center position-absolute">Dime</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>

@@ -23,3 +23,19 @@
     color: $danger!important;
   }
 }
+
+img {
+  &.dark-image-50 {
+    display: block;
+    filter: brightness(50%);
+  }
+  &.dark-image-25 {
+    display: block;
+    filter: brightness(75%);
+  }
+
+  &.dark-image-75 {
+    display: block;
+    filter: brightness(25%);
+  }
+}
