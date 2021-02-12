@@ -40885,6 +40885,11 @@ body > #app > #main {
   opacity: 0;
 }
 
+.object-fit-cover {
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
 header #nav-toggle {
   width: 20px;
   height: 20px;

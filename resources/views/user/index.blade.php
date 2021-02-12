@@ -110,4 +110,55 @@
     </div>
   </section>
 
+  <section class="container mb-5">
+    <div class="row">
+      <div class="col-lg-5 col-md-4">
+        <img src="{{ asset('images/shop_photo.jpg') }}" class="w-100 h-100 object-fit-cover" alt="WallrideStore shop Kazhstan">
+      </div>
+
+      <div class="col">
+        <div class="row h-100 align-items-stretch">
+          <div class="col-12 h-auto">
+            <div class="card bg-white shadow-0">
+              <div class="card-body px-4">
+                <div class="row">
+                  <div class="col-md-7 col-12">
+                    <h3 class="font-weight-bolder mt-2">Приходите в гости в магазин Wallridestore</h3>
+                  </div>
+                  <p class="text-gray-1 mt-3">Наш скейтшоп находится в чудесном городе Алма-Ата, на высоте 900 метров над уровнем моря. Иногда мы сравниваем ландшафт города с Сан-Франциско: здесь крутой даунхил и много спотов, наверное, поэтому Казахстанский скейтбординг обрел здесь свое начало и продолжает развиваться.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 h-50">
+            <div class="card shadow-0 h-100">
+              <div class="card-body p-0 h-100">
+                <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A6358423497b39c18edf3d1526a35662c1cb50b361ebf554585d2d0b14456a080&amp;source=constructor" width="100%" height="100%" frameborder="0"></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container mt-5 mb-5">
+    <div class="row">
+      <div class="col-6">
+        <h3 class="font-weight-bolder">{{ __('Новые товары') }}</h3>
+      </div>
+
+      <div class="col-6">
+        <a href="#" class="text-dark d-block text-right">{{ __('Перейти в каталог') }}</a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-3 col-md-4 col-6" v-for="i in 8">
+        @include('user.layouts.item')
+      </div>
+    </div>
+  </section>
+
 @endsection

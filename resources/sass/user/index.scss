@@ -68,6 +68,10 @@ body > #app > #main {
   opacity: 0;
 }
 
+.object-fit-cover {
+  object-fit: cover;
+}
+
 @import './header';
 @import 'alert';
 
