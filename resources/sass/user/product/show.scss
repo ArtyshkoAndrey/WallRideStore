@@ -1,0 +1,16 @@
+@import "resources/sass/user/variables";
+.breadcrumb {
+  .breadcrumb-link {
+    color: $dark!important;
+    //margin: 0 15px;
+    &:not(:last-child) {
+      &:hover {
+        color: $danger!important;
+      }
+      &:after {
+        content: '/';
+        margin: 0 5px;
+      }
+    }
+  }
+}

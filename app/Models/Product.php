@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -52,7 +55,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Product wherePriceSale($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereSoldCount($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereTranslation(string $translationField, $value, ?string $locale = null, string $method = 'whereHas', string $operator = '=')
- * @method static \Illuminate\Database\Eloquent\Builder|Product whereTranslationLike(string $translationField, $value, ?string $locale = null)
+ * @metphod static \Illuminate\Database\Eloquent\Builder|Product whereTranslationLike(string $translationField, $value, ?string $locale = null)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereWeight($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product withTranslation()
@@ -96,4 +99,66 @@ class Product extends Model implements TranslatableContract
       "title": ""
     }'
   ];
+
+  protected $appends =[
+    'thumbnail_webp',
+    'thumbnail_jpg'
+  ];
+
+  public function available (): bool
+  {
+    $counter = 0;
+    foreach ($this->skus as $sku) {
+      $counter += $sku->stock;
+    }
+    return (boolean) $counter > 0;
+  }
+
+  public function category(): BelongsTo
+  {
+    return $this->belongsTo(Category::class, 'category_id', 'id');
+  }
+
+  public function brand(): BelongsTo
+  {
+    return $this->belongsTo(Brand::class, 'brand_id', 'id');
+  }
+
+  public function photos(): HasMany
+  {
+    return $this->hasMany(Photo::class, 'product_id', 'id');
+  }
+
+  public function skuses(): BelongsToMany
+  {
+    return $this->belongsToMany(Skus::class, 'product_skuses', 'product_id', 'skus_id')->withPivot('stock', 'id');
+  }
+
+  public function productSkuses(): HasMany
+  {
+    return $this->hasMany(ProductSkus::class, 'product_id', 'id');
+  }
+
+  public function orders(): BelongsToMany
+  {
+    return $this->belongsToMany(Order::class, 'order_items', 'product_id', 'order_id')->withPivot(['amount']);
+  }
+
+  public function getThumbnailWebpAttribute (): string
+  {
+    if ($this->photos->count() > 0) {
+      return $this->photos->first()->thumbnail_url_webp;
+    } else {
+      return asset('images/product.jpg');
+    }
+  }
+
+  public function getThumbnailJpgAttribute (): string
+  {
+    if ($this->photos->count() > 0) {
+      return $this->photos->first()->thumbnail_url_jpg;
+    } else {
+      return asset('images/product.jpg');
+    }
+  }
 }

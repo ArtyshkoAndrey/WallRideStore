@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App;
 use App\Models\Product;
 use App\Models\Skus;
 use Illuminate\Contracts\Foundation\Application;
@@ -203,7 +204,9 @@ class ProductController extends Controller
         $categories = [];
       }
 
-      return view('user.product.show', compact('product', 'categories'));
+      $translation = $product->translate(App::getLocale());
+
+      return view('user.product.show', compact('product', 'categories', 'translation'));
     }
     throw new NotFoundHttpException();
   }

@@ -28,7 +28,7 @@
       <div class="col-md-3 col-sm-6 col-12 mt-3">
         <h5>Категории</h5>
 
-        @widget('footer-categories')
+        @widget("footer-categories")
 
       </div>
 

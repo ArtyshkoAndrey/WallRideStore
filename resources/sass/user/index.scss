@@ -51,9 +51,17 @@ body {
   text-align: right;
 }
 
-body > #app > #main {
-  margin-top: 62px;
-  transition: .5s;
+body {
+  &#index-page {
+    > #app > #main {
+      margin-top: 62px;
+      transition: .5s;
+    }
+  }
+
+  > #app > #main {
+    margin-top: 150px;
+  }
 }
 
 .slide-fade-enter-active {
@@ -62,8 +70,7 @@ body > #app > #main {
 .slide-fade-leave-active {
   transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
-.slide-fade-enter, .slide-fade-leave-to
-  /* .slide-fade-leave-active до версии 2.1.8 */ {
+.slide-fade-enter, .slide-fade-leave-to {
   transform: translateX(10px);
   opacity: 0;
 }
