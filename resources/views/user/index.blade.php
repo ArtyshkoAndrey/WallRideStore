@@ -7,11 +7,11 @@
   <div class="container-fluid p-0">
     <div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-mdb-ride="carousel">
       <ol class="carousel-indicators">
-        <li data-target="#carouselExampleCaptions" :data-slide-to="i-1" :class="i === 1 ? 'active' : ''" v-for="i in 1"></li>
+        <li data-target="#carouselExampleCaptions" :data-slide-to="i-1" :class="i === 1 ? 'active' : ''" v-for="i in 3"></li>
       </ol>
       <div class="carousel-inner">
 
-        <div class="carousel-item" :class="i === 1 ? 'active' : ''" v-for="i in 1">
+        <div class="carousel-item" :class="i === 1 ? 'active' : ''" v-for="i in 3">
           <div class="image">
             <img src="{{ asset('storage/slider/photos/slider.jpg') }}" class="d-block d-lg-none w-100" alt="...">
 
@@ -60,7 +60,7 @@
         <div class="row align-self-end h-100">
           <div class="col-12">
             <h4 class="h3 font-weight-bolder">Заголовок про <br/> бренды</h4>
-            <p class="text-gray-1 d-block">Наш скейтшоп находится в чудесном городе Алма-Ата, на высоте 900 метров над уровнем моря. Иногда мы сравниваем ландшафт города </p>
+            <p class="text-gray-1 d-block mt-4">Наш скейтшоп находится в чудесном городе Алма-Ата, на высоте 900 метров над уровнем моря. Иногда мы сравниваем ландшафт города </p>
           </div>
           <div class="col-12 mt-auto">
             <a href="#" class="btn btn-dark d-block py-3 my-auto mb-0">Смотреть все бренды</a>
