@@ -16,6 +16,24 @@
   color: $gray-1;
 }
 
+a {
+  &.text-gray-1 {
+    &:hover {
+      color: $dark;
+    }
+  }
+}
+
+.bg-dark {
+  a {
+    &.text-gray-1 {
+      &:hover {
+        color: $white;
+      }
+    }
+  }
+}
+
 .text-dark {
   color: $dark!important;
 

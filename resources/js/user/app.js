@@ -11,6 +11,7 @@
 
 require('./bootstrap.js')
 require('./header.js')
+require('./root.js')
 import store from "./store";
 window.Vue = require('vue')
 
