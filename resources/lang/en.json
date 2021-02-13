@@ -15,5 +15,10 @@
   "Все товары": "All Products",
   "Новые товары": "New products",
   "Перейти в каталог": "Go to catalog",
-  "Выбрать": "Choose"
+  "Выбрать": "Choose",
+  "Вход через соц. сеть": "Login via social network",
+  "Укажите свой логин и пароль": "Enter your username and password",
+  "Пароль": "Password",
+  "Забыли пароль?": "Forgot your password?",
+  "Войти": "Login"
 }

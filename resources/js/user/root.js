@@ -10,3 +10,16 @@ $(function() {
     })
   }
 })
+window.passwordTypeToggle = function (button, elID) {
+  let el = $('#' + elID)
+  let icon = $(button).children('i')
+  if (el.attr('type') === 'password') {
+    el.attr('type', 'text')
+    icon.removeClass('fa-eye')
+    icon.addClass('fa-eye-slash')
+  } else if (el.attr('type') === 'text') {
+    el.attr('type', 'password')
+    icon.addClass('fa-eye')
+    icon.removeClass('fa-eye-slash')
+  }
+}
