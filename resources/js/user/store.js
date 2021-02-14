@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
+import Alert from "./Alert";
 
 Vue.use(Vuex);
 
@@ -108,7 +109,10 @@ const store = new Vuex.Store({
           commit('currency', response.data)
         })
         .catch(error => {
-          alert(error.response.data)
+          for (let key in error.response.data) {
+            Alert.warning(error.response.data[key])
+            break;
+          }
         })
     },
     updateAuthCart: ({commit, state}) => {
@@ -122,6 +126,9 @@ const store = new Vuex.Store({
             console.log(response.data)
           })
           .catch(error => {
+            for (let key in error.response.data) {
+              Alert.warning(error.response.data[key])
+            }
             alert(error.response.data)
           })
       }
@@ -139,6 +146,13 @@ const store = new Vuex.Store({
             })
             store.dispatch('getProducts')
           })
+          .catch(error => {
+            console.log(error.response.data)
+            for (let key in error.response.data) {
+              Alert.warning(error.response.data[key])
+              break;
+            }
+          })
       }
     },
     getProducts: ({commit, state}) => {
@@ -150,7 +164,11 @@ const store = new Vuex.Store({
           commit('setProducts', response.data)
         })
         .catch(error => {
-          alert(error.response.data)
+          for (let key in error.response.data) {
+            Alert.warning(error.response.data[key])
+            break;
+          }
+          // alert(error.response.data)
         })
     }
   },

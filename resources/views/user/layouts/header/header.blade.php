@@ -120,14 +120,66 @@
             >
               <i class="far fa-user"></i>
             </a>
-            <ul class="dropdown-menu dropdown-menu-end p-4" aria-labelledby="userDropdown">
-              <li class="dropdown-item px-0">
-                <a href="{{ route('login') }}" class="text-gray-1">{{ __('Вход') }}</a>
-              </li>
-              <li class="dropdown-item px-0">
-                <a href="{{ route('register') }}" class="text-gray-1">{{ __('Регистрация') }}</a>
-              </li>
-            </ul>
+            @guest
+              <ul class="dropdown-menu dropdown-menu-end p-4" aria-labelledby="userDropdown">
+                <li class="dropdown-item px-0">
+                  <a href="{{ route('login') }}" class="text-gray-1">{{ __('Вход') }}</a>
+                </li>
+                <li class="dropdown-item px-0">
+                  <a href="{{ route('register') }}" class="text-gray-1">{{ __('Регистрация') }}</a>
+                </li>
+              </ul>
+            @else
+              <div class="dropdown-menu dropdown-menu-end p-4 w-auto" aria-labelledby="userDropdown">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="row">
+                      <a href="{{ route('profile.index') }}" class="d-flex dropdown-item">
+                        <div class="col-2 d-flex align-items-center justify-content-center">
+                          <img src="{{ auth()->user()->avatar_image }}" alt="logo" class="rounded-circle" style="width: 25px; height: 25px;">
+                        </div>
+                        <div class="col-auto mx-2">
+                          {{ auth()->user()->name }}
+                        </div>
+                      </a>
+                    </div>
+                    <div class="row">
+                      <a href="{{ route('order.index') }}" class="d-flex dropdown-item">
+                        <div class="col-2 d-flex align-items-center justify-content-center">
+                          <i class="far fa-stream"></i>
+                        </div>
+                        <div class="col-auto mx-2">
+                          {{ __('Мои заказы') }}
+                        </div>
+                      </a>
+                    </div>
+                    <div class="row">
+                      <a href="{{ route('admin.index') }}" class="d-flex dropdown-item">
+                        <div class="col-2 d-flex align-items-center justify-content-center">
+                          <i class="fad fa-truck-loading"></i>
+                        </div>
+                        <div class="col-auto mx-2">
+                          Администитивная панель
+                        </div>
+                      </a>
+                    </div>
+                    <div class="row">
+                      <a href="#" onclick="event.preventDefault();$('#logout').submit()" class="d-flex dropdown-item">
+                        <div class="col-2 d-flex align-items-center justify-content-center">
+                          <i class="fad fa-sign-out-alt"></i>
+                        </div>
+                        <div class="col-auto mx-2">
+                          {{ __('Выйти') }}
+                        </div>
+                      </a>
+                      <form action="{{ route('logout') }}" id="logout" method="POST" class="d-none">
+                        @csrf
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            @endguest
           </li>
 
           <li class="divider d-none d-lg-block"></li>

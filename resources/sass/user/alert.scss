@@ -1,3 +1,6 @@
 body > #app > .alert {
   right: 20px;
+  z-index: 10;
+  border-radius: 0;
+  top: 100px;
 }

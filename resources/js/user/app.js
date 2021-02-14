@@ -12,6 +12,7 @@
 require('./bootstrap.js')
 require('./header.js')
 require('./root.js')
+import Alert from './Alert';
 import store from "./store";
 window.Vue = require('vue')
 
@@ -62,6 +63,10 @@ const app = new Vue({
         this.test ? console.log('Auth bool server', response.data) : null
       })
       .catch(response => {
+        for (let key in error.response.data) {
+          Alert.warning(error.response.data[key])
+          break;
+        }
         console.error(response)
       })
 
@@ -72,6 +77,10 @@ const app = new Vue({
         this.test ? console.log('Server return currency', response.data) : null
       })
       .catch(error => {
+        for (let key in error.response.data) {
+          Alert.warning(error.response.data[key])
+          break;
+        }
         // alert(error.response.data.error)
       })
 
@@ -102,6 +111,10 @@ const app = new Vue({
 
       })
       .catch(error => {
+        for (let key in error.response.data) {
+          Alert.warning(error.response.data[key])
+          break;
+        }
         // alert(error.response.data)
       })
 

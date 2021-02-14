@@ -6,7 +6,7 @@
 .product {
   .card-body {
     .title {
-      color: black;
+      color: $dark;
       font-weight: 500;
       -webkit-line-clamp: 2;
       display: -webkit-box;
@@ -17,7 +17,7 @@
 
     &:hover {
       .title {
-        color: #0c56d0;
+        color: $danger;
       }
     }
 

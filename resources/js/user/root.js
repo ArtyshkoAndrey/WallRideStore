@@ -10,6 +10,7 @@ $(function() {
     })
   }
 })
+
 window.passwordTypeToggle = function (button, elID) {
   let el = $('#' + elID)
   let icon = $(button).children('i')
@@ -22,4 +23,10 @@ window.passwordTypeToggle = function (button, elID) {
     icon.addClass('fa-eye')
     icon.removeClass('fa-eye-slash')
   }
+}
+
+window.onload = function () {
+  setTimeout(() => {
+    $('.alert').alert('close')
+  }, 3000)
 }

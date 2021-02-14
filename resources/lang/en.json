@@ -20,5 +20,12 @@
   "Укажите свой логин и пароль": "Enter your username and password",
   "Пароль": "Password",
   "Забыли пароль?": "Forgot your password?",
-  "Войти": "Login"
+  "Войти": "Login",
+  "Регистрация через соц. сеть": "Registration via social network",
+  "Имя": "Name",
+  "Повторите пароль": "Confirm password",
+  "Зарегистрироваться": "Register now",
+  "Укажите логин и пароль": "Enter your username and password",
+  "Мои заказы": "My orders",
+  "Выход": "Exit"
 }

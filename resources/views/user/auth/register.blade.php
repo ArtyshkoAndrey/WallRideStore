@@ -16,18 +16,18 @@
             <div class="col-5 col-md-6 bg-gray px-4 px-md-5 py-4 link-inverse-login-register font-weight-bolder">
               <a href="{{ route('login') }}" class="text-decoration-none inverse d-flex justify-content-center align-items-center">
                 <i class="bx bx-sm bx-user mr-1"></i>
-                Войти
+                {{ __('Войти') }}
               </a>
             </div>
             <div class="col col-md-6 px-2 px-sm-5 py-4 font-weight-bolder d-flex justify-content-center align-items-center">
               <i class="bx bx-sm bx-plus-circle mr-1"></i>
-              Регистрация
+              {{ __('Регистрация') }}
             </div>
           </div>
           <div class="card-body p-4">
             <div class="row">
               <div class="col-12 d-none">
-                <h5 class="text-center font-weight-light w-100">Регистрация через соц. сеть</h5>
+                <h5 class="text-center font-weight-light w-100">{{ __('Регистрация через соц. сеть') }}</h5>
               </div>
               <div class="col-12 d-none">
                 <div class="row p-0 m-0">
@@ -52,14 +52,14 @@
                 </div>
               </div>
               <div class="col-12 mt-3">
-                <h5 class="text-center font-weight-light"><!--Или-->Укажите логин и пароль</h5>
+                <h5 class="text-center font-weight-light"><!--Или-->{{ __('Укажите логин и пароль') }}</h5>
               </div>
               <div class="col-12 mt-3">
                 <form action="{{ route('register') }}" method="post">
                   @csrf
                   <div class="form-outline mb-4">
                     <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" required/>
-                    <label class="form-label" for="name">Имя</label>
+                    <label class="form-label" for="name">{{ __('Имя') }}</label>
                   </div>
                   @error('first_name')
                   <span class="invalid-feedback" role="alert">
@@ -79,7 +79,7 @@
 
                   <div class="form-outline form-password mb-4">
                     <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" required/>
-                    <label class="form-label" for="password">Пароль</label>
+                    <label class="form-label" for="password">{{ __('Пароль') }}</label>
                     <button type="button" class="hide-show-btn" onclick="passwordTypeToggle(this, 'password')"><i class="fas fa-eye"></i></button>
                   </div>
                   @error('password')
@@ -90,11 +90,11 @@
 
                   <div class="form-outline form-password mb-4">
                     <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" required/>
-                    <label class="form-label" for="password_confirmation">Повторите пароль</label>
+                    <label class="form-label" for="password_confirmation">{{ __('Повторите пароль') }}</label>
                     <button type="button" class="hide-show-btn" onclick="passwordTypeToggle(this, 'password_confirmation')"><i class="fas fa-eye"></i></button>
                   </div>
 
-                  <button id="submitter" class="btn btn-dark w-100 d-block mt-3" style="height: 43px;" disabled>Зарегистрироваться</button>
+                  <button id="submitter" class="btn btn-dark w-100 d-block mt-3" style="height: 43px;" disabled>{{ __('Зарегистрироваться') }}</button>
                 </form>
               </div>
             </div>

@@ -29,7 +29,7 @@
 {{--          <span class="price">123 000 @{{ $store.state.currency.symbol }}</span>--}}
 {{--        @endif--}}
       </div>
-      <div class="col-md-7 mt-2 col-12 p-0">
+      <div class="col-md-7 mt-3 col-12 p-0">
 {{--        @if($item->skuses()->count() >=  2)--}}
           <a href="#" class="btn btn-dark h-100 w-100 d-block btn-to-cart">
             <span class="pe-2">{{ __('Выбрать') }}</span>

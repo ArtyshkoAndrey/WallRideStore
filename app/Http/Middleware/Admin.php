@@ -25,6 +25,6 @@ class Admin
       }
     }
 
-    return redirect()->route('index')->withErrors(['error' => 'Доступно только администраторам!']);
+    return redirect()->route('index')->withErrors(['Доступно только администраторам!']);
   }
 }
