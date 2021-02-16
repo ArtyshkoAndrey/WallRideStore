@@ -63,48 +63,66 @@
             <p class="text-gray-1 d-block mt-4">Наш скейтшоп находится в чудесном городе Алма-Ата, на высоте 900 метров над уровнем моря. Иногда мы сравниваем ландшафт города </p>
           </div>
           <div class="col-12 mt-auto">
-            <a href="#" class="btn btn-dark d-block py-3 my-auto mb-0">Смотреть все бренды</a>
+            <a href="#" class="btn btn-dark d-block py-3 my-auto mb-0">{{ __('Смотреть все бренды') }}</a>
           </div>
         </div>
       </div>
 
       <div class="col-lg-8 col-md-6 col-12 p-0 ps-md-3">
+
         <div class="row">
           <div class="col-lg-6 col-md-6">
             <div class="row">
-              <div class="col-lg-12 col-md-12 col-4 mb-3 position-relative">
-                <img src="{{ asset('images/product.jpg') }}" class="w-100 h-100 object-fit-cover dark-image-25" alt="...">
-                <p class="text-white text-center position-absolute">Dime</p>
-              </div>
+              @if(count($brands) > 0)
+                <div class="col-lg-12 col-md-12 col-4 mb-3 position-relative">
+                  <img src="{{ $brands[0]->photo_jpg_storage }}" class="w-100 h-100 object-fit-cover dark-image-25" alt="{{ $brands[0]->name }}">
+                  <p class="text-white text-center position-absolute">{{ $brands[0]->name }}</p>
+                </div>
+              @endif
 
-              <div class="col-lg-6 col-md-12 col-4 mb-3 mb-lg-0 position-relative">
-                <img src="{{ asset('images/product.jpg') }}" class="w-100 h-100 object-fit-cover dark-image-25" alt="...">
-                <p class="text-white text-center position-absolute">Dime</p>
-              </div>
-              <div class="col-lg-6 col-md-12 col-4 mb-3 mb-lg-0 position-relative">
-                <img src="{{ asset('images/product.jpg') }}" class="w-100 h-100 object-fit-cover dark-image-25" alt="...">
-                <p class="text-white text-center position-absolute">Dime</p>
-              </div>
+              @if(count($brands) > 1)
+                <div class="col-lg-6 col-md-12 col-4 mb-3 mb-lg-0 position-relative">
+                  <img src="{{ $brands[1]->photo_jpg_storage }}" class="w-100 h-100 object-fit-cover dark-image-25" alt="{{ $brands[1]->name }}">
+                  <p class="text-white text-center position-absolute">{{ $brands[1]->name }}</p>
+                </div>
+              @endif
+
+              @if(count($brands) > 2)
+                <div class="col-lg-6 col-md-12 col-4 mb-3 mb-lg-0 position-relative">
+                  <img src="{{ $brands[2]->photo_jpg_storage }}" class="w-100 h-100 object-fit-cover dark-image-25" alt="{{ $brands[2]->name }}">
+                  <p class="text-white text-center position-absolute">{{ $brands[2]->name }}</p>
+                </div>
+              @endif
             </div>
           </div>
 
           <div class="col-lg-6 col-md-6">
             <div class="row">
-              <div class="col-lg-6 col-md-12 col-4 mb-3 position-relative">
-                <img src="{{ asset('images/product.jpg') }}" class="w-100 h-100 object-fit-cover dark-image-25" alt="...">
-                <p class="text-white text-center position-absolute">Dime</p>
-              </div>
-              <div class="col-lg-6 col-md-12 col-4 mb-3 position-relative">
-                <img src="{{ asset('images/product.jpg') }}" class="w-100 h-100 object-fit-cover dark-image-25" alt="...">
-                <p class="text-white text-center position-absolute">Dime</p>
-              </div>
 
-              <div class="col-lg-12 col-md-12 col-4 mb-3 mb-lg-0 position-relative">
-                <img src="{{ asset('images/product.jpg') }}" class="w-100 h-100 object-fit-cover dark-image-25" alt="...">
-                <p class="text-white text-center position-absolute">Dime</p>
-              </div>
+              @if(count($brands) > 3)
+                <div class="col-lg-6 col-md-12 col-4 mb-3 position-relative">
+                  <img src="{{ $brands[3]->photo_jpg_storage }}" class="w-100 h-100 object-fit-cover dark-image-25" alt="{{ $brands[3]->name }}">
+                  <p class="text-white text-center position-absolute">{{ $brands[3]->name }}</p>
+                </div>
+              @endif
+
+              @if(count($brands) > 4)
+                <div class="col-lg-6 col-md-12 col-4 mb-3 position-relative">
+                  <img src="{{ $brands[4]->photo_jpg_storage }}" class="w-100 h-100 object-fit-cover dark-image-25" alt="{{ $brands[4]->name }}">
+                  <p class="text-white text-center position-absolute">{{ $brands[4]->name }}</p>
+                </div>
+              @endif
+
+              @if(count($brands) > 5)
+                <div class="col-lg-12 col-md-12 col-4 mb-3 mb-lg-0 position-relative">
+                  <img src="{{ $brands[5]->photo_jpg_storage }}" class="w-100 h-100 object-fit-cover dark-image-25" alt="{{ $brands[5]->name }}">
+                  <p class="text-white text-center position-absolute">{{ $brands[5]->name }}</p>
+                </div>
+              @endif
             </div>
           </div>
+
+
         </div>
       </div>
     </div>
