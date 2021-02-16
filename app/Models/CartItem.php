@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\CartItem
@@ -13,46 +16,56 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $user_id
  * @property int $product_sku_id
  * @property int $amount
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Product $product
- * @property-read \App\Models\User $user
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem query()
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem whereAmount($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem whereProductSkuId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem whereUserId($value)
- * @mixin \Eloquent
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Product $product
+ * @property-read User $user
+ * @method static Builder|CartItem newModelQuery()
+ * @method static Builder|CartItem newQuery()
+ * @method static Builder|CartItem query()
+ * @method static Builder|CartItem whereAmount($value)
+ * @method static Builder|CartItem whereCreatedAt($value)
+ * @method static Builder|CartItem whereId($value)
+ * @method static Builder|CartItem whereProductSkuId($value)
+ * @method static Builder|CartItem whereUpdatedAt($value)
+ * @method static Builder|CartItem whereUserId($value)
+ * @mixin Eloquent
  */
 class CartItem extends Model
 {
   use HasFactory;
+
+  /**
+   * Columns
+   *
+   * @var string[]
+   */
   protected $fillable = [
     'amount',
   ];
 
   /**
-   * Отношения Продукта к данному товару в корзине
+   * Product in cart
    *
    * @return BelongsTo
    */
   public function product(): BelongsTo
   {
-    return $this->belongsTo(Product::class);
+    return $this->belongsTo(
+      Product::class
+    );
   }
 
   /**
-   * Отношения пользователя к данному товару в корзине
+   * User product in cart
    *
    * @return BelongsTo
    */
   public function user(): BelongsTo
   {
-    return $this->belongsTo(User::class);
+    return $this->belongsTo(
+      User::class
+    );
   }
 
 }

@@ -45,24 +45,44 @@ class City extends Model
     'pickup'
   ];
 
+  /**
+   * Type Columns
+   *
+   * @var string[]
+   */
   protected $casts = [
     'pickup' => 'boolean'
   ];
 
+  /**
+   * Set function in property
+   *
+   * @var string[]
+   */
   protected $appends = [
     'search_name'
   ];
 
   /**
-   * Country city
+   *
+  Country of the city
    *
    * @return HasOne
    */
   public function country (): HasOne
   {
-    return $this->hasOne(Country::class, 'id', 'country_id');
+    return $this->hasOne(
+      Country::class,
+      'id',
+      'country_id'
+    );
   }
 
+  /**
+   * Name with Country
+   *
+   * @return string
+   */
   public function getSearchNameAttribute (): string
   {
     return $this->name . '(' . $this->country->name . ')';

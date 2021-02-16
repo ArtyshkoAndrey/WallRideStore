@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -13,21 +14,32 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $locale
  * @property string $title
  * @property string $content
- * @method static \Illuminate\Database\Eloquent\Builder|FaqsTranslation newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|FaqsTranslation newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|FaqsTranslation query()
- * @method static \Illuminate\Database\Eloquent\Builder|FaqsTranslation whereContent($value)
- * @method static \Illuminate\Database\Eloquent\Builder|FaqsTranslation whereFaqsId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|FaqsTranslation whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|FaqsTranslation whereLocale($value)
- * @method static \Illuminate\Database\Eloquent\Builder|FaqsTranslation whereTitle($value)
- * @mixin \Eloquent
+ * @method static Builder|FaqsTranslation newModelQuery()
+ * @method static Builder|FaqsTranslation newQuery()
+ * @method static Builder|FaqsTranslation query()
+ * @method static Builder|FaqsTranslation whereContent($value)
+ * @method static Builder|FaqsTranslation whereFaqsId($value)
+ * @method static Builder|FaqsTranslation whereId($value)
+ * @method static Builder|FaqsTranslation whereLocale($value)
+ * @method static Builder|FaqsTranslation whereTitle($value)
+ * @mixin Eloquent
  */
 class FaqsTranslation extends Model
 {
+  /**
+   * Not use Date
+   *
+   * @var bool
+   */
   public $timestamps = false;
 
+  /**
+   * Columns
+   *
+   * @var string[]
+   */
   protected $fillable = [
-    'title', 'content',
+    'title',
+    'content'
   ];
 }
