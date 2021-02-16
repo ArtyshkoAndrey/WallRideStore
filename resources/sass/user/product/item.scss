@@ -40,7 +40,6 @@
       }
 
       .info {
-        display: none;
         position: absolute;
         bottom: 0;
         left: 0;
@@ -48,12 +47,11 @@
         width: 100%;
         background: rgba(0, 0, 0, 0.3);
         backdrop-filter: blur(6px);
-        transition: opacity 1s ease-out;
+        transition: opacity .3s ease-out;
       }
 
       &:hover {
         .info {
-          display: block;
           opacity: 1;
 
         }
