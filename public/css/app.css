@@ -41111,6 +41111,14 @@ header .nav-item {
     font-size: 1em;
   }
 }
+header .nav-item #cartDropdown {
+  font-size: 1.1em !important;
+}
+@media (min-width: 768px) {
+  header .nav-item #cartDropdown {
+    font-size: 1em !important;
+  }
+}
 header .nav-item#search-nav-item {
   position: unset;
 }

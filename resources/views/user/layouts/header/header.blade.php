@@ -197,7 +197,7 @@
             <a
               class="nav-link nav-link-end dropdown-toggle not-after"
               href="#"
-              id="userDropdown"
+              id="cartDropdown"
               role="button"
               data-mdb-toggle="dropdown"
               aria-expanded="false"
@@ -205,7 +205,7 @@
               <i class="far fa-shopping-bag"></i>
               <span class="badge rounded-pill badge-notification bg-danger text-black">0</span>
             </a>
-            <div class="dropdown-menu full-width dropdown-menu-end p-4">
+            <div class="dropdown-menu full-width dropdown-menu-end p-4" шв>
 
               <div class="row mx-0 mb-3 mb-sm-2" v-for="i in 10">
                 <div class="col-sm-2 col-3 d-flex align-items-center p-0 pb-2">

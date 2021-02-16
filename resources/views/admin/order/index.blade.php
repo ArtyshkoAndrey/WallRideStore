@@ -140,7 +140,8 @@
 @section('script')
   <script>
     $("#orders tbody tr").click(function() {
-      window.location = $(this).data("href");
+      if ($(this).data("href"))
+        window.location = $(this).data("href");
     });
   </script>
 @endsection

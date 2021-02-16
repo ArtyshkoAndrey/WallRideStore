@@ -26,6 +26,14 @@ header {
       font-size: 1em;
     }
 
+    #cartDropdown {
+      font-size: 1.1em!important;
+
+      @include respond-to(md) {
+        font-size: 1em!important;
+      }
+    }
+
     &#search-nav-item {
       position: unset;
 
