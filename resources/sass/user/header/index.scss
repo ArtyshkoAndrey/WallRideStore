@@ -152,18 +152,18 @@ header {
     }
 
     .dropdown-menu {
-      top: 49px;
+      top: 48px;
       border-radius: 0;
       left: -20px;
       min-width: 6rem;
 
       &.full-width {
         overflow-y: auto;
-        height: calc(100vh - 72px);
+        height: calc(100vh - 63px);
         width: 100vw;
         padding-bottom: 60px !important;
         min-width: auto;
-        max-height: calc(100vh - 72px);
+        max-height: calc(100vh - 63px);
 
         @include respond-to(lg) {
           min-width: 656px;
@@ -177,7 +177,7 @@ header {
 
       &.dropdown-menu-end {
         left: auto!important;
-        right: -20px;
+        right: -18px;
       }
 
       .dropdown-item {

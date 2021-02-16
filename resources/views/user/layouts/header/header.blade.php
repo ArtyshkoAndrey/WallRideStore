@@ -259,7 +259,7 @@
                   </div>
                 </div>
 
-                <div class="col-12 col-md-5 d-flex align-items-end align-self-start p-0">
+                <div class="col-12 order-first order-md-last col-md-5 d-flex align-items-end align-self-start p-0">
                   <a href="{{ route('cart.index') }}" class="btn btn-dark py-3 w-100">{{ __('Перейти в корзину') }}</a>
                 </div>
               </div>
