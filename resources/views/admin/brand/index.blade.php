@@ -99,7 +99,7 @@
     <!-- Full-screen modal -->
     <div class="modal modal-full ie-scroll-fix" id="modal-brand-{{ $brand->id }}" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
-        <div class="modal-content m-0 h-full bg-dark-light-dm bg-light-lm ">
+        <div class="modal-content m-0 bg-dark-light-dm bg-light-lm ">
           <a href="#" class="close" role="button" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </a>
@@ -180,7 +180,7 @@
 
   <div class="modal modal-full ie-scroll-fix" id="modal-brand-add" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-      <div class="modal-content m-0 h-full bg-dark-light-dm bg-light-lm ">
+      <div class="modal-content m-0 bg-dark-light-dm bg-light-lm ">
         <a href="#" class="close" role="button" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </a>
