@@ -104,17 +104,6 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="sex" class="required">Пол</label>
-                  <div class="input-group">
-                    <select name="sex" id="sex" class="form-control" required>
-                      @foreach(\App\Models\Product::SEX_MAP as $sex)
-                        <option value="{{ $sex }}" {{ old('sex', $product->sex) === $sex ? 'selected' : '' }}>{{ \App\Models\Product::$sexMap[$sex] }}</option>
-                      @endforeach
-                    </select>
-                  </div>
-                </div>
-
-                <div class="form-group">
                   <label for="weight" class="required">Вес товара</label>
                   <div class="input-group">
                     <div class="input-group-prepend">

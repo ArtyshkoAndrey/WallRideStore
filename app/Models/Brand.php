@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Models\Brand
@@ -46,6 +47,52 @@ class Brand extends Model implements TranslatableContract
   ];
 
   protected $fillable = [
-    'name'
+    'name',
+    'logo',
+    'photo',
+    'to_index'
   ];
+
+  protected $casts = [
+    'to_index' => 'boolean'
+  ];
+
+  public function products (): HasMany
+  {
+    return $this->hasMany(Product::class);
+  }
+
+  public function getPhotoJpgStorageAttribute (): string
+  {
+    if ($this->photo) {
+      return asset('storage/brands/photo/' . $this->photo . '.jpg');
+    }
+
+    return asset('images/product.jpg');
+  }
+
+  public function getPhotoWebpStorageAttribute (): string
+  {
+    if ($this->photo) {
+      return asset('storage/brands/photo/' . $this->photo . '.webp');
+    }
+
+    return asset('images/product.jpg');
+  }
+
+  public function getLogoJpgStorageAttribute (): string
+  {
+    if ($this->logo)
+      return asset('storage/brands/logo/' . $this->logo . '.jpg');
+
+    return asset('images/product.jpg');
+  }
+
+  public function getLogoWebpStorageAttribute (): string
+  {
+    if ($this->logo)
+      return asset('storage/brands/logo/' . $this->logo . 'webp');
+
+    return asset('images/product.jpg');
+  }
 }

@@ -57,7 +57,10 @@
             <div class="col-12 mt-10">
               <div class="card p-10 bg-dark-dm m-0">
                 <div class="row align-items-center">
-                  <div class="col-4 col-md-4 col-lg-auto">
+                  <div class="col-md-1">
+                    <img src="{{ $brand->logo_jpg_storage }}" class="img-fluid rounded" alt="{{ $brand->name }}">
+                  </div>
+                  <div class="col-4 col-md-4 pl-10 col-lg-auto">
                     <a href="#modal-brand-{{ $brand->id }}" class="text-decoration-none text-danger m-0 p-0"><h5 class="p-0 m-0 d-block">{{ $brand->name }}</h5></a>
                   </div>
 
@@ -94,9 +97,9 @@
 @section('modal')
   @foreach($brands as $brand)
     <!-- Full-screen modal -->
-    <div class="modal ie-scroll-fix" id="modal-brand-{{ $brand->id }}" tabindex="-1" role="dialog">
+    <div class="modal modal-full ie-scroll-fix" id="modal-brand-{{ $brand->id }}" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
-        <div class="modal-content bg-dark-light-dm bg-light-lm ">
+        <div class="modal-content m-0 h-full bg-dark-light-dm bg-light-lm ">
           <a href="#" class="close" role="button" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </a>
@@ -104,7 +107,7 @@
 
             <div class="row justify-content-center">
               <div class="col-md-8 col-12">
-                <form action="{{ route('admin.brand.update', $brand) }}" method="POST">
+                <form action="{{ route('admin.brand.update', $brand) }}" method="POST" enctype="multipart/form-data">
                   @csrf
                   @method('PUT')
                   <div class="form-group">
@@ -112,7 +115,60 @@
                     <input type="text" name="name" id="name" class="form-control" placeholder="Наименование" required="required" value="{{ $brand->name }}">
                   </div>
 
-                  <input class="btn btn-primary btn-block" type="submit" value="Изменить">
+                  <div class="row">
+                    <div class="col-3 mr-10">
+                      <div class="custom-file mb-20">
+                        <label class="required bg-transparent disabled p-0 shadow-none border-0">Логотип</label>
+                        <input type="file"
+                               id="logo-{{ $brand->id }}"
+                               class="w-full"
+                               name="logo"
+                               value="{{ $brand->logo }}"
+                               accept=".jpg,.png">
+
+                        <div class="wrapper-hover-image" onclick="$('#logo-{{ $brand->id }}').click()">
+                          <img class='img-fluid' src='{{ $brand->logo_jpg_storage }}' alt="{{ $brand->name }}">
+                          <span class="edit-image-hover"><i class="bx bxs-cloud-upload d-block"></i>Изменить</span>
+                        </div>
+
+                      </div>
+                    </div>
+                    <div class="col-3 ml-10">
+                      <div class="custom-file mb-20">
+                        <label class="required bg-transparent disabled p-0 shadow-none border-0">Фотография</label>
+                        <input type="file"
+                               id="photo-{{ $brand->id }}"
+                               class="w-full"
+                               name="photo"
+                               value="{{ $brand->photo }}"
+                               accept=".jpg,.png">
+
+                        <div class="wrapper-hover-image" onclick="$('#photo-{{ $brand->id }}').click()">
+                          <img class='img-fluid' src='{{ $brand->photo_jpg_storage }}' alt="{{ $brand->name }}">
+                          <span class="edit-image-hover"><i class="bx bxs-cloud-upload d-block"></i>Изменить</span>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="ru[description]" class="required">Описание</label>
+                    <textarea class="form-control" id="ru[description]" name="ru[description]" required placeholder="Описание на Русском">{!! $brand->{'description:ru'} !!}</textarea>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="en[description]" class="required">Описание En</label>
+                    <textarea class="form-control" id="en[description]" name="en[description]" required placeholder="Описание на Английском">{!! $brand->{'description:en'} !!}</textarea>
+                  </div>
+
+                  <div class="custom-switch mb-20">
+                    <input type="hidden" name="to_index" value="0">
+                    <input type="checkbox" id="to_index-{{ $brand->id }}" name="to_index" value="1" {{ $brand->to_index ? 'checked' : null }}>
+                    <label for="to_index-{{ $brand->id }}">На главную страницу</label>
+                  </div>
+
+                  <input class="btn btn-primary btn-block" type="submit" value="Сохранить">
                 </form>
               </div>
             </div>
@@ -122,9 +178,9 @@
     </div>
   @endforeach
 
-  <div class="modal ie-scroll-fix" id="modal-brand-add" tabindex="-1" role="dialog">
+  <div class="modal modal-full ie-scroll-fix" id="modal-brand-add" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-      <div class="modal-content bg-dark-light-dm bg-light-lm ">
+      <div class="modal-content m-0 h-full bg-dark-light-dm bg-light-lm ">
         <a href="#" class="close" role="button" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </a>
@@ -135,11 +191,53 @@
               <h1 class="modal-title font-size-16 text-center">Добавление нового бренда</h1>
             </div>
             <div class="col-md-8 col-12">
-              <form action="{{ route('admin.brand.store') }}" method="POST">
+              <form action="{{ route('admin.brand.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                   <label for="name" class="required">Наименование</label>
                   <input type="text" name="name" id="name" class="form-control" placeholder="Наименование" required="required" value="{{ old('name') }}">
+                </div>
+
+                <div class="row">
+                  <div class="col-12">
+                    <div class="custom-file mb-20">
+                      <input type="file"
+                             id="logo"
+                             class="w-full"
+                             name="logo"
+                             accept=".jpg,.png">
+
+                      <label for="logo" >Выбрать Логотип</label>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="custom-file mb-20">
+                      <input type="file"
+                             id="photo"
+                             class="w-full"
+                             name="photo"
+                             accept=".jpg,.png">
+
+                      <label for="photo" >Выбрать фотографию</label>
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="ru[description]" class="required">Описание</label>
+                  <textarea class="form-control" id="ru[description]" name="ru[description]" required placeholder="Описание на Русском"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="en[description]" class="required">Описание En</label>
+                  <textarea class="form-control" id="en[description]" name="en[description]" required placeholder="Описание на Английском"></textarea>
+                </div>
+
+                <div class="custom-switch mb-20">
+                  <input type="hidden" name="to_index" value="0">
+                  <input type="checkbox" id="to_index" name="to_index" value="1">
+                  <label for="to_index">На главную страницу</label>
                 </div>
 
                 <input class="btn btn-primary btn-block" type="submit" value="Создать">

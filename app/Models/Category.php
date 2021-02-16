@@ -48,7 +48,8 @@ class Category extends Model implements TranslatableContract
   ];
 
   protected $fillable = [
-    'to_menu'
+    'to_menu',
+    'photo'
   ];
 
   protected $casts = [
@@ -94,5 +95,13 @@ class Category extends Model implements TranslatableContract
       return $this->name . '(' . $this->child()->first()->name .')';
 
     return '()';
+  }
+
+  public function getPhotoStorageAttribute (): string
+  {
+    if ($this->photo)
+      return asset('storage/categories/photo/' . $this->photo);
+
+    return asset('images/product.jpg');
   }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Services\PhotoService;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -55,9 +56,21 @@ class BrandController extends Controller
   public function store(Request $request): RedirectResponse
   {
     $request->validate([
-      'name' => 'required|string|unique:brands,name'
+      'name'            => 'required|string|unique:brands,name',
+      'photo'           => 'sometimes|image',
+      'logo'            => 'sometimes|image',
+      'ru.description'  => 'required|string',
+      'en.description'  => 'required|string',
+      'to_index'        => 'required|boolean'
     ]);
-    Brand::create($request->all());
+
+    $data = $request->all();
+    if ($request->has('photo'))
+      $data['photo'] = PhotoService::create($request->file('photo'), 'storage/brands/photo', true, 30, 500);
+    if ($request->has('logo'))
+      $data['logo'] = PhotoService::create($request->file('logo'), 'storage/brands/logo', true, 30, 500);
+
+    Brand::create($data);
     return redirect()->back()->with('success', ['Бренд успешно создан']);
   }
 
@@ -93,10 +106,22 @@ class BrandController extends Controller
   public function update(Request $request, int $id): RedirectResponse
   {
     $request->validate([
-      'name' => 'required|string|unique:brands,name'
+      'name'            => 'required|string|unique:brands,name,' . $id,
+      'photo'           => 'sometimes|image',
+      'logo'            => 'sometimes|image',
+      'ru.description'  => 'required|string',
+      'en.description'  => 'required|string',
+      'to_index'        => 'required|boolean'
     ]);
+
     $brand = Brand::find($id);
-    $brand->update($request->all());
+
+    $data = $request->all();
+    if ($request->has('photo'))
+      $data['photo'] = PhotoService::create($request->file('photo'), 'storage/brands/photo', true, 30, 500);
+    if ($request->has('logo'))
+      $data['logo'] = PhotoService::create($request->file('logo'), 'storage/brands/logo', true, 30, 500);
+    $brand->update($data);
     return redirect()->back()->with('success', ['Бренд успешно обнавлён']);
   }
 

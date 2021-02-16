@@ -80,7 +80,6 @@ class ProductController extends Controller
       'on_new' => 'boolean',
       'photos' => 'array',
     ]);
-//    dd($request->all());
     $data = $request->all();
     $data['meta'] = (object) [
       'title' => $data['meta_title'],
