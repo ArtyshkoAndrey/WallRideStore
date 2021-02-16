@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Services\PhotoService;
+use Cache;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -71,6 +72,7 @@ class BrandController extends Controller
       $data['logo'] = PhotoService::create($request->file('logo'), 'storage/brands/logo', true, 30, 500);
 
     Brand::create($data);
+    Cache::delete('brands-to-index');
     return redirect()->back()->with('success', ['Бренд успешно создан']);
   }
 
@@ -122,6 +124,8 @@ class BrandController extends Controller
     if ($request->has('logo'))
       $data['logo'] = PhotoService::create($request->file('logo'), 'storage/brands/logo', true, 30, 500);
     $brand->update($data);
+
+    Cache::delete('brands-to-index');
     return redirect()->back()->with('success', ['Бренд успешно обнавлён']);
   }
 
