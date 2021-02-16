@@ -13,6 +13,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Psr\SimpleCache\InvalidArgumentException;
 
 class BrandController extends Controller
 {
@@ -104,6 +105,7 @@ class BrandController extends Controller
    * @param Request $request
    * @param int $id
    * @return RedirectResponse
+   * @throws InvalidArgumentException
    */
   public function update(Request $request, int $id): RedirectResponse
   {
