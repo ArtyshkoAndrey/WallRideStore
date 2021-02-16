@@ -41380,7 +41380,6 @@ body > #app > .alert {
   transform: scale(1.2);
 }
 .product .card-body .img-wrapper .info {
-  display: none;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -41389,10 +41388,9 @@ body > #app > .alert {
   background: rgba(0, 0, 0, 0.3);
   -webkit-backdrop-filter: blur(6px);
           backdrop-filter: blur(6px);
-  transition: opacity 1s ease-out;
+  transition: opacity 0.3s ease-out;
 }
 .product .card-body .img-wrapper:hover .info {
-  display: block;
   opacity: 1;
 }
 .product .card-body .old-price {
