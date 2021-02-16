@@ -73,6 +73,7 @@ class BrandController extends Controller
       $data['logo'] = PhotoService::create($request->file('logo'), 'storage/brands/logo', true, 30, 500);
 
     Brand::create($data);
+//    TODO: Чистить кеш брендов левого меню и брендов верхнего меню
     Cache::delete('brands-to-index');
     return redirect()->back()->with('success', ['Бренд успешно создан']);
   }
