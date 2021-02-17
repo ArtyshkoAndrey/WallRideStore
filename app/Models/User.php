@@ -64,6 +64,11 @@ use Illuminate\Support\Carbon;
  * @method static Builder|User whereRememberToken($value)
  * @method static Builder|User whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\CartItem[] $cartItems
+ * @property-read int|null $cart_items_count
+ * @property-read string $full_address
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Order[] $orders
+ * @property-read int|null $orders_count
  */
 class User extends Authenticatable
 {
@@ -137,5 +142,36 @@ class User extends Authenticatable
   public function getAvatarImageAttribute (): string
   {
     return $this->avatar ? asset('storage/avatar/' . $this->avatar) : asset('images/product.jpg');
+  }
+
+  public function cartItems (): HasMany
+  {
+    return $this->hasMany(CartItem::class, 'user_id', 'id');
+  }
+
+  public function orders (): HasMany
+  {
+    return $this->hasMany(Order::class);
+  }
+
+  public function getFullAddressAttribute (): string
+  {
+    $text = '';
+    if($this->country)
+      $text .= $this->country->name . ', ';
+
+    if($this->city)
+      $text .= $this->city->name . ', ';
+
+    if($this->address)
+      if($this->post_code)
+        $text .= $this->address . ', ';
+      else
+        $text .= $this->address;
+
+    if($this->post_code)
+      $text .= $this->post_code;
+
+    return $text;
   }
 }

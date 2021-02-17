@@ -28,6 +28,6 @@ class ProductTranslation extends Model
 
   protected $fillable = [
     'title',
-    'description'
+    'content'
   ];
 }

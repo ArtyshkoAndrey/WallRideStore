@@ -50,18 +50,34 @@ class OrderItem extends Model
     'price'
   ];
 
+  /**
+   * @return BelongsTo
+   */
   public function product(): BelongsTo
   {
-    return $this->belongsTo(Product::class)->withTrashed();
+    return $this->belongsTo(
+      Product::class
+    )
+      ->withTrashed();
   }
 
+  /**
+   * @return BelongsTo
+   */
   public function order(): BelongsTo
   {
-    return $this->belongsTo(Order::class);
+    return $this->belongsTo(
+      Order::class
+    );
   }
 
+  /**
+   * @return BelongsTo
+   */
   public function skus(): BelongsTo
   {
-    return $this->belongsTo(Skus::class);
+    return $this->belongsTo(
+      Skus::class
+    );
   }
 }

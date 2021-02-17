@@ -54,7 +54,6 @@ class Photo extends Model
     'thumbnail_url_jpg'
   ];
 
-//  TODO: Переписать нормально папки
 
   public function getUrlWebpAttribute(): string
   {

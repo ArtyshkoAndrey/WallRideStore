@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Models\Skuscategory
@@ -33,6 +34,8 @@ use Astrotomic\Translatable\Translatable;
  * @method static \Illuminate\Database\Eloquent\Builder|Skuscategory whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Skuscategory withTranslation()
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Skus[] $skuses
+ * @property-read int|null $skuses_count
  */
 class Skuscategory extends Model implements TranslatableContract
 {
@@ -46,4 +49,10 @@ class Skuscategory extends Model implements TranslatableContract
   protected $fillable = [
 
   ];
+
+  public function skuses (): HasMany
+  {
+    return $this->hasMany(Skus::class);
+  }
+
 }

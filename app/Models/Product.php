@@ -62,6 +62,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|Product withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Product withoutTrashed()
  * @mixin \Eloquent
+ * @property-read \App\Models\Brand|null $brand
+ * @property-read \App\Models\Category|null $category
+ * @property-read string $thumbnail_jpg
+ * @property-read string $thumbnail_webp
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Order[] $orders
+ * @property-read int|null $orders_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Photo[] $photos
+ * @property-read int|null $photos_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ProductSkus[] $productSkuses
+ * @property-read int|null $product_skuses_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Skus[] $skuses
+ * @property-read int|null $skuses_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereTranslationLike(string $translationField, $value, ?string $locale = null)
  */
 class Product extends Model implements TranslatableContract
 {
@@ -70,7 +83,8 @@ class Product extends Model implements TranslatableContract
   use SoftDeletes;
 
   public array $translatedAttributes = [
-    'title', 'description',
+    'title',
+    'description'
   ];
 
   protected $fillable = [
@@ -88,7 +102,7 @@ class Product extends Model implements TranslatableContract
     'on_sale' => 'boolean',
     'on_new' => 'boolean',
     'on_top' => 'boolean',
-    'meta' => 'object',
+    'meta' => 'object'
   ];
 
   protected $dates = ['deleted_at'];
@@ -160,5 +174,17 @@ class Product extends Model implements TranslatableContract
     } else {
       return asset('images/product.jpg');
     }
+  }
+
+  protected static function booted()
+  {
+    parent::boot();
+    static::deleting(function ($product) {
+      if ($product->isForceDeleting()) {
+        foreach ($product->photos as $photo) {
+          $photo->delete();
+        }
+      }
+    });
   }
 }
