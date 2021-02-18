@@ -94,7 +94,12 @@
                   @method('PUT')
                   <div class="form-group">
                     <label for="name" class="required">Наименование</label>
-                    <input type="text" name="name" id="name" class="form-control" placeholder="Наименование" required="required" value="{{ old('name', $category->name) }}">
+                    <input type="text" name="ru[name]" id="name" class="form-control" placeholder="Наименование" required="required" value="{{ old('name', $category->{'name:ru'}) }}">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="name" class="required">Наименование Eng</label>
+                    <input type="text" name="en[name]" id="name" class="form-control" placeholder="Наименование" required="required" value="{{ old('name', $category->{'name:en'}) }}">
                   </div>
 
                   <div class="form-group">
@@ -144,7 +149,12 @@
                 @csrf
                 <div class="form-group">
                   <label for="name" class="required">Наименование</label>
-                  <input type="text" name="name" id="name" class="form-control" placeholder="Наименование" required="required" value="{{ old('name') }}">
+                  <input type="text" name="ru[name]" id="name" class="form-control" placeholder="Наименование" required="required" value="{{ old('name') }}">
+                </div>
+
+                <div class="form-group">
+                  <label for="name" class="required">Наименование Eng</label>
+                  <input type="text" name="en[name]" id="name" class="form-control" placeholder="Наименование" required="required" value="{{ old('name') }}">
                 </div>
 
                 <div class="form-group">
