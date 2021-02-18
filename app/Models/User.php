@@ -41,7 +41,7 @@ use Illuminate\Support\Carbon;
  * @property-read \App\Models\City $city
  * @property-read \App\Models\Country $country
  * @property-read \App\Models\Currency|null $currency
- * @property-read string $avatar_image
+ * @property-read string $user_image
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @method static Builder|User newModelQuery()
@@ -139,9 +139,9 @@ class User extends Authenticatable
     return $this->belongsTo(Currency::class);
   }
 
-  public function getAvatarImageAttribute (): string
+  public function getUserImageAttribute (): string
   {
-    return $this->avatar ? asset('storage/avatar/' . $this->avatar) : asset('images/product.jpg');
+    return $this->avatar ? asset('storage/users/' . $this->avatar) : asset('images/product.jpg');
   }
 
   public function cartItems (): HasMany
