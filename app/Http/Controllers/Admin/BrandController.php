@@ -75,6 +75,7 @@ class BrandController extends Controller
     Brand::create($data);
 //    TODO: Чистить кеш брендов левого меню и брендов верхнего меню
     Cache::delete('brands-to-index');
+    Cache::delete('brands-menu');
     return redirect()->back()->with('success', ['Бренд успешно создан']);
   }
 
@@ -129,6 +130,7 @@ class BrandController extends Controller
     $brand->update($data);
 
     Cache::delete('brands-to-index');
+    Cache::delete('brands-menu');
     return redirect()->back()->with('success', ['Бренд успешно обнавлён']);
   }
 
@@ -143,6 +145,8 @@ class BrandController extends Controller
   {
     $brand = Brand::find($id);
     $brand->delete();
+    Cache::delete('brands-to-index');
+    Cache::delete('brands-menu');
     return redirect()->back()->with('success', ['Бренд успешно удалён']);
   }
 }
