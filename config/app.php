@@ -197,9 +197,6 @@ return [
     App\Providers\EventServiceProvider::class,
     App\Providers\RouteServiceProvider::class,
     App\Providers\TelescopeServiceProvider::class,
-//    Barryvdh\Debugbar\ServiceProvider::class,
-//    TODO: Коментить для Прод
-//    Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
     App\Providers\WidgetServiceProvider::class,
 
   ],
