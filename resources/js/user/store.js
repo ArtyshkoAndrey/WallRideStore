@@ -15,6 +15,7 @@ const store = new Vuex.Store({
     currency_id: 1,
     auth: false,
     user: null,
+    version: '1.1',
   },
   mutations: {
     addItem: (state, {id, amount}) => {
