@@ -136,7 +136,7 @@
                     <div class="row">
                       <a href="{{ route('profile.index') }}" class="d-flex dropdown-item">
                         <div class="col-2 d-flex align-items-center justify-content-center">
-                          <img src="{{ auth()->user()->avatar_image }}" alt="logo" class="rounded-circle" style="width: 25px; height: 25px;">
+                          <img src="{{ auth()->user()->user_image }}" alt="logo" class="rounded-circle" style="width: 25px; height: 25px;">
                         </div>
                         <div class="col-auto mx-2">
                           {{ auth()->user()->name }}

@@ -35,7 +35,7 @@
       </button>
       <div class="dropdown-menu dropdown-menu-right w-200" aria-labelledby="navbar-dropdown-toggle-btn-1"> <!-- w-200 = width: 20rem (200px) -->
         <p class="dropdown-item d-flex align-items-center m-0">
-          <img src="{{ auth()->user()->avatar_image }}" alt="person" class="img-fluid rounded-circle h-25 mr-10">
+          <img src="{{ auth()->user()->user_image }}" alt="person" class="img-fluid rounded-circle h-25 mr-10">
           {{ auth()->user()->name }}
         </p>
         <div class="dropdown-divider"></div>

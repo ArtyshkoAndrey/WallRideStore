@@ -21,7 +21,7 @@
             </div>
             <div class="row mt-4">
               <div class="col-md-3">
-                <img src="{{ auth()->user()->avatar_image }}" class="img-fluid w-100 px-4 px-md-0" alt="{{ auth()->user()->name }}">
+                <img src="{{ auth()->user()->user_image }}" class="img-fluid w-100 px-4 px-md-0" alt="{{ auth()->user()->name }}">
                 <form action="{{ route('profile.update.photo') }}" method="POST" id="form-photo" enctype="multipart/form-data">
                   @csrf
                   @method('PUT')
