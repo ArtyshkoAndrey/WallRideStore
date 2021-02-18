@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use Cache;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -12,6 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
+use Psr\SimpleCache\InvalidArgumentException;
 
 class CategoryController extends Controller
 {
@@ -43,7 +45,7 @@ class CategoryController extends Controller
       array_push($categoriesLink, $categoryTemp);
     } else {
       $categories = Category::select('*')->whereNotIn('id',function($query) {
-        $query->select('child_category_id')->from('categories_categories');
+        $query->select('child_category_id')->from('category_categories');
       })->get();
     }
 
@@ -70,7 +72,8 @@ class CategoryController extends Controller
   {
 
     $request->validate([
-      'name' => 'required|string',
+      'ru.name' => 'required|string',
+      'en.name' => 'required|string',
       'category_id' => 'required|exists_or_null:categories,id',
       'to_menu' => 'required|boolean'
     ]);
@@ -81,6 +84,7 @@ class CategoryController extends Controller
       $category->parents()->attach($category_id);
       return redirect()->route('admin.category.index', ['category_id' => $category_id])->with('success', ['Категория успешно создана']);
     }
+    Cache::delete('categories-menu');
     return redirect()->route('admin.category.index')->with('success', ['Категория успешно создана']);
   }
 
@@ -110,16 +114,19 @@ class CategoryController extends Controller
    * Update the specified resource in storage.
    *
    * @param Request $request
-   * @param  int $id
+   * @param int $id
    * @return RedirectResponse
+   * @throws InvalidArgumentException
    */
-  public function update(Request $request, int $id)
+  public function update(Request $request, int $id): RedirectResponse
   {
     $request->validate([
-      'name' => 'required|string',
+      'ru.name' => 'required|string',
+      'en.name' => 'required|string',
       'to_menu' => 'required|boolean'
     ]);
     Category::find($id)->update($request->all());
+    Cache::delete('categories-menu');
     return redirect()->back()->with('success', ['Категория успешна изменена']);
   }
 
@@ -134,6 +141,7 @@ class CategoryController extends Controller
   {
     try {
       Category::find($id)->delete();
+      Cache::delete('categories-menu');
       return redirect()->back()->with('success', ['Категория успешна удалена']);
     } catch (Exception $exception) {
       return redirect()->back()->withErrors(['Ошибка удаления категории']);
