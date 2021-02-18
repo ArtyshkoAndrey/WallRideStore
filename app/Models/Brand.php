@@ -42,6 +42,8 @@ use Illuminate\Support\Carbon;
  * @mixin Eloquent
  * @property string|null $logo
  * @property string|null $photo
+ * @property string|null $logo_path
+ * @property string|null $photo_path
  * @property bool $to_index
  * @property-read string $logo_jpg_storage
  * @property-read string $logo_webp_storage
@@ -57,6 +59,16 @@ class Brand extends Model implements TranslatableContract
 {
   use HasFactory;
   use Translatable;
+
+  /**
+   * @var string
+   */
+  const PHOTO_PATH = 'storage/brands/photo/';
+
+  /**
+   * @var string
+   */
+  const LOGO_PATH = 'storage/brands/logo/';
 
   /**
    * Translate column
@@ -108,7 +120,7 @@ class Brand extends Model implements TranslatableContract
   public function getPhotoJpgStorageAttribute (): string
   {
     if ($this->photo) {
-      return asset('storage/brands/photo/' . $this->photo . '.jpg');
+      return asset(Brand::PHOTO_PATH . $this->photo . '.jpg');
     }
 
     return asset('images/product.jpg');
@@ -122,7 +134,7 @@ class Brand extends Model implements TranslatableContract
   public function getPhotoWebpStorageAttribute (): string
   {
     if ($this->photo) {
-      return asset('storage/brands/photo/' . $this->photo . '.webp');
+      return asset(Brand::PHOTO_PATH . $this->photo . '.webp');
     }
 
     return asset('images/product.jpg');
@@ -136,7 +148,7 @@ class Brand extends Model implements TranslatableContract
   public function getLogoJpgStorageAttribute (): string
   {
     if ($this->logo)
-      return asset('storage/brands/logo/' . $this->logo . '.jpg');
+      return asset(Brand::LOGO_PATH . $this->logo . '.jpg');
 
     return asset('images/product.jpg');
   }
@@ -149,7 +161,7 @@ class Brand extends Model implements TranslatableContract
   public function getLogoWebpStorageAttribute (): string
   {
     if ($this->logo)
-      return asset('storage/brands/logo/' . $this->logo . 'webp');
+      return asset(Brand::LOGO_PATH . $this->logo . 'webp');
 
     return asset('images/product.jpg');
   }
