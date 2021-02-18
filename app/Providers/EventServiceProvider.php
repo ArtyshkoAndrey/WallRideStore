@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Brand;
 use App\Models\Photo;
 use App\Models\Product;
 use App\Models\User;
+use App\Observers\BrandObserver;
 use App\Observers\PhotoObserver;
 use App\Observers\ProductObserver;
 use App\Observers\UserObserver;
@@ -33,10 +35,9 @@ class EventServiceProvider extends ServiceProvider
    */
   public function boot()
   {
-//    TODO: Удаления фоток
-//    Photo::observe(PhotoObserver::class);
+    Photo::observe(PhotoObserver::class);
     User::observe(UserObserver::class);
-//    Product::observe(ProductObserver::class);
-
+    Product::observe(ProductObserver::class);
+    Brand::observe(BrandObserver::class);
   }
 }
