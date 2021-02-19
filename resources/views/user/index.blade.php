@@ -166,7 +166,7 @@
   <section class="container mt-5 mb-5">
     <div class="row">
       <div class="col-6">
-        <h3 class="font-weight-bolder">{{ __('Новые товары') }}</h3>
+        <h3 class="font-weight-bolder">{{ __('Хит продаж') }}</h3>
       </div>
 
       <div class="col-6">
