@@ -40,44 +40,86 @@
           <div class="row row-eq-spacing p-0 m-0">
 
             <div class="col-12 col-lg mt-10">
-              <div class="card bg-dark-dm">
-                <div class="form-group">
-                  <label for="title" class="required">Название</label>
-                  <input type="text" class="form-control" name="title" id="title" placeholder="Название" value="{{ old('title') }}" required>
-                </div>
 
-                <div class="form-group">
-                  <label for="description" class="required">Описание</label>
-                  <textarea class="form-control" name="description" id="description" cols="30" rows="10">{{ old('description') }}</textarea>
-                </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="card bg-dark-dm m-0">
 
-                <div class="form-group">
-                  <label for="meta_title" class="required">Meta Title</label>
-                  <input type="text" class="form-control" name="meta_title" id="meta_title" placeholder="Meta Title" value="{{ old('meta_title') }}" required>
-                </div>
+                    <div class="wrapper-tabs">
+                      <div class="tabs d-inline-flex w-full">
+                        <button class="btn shadow-none align-items-center d-flex active" data-tabs-content-id="russian" type="button"><img src="{{ asset('images/flags/ru-flag.png') }}"  height="25px" class="w-auto" alt=""></button>
 
-                <div class="form-group">
-                  <label for="meta_description" class="required">Meta Описание</label>
-                  <input type="text" class="form-control" name="meta_description" id="meta_description" placeholder="Meta Описание" value="{{ old('meta_description') }}" required>
-                </div>
+                        <button class="btn shadow-none align-items-center d-flex" data-tabs-content-id="english" type="button"><img src="{{ asset('images/flags/en-flag.png') }}" height="25px" class="w-auto" alt=""></button>
+                      </div>
 
-                <div class="custom-switch d-inline-block mr-10">
-                  <input type="hidden" name="on_sale" value="0"><!-- d-inline-block = display: inline-block, mr-10 = margin-right: 1rem (10px) -->
-                  <input type="checkbox" name="on_sale" id="switch-1" value="1" {{ old('on_sale') ? 'checked' : null }}>
-                  <label for="switch-1" class="text-danger">Скидка</label>
-                </div>
-                <div class="custom-switch d-inline-block mr-10">
-                  <input type="hidden" name="on_new" value="0">
-                  <input type="checkbox" name="on_new" id="switch-2" value="1" {{ old('on_new') ? 'checked' : null }}>
-                  <label for="switch-2" >Новый товар</label>
-                </div>
-                <div class="custom-switch d-inline-block mr-10">
-                  <input type="hidden" name="on_top" value="0"><!-- d-inline-block = display: inline-block, mr-10 = margin-right: 1rem (10px) -->
-                  <input type="checkbox" name="on_top" id="switch-3" value="1" {{ old('on_top') ? 'checked' : null }}>
-                  <label for="switch-3">Хит продаж</label>
-                </div>
+                      <div class="tabs-content active" id="russian">
 
+                        <div class="form-group">
+                          <label for="title" class="required">Название</label>
+                          <input type="text" class="form-control" name="ru[title]" id="title" placeholder="Название" value="{{ old('ru.title') }}" required>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="ru_description" class="required">Описание</label>
+                          <textarea class="form-control" name="ru[description]" id="ru_description" cols="30" rows="20">{{ old('ru.description') }}</textarea>
+                        </div>
+
+                      </div>
+
+                      <div class="tabs-content" id="english">
+
+                        <div class="form-group">
+                          <label for="title" class="required">Название</label>
+                          <input type="text" class="form-control" name="en[title]" id="title" placeholder="Название" value="{{ old('en.title') }}" required>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="en_description" class="required">Описание</label>
+                          <textarea class="form-control" name="en[description]" id="en_description" cols="30" rows="20">{{ old('en.description') }}</textarea>
+                        </div>
+
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
               </div>
+
+              <div class="row mt-20">
+                <div class="col-12">
+                  <div class="card bg-dark-dm m-0">
+
+                    <div class="form-group">
+                      <label for="meta_title" class="required">Meta Title</label>
+                      <input type="text" class="form-control" name="meta_title" id="meta_title" placeholder="Meta Title" value="{{ old('meta_title') }}" required>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="meta_description" class="required">Meta Описание</label>
+                      <input type="text" class="form-control" name="meta_description" id="meta_description" placeholder="Meta Описание" value="{{ old('meta_description') }}" required>
+                    </div>
+
+                    <div class="custom-switch d-inline-block mr-10">
+                      <input type="hidden" name="on_sale" value="0"><!-- d-inline-block = display: inline-block, mr-10 = margin-right: 1rem (10px) -->
+                      <input type="checkbox" name="on_sale" id="switch-1" value="1" {{ old('on_sale') ? 'checked' : null }}>
+                      <label for="switch-1" class="text-danger">Скидка</label>
+                    </div>
+                    <div class="custom-switch d-inline-block mr-10">
+                      <input type="hidden" name="on_new" value="0">
+                      <input type="checkbox" name="on_new" id="switch-2" value="1" {{ old('on_new') ? 'checked' : null }}>
+                      <label for="switch-2" >Новый товар</label>
+                    </div>
+                    <div class="custom-switch d-inline-block mr-10">
+                      <input type="hidden" name="on_top" value="0"><!-- d-inline-block = display: inline-block, mr-10 = margin-right: 1rem (10px) -->
+                      <input type="checkbox" name="on_top" id="switch-3" value="1" {{ old('on_top') ? 'checked' : null }}>
+                      <label for="switch-3">Хит продаж</label>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+
             </div>
 
             <div class="col-lg-4 col-12 mt-10">
@@ -99,17 +141,6 @@
                       <span class="input-group-text">₸</span>
                     </div>
                     <input type="number" min="0" class="form-control" name="price_sale" id="price_sale" placeholder="Стоимость" value="{{ old('price_sale') }}">
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="sex" class="required">Пол</label>
-                  <div class="input-group">
-                    <select name="sex" id="sex" class="form-control" required>
-                      @foreach(\App\Models\Product::SEX_MAP as $sex)
-                        <option value="{{ $sex }}" {{ old('sex') === $sex ? 'selected' : '' }}>{{ \App\Models\Product::$sexMap[$sex] }}</option>
-                      @endforeach
-                    </select>
                   </div>
                 </div>
 
@@ -215,10 +246,17 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.0/min/dropzone.min.js"></script>
   <script>
     tinymce.init({
-      selector: 'textarea#description',
+      selector: 'textarea#ru_description',
       plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
       toolbar_mode: 'floating',
     });
+
+    tinymce.init({
+      selector: 'textarea#en_description',
+      plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+      toolbar_mode: 'floating',
+    });
+
 
     Dropzone.autoDiscover = false;
     let i =0;
