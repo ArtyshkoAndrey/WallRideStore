@@ -42,6 +42,16 @@ class Photo extends Model
     'name',
   ];
 
+  /**
+   * @var string
+   */
+  const PHOTO_PATH = 'storage/products/photos/';
+
+  /**
+   * @var string
+   */
+  const THUMBNAIL_PATH = 'storage/products/thumbnails/';
+
   public function product(): BelongsTo
   {
     return $this->belongsTo(Product::class, 'product_id', 'id')->withTrashed();
@@ -57,21 +67,21 @@ class Photo extends Model
 
   public function getUrlWebpAttribute(): string
   {
-    return asset('storage/products/photos/' . str_replace(" ", "%20", $this->name)  . '.webp');
+    return asset(Photo::PHOTO_PATH . str_replace(" ", "%20", $this->name)  . '.webp');
   }
 
   public function getThumbnailUrlWebpAttribute(): string
   {
-    return asset('storage/products/thumbnails/' . str_replace(" ", "%20", $this->name)  . '.webp');
+    return asset(Photo::THUMBNAIL_PATH . str_replace(" ", "%20", $this->name)  . '.webp');
   }
 
   public function getUrlJpgAttribute(): string
   {
-    return asset('storage/products/photos/' . str_replace(" ", "%20", $this->name)  . '.jpg');
+    return asset(Photo::PHOTO_PATH . str_replace(" ", "%20", $this->name)  . '.jpg');
   }
 
   public function getThumbnailUrlJpgAttribute(): string
   {
-    return asset('storage/products/thumbnails/' .  str_replace(" ", "%20", $this->name) . '.jpg');
+    return asset(Photo::THUMBNAIL_PATH .  str_replace(" ", "%20", $this->name) . '.jpg');
   }
 }

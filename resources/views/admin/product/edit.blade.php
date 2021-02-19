@@ -311,7 +311,7 @@
       <?php $i = 0;?>
       let mockFile
       @foreach($product->photos as $photo)
-        mockFile = { name: '{{ $photo->name . '.jpg' }}', size: {{ File::size(public_path('storage/images/photos/' . $photo->name . '.jpg')) }} };
+        mockFile = { name: '{{ $photo->name . '.jpg' }}', size: {{ File::size(public_path(\App\Models\Photo::PHOTO_PATH . $photo->name . '.jpg')) }} };
         uploader.emit("addedfile", mockFile);
         uploader.emit("thumbnail", mockFile, '{{ $photo->thumbnail_url_jpg }}');
         uploader.emit("complete", mockFile);

@@ -328,9 +328,9 @@
       <?php $i = 0;?>
       let mockFile
       @foreach(old('photos', []) as $photo)
-        mockFile = { name: '{{ $photo }}', size: {{ File::size(public_path('storage/images/photos/' . $photo)) }} };
+        mockFile = { name: '{{ $photo }}', size: {{ File::size(public_path(\App\Models\Photo::PHOTO_PATH . $photo)) }} };
         uploader.emit("addedfile", mockFile);
-        uploader.emit("thumbnail", mockFile, '{{ asset('storage/images/thumbnails/' . $photo) }}');
+        uploader.emit("thumbnail", mockFile, '{{ asset(\App\Models\Photo::THUMBNAIL_PATH . $photo) }}');
         uploader.emit("complete", mockFile);
         uploader.files.push(mockFile)
         fileList.push({"serverFileName": '{{ $photo }}', "fileName":'{{ $photo }}', "fileId": {{ $i }}});
