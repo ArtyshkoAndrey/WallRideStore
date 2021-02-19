@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +22,7 @@ class Admin
 //      Если залогинен
       if (auth()->user()->is_admin) {
 //        Если в свойствах стоит Admin
+        App::setLocale('ru');
         return $next($request);
       }
     }
