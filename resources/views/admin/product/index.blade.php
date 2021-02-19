@@ -66,7 +66,7 @@
                   <img src="{{ $product->thumbnail_jpg  }}" class="img-fluid rounded-top h-150 w-full object-fit-cover" alt="...">
                   <div class="content mx-20 mt-0">
                     <div class="content-title my-20">
-                      {{ $product->title }}
+                      <a href="{{ route('admin.product.edit', $product->id) }}" class="text-dark-lm text-white-dm">{{ $product->title }}</a>
                       @if($product->trashed())
                         <p class="text-danger font-size-12 m-0">Удалено</p>
                       @endif
