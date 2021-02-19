@@ -67,14 +67,16 @@ class ProductController extends Controller
   public function store(Request $request): RedirectResponse
   {
     $request->validate([
-      'title' => 'required|string|max:255',
+      'ru.title' => 'required|string|max:255',
+      'en.title' => 'required|string|max:255',
       'price' => 'required|integer|min:0',
       'weight' => 'required|min:0',
       'brand' => 'required|exists:brands,id',
       'category' => 'required|exists:categories,id',
       'meta_title' => 'required|string',
       'meta_description' => 'required|string',
-      'description' => 'required|string',
+      'ru.description' => 'required|string',
+      'en.description' => 'required|string',
       'on_sale' => 'boolean',
       'on_top' => 'boolean',
       'on_new' => 'boolean',
@@ -144,14 +146,16 @@ class ProductController extends Controller
   public function update(Request $request, int $id): RedirectResponse
   {
     $request->validate([
-      'title' => 'required|string|max:255',
+      'ru.title' => 'required|string|max:255',
+      'en.title' => 'required|string|max:255',
       'price' => 'required|integer|min:0',
       'weight' => 'required|min:0',
       'brand' => 'required|exists:brands,id',
       'category' => 'required|exists:categories,id',
       'meta_title' => 'required|string',
       'meta_description' => 'required|string',
-      'description' => 'required|string',
+      'ru.description' => 'required|string',
+      'en.description' => 'required|string',
       'on_sale' => 'boolean',
       'on_top' => 'boolean',
       'on_new' => 'boolean',
