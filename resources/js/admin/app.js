@@ -4,6 +4,8 @@ window.halfmoon = require("halfmoon");
 window.$ = window.jQuery = require('jquery');
 window.axios = require('axios');
 
+require('./tabs.js')
+
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 const files = require.context('./components', true, /\.vue$/i)
