@@ -257,5 +257,81 @@ sup {
   }
 }
 
+.tabs {
+  button {
+    &.active {
+      background: var(--lm-button-bg-color-hover);
+      outline: none !important;
+      box-shadow: none;
+    }
+  }
+}
+
+.dark-mode {
+  .tabs {
+    button.btn {
+
+      &.active {
+        background: black;
+        outline: none !important;
+        box-shadow: none!important;
+      }
+    }
+  }
+}
+
+.wrapper-tabs {
+  .tabs {
+    margin: 0 0 20px 0 ;
+    button {
+      margin: 0 5px;
+      &:hover, &:focus {
+        outline: none !important;
+        box-shadow: none!important;
+      }
+
+      &:hover, &:focus {
+        outline: none !important;
+        box-shadow: none!important;
+      }
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+
+  .tabs-content {
+    transition: opacity .5s ease-in;
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+
+    &.active {
+      opacity: 1;
+      height: auto;
+      transition: opacity .5s ease-out;
+    }
+  }
+}
 
 
+@-webkit-keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@-webkit-keyframes fadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
