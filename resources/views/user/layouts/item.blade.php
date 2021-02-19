@@ -34,7 +34,7 @@
           <span class="old-price">{{ $cost($store.state.currency.ratio * <? echo $product->price ?>) }} @{{ $store.state.currency.symbol }}</span>
           <span class="price">{{ $cost($store.state.currency.ratio * <? echo $product->price_sale ?>) }} @{{ $store.state.currency.symbol }}</span>
         @else
-          <span class="price">{{ $cost($store.state.currency.ratio * <? echo $product->price ?>) }} @{{ $store.state.currency.symbol }}</span>
+          <span class="price font-weight-bolder">{{ $cost($store.state.currency.ratio * <? echo $product->price ?>) }} @{{ $store.state.currency.symbol }}</span>
         @endif
       </div>
       <div class="col-md-7 mt-3 col-12 p-0">
