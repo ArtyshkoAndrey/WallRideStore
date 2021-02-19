@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\SkusCategory;
+use App\Models\Skuscategory;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -42,10 +42,10 @@ class SkusCategoryController extends Controller
   public function store(Request $request)
   {
     $request->validate([
-      'name' => 'required|string'
+      'ru.name' => 'required|string',
+      'en.name' => 'required|string'
     ]);
-    $sk = new SkusCategory($request->all());
-    $sk->save();
+    $sk = Skuscategory::create($request->except(['_method', '_token']));
     return redirect('admin/skus#modal-skus-' . $sk->id)->with('success', ['Категория размеров "'. $sk->name .'" успешно создана']);
   }
 
@@ -92,7 +92,7 @@ class SkusCategoryController extends Controller
    */
   public function destroy(int $id): RedirectResponse
   {
-    $sk = SkusCategory::find($id);
+    $sk = Skuscategory::find($id);
     $sk_name = $sk->name;
     try {
       $sk->delete();

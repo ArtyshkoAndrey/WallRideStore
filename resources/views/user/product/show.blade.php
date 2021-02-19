@@ -1,15 +1,15 @@
 @extends('user.layouts.app')
 
-@section('title', $translation->title)
+@section('title', $product->title)
 
 @section('content')
   <div class="container my-5 ">
     <div class="row">
       <div class="col-12 ps-3 breadcrumb">
         @foreach($categories as $category)
-          <a class="breadcrumb-link" href="{{ route('product.all', ['category' => $category->id]) }}">{{ $category->translate(App::getLocale(), true)->name }}</a>
+          <a class="breadcrumb-link" href="{{ route('product.all', ['category' => $category->id]) }}">{{ $category->name }}</a>
         @endforeach
-        <p>{{ $translation->title }}</p>
+        <p>{{ $product->title }}</p>
       </div>
     </div>
 

@@ -52,7 +52,7 @@ class Skuscategory extends Model implements TranslatableContract
 
   public function skuses (): HasMany
   {
-    return $this->hasMany(Skus::class);
+    return $this->hasMany(Skus::class, 'skuscategory_id', 'id');
   }
 
 }

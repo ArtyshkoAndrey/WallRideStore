@@ -153,6 +153,7 @@
                   <label for="title" class="required">Наименование</label>
                   <input type="text" name="title" id="title" class="form-control" placeholder="Наименование" required="required">
                 </div>
+
                 <div class="form-group">
                   <label for="weight" class="required">Вес</label>
                   <input type="number" id="weight" name="weight" class="form-control" placeholder="Вес" required="required">
@@ -187,15 +188,21 @@
 
           <div class="row justify-content-center">
             <div class="col-12">
-              <h1 class="modal-title font-size-16 text-center">Добавление новой категории зармеров</h1>
+              <h1 class="modal-title font-size-16 text-center">Добавление новой категории размеров</h1>
             </div>
             <div class="col-md-8 col-12">
               <form action="{{ route('admin.skus-category.store') }}" method="POST">
                 @csrf
                 <div class="form-group">
                   <label for="name" class="required">Наименование</label>
-                  <input type="text" name="name" id="name" class="form-control" placeholder="Наименование" required="required">
+                  <input type="text" name="ru[name]" id="name" class="form-control" placeholder="Наименование" required="required">
                 </div>
+
+                <div class="form-group">
+                  <label for="name" class="required">Наименование Eng</label>
+                  <input type="text" name="en[name]" id="name" class="form-control" placeholder="Наименование" required="required">
+                </div>
+
                 <input class="btn btn-primary btn-block" type="submit" value="Создать">
               </form>
             </div>

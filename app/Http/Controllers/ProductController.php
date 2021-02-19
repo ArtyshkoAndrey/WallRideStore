@@ -204,9 +204,7 @@ class ProductController extends Controller
         $categories = [];
       }
 
-      $translation = $product->translate(App::getLocale());
-
-      return view('user.product.show', compact('product', 'categories', 'translation'));
+      return view('user.product.show', compact('product', 'categories'));
     }
     throw new NotFoundHttpException();
   }

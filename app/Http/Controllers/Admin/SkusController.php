@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Skus;
-use App\Models\SkusCategory;
+use App\Models\Skuscategory;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -24,7 +24,7 @@ class SkusController extends Controller
    */
   public function index()
   {
-    $skus_categories = SkusCategory::with('skuses')->get();
+    $skus_categories = Skuscategory::with('skuses')->get();
     return view('admin.skus.index', compact('skus_categories'));
   }
 
@@ -48,12 +48,12 @@ class SkusController extends Controller
   {
     $request->validate([
       'title' => 'required|string',
-      'sk'  => 'required|exists:skus_categories,id',
-      'weight' => 'required|unique:skuses,weight,null,id,skus_category_id,'.$request->sk
+      'sk'  => 'required|exists:skuscategories,id',
+      'weight' => 'required|unique:skuses,weight,null,id,skuscategory_id,'.$request->sk
     ]);
 
     $skus = new Skus($request->all());
-    $sk = SkusCategory::find($request->sk);
+    $sk = Skuscategory::find($request->sk);
     $sk->skuses()->save($skus);
 
     return redirect('admin/skus#modal-skus-' . $sk->id)->with('success', ['Размер успешно создан']);

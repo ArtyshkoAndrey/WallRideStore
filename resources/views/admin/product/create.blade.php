@@ -188,7 +188,7 @@
         </a>
         <div class="modal-body w-full">
           <div class="row row-eq-spacing m-0 p-0">
-            @foreach(\App\Models\SkusCategory::all() as $sk)
+            @foreach(\App\Models\Skuscategory::all() as $sk)
               <div class="col-12 m-0 p-0">
                 <h5>{{ $sk->name }}</h5>
                 @foreach($sk->skuses as $skus)
