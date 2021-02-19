@@ -11,14 +11,14 @@
                role="button"
                data-mdb-toggle="dropdown"
                aria-expanded="false">
-              {{ $category->translate(App::getLocale(), true)->name }}
+              {{ $category->name }}
             </a>
             <div class="dropdown-menu overflow-auto p-4"
                  aria-labelledby="categoryButton-{{ $category->id }}">
               <div class="row">
                 <div class="col-6">
                   <p class="h5 text-muted">
-                    {{ $category->translate(App::getLocale(), true)->name }}
+                    {{ $category->name }}
                   </p>
                 </div>
                 <div class="col-2"></div>
@@ -34,7 +34,7 @@
                   <div class="col-md-4 py-2" >
                     <a href="{{ route('product.all', ['category'=>$category->id]) }}"
                        class="text-gray-2">
-                      {{ $category->translate(App::getLocale(), true)->name }}
+                      {{ $category->name }}
                     </a>
                   </div>
 

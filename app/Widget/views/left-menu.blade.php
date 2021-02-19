@@ -37,7 +37,7 @@
       <div class="section">
         <input type="radio" name="accordion-1" id="section-category-{{$category->id}}"/>
         <label for="section-category-{{$category->id}}">
-          <span>{{ $category->translate(App::getLocale(), true)->name }}</span>
+          <span>{{ $category->name }}</span>
           <span class="caret fa fa-angle-right"></span>
         </label>
 
@@ -47,7 +47,7 @@
               <li>
                 <span>
                   <a href="{{ route('product.all', ['category' => $ct->id]) }}">
-                    {{ $ct->translate(App::getLocale(), true)->name }}
+                    {{ $ct->name }}
                   </a>
                 </span>
               </li>

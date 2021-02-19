@@ -12,11 +12,11 @@ class LeftMenuWidget implements ContractWidget {
 
   public function execute(){
     $brands = Cache::remember('brands-menu', config('app.cache.bd'), function () {
-      return Brand::withTranslation()->orderBy('name', 'ASC')->get();
+      return Brand::orderBy('name', 'ASC')->get();
     });
 
     $categories = Cache::remember('categories-menu', config('app.cache.bd'), function () {
-      return Category::withTranslation()->whereDoesntHave('parents')->with('child')->get();
+      return Category::whereDoesntHave('parents')->with('child')->get();
     });
 
     return view('Widget::left-menu', [

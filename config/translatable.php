@@ -39,7 +39,7 @@ return [
   | and never fallback to the translator one.
   |
   */
-  'locale' => 'ru',
+  'locale' => null,
 
   /*
   |--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ return [
   | $useTranslationFallback when defined
   |
   */
-  'use_fallback' => 'ru',
+  'use_fallback' => false,
 
   /*
   |--------------------------------------------------------------------------
