@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
@@ -36,13 +37,13 @@ class ProductSkus extends Model
     'stock',
   ];
 
-  public function skus (): HasOne
+  public function skus (): belongsTo
   {
-    return $this->hasOne(Skus::class, 'id', 'skus_id');
+    return $this->belongsTo(Skus::class, 'skus_id', 'id');
   }
 
-  public function product (): HasOne
+  public function product (): belongsTo
   {
-    return $this->hasOne(Product::class, 'id', 'product_id');
+    return $this->belongsTo(Product::class, 'product_id', 'id');
   }
 }
