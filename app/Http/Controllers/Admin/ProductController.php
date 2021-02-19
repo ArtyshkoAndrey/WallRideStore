@@ -101,6 +101,10 @@ class ProductController extends Controller
     if (is_array($request->get('skus', []))) {
       foreach ($request->get('skus', []) as $id => $stock) {
         $ps = new ProductSkus(['skus_id' => $id, 'stock' => $stock, 'product_id' => $product->id]);
+        $ps = new ProductSkus();
+        $ps->stock = $stock;
+        $ps->skus()->associate($id);
+        $ps->product()->associate($product->id);
         $ps->save();
       }
     }
@@ -176,7 +180,10 @@ class ProductController extends Controller
           }
         }
         if (!$flag) {
-          $ps = new ProductSkus(['skus_id' => $id, 'stock' => $stock, 'product_id' => $product->id]);
+          $ps = new ProductSkus();
+          $ps->stock = $stock;
+          $ps->skus()->associate($id);
+          $ps->product()->associate($product->id);
           $ps->save();
         }
       }
