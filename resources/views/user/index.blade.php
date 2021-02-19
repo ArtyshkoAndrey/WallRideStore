@@ -48,9 +48,11 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-3 col-md-4 col-6" v-for="i in 8">
-        @include('user.layouts.item')
-      </div>
+      @foreach($newProducts as $product)
+        <div class="col-lg-3 col-md-4 col-6">
+          @include('user.layouts.item', ['product' => $product])
+        </div>
+      @endforeach
     </div>
   </section>
 
@@ -173,9 +175,11 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-3 col-md-4 col-6" v-for="i in 8">
-        @include('user.layouts.item')
-      </div>
+      @foreach($bestseller as $product)
+        <div class="col-lg-3 col-md-4 col-6">
+          @include('user.layouts.item', ['product' => $product])
+        </div>
+      @endforeach
     </div>
   </section>
 

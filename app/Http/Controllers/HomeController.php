@@ -23,20 +23,20 @@ class HomeController extends Controller
   {
 
 //    $categories = Category::whereToMenu(true)->get();
-//    $newProducts = Product::whereOnNew(true)
-//      ->orderByDesc('id')
-//      ->take(4)
-//      ->get();
-//    $hitProducts = Product::whereOnTop(true)
-//      ->orderByDesc('id')
-//      ->take(4)
-//      ->get();
+    $newProducts = Product::whereOnNew(true)
+      ->orderByDesc('id')
+      ->take(8)
+      ->get();
+    $bestseller = Product::whereOnTop(true)
+      ->orderByDesc('id')
+      ->take(8)
+      ->get();
 //    return view('user.index', compact('categories', 'newProducts', 'hitProducts'));
 
     $brands = Cache::remember('brands-to-index', config('app.cache.bd'), function () {
       return Brand::where('to_index', true)->take(6)->get();
     });
-    return view('user.index', compact('brands'));
+    return view('user.index', compact('brands', 'bestseller', 'newProducts'));
   }
 
   /**
