@@ -10,6 +10,9 @@
   <meta name="keywords" content="@yield('meta-keywords', '')">
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
+  <link rel="preload" href="{{ asset('css/preloader.css') }}" as="style" />
+  <link rel="stylesheet" href="{{ asset('css/preloader.css') }}">
+
   <link rel="preload" href="{{ mix('css/app.css') }}" as="style" />
 
   <link rel="stylesheet" type="text/css" href="{{ mix('css/app.css') }}">
@@ -43,6 +46,15 @@
   @endif
 </head>
 <body id="{{ str_replace('.', '-', Route::currentRouteName()) . '-page' }}">
+
+  <div class="preloader">
+    <img src="{{ asset('images/logo-dark.svg') }}" alt="logo" class="img-fluid preloader__logo">
+    <div class="preloader__row">
+      <div class="preloader__item"></div>
+      <div class="preloader__item"></div>
+    </div>
+  </div>
+
   <div id="app">
 
     @include('user.layouts.header.alerts')
@@ -57,5 +69,15 @@
   @include('user.layouts.footer')
 
   <script src="{{ mix('js/app.js') }}"></script>
+
+  <script>
+    window.onload = function () {
+      document.body.classList.add('loaded_hiding');
+      window.setTimeout(function () {
+        document.body.classList.add('loaded');
+        document.body.classList.remove('loaded_hiding');
+      }, 300);
+    }
+  </script>
 </body>
 </html>

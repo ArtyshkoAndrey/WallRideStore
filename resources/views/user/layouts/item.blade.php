@@ -1,3 +1,4 @@
+
 <div class="card product sale bg-transparent shadow-0 h-100">
 
   <div class="card-body d-flex flex-column">
@@ -31,30 +32,17 @@
     <div class="row context mt-auto">
       <div class="col-md-5 col-12 d-flex flex-column align-self-end p-0">
         @if($product->on_sale)
-          <span class="old-price">{{ $cost($store.state.currency.ratio * <? echo $product->price ?>) }} @{{ $store.state.currency.symbol }}</span>
-          <span class="price">{{ $cost($store.state.currency.ratio * <? echo $product->price_sale ?>) }} @{{ $store.state.currency.symbol }}</span>
+          <span class="old-price">{{ $cost($store.state.currency.ratio * <?= $product->price ?>) }} @{{ $store.state.currency.symbol }}</span>
+          <span class="price">{{ $cost($store.state.currency.ratio * <?= $product->price_sale ?>) }} @{{ $store.state.currency.symbol }}</span>
         @else
-          <span class="price font-weight-bolder">{{ $cost($store.state.currency.ratio * <? echo $product->price ?>) }} @{{ $store.state.currency.symbol }}</span>
+          <span class="price font-weight-bolder">{{ $cost($store.state.currency.ratio * <?= $product->price ?>) }} @{{ $store.state.currency.symbol }}</span>
         @endif
       </div>
       <div class="col-md-7 mt-3 col-12 p-0">
-{{--        @if($item->skuses()->count() >=  2)--}}
-          <a href="#" class="btn btn-dark h-100 w-100 d-block btn-to-cart">
-            <span class="pe-2">{{ __('Выбрать') }}</span>
-            <i class="far fa-shopping-bag"></i>
-          </a>
-{{--        @elseif($item->skuses()->count() === 1)--}}
-{{--          <button class="btn btn-outline-dark btn-to-cart w-100 mt-2 mt-md-0"--}}
-{{--                  @click="$store.commit('addItem', {id: {{ $item->skuses()->first()->pivot->id }}, amount: 1})">--}}
-{{--            <i class="bx bx-cart"></i>--}}
-{{--            <span>В корзину</span>--}}
-{{--          </button>--}}
-{{--        @else--}}
-{{--          <button class="btn btn-outline-dark btn-to-cart w-100 mt-2 mt-md-0" disabled>--}}
-{{--            Товар распродан--}}
-{{--          </button>--}}
-{{--        @endif--}}
-
+        <a href="#" class="btn btn-dark h-100 w-100 d-block btn-to-cart">
+          <span class="pe-2">{{ __('Выбрать') }}</span>
+          <i class="far fa-shopping-bag"></i>
+        </a>
       </div>
     </div>
   </div>
