@@ -79,5 +79,7 @@
       }, 300);
     }
   </script>
+
+  @yield('js')
 </body>
 </html>
