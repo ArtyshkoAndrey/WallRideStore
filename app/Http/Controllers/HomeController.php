@@ -47,6 +47,6 @@ class HomeController extends Controller
   public function language (string $locale): RedirectResponse
   {
     setcookie('language', $locale, time() + (86400 * 30), "/");
-    return redirect()->route('index');
+    return redirect()->back();
   }
 }
