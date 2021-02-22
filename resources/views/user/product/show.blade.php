@@ -5,15 +5,9 @@
 @section('content')
   <div class="container my-5 item-page">
     <div class="row">
-      <div class="col-12 ps-3 breadcrumb">
-        @foreach($categories as $category)
-          <a class="breadcrumb-link" href="{{ route('product.all', ['category' => $category->id]) }}">{{ $category->name }}</a>
-        @endforeach
-        <p>{{ $product->title }}</p>
-      </div>
 
       <div class="row">
-        <div class="col-5">
+        <div class="col-6">
           <div class="row">
             <div class="col-3 d-flex justify-content-center">
               <button id="prev" class="slider-button"><i class="far fa-chevron-up"></i></button>
@@ -22,7 +16,7 @@
         </div>
       </div>
 
-      <div class="col-12 col-md-5 slider">
+      <div class="col-12 col-md-6 slider">
         <div class="row flex-column-reverse flex-md-row">
           <div class="col-12 col-md-3 slider-nav">
             <div class="scroll-wrapper flex-row flex-md-column justify-content-start">
@@ -65,26 +59,39 @@
           </div>
         </div>
       </div>
-      <div class="col-md-7 col-12 pl-md-4 item-details ">
+      <div class="col-md-6 col-12 pl-md-4 item-details ">
         <div class="row flex-column">
-          <h2 class="font-weight-bolder col-md-8 col-12">{{ $product->title }}</h2>
+          <div class="col-12 ps-3 breadcrumb">
+            @foreach($categories as $category)
+              <a class="breadcrumb-link mb-0" href="{{ route('product.all', ['category' => $category->id]) }}">{{ $category->name }}</a>
+            @endforeach
+            <p class="mb-0">{{ $product->title }}</p>
+          </div>
+          <h2 class="font-weight-bolder col-md-8 mb-4 col-12">{{ $product->title }}</h2>
 
           <div class="col-12 prices-wrapper sale mb-2">
-{{--            @if($product->on_sale)--}}
+            @if($product->on_sale)
               <span class="old-price">{{ $cost($store.state.currency.ratio * <?= $product->price ?>) }} @{{ $store.state.currency.symbol }}</span>
-{{--            @endif--}}
+            @endif
             <span class="price">{{ $cost($store.state.currency.ratio * <?= $product->on_sale ? $product->price_sale : $product->price?>) }} @{{ $store.state.currency.symbol }}</span>
+          </div>
+
+          <div class="col-md-12 mb-2">
+            <select name="skus" class="form-control rounded-0" id="skus">
+              <option value="null" selected disabled>{{ __('Размер') }}</option>
+              <option value="123">Ботинки 36</option>
+            </select>
           </div>
 
           <div class="col-12 mb-5">
             <button class="btn btn-dark btn-to-cart mt-2 mt-md-0">
-              <span>Добавить в корзину</span>
+              <span>{{ __('Добавить в корзину') }}</span>
               <i class="bx bx-cart-alt"></i>
             </button>
           </div>
           <div class="col-12 description-wrapper">
             <div class="row">
-              <div class="col-12 title">Описание</div>
+              <div class="col-12 title">{{ __('Описание') }}</div>
               <div class="col-12 description">
                 {!! $product->description !!}
               </div>
@@ -95,6 +102,17 @@
 
       </div>
 
+    </div>
+
+    <div class="row mt-5">
+      <div class="col-12">
+        <h4 class="font-weight-bolder">{{ __('Похожие товары') }}</h4>
+      </div>
+      @foreach($similarProducts as $product)
+        <div class="col-md-3 col-sm-4 col-6">
+          @include('user.layouts.item', ['product' => $product])
+        </div>
+      @endforeach
     </div>
 
 

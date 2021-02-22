@@ -2,7 +2,6 @@
 .breadcrumb {
   .breadcrumb-link {
     color: $dark!important;
-    //margin: 0 15px;
     &:not(:last-child) {
       &:hover {
         color: $danger!important;
@@ -114,7 +113,7 @@
   .slider-button {
     border: none;
     background: transparent;
-    color: #4F545B;
+    color: $gray-1;
 
     i {
       font-size: 1.8em;
@@ -136,8 +135,8 @@
   .prices-wrapper {
     .old-price {
       display: none;
-      color: #4F545B;
-      font-size: 0.9em;
+      color: $gray-2;
+      font-size: 1em;
       text-align: left;
       width: 100%;
       padding-left: 0.1em;
@@ -146,9 +145,9 @@
     }
 
     .price {
-      font-weight: 500;
-      font-size: 1.2em;
-      color: #2D3134;
+      font-weight: 600;
+      font-size: 1.6em;
+      color: $dark;
     }
 
     &.sale {
@@ -161,11 +160,13 @@
   .description-wrapper {
     .title {
       font-weight: bold;
+      font-size: 1.3em;
+      margin-bottom: 15px;
       color: #2D3134;
     }
 
     .description {
-      color: #4F545B;
+      color: $gray-1;
       font-size: .9em;
     }
   }
