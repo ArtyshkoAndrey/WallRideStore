@@ -119,6 +119,9 @@ class Product extends Model implements TranslatableContract
     'thumbnail_jpg'
   ];
 
+  const PHOTO_PATH = 'storage/products/photos';
+  const THUMBNAIL_PATH = 'storage/products/thumbnails';
+
   public function available (): bool
   {
     $counter = 0;

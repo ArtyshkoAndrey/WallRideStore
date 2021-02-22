@@ -3,14 +3,12 @@
 namespace App\Observers;
 
 use App\Models\Category;
-use App\Models\Product;
+use App\Models\ProductTranslation;
 use Cache;
-use Exception;
 use Psr\SimpleCache\InvalidArgumentException;
 
-class ProductObserver
+class ProductTranslationObserver
 {
-
   private array $categories;
 
   public function __construct()
@@ -21,13 +19,13 @@ class ProductObserver
   }
 
   /**
-   * Handle the Product "created" event.
+   * Handle the ProductTranslation "created" event.
    *
-   * @param Product $product
+   * @param ProductTranslation $product
    * @return void
    * @throws InvalidArgumentException
    */
-  public function created(Product $product): void
+  public function created(ProductTranslation $product): void
   {
     foreach ($this->categories as $category) {
       Cache::delete('similar-product-' . $category);
@@ -35,13 +33,13 @@ class ProductObserver
   }
 
   /**
-   * Handle the Product "updated" event.
+   * Handle the ProductTranslation "updated" event.
    *
-   * @param Product $product
+   * @param ProductTranslation $product
    * @return void
    * @throws InvalidArgumentException
    */
-  public function updated(Product $product): void
+  public function updated(ProductTranslation $product): void
   {
     foreach ($this->categories as $category) {
       Cache::delete('similar-product-' . $category);
@@ -49,13 +47,13 @@ class ProductObserver
   }
 
   /**
-   * Handle the Product "deleted" event.
+   * Handle the ProductTranslation "deleted" event.
    *
-   * @param Product $product
+   * @param ProductTranslation $product
    * @return void
    * @throws InvalidArgumentException
    */
-  public function deleted(Product $product): void
+  public function deleted(ProductTranslation $product): void
   {
     foreach ($this->categories as $category) {
       Cache::delete('similar-product-' . $category);
@@ -63,25 +61,24 @@ class ProductObserver
   }
 
   /**
-   * Handle the Product "restored" event.
+   * Handle the ProductTranslation "restored" event.
    *
-   * @param Product $product
+   * @param ProductTranslation $product
    * @return void
    */
-  public function restored(Product $product): void
+  public function restored(ProductTranslation $product): void
   {
 
   }
 
   /**
-   * Handle the Product "force deleted" event.
+   * Handle the ProductTranslation "force deleted" event.
    *
-   * @param Product $product
+   * @param ProductTranslation $product
    * @return void
-   * @throws Exception
    * @throws InvalidArgumentException
    */
-  public function forceDeleted(Product $product): void
+  public function forceDeleted(ProductTranslation $product): void
   {
     foreach ($this->categories as $category) {
       Cache::delete('similar-product-' . $category);

@@ -3,7 +3,9 @@
 namespace App\Observers;
 
 use App\Models\Brand;
-use Illuminate\Support\Facades\File;
+use App\Services\PhotoService;
+use Cache;
+use Psr\SimpleCache\InvalidArgumentException;
 
 class BrandObserver
 {
@@ -12,10 +14,12 @@ class BrandObserver
    *
    * @param Brand $brand
    * @return void
+   * @throws InvalidArgumentException
    */
-  public function created(Brand $brand)
+  public function created(Brand $brand): void
   {
-    //
+    Cache::delete('brands-to-index');
+    Cache::delete('brands-menu');
   }
 
   /**
@@ -23,10 +27,12 @@ class BrandObserver
    *
    * @param Brand $brand
    * @return void
+   * @throws InvalidArgumentException
    */
-  public function updated(Brand $brand)
+  public function updated(Brand $brand): void
   {
-    //
+    Cache::delete('brands-to-index');
+    Cache::delete('brands-menu');
   }
 
   /**
@@ -34,21 +40,18 @@ class BrandObserver
    *
    * @param Brand $brand
    * @return void
+   * @throws InvalidArgumentException
    */
-  public function deleted(Brand $brand)
+  public function deleted(Brand $brand): void
   {
-    $types = ['webp', 'jpg'];
+    if ($brand->photo)
+      PhotoService::delete($brand->photo, Brand::PHOTO_PATH, true);
 
-    foreach ($types as $type) {
-      if ($brand->photo)
-        if (file_exists(public_path(Brand::PHOTO_PATH . $brand->photo . '.' . $type)))
-          File::delete(public_path(Brand::PHOTO_PATH . $brand->photo . '.' . $type));
+    if ($brand->logo)
+      PhotoService::delete($brand->photo, Brand::LOGO_PATH, true);
 
-      if ($brand->logo)
-        if (file_exists(public_path(Brand::LOGO_PATH . $brand->logo . '.' . $type)))
-          File::delete(public_path(Brand::LOGO_PATH . $brand->logo . '.' . $type));
-    }
-
+    Cache::delete('brands-to-index');
+    Cache::delete('brands-menu');
   }
 
   /**
@@ -57,9 +60,9 @@ class BrandObserver
    * @param Brand $brand
    * @return void
    */
-  public function restored(Brand $brand)
+  public function restored(Brand $brand): void
   {
-    //
+
   }
 
   /**
@@ -68,7 +71,7 @@ class BrandObserver
    * @param Brand $brand
    * @return void
    */
-  public function forceDeleted(Brand $brand)
+  public function forceDeleted(Brand $brand): void
   {
 
   }

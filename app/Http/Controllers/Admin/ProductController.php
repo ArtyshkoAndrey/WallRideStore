@@ -11,13 +11,10 @@ use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\File;
-use PhpParser\Node\Expr\Array_;
 
 class ProductController extends Controller
 {
@@ -100,7 +97,6 @@ class ProductController extends Controller
 
     if (is_array($request->get('skus', []))) {
       foreach ($request->get('skus', []) as $id => $stock) {
-        $ps = new ProductSkus(['skus_id' => $id, 'stock' => $stock, 'product_id' => $product->id]);
         $ps = new ProductSkus();
         $ps->stock = $stock;
         $ps->skus()->associate($id);
@@ -120,11 +116,10 @@ class ProductController extends Controller
    * Display the specified resource.
    *
    * @param int $id
-   * @return Response
    */
   public function show(int $id)
   {
-      //
+    //
   }
 
   /**
@@ -210,6 +205,8 @@ class ProductController extends Controller
       ->category()
       ->associate($request->category);
     $product->save();
+
+
     return redirect()->back()->with('success', ['Товар успешно обновлён']);
   }
 
@@ -237,8 +234,8 @@ class ProductController extends Controller
 
   public function photo(Request $request, $id) {
 
-    $name = PhotoService::create($request->file('file'), 'storage/products/thumbnails', true, 30, 500);
-    PhotoService::create($request->file('file'), 'storage/products/photos', true, 80, 1200);
+    $name = PhotoService::create($request->file('file'), Product::THUMBNAIL_PATH, true, 30, 500);
+    PhotoService::create($request->file('file'), Product::PHOTO_PATH, true, 80, 1200);
     $photo = new Photo(['name' => $name]);
     $photo->product()->associate($id);
     $photo->save();
@@ -251,7 +248,7 @@ class ProductController extends Controller
       'name' => 'required|string'
     ]);
     try {
-      $ph = Photo::where('name', explode('.' ,$request->name)[0])->first()->delete();
+      Photo::where('name', explode('.' ,$request->name)[0])->first()->delete();
       return response()->json(['status' => 'success']);
     } catch (Exception $e) {
       return response()->json(['status' => 'error'], 500);
@@ -259,14 +256,15 @@ class ProductController extends Controller
   }
 
   public function photoStore(Request $request) {
-    $name = PhotoService::create($request->file('file'), 'storage/products/thumbnails', true, 30, 500);
-    PhotoService::create($request->file('file'), 'storage/products/photos', true, 80, 1200);
+    $name = PhotoService::create($request->file('file'), Product::THUMBNAIL_PATH, true, 30, 500);
+    PhotoService::create($request->file('file'), Product::PHOTO_PATH, true, 80, 1200);
     try {
       $photo = new Photo(['name' => $name]);
       $photo->product()->associate(null);
       $photo->save();
     } catch (Exception $exception) {
-      PhotoService::delete($name);
+      PhotoService::delete($name, Product::PHOTO_PATH, true);
+      PhotoService::delete($name, Product::THUMBNAIL_PATH, true);
       return response()->json($exception->getMessage(), 500);
     }
     return $name;

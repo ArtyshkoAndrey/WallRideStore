@@ -95,6 +95,8 @@ class Category extends Model implements TranslatableContract
     'search_name'
   ];
 
+  const PHOTO_PATH = 'storage/categories/photo/';
+
   /**
    * Child Categories
    *
@@ -161,7 +163,7 @@ class Category extends Model implements TranslatableContract
   public function getPhotoStorageAttribute (): string
   {
     if ($this->photo)
-      return asset('storage/categories/photo/' . $this->photo);
+      return asset(Category::PHOTO_PATH . $this->photo);
 
     return asset('images/product.jpg');
   }

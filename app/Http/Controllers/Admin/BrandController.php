@@ -42,11 +42,11 @@ class BrandController extends Controller
   /**
    * Show the form for creating a new resource.
    *
-   * @return Response
+   * @return void
    */
-  public function create()
+  public function create(): void
   {
-      //
+
   }
 
   /**
@@ -68,36 +68,34 @@ class BrandController extends Controller
 
     $data = $request->all();
     if ($request->has('photo'))
-      $data['photo'] = PhotoService::create($request->file('photo'), 'storage/brands/photo', true, 30, 500);
+      $data['photo'] = PhotoService::create($request->file('photo'), Brand::PHOTO_PATH, true, 30, 500);
     if ($request->has('logo'))
-      $data['logo'] = PhotoService::create($request->file('logo'), 'storage/brands/logo', true, 30, 500);
+      $data['logo'] = PhotoService::create($request->file('logo'), Brand::LOGO_PATH, true, 30, 500);
 
     Brand::create($data);
-    Cache::delete('brands-to-index');
-    Cache::delete('brands-menu');
     return redirect()->back()->with('success', ['Бренд успешно создан']);
   }
 
   /**
    * Display the specified resource.
    *
-   * @param  int  $id
-   * @return Response
+   * @param  int $id
+   * @return void
    */
-  public function show($id)
+  public function show(int $id): void
   {
-      //
+
   }
 
   /**
    * Show the form for editing the specified resource.
    *
-   * @param  int  $id
-   * @return Response
+   * @param  int $id
+   * @return void
    */
-  public function edit($id)
+  public function edit(int $id): void
   {
-      //
+
   }
 
   /**
@@ -106,7 +104,6 @@ class BrandController extends Controller
    * @param Request $request
    * @param int $id
    * @return RedirectResponse
-   * @throws InvalidArgumentException
    */
   public function update(Request $request, int $id): RedirectResponse
   {
@@ -123,13 +120,15 @@ class BrandController extends Controller
 
     $data = $request->all();
     if ($request->has('photo'))
-      $data['photo'] = PhotoService::create($request->file('photo'), 'storage/brands/photo', true, 30, 500);
+
+
+      $data['photo'] = PhotoService::create($request->file('photo'), Brand::PHOTO_PATH, true, 30, 500);
+
     if ($request->has('logo'))
-      $data['logo'] = PhotoService::create($request->file('logo'), 'storage/brands/logo', true, 30, 500);
+      $data['logo'] = PhotoService::create($request->file('logo'), Brand::LOGO_PATH, true, 30, 500);
+
     $brand->update($data);
 
-    Cache::delete('brands-to-index');
-    Cache::delete('brands-menu');
     return redirect()->back()->with('success', ['Бренд успешно обнавлён']);
   }
 
@@ -144,8 +143,6 @@ class BrandController extends Controller
   {
     $brand = Brand::find($id);
     $brand->delete();
-    Cache::delete('brands-to-index');
-    Cache::delete('brands-menu');
     return redirect()->back()->with('success', ['Бренд успешно удалён']);
   }
 }

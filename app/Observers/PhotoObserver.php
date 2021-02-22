@@ -14,7 +14,7 @@ class PhotoObserver
    * @param Photo $photo
    * @return void
    */
-  public function created(Photo $photo)
+  public function created(Photo $photo): void
   {
     //
   }
@@ -25,7 +25,7 @@ class PhotoObserver
    * @param Photo $photo
    * @return void
    */
-  public function updated(Photo $photo)
+  public function updated(Photo $photo): void
   {
     //
   }
@@ -36,9 +36,10 @@ class PhotoObserver
    * @param Photo $photo
    * @return void
    */
-  public function deleted(Photo $photo)
+  public function deleted(Photo $photo): void
   {
-    PhotoService::delete($photo->name);
+    PhotoService::delete($photo->name, Photo::PHOTO_PATH, true);
+    PhotoService::delete($photo->name, Photo::THUMBNAIL_PATH, true);
   }
 
   /**
@@ -47,7 +48,7 @@ class PhotoObserver
    * @param Photo $photo
    * @return void
    */
-  public function restored(Photo $photo)
+  public function restored(Photo $photo): void
   {
     //
   }
@@ -58,7 +59,7 @@ class PhotoObserver
    * @param Photo $photo
    * @return void
    */
-  public function forceDeleted(Photo $photo)
+  public function forceDeleted(Photo $photo): void
   {
 
   }
