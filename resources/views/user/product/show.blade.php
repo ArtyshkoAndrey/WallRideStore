@@ -77,14 +77,18 @@
           </div>
 
           <div class="col-md-12 mb-2">
-            <select name="skus" class="form-control rounded-0" id="skus">
+            <select name="skus" class="form-control rounded-0" id="skus" v-model.number="selectSkus">
               <option value="null" selected disabled>{{ __('Размер') }}</option>
-              <option value="123">Ботинки 36</option>
+              @foreach($product->skuses as $skus)
+                <option value="{{ $skus->pivot->id }}" {{ $skus->pivot->stock === 0 ? 'disabled' : null }}>{{ $skus->title }}</option>
+              @endforeach
             </select>
           </div>
 
           <div class="col-12 mb-5">
-            <button class="btn btn-dark btn-to-cart mt-2 mt-md-0">
+            <button class="btn btn-dark btn-to-cart mt-2 mt-md-0"
+                    :disabled="selectSkus === null"
+                    @click="$store.commit('addItem', {id: selectSkus, amount: 1})">
               <span>{{ __('Добавить в корзину') }}</span>
               <i class="bx bx-cart-alt"></i>
             </button>
