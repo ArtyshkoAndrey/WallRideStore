@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App;
 use App\Models\Product;
 use App\Models\Skus;
+use Cache;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -204,7 +205,12 @@ class ProductController extends Controller
         $categories = [];
       }
 
-      return view('user.product.show', compact('product', 'categories'));
+      if ($category = end($categories)) {
+        $similarProducts = Cache::remember('similar-product-' . $category->id, config('app.cache.bd'), function () use ($category) {
+          return $category->products()->take(4)->get();
+        });
+      }
+      return view('user.product.show', compact('product', 'categories', 'similarProducts'));
     }
     throw new NotFoundHttpException();
   }
