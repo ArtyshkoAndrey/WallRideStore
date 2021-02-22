@@ -21,7 +21,11 @@
 
     .slider-nav {
       overflow: hidden;
-      height: 0;
+      height: auto!important;
+
+      @include respond-to(lg) {
+        height: unset!important;
+      }
 
       .scroll-wrapper {
         display: flex;
@@ -30,23 +34,27 @@
         position: relative;
         transition-duration: .5s;
 
-        @include media-breakpoint-down(sm) {
-          overflow-y: auto;
-          padding-bottom: 1em;
-          top: 0 !important;
+        overflow-y: auto;
+        padding-bottom: 1em;
+        top: 0 !important;
+
+        @include respond-to(lg) {
+          padding-bottom: 0;
+          top: unset !important;
         }
       }
 
       .item {
         display: flex;
         justify-content: center;
-        width: 100%;
-        margin-bottom: 20px;
+        margin-bottom: 0;
+        margin-right: 15px;
+        width: auto;
 
-        @include media-breakpoint-down(sm) {
-          margin-bottom: 0;
-          margin-right: 15px;
-          width: auto;
+        @include respond-to(lg) {
+          width: 100%;
+          margin-bottom: 20px;
+          margin-right: 0;
         }
 
         .img-wrapper {
@@ -63,8 +71,10 @@
     }
 
     .slider-for {
-      @include media-breakpoint-down(sm) {
-        margin-bottom: 1em;
+      margin-bottom: 1em;
+
+      @include respond-to(lg) {
+        margin-bottom: 0;
       }
 
       .img-wrapper {

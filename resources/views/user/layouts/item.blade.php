@@ -4,7 +4,7 @@
   <div class="card-body d-flex flex-column">
     <div class="row">
       <div class="col-12 p-0">
-        <a href="#" class="img-wrapper d-block">
+        <a href="{{ route('product.show', $product->id) }}" class="img-wrapper d-block">
           <picture>
             <source type="image/webp" srcset="{{ $product->thumbnail_webp }}">
             <source type="image/jpeg" srcset="{{ $product->thumbnail_jpg }}">

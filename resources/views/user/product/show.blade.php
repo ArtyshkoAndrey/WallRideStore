@@ -6,7 +6,7 @@
   <div class="container my-5 item-page">
     <div class="row">
 
-      <div class="row">
+      <div class="row d-none d-lg-block">
         <div class="col-6">
           <div class="row">
             <div class="col-3 d-flex justify-content-center">
@@ -16,10 +16,10 @@
         </div>
       </div>
 
-      <div class="col-12 col-md-6 slider">
-        <div class="row flex-column-reverse flex-md-row">
-          <div class="col-12 col-md-3 slider-nav">
-            <div class="scroll-wrapper flex-row flex-md-column justify-content-start">
+      <div class="col-12 col-lg-6 slider">
+        <div class="row flex-column-reverse flex-lg-row">
+          <div class="col-12 col-lg-3 slider-nav">
+            <div class="scroll-wrapper flex-row flex-lg-column justify-content-start">
 
               @foreach($product->photos as $photo)
 
@@ -38,7 +38,7 @@
 
             </div>
           </div>
-          <div class="col-12 col-md-9 slider-for">
+          <div class="col-12 col-lg-9 slider-for">
             @foreach($product->photos as $index => $photo)
               <div class="img-wrapper {{ $index === 0 ? 'active' : null }}" data-id="{{ $photo->id }}">
                 <picture>
@@ -50,7 +50,7 @@
             @endforeach
 
           </div>
-          <div class="col-12 d-none d-md-block">
+          <div class="col-12 d-none d-lg-block">
             <div class="row">
               <div class="col-3 d-flex justify-content-center">
                 <button id="next" class="slider-button"><i class="far fa-chevron-down"></i></button>
@@ -59,7 +59,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6 col-12 pl-md-4 item-details ">
+      <div class="col-lg-6 col-12 pl-md-4 item-details ">
         <div class="row flex-column">
           <div class="col-12 ps-3 breadcrumb">
             @foreach($categories as $category)
@@ -85,15 +85,27 @@
             </select>
           </div>
 
-          <div class="col-12 mb-5">
-            <button class="btn btn-dark btn-to-cart mt-2 mt-md-0"
-                    :disabled="selectSkus === null"
-                    @click="$store.commit('addItem', {id: selectSkus, amount: 1})">
-              <span>{{ __('Добавить в корзину') }}</span>
-              <i class="bx bx-cart-alt"></i>
-            </button>
+          <div class="col-12">
+
+            <div class="row">
+              <div class="col-md-auto mt-2">
+                <button class="btn w-100 btn-dark btn-to-cart mt-2 mt-md-0"
+                        :disabled="selectSkus === null"
+                        @click="$store.commit('addItem', {id: selectSkus, amount: 1})">
+                  <span>{{ __('Добавить в корзину') }}</span>
+                  <i class="ms-2 far fa-shopping-bag"></i>
+                </button>
+              </div>
+              <div class="col-md-auto mt-2">
+                <button class="btn w-100 btn-dark btn-to-cart mt-2 mt-md-0"
+                        @click="addFavor({{$product->id}})">
+                  <span>{{ __('Добавить в избранные') }}</span>
+                  <i class="ms-2 far fa-heart"></i>
+                </button>
+              </div>
+            </div>
           </div>
-          <div class="col-12 description-wrapper">
+          <div class="col-12 mt-3 description-wrapper">
             <div class="row">
               <div class="col-12 title">{{ __('Описание') }}</div>
               <div class="col-12 description">
