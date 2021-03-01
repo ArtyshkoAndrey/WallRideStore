@@ -41349,10 +41349,6 @@ body > #app > .alert {
   bottom: 0;
 }
 
-/*!
- * Copyright (c) 2020. Данный файл является интелектуальной собственостью Fulliton.
- * Я буду рад если вы будите вносить улучшения, всегда жду ваших пул реквестов
- */
 .product .card-body .title {
   color: #1D1E23;
   font-weight: 500;
@@ -41596,6 +41592,110 @@ body > #app > .alert {
   .item-page .item-details .btn-to-cart {
     width: auto;
   }
+}
+
+#catalog .form-check-input[type=checkbox]:checked {
+  background-color: #F33C3C;
+  border-color: #F33C3C;
+}
+#catalog .form-check-input[type=checkbox]:checked:focus {
+  background-color: #F33C3C;
+}
+#catalog .form-check-input[type=checkbox]:checked:focus:before {
+  box-shadow: 0 0 0 13px #F33C3C;
+}
+#catalog > div {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+#catalog > div > .title {
+  font-size: 1.1em;
+  font-weight: 700;
+  color: #1D1E23;
+  margin-left: 0.1em;
+}
+@media (min-width: 768px) {
+  #catalog > div > .title {
+    font-size: 1.5em;
+  }
+}
+#catalog > div .badge {
+  line-height: unset;
+  background: #FFFFFF;
+  color: #1D1E23;
+  font-weight: 400;
+  margin-left: 1em;
+}
+#catalog > div .badge-notification {
+  line-height: unset;
+  background: #FFFFFF;
+  color: #1D1E23;
+  font-weight: 500;
+  position: absolute;
+  right: -3px;
+  top: 0;
+  font-size: 0.6em;
+  padding: 0 4px;
+}
+#catalog #product-all {
+  display: flex;
+  align-items: center;
+}
+#catalog #product-all .dropdown {
+  display: flex;
+}
+#catalog #product-all .dropdown .dropdown-toggle {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+#catalog #product-all .dropdown .dropdown-toggle:after {
+  color: #444447;
+  margin-left: auto;
+}
+@media (min-width: 576px) {
+  #catalog #product-all .dropdown .dropdown-toggle:after {
+    font-size: 1.6em;
+  }
+}
+#catalog #product-all .dropdown .dropdown-menu {
+  width: 100vw !important;
+  transform: translate(0, 40px) !important;
+  margin-left: -12px;
+}
+@media (min-width: 576px) {
+  #catalog #product-all .dropdown .dropdown-menu {
+    width: 300px !important;
+    max-height: 300px !important;
+    transform: none !important;
+    margin-left: unset;
+  }
+}
+#catalog #product-all .dropdown .dropdown-menu .checkbox {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+#catalog hr {
+  color: #8B8D96;
+}
+#catalog .filter-badge {
+  display: flex;
+  align-items: center;
+  background: #E9EAEC;
+  border-radius: 10px;
+}
+#catalog .filter-badge button {
+  display: flex;
+  align-items: center;
+  margin: 0 0 0 0.3em;
+}
+#catalog .badge.badge-notification {
+  margin-left: 0 !important;
+}
+#catalog .clear-filters a {
+  color: #2D3134;
+  text-decoration: underline;
 }
 
 #login-page, #register-page, #password-request-page, #password-reset-page {

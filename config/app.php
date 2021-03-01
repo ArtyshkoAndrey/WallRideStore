@@ -13,7 +13,7 @@ return [
   |
   */
 
-  'name' => env('APP_NAME', 'Docku'),
+  'name' => env('APP_NAME', 'WallRide Shop'),
   'admin' => [
     'version' => env('ADMIN_VERSION', 'CRACKED VERSION'),
     'name' => env('PROGRAMMER_NAME', 'Fulliton'),

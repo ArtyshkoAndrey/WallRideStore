@@ -1,9 +1,18 @@
-/*!
- * Copyright (c) 2021. Данный файл является интелектуальной собственостью Fulliton.
- * Я буду рад если вы будите вносить улучшения, всегда жду ваших пул реквестов
- */
-
+@import "resources/sass/user/variables";
 #catalog {
+
+  .form-check-input[type=checkbox]:checked {
+    background-color: $danger;
+    border-color: $danger;
+
+    &:focus {
+      background-color: $danger;
+      &:before {
+        box-shadow: 0 0 0 13px $danger;
+      }
+    }
+  }
+
 
   &> div {
     display: flex;
@@ -11,28 +20,28 @@
     margin-top: 20px;
 
     > .title {
-      font-size: 1.5em;
+      font-size: 1.1em;
       font-weight: 700;
-      color: #2D3134;
+      color: $dark;
       margin-left: .1em;
 
       @include respond-to(md) {
-        font-size: 1.1em;
+        font-size: 1.5em;
       }
     }
 
     .badge {
       line-height: unset;
-      background: #E9EAEC;
-      color: #2D3134;
+      background: $white;
+      color: $dark;
       font-weight: 400;
       margin-left: 1em;
     }
 
     .badge-notification {
       line-height: unset;
-      background: #E9EAEC;
-      color: #2D3134;
+      background: $white;
+      color: $dark;
       font-weight: 500;
       position: absolute;
       right: -3px;
@@ -55,7 +64,7 @@
         width: 100%;
 
         &:after {
-          color: #2D3134;
+          color: $gray-2;
           margin-left: auto;
 
           @include respond-to(sm) {
@@ -65,13 +74,17 @@
       }
 
       .dropdown-menu {
-        width: 300px!important;
-        max-height: 300px!important;
+        width: 100vw!important;
+        transform: translate(0, 40px)!important;
+        margin-left: -12px;
+
+
 
         @include respond-to(sm) {
-          width: 100vw!important;
-          transform: translate(0, 40px)!important;
-          margin-left: -12px;
+          width: 300px!important;
+          max-height: 300px!important;
+          transform: none!important;
+          margin-left: unset;
         }
 
         .checkbox {
@@ -83,7 +96,7 @@
   }
 
   hr {
-    color: #a4a5a7;
+    color: $gray;
   }
 
   .filter-badge {
