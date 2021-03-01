@@ -2,7 +2,7 @@
   <div class="container py-3">
     <div class="row ps-3 ps-md-0">
       <div class="col-md-3 col-sm-6 col-12 mt-3">
-        <p>Есть вопросы? Свяжитесь с нами ;)</p>
+        <p>{{ __('Есть вопросы? Свяжитесь с нами ;)') }}</p>
         <a href="tel:+77475562383" class="h2 text-white">+7 (747) 556-23-83</a>
 
         <ul class="mt-3 list-unstyled">
@@ -18,31 +18,31 @@
       </div>
 
       <div class="col-md-3 col-sm-6 col-12 mt-3">
-        <h5>Помощь по заказам</h5>
+        <h5>{{ __('Помощь по заказам') }}</h5>
 
-        <a href="" class="text-gray-1 d-block mt-2">Доставка и оплата</a>
-        <a href="" class="text-gray-1 d-block mt-2">Политика конфиденциальности</a>
-        <a href="" class="text-gray-1 d-block mt-2">Свяжитесь с нами</a>
+        <a href="" class="text-gray-1 d-block mt-2">{{ __('Доставка и оплата') }}</a>
+        <a href="" class="text-gray-1 d-block mt-2">{{ __('Политика конфиденциальности') }}</a>
+        <a href="" class="text-gray-1 d-block mt-2">{{ __('Свяжитесь с нами') }}</a>
       </div>
 
       <div class="col-md-3 col-sm-6 col-12 mt-3">
-        <h5>Категории</h5>
+        <h5>{{ __('Категории') }}</h5>
 
         @widget("footer-categories")
 
       </div>
 
       <div class="col-md-3 col-sm-6 col-12 mt-3">
-        <h5>Как нас найти</h5>
+        <h5>{{ __('Как нас найти') }}</h5>
 
-        <p class="text-gray-1 d-block">РК, Алматы Мкр. Самал-3,1 050059</p>
-        <p class="text-gray-1 d-block mt-2">Аль Фараби угол ул. Достык, слева от центрального входа в ТРЦ “Ритц Палас” </p>
+        <p class="text-gray-1 d-block">{{ __('РК, Алматы Мкр. Самал-3,1 050059') }}</p>
+        <p class="text-gray-1 d-block mt-2">{{ __("Аль Фараби угол ул. Достык, слева от центрального входа в ТРЦ 'Ритц Палас'") }}</p>
       </div>
 
     </div>
     <div class="row mt-3 ps-3 ps-md-0">
       <div class="col-md-3">
-        <p>©Wallridestore, {{ date('Y') }}. Все права защищены</p>
+        <p>©Wallridestore, {{ date('Y') }}. {{ __('Все права защищены') }}</p>
       </div>
     </div>
     <div class="row justify-content-center">
