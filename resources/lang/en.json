@@ -37,6 +37,7 @@
   "Размер": "Size",
   "Похожие товары": "Similar Products",
   "Товар закончился": "The product is out of stock",
+
   "FOOTER": "FOOTER",
   "Есть вопросы? Свяжитесь с нами ;)": "Any questions? Contact us ;)",
   "Помощь по заказам": "Help with orders",
@@ -47,5 +48,8 @@
   "Аль Фараби угол ул. Достык, слева от центрального входа в ТРЦ 'Ритц Палас'": "Al Farabi corner of Dostyk Street, to the left of the main entrance to the Ritz Palace shopping center”",
   "Доставка и оплата": "Delivery and payment",
   "Политика конфиденциальности": "Privacy Policy",
-  "Свяжитесь с нами": "Contact us"
+  "Свяжитесь с нами": "Contact us",
+
+  "HEADER": "HEADER",
+  "Выйти": "Exit"
 }
