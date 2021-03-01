@@ -203,13 +203,15 @@
               aria-expanded="false"
             >
               <i class="far fa-shopping-bag"></i>
-              <span class="badge rounded-pill badge-notification bg-danger text-black">0</span>
+              <span class="badge rounded-pill badge-notification bg-danger text-black">
+                @{{ $store.state.cart.items.reduce((a, b) => +a + +b.amount, 0) }}
+              </span>
             </a>
-            <div class="dropdown-menu full-width dropdown-menu-end p-4" шв>
+            <div class="dropdown-menu full-width dropdown-menu-end p-4">
 
-              <div class="row mx-0 mb-3 mb-sm-2" v-for="i in 10">
+              <div class="row mx-0 mb-3 mb-sm-2" v-for="product in $store.getters.productsCart" v-if="product">
                 <div class="col-sm-2 col-3 d-flex align-items-center p-0 pb-2">
-                  <img src="{{ asset('images/product.jpg') }}" class="img-fluid" alt="product">
+                  <img :src="product.thumbnail_jpg" :alt="product.title" class="img-fluid">
                 </div>
 
                 <div class="col-9 col-sm-10 pb-2">
@@ -217,28 +219,37 @@
 
                     <div class="col-6 col-sm-5 order-1 d-flex align-self-stretch align-self-sm-auto">
                       <p class="m-0 font-weight-bold product-name">
-                        Lorem ipsum dolor sit amet.
+                        @{{ product.title }} -  @{{ product.skus.skus.title }}
                       </p>
                     </div>
 
                     <div class="col-7 col-sm-auto order-3 order-sm-2 ml-sm-auto mt-auto mt-sm-0">
                       <p class="m-0 font-weight-normal product-price">
-                        42 000 ₽
+                        @{{ $cost( (product.on_sale ? product.price_sale : product.price) * $store.state.currency.ratio) }} @{{ $store.state.currency.symbol }}
                       </p>
                     </div>
 
                     <div class="col-5 col-sm-auto order-4 order-sm-3 d-flex justify-content-between align-items-center mt-auto mt-sm-0">
-                      <button type="button" class="btn btn-dark p-2">
+                      <button type="button" class="btn btn-dark p-2"
+                              onclick="event.stopPropagation();"
+                              @click="$store.commit('addItem', {id: product.item.id, amount: -1 })">
                         <i class="far fa-minus"></i>
                       </button>
-                      <p class="mx-2 my-auto">10</p>
-                      <button type="button" class="btn btn-dark p-2">
+                      <p class="mx-2 my-auto">
+                        @{{ product.item.amount }}
+                      </p>
+                      <button type="button" class="btn btn-dark p-2"
+                              onclick="event.stopPropagation();"
+                              @click="$store.commit('addItem', {id: product.item.id, amount: 1 })">
                         <i class="far fa-plus"></i>
                       </button>
                     </div>
 
                     <div class="col-6 col-sm-auto order-2 order-sm-4 d-flex align-items-start justify-content-end align-self-stretch align-self-sm-auto">
-                      <button type="button" class="p-0 btn bg-transparent shadow-0 border-0 text-danger">
+                      <button type="button"
+                              class="p-0 btn bg-transparent shadow-0 border-0 text-danger"
+                              onclick="event.stopPropagation();"
+                              @click="$store.commit('removeItem', product.item.id)">
                         <i class="far fa-trash h5"></i>
                       </button>
                     </div>
@@ -251,10 +262,16 @@
                 <div class="col-12 col-md-6 d-flex d-md-block justify-content-between ml-2 mb-3 mb-md-0 text-left">
                   <div class="row m-0">
                     <div class="col-6 col-12 d-flex justify-content-start align-items-center p-0">
-                      <p class="h5 font-weight-bold mb-1"> 999 000 Р</p>
+                      <p class="h5 font-weight-bold mb-1">
+                        @{{ $cost($store.getters.priceAmount) }} @{{ $store.state.currency.symbol }}
+                      </p>
                     </div>
                     <div class="col-12 d-flex justify-content-start p-0">
-                      <button class="bg-transparent border-0 text-decoration-none p-0">{{ __('Очистить корзину') }}</button>
+                      <button class="bg-transparent border-0 text-decoration-none p-0"
+                              onclick="event.stopPropagation();"
+                              @click="$store.commit('clearCart')">
+                        {{ __('Очистить корзину') }}
+                      </button>
                     </div>
                   </div>
                 </div>
