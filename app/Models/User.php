@@ -114,6 +114,8 @@ class User extends Authenticatable
     'old_notification' => 'boolean',
   ];
 
+  const PHOTO_PATH = 'storage/users/';
+
   /**
    * User city
    *
@@ -141,7 +143,7 @@ class User extends Authenticatable
 
   public function getUserImageAttribute (): string
   {
-    return $this->avatar ? asset('storage/users/' . $this->avatar) : asset('images/product.jpg');
+    return $this->avatar ? asset(User::PHOTO_PATH . $this->avatar) : asset('images/product.jpg');
   }
 
   public function cartItems (): HasMany
