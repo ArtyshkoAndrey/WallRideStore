@@ -39,10 +39,24 @@
         @endif
       </div>
       <div class="col-md-7 mt-3 col-12 p-0">
-        <a href="#" class="btn btn-dark h-100 w-100 d-block btn-to-cart">
-          <span class="pe-2">{{ __('Выбрать') }}</span>
-          <i class="far fa-shopping-bag"></i>
-        </a>
+        @if(count($product->skuses) > 1)
+          <a href="{{ route('product.show', $product->id) }}" class="btn btn-dark h-100 w-100 d-block btn-to-cart">
+            <span class="pe-2">{{ __('Выбрать') }}</span>
+            <i class="far fa-shopping-bag"></i>
+          </a>
+        @elseif(count($product->skuses) === 1)
+          <button class="btn btn-dark h-100 w-100 d-block btn-to-cart"
+                  @click="$store.commit('addItem', {id: {{ $product->skuses()->first()->pivot->id }}, amount: 1})">
+            <span class="pe-2">{{ __('В корзину') }}</span>
+            <i class="far fa-shopping-bag"></i>
+          </button>
+
+        @else
+          <button disabled="disabled" class="btn btn-dark h-100 w-100 d-block btn-to-cart">
+            <span class="pe-2">{{ __('Товар закончился') }}</span>
+          </button>
+        @endif
+
       </div>
     </div>
   </div>
