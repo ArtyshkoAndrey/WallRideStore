@@ -31,7 +31,7 @@ class ClearImages implements ShouldQueue
 
   public function handle()
   {
-    $dir = public_path('storage/products/photos');
+    $dir = public_path(Photo::PHOTO_PATH);
 
     $files = array_values(array_filter(scandir($dir), function($file) use ($dir) {
       return !is_dir($dir . '/' . $file);
@@ -47,7 +47,7 @@ class ClearImages implements ShouldQueue
           $filesName->add($filename);
 
           if (!Photo::whereName($filename)->exists()) {
-            $this->photoService->delete($filename);
+            $this->photoService->delete($filename, Photo::PHOTO_PATH, true);
           }
         } else
           continue;
