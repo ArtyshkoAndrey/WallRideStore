@@ -2,19 +2,29 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
 use App;
-use \Illuminate\Http\Request;
+use Closure;
+use Illuminate\Http\Request;
 
 class LocaleMiddleware
 {
-  public static string $mainLanguage = 'ru'; //основной язык, который не должен отображаться в URl
+  /**
+   * main language that shouldn't appear in URl
+   * @var string
+   */
+  public static string $mainLanguage = 'ru';
 
-  public static array $languages = ['en', 'ru']; // Указываем, какие языки будем использовать в приложении.
+  /**
+   * List of available localizations
+   * @var array|string[]
+   */
+  public static array $languages = [
+    'en',
+    'ru'
+  ];
 
   /**
    * Handle an incoming request.
-   *
    * @param Request $request
    * @param Closure $next
    * @return mixed
@@ -22,17 +32,20 @@ class LocaleMiddleware
   public function handle(Request $request, Closure $next)
   {
     $locale = self::getLocale();
-//    dd($locale);
     if($locale) App::setLocale($locale);
-
-    //если метки нет - устанавливаем основной язык $mainLanguage
+//  if there is no label - set the main language $mainLanguage
     else App::setLocale(self::$mainLanguage);
 
-    return $next($request); //пропускаем дальше - передаем в следующий посредник
+//  skip further - pass to the next intermediary
+    return $next($request);
   }
 
+  /**
+   * Returns the selected language from the cookie
+   * @return mixed|null
+   */
   public static function getLocale()
   {
-    return isset($_COOKIE['language']) ? $_COOKIE['language'] : null ;
+    return $_COOKIE['language'] ?? null;
   }
 }
