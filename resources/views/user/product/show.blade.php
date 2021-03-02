@@ -125,7 +125,7 @@
         <h4 class="font-weight-bolder">{{ __('Похожие товары') }}</h4>
       </div>
       @foreach($similarProducts as $product)
-        <div class="col-md-3 col-sm-4 col-6">
+        <div class="col-xl-3 col-lg-4 col-6">
           @include('user.layouts.item', ['product' => $product])
         </div>
       @endforeach

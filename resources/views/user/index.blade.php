@@ -41,7 +41,7 @@
 
     <div class="row">
       @foreach($newProducts as $product)
-        <div class="col-lg-3 col-md-4 col-6">
+        <div class="col-xl-3 col-lg-4 col-6">
           @include('user.layouts.item', ['product' => $product])
         </div>
       @endforeach
@@ -168,7 +168,7 @@
 
     <div class="row">
       @foreach($bestseller as $product)
-        <div class="col-lg-3 col-md-4 col-6">
+        <div class="col-xl-3 col-lg-4 col-6">
           @include('user.layouts.item', ['product' => $product])
         </div>
       @endforeach

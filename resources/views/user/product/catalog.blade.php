@@ -160,7 +160,7 @@
   <div class="container">
     <div class="row">
       @foreach($items as $item)
-        <div class="col-6 col-lg-4 col-xl-3">
+        <div class="col-xl-3 col-lg-4 col-6">
           @include('user.layouts.item', array('product' => $item))
         </div>
       @endforeach
