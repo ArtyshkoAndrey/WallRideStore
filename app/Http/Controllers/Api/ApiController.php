@@ -1,14 +1,17 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+
 use App\Exceptions\CouponCodeUnavailableException;
 use App\Http\Controllers\Controller;
-use App\Models\CartItems;
+use App\Models\CartItem;
 use App\Models\CouponCode;
 use App\Models\Currency;
 use App\Models\Product;
 use App\Models\User;
 use App\Services\ParserEmsService;
+use Exception;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Validator;
@@ -16,33 +19,36 @@ use Validator;
 class ApiController extends Controller
 {
 
-  public function currency (int $id): JsonResponse
+  /**
+   * Returns full data by currency id
+   *
+   * @param int $id
+   * @return JsonResponse
+   */
+  public function currency(int $id): JsonResponse
   {
     $validate = Validator::make(
-      [
-        'id' => $id
-      ],
-      [
-        'id' => 'required|exists:currencies,id'
-      ]
+      ['id' => $id],
+      ['id' => 'required|exists:currencies,id']
     );
     if ($validate->fails()) {
       return response()->json(['error' => $validate->errors()->first()], 500);
     }
     $currency = Currency::find($id);
-    return response()->json($currency, 200);
+    return response()->json($currency);
   }
 
   /**
    * Set if isset user new currency in profile. Return new currency
+   *
    * @param Request $request
    * @return JsonResponse
    */
-  public function set_currency (Request $request): JsonResponse
+  public function set_currency(Request $request): JsonResponse
   {
     $request->validate([
       'currency_id' => 'required|exists:currencies,id',
-      'user_id'     => 'present|int|exists:users,id|nullable'
+      'user_id' => 'present|int|exists:users,id|nullable'
     ]);
 
     $data = $request->all();
@@ -51,10 +57,16 @@ class ApiController extends Controller
     if ($data['user_id'])
       User::find($data['user_id'])->update(['currency_id' => $data['currency_id']]);
 
-    return response()->json($currency, 200);
+    return response()->json($currency);
   }
 
-  public function products (Request $request): JsonResponse
+  /**
+   * Returns all products according to the given dimensions
+   *
+   * @param Request $request
+   * @return JsonResponse
+   */
+  public function products(Request $request): JsonResponse
   {
     $ids = $request->get('products_skuses_ids', []);
     $products = Product::with('photos', 'productSkuses.skus')->whereHas('productSkuses', function ($q) use ($ids) {
@@ -64,28 +76,47 @@ class ApiController extends Controller
     return response()->json($products);
   }
 
-  public function update_cart (Request $request)
+
+  /**
+   * Updates the cart in the database
+   *
+   * @param Request $request
+   * @throws Exception
+   */
+  public function update_cart(Request $request)
   {
     $data = $request->all();
 
-    CartItems::whereUserId($data['user_id'])->delete();
+    CartItem::whereUserId($data['user_id'])->delete();
     foreach ($data['products_skuses'] as $ps) {
-      CartItems::create(['user_id' => $data['user_id'], 'product_sku_id' => $ps['id'], 'amount' => $ps['amount']]);
+      CartItem::create(['user_id' => $data['user_id'], 'product_sku_id' => $ps['id'], 'amount' => $ps['amount']]);
     }
   }
 
-  public function cart_items_auth (Request $request): JsonResponse
+  /**
+   * Products from the database basket
+   *
+   * @param Request $request
+   * @return JsonResponse
+   */
+  public function cart_items_auth(Request $request): JsonResponse
   {
-    $cartItems = CartItems::whereUserId($request->get('user_id'))->get();
+    $cartItems = CartItem::whereUserId($request->get('user_id'))->get();
     return response()->json($cartItems);
   }
 
-  public function coupon (Request $request)
+  /**
+   * Checks coupon
+   *
+   * @param Request $request
+   * @return JsonResponse
+   */
+  public function coupon(Request $request): JsonResponse
   {
 
     $data = $request->all();
 
-    if (!$record = CouponCode::where('code', $request->code)->first()) {
+    if (!$record = CouponCode::where('code', $data['code'])->first()) {
       return response()->json(['error' => 'Данного купона не существует'], 403);
     }
 
@@ -139,7 +170,7 @@ class ApiController extends Controller
 
       if ($countCategoriesEnabled > 0) {
         if (!$record->categoriesEnabled()->whereIn('category_id', $product->categories)->exists()) {
-         continue;
+          continue;
         }
       }
       $sum += ($product->on_sale ? $product->price_sale : $product->price) * $item['item']['amount'];
@@ -164,14 +195,22 @@ class ApiController extends Controller
     return response()->json(['sale' => $sale]);
   }
 
-  public function getCostEms (Request $request): JsonResponse
+  public function getCostEms(Request $request): JsonResponse
   {
+    $request->validate([
+      'post_code' => 'required',
+      'country_code' => 'required',
+      'weight' => 'required',
+    ]);
+    $data = $request->all();
     try {
-      $emsService = new ParserEmsService($request->post_code, $request->country_code, $request->weight);
+      $emsService = new ParserEmsService($data['post_code'], $data['country_code'], $data['weight']);
       $price = $emsService->getPrice();
       return response()->json($price);
-    } catch (\Exception $exception) {
-      return response()->json('Возможно в ваш город нет доставки', 500);
+    } catch (Exception $exception) {
+      return response()->json(__('errors_redirect.delivery.not_price'), 500);
+    } catch (GuzzleException $e) {
+      return response()->json(__('errors_redirect.delivery.error'), 500);
     }
   }
 }

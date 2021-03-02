@@ -12,6 +12,7 @@ class HomeController extends Controller
 {
   /**
    * Homepage
+   *
    * @return View
    */
   public function index(): View
@@ -33,6 +34,7 @@ class HomeController extends Controller
 
   /**
    * Change site language
+   *
    * @param string $locale
    * @return RedirectResponse
    */
@@ -44,6 +46,7 @@ class HomeController extends Controller
 
   /**
    * Page PRIVACY POLICY
+   *
    * @return View
    */
   public function policy(): View

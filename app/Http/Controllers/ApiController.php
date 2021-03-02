@@ -15,6 +15,7 @@ class ApiController extends Controller
 
   /**
    * Displaying countries by search
+   *
    * @param Request $request
    * @return JsonResponse
    */
@@ -30,6 +31,7 @@ class ApiController extends Controller
 
   /**
    * Displaying categories by search
+   *
    * @param Request $request
    * @return JsonResponse
    */
@@ -45,6 +47,7 @@ class ApiController extends Controller
 
   /**
    * Displaying cities by search
+   *
    * @param Request $request
    * @return JsonResponse
    */
@@ -60,6 +63,7 @@ class ApiController extends Controller
 
   /**
    * Conclusion of brands by search
+   *
    * @param Request $request
    * @return JsonResponse
    */
@@ -76,6 +80,7 @@ class ApiController extends Controller
 
   /**
    * Checking for auth and outputting user data
+   *
    * @return JsonResponse
    */
   public function check(): JsonResponse

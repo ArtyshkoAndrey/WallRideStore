@@ -18,6 +18,7 @@ class ProductController extends Controller
 
   /**
    * Search page
+   *
    * @param Request $request
    * @return View
    * @throws RedirectWithErrorsException
@@ -36,6 +37,7 @@ class ProductController extends Controller
 
   /**
    * Displaying products by filter
+   *
    * @param Request $request
    * @return Application|Factory|View
    * @throws RedirectWithErrorsException
@@ -187,6 +189,7 @@ class ProductController extends Controller
 
   /**
    * Product page
+   *
    * @param int $id
    * @return View|void
    * @throws RedirectWithErrorsException

@@ -9,5 +9,9 @@ return [
   ],
   "auth" => [
     "admin" => "Access to open only to administrators"
+  ],
+  "delivery" => [
+    "error" => "Calculation error delivery",
+    "not_price" => "Perhaps there is no delivery to your city"
   ]
 ];
