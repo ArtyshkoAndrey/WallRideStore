@@ -89,7 +89,11 @@ class ApiController extends Controller
 
     CartItem::whereUserId($data['user_id'])->delete();
     foreach ($data['products_skuses'] as $ps) {
-      CartItem::create(['user_id' => $data['user_id'], 'product_sku_id' => $ps['id'], 'amount' => $ps['amount']]);
+      $cartItem = new CartItem(['amount' => $ps['amount']]);
+      $cartItem->user()->associate($data['user_id']);
+      $cartItem->product_skus()->associate($ps['id']);
+      $cartItem->save();
+//      CartItem::create(['user_id' => $data['user_id'], 'product_sku_id' => $ps['id'], 'amount' => $ps['amount']]);
     }
   }
 

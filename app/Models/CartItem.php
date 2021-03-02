@@ -68,4 +68,18 @@ class CartItem extends Model
     );
   }
 
+  /**
+   * Skus product in cart
+   *
+   * @return BelongsTo
+   */
+  public function product_skus(): BelongsTo
+  {
+    return $this->belongsTo(
+      ProductSkus::class,
+      'product_sku_id',
+      'id'
+    );
+  }
+
 }
