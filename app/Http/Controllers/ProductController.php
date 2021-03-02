@@ -2,52 +2,57 @@
 
 namespace App\Http\Controllers;
 
-use App;
+use App\Exceptions\RedirectWithErrorsException;
 use App\Models\Product;
 use App\Models\Skus;
 use Cache;
+use Error;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Validator;
 
 class ProductController extends Controller
 {
 
-  public function search (Request $request) {
+  /**
+   * Search page
+   * @param Request $request
+   * @return View
+   * @throws RedirectWithErrorsException
+   */
+  public function search(Request $request): View
+  {
     $q = $request->get('q', null);
     if ($q) {
       $products = Product::where('title', 'like', '%' . $q . '%')->get();
-      return view ('user.product.search', compact('products'));
-    } else  {
-      return redirect()->back()->withErrors(['Поле поиск не может быть пустым']);
+      return view('user.product.search', compact('products'));
+    } else {
+      throw new RedirectWithErrorsException(__('errors_redirect.product.product_search'), 403);
     }
   }
 
 
   /**
-   * Показ товаров по фильтру
-   *
+   * Displaying products by filter
    * @param Request $request
    * @return Application|Factory|View
+   * @throws RedirectWithErrorsException
    */
-  public function all (Request $request)
+  public function all(Request $request): View
   {
     $items = Product::query();
     $order = $request->input('order', 'sort-new');
-
     $sale = $request->get('sale', false);
     $new = $request->get('new', false);
-
     $size = $request->get('size', []);
 
-    if($sale) {
+    if ($sale) {
       $items = $items->whereOnSale(true);
     }
 
-    if($new) {
+    if ($new) {
       $items = $items->whereOnNew(true);
     }
 
@@ -64,19 +69,23 @@ class ProductController extends Controller
     }
 
     if ($sex = $request->input('sex', [])) {
-      !is_array($sex) ? $sex = [$sex] : null;
+      if (!is_array($sex))
+        $sex = [$sex];
+
       $items = $items->whereIn('sex', $sex);
     }
 
     if ($categoryArr = $request->input('category', [])) {
-      !is_array($categoryArr) ? $categoryArr = [$categoryArr] : null;
+      if (!is_array($categoryArr))
+        $categoryArr = [$categoryArr];
+
       $rules = [
         'categories' => 'required|array',
         'categories.*' => 'exists:categories,id', // check each item in the array
       ];
       $validator = Validator::make(['categories' => $categoryArr], $rules);
       if ($validator->fails()) {
-        throw new NotFoundHttpException();
+        throw new RedirectWithErrorsException(__('errors_redirect.product.product_catalog_categories'));
       }
       foreach ($categoryArr as $index => $category) {
         if ($index == 0) {
@@ -92,7 +101,8 @@ class ProductController extends Controller
     }
 
     if ($brandArr = $request->input('brand', [])) {
-      !is_array($brandArr) ? $brandArr = [$brandArr] : null;
+      if (!is_array($brandArr))
+        $brandArr = [$brandArr];
 
       $rules = [
         'brands' => 'required|array',
@@ -100,7 +110,7 @@ class ProductController extends Controller
       ];
       $validator = Validator::make(['brands' => $brandArr], $rules);
       if ($validator->fails()) {
-        throw new NotFoundHttpException();
+        throw new RedirectWithErrorsException(__('errors_redirect.product.product_catalog_brands'));
       }
 
       foreach ($brandArr as $index => $brand) {
@@ -136,7 +146,8 @@ class ProductController extends Controller
     }
 
     if ($size) {
-      !is_array($size) ? $size = [$size] : null;
+      if (is_array($size))
+        $size = [$size];
 
       $rules = [
         'skuses' => 'required|array',
@@ -144,35 +155,24 @@ class ProductController extends Controller
       ];
       $validator = Validator::make(['skuses' => $size], $rules);
       if ($validator->fails()) {
-        throw new NotFoundHttpException();
+        throw new RedirectWithErrorsException(__('errors_redirect.product.product_catalog_skuses'));
       }
 
       $items = $items->whereHas('skuses', function ($query) use ($size) {
         return $query->whereIn('skus_id', $size);
       });
-//      foreach ($size as $index => $s) {
-//        if ($index == 0) {
-//          $items = $items->whereHas('skuses', function ($query) use ($s) {
-//            return $query->where('id', '=', $s);
-//          });
-//        } else {
-//          $items = $items->orWhereHas('skuses', function ($query) use ($s) {
-//            return $query->where('id', '=', $s);
-//          });
-//        }
-//      }
     }
 
     $itemsCount = $items->count();
-    $items = $items->paginate(15);
+    $items = $items->paginate(16);
     $filter = [
       'category' => $categoryArr,
       'order' => $order,
       'brand' => $brandArr,
-      'sale'  => $sale,
-      'new'   => $new,
-      'sex'   => $sex,
-      'size'  => $size
+      'sale' => $sale,
+      'new' => $new,
+      'sex' => $sex,
+      'size' => $size
     ];
     $counter = 0;
     foreach ($filter as $name => $f) {
@@ -186,25 +186,27 @@ class ProductController extends Controller
   }
 
   /**
+   * Product page
    * @param int $id
    * @return View|void
+   * @throws RedirectWithErrorsException
    */
-  public function show (int $id): View
+  public function show(int $id): View
   {
     $product = Product::find($id);
     if ($product) {
       try {
         $childCategory = $product->category()->first();
         $categories = [];
-        while($category = $childCategory->parents()->first()) {
+        while ($category = $childCategory->parents()->first()) {
           array_unshift($categories, $category);
           $childCategory = $category;
         }
         array_push($categories, $product->category()->first());
-      } catch (\Error $exception) {
+      } catch (Error $exception) {
         $categories = [];
       }
-
+      $similarProducts = [];
       if ($category = end($categories)) {
         $similarProducts = Cache::remember('similar-product-' . $category->id, config('app.cache.bd'), function () use ($category) {
           return $category->products()->take(4)->get();
@@ -212,6 +214,6 @@ class ProductController extends Controller
       }
       return view('user.product.show', compact('product', 'categories', 'similarProducts'));
     }
-    throw new NotFoundHttpException();
+    throw new RedirectWithErrorsException(__('errors_redirect.product.product_show'));
   }
 }
