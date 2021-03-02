@@ -2,9 +2,16 @@
 
 namespace App\Http\Controllers;
 
-class CartController extends Controller {
+use Illuminate\Contracts\View\View;
 
-  public function index ()
+class CartController extends Controller
+{
+
+  /**
+   * Cart page
+   * @return View
+   */
+  public function index(): View
   {
     return view('user.cart.index');
   }
