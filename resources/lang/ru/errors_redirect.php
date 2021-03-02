@@ -6,5 +6,8 @@ return [
     "product_catalog_brands" => "Выбраны неверные бренды",
     "product_catalog_categories" => "Выбраны неверные категории",
     "product_search" => "Поле поиск не может быть пустым"
+  ],
+  "auth" => [
+    "admin" => "Доступ открыть только администраторам"
   ]
 ];

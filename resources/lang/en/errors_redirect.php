@@ -6,5 +6,8 @@ return [
     "product_catalog_brands" => "Wrong brands selected",
     "product_catalog_categories" => "Wrong categories selected",
     "product_search" => "Search field cannot be empty",
+  ],
+  "auth" => [
+    "admin" => "Access to open only to administrators"
   ]
 ];
