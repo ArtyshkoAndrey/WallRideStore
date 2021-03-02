@@ -21,10 +21,9 @@
 
     .slider-nav {
       overflow: hidden;
-      height: auto!important;
 
-      @include respond-to(lg) {
-        height: unset!important;
+      @include respond-up(sm) {
+        height: auto!important;
       }
 
       .scroll-wrapper {
@@ -36,11 +35,10 @@
 
         overflow-y: auto;
         padding-bottom: 1em;
-        top: 0 !important;
 
-        @include respond-to(lg) {
+        @include respond-up(lg) {
           padding-bottom: 0;
-          top: unset !important;
+          top: 0 !important;
         }
       }
 

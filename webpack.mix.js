@@ -43,5 +43,5 @@ if (mix.inProduction()) {
   mix.version();
 }
 
-mix.browserSync('http://wallride/');
+mix.browserSync('http://myshop/');
 mix.disableNotifications();

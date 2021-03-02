@@ -51,5 +51,15 @@
   "Свяжитесь с нами": "Contact us",
 
   "HEADER": "HEADER",
-  "Выйти": "Exit"
+  "Выйти": "Exit",
+
+  "CATALOG": "CATALOG",
+  "Очистить всё": "Clear all",
+  "Размеры": "Dimensions",
+  "С начало старые": "From the beginning old",
+  "С начало новые": "From the beginning new",
+  "С начало дорогие": "From the beginning dear",
+  "С начало дешёвые": "From the beginning cheap",
+  "Применить": "Apply",
+  "Каталог товаров": "Catalog"
 }

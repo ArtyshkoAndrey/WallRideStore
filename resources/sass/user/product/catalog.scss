@@ -66,10 +66,13 @@
         &:after {
           color: $gray-2;
           margin-left: auto;
-
-          @include respond-to(sm) {
-            font-size: 1.6em;
-          }
+          font-family: "Font Awesome 5 Pro", serif;
+          content: "\F078";
+          border: none;
+          text-align: center;
+          display: flex;
+          align-self: center;
+          padding: 0 0 0 5px;
         }
       }
 
@@ -83,7 +86,6 @@
         @include respond-to(sm) {
           width: 300px!important;
           max-height: 300px!important;
-          transform: none!important;
           margin-left: unset;
         }
 

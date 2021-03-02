@@ -5,7 +5,7 @@
 @section('content')
   <div class="container" id="catalog">
     <div class="mb-2">
-      <span class="title">Каталог товаров</span>
+      <span class="title">{{ __('Каталог товаров') }}</span>
       <span class="badge text-dark">{{ $itemsCount }}</span>
       <button class="ml-auto d-flex d-md-none position-relative" style="border: none; background: transparent; color: #2D3134;" onclick="toggleFilters()">
         <span class="bx bx-filter-alt" style="font-size: 1.4em;"></span>
@@ -16,9 +16,9 @@
     <form action="{{ route('product.all') }}" class="" method="get" id="product-all">
       <input type="hidden" name="order" id="order" value="{{ $filter['order'] }}">
       <div class="row m-0 w-100 align-items-center">
-        <div class="col-12 col-md-auto dropdown">
+        <div class="col-12 col-md-auto ps-md-0 dropdown">
           <a href="#" class="text-dark dropdown-toggle border-hover text-decoration-none" role="button" id="dropdownCategoryLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="{{ count($filter['category']) > 0 ? 'font-weight-bolder' : null }}">Категории</span>
+            <span class="{{ count($filter['category']) > 0 ? 'font-weight-bolder' : null }}">{{ __('Категории') }}</span>
           </a>
           <div class="dropdown-menu dropdown-shadow rounded-0 border-0 py-3 px-4 overflow-auto" aria-labelledby="dropdownCategoryLink">
             @foreach(\App\Models\Category::all() as $category)
@@ -36,9 +36,9 @@
           </div>
         </div>
 
-        <div class="col-12 col-md-auto dropdown d-none d-md-block hiddable-filter">
+        <div class="col-12 col-md-auto dropdown hiddable-filter">
           <a href="#" class="text-dark dropdown-toggle border-hover text-decoration-none" role="button" id="dropdownBrandLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="{{ count($filter['brand']) > 0 ? 'font-weight-bolder' : null }}">Бренды</span>
+            <span class="{{ count($filter['brand']) > 0 ? 'font-weight-bolder' : null }}">{{ __('Бренды') }}</span>
           </a>
           <div class="dropdown-menu dropdown-shadow rounded-0 border-0 py-3 px-4 overflow-auto" aria-labelledby="dropdownBrandLink">
             @foreach($brands = \App\Models\Brand::all() as $brand)
@@ -58,7 +58,7 @@
 
         <div class="col-12 col-md-auto dropdown">
           <a href="#" class="text-dark dropdown-toggle border-hover text-decoration-none" role="button" id="dropdownBrandLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="{{ count($filter['size']) > 0 ? 'font-weight-bolder' : null }}">Размеры</span>
+            <span class="{{ count($filter['size']) > 0 ? 'font-weight-bolder' : null }}">{{ __('Размеры') }}</span>
           </a>
           <div class="dropdown-menu dropdown-shadow rounded-0 border-0 py-3 px-4 overflow-auto" aria-labelledby="dropdownBrandLink">
             @foreach($attributes as $attr)
@@ -76,7 +76,7 @@
           </div>
         </div>
 
-        <div class="col-auto d-none d-md-block hiddable-filter">
+        <div class="col-auto mt-2 mt-md-0 hiddable-filter">
           <div class="checkbox w-100 h-100 d-flex align-items-center">
             <div class="row">
               <div class="col-auto pr-0">
@@ -89,7 +89,7 @@
           </div>
         </div>
 
-        <div class="col-auto d-none d-md-block hiddable-filter">
+        <div class="col-auto mt-2 mt-md-0 hiddable-filter">
           <div class="checkbox w-100 h-100 d-flex align-items-center">
             <div class="row">
               <div class="col-auto pr-0">
@@ -103,26 +103,26 @@
         </div>
 
         <div class="col-12 col-md-auto mt-3 mt-md-0">
-          <button class="btn btn-primary w-100">Применить</button>
+          <button class="btn btn-dark w-100">{{ __('Применить') }}</button>
         </div>
 
-        <div class="col-12 col-md-auto dropdown ml-auto mt-2 mt-md-0">
+        <div class="col-12 col-md-auto dropdown ms-auto mt-2 mt-md-0">
           <a href="#" class="text-dark dropdown-toggle text-decoration-none" role="button" id="dropdownOrderLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             @if($filter['order'] === 'sort-old')
-              <i class="fas fa-sort-amount-down"></i> С начало старые
+              <i class="fas fa-sort-amount-down"></i> {{ __('С начало старые') }}
             @elseif($filter['order'] === 'sort-new')
-              <i class="fas fa-sort-amount-up"></i> С начало новые
+              <i class="fas fa-sort-amount-up"></i> {{ __('С начало новые') }}
             @elseif($filter['order'] === 'sort-expensive')
-              <i class="fas fa-sort-amount-up"></i> С начало дорогие
+              <i class="fas fa-sort-amount-up"></i> {{ __('С начало дорогие') }}
             @elseif($filter['order'] === 'sort-cheap')
-              <i class="fas fa-sort-amount-down"></i> С начало дешёвые
+              <i class="fas fa-sort-amount-down"></i> {{ __('С начало дешёвые') }}
             @endif
           </a>
           <div class="dropdown-menu dropdown-menu-right dropdown-shadow rounded-0 border-0 py-3 px-4" aria-labelledby="dropdownOrderLink">
-            <a href="#" role="button" onclick="orderSort('sort-old')" class="dropdown-item bg-transparent {{ $filter['order'] === 'sort-old' ? 'active' : '' }}"><i class="fas fa-sort-amount-down"></i> С начало старые</a>
-            <a href="#" role="button" onclick="orderSort('sort-new')" class="dropdown-item bg-transparent {{ $filter['order'] === 'sort-new' ? 'active' : '' }}"><i class="fas fa-sort-amount-up"></i> С начало новые</a>
-            <a href="#" role="button" onclick="orderSort('sort-expensive')" class="dropdown-item bg-transparent {{ $filter['order'] === 'sort-expensive' ? 'active' : '' }}"><i class="fas fa-sort-amount-up"></i> С начало дорогие</a>
-            <a href="#" role="button" onclick="orderSort('sort-cheap')" class="dropdown-item bg-transparent {{ $filter['order'] === 'sort-cheap' ? 'active' : '' }}"><i class="fas fa-sort-amount-down"></i> С начало дешёвые</a>
+            <a href="#" role="button" onclick="orderSort('sort-old')" class="dropdown-item bg-transparent {{ $filter['order'] === 'sort-old' ? 'active' : '' }}"><i class="fas fa-sort-amount-down"></i> {{ __('С начало старые') }}</a>
+            <a href="#" role="button" onclick="orderSort('sort-new')" class="dropdown-item bg-transparent {{ $filter['order'] === 'sort-new' ? 'active' : '' }}"><i class="fas fa-sort-amount-up"></i> {{ __('С начало новые') }}</a>
+            <a href="#" role="button" onclick="orderSort('sort-expensive')" class="dropdown-item bg-transparent {{ $filter['order'] === 'sort-expensive' ? 'active' : '' }}"><i class="fas fa-sort-amount-up"></i> {{ __('С начало дорогие') }}</a>
+            <a href="#" role="button" onclick="orderSort('sort-cheap')" class="dropdown-item bg-transparent {{ $filter['order'] === 'sort-cheap' ? 'active' : '' }}"><i class="fas fa-sort-amount-down"></i> {{ __('С начало дешёвые')}}</a>
           </div>
         </div>
       </div>
@@ -150,7 +150,7 @@
       @endforeach
 
       <div class="col-auto px-2 py-1 m-1 clear-filters">
-        <a href="{{ route('product.all') }}">Очистить всё</a>
+        <a href="{{ route('product.all') }}">{{ __('Очистить всё') }}</a>
       </div>
     </div>
     <hr>
@@ -160,8 +160,8 @@
   <div class="container">
     <div class="row">
       @foreach($items as $item)
-        <div class="col-6 col-lg-4 col-xl-3 p-0">
-          @include('user_1.layouts.item', array('item' => $item))
+        <div class="col-6 col-lg-4 col-xl-3">
+          @include('user.layouts.item', array('product' => $item))
         </div>
       @endforeach
     </div>

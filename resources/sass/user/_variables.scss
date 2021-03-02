@@ -49,3 +49,19 @@ $grid-breakpoints: ( xs: 0, xsm: 300px, sm: 576px, md: 768px, lg: 992px, xl: 120
         + "Available breakpoints are: #{map-keys($grid-breakpoints)}.";
   }
 }
+
+@mixin respond-up($breakpoint) {
+  // If the key exists in the map
+  @if map-has-key($grid-breakpoints, $breakpoint) {
+    // Prints a media query based on the value
+    @media (max-width: map-get($grid-breakpoints, $breakpoint)) {
+      @content;
+    }
+  }
+
+    // If the key doesn't exist in the map
+  @else {
+    @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+        + "Available breakpoints are: #{map-keys($grid-breakpoints)}.";
+  }
+}
