@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use App\Notifications\ChangeOrderUser;
-use App\Notifications\OrderCancledNotification;
 use App\Services\OrderService;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;

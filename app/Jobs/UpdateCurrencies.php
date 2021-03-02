@@ -5,6 +5,7 @@ namespace App\Jobs;
 
 use App\Models\Currency;
 use Carbon\Carbon;
+use ErrorException;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -19,8 +20,7 @@ class UpdateCurrencies implements ShouldQueue
   protected string $url = 'https://nationalbank.kz/rss/rates_all.xml';
 
   /**
-   * Create a new job instance.
-   *
+   * UpdateCurrencies constructor.
    */
   public function __construct()
   {
@@ -35,7 +35,7 @@ class UpdateCurrencies implements ShouldQueue
   public function handle()
   {
     $arrContextOptions = array(
-      "ssl"=> array(
+      "ssl" => array(
         "verify_peer" => false,
         "verify_peer_name" => false
       )
@@ -45,7 +45,7 @@ class UpdateCurrencies implements ShouldQueue
       $assertion = file_get_contents($this->url, false, stream_context_create($arrContextOptions));
       $ar = simplexml_load_string($assertion);
       if (isset($ar->channel)) {
-        if(isset($ar->channel->item)) {
+        if (isset($ar->channel->item)) {
           foreach ($ar->channel->item as $item) {
             if (isset($item->title) && isset($item->description)) {
               if ((string)$item->title === 'USD') {
@@ -65,7 +65,7 @@ class UpdateCurrencies implements ShouldQueue
       $currency = Currency::where('name', 'Тенге')->first();
       $currency->updated_at = Carbon::now();
       $currency->save();
-    } catch (\ErrorException $e) {
+    } catch (ErrorException $e) {
       Log::info($e);
     }
   }

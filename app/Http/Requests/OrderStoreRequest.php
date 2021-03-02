@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Brand;
 use App\Models\CouponCode;
 use App\Models\ProductSkus;
 use Illuminate\Foundation\Http\FormRequest;
@@ -41,11 +40,12 @@ class OrderStoreRequest extends FormRequest
       'info.post_code' => ['required', 'string'],
       'code' => [
         function ($attribute, $value, $fail) {
-          if($value !== null && $value !== '') {
-            if (!$code = CouponCode::firstWhere('code', $value)) {
+          if ($value !== null && $value !== '') {
+            if (!CouponCode::firstWhere('code', $value)) {
               return $fail('Данного промокода несуществует');
             }
           }
+
         }
       ],
       'method_pay' => ['required',
