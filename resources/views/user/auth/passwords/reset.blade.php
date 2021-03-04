@@ -1,9 +1,9 @@
 @extends('user_1.layouts.app')
 
-@section('title', 'DOCKU | Изменение пароля')
+@section('title', 'Изменение пароля')
 
 @section('content')
-  <div class="container-fluid d-flex align-items-center justify-content-center">
+  <div class="container-fluid h-100 d-flex align-items-center justify-content-center">
     <div class="row w-100 d-flex justify-content-center">
       <div class="col-lg-5 col-md-6 col-12">
         <div class="row justify-content-center">

@@ -3,12 +3,12 @@
 @section('title', 'Регистрация профиля')
 
 @section('content')
-  <div class="container-fluid d-flex align-items-center justify-content-center">
+  <div class="container-fluid h-100 d-flex align-items-center justify-content-center">
     <div class="row w-100 mt-5 d-flex justify-content-center">
       <div class="col-lg-4 col-md-5 col-sm-8 col-12">
         <div class="row justify-content-center">
           <div class="col-md-5 col-6">
-            <img src="{{ asset('images/logo.svg') }}" alt="logo" class="img-fluid mb-5 mx-auto d-block">
+            <img src="{{ asset('images/logo-dark.svg') }}" alt="logo" class="img-fluid mb-5 mx-auto d-block">
           </div>
         </div>
         <div class="card rounded-0">

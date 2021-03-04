@@ -15,7 +15,7 @@
     "browser-sync": "^2.26.14",
     "browser-sync-webpack-plugin": "^2.3.0",
     "cross-env": "^7.0",
-    "jquery": "^3.2",
+    "jquery": "^3.6.0",
     "laravel-mix": "^5.0.1",
     "lodash": "^4.17.21",
     "popper.js": "^1.12",
@@ -31,5 +31,8 @@
     "sweetalert2": "^10.15.5",
     "vuex": "^3.6.2",
     "vuex-persistedstate": "^4.0.0-beta.3"
+  },
+  "optionalDependencies": {
+    "fsevents": "^1.2.13"
   }
 }
