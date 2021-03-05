@@ -1,11 +1,11 @@
 {
-  "name": "fulliton/docku",
+  "name": "fulliton/wallride",
   "type": "project",
   "description": "shop",
   "keywords": [
     "framework",
     "laravel",
-    "docku"
+    "wallride"
   ],
   "license": "MIT",
   "require": {
