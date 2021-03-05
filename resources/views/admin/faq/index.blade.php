@@ -19,7 +19,7 @@
             <h3>FAQ</h3>
           </div>
 
-          <div class="col-md-auto col-12 mt-10 mt-md-0 px-10">
+          <div class="col-md-auto col-12 mt-10 mt-md-0 px-0 px-md-10">
             <a href="{{ route('admin.faq.create') }}" class="btn d-block">Создать новую FAQ</a>
           </div>
 
@@ -64,16 +64,26 @@
                     </a>
                   </div>
 
-                  <div class="col-lg col-12">
+                  <div class="col-md col-12">
                     <div class="row justify-content-end">
-                      <div class="col-md-auto col-6 pl-10 mt-10 mt-lg-0 mt-md-10">
-                        <a href="{{ route('admin.faq.edit', $faq) }}" class="btn bg-transparent text-success shadow-none border-0 d-block"><i class="bx bx-pencil font-size-16"></i></a>
+                      <div class="col-md-auto col-6 pl-0 pl-md-10 mt-10 mt-lg-0 mt-md-10">
+                        <a href="{{ route('admin.faq.edit', $faq) }}" class="btn btn-success d-block d-md-none">
+                          <i class="bx bx-pencil font-size-16"></i>
+                        </a>
+                        <a href="{{ route('admin.faq.edit', $faq) }}" class="btn bg-transparent text-success shadow-none border-0 d-none d-md-block">
+                          <i class="bx bx-pencil font-size-16"></i>
+                        </a>
                       </div>
                       <div class="col-md-auto col-6 pl-10 mt-10 mt-lg-0 mt-md-10">
                         <form action="{{ route('admin.faq.destroy', $faq) }}" method="POST">
                           @csrf
                           @method('DELETE')
-                          <button class="btn shadow-none bg-transparent text-danger border-0 w-full d-block"><i class="bx bx-trash font-size-16"></i></button>
+                          <button class="btn btn-danger w-full d-block d-md-none">
+                            <i class="bx bx-trash font-size-16"></i>
+                          </button>
+                          <button class="btn shadow-none bg-transparent text-danger border-0 w-full d-md-block d-none">
+                            <i class="bx bx-trash font-size-16"></i>
+                          </button>
                         </form>
                       </div>
                     </div>
