@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Docku -  Новый промокод')
+@section('title', 'Новый промокод')
 
 @section('css')
 

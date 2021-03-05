@@ -63,4 +63,15 @@ class Faqs extends Model implements TranslatableContract
   protected $fillable = [
     'image'
   ];
+
+  const PHOTO_PATH = 'storage/faqs/photo/';
+  const PHOTO_CONTENT_PATH = 'storage/faqs/content/';
+
+  public function getPhotoStorageAttribute(): string
+  {
+    if ($this->image) {
+      return asset(Post::PHOTO_PATH . $this->image);
+    }
+    return asset('images/user-o.jpg');
+  }
 }

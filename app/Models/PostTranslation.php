@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -12,15 +14,15 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $locale
  * @property string $title
  * @property string $content
- * @method static \Illuminate\Database\Eloquent\Builder|PostTranslation newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|PostTranslation newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|PostTranslation query()
- * @method static \Illuminate\Database\Eloquent\Builder|PostTranslation whereContent($value)
- * @method static \Illuminate\Database\Eloquent\Builder|PostTranslation whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|PostTranslation whereLocale($value)
- * @method static \Illuminate\Database\Eloquent\Builder|PostTranslation wherePostId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|PostTranslation whereTitle($value)
- * @mixin \Eloquent
+ * @method static Builder|PostTranslation newModelQuery()
+ * @method static Builder|PostTranslation newQuery()
+ * @method static Builder|PostTranslation query()
+ * @method static Builder|PostTranslation whereContent($value)
+ * @method static Builder|PostTranslation whereId($value)
+ * @method static Builder|PostTranslation whereLocale($value)
+ * @method static Builder|PostTranslation wherePostId($value)
+ * @method static Builder|PostTranslation whereTitle($value)
+ * @mixin Eloquent
  */
 class PostTranslation extends Model
 {
@@ -28,6 +30,6 @@ class PostTranslation extends Model
 
   protected $fillable = [
     'title',
-    'description'
+    'content'
   ];
 }

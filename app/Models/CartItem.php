@@ -30,6 +30,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|CartItem whereUpdatedAt($value)
  * @method static Builder|CartItem whereUserId($value)
  * @mixin Eloquent
+ * @property-read \App\Models\ProductSkus $product_skus
  */
 class CartItem extends Model
 {

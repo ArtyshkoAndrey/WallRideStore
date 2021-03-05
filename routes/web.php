@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\FAQController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\PickupController;
+use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
@@ -14,18 +16,20 @@ Auth::routes();
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('index');
 Route::get('language/change/{locale}', [\App\Http\Controllers\HomeController::class, 'language']);
 Route::get('policy', [\App\Http\Controllers\HomeController::class, 'policy'])->name('policy');
-Route::prefix('product')->name('product.')->group( function () {
+Route::post('auth/check', [App\Http\Controllers\ApiController::class, 'check']);
+
+Route::prefix('product')->name('product.')->group(function () {
   Route::get('/search', [ProductController::class, 'search'])->name('search');
   Route::get('/all', [ProductController::class, 'all'])->name('all');
   Route::get('/{id}', [ProductController::class, 'show'])->name('show');
 });
 
-Route::prefix('cart')->name('cart.')->group( function () {
+Route::prefix('cart')->name('cart.')->group(function () {
   Route::get('/', [CartController::class, 'index'])->name('index');
 });
 
-Route::middleware(['auth'])->prefix('profile')->name('profile.')->group( function () {
-  Route::name('update.')->prefix('update')->group( function () {
+Route::middleware(['auth'])->prefix('profile')->name('profile.')->group(function () {
+  Route::name('update.')->prefix('update')->group(function () {
     Route::put('data', [ProfileController::class, 'data'])->name('data');
     Route::put('photo', [ProfileController::class, 'photo'])->name('photo');
     Route::put('password', [ProfileController::class, 'password'])->name('password');
@@ -33,12 +37,15 @@ Route::middleware(['auth'])->prefix('profile')->name('profile.')->group( functio
   Route::get('/', [ProfileController::class, 'index'])->name('index');
 });
 
-Route::prefix('order')->name('order.')->group( function () {
+Route::prefix('order')->name('order.')->group(function () {
   Route::get('/', [OrderController::class, 'index'])->middleware('auth')->name('index');
   Route::get('/create', [OrderController::class, 'create'])->name('create');
   Route::post('/store', [OrderController::class, 'store'])->name('store');
   Route::post('/update/status', [OrderController::class, 'updateStatus'])->name('update.status');
 });
+
+
+// Admin Controllers
 
 Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function () {
   Route::get('/', [HomeController::class, 'index'])->name('index');
@@ -68,6 +75,20 @@ Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function ()
   Route::resource('coupon', App\Http\Controllers\Admin\CouponController::class)->except([
     'show'
   ]);
+  Route::resource('post', App\Http\Controllers\Admin\PostController::class)->except([
+    'show'
+  ]);
+  Route::post('post/content-image', [PostController::class, 'content_mage'])->name('post.content-image');
+  Route::post('post/photo/store', [PostController::class, 'photo_store'])->name('post.photo.store');
+  Route::post('post/photo/delete', [PostController::class, 'photo_delete'])->name('post.photo.delete');
+
+  Route::resource('faq', App\Http\Controllers\Admin\FAQController::class)->except([
+    'show'
+  ]);
+  Route::post('faq/content-image', [FAQController::class, 'content_mage'])->name('faq.content-image');
+  Route::post('faq/photo/store', [FAQController::class, 'photo_store'])->name('faq.photo.store');
+  Route::post('faq/photo/delete', [FAQController::class, 'photo_delete'])->name('faq.photo.delete');
+
 
   Route::post('product/photo/store', [\App\Http\Controllers\Admin\ProductController::class, 'photoStore'])->name('product.store.photo');
   Route::post('product/photo/{id}', [\App\Http\Controllers\Admin\ProductController::class, 'photo'])->name('product.photo');
@@ -86,5 +107,3 @@ Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function ()
     });
   });
 });
-
-Route::post('auth/check', [App\Http\Controllers\ApiController::class, 'check']);

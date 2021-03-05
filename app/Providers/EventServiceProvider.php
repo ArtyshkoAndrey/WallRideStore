@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\CategoryTranslation;
 use App\Models\Photo;
+use App\Models\Post;
 use App\Models\Product;
 use App\Models\ProductTranslation;
 use App\Models\User;
@@ -13,6 +14,7 @@ use App\Observers\BrandObserver;
 use App\Observers\CategoryObserver;
 use App\Observers\CategoryTranslationObserver;
 use App\Observers\PhotoObserver;
+use App\Observers\PostObserver;
 use App\Observers\ProductObserver;
 use App\Observers\ProductTranslationObserver;
 use App\Observers\UserObserver;
@@ -48,5 +50,6 @@ class EventServiceProvider extends ServiceProvider
     Category::observe(CategoryObserver::class);
     CategoryTranslation::observe(CategoryTranslationObserver::class);
     Brand::observe(BrandObserver::class);
+    Post::observe(PostObserver::class);
   }
 }

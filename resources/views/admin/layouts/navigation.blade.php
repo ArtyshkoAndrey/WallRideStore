@@ -71,6 +71,13 @@
       Промокоды
     </a>
 
+    <a href="{{ route('admin.post.index') }}" class="sidebar-link sidebar-link-with-icon {{ Route::currentRouteNamed('admin.post.*') ? 'active' : '' }}">
+      <span class="sidebar-icon bg-transparent justify-content-start mr-0">
+        <i class="bx bxs-news" aria-hidden="true"></i>
+      </span>
+      Новости
+    </a>
+
     <br />
     <h5 class="sidebar-title">Товары</h5>
     <div class="sidebar-divider"></div>
