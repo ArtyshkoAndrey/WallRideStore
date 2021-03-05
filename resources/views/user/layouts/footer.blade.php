@@ -21,7 +21,7 @@
         <h5>{{ __('Помощь по заказам') }}</h5>
 
         <a href="" class="text-gray-1 d-block mt-2">{{ __('Доставка и оплата') }}</a>
-        <a href="" class="text-gray-1 d-block mt-2">{{ __('Политика конфиденциальности') }}</a>
+        <a href="{{ route('policy') }}" class="text-gray-1 d-block mt-2">{{ __('Политика конфиденциальности') }}</a>
         <a href="" class="text-gray-1 d-block mt-2">{{ __('Свяжитесь с нами') }}</a>
       </div>
 
