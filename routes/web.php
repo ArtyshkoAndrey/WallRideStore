@@ -28,6 +28,8 @@ Route::prefix('cart')->name('cart.')->group(function () {
   Route::get('/', [CartController::class, 'index'])->name('index');
 });
 
+Route::resource('post', App\Http\Controllers\PostController::class)->only(['show', 'index']);
+
 Route::middleware(['auth'])->prefix('profile')->name('profile.')->group(function () {
   Route::name('update.')->prefix('update')->group(function () {
     Route::put('data', [ProfileController::class, 'data'])->name('data');
