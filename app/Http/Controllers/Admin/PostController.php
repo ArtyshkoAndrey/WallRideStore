@@ -57,6 +57,8 @@ class PostController extends Controller
       'en.title' => 'required|string',
       'ru.content' => 'required|string',
       'en.content' => 'required|string',
+      'ru.short_content' => 'required|string',
+      'en.short_content' => 'required|string',
       'photo' => 'required|string'
     ]);
 
@@ -104,6 +106,8 @@ class PostController extends Controller
       'en.title' => 'required|string',
       'ru.content' => 'required|string',
       'en.content' => 'required|string',
+      'ru.short_content' => 'required|string',
+      'en.short_content' => 'required|string',
       'photo' => 'required|string'
     ]);
 

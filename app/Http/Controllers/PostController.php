@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Cache;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -13,11 +14,13 @@ class PostController extends Controller
   /**
    * Display a listing of the resource.
    *
+   * @param Request $request
    * @return Application|Factory|View
    */
-  public function index()
+  public function index(Request $request)
   {
-    $posts = Post::paginate(16);
+    $posts = Post::orderByDesc('created_at')
+      ->paginate(6);
     return view('user.post.index', compact('posts'));
   }
 

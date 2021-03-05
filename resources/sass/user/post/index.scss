@@ -1,0 +1,30 @@
+@import "resources/sass/user/variables";
+.post {
+  color: $gray-2!important;
+  cursor: pointer;
+
+  .card-body {
+    //padding: 2px;
+    transition: .5s;
+    &:hover {
+      //transition: .5s;
+      //box-shadow:0 0 15px 1px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  a {
+
+    &.title {
+      color: $dark!important;
+      font-size: 1.4em;
+      line-height: .4em;
+      font-weight: bolder;
+    }
+
+    &:hover {
+      &.title {
+        color: $danger!important;
+      }
+    }
+  }
+}

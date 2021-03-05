@@ -51,16 +51,17 @@ class Post extends Model implements TranslatableContract
 
   public array $translatedAttributes = [
     'title',
-    'content'
+    'content',
+    'short_content'
   ];
   protected $fillable = [
     'photo'
   ];
 
-  public function getPhotoStorageAttribute(): string
+  public function getPhotoStorageJpgAttribute(): string
   {
     if ($this->photo) {
-      return asset(Post::PHOTO_PATH . $this->photo);
+      return asset(Post::PHOTO_PATH . $this->photo . '.jpg');
     }
     return asset('images/user-o.jpg');
   }

@@ -60,8 +60,13 @@
                         </div>
 
                         <div class="form-group">
+                          <label for="ru_short_content" class="required">Краткий конент</label>
+                          <textarea class="form-control" name="ru[short_content]" id="ru_short_content" cols="30" rows="20">{{ old('ru.short_content') }}</textarea>
+                        </div>
+
+                        <div class="form-group">
                           <label for="ru_content" class="required">Контент</label>
-                          <textarea class="form-control" name="ru[content]" id="ru_content" cols="30" rows="20">{{ old('ru.content') }}</textarea>
+                          <textarea class="form-control area" name="ru[content]" id="ru_content" cols="30" rows="20">{{ old('ru.content') }}</textarea>
                         </div>
 
                       </div>
@@ -74,8 +79,13 @@
                         </div>
 
                         <div class="form-group">
+                          <label for="en_short_content" class="required">Краткий конент</label>
+                          <textarea class="form-control" name="en[short_content]" id="en_short_content" cols="30" rows="20">{{ old('en.short_content') }}</textarea>
+                        </div>
+
+                        <div class="form-group">
                           <label for="en_content" class="required">Контент</label>
-                          <textarea class="form-control h-100" name="en[content]" id="en_content" cols="30" rows="30">{{ old('en.content') }}</textarea>
+                          <textarea class="form-control area" name="en[content]" id="en_content" cols="30" rows="30">{{ old('en.content') }}</textarea>
                         </div>
 
                       </div>
@@ -162,7 +172,7 @@
 
     $(document).ready(() => {
       tinymce.init({
-        selector: 'textarea',
+        selector: 'textarea.area',
         plugins: 'print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons paste',
         imagetools_cors_hosts: ['picsum.photos'],
         menubar: 'file edit view insert format tools table help',

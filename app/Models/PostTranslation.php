@@ -30,6 +30,7 @@ class PostTranslation extends Model
 
   protected $fillable = [
     'title',
-    'content'
+    'content',
+    'short_content'
   ];
 }
