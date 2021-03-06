@@ -27250,7 +27250,7 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\OpenServer\domains\wallride\resources\js\admin\app.js */"./resources/js/admin/app.js");
+module.exports = __webpack_require__(/*! /mnt/c/openserver/domains/myshop/resources/js/admin/app.js */"./resources/js/admin/app.js");
 
 
 /***/ })

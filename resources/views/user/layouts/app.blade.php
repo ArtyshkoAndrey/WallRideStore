@@ -44,6 +44,8 @@
     <noscript><div><img src="https://mc.yandex.ru/watch/62982313" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <!— /Yandex.Metrika counter —>
   @endif
+
+
 </head>
 <body id="{{ str_replace('.', '-', Route::currentRouteName()) . '-page' }}">
 
@@ -69,6 +71,7 @@
 
     @include('user.layouts.footer')
   </div>
+
   <script src="{{ mix('js/app.js') }}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" crossorigin="anonymous"></script>
 
@@ -81,7 +84,6 @@
       }, 300);
     }
   </script>
-
   @yield('js')
 </body>
 </html>

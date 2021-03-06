@@ -57453,9 +57453,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\OpenServer\domains\wallride\resources\js\user\app.js */"./resources/js/user/app.js");
-__webpack_require__(/*! D:\OpenServer\domains\wallride\resources\sass\user\app.scss */"./resources/sass/user/app.scss");
-module.exports = __webpack_require__(/*! D:\OpenServer\domains\wallride\resources\sass\admin\app.scss */"./resources/sass/admin/app.scss");
+__webpack_require__(/*! /mnt/c/openserver/domains/myshop/resources/js/user/app.js */"./resources/js/user/app.js");
+__webpack_require__(/*! /mnt/c/openserver/domains/myshop/resources/sass/user/app.scss */"./resources/sass/user/app.scss");
+module.exports = __webpack_require__(/*! /mnt/c/openserver/domains/myshop/resources/sass/admin/app.scss */"./resources/sass/admin/app.scss");
 
 
 /***/ })
