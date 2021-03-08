@@ -31,6 +31,8 @@ class SliderTranslation extends Model
 {
   use HasFactory;
 
+  public $timestamps = false;
+
   protected $fillable = [
     'h1',
     'h2',

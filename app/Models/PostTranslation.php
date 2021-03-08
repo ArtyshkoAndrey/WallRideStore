@@ -23,6 +23,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|PostTranslation wherePostId($value)
  * @method static Builder|PostTranslation whereTitle($value)
  * @mixin Eloquent
+ * @property string $short_content
+ * @method static Builder|PostTranslation whereShortContent($value)
  */
 class PostTranslation extends Model
 {

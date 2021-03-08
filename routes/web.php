@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\PickupController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
@@ -77,12 +78,19 @@ Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function ()
   Route::resource('coupon', App\Http\Controllers\Admin\CouponController::class)->except([
     'show'
   ]);
-  Route::resource('post', App\Http\Controllers\Admin\PostController::class)->except([
+
+  Route::resource('post', PostController::class)->except([
     'show'
   ]);
   Route::post('post/content-image', [PostController::class, 'content_mage'])->name('post.content-image');
   Route::post('post/photo/store', [PostController::class, 'photo_store'])->name('post.photo.store');
   Route::post('post/photo/delete', [PostController::class, 'photo_delete'])->name('post.photo.delete');
+
+  Route::resource('slider', App\Http\Controllers\Admin\SliderController::class)->except([
+    'show'
+  ]);
+  Route::post('slider/photo/store', [SliderController::class, 'photo_store'])->name('slider.photo.store');
+  Route::post('slider/photo/delete', [SliderController::class, 'photo_delete'])->name('slider.photo.delete');
 
   Route::resource('faq', App\Http\Controllers\Admin\FAQController::class)->except([
     'show'

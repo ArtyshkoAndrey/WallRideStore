@@ -147,11 +147,23 @@ class PostController extends Controller
     return response()->json(['location' => url($imgPath)]);
   }
 
+  /**
+   * Save file in storage onload dropzone
+   *
+   * @param Request $request
+   * @return string
+   */
   public function photo_store(Request $request): string
   {
     return PhotoService::create($request->file('file'), Post::PHOTO_PATH, true, 60, 1200);
   }
 
+  /**
+   * Delete FIle in dropzone
+   *
+   * @param Request $request
+   * @return JsonResponse
+   */
   public function photo_delete(Request $request): JsonResponse
   {
     $request->validate([

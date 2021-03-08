@@ -7,22 +7,28 @@
   <div class="container-fluid p-0">
     <div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-mdb-ride="carousel">
       <ol class="carousel-indicators">
-        <li data-target="#carouselExampleCaptions" :data-slide-to="i-1" :class="i === 1 ? 'active' : ''" v-for="i in 3"></li>
+        @foreach($sliders as $il)
+          <li data-target="#carouselExampleCaptions" class="{{ $loop->index === 0 ? 'active' : '' }}" :data-slide-to="{{ $loop->index }}"></li>
+        @endforeach
       </ol>
       <div class="carousel-inner">
 
-        <div class="carousel-item" :class="i === 1 ? 'active' : ''" v-for="i in 3">
-          <div class="image">
-            <img src="{{ asset('storage/slider/photos/slider.jpg') }}" class="d-block d-lg-none w-100" alt="...">
+        @foreach($sliders as $slider)
 
-            <img src="{{ asset('storage/slider/photos/slider1.jpg') }}" class="d-lg-block d-none w-100" alt="...">
+          <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+            <div class="image">
+              <img src="{{ $slider->photo_url_jpg }}" class="d-block d-lg-none w-100" alt="...">
+
+              <img src="{{ $slider->photo_mobile_url_jpg }}" class="d-lg-block d-none w-100" alt="...">
+            </div>
+            <div class="carousel-caption">
+              <h2 class="text-uppercase">{{ $slider->h1 }}</h2>
+              <p>{{ $slider->h2 }}</p>
+              <a href="{{ url($slider->url) }}" class="btn btn-dark">{{ $slider->btn_text }}</a>
+            </div>
           </div>
-          <div class="carousel-caption">
-            <h2 class="text-uppercase">Vans</h2>
-            <p>“OF THE WALL”</p>
-            <a href="#" class="btn btn-dark">Перейти в магазин</a>
-          </div>
-        </div>
+
+        @endforeach
 
       </div>
     </div>

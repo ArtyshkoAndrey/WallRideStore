@@ -20,8 +20,10 @@ use Illuminate\Support\Carbon;
  * @property string $photo
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read string $photo_mobile_url
- * @property-read string $photo_url
+ * @property-read string $photo_mobile_url_jpg
+ * @property-read string $photo_mobile_url_webp
+ * @property-read string $photo_url_jpg
+ * @property-read string $photo_url_webp
  * @property-read SliderTranslation|null $translation
  * @property-read Collection|SliderTranslation[] $translations
  * @property-read int|null $translations_count
@@ -70,23 +72,26 @@ class Slider extends Model implements TranslatableContract
     'photo_mobile_url_webp'
   ];
 
-  public function getPhotoUrlAttribute(): string
+  const PHOTO_PATH = 'storage/slider/photos/';
+  const PHOTO_PATH_MOBILE = 'storage/slider/mobile/';
+
+  public function getPhotoUrlJpgAttribute(): string
   {
-    return storage_path('storage/slider/photos/' . $this->photo . '.jpg');
+    return asset(Slider::PHOTO_PATH . $this->photo . '.jpg');
   }
 
   public function getPhotoMobileUrlJpgAttribute(): string
   {
-    return storage_path('storage/slider/mobile/' . $this->mobile_photo . '.jpg');
+    return asset(Slider::PHOTO_PATH_MOBILE . $this->mobile_photo . '.jpg');
   }
 
   public function getPhotoUrlWebpAttribute(): string
   {
-    return storage_path('storage/slider/photos/' . $this->photo . '.webp');
+    return asset(Slider::PHOTO_PATH . $this->photo . '.webp');
   }
 
   public function getPhotoMobileUrlWebpAttribute(): string
   {
-    return storage_path('storage/slider/mobile/' . $this->mobile_photo . '.webp');
+    return asset(Slider::PHOTO_PATH_MOBILE . $this->mobile_photo . '.webp');
   }
 }

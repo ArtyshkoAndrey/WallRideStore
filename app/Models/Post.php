@@ -40,6 +40,7 @@ use Illuminate\Support\Carbon;
  * @property-read PostTranslation|null $translation
  * @property-read Collection|PostTranslation[] $translations
  * @property-read int|null $translations_count
+ * @property-read string $photo_storage_jpg
  */
 class Post extends Model implements TranslatableContract
 {
