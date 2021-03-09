@@ -149,7 +149,7 @@ class ProductController extends Controller
     }
 
     if ($size) {
-      if (is_array($size))
+      if (!is_array($size))
         $size = [$size];
 
       $rules = [
