@@ -25,9 +25,9 @@ class ProductController extends Controller
    */
   public function search(Request $request): View
   {
-    $q = $request->get('q', null);
+    $q = $request->get('q');
     if ($q) {
-      $products = Product::where('title', 'like', '%' . $q . '%')->get();
+      $products = Product::whereTranslationLike('title', '%' . $q . '%')->get();
       return view('user.product.search', compact('products'));
     } else {
       throw new RedirectWithErrorsException(__('errors_redirect.product.product_search'), 403);

@@ -134,6 +134,10 @@ class FAQController extends Controller
    */
   public function content_mage(Request $request): JsonResponse
   {
+    $request->validate([
+      'file' => 'required|image',
+    ]);
+
     $imgPath = $request->file('file')->storeAs(
       mb_substr(Faqs::PHOTO_CONTENT_PATH, 0, -1),
       time() . '.' . $request->file('file')->extension(),
@@ -144,6 +148,9 @@ class FAQController extends Controller
 
   public function photo_store(Request $request): string
   {
+    $request->validate([
+      'file' => 'required|image',
+    ]);
     return PhotoService::create($request->file('file'), Faqs::PHOTO_PATH, true, 60, 1200);
   }
 

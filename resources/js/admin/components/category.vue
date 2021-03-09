@@ -11,7 +11,7 @@
       </div>
       <div class="dropdown-menu mt-20">
         <h6 class="dropdown-header">Выберите категория</h6>
-        <a v-if="categories.length > 0" @click="setCountry(category)" v-for="category in categories" class="dropdown-item pointer-events-auto">{{ category.search_name }}</a>
+        <a v-if="categories.length > 0" @click="setCountry(category)" v-for="category in categories" class="dropdown-item pointer-events-auto">{{ category.name }}</a>
         <h5 v-if="categories.length === 0" class="dropdown-header">Нет категорий</h5>
       </div>
     </div>
@@ -50,7 +50,7 @@ export default {
   created: function () {
     if (this.category_props) {
       this.selected_category = this.category_props
-      this.search = this.category_props.search_name
+      this.search = this.category_props.name
     }
     this.watcher = this.$watch('search', function (n, o) {
       this.watcherSearch(n, o)
@@ -62,7 +62,7 @@ export default {
         this.watcher()
         this.show = false
         this.categories = []
-        this.search = this.selected_category.search_name
+        this.search = this.selected_category.name
         this.watcher = this.$watch('search', function (n, o) {
           this.watcherSearch(n, o)
         })
@@ -72,7 +72,7 @@ export default {
       this.watcher()
       this.selected_category = category
       this.show = false
-      this.search = category.search_name
+      this.search = category.name
       this.watcher = this.$watch('search', function (n, o) {
         this.watcherSearch(n, o)
       })

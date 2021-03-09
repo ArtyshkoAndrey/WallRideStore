@@ -68,10 +68,18 @@ class Faqs extends Model implements TranslatableContract
   const PHOTO_PATH = 'storage/faqs/photo/';
   const PHOTO_CONTENT_PATH = 'storage/faqs/content/';
 
-  public function getPhotoStorageAttribute(): string
+  public function getPhotoStorageJpgAttribute(): string
   {
     if ($this->image) {
-      return asset(Post::PHOTO_PATH . $this->image);
+      return asset(Faqs::PHOTO_PATH . $this->image . '.jpg');
+    }
+    return asset('images/user-o.jpg');
+  }
+
+  public function getPhotoStorageWebpAttribute(): string
+  {
+    if ($this->image) {
+      return asset(Faqs::PHOTO_PATH . $this->image . '.webp');
     }
     return asset('images/user-o.jpg');
   }

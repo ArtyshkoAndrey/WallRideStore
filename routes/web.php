@@ -30,6 +30,7 @@ Route::prefix('cart')->name('cart.')->group(function () {
 });
 
 Route::resource('post', App\Http\Controllers\PostController::class)->only(['show', 'index']);
+Route::resource('faq', App\Http\Controllers\FaqController::class)->only(['show', 'index']);
 
 Route::middleware(['auth'])->prefix('profile')->name('profile.')->group(function () {
   Route::name('update.')->prefix('update')->group(function () {

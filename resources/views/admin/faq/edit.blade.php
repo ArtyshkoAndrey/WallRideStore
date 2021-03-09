@@ -14,7 +14,7 @@
         <nav aria-label="Breadcrumb navigation example">
           <ul class="breadcrumb">
             <li class="breadcrumb-item">
-              <a href="{{ route('admin.post.index') }}">FAQ</a>
+              <a href="{{ route('admin.faq.index') }}">FAQ</a>
             </li>
             <li class="breadcrumb-item active">Редактирование FAQ</li>
           </ul>

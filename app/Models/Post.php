@@ -67,4 +67,12 @@ class Post extends Model implements TranslatableContract
     return asset('images/user-o.jpg');
   }
 
+  public function getPhotoStorageWebpAttribute(): string
+  {
+    if ($this->photo) {
+      return asset(Post::PHOTO_PATH . $this->photo . '.webp');
+    }
+    return asset('images/user-o.jpg');
+  }
+
 }

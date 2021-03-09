@@ -41844,6 +41844,27 @@ body > .wrapper > #app > .alert {
   color: #F33C3C !important;
 }
 
+.header-image-post {
+  width: 100%;
+}
+.header-image-post img {
+  width: 100%;
+  height: 500px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  filter: brightness(35%);
+}
+
+#faq-show-page #main, #post-show-page #main {
+  margin-top: 0 !important;
+}
+#faq-show-page #main .container-fluid h2.title, #faq-show-page #main .container-sm h2.title, #faq-show-page #main .container-md h2.title, #faq-show-page #main .container-lg h2.title, #faq-show-page #main .container-xl h2.title, #faq-show-page #main .container-xxl h2.title, #faq-show-page #main .container-fluid .title.h2, #faq-show-page #main .container-sm .title.h2, #faq-show-page #main .container-md .title.h2, #faq-show-page #main .container-lg .title.h2, #faq-show-page #main .container-xl .title.h2, #faq-show-page #main .container-xxl .title.h2, #post-show-page #main .container-fluid h2.title, #post-show-page #main .container-sm h2.title, #post-show-page #main .container-md h2.title, #post-show-page #main .container-lg h2.title, #post-show-page #main .container-xl h2.title, #post-show-page #main .container-xxl h2.title, #post-show-page #main .container-fluid .title.h2, #post-show-page #main .container-sm .title.h2, #post-show-page #main .container-md .title.h2, #post-show-page #main .container-lg .title.h2, #post-show-page #main .container-xl .title.h2, #post-show-page #main .container-xxl .title.h2 {
+  top: 250px;
+}
+#faq-show-page .post-content img, #post-show-page .post-content img {
+  width: 50%;
+}
+
 #login-page footer, #register-page footer,
 #password-request-page footer,
 #password-reset-page footer {

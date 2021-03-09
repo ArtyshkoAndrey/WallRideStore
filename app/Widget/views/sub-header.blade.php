@@ -76,21 +76,21 @@
 
         <li class="nav-item">
           <a class="nav-link"
-             href="#">
+             href="{{ route('faq.index') }}">
             {{ __('FAQ') }}
           </a>
         </li>
 
         <li class="nav-item">
           <a class="nav-link"
-             href="#">
+             href="{{ route('post.index') }}">
             {{ __('Новости') }}
           </a>
         </li>
 
         <li class="nav-item">
           <a class="nav-link text-danger"
-             href="#">
+             href="{{ route('product.all', ['sale' => true]) }}">
             {{ __('Sale') }}
           </a>
         </li>

@@ -4,55 +4,63 @@
 
 @section('content')
 
-  <div class="container-fluid p-0">
-    <div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-mdb-ride="carousel">
-      <ol class="carousel-indicators">
-        @foreach($sliders as $il)
-          <li data-target="#carouselExampleCaptions" class="{{ $loop->index === 0 ? 'active' : '' }}" :data-slide-to="{{ $loop->index }}"></li>
-        @endforeach
-      </ol>
-      <div class="carousel-inner">
+  @if(count($sliders) > 0)
+    <div class="container-fluid p-0">
+      <div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-mdb-ride="carousel">
+        <ol class="carousel-indicators">
+          @foreach($sliders as $il)
+            <li data-target="#carouselExampleCaptions" class="{{ $loop->index === 0 ? 'active' : '' }}" :data-slide-to="{{ $loop->index }}"></li>
+          @endforeach
+        </ol>
+        <div class="carousel-inner">
 
-        @foreach($sliders as $slider)
+          @foreach($sliders as $slider)
 
-          <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-            <div class="image">
-              <img src="{{ $slider->photo_url_jpg }}" class="d-block d-lg-none w-100" alt="...">
+            <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+              <div class="image">
+                <img src="{{ $slider->photo_url_jpg }}" class="d-block d-lg-none w-100" alt="...">
 
-              <img src="{{ $slider->photo_mobile_url_jpg }}" class="d-lg-block d-none w-100" alt="...">
+                <img src="{{ $slider->photo_mobile_url_jpg }}" class="d-lg-block d-none w-100" alt="...">
+              </div>
+              <div class="carousel-caption">
+                <h2 class="text-uppercase">{{ $slider->h1 }}</h2>
+                <p>{{ $slider->h2 }}</p>
+                <a href="{{ url($slider->url) }}" class="btn btn-dark">{{ $slider->btn_text }}</a>
+              </div>
             </div>
-            <div class="carousel-caption">
-              <h2 class="text-uppercase">{{ $slider->h1 }}</h2>
-              <p>{{ $slider->h2 }}</p>
-              <a href="{{ url($slider->url) }}" class="btn btn-dark">{{ $slider->btn_text }}</a>
-            </div>
-          </div>
 
-        @endforeach
+          @endforeach
 
-      </div>
-    </div>
-  </div>
-
-  <section class="container mt-5 mb-5">
-    <div class="row">
-      <div class="col-6">
-        <h3 class="font-weight-bolder">{{ __('Новые товары') }}</h3>
-      </div>
-
-      <div class="col-6">
-        <a href="{{ route('product.all', ['sale' => true]) }}" class="text-dark d-block text-right">{{ __('Перейти в каталог') }}</a>
-      </div>
-    </div>
-
-    <div class="row">
-      @foreach($newProducts as $product)
-        <div class="col-xl-3 col-lg-4 col-6">
-          @include('user.layouts.item', ['product' => $product])
         </div>
-      @endforeach
+      </div>
     </div>
-  </section>
+  @else
+    <div class="container pb-4">
+      <div class="row"></div>
+    </div>
+  @endif
+
+  @if(count($newProducts) > 0)
+    <section class="container mt-5 mb-5">
+      <div class="row">
+        <div class="col-6">
+          <h3 class="font-weight-bolder">{{ __('Новые товары') }}</h3>
+        </div>
+
+        <div class="col-6">
+          <a href="{{ route('product.all', ['sale' => true]) }}" class="text-dark d-block text-right">{{ __('Перейти в каталог') }}</a>
+        </div>
+      </div>
+
+      <div class="row">
+        @foreach($newProducts as $product)
+          <div class="col-xl-3 col-lg-4 col-6">
+            @include('user.layouts.item', ['product' => $product])
+          </div>
+        @endforeach
+      </div>
+    </section>
+  @endif
 
   <section class="container my-5" id="brands-section">
     <div class="row m-0">
@@ -161,24 +169,26 @@
     </div>
   </section>
 
-  <section class="container mt-5 mb-5">
-    <div class="row">
-      <div class="col-6">
-        <h3 class="font-weight-bolder">{{ __('Хит продаж') }}</h3>
-      </div>
-
-      <div class="col-6">
-        <a href="{{ route('product.all') }}" class="text-dark d-block text-right">{{ __('Перейти в каталог') }}</a>
-      </div>
-    </div>
-
-    <div class="row">
-      @foreach($bestseller as $product)
-        <div class="col-xl-3 col-lg-4 col-6">
-          @include('user.layouts.item', ['product' => $product])
+  @if(count($bestseller) > 0)
+    <section class="container mt-5 mb-5">
+      <div class="row">
+        <div class="col-6">
+          <h3 class="font-weight-bolder">{{ __('Хит продаж') }}</h3>
         </div>
-      @endforeach
-    </div>
-  </section>
+
+        <div class="col-6">
+          <a href="{{ route('product.all') }}" class="text-dark d-block text-right">{{ __('Перейти в каталог') }}</a>
+        </div>
+      </div>
+
+      <div class="row">
+        @foreach($bestseller as $product)
+          <div class="col-xl-3 col-lg-4 col-6">
+            @include('user.layouts.item', ['product' => $product])
+          </div>
+        @endforeach
+      </div>
+    </section>
+  @endif
 
 @endsection

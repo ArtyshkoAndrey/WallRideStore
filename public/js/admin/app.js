@@ -2110,7 +2110,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     if (this.category_props) {
       this.selected_category = this.category_props;
-      this.search = this.category_props.search_name;
+      this.search = this.category_props.name;
     }
 
     this.watcher = this.$watch('search', function (n, o) {
@@ -2123,7 +2123,7 @@ __webpack_require__.r(__webpack_exports__);
         this.watcher();
         this.show = false;
         this.categories = [];
-        this.search = this.selected_category.search_name;
+        this.search = this.selected_category.name;
         this.watcher = this.$watch('search', function (n, o) {
           this.watcherSearch(n, o);
         });
@@ -2133,7 +2133,7 @@ __webpack_require__.r(__webpack_exports__);
       this.watcher();
       this.selected_category = category;
       this.show = false;
-      this.search = category.search_name;
+      this.search = category.name;
       this.watcher = this.$watch('search', function (n, o) {
         this.watcherSearch(n, o);
       });
@@ -14455,7 +14455,7 @@ var render = function() {
                       }
                     }
                   },
-                  [_vm._v(_vm._s(category.search_name))]
+                  [_vm._v(_vm._s(category.name))]
                 )
               : _vm._e()
           }),

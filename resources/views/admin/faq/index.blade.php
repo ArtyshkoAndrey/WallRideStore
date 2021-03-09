@@ -55,7 +55,7 @@
       <div class="col-12">
         <div class="row" style="margin-left: -1rem; margin-right: -1rem ;">
           @foreach($faqs as $faq)
-            <div class="col-12 col-md-12 col-xl-6 p-10">
+            <div class="col-12 p-10">
               <div class="card p-10 bg-dark-dm m-0">
                 <div class="row align-items-center">
                   <div class="col-auto col-md-auto">
