@@ -48,7 +48,7 @@
         </div>
 
         <div class="col-6">
-          <a href="{{ route('product.all', ['sale' => true]) }}" class="text-dark d-block text-right">{{ __('Перейти в каталог') }}</a>
+          <a href="{{ route('product.all', ['new' => true]) }}" class="text-dark d-block text-right">{{ __('Перейти в каталог') }}</a>
         </div>
       </div>
 
