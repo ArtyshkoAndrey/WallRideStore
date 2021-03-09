@@ -22,6 +22,7 @@ Route::post('auth/check', [App\Http\Controllers\ApiController::class, 'check']);
 Route::prefix('product')->name('product.')->group(function () {
   Route::get('/search', [ProductController::class, 'search'])->name('search');
   Route::get('/all', [ProductController::class, 'all'])->name('all');
+  Route::get('/favor', [ProductController::class, 'favor'])->name('favor');
   Route::get('/{id}', [ProductController::class, 'show'])->name('show');
 });
 

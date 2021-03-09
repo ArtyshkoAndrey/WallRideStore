@@ -11,6 +11,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Seld\JsonLint\JsonParser;
 use Validator;
 
 class ProductController extends Controller
@@ -218,5 +219,21 @@ class ProductController extends Controller
       return view('user.product.show', compact('product', 'categories', 'similarProducts'));
     }
     throw new RedirectWithErrorsException(__('errors_redirect.product.product_show'));
+  }
+
+  /**
+   * Display Favor products
+   *
+   * @return Application|Factory|View
+   */
+  public function favor ()
+  {
+    if (isset($_COOKIE['favor'])) {
+      $ids = json_decode($_COOKIE['favor']);
+      $products = Product::findMany($ids);
+    } else {
+      $products = [];
+    }
+    return view('user.product.favor', compact('products'));
   }
 }

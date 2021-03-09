@@ -98,8 +98,9 @@
               </div>
               <div class="col-md-auto mt-2">
                 <button class="btn w-100 btn-dark btn-to-cart mt-2 mt-md-0"
-                        @click="addFavor({{$product->id}})">
-                  <span>{{ __('Добавить в избранные') }}</span>
+                        @click="$store.commit('addItemFavor', {{ $product->id }})">
+                  <span v-if="!$store.getters.productFavor( {{$product->id}} )">{{ __('Добавить в избранные') }}</span>
+                  <span v-else>{{ __('Убрать из избранных') }}</span>
                   <i class="ms-2 far fa-heart"></i>
                 </button>
               </div>

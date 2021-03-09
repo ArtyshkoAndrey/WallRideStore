@@ -186,7 +186,7 @@
           <li class="nav-item dropdown d-none d-lg-flex">
             <a
               class="nav-link"
-              href="#"
+              href="{{ route('product.favor') }}"
             >
               <i class="far fa-heart"></i>
             </a>

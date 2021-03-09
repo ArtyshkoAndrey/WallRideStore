@@ -68,10 +68,17 @@ class ApiController extends Controller
    */
   public function products(Request $request): JsonResponse
   {
-    $ids = $request->get('products_skuses_ids', []);
-    $products = Product::with('photos', 'productSkuses.skus')->whereHas('productSkuses', function ($q) use ($ids) {
-      $q->whereIn('id', $ids);
-    })->get();
+    if ($request->has('ids')) {
+      $ids = $request->get('ids');
+      $products = Product::findMany($ids);
+    } else if ($request->has('products_skuses_ids')) {
+      $ids = $request->get('products_skuses_ids');
+      $products = Product::with('photos', 'productSkuses.skus')->whereHas('productSkuses', function ($q) use ($ids) {
+        $q->whereIn('id', $ids);
+      })->get();
+    } else {
+      $products = [];
+    }
 
     return response()->json($products);
   }

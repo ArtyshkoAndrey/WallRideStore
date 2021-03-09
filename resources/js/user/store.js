@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 import Alert from "./Alert";
+import Cookies from 'js-cookie'
 
 Vue.use(Vuex);
 
@@ -11,11 +12,15 @@ const store = new Vuex.Store({
       items: [],
       products: []
     },
+    favor: {
+      items: [],
+      products: []
+    },
     currency: {},
     currency_id: 1,
     auth: false,
     user: null,
-    version: '1.1',
+    version: '1.2',
   },
   mutations: {
     addItem: (state, {id, amount}) => {
@@ -35,6 +40,9 @@ const store = new Vuex.Store({
     setProducts: (state, products) => {
       state.cart.products = products
     },
+    setProductsFavor: (state, products) => {
+      state.favor.products = products
+    },
     removeItem: (state, id) => {
       state.cart.items = state.cart.items.filter( e => e.id !== id )
       state.cart.products = state.cart.products.filter( e => {
@@ -47,6 +55,19 @@ const store = new Vuex.Store({
       state.cart.items = []
       state.cart.products = []
       store.dispatch('updateAuthCart')
+    },
+    addItemFavor: (state, id) => {
+      let item = state.favor.items.find(el => el === id )
+      if (item) {
+        state.favor.items = state.favor.items.filter( e => {
+          return !e === id
+        })
+      } else {
+        state.favor.items.push(id)
+        // store.dispatch('updateAuthFavor')
+      }
+      Cookies.set('favor', JSON.stringify(state.favor.items));
+      store.dispatch('getProductsFavor')
     },
     currency: (state, item) => {
       state.currency = item
@@ -62,6 +83,9 @@ const store = new Vuex.Store({
     },
   },
   getters: {
+    productFavor: state => id => {
+      return state.favor.items.find(el => el === id);
+    },
     items: state => {
       return state.cart.items;
     },
@@ -163,6 +187,22 @@ const store = new Vuex.Store({
       })
         .then(response => {
           commit('setProducts', response.data)
+        })
+        .catch(error => {
+          for (let key in error.response.data) {
+            Alert.warning(error.response.data[key])
+            break;
+          }
+          // alert(error.response.data)
+        })
+    },
+    getProductsFavor: ({commit, state}) => {
+      console.log(state.favor.items.map(el => el))
+      window.axios.post('/api/products', {
+        ids: state.favor.items.map(el => el)
+      })
+        .then(response => {
+          commit('setProductsFavor', response.data)
         })
         .catch(error => {
           for (let key in error.response.data) {
