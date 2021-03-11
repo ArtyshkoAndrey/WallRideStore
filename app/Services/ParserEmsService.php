@@ -13,6 +13,7 @@ use DOMXPath;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Auth;
+use RuntimeException;
 use SimpleXMLElement;
 use Exception;
 
@@ -44,7 +45,6 @@ class ParserEmsService
    * @var array|string[]
    */
   private array $product = [
-    'RU' => 'P203',
     'KZ' => 'P103'
   ];
 
@@ -72,10 +72,10 @@ class ParserEmsService
    * @param string $country_code
    * @param float $weight
    */
-  public function __construct (string $post_code, string $country_code, float $weight)
+  public function __construct(string $post_code, string $country_code, float $weight)
   {
     $this->post_code = $post_code;
-    $this->country_code  =$country_code;
+    $this->country_code = $country_code;
     $this->weight = $weight;
   }
 
@@ -111,19 +111,20 @@ class ParserEmsService
     $body = $xpath->evaluate('//SOAP-ENV:Body')->item(0);
     $ns2 = $body->firstChild->firstChild;
     if ($ns2->localName === 'Sum') {
-      return (int) $ns2->textContent;
-    } else {
-      throw new Exception('Нет данных');
+      return (int)$ns2->textContent;
     }
+
+    throw new RuntimeException('Нет данных');
   }
 
   /**
    * Созданите тела запроса
    * @return DOMDocument
    */
-  private function createXML (): DOMDocument
+  private function createXML(): DOMDocument
   {
-    $xml = new DOMDocument( );
+    $productData = $this->product[$this->country_code] ?? 'P203';
+    $xml = new DOMDocument();
 
     $Envelope = $xml->createElement('soapenv:Envelope');
     $Envelope->setAttribute('xmlns:soapenv', 'http://schemas.xmlsoap.org/soap/envelope/');
@@ -139,7 +140,7 @@ class ParserEmsService
 
     $SndrCtg = $xml->createElement('pos:SndrCtg', 1);
     $Contract = $xml->createElement('pos:Contract');
-    $Product = $xml->createElement('pos:Product', $this->product[$this->country_code]);
+    $Product = $xml->createElement('pos:Product', $productData);
     $MailCat = $xml->createElement('pos:MailCat', 3);
     $SendMethod = $xml->createElement('pos:SendMethod', 1);
     $Weight = $xml->createElement('pos:Weight', $this->weight * 1000);

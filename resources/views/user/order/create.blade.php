@@ -174,8 +174,8 @@
                   <div class="choosable-field" :class="transfer.name === 'ems' ? 'active' : null" @click="setEmsTransfer">
                     <div class="row">
                       <div class="col-8 d-flex flex-column">
-                        <span class="title">Стандартная доставка</span>
-                        <span class="description">Доставка осуществляется от 4 до 7 дней сервисом Kaz Post</span>
+                        <span class="title">{{ __('Стандартная доставка') }}</span>
+                        <span class="description">{{ __('Доставка осуществляется от 4 до 7 дней сервисом Kaz Post') }}</span>
                       </div>
                       <div class="col-4 d-flex justify-content-end">
                         <span class="price">@{{ $cost(ems.price * $store.state.currency.ratio) }} @{{ $store.state.currency.symbol }}</span>
@@ -189,32 +189,32 @@
                 <div class="col-12" v-if="transfer.name !== null">
                   <div class="row">
                     <div class="col-12 mb-4">
-                      <p class="h4 title">Оплата</p>
+                      <p class="h4 title">{{ __('Оплата') }}</p>
                     </div>
-                    @if($cash ? ($cash->data === '1') : false)
+                    @if($cash  &&  $cash->data === '1')
                       <div class="col-12 mb-3" v-if="transfer.name !== 'ems'">
                         <div class="choosable-field"
                              :class="method_pay === 'cash' ? 'active' : null"
                              @click="setCashMethod">
                           <div class="row">
                             <div class="col-8 d-flex flex-column">
-                              <span class="title">Оплата при получении</span>
-                              <span class="description">Оплатите курьеру или в магазине после получения</span>
+                              <span class="title">{{ __('Оплата при получении') }}</span>
+                              <span class="description">{{ __('Оплатите курьеру или в магазине после получения') }}</span>
                             </div>
                           </div>
                         </div>
                       </div>
                     @endif
 
-                    @if($cloudPayment ? ($cloudPayment->data === '1') : false)
+                    @if($cloudPayment  &&  $cloudPayment->data === '1')
                       <div class="col-12 mb-5">
                         <div class="choosable-field"
                              :class="method_pay === 'cloudPayment' ? 'active' : null"
                              @click="setCloudPaymentMethod">
                           <div class="row">
                             <div class="col-8 d-flex flex-column">
-                              <span class="title">Оплатить онлайн</span>
-                              <span class="description">Оплатите онлайн любым удобным способом через сервис cloud payments</span>
+                              <span class="title">{{ __('Оплатить онлайн') }}</span>
+                              <span class="description">{{ __('Оплатите онлайн любым удобным способом через сервис cloud payments') }}</span>
                             </div>
                           </div>
                         </div>
@@ -331,7 +331,7 @@
         <div v-else key="loaderWindow" class="mt-5">
           <div class="row">
             <div class="col-12 text-center">
-              <h3><strong>Не закрывайте браузер.</strong> Ожидаем подтверждения оплаты</h3>
+              <h3><strong>{{ __('Не закрывайте браузер.') }}</strong> {{ __('Ожидаем подтверждения оплаты') }}</h3>
             </div>
           </div>
           <div class="row justify-content-center my-5">

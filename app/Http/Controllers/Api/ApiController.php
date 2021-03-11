@@ -14,6 +14,7 @@ use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use RuntimeException;
 use Validator;
 
 class ApiController extends Controller
@@ -90,7 +91,7 @@ class ApiController extends Controller
    * @param Request $request
    * @throws Exception
    */
-  public function update_cart(Request $request)
+  public function update_cart(Request $request): void
   {
     $data = $request->all();
 
@@ -218,7 +219,7 @@ class ApiController extends Controller
       $emsService = new ParserEmsService($data['post_code'], $data['country_code'], $data['weight']);
       $price = $emsService->getPrice();
       return response()->json($price);
-    } catch (Exception $exception) {
+    } catch (RuntimeException $exception) {
       return response()->json(__('errors_redirect.delivery.not_price'), 500);
     } catch (GuzzleException $e) {
       return response()->json(__('errors_redirect.delivery.error'), 500);

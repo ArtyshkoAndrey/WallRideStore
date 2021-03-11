@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 export default {
   name: "order",
   data () {
@@ -137,11 +138,12 @@ export default {
       })
     },
     pay () {
-      let widget = new cp.CloudPayments();
+      let language = Cookies.get('language') === 'en' ? 'en-US' : 'ru-RU';
+      let widget = new cp.CloudPayments({ language: language} );
       widget.pay('auth', // или 'charge'
         { //options
-          publicId: 'pk_e531fbe6a10b284d414ce62fbf852', //id из личного кабинета
-          description: 'Оплата товаров dockuboardhouse.com', //назначение
+          publicId: 'pk_b5c5ad6d88e7b2dd6554a7f65b2e1', //id из личного кабинета
+          description: '', //назначение
           amount: this.price, //сумма
           currency: this.$store.state.currency.short_name, //валюта
           invoiceId: this.order.no, //номер заказа  (необязательно)
@@ -351,11 +353,11 @@ export default {
         this.resetTransfer()
         this.method_pay = null
         if (after.name !== null && after.name !== '' && this.info.post_code !== null && this.info.post_code !== '') {
-          if(this.info.post_code.length === 6)
+          if(this.info.post_code.length >= 4)
             this.getEmsCost()
           else {
             this.resetTransfer()
-            this.errors.ems = 'Почтовый индекс должен иметь 6 символов'
+            this.errors.ems = 'Почтовый индекс должен иметь 4 символа'
             this.ems.error = true
           }
         }
@@ -376,11 +378,11 @@ export default {
         this.resetTransfer()
         this.method_pay = null
         if (after !== null && after !== '' && this.info.country.name !== null && this.info.country.name !== '') {
-          if(after.length === 6)
+          if(after.length >= 4)
             this.getEmsCost()
           else {
             this.resetTransfer()
-            this.errors.ems = 'Почтовый индекс должен иметь 6 символов'
+            this.errors.ems = 'Почтовый индекс должен иметь 4 символа'
             this.ems.error = true
           }
         }
