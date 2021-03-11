@@ -1,2 +1,9 @@
 *
 !.gitignore
+!/brands
+!/categories
+!/faqs
+!/posts
+!/products
+!/slider
+!/users
