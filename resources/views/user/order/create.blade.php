@@ -15,7 +15,7 @@
             <div class="row">
 
               <div class="col-12 mb-4">
-                <p class="h4 title">Адрес доставки</p>
+                <p class="h4 title">{{ __('Адрес доставки') }}</p>
               </div>
 
               <div class="col-12 col-md-6 mb-3">
@@ -44,7 +44,7 @@
                          @input="setAddress"/>
                   <label class="form-label"
                          for="address">
-                    Точный адрес
+                    {{ __('Точный адрес') }}
                     <span class="required">*</span>
                   </label>
                 </div>
@@ -60,14 +60,14 @@
                          @input="setPostCode"/>
                   <label class="form-label"
                          for="post_code">
-                    Индекс
+                    {{ __('Индекс') }}
                     <span class="required">*</span>
                   </label>
                 </div>
               </div>
 
               <div class="col-12 mb-4">
-                <p class="h4 title">Контактные данные</p>
+                <p class="h4 title">{{ __('Контактные данные') }}</p>
               </div>
 
               <div class="col-12 mb-3">
@@ -80,7 +80,7 @@
                          @input="setName"/>
                   <label class="form-label"
                          for="name">
-                    ФИО
+                    {{ __('ФИО') }}
                     <span class="required">*</span>
                   </label>
                 </div>
@@ -112,14 +112,14 @@
                          @input="setPhone"/>
                   <label class="form-label"
                          for="phone">
-                    Телефон
+                    {{ __('Телефон') }}
                     <span class="required">*</span>
                   </label>
                 </div>
               </div>
 
               <div class="col-12 mb-4">
-                <p class="h4 title">Доставка</p>
+                <p class="h4 title">{{ __('Доставка') }}</p>
               </div>
 
               <transition name="slide-fade" mode="out-in" appear>
@@ -128,8 +128,8 @@
                   <div class="choosable-field" :class="transfer.name === 'pickup' ? 'active' : null" @click="setPickupTransfer">
                     <div class="row">
                       <div class="col-8 d-flex flex-column">
-                        <span class="title">Самовывоз из магазина</span>
-                        <span class="description">Закажите онлайн и заберите в нашем магазине</span>
+                        <span class="title">{{ __('Самовывоз из магазина') }}</span>
+                        <span class="description">{{ __('Закажите онлайн и заберите в нашем магазине') }}</span>
                       </div>
                       <div class="col-4 d-flex justify-content-end">
                         <span class="price">0 @{{ $store.state.currency.symbol }}</span>
@@ -159,9 +159,9 @@
                   <div class="choosable-field" style="cursor: default">
                     <div class="row">
                       <div class="col-8 d-flex flex-column">
-                        <span class="title">Стандартная доставка</span>
+                        <span class="title">{{ __('Стандартная доставка') }}</span>
                         <span class="description text-danger">@{{ errors.ems }}</span>
-                        <a target="_blank" href="https://wa.me/+77475562383?text=Здравствуйте!%20На%20вашем%20сайте%20нет%20моего%20города%20для%20доставки">Написать в поддержку</a>
+                        <a target="_blank" href="https://wa.me/+77475562383?text=Здравствуйте!%20На%20вашем%20сайте%20нет%20моего%20города%20для%20доставки">{{ __('Написать в поддержку') }}</a>
                       </div>
                       <div class="col-4 d-flex justify-content-end">
 {{--                        <span class="price">1123</span>--}}
@@ -229,26 +229,26 @@
           <div class="col-12 col-md-5">
             <div class="row">
               <div class="col-12 justify-content-end d-flex mb-3 mt-4">
-                <a href="{{ route('login') }}" class="text-decoration-none" v-if="!$store.state.auth" style="font-size: .9em;">Войдите в аккаунт,
-                  чтобы оплачивать быстрее</a>
+                <a href="{{ route('login') }}" class="text-decoration-none" v-if="!$store.state.auth" style="font-size: .9em;">{{ __('Войдите в аккаунт,
+                  чтобы оплачивать быстрее') }}</a>
               </div>
               <div class="col-12 mb-2" :class="$store.state.auth ? 'mt-3' : null">
                 <div class="order-results">
                   <div class="row">
                     <div class="col-12">
-                      <span>Сумма покупок</span>
+                      <span>{{ __('Сумма покупок') }}</span>
                       <span>@{{ $cost($store.getters.priceAmount) }} @{{ $store.state.currency.symbol }}</span>
                     </div>
                     <div class="col-12">
-                      <span>Доставка</span>
+                      <span>{{ __('Доставка') }}</span>
                       <span>@{{ $cost(transfer.price * $store.state.currency.ratio) }} @{{ $store.state.currency.symbol }}</span>
                     </div>
                     <div class="col-12" v-if="sale">
-                      <span>Скидка</span>
+                      <span>{{ __('Скидка') }}</span>
                       <span>- @{{ $cost(price_with_sale * $store.state.currency.ratio) }} @{{ $store.state.currency.symbol }}</span>
                     </div>
                     <div class="col-12">
-                      <span>Итог заказа</span>
+                      <span>{{ __('Итог заказа') }}</span>
                       <span class="font-weight-bold">@{{ $cost(price) }} @{{ $store.state.currency.symbol }}</span>
                     </div>
                   </div>
@@ -258,17 +258,17 @@
               <div class="col-12">
                 <div class="form-outline">
                   <input type="text" id="promocode" name="promocode" class="form-control" v-model="code"/>
-                  <label class="form-label" for="promocode">Введите промокод (при наличии)</label>
+                  <label class="form-label" for="promocode">{{ __('Введите промокод (при наличии)') }}</label>
                 </div>
               </div>
               <div class="col-12 mb-5">
-                <button @click="checkSale" class="btn btn-dark d-block w-100 mt-2 py-3 promocode-button" :disabled="disabledButtonCode">Активировать промокод</button>
+                <button @click="checkSale" class="btn btn-dark d-block w-100 mt-2 py-3 promocode-button" :disabled="disabledButtonCode">{{ __('Активировать промокод') }}</button>
               </div>
 
               <div class="col-12">
                 <div class="row">
                   <div class="col-12 mb-3">
-                    <span class="h5 title">Позиции заказа</span>
+                    <span class="h5 title">{{ __('Позиции заказа') }}</span>
                   </div>
                   <transition name="slide-fade" mode="out-in" appear>
                     <div class="col-12" v-if="!$root.cartLoader" key="products">
@@ -309,7 +309,7 @@
             <div class="row">
               <div class="col-md-6 d-flex">
                 <button class="btn btn-dark complete" id="checkout" @click="orderedNow" :disabled="disabledButton">
-                  <span v-if="!loaderButton">Завершить и перейти к оплате</span>
+                  <span v-if="!loaderButton">{{ __('Завершить и перейти к оплате') }}</span>
                   <div v-else class="spinner-border text-light" role="status">
                     <span class="visually-hidden">Loading...</span>
                   </div>
@@ -317,7 +317,7 @@
               </div>
               <div class="col-md-6 d-flex">
                 <button class="btn btn-outline-dark complete" @click="orderAfter" data-mdb-ripple-color="dark" id="checkout" :disabled="disabledButtonAfter">
-                  <span v-if="!loaderButtonAfter">Завершить и оплатить позже</span>
+                  <span v-if="!loaderButtonAfter">{{ __('Завершить и оплатить позже') }}</span>
 
                   <div v-else class="spinner-border text-dark" role="status">
                     <span class="visually-hidden">Loading...</span>

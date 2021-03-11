@@ -6,7 +6,7 @@
   <div class="container mt-2 cart-page pb-5">
     <div class="row justify-content-center">
       <div class="col-12">
-        <p class="font-weight-bolder h4" style="color: #2D3134;">Корзина</p>
+        <p class="font-weight-bolder h4" style="color: #2D3134;">{{ __('Корзина') }}</p>
       </div>
       <div class="col-md-8">
         <transition name="slide-fade" mode="out-in" appear>
@@ -72,14 +72,14 @@
       <div class="col-md-4 mt-md-0 mt-4">
         <div class="row">
           <div class="col-12 justify-content-end d-flex" v-if="!$store.state.auth">
-            <a href="{{ route('login') }}" class="text-decoration-none" style="font-size: .9em;">Войдите в аккаунт, чтобы оплачивать быстрее</a>
+            <a href="{{ route('login') }}" class="text-decoration-none" style="font-size: .9em;">{{ __('Войдите в аккаунт, чтобы оплачивать быстрее') }}</a>
           </div>
           <div class="col-12">
-            <a href="{{ route('order.create') }}" class="btn btn-dark d-block w-100 mt-2 py-3 promocode-button" :class="$store.state.cart.items.length < 1 ? 'disabled' : null">Перейти к оплате</a>
+            <a href="{{ route('order.create') }}" class="btn btn-dark d-block w-100 mt-2 py-3 promocode-button" :class="$store.state.cart.items.length < 1 ? 'disabled' : null">{{ __('Перейти к оплате') }}</a>
           </div>
           <div class="col-12 mt-2">
             <div class="border w-100 py-3 px-3 mt-2 d-flex justify-content-between">
-              <p class="font-weight-normal m-0">Итог заказа</p>
+              <p class="font-weight-normal m-0">{{ __('Итог заказа') }}:</p>
               <p class="font-weight-bold m-0">@{{ $cost($store.getters.priceAmount) }} @{{ $store.state.currency.symbol }}</p>
             </div>
           </div>
