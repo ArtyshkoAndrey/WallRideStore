@@ -30,8 +30,10 @@ class PhotoService
     $file = $image->getClientOriginalName();
     $destinationPath = public_path($path);
     $originalName = pathinfo($file, PATHINFO_FILENAME);
-    foreach (PhotoService::$type as $type) {
-      $name = $originalName . '.' . $type;
+    $time = time() . '_';
+    $nameNonType = $time . $originalName;
+    foreach (self::$type as $type) {
+      $name = $nameNonType . '.' . $type;
       $img = Image::make($image->getRealPath())->encode($type, $quality);
       if ($cube) {
         $img->fit($width, $width, function ($constraint) {
@@ -47,7 +49,7 @@ class PhotoService
       $img->save($destinationPath.'/'.$name);
     }
 
-    return $originalName;
+    return $nameNonType;
   }
 
   /**
@@ -61,13 +63,15 @@ class PhotoService
   public static  function delete (string $name, string $path, bool $types): bool
   {
     if ($types) {
-      foreach (PhotoService::$type as $type) {
-        if (file_exists(public_path($path . $name . '.' . $type)))
+      foreach (self::$type as $type) {
+        if (file_exists(public_path($path . $name . '.' . $type))) {
           File::delete(public_path($path . $name . '.' . $type));
+        }
       }
     } else {
-      if (file_exists(public_path($path . $name)))
+      if (file_exists(public_path($path . $name))) {
         File::delete(public_path($path . $name));
+      }
     }
     return true;
   }
