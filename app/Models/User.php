@@ -143,7 +143,7 @@ class User extends Authenticatable
 
   public function getUserImageAttribute (): string
   {
-    return $this->avatar ? asset(User::PHOTO_PATH . $this->avatar) : asset('images/product.jpg');
+    return $this->avatar ? asset(self::PHOTO_PATH . $this->avatar) : asset('images/product.jpg');
   }
 
   public function cartItems (): HasMany
@@ -159,20 +159,25 @@ class User extends Authenticatable
   public function getFullAddressAttribute (): string
   {
     $text = '';
-    if($this->country)
+    if($this->country) {
       $text .= $this->country->name . ', ';
+    }
 
-    if($this->city)
+    if($this->city) {
       $text .= $this->city->name . ', ';
+    }
 
-    if($this->address)
-      if($this->post_code)
+    if($this->address) {
+      if ($this->post_code) {
         $text .= $this->address . ', ';
-      else
+      } else {
         $text .= $this->address;
+      }
+    }
 
-    if($this->post_code)
+    if($this->post_code) {
       $text .= $this->post_code;
+    }
 
     return $text;
   }
