@@ -132,6 +132,15 @@
       FAQ
     </a>
 
+    <a href="{{ route('admin.slider.index') }}"
+       class="sidebar-link sidebar-link-with-icon {{ Route::currentRouteNamed('admin.slider.*') ? 'active' : '' }}">
+      <span class="sidebar-icon bg-transparent justify-content-start mr-0">
+        <i class="bx bxs-news"
+           aria-hidden="true"></i>
+      </span>
+      Слайдер
+    </a>
+
     <br />
     <h5 class="sidebar-title">
       Товары
