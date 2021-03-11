@@ -1,4 +1,4 @@
-
+@import "resources/sass/user/variables";
 #profile {
   .form-outline {
     .form-notch-leading {
@@ -8,6 +8,9 @@
     .form-notch-trailing {
       border-radius: 0 .25rem .25rem 0;
     }
+  }
+  form#form-photo {
+    position: relative;
   }
 
   button#add-photo {
