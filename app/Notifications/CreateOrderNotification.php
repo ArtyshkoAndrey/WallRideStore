@@ -2,6 +2,8 @@
 
 namespace App\Notifications;
 
+use App\Models\Category;
+use Cache;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -24,11 +26,13 @@ class CreateOrderNotification extends Notification implements ShouldQueue {
 
   public function toMail($notifiable): MailMessage
   {
+    $category = Category::whereDoesntHave('parents')->get();
+
     return (new MailMessage)
-      ->subject('Ваш заказ успешно создан')
-      ->greeting('Здраствуйте ' . $this->order->user->name)
-      ->line($this->order->created_at->format('d.m.Y H:i') . ' был создан ваш заказ по номеру ' . $this->order->no)
-      ->action('Просмотреть статус заказа', route('order.index'))
-      ->success();
+      ->subject('Заказ № ' . $this->order->no . ' успешно создан')
+      ->view('emails.order', [
+        'order' => $this->order,
+        'category' => $category
+      ]);
   }
 }

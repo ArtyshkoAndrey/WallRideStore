@@ -84,8 +84,12 @@ class OrderController extends Controller
         $data['sale'],
         $data['code']
       );
+    try {
+      $user->notify(new CreateOrderNotification($order));
+    } catch (Swift_TransportException $e) {
 
-    $user->notify(new CreateOrderNotification($order));
+    }
+
     Auth::login($user);
     $delay = config('app.order.test') ?
       now()->addMinutes(config('app.order.delay.minutes')) :
