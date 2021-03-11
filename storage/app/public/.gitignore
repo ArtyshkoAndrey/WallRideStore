@@ -1,9 +1,9 @@
 *
 !.gitignore
-!/brands
-!/categories
-!/faqs
-!/posts
-!/products
-!/slider
-!/users
+!/brands/
+!/categories/
+!/faqs/
+!/posts/
+!/products/
+!/slider/
+!/users/
