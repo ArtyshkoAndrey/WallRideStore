@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DB;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -166,5 +167,9 @@ class Category extends Model implements TranslatableContract
       return asset(Category::PHOTO_PATH . $this->photo);
 
     return asset('images/product.jpg');
+  }
+
+  public function countProducts() {
+    return $this->products->count() + $this->child()->withCount('products')->get()->sum('products_count');
   }
 }

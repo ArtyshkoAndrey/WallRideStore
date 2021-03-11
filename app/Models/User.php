@@ -69,6 +69,10 @@ use Illuminate\Support\Carbon;
  * @property-read string $full_address
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Order[] $orders
  * @property-read int|null $orders_count
+ * @property int|null $country_id
+ * @property int|null $city_id
+ * @method static Builder|User whereCityId($value)
+ * @method static Builder|User whereCountryId($value)
  */
 class User extends Authenticatable
 {

@@ -30,9 +30,9 @@ class ProductController extends Controller
     if ($q) {
       $products = Product::whereTranslationLike('title', '%' . $q . '%')->get();
       return view('user.product.search', compact('products'));
-    } else {
-      throw new RedirectWithErrorsException(__('errors_redirect.product.product_search'), 403);
     }
+
+    throw new RedirectWithErrorsException(__('errors_redirect.product.product_search'), 403);
   }
 
 
@@ -72,8 +72,9 @@ class ProductController extends Controller
     }
 
     if ($sex = $request->input('sex', [])) {
-      if (!is_array($sex))
+      if (!is_array($sex)) {
         $sex = [$sex];
+      }
 
       $items = $items->whereIn('sex', $sex);
     }
@@ -91,13 +92,20 @@ class ProductController extends Controller
         throw new RedirectWithErrorsException(__('errors_redirect.product.product_catalog_categories'));
       }
       foreach ($categoryArr as $index => $category) {
-        if ($index == 0) {
-          $items = $items->whereHas('category', function ($query) use ($category) {
-            return $query->where('categories.id', '=', $category);
+        if ($index === 0) {
+
+          $items->whereHas('category', function ($query) use ($category) {
+            $query->whereHas('parents', function ($query) use ($category) {
+              $query->where('laravel_reserved_0.id', $category);
+            })
+              ->orWhere('categories.id', $category);
           });
         } else {
-          $items = $items->orWhereHas('category', function ($query) use ($category) {
-            return $query->where('categories.id', '=', $category);
+          $items = $items->orWhereHas('category', function ($query) use ($category, $index) {
+            $query->whereHas('parents', function ($query) use ($category, $index) {
+              $query->where('laravel_reserved_' . $index . '.id', $category);
+            })
+              ->orWhere('categories.id', $category);
           });
         }
       }

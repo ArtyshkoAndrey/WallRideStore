@@ -47,6 +47,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Slider whereUrl($value)
  * @method static Builder|Slider withTranslation()
  * @mixin Eloquent
+ * @method static Builder|Slider whereMobilePhoto($value)
  */
 class Slider extends Model implements TranslatableContract
 {

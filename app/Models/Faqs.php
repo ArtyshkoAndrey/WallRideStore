@@ -40,6 +40,8 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Faqs withTranslation()
  * @mixin Eloquent
  * @property-read string $photo_storage
+ * @property-read string $photo_storage_jpg
+ * @property-read string $photo_storage_webp
  */
 class Faqs extends Model implements TranslatableContract
 {
