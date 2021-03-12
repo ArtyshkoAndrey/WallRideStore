@@ -2,15 +2,15 @@
 
 namespace App\Jobs;
 
+use App\Models\Order;
 use App\Notifications\ChangeOrderUser;
 use App\Services\OrderService;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use App\Models\Order;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 // Работа когда нужно закрыть заказ, т.е. отмена
 class CloseOrder implements ShouldQueue
@@ -26,7 +26,7 @@ class CloseOrder implements ShouldQueue
     $this->delay($delay);
     $this->orderService = $orderService;
   }
-
+// TODO: ИЗмнеить уведомления на новый вид
   public function handle()
   {
     if (!isset($this->order->paid_at) && $this->order->ship_status === Order::SHIP_STATUS_PAID) {
