@@ -53,7 +53,7 @@ class OrderService
           'amount' => $item['item']['amount']
         ]);
         $ps = ProductSkus::find($item['item']['id']);
-        $ps->stock = $ps->stock - $item['item']['amount'];
+        $ps->stock -= $item['item']['amount'];
         $ps->save();
         $orderItem->product()->associate($item['id']);
         $orderItem->skus()->associate($item['skus']['skus']['id']);
@@ -72,7 +72,7 @@ class OrderService
   /**
    * @param Order $order
    */
-  public function canceled(Order $order)
+  public function canceled(Order $order): void
   {
     foreach ($order->items as $orderItem) {
       if (($product = $orderItem->product)->trashed()) {
@@ -82,7 +82,7 @@ class OrderService
         ->where('skus_id', $orderItem->skus->id)
         ->first();
       if ($ps) {
-        $ps->stock = $ps->stock + $orderItem->amount;
+        $ps->stock += $orderItem->amount;
         $ps->save();
       }
     }

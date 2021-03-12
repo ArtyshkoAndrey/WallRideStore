@@ -3,7 +3,6 @@
 namespace App\Console;
 
 use App\Jobs\ClearImages;
-use App\Jobs\NotifyWhenItemsCart;
 use App\Jobs\UpdateCurrencies;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;

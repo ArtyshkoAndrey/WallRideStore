@@ -15,6 +15,7 @@ use App\Models\User;
 use App\Notifications\AdminPaidOrderNotification;
 use App\Notifications\ChangeOrderUser;
 use App\Notifications\CreateOrderNotification;
+use App\Notifications\PaymentOrderNotification;
 use App\Notifications\RegisterPassword;
 use App\Services\OrderService;
 use Auth;
@@ -47,6 +48,11 @@ class OrderController extends Controller
     return view('user.order.create', compact('cash', 'cloudPayment'));
   }
 
+  /**
+   * @param OrderStoreRequest $request
+   * @return JsonResponse
+   * @throws \Throwable
+   */
   public function store (OrderStoreRequest $request): JsonResponse
   {
     $data = $request->all();
@@ -102,7 +108,7 @@ class OrderController extends Controller
     ]);
   }
 
-  public function updateStatus (Request $request)
+  public function updateStatus (Request $request): void
   {
     $request->validate([
       'order' => 'required|exists:orders,id'
@@ -113,7 +119,7 @@ class OrderController extends Controller
     $order->ship_status = Order::SHIP_STATUS_PENDING;
     $order->paid_at = Carbon::now();
     $order->save();
-    $order->user->notify(new ChangeOrderUser($order));
+    $order->user->notify(new PaymentOrderNotification($order));
 
     $admins = User::whereIsAdmin(true)->get();
 

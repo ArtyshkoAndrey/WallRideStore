@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Order;
-use App\Notifications\ChangeOrderUser;
+use App\Notifications\CloseOrderNotification;
 use App\Services\OrderService;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
@@ -26,12 +26,12 @@ class CloseOrder implements ShouldQueue
     $this->delay($delay);
     $this->orderService = $orderService;
   }
-// TODO: ИЗмнеить уведомления на новый вид
-  public function handle()
+
+  public function handle(): void
   {
     if (!isset($this->order->paid_at) && $this->order->ship_status === Order::SHIP_STATUS_PAID) {
       $this->orderService->canceled($this->order);
-      $this->order->user->notify(new ChangeOrderUser($this->order));
+      $this->order->user->notify(new CloseOrderNotification($this->order));
     }
   }
 }

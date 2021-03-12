@@ -13,10 +13,10 @@ use Illuminate\Notifications\Notification;
  * Class CreateOrderNotification
  * @package App\Notifications
  *
- * Уведомление о создании заказа
+ * Уведомление о отмене заказа
  */
 
-class CreateOrderNotification extends Notification implements ShouldQueue
+class CloseOrderNotification extends Notification implements ShouldQueue
 {
   use Queueable;
 
@@ -37,8 +37,8 @@ class CreateOrderNotification extends Notification implements ShouldQueue
     $category = Category::whereDoesntHave('parents')->get();
 
     return (new MailMessage)
-      ->subject('Заказ № ' . $this->order->no . ' успешно создан')
-      ->view('emails.order.create', [
+      ->subject('Заказ № ' . $this->order->no . ' успешно отменён')
+      ->view('emails.order.canceled', [
         'order' => $this->order,
         'category' => $category
       ]);
