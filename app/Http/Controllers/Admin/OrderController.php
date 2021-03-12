@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Notifications\ChangeOrderUser;
+use App\Notifications\CloseOrderNotification;
 use App\Services\OrderService;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
@@ -29,7 +30,7 @@ class OrderController extends Controller
    * Просмотр всех заказов, так же фильтрация.
    *
    * @param Request $request
-   * @return Application|Factory|View|Response
+   * @return Application|Factory|View
    */
   public function index(Request $request)
   {
@@ -72,9 +73,9 @@ class OrderController extends Controller
   /**
    * Форма создания заказа
    *
-   * @return Response
+   * @return void
    */
-  public function create()
+  public function create(): void
   {
       //
   }
@@ -83,9 +84,9 @@ class OrderController extends Controller
    * Store a newly created resource in storage.
    *
    * @param Request $request
-   * @return Response
+   * @return void
    */
-  public function store(Request $request)
+  public function store(Request $request): void
   {
       //
   }
@@ -94,9 +95,9 @@ class OrderController extends Controller
    * Display the specified resource.
    *
    * @param int $id
-   * @return Response
+   * @return void
    */
-  public function show(int $id)
+  public function show(int $id): void
   {
       //
   }
@@ -105,7 +106,7 @@ class OrderController extends Controller
    * Show the form for editing the specified resource.
    *
    * @param int $id
-   * @return Application|Factory|View|Response
+   * @return Application|Factory|View
    */
   public function edit(int $id)
   {
@@ -126,7 +127,7 @@ class OrderController extends Controller
       'ship_status' => 'required|string'
     ]);
     $data = $request->all();
-    if (!in_array($data['ship_status'], Order::SHIP_STATUS_MAP)) {
+    if (!in_array($data['ship_status'], Order::SHIP_STATUS_MAP, true)) {
       return redirect()->back()->withInput($data)->withErrors('Не правильно выбран статус');
     }
     $order = Order::find($id);
@@ -144,7 +145,7 @@ class OrderController extends Controller
     }
 
     try {
-      $order->user->notify(new ChangeOrderUser($order));
+      $order->user->notify(new CloseOrderNotification($order));
     } catch (Swift_TransportException $exception) {
       $errors = $exception->getMessage();
     }

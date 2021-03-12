@@ -26,6 +26,8 @@ Route::prefix('product')->name('product.')->group(function () {
   Route::get('/{id}', [ProductController::class, 'show'])->name('show');
 });
 
+Route::resource('brand', App\Http\Controllers\BrandController::class)->only(['show']);
+
 Route::prefix('cart')->name('cart.')->group(function () {
   Route::get('/', [CartController::class, 'index'])->name('index');
 });

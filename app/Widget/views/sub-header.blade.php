@@ -63,7 +63,7 @@
               @foreach($brands as $brand)
 
                 <div class="col-md-4 py-2">
-                  <a href="{{ route('product.all', ['brand' => $brand->id]) }}"
+                  <a href="{{ route('brand.show', $brand->id) }}"
                      class="text-gray-2">
                     {{ $brand->name }}
                   </a>

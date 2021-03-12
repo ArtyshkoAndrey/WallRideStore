@@ -120,7 +120,7 @@ class Brand extends Model implements TranslatableContract
   public function getPhotoJpgStorageAttribute (): string
   {
     if ($this->photo) {
-      return asset(Brand::PHOTO_PATH . $this->photo . '.jpg');
+      return asset(self::PHOTO_PATH . $this->photo . '.jpg');
     }
 
     return asset('images/product.jpg');
@@ -134,7 +134,7 @@ class Brand extends Model implements TranslatableContract
   public function getPhotoWebpStorageAttribute (): string
   {
     if ($this->photo) {
-      return asset(Brand::PHOTO_PATH . $this->photo . '.webp');
+      return asset(self::PHOTO_PATH . $this->photo . '.webp');
     }
 
     return asset('images/product.jpg');
@@ -148,7 +148,7 @@ class Brand extends Model implements TranslatableContract
   public function getLogoJpgStorageAttribute (): string
   {
     if ($this->logo)
-      return asset(Brand::LOGO_PATH . $this->logo . '.jpg');
+      return asset(self::LOGO_PATH . $this->logo . '.jpg');
 
     return asset('images/product.jpg');
   }
@@ -161,7 +161,7 @@ class Brand extends Model implements TranslatableContract
   public function getLogoWebpStorageAttribute (): string
   {
     if ($this->logo)
-      return asset(Brand::LOGO_PATH . $this->logo . 'webp');
+      return asset(self::LOGO_PATH . $this->logo . 'webp');
 
     return asset('images/product.jpg');
   }
