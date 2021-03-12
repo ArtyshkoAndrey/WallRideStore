@@ -74,7 +74,7 @@
 
           <li class="divider d-none d-lg-block"></li>
 
-          <li class="nav-item dropdown d-none d-lg-flex" id="search-nav-item">
+          <li class="nav-item dropdown d-flex" id="search-nav-item">
             <a
               class="nav-link dropdown-toggle not-after"
               href="#"
@@ -93,7 +93,7 @@
                       <input type="text" id="search" name="q" class="w-100" placeholder="{{ __('Название товара, бренд категория') }}" />
                     </div>
                     <div class="col-1 px-0">
-                      <button class="btn btn-dark shadow-none w-100 h-100 h4"><i class="far fa-search"></i></button>
+                      <button class="btn btn-dark shadow-none w-100 h-100 h4 align-items-center justify-content-center d-flex"><i class="far fa-search"></i></button>
                     </div>
                   </div>
                 </form>
@@ -108,7 +108,7 @@
             </a>
           </li>
 
-          <li class="nav-item dropdown d-none d-lg-flex">
+          <li class="nav-item dropdown d-flex">
             <a
               class="nav-link nav-link-end dropdown-toggle not-after"
               href="#"
