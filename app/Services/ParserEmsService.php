@@ -6,16 +6,12 @@
 
 namespace App\Services;
 
-use App\Models\Product;
-use App\Models\Skus;
 use DOMDocument;
 use DOMXPath;
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Support\Facades\Auth;
 use RuntimeException;
-use SimpleXMLElement;
-use Exception;
 
 class ParserEmsService
 {
@@ -55,12 +51,6 @@ class ParserEmsService
   private string $send_post_code = '050059';
 
   /**
-   * Код страны отправителя
-   * @var string
-   */
-  private string $send_country_code = 'KZ';
-
-  /**
    * Ссылка для парсинга
    * @var string
    */
@@ -71,6 +61,7 @@ class ParserEmsService
    * @param string $post_code
    * @param string $country_code
    * @param float $weight
+   * @return void
    */
   public function __construct(string $post_code, string $country_code, float $weight)
   {
@@ -94,27 +85,6 @@ class ParserEmsService
 
     $data = $create->getBody()->getContents();
     return $this->parseXML($data);
-  }
-
-  /**
-   * Получение данных с API
-   * @param $data
-   * @return int
-   * @throws Exception
-   */
-  private function parseXML($data): int
-  {
-    $doc = new DOMDocument();
-    $doc->loadXML($data);
-    $xpath = new DOMXpath($doc);
-    $xpath->registerNamespace('SOAP-ENV', "http://schemas.xmlsoap.org/soap/envelope/");
-    $body = $xpath->evaluate('//SOAP-ENV:Body')->item(0);
-    $ns2 = $body->firstChild->firstChild;
-    if ($ns2->localName === 'Sum') {
-      return (int)$ns2->textContent;
-    }
-
-    throw new RuntimeException('Нет данных');
   }
 
   /**
@@ -170,5 +140,26 @@ class ParserEmsService
     $Envelope->appendChild($Body);
     $xml->appendChild($Envelope);
     return $xml;
+  }
+
+  /**
+   * Получение данных с API
+   * @param $data
+   * @return int
+   * @throws Exception
+   */
+  private function parseXML($data): int
+  {
+    $doc = new DOMDocument();
+    $doc->loadXML($data);
+    $xpath = new DOMXpath($doc);
+    $xpath->registerNamespace('SOAP-ENV', "http://schemas.xmlsoap.org/soap/envelope/");
+    $body = $xpath->evaluate('//SOAP-ENV:Body')->item(0);
+    $ns2 = $body->firstChild->firstChild;
+    if ($ns2->localName === 'Sum') {
+      return (int)$ns2->textContent;
+    }
+
+    throw new RuntimeException('Нет данных');
   }
 }

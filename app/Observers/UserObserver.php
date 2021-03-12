@@ -15,7 +15,7 @@ class UserObserver
    */
   public function created(User $user)
   {
-      //
+    //
   }
 
   /**
@@ -26,7 +26,7 @@ class UserObserver
    */
   public function updated(User $user)
   {
-      //
+    //
   }
 
   /**
@@ -49,7 +49,7 @@ class UserObserver
    */
   public function restored(User $user)
   {
-      //
+    //
   }
 
   /**
@@ -60,6 +60,6 @@ class UserObserver
    */
   public function forceDeleted(User $user)
   {
-      //
+    //
   }
 }

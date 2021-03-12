@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services;
-
 
 use App\Models\CouponCode;
 use App\Models\Order;
@@ -10,18 +8,31 @@ use App\Models\Product;
 use App\Models\ProductSkus;
 use App\Models\User;
 use Carbon\Carbon;
+use DB;
+use Throwable;
 
 class OrderService
 {
+  /**
+   * @param User $user
+   * @param array $items
+   * @param string $method_pay
+   * @param array $transfer
+   * @param string $price
+   * @param string $sale
+   * @param string|null $code
+   * @return mixed
+   * @throws Throwable
+   */
   public function store(User $user, array $items, string $method_pay, array $transfer, string $price, string $sale, string $code = null)
   {
 
-    return \DB::transaction(function () use ($user, $items, $method_pay, $transfer, $price, $sale, $code) {
+    return DB::transaction(function () use ($user, $items, $method_pay, $transfer, $price, $sale, $code) {
 
-      $order   = new Order([
-        'address'      => [
-          'address'       => $user->full_Address,
-          'contact_name'  => $user->name,
+      $order = new Order([
+        'address' => [
+          'address' => $user->full_Address,
+          'contact_name' => $user->name,
           'contact_phone' => $user->phone,
         ],
         'price' => $price,
@@ -49,7 +60,7 @@ class OrderService
         $orderItem->save();
 
         $pss = ProductSkus::where('product_id', $item['id'])->get();
-        if($pss->pluck('stock')->sum() < 1) {
+        if ($pss->pluck('stock')->sum() < 1) {
           Product::find($item['id'])->delete();
         }
       }
@@ -58,15 +69,19 @@ class OrderService
     });
   }
 
-  public function canceled (Order $order) {
+  /**
+   * @param Order $order
+   */
+  public function canceled(Order $order)
+  {
     foreach ($order->items as $orderItem) {
-      if(($product = $orderItem->product)->trashed()) {
+      if (($product = $orderItem->product)->trashed()) {
         $product->restore();
       }
       $ps = ProductSkus::where('product_id', $orderItem->product->id)
         ->where('skus_id', $orderItem->skus->id)
         ->first();
-      if($ps) {
+      if ($ps) {
         $ps->stock = $ps->stock + $orderItem->amount;
         $ps->save();
       }

@@ -4,7 +4,6 @@ namespace App\Notifications;
 
 use App\Models\Order;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -18,6 +17,7 @@ class AdminPaidOrderNotification extends Notification
    * Create a new notification instance.
    *
    * @param Order $order
+   * @return void
    */
   public function __construct(Order $order)
   {
@@ -27,7 +27,7 @@ class AdminPaidOrderNotification extends Notification
   /**
    * Get the notification's delivery channels.
    *
-   * @param  mixed  $notifiable
+   * @param mixed $notifiable
    * @return array
    */
   public function via($notifiable): array
@@ -38,7 +38,7 @@ class AdminPaidOrderNotification extends Notification
   /**
    * Get the mail representation of the notification.
    *
-   * @param  mixed  $notifiable
+   * @param mixed $notifiable
    * @return MailMessage
    */
   public function toMail($notifiable): MailMessage
@@ -46,14 +46,14 @@ class AdminPaidOrderNotification extends Notification
     return (new MailMessage)
       ->greeting('Здраствуйте')
       ->subject('Заказ №' . $this->order->no . ' был оплачен')
-      ->line('Заказ от '. $this->order->user->name . ' был оплачен. Зайдите в админ панель что бы узать подробнее.')
+      ->line('Заказ от ' . $this->order->user->name . ' был оплачен. Зайдите в админ панель что бы узать подробнее.')
       ->action('Подробнее', route('admin.order.edit', $this->order->id));
   }
 
   /**
    * Get the array representation of the notification.
    *
-   * @param  mixed  $notifiable
+   * @param mixed $notifiable
    * @return array
    */
   public function toArray($notifiable): array

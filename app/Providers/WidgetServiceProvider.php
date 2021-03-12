@@ -1,9 +1,11 @@
 <?php
+
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use App;
+use App\Widget\Widget;
 use Blade;
+use Illuminate\Support\ServiceProvider;
 
 class WidgetServiceProvider extends ServiceProvider
 {
@@ -16,19 +18,19 @@ class WidgetServiceProvider extends ServiceProvider
      * @widget('menu', [$data1,$data2...])
      */
     Blade::directive('widget', function ($name) {
-      return "<?php echo app('widget')->show($name); ?>";
+      return "<?php echo app('widget')->show($name) ?>";
     });
     /*
      * Регистрируется (добавляем) каталог для хранения шаблонов виджетов
      * app\Widgets\view
      */
-    $this->loadViewsFrom(app_path() .'/Widget/views', 'Widget');
+    $this->loadViewsFrom(app_path() . '/Widget/views', 'Widget');
   }
 
   public function register()
   {
-    App::singleton('widget', function(){
-      return new \App\Widget\Widget();
+    App::singleton('widget', function () {
+      return new Widget();
     });
   }
 }

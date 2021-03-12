@@ -18,6 +18,7 @@ class ChangeOrderUser extends Notification
    * Create a new notification instance.
    *
    * @param Order $order
+   * @return void
    */
   public function __construct(Order $order)
   {

@@ -4,7 +4,6 @@ namespace App\Observers;
 
 use App\Models\Photo;
 use App\Services\PhotoService;
-use Illuminate\Support\Facades\File;
 
 class PhotoObserver
 {

@@ -7,10 +7,12 @@ use App\Models\Category;
 use App\Widget\Interfaces\ContractWidget;
 use Cache;
 
-class FooterCategoriesWidget implements ContractWidget {
+class FooterCategoriesWidget implements ContractWidget
+{
 
 
-  public function execute(){
+  public function execute()
+  {
 
     $categories = Cache::remember('categories-menu', config('app.cache.bd'), function () {
       return Category::withTranslation()->whereDoesntHave('parents')->with('child')->get();

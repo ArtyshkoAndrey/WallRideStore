@@ -7,10 +7,11 @@ use App\Models\Category;
 use App\Widget\Interfaces\ContractWidget;
 use Cache;
 
-class LeftMenuWidget implements ContractWidget {
+class LeftMenuWidget implements ContractWidget
+{
 
-
-  public function execute(){
+  public function execute()
+  {
     $brands = Cache::remember('brands-menu', config('app.cache.bd'), function () {
       return Brand::orderBy('name', 'ASC')->get();
     });

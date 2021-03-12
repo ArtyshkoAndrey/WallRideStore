@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 
@@ -15,9 +16,9 @@ class AppServiceProvider extends ServiceProvider
   public function register()
   {
     if (config('app.env', 'local') === 'local') {
-        $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
-        $this->app->alias('Debugbar', 'Barryvdh\Debugbar\Facade::class');
-        $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
+      $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
+      $this->app->alias('Debugbar', 'Barryvdh\Debugbar\Facade::class');
+      $this->app->register(IdeHelperServiceProvider::class);
     }
     $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
     $this->app->register(TelescopeServiceProvider::class);
@@ -32,9 +33,8 @@ class AppServiceProvider extends ServiceProvider
   {
     Validator::extend(
       'exists_or_null',
-      function ($attribute, $value, $parameters)
-      {
-        if($value == 0 || is_null($value)) {
+      function ($attribute, $value, $parameters) {
+        if ($value == 0 || is_null($value)) {
           return true;
         } else {
           $validator = Validator::make([$attribute => $value], [

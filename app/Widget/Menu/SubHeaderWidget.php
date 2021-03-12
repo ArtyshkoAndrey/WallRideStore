@@ -8,7 +8,8 @@ use Cache;
 
 class SubHeaderWidget
 {
-  public function execute(){
+  public function execute()
+  {
     $categories = Cache::remember('categories-menu', config('app.cache.bd'), function () {
       return Category::whereDoesntHave('parents')->with('child')->get();
     });
