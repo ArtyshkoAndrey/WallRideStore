@@ -16,7 +16,6 @@ use App\Notifications\AdminPaidOrderNotification;
 use App\Notifications\ChangeOrderUser;
 use App\Notifications\CreateOrderNotification;
 use App\Notifications\RegisterPassword;
-use App\Services\CartService;
 use App\Services\OrderService;
 use Auth;
 use Carbon\Carbon;
