@@ -152,16 +152,18 @@
                         </div>
                       </a>
                     </div>
-                    <div class="row">
-                      <a href="{{ route('admin.index') }}" class="d-flex dropdown-item">
-                        <div class="col-2 d-flex align-items-center justify-content-center">
-                          <i class="fad fa-truck-loading"></i>
-                        </div>
-                        <div class="col-auto mx-2">
-                          Администитивная панель
-                        </div>
-                      </a>
-                    </div>
+                    @if(auth()->user()->is_admin)
+                      <div class="row">
+                        <a href="{{ route('admin.index') }}" class="d-flex dropdown-item">
+                          <div class="col-2 d-flex align-items-center justify-content-center">
+                            <i class="fad fa-truck-loading"></i>
+                          </div>
+                          <div class="col-auto mx-2">
+                            Администитивная панель
+                          </div>
+                        </a>
+                      </div>
+                    @endif
                     <div class="row">
                       <a href="#" onclick="event.preventDefault();$('#logout').submit()" class="d-flex dropdown-item">
                         <div class="col-2 d-flex align-items-center justify-content-center">
