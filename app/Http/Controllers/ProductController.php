@@ -4,25 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\RedirectWithErrorsException;
 use App\Models\Product;
-use App\Models\Skus;
+use App\Traits\FilterProductTrait;
 use Cache;
 use Error;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Seld\JsonLint\JsonParser;
-use Validator;
 
 class ProductController extends Controller
 {
+  use FilterProductTrait;
 
   /**
    * Search page
    *
    * @param Request $request
    * @return View
-   * @throws RedirectWithErrorsException
+   * @throws RedirectWithErrorsException|BindingResolutionException
    */
   public function search(Request $request): View
   {
@@ -41,158 +41,35 @@ class ProductController extends Controller
    *
    * @param Request $request
    * @return Application|Factory|View
-   * @throws RedirectWithErrorsException
+   * @throws RedirectWithErrorsException|BindingResolutionException
    */
   public function all(Request $request): View
   {
-    $items = Product::query();
     $order = $request->input('order', 'sort-new');
+
     $sale = $request->get('sale', false);
     $new = $request->get('new', false);
-    $size = $request->get('size', []);
+    $sizes = $request->get('size', []);
+    $categories = $request->input('category', []);
+    $brands = $request->input('brand', []);
 
-    if ($sale) {
-      $items = $items->whereOnSale(true);
+    if (!is_array($sizes)) {
+      $sizes = [$sizes];
+    }
+    if (!is_array($brands)) {
+      $brands = [$brands];
+    }
+    if (!is_array($categories)) {
+      $categories = [$categories];
     }
 
-    if ($new) {
-      $items = $items->whereOnNew(true);
-    }
+    $data = $this->filter($brands, $categories, $order, $sizes, 16, $sale, $new);
+    $items = $data['items'];
+    $filter = $data['filter'];
+    $attributes = $data['attributes'];
+    $itemsCount = $data['itemsCount'];
+    $counter = $data['counter'];
 
-    if ($order) {
-      if ($order === 'sort-new') {
-        $items = $items->orderBy('created_at', 'desc');
-      } else if ($order === 'sort-old') {
-        $items = $items->orderBy('created_at');
-      } else if ($order === 'sort-expensive') {
-        $items = $items->orderBy('price', 'desc');
-      } else if ($order === 'sort-cheap') {
-        $items = $items->orderBy('price');
-      }
-    }
-
-    if ($sex = $request->input('sex', [])) {
-      if (!is_array($sex)) {
-        $sex = [$sex];
-      }
-
-      $items = $items->whereIn('sex', $sex);
-    }
-
-    if ($categoryArr = $request->input('category', [])) {
-      if (!is_array($categoryArr))
-        $categoryArr = [$categoryArr];
-
-      $rules = [
-        'categories' => 'required|array',
-        'categories.*' => 'exists:categories,id', // check each item in the array
-      ];
-      $validator = Validator::make(['categories' => $categoryArr], $rules);
-      if ($validator->fails()) {
-        throw new RedirectWithErrorsException(__('errors_redirect.product.product_catalog_categories'));
-      }
-      foreach ($categoryArr as $index => $category) {
-        if ($index === 0) {
-
-          $items->whereHas('category', function ($query) use ($category) {
-            $query->whereHas('parents', function ($query) use ($category) {
-              $query->where('laravel_reserved_0.id', $category);
-            })
-              ->orWhere('categories.id', $category);
-          });
-        } else {
-          $items = $items->orWhereHas('category', function ($query) use ($category, $index) {
-            $query->whereHas('parents', function ($query) use ($category, $index) {
-              $query->where('laravel_reserved_' . $index . '.id', $category);
-            })
-              ->orWhere('categories.id', $category);
-          });
-        }
-      }
-    }
-
-    if ($brandArr = $request->input('brand', [])) {
-      if (!is_array($brandArr))
-        $brandArr = [$brandArr];
-
-      $rules = [
-        'brands' => 'required|array',
-        'brands.*' => 'exists:brands,id', // check each item in the array
-      ];
-      $validator = Validator::make(['brands' => $brandArr], $rules);
-      if ($validator->fails()) {
-        throw new RedirectWithErrorsException(__('errors_redirect.product.product_catalog_brands'));
-      }
-
-      foreach ($brandArr as $index => $brand) {
-        if ($index == 0) {
-          $items = $items->whereHas('brand', function ($query) use ($brand) {
-            return $query->where('brands.id', '=', $brand);
-          });
-        } else {
-          $items = $items->orWhereHas('brand', function ($query) use ($brand) {
-            return $query->where('brands.id', '=', $brand);
-          });
-        }
-      }
-    }
-
-    if ($brandArr !== [] && $categoryArr !== []) {
-      $attributes = Skus::whereHas('products.brand', function ($q) use ($brandArr) {
-        $q->whereIn('products.brand_id', $brandArr);
-      })
-        ->whereHas('products.category', function ($q) use ($categoryArr) {
-          $q->whereIn('products.category_id', $categoryArr);
-        })->get();
-    } else if ($categoryArr !== [] && $brandArr === []) {
-      $attributes = Skus::whereHas('products.category', function ($q) use ($categoryArr) {
-        $q->whereIn('products.category_id', $categoryArr);
-      })->get();
-    } else if ($categoryArr === [] && $brandArr !== []) {
-      $attributes = Skus::whereHas('products.brand', function ($q) use ($brandArr) {
-        $q->whereIn('products.brand_id', $brandArr);
-      })->get();
-    } else {
-      $attributes = Skus::all();
-    }
-
-    if ($size) {
-      if (!is_array($size))
-        $size = [$size];
-
-      $rules = [
-        'skuses' => 'required|array',
-        'skuses.*' => 'exists:skuses,id', // check each item in the array
-      ];
-      $validator = Validator::make(['skuses' => $size], $rules);
-      if ($validator->fails()) {
-        throw new RedirectWithErrorsException(__('errors_redirect.product.product_catalog_skuses'));
-      }
-
-      $items = $items->whereHas('skuses', function ($query) use ($size) {
-        return $query->whereIn('skus_id', $size);
-      });
-    }
-
-    $itemsCount = $items->count();
-    $items = $items->paginate(16);
-    $filter = [
-      'category' => $categoryArr,
-      'order' => $order,
-      'brand' => $brandArr,
-      'sale' => $sale,
-      'new' => $new,
-      'sex' => $sex,
-      'size' => $size
-    ];
-    $counter = 0;
-    foreach ($filter as $name => $f) {
-      if ($name !== 'sale' && $name !== 'new' && $name !== 'order')
-        $counter += count($f);
-      else
-        if ($f && $name !== 'order')
-          $counter++;
-    }
     return view('user.product.catalog', compact('items', 'filter', 'itemsCount', 'attributes', 'counter'));
   }
 
@@ -201,7 +78,7 @@ class ProductController extends Controller
    *
    * @param int $id
    * @return View|void
-   * @throws RedirectWithErrorsException
+   * @throws RedirectWithErrorsException|BindingResolutionException
    */
   public function show(int $id): View
   {
@@ -233,8 +110,9 @@ class ProductController extends Controller
    * Display Favor products
    *
    * @return Application|Factory|View
+   * @throws BindingResolutionException
    */
-  public function favor ()
+  public function favor()
   {
     if (isset($_COOKIE['favor'])) {
       $ids = json_decode($_COOKIE['favor']);
