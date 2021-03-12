@@ -1,7 +1,7 @@
 <div id="left-menu" class="d-lg-none d-block">
   <div class="accordion" style="height: 1000px">
 
-    <div class="section mb-2">
+    <div class="section">
       <input type="radio" name="accordion-1" id="section-language"/>
       <label for="section-language">
         <span>{{ __('Язык сайта') }}: {{ isset($_COOKIE['language']) ? $_COOKIE['language'] == 'ru' ? 'RUS' : 'ENG' : 'RUS' }}</span>
@@ -20,6 +20,29 @@
               <a href="{{ url('/language/change/en') }}">English</a>
             </span>
           </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <input type="radio" name="accordion-1" id="section-currency"/>
+      <label for="section-currency">
+        <span>{{ __('Валюта') }}: @{{ $store.state.currency.short_name ? $store.state.currency.short_name : 'Загрузка' }}</span>
+        <span class="caret fa fa-angle-right"></span>
+      </label>
+
+      <div class="content">
+        <ul>
+          @foreach(\App\Models\Currency::all() as $currency)
+            <li>
+              <span>
+                <a role="button"
+                   v-bind:class="$store.state.currency.id === {{ $currency->id }} ? 'active' : '' "
+                   @click="$store.dispatch('set_currency', { currency: {{$currency}} })"
+                >{{ $currency->short_name }}</a>
+              </span>
+            </li>
+          @endforeach
         </ul>
       </div>
     </div>
@@ -82,7 +105,7 @@
     <div class="section">
       <label>
         <span>
-          <a href="{{ route('index') }}">{{ __('FAQ') }}</a>
+          <a href="{{ route('faq.index') }}">{{ __('FAQ') }}</a>
         </span>
       </label>
       <div class="content"></div>
@@ -91,7 +114,7 @@
     <div class="section">
       <label>
         <span>
-          <a href="{{ route('index') }}">{{ __('Новости') }}</a>
+          <a href="{{ route('post.index') }}">{{ __('Новости') }}</a>
         </span>
       </label>
       <div class="content"></div>
@@ -100,7 +123,16 @@
     <div class="section">
       <label>
         <span>
-          <a href="{{ route('index') }}" class="text-danger">{{ __('Sale') }}</a>
+          <a href="{{ route('product.all', ['sale' => true]) }}" class="text-danger">{{ __('Sale') }}</a>
+        </span>
+      </label>
+      <div class="content"></div>
+    </div>
+
+    <div class="section">
+      <label>
+        <span>
+          <a href="{{ route('product.favor') }}">{{ __('Избранные') }}</a>
         </span>
       </label>
       <div class="content"></div>
