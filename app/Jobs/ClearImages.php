@@ -4,14 +4,13 @@ namespace App\Jobs;
 
 use App\Models\Photo;
 use App\Services\PhotoService;
-
 use Ds\Set;
 use Illuminate\Bus\Queueable;
-use Illuminate\Http\File;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Http\File;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 // Работа отчистки хостинга от лишних фотографий
 class ClearImages implements ShouldQueue
@@ -33,7 +32,7 @@ class ClearImages implements ShouldQueue
   {
     $dir = public_path(Photo::PHOTO_PATH);
 
-    $files = array_values(array_filter(scandir($dir), function($file) use ($dir) {
+    $files = array_values(array_filter(scandir($dir), function ($file) use ($dir) {
       return !is_dir($dir . '/' . $file);
     }));
     $filesName = new Set();
