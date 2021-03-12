@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Country;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,7 @@ class ApiController extends Controller
    *
    * @param Request $request
    * @return JsonResponse
+   * @throws BindingResolutionException
    */
   public function countries(Request $request): JsonResponse
   {
@@ -34,6 +36,7 @@ class ApiController extends Controller
    *
    * @param Request $request
    * @return JsonResponse
+   * @throws BindingResolutionException
    */
   public function categories(Request $request): JsonResponse
   {
@@ -50,10 +53,11 @@ class ApiController extends Controller
    *
    * @param Request $request
    * @return JsonResponse
+   * @throws BindingResolutionException
    */
   public function cities(Request $request): JsonResponse
   {
-    if ($name = $request->get('name', null)) {
+    if ($name = $request->get('name')) {
       $cities = City::where('name', 'like', '%' . $name . '%')->limit(5)->get();
     } else {
       $cities = City::limit(5)->get();
@@ -66,6 +70,7 @@ class ApiController extends Controller
    *
    * @param Request $request
    * @return JsonResponse
+   * @throws BindingResolutionException
    */
   public function brands(Request $request): JsonResponse
   {
@@ -82,6 +87,7 @@ class ApiController extends Controller
    * Checking for auth and outputting user data
    *
    * @return JsonResponse
+   * @throws BindingResolutionException
    */
   public function check(): JsonResponse
   {
