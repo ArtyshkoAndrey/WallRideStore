@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
-use DB;
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Astrotomic\Translatable\Translatable;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
-use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
@@ -58,6 +57,7 @@ class Category extends Model implements TranslatableContract
   use HasFactory;
   use Translatable;
 
+  const PHOTO_PATH = 'storage/categories/photo/';
   /**
    * Translate Columns
    *
@@ -66,7 +66,6 @@ class Category extends Model implements TranslatableContract
   public array $translatedAttributes = [
     'name',
   ];
-
   /**
    * Columns
    *
@@ -76,7 +75,6 @@ class Category extends Model implements TranslatableContract
     'to_menu',
     'photo'
   ];
-
   /**
    * Type columns
    *
@@ -85,8 +83,6 @@ class Category extends Model implements TranslatableContract
   protected $casts = [
     'to_menu' => 'boolean'
   ];
-
-
   /**
    * Set property function
    *
@@ -95,38 +91,6 @@ class Category extends Model implements TranslatableContract
   protected $appends = [
     'search_name'
   ];
-
-  const PHOTO_PATH = 'storage/categories/photo/';
-
-  /**
-   * Child Categories
-   *
-   * @return BelongsToMany
-   */
-  public function child(): BelongsToMany
-  {
-    return $this->belongsToMany(
-      Category::class,
-      'category_categories',
-      'category_id',
-      'child_category_id'
-    );
-  }
-
-  /**
-   * Parent Categories
-   *
-   * @return BelongsToMany
-   */
-  public function parents(): BelongsToMany
-  {
-    return $this->belongsToMany(
-      Category::class,
-      'category_categories',
-      'child_category_id',
-      'category_id'
-    );
-  }
 
   /**
    * Products in category
@@ -145,15 +109,45 @@ class Category extends Model implements TranslatableContract
    *
    * @return string
    */
-  public function getSearchNameAttribute (): string
+  public function getSearchNameAttribute(): string
   {
     if ($this->parents()->count() > 0)
-      return $this->name . '(' . $this->parents()->first()->name .')';
+      return $this->name . '(' . $this->parents()->first()->name . ')';
 
     if ($this->child()->count() > 0)
-      return $this->name . '(' . $this->child()->first()->name .')';
+      return $this->name . '(' . $this->child()->first()->name . ')';
 
     return '';
+  }
+
+  /**
+   * Parent Categories
+   *
+   * @return BelongsToMany
+   */
+  public function parents(): BelongsToMany
+  {
+    return $this->belongsToMany(
+      Category::class,
+      'category_categories',
+      'child_category_id',
+      'category_id'
+    );
+  }
+
+  /**
+   * Child Categories
+   *
+   * @return BelongsToMany
+   */
+  public function child(): BelongsToMany
+  {
+    return $this->belongsToMany(
+      Category::class,
+      'category_categories',
+      'category_id',
+      'child_category_id'
+    );
   }
 
   /**
@@ -161,7 +155,7 @@ class Category extends Model implements TranslatableContract
    *
    * @return string
    */
-  public function getPhotoStorageAttribute (): string
+  public function getPhotoStorageAttribute(): string
   {
     if ($this->photo)
       return asset(Category::PHOTO_PATH . $this->photo);
@@ -169,7 +163,8 @@ class Category extends Model implements TranslatableContract
     return asset('images/product.jpg');
   }
 
-  public function countProducts() {
+  public function countProducts()
+  {
     return $this->products->count() + $this->child()->withCount('products')->get()->sum('products_count');
   }
 }

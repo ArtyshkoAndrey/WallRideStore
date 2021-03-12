@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Skus
@@ -14,22 +18,22 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string $title
  * @property int $weight
  * @property int $skuscategory_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Skuscategory $category
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Product[] $products
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Skuscategory $category
+ * @property-read Collection|Product[] $products
  * @property-read int|null $products_count
- * @method static \Illuminate\Database\Eloquent\Builder|Skus newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Skus newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Skus query()
- * @method static \Illuminate\Database\Eloquent\Builder|Skus whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Skus whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Skus whereSkuscategoryId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Skus whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Skus whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Skus whereWeight($value)
- * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ProductSkus[] $productSkus
+ * @method static Builder|Skus newModelQuery()
+ * @method static Builder|Skus newQuery()
+ * @method static Builder|Skus query()
+ * @method static Builder|Skus whereCreatedAt($value)
+ * @method static Builder|Skus whereId($value)
+ * @method static Builder|Skus whereSkuscategoryId($value)
+ * @method static Builder|Skus whereTitle($value)
+ * @method static Builder|Skus whereUpdatedAt($value)
+ * @method static Builder|Skus whereWeight($value)
+ * @mixin Eloquent
+ * @property-read Collection|ProductSkus[] $productSkus
  * @property-read int|null $product_skus_count
  */
 class Skus extends Model
@@ -41,17 +45,17 @@ class Skus extends Model
     'weight',
   ];
 
-  public function category (): BelongsTo
+  public function category(): BelongsTo
   {
     return $this->belongsTo(Skuscategory::class, 'skuscategory_id', 'id', 'skuscategories');
   }
 
-  public function products (): BelongsToMany
+  public function products(): BelongsToMany
   {
     return $this->belongsToMany(Product::class, 'product_skuses', 'skus_id', 'product_id', 'id');
   }
 
-  public function productSkus (): BelongsToMany
+  public function productSkus(): BelongsToMany
   {
     return $this->belongsToMany(ProductSkus::class);
   }
