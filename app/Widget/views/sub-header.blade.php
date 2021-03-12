@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand navbar-light bg-dark-transparent">
   <div class="container-fluid overflow-x-auto">
     <div class="collapse navbar-collapse align-items-center justify-content-center" id="sub-header">
-      <ul class="navbar-nav justify-content-sm-center w-100 px-0 px-lg-4">
+      <ul class="navbar-nav justify-content-center w-100 px-0 px-lg-4">
 
         @foreach($categories as $category)
           <li class="nav-item dropdown full-width">
@@ -31,7 +31,7 @@
 
                 @foreach($category->child as $category)
 
-                  <div class="col-md-4 py-2" >
+                  <div class="col-md-4 py-2">
                     <a href="{{ route('product.all', ['category'=>$category->id]) }}"
                        class="text-gray-2">
                       {{ $category->name }}
@@ -62,7 +62,7 @@
 
               @foreach($brands as $brand)
 
-                <div class="col-md-4 py-2" >
+                <div class="col-md-4 py-2">
                   <a href="{{ route('product.all', ['brand' => $brand->id]) }}"
                      class="text-gray-2">
                     {{ $brand->name }}
