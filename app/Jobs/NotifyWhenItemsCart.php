@@ -5,7 +5,6 @@ namespace App\Jobs;
 use App\Models\User;
 use App\Notifications\HasItemsInCart;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -13,9 +12,9 @@ use Illuminate\Queue\SerializesModels;
 use Swift_TransportException;
 
 /**
-* Class NotifyWhenItemsCart для уведомления пользователя об товарах в корзине, напоминие о том что он был на сайте. Раз в сутки
-* @package App\Jobs
-*/
+ * Class NotifyWhenItemsCart для уведомления пользователя об товарах в корзине, напоминие о том что он был на сайте. Раз в сутки
+ * @package App\Jobs
+ */
 class NotifyWhenItemsCart implements ShouldQueue
 {
   use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -28,6 +27,7 @@ class NotifyWhenItemsCart implements ShouldQueue
    *
    * @param array $items
    * @param User $user
+   * "@return void
    */
   public function __construct(array $items, User $user)
   {

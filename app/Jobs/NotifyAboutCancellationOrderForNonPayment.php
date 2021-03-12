@@ -5,7 +5,6 @@ namespace App\Jobs;
 use App\Models\Order;
 use App\Notifications\ChangeOrderUser;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -13,9 +12,9 @@ use Illuminate\Queue\SerializesModels;
 use Swift_TransportException;
 
 /**
-* Class NotifyAboutCancellationOrderForNonPayment. Уведомить пользователя об автоотмене заказ если так и не оплатил
-* @package App\Jobs
-*/
+ * Class NotifyAboutCancellationOrderForNonPayment. Уведомить пользователя об автоотмене заказ если так и не оплатил
+ * @package App\Jobs
+ */
 class NotifyAboutCancellationOrderForNonPayment implements ShouldQueue
 {
   use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -26,6 +25,7 @@ class NotifyAboutCancellationOrderForNonPayment implements ShouldQueue
    * Создание job, закидываем заказ в работу.
    *
    * @param Order $order
+   * @return void
    */
   public function __construct(Order $order)
   {
@@ -40,6 +40,7 @@ class NotifyAboutCancellationOrderForNonPayment implements ShouldQueue
    */
   public function handle()
   {
+//    TODO: Дописать код на удаление заказа
     if (!$this->order->paid_at) {
       $this->order->close();
       try {

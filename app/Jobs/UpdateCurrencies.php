@@ -21,6 +21,8 @@ class UpdateCurrencies implements ShouldQueue
 
   /**
    * UpdateCurrencies constructor.
+   *
+   * @return void
    */
   public function __construct()
   {
