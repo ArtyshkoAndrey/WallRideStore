@@ -9,14 +9,14 @@
         <div class="row mx-0">
           <div class="col-md-3 bg-gray m-0 p-0">
             <div class="nav flex-column nav-pills h-100 m-0" role="tablist" aria-orientation="vertical">
-              <a class="nav-link active border-0 rounded-0 py-4" href="{{ route('profile.index') }}" aria-selected="true"><i class="bx bx-user bx-sm pr-1"></i> Мой профиль</a>
-              <a class="nav-link border-0 rounded-0 py-4" href="{{ route('order.index') }}" aria-selected="true"><i class="bx bx-list-ol bx-sm pr-1"></i> Мои заказы</a>
+              <a class="nav-link active border-0 rounded-0 py-4" href="{{ route('profile.index') }}" aria-selected="true"><i class="bx bx-user bx-sm pr-1"></i> {{__('Мой профиль')}}</a>
+              <a class="nav-link border-0 rounded-0 py-4" href="{{ route('order.index') }}" aria-selected="true"><i class="bx bx-list-ol bx-sm pr-1"></i> {{__('Мои заказы')}}</a>
             </div>
           </div>
           <div class="col-md-9 p-4">
             <div class="row">
               <div class="col-12">
-                <h3 class="font-weight-bold">Мой профиль</h3>
+                <h3 class="font-weight-bold">{{ __('Мой профиль') }}</h3>
               </div>
             </div>
             <div class="row mt-4">
@@ -34,7 +34,7 @@
               <div class="col-md-9 pl-md-5 pl-0 px-3 mt-4 mt-md-0">
                 <h4 class="font-weight-bold">{{ auth()->user()->name }}</h4>
                 <p class="font-weight-light mb-0">{{ auth()->user()->full_address }}</p>
-                <p class="font-weight-light mb-0">Валюта: {{ auth()->user()->currency->name ?? '' }}</p>
+                <p class="font-weight-light mb-0">{{ __('Валюта') }}: {{ auth()->user()->currency->name ?? '' }}</p>
                 <p class="font-weight-light mb-0">{{ auth()->user()->phone }}</p>
               </div>
             </div>
@@ -42,7 +42,7 @@
               <div class="col-md-4 px-3 px-md-2">
                 <div class="row">
                   <div class="col-12">
-                    <h4 class="font-weight-bold">Сменить пароль</h4>
+                    <h4 class="font-weight-bold">{{ __('Сменить пароль') }}</h4>
                   </div>
                   <div class="col-12">
                     <form action="{{ route('profile.update.password') }}" method="POST">
@@ -50,15 +50,15 @@
                       @method('PUT')
                       <div class="form-outline form-password mb-4 rounded">
                         <input type="password" id="password" name="password" class="form-control" />
-                        <label class="form-label" for="password">Новый пароль</label>
+                        <label class="form-label" for="password">{{ __('Пароль') }}</label>
                         <button type="button" class="hide-show-btn" onclick="passwordTypeToggle(this, 'password')"><i class="fas fa-eye"></i></button>
                       </div>
                       <div class="form-outline form-password mb-3">
                         <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" required/>
-                        <label class="form-label" for="password_confirmation">Повторите пароль</label>
+                        <label class="form-label" for="password_confirmation">{{ __('Повторите пароль') }}</label>
                         <button type="button" class="hide-show-btn" onclick="passwordTypeToggle(this, 'password_confirmation')"><i class="fas fa-eye"></i></button>
                       </div>
-                      <button type="submit" class="btn btn-dark m-0 rounded-0">Сохранить</button>
+                      <button type="submit" class="btn btn-dark m-0 rounded-0">{{ __('Сохранить') }}</button>
                     </form>
                   </div>
                 </div>
@@ -66,7 +66,7 @@
               <div class="col-md-8 px-3 px-md-2 mt-4 mt-md-0">
                 <div class="row">
                   <div class="col-12">
-                    <h4 class="font-weight-bold">Настройки профиля</h4>
+                    <h4 class="font-weight-bold">{{ __('Настройки профиля') }}</h4>
                   </div>
                   <div class="col-12">
                     <form action="{{ route('profile.update.data') }}" method="POST">
@@ -84,7 +84,7 @@
                                    required/>
                             <label class="form-label"
                                    for="name">
-                              ФИО
+                              {{ __('ФИО') }}
                             </label>
                           </div>
                         </div>
@@ -96,10 +96,10 @@
                                    name="phone"
                                    class="form-control active"
                                    value="{{ auth()->user()->phone }}"
-                                   required/>
+                                   required />
                             <label class="form-label"
                                    for="phone">
-                              Номер телефона
+                              {{ __('Телефон') }}
                             </label>
                           </div>
                         </div>
@@ -158,7 +158,7 @@
                             <label class="form-label"
                                    for="address"
                             >
-                              Улица
+                              {{ __('Точный адрес') }}
                             </label>
                           </div>
                           <small class="form-text text-muted">
@@ -179,7 +179,7 @@
                             <label class="form-label"
                                    for="post_code"
                             >
-                              Индекс
+                              {{ __('Индекс') }}
                             </label>
                           </div>
                           <small class="form-text text-muted">
@@ -190,7 +190,7 @@
 
                       <button type="submit"
                               class="btn btn-dark m-0 mt-3 rounded-0">
-                        Сохранить
+                        {{ __('Сохранить') }}
                       </button>
                     </form>
                   </div>

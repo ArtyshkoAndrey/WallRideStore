@@ -124,7 +124,7 @@
       @empty
 
         <div class="col-12">
-          <p class="font-weight-bolder h4 mt-3 text-center">Товары отсутствуют</p>
+          <p class="font-weight-bolder h4 mt-3 text-center">{{ __('Товары отсутствуют') }}</p>
         </div>
 
       @endforelse

@@ -69,10 +69,10 @@
 
     .price {
       font-weight: 500;
-      font-size: .8em;
+      font-size: 1.1em;
 
       @include respond-to(lg) {
-        font-size: .9em;
+        font-size: 1em;
       }
     }
   }

@@ -6,6 +6,13 @@
   <div class="container my-5 item-page">
     <div class="row">
 
+      <div class="col-12 ps-3 breadcrumb d-lg-none d-block">
+        @foreach($categories as $category)
+          <a class="breadcrumb-link mb-0" href="{{ route('product.all', ['category' => $category->id]) }}">{{ $category->name }}</a>
+        @endforeach
+        <p class="mb-0">{{ $product->title }}</p>
+      </div>
+
       <div class="row d-none d-lg-block">
         <div class="col-6">
           <div class="row">
@@ -61,13 +68,13 @@
       </div>
       <div class="col-lg-6 col-12 pl-md-4 item-details ">
         <div class="row flex-column">
-          <div class="col-12 ps-3 breadcrumb">
+          <div class="col-12 ps-3 breadcrumb d-none d-lg-block">
             @foreach($categories as $category)
               <a class="breadcrumb-link mb-0" href="{{ route('product.all', ['category' => $category->id]) }}">{{ $category->name }}</a>
             @endforeach
             <p class="mb-0">{{ $product->title }}</p>
           </div>
-          <h2 class="font-weight-bolder col-md-8 mb-4 col-12">{{ $product->title }}</h2>
+          <h2 class="font-weight-bolder col-md-8 mb-4 mt-3 mt-lg-0 col-12">{{ $product->title }}</h2>
 
           <div class="col-12 prices-wrapper sale mb-2">
             @if($product->on_sale)
@@ -89,7 +96,7 @@
 
             <div class="row">
               <div class="col-md-6 mt-2">
-                <button class="btn w-100 btn-dark btn-to-cart mt-2 mt-md-0"
+                <button class="btn w-100 btn-dark btn-to-cart-show mt-2 mt-md-0"
                         :disabled="selectSkus === null"
                         @click="$store.commit('addItem', {id: selectSkus, amount: 1})">
                   <span>{{ __('Добавить в корзину') }}</span>
@@ -98,7 +105,7 @@
               </div>
 
               <div class="col-md-6 mt-2">
-                <button class="btn w-100 btn-dark btn-to-cart mt-2 mt-md-0"
+                <button class="btn w-100 btn-dark btn-to-cart-show mt-2 mt-md-0"
                         @click="$store.commit('addItemFavor', {{ $product->id }})">
                   <span v-if="!$store.getters.productFavor( {{$product->id}} )">{{ __('Добавить в избранные') }}</span>
                   <span v-else>{{ __('Убрать из избранных') }}</span>

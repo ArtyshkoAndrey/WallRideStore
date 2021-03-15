@@ -43,7 +43,7 @@
   #main {
     margin-top: 0!important;
 
-    .container-fluid {
+    .container-fluid.container-md:first-child {
       h2.title {
         top: 250px;
       }

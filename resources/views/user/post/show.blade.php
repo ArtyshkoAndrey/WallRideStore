@@ -2,9 +2,9 @@
 @section('title', $post->title)
 
 @section('content')
-  <div class="container-fluid">
+  <div class="container-fluid container-md">
     <div class="row justify-content-center">
-      <div class="col-12 p-0">
+      <div class="col-12 p-0 position-relative">
         <div class="header-image-post">
           <picture >
             <source srcset="{{ $post->photo_storage_jpg }}" type="image/webp">

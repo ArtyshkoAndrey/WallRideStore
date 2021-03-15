@@ -26,15 +26,15 @@
                         </a>
                       </div>
 
-                      <a href="{{ route('faq.show', $faq) }}" class="text-danger text-right d-block">Далее</a>
+                      <a href="{{ route('faq.show', $faq) }}" class="text-danger text-right d-block">{{ __('Далее') }}</a>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           @empty
-            <h5 class="font-weight-bolder text-center">Упс...</h5>
-            <p class="text-center">Пока что нет FAQ</p>
+            <h5 class="font-weight-bolder text-center">{{ __('Упс...') }}</h5>
+            <p class="text-center">{{ __('Пока что нет FAQ') }}</p>
           @endforelse
         </div>
         <div class="row mt-4 justify-content-center">

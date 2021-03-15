@@ -8,6 +8,14 @@
   outline: none;
 }
 
+a {
+  color: $danger;
+
+  &:hover {
+    color: $dark;
+  }
+}
+
 @include respond-to(md) {
   *::-webkit-scrollbar {
     width: 10px;

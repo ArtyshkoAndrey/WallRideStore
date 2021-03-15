@@ -5,7 +5,7 @@
   <div class="container mt-2 cart-page pb-5">
     <div class="row justify-content-center">
       <div class="col-12">
-        <h2 class="font-weight-bolder">Новости</h2>
+        <h2 class="font-weight-bolder">{{ __('Новости') }}</h2>
       </div>
       <div class="col-12 mt-2">
         <div class="row">
@@ -27,15 +27,15 @@
                         <p class="mt-2">{{ $post->short_content }}</p>
                       </div>
 
-                      <a href="{{ route('post.show', $post) }}" class="text-danger text-right d-block">Далее</a>
+                      <a href="{{ route('post.show', $post) }}" class="text-danger text-right d-block">{{ __('Далее') }}</a>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           @empty
-            <h5 class="font-weight-bolder text-center">Упс...</h5>
-            <p class="text-center">Пока что нет новостей</p>
+            <h5 class="font-weight-bolder text-center">{{ __('Упс...') }}</h5>
+            <p class="text-center">{{ __('Пока что нет новостей')}}</p>
           @endforelse
         </div>
         <div class="row mt-4 justify-content-center">

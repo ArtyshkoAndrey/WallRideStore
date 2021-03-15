@@ -40806,6 +40806,13 @@ img.dark-image-75 {
   outline: none;
 }
 
+a {
+  color: #F33C3C;
+}
+a:hover {
+  color: #1D1E23;
+}
+
 @media (min-width: 768px) {
   *::-webkit-scrollbar {
     width: 10px;
@@ -41389,11 +41396,11 @@ body > .wrapper > #app > .alert {
 }
 .product .card-body .price {
   font-weight: 500;
-  font-size: 0.8em;
+  font-size: 1.1em;
 }
 @media (min-width: 992px) {
   .product .card-body .price {
-    font-size: 0.9em;
+    font-size: 1em;
   }
 }
 .product.sale .old-price {
@@ -41543,6 +41550,11 @@ body > .wrapper > #app > .alert {
 }
 .item-page .slider-button#next i {
   margin-top: 0.3em;
+}
+.item-page .btn-to-cart-show {
+  font-size: 0.85rem;
+  padding: 0.575rem 0.95rem;
+  text-transform: none !important;
 }
 .item-page .prices-wrapper .old-price {
   display: none;
@@ -41850,7 +41862,7 @@ body > .wrapper > #app > .alert {
 #faq-show-page #main, #post-show-page #main {
   margin-top: 0 !important;
 }
-#faq-show-page #main .container-fluid h2.title, #faq-show-page #main .container-sm h2.title, #faq-show-page #main .container-md h2.title, #faq-show-page #main .container-lg h2.title, #faq-show-page #main .container-xl h2.title, #faq-show-page #main .container-xxl h2.title, #faq-show-page #main .container-fluid .title.h2, #faq-show-page #main .container-sm .title.h2, #faq-show-page #main .container-md .title.h2, #faq-show-page #main .container-lg .title.h2, #faq-show-page #main .container-xl .title.h2, #faq-show-page #main .container-xxl .title.h2, #post-show-page #main .container-fluid h2.title, #post-show-page #main .container-sm h2.title, #post-show-page #main .container-md h2.title, #post-show-page #main .container-lg h2.title, #post-show-page #main .container-xl h2.title, #post-show-page #main .container-xxl h2.title, #post-show-page #main .container-fluid .title.h2, #post-show-page #main .container-sm .title.h2, #post-show-page #main .container-md .title.h2, #post-show-page #main .container-lg .title.h2, #post-show-page #main .container-xl .title.h2, #post-show-page #main .container-xxl .title.h2 {
+#faq-show-page #main .container-fluid.container-md:first-child h2.title, #faq-show-page #main .container-md:first-child h2.title, #faq-show-page #main .container-md:first-child .title.h2, #post-show-page #main .container-fluid.container-md:first-child h2.title, #post-show-page #main .container-md:first-child h2.title, #post-show-page #main .container-md:first-child .title.h2 {
   top: 250px;
 }
 #faq-show-page .post-content img, #post-show-page .post-content img {

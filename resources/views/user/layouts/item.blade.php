@@ -30,7 +30,7 @@
       </div>
     </div>
     <div class="row context mt-auto">
-      <div class="col-md-5 col-12 d-flex flex-column align-self-end p-0">
+      <div class="col-md-5 col-12 d-flex flex-column align-self-end p-0 mt-2 mt-md-0">
         @if($product->on_sale)
           <span class="old-price">{{ $cost($store.state.currency.ratio * <?= $product->price ?>) }} @{{ $store.state.currency.symbol }}</span>
           <span class="price">{{ $cost($store.state.currency.ratio * <?= $product->price_sale ?>) }} @{{ $store.state.currency.symbol }}</span>
@@ -38,7 +38,7 @@
           <span class="price font-weight-bolder">{{ $cost($store.state.currency.ratio * <?= $product->price ?>) }} @{{ $store.state.currency.symbol }}</span>
         @endif
       </div>
-      <div class="col-md-7 mt-3 col-12 p-0">
+      <div class="col-md-7 mt-2 mt-md-3 col-12 p-0">
         @if(count($product->skuses) > 1)
           <a href="{{ route('product.show', $product->id) }}" class="btn btn-dark h-100 w-100 d-block btn-to-cart">
             <span class="pe-2">{{ __('Выбрать') }}</span>

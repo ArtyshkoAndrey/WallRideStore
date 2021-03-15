@@ -49,6 +49,9 @@
       <div class="col-md-3">
         <p class="text-center">Powered by <a href="{{ config('app.admin.link') }}" class="text-danger">{{ config('app.admin.name') }}</a></p>
       </div>
+      <div class="col-12">
+        <p class="text-center">Supported by <a href="{{ url('https://www.instagram.com/shopper.pro/') }}"class="text-danger"> Shopper</a></p>
+      </div>
     </div>
   </div>
 </footer>
