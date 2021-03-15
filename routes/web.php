@@ -70,6 +70,14 @@ Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function ()
     'create'
   ]);
 
+  Route::resource('express', App\Http\Controllers\Admin\ExpressController::class)->except([
+    'show'
+  ]);
+
+  Route::resource('express-zone', App\Http\Controllers\Admin\ExpressZoneController::class)->except([
+    'show'
+  ]);
+
   Route::resource('skus-category', App\Http\Controllers\Admin\SkusCategoryController::class)->only([
     'store', 'destroy'
   ]);

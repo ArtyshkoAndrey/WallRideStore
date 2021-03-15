@@ -141,6 +141,15 @@
       Слайдер
     </a>
 
+    <a href="{{ route('admin.express.index') }}"
+       class="sidebar-link sidebar-link-with-icon {{ Route::currentRouteNamed('admin.express.*') ? 'active' : '' }}">
+      <span class="sidebar-icon bg-transparent justify-content-start mr-0">
+        <i class="bx bxs-car"
+           aria-hidden="true"></i>
+      </span>
+      Компании доставки
+    </a>
+
     <br />
     <h5 class="sidebar-title">
       Товары
