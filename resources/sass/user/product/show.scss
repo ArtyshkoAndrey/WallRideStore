@@ -22,7 +22,7 @@
     .slider-nav {
       overflow: hidden;
 
-      @include respond-up(sm) {
+      @include respond-up(lg) {
         height: auto!important;
       }
 

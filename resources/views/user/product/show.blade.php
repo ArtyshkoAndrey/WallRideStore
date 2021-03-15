@@ -88,7 +88,7 @@
           <div class="col-12">
 
             <div class="row">
-              <div class="col-md-auto mt-2">
+              <div class="col-md-6 mt-2">
                 <button class="btn w-100 btn-dark btn-to-cart mt-2 mt-md-0"
                         :disabled="selectSkus === null"
                         @click="$store.commit('addItem', {id: selectSkus, amount: 1})">
@@ -96,7 +96,8 @@
                   <i class="ms-2 far fa-shopping-bag"></i>
                 </button>
               </div>
-              <div class="col-md-auto mt-2">
+
+              <div class="col-md-6 mt-2">
                 <button class="btn w-100 btn-dark btn-to-cart mt-2 mt-md-0"
                         @click="$store.commit('addItemFavor', {{ $product->id }})">
                   <span v-if="!$store.getters.productFavor( {{$product->id}} )">{{ __('Добавить в избранные') }}</span>
@@ -104,6 +105,7 @@
                   <i class="ms-2 far fa-heart"></i>
                 </button>
               </div>
+
             </div>
           </div>
           <div class="col-12 mt-3 description-wrapper">
