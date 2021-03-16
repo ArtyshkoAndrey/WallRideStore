@@ -184,6 +184,23 @@
                   </div>
                 </div>
               </transition>
+              <transition-group>
+
+                <div class="col-12 mb-3" v-for="company in customCompanies" :key="company.id">
+                  <div class="choosable-field" :class="transfer.name === company.name ? 'active' : null" @click="setCompanyTransfer(company)">
+                    <div class="row">
+                      <div class="col-8 d-flex flex-column">
+                        <span class="title">@{{ company.name }}</span>
+                        <span class="description">{{ __('Доставка осуществляется от 4 до 7 дней сервисом Kaz Post') }}</span>
+                      </div>
+                      <div class="col-4 d-flex justify-content-end">
+                        <span class="price">@{{ $cost(company.price * $store.state.currency.ratio) }} @{{ $store.state.currency.symbol }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </transition-group>
 
               <transition name="slide-fade" mode="out-in" appear>
                 <div class="col-12" v-if="transfer.name !== null">
@@ -192,7 +209,7 @@
                       <p class="h4 title">{{ __('Оплата') }}</p>
                     </div>
                     @if($cash  &&  $cash->data === '1')
-                      <div class="col-12 mb-3" v-if="transfer.name !== 'ems'">
+                      <div class="col-12 mb-3" v-if="transfer.name !== 'ems' && transfer.enabled_cash || transfer.name === 'pickup'">
                         <div class="choosable-field"
                              :class="method_pay === 'cash' ? 'active' : null"
                              @click="setCashMethod">
@@ -207,7 +224,7 @@
                     @endif
 
                     @if($cloudPayment  &&  $cloudPayment->data === '1')
-                      <div class="col-12 mb-5">
+                      <div class="col-12 mb-5" v-if="!isNaN(transfer.enabled_card) ? transfer.enabled_card : true">
                         <div class="choosable-field"
                              :class="method_pay === 'cloudPayment' ? 'active' : null"
                              @click="setCloudPaymentMethod">

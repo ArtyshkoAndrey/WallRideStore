@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\CouponCode;
+use App\Models\ExpressCompany;
 use App\Models\ProductSkus;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -57,7 +58,7 @@ class OrderStoreRequest extends FormRequest
       ],
       'transfer.name' => ['required',
         function ($attribute, $value, $fail) {
-          if ($value !== 'pickup' && $value !== 'ems') {
+          if ($value !== 'pickup' && $value !== 'ems' && !ExpressCompany::whereName($value)->exists()) {
             return $fail('Выбаран несуществующий метод доставки');
           }
         }

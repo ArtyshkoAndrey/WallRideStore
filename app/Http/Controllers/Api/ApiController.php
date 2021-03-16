@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\CartItem;
 use App\Models\CouponCode;
 use App\Models\Currency;
+use App\Models\ExpressCompany;
+use App\Models\ExpressZone;
 use App\Models\Product;
 use App\Models\User;
 use App\Services\ParserEmsService;
@@ -224,5 +226,51 @@ class ApiController extends Controller
     } catch (GuzzleException $e) {
       return response()->json(__('errors_redirect.delivery.error'), 500);
     }
+  }
+
+  /**
+   * Get list companies
+   *
+   * @param Request $request
+   * @return JsonResponse
+   */
+  public function companies(Request $request): JsonResponse
+  {
+    $request->validate([
+      'city' => 'required|exists:cities,id',
+      'weight' => 'required|numeric',
+    ]);
+    $weight = $request->get('weight');
+    $express_companies = ExpressCompany::get();
+    $zones = ExpressZone::with('company')->whereHas('cities', function ($qq) use ($request) {
+      $qq->where('cities.id', $request->city);
+    })->get();
+    $express_companies = $express_companies->toArray();
+    foreach ($express_companies as $i => $iValue) {
+      foreach ($zones as $z) {
+        if ($z->company->id === $iValue['id']) {
+          if ($z->step_cost_array !== null) {
+            foreach ($z->step_cost_array as $item) {
+              if ($item['weight_to'] < $weight && $weight <= $item['weight_from']) {
+                $express_companies[$i]['price'] = $item['cost'];
+              }
+            }
+//            $express_companies[$i]['costedTransfer'] = $z->step_cost_array;
+          } else {
+            $iterations = (int) $weight / $z->step;
+            $express_companies[$i]['price'] = $iterations * $z->cost_step;
+          }
+        }
+      }
+      if (!isset($express_companies[$i]['price'])) {
+        unset($express_companies[$i]);
+      }
+//        $express_companies[$i]['price'] = null;
+//        $express_companies[$i]['costedTransfer'] = null;
+//        $express_companies[$i]['step_unlim'] = null;
+//        $express_companies[$i]['step_cost_unlim'] = null;
+//      }
+    }
+    return response()->json(['companies' => $express_companies]);
   }
 }

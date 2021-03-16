@@ -45,7 +45,8 @@ export default {
       ems: {
         price: null,
         error: false,
-      }
+      },
+      customCompanies: []
     }
   },
   mounted () {
@@ -97,6 +98,15 @@ export default {
       this.transfer = {
         price: this.ems.price,
         name: 'ems'
+      }
+      this.method_pay = null
+    },
+    setCompanyTransfer (company) {
+      this.transfer = {
+        price: company.price,
+        name: company.name,
+        enabled_cash: company.enabled_cash,
+        enabled_card: company.enabled_card
       }
       this.method_pay = null
     },
@@ -284,13 +294,27 @@ export default {
         post_code: this.info.post_code,
         weight: this.$store.getters.weight
       })
-      .then(response => {
-        this.ems.price = Number(response.data)
-        this.ems.error = false
+        .then(response => {
+          this.ems.price = Number(response.data)
+          this.ems.error = false
+        })
+        .catch(error => {
+          this.errors.ems = error.response.data
+        })
+
+      this.getCustomCompanies()
+    },
+    getCustomCompanies () {
+      window.axios.post('/api/companies', {
+        city: this.info.city.id,
+        weight: this.$store.getters.weight,
       })
-      .catch(error => {
-        this.errors.ems = error.response.data
-      })
+        .then(response => {
+         this.customCompanies = response.data.companies;
+        })
+        .catch(error => {
+          this.errors.ems = error.response.data
+        })
     }
   },
   computed: {

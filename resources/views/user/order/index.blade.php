@@ -55,7 +55,7 @@
                               <th scope="row">{{ $order->no }}</th>
                               <td>{{ \App\Models\Order::$shipStatusMap[$order->ship_status] }}</td>
                               <td>{{ \App\Models\Order::$paymentMethodsMap[$order->payment_method] }}</td>
-                              <td>{{ \App\Models\Order::$transferMethodsMap[$order->transfer] }}</td>
+                              <td>{{ $order->transfer === 'pickup' || $order->transfer === 'ems' ? \App\Models\Order::$transferMethodsMap[$order->transfer] : $order->transfer }}</td>
                               <td>{{ $order->ship_data->track ?? 'Нет данных' }}</td>
                               <td>{{ number_format($order->price + $order->ship_price - $order->sale, 0,',', ' ') }} ₸</td>
                             </tr>
@@ -88,7 +88,7 @@
                             <th scope="row">{{ $order->no }}</th>
                             <td>{{ \App\Models\Order::$shipStatusMap[$order->ship_status] }}</td>
                             <td>{{ \App\Models\Order::$paymentMethodsMap[$order->payment_method] }}</td>
-                            <td>{{ \App\Models\Order::$transferMethodsMap[$order->transfer] }}</td>
+                            <td>{{ $order->transfer === 'pickup' || $order->transfer === 'ems' ? \App\Models\Order::$transferMethodsMap[$order->transfer] : $order->transfer }}</td>
                             <td>{{ $order->ship_data->track ?? 'Нет данных' }}</td>
                             <td>{{ number_format($order->price + $order->ship_price - $order->sale, 0,',', ' ') }} ₸</td>
                           </tr>
