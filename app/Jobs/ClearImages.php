@@ -17,22 +17,16 @@ class ClearImages implements ShouldQueue
 {
   use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-  /**
-   * @var PhotoService
-   */
-  private PhotoService $photoService;
-
-
   public function __construct()
   {
-    $this->photoService = new PhotoService();
+
   }
 
-  public function handle()
+  public function handle(): void
   {
     $dir = public_path(Photo::PHOTO_PATH);
 
-    $files = array_values(array_filter(scandir($dir), function ($file) use ($dir) {
+    $files = array_values(array_filter(scandir($dir), static function ($file) use ($dir) {
       return !is_dir($dir . '/' . $file);
     }));
     $filesName = new Set();
@@ -46,10 +40,11 @@ class ClearImages implements ShouldQueue
           $filesName->add($filename);
 
           if (!Photo::whereName($filename)->exists()) {
-            $this->photoService->delete($filename, Photo::PHOTO_PATH, true);
+            PhotoService::delete($filename, Photo::PHOTO_PATH, true);
           }
-        } else
+        } else {
           continue;
+        }
       }
 
     }

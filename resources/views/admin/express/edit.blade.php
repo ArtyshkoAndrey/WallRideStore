@@ -133,9 +133,13 @@
                       <td>{{ number_format($zone->cost_step, 0,',', ' ') }} ₸ / {{ $zone->step }} кг.</td>
                       <td><a href="{{ route('admin.express-zone.edit', $zone->id) }}" class="btn btn-secondary">Редактировать</a></td>
                       <td>
-                        <button class="bg-transparent border-0 rounded-0" style="color: #F33C3C" type="button" onclick="deletedZone({{ $zone->id }})">
-                          <i style="font-size: 1.5rem" class="bx bx-trash"></i>
-                        </button>
+                        <form action="{{ route('admin.express-zone.destroy', $zone->id) }}" method="POST">
+                          @csrf
+                          @method('DELETE')
+                          <button class="btn bg-transparent border-0 shadow-none rounded-0" style="color: #F33C3C" type="submit">
+                            <i style="font-size: 1.5rem" class="bx bx-trash"></i>
+                          </button>
+                        </form>
                       </td>
                     </tr>
                   @endforeach
@@ -164,9 +168,13 @@
                       <td>{{ number_format(count($zone->step_cost_array) > 0 ? $zone->step_cost_array[0]['cost'] : 0, 0,',', ' ') }} ₸</td>
                       <td><a href="{{ route('admin.express-zone.edit', $zone->id) }}" class="btn btn-secondary">Редактировать</a></td>
                       <td>
-                        <button class="bg-transparent border-0 rounded-0" style="color: #F33C3C" type="button" onclick="deletedZone({{ $zone->id }})">
-                          <i style="font-size: 1.5rem" class="bx bx-trash"></i>
-                        </button>
+                        <form action="{{ route('admin.express-zone.destroy', $zone->id) }}" method="POST">
+                          @csrf
+                          @method('DELETE')
+                          <button class="btn bg-transparent border-0 shadow-none rounded-0" style="color: #F33C3C" type="submit">
+                            <i style="font-size: 1.5rem" class="bx bx-trash"></i>
+                          </button>
+                        </form>
                       </td>
                     </tr>
                   @endforeach
@@ -185,16 +193,5 @@
 @endsection
 
 @section('script')
-  <script>
-    function deletedZone(id) {
-      let form = document.createElement('form');
-      form.action = '{{ route('admin.express-zone.index') }}/' + id;
-      form.method = 'POST';
-      $(form).append('<input type="hidden" name="_token" value="'+ $('meta[name="csrf-token"]').attr('content') +'">')
-      $(form).append('<input type="hidden" name="_method" value="delete">')
-// перед отправкой формы, её нужно вставить в документ
-      document.body.append(form);
-      form.submit();
-    }
-  </script>
+
 @endsection

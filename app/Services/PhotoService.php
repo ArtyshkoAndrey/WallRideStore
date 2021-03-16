@@ -68,10 +68,8 @@ class PhotoService
           File::delete(public_path($path . $name . '.' . $type));
         }
       }
-    } else {
-      if (file_exists(public_path($path . $name))) {
-        File::delete(public_path($path . $name));
-      }
+    } else if (file_exists(public_path($path . $name))) {
+      File::delete(public_path($path . $name));
     }
     return true;
   }

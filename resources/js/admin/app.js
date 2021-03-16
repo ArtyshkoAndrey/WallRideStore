@@ -3,6 +3,7 @@ window.Vue = require('vue')
 window.halfmoon = require("halfmoon");
 window.$ = window.jQuery = require('jquery');
 window.axios = require('axios');
+window.swal = require('sweetalert2')
 
 require('./tabs.js')
 
