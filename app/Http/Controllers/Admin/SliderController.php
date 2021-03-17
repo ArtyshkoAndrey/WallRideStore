@@ -147,12 +147,14 @@ class SliderController extends Controller
     if ($data['type'] !== 'mobile' && $data['type'] !== 'desktop') {
       $data['type'] = 'desktop';
     }
-    if ($data['type'] === 'desktop')
+    if ($data['type'] === 'desktop') {
       $storage = Slider::PHOTO_PATH;
-    else
+    }
+    else {
       $storage = Slider::PHOTO_PATH_MOBILE;
+    }
 
-    return PhotoService::create($request->file('file'), $storage, true, 60, 1200);
+    return PhotoService::create($request->file('file'), $storage, true, 60, false, 1200);
   }
 
   /**
@@ -172,10 +174,12 @@ class SliderController extends Controller
     if ($data['type'] !== 'mobile' && $data['type'] !== 'desktop') {
       $data['type'] = 'desktop';
     }
-    if ($data['type'] === 'desktop')
+    if ($data['type'] === 'desktop') {
       $storage = Slider::PHOTO_PATH;
-    else
+    }
+    else {
       $storage = Slider::PHOTO_PATH_MOBILE;
+    }
 
     PhotoService::delete($data['name'], $storage, true);
     return response()->json(['status' => 'success']);

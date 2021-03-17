@@ -68,10 +68,10 @@ class BrandController extends Controller
 
     $data = $request->all();
     if ($request->has('photo')) {
-      $data['photo'] = PhotoService::create($request->file('photo'), Brand::PHOTO_PATH, true, 30, 500);
+      $data['photo'] = PhotoService::create($request->file('photo'), Brand::PHOTO_PATH, true, 30, true, 500);
     }
     if ($request->has('logo')) {
-      $data['logo'] = PhotoService::create($request->file('logo'), Brand::LOGO_PATH, true, 30, 500);
+      $data['logo'] = PhotoService::create($request->file('logo'), Brand::LOGO_PATH, true, 30, true, 500);
     }
 
     Brand::create($data);
@@ -121,13 +121,13 @@ class BrandController extends Controller
     $brand = Brand::find($id);
 
     $data = $request->all();
-    if ($request->has('photo'))
+    if ($request->has('photo')) {
+      $data['photo'] = PhotoService::create($request->file('photo'), Brand::PHOTO_PATH, true, 30, true, 500);
+    }
 
-
-      $data['photo'] = PhotoService::create($request->file('photo'), Brand::PHOTO_PATH, true, 30, 500);
-
-    if ($request->has('logo'))
-      $data['logo'] = PhotoService::create($request->file('logo'), Brand::LOGO_PATH, true, 30, 500);
+    if ($request->has('logo')) {
+      $data['logo'] = PhotoService::create($request->file('logo'), Brand::LOGO_PATH, true, 30, true, 500);
+    }
 
     $brand->update($data);
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Faqs;
 use App\Services\PhotoService;
 use Exception;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -131,6 +132,7 @@ class FAQController extends Controller
    *
    * @param Request $request
    * @return JsonResponse
+   * @throws BindingResolutionException
    */
   public function content_mage(Request $request): JsonResponse
   {
@@ -151,7 +153,7 @@ class FAQController extends Controller
     $request->validate([
       'file' => 'required|image',
     ]);
-    return PhotoService::create($request->file('file'), Faqs::PHOTO_PATH, true, 60, 1200);
+    return PhotoService::create($request->file('file'), Faqs::PHOTO_PATH, true, 60, true, 1200);
   }
 
   public function photo_delete(Request $request): JsonResponse

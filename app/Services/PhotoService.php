@@ -21,17 +21,22 @@ class PhotoService
    * @param string $path
    * @param bool $cube
    * @param int $quality
+   * @param bool $strRand
    * @param int|null $width
    * @param int|null $height
    * @return string
    */
-  public static function create($image, string $path, bool $cube, int $quality, int $width = null, int $height = null): string
+  public static function create($image, string $path, bool $cube, int $quality, bool $strRand = true , int $width = null, int $height = null): string
   {
     $file = $image->getClientOriginalName();
     $destinationPath = public_path($path);
     $originalName = pathinfo($file, PATHINFO_FILENAME);
-    $time = time() . '_';
-    $nameNonType = $time . $originalName;
+    if ($strRand) {
+      $time = time() . '_';
+       $nameNonType = $time . $originalName;
+    } else {
+      $nameNonType = $originalName;
+    }
     foreach (self::$type as $type) {
       $name = $nameNonType . '.' . $type;
       $img = Image::make($image->getRealPath())->encode($type, $quality);

@@ -161,7 +161,7 @@ class PostController extends Controller
     $request->validate([
       'file' => 'required|image',
     ]);
-    return PhotoService::create($request->file('file'), Post::PHOTO_PATH, true, 60, 1200);
+    return PhotoService::create($request->file('file'), Post::PHOTO_PATH, true, 60, true, 1200);
   }
 
   /**
