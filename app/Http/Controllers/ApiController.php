@@ -38,7 +38,7 @@ class ApiController extends Controller
   public function categories(Request $request): JsonResponse
   {
     if ($name = $request->get('name')) {
-      $categories = Category::where('name', 'like', '%' . $name . '%')->limit(5)->get();
+      $categories = Category::whereTranslationLike('name', '%' . $name . '%')->limit(5)->get();
     } else {
       $categories = Category::limit(5)->get();
     }
