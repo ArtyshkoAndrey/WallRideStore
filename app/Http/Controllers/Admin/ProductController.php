@@ -35,7 +35,7 @@ class ProductController extends Controller
       $products = $products->onlyTrashed();
     }
     if ($name) {
-      $products = $products->where('title', 'like', '%' . $name . '%');
+      $products = $products->whereTranslationLike('title', '%' . $name . '%');
     }
     $products = $products->paginate(10);
     $filter = [
