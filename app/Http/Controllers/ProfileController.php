@@ -9,6 +9,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use File;
+use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -17,7 +21,11 @@ use Intervention\Image\ImageManagerStatic as Image;
 class ProfileController extends Controller
 {
 
-  public function index ()
+  /**
+   * @return Application|Factory|View
+   * @throws BindingResolutionException
+   */
+  public function index()
   {
     return view('user.profile.index');
   }
@@ -26,16 +34,16 @@ class ProfileController extends Controller
    * @param Request $request
    * @return RedirectResponse
    */
-  public function data (Request $request): RedirectResponse
+  public function data(Request $request): RedirectResponse
   {
     $request->validate([
-      'currency'  => 'required|exists:currencies,id',
-      'name'      => 'required|string',
-      'phone'     => 'required|string',
-      'email'     => 'required|unique:users,email,' . auth()->user()->id,
-      'address'   => 'required|string',
-      'country'   => 'required|exists:countries,id',
-      'city'      => 'required|exists:cities,id'
+      'currency' => 'required|exists:currencies,id',
+      'name' => 'required|string',
+      'phone' => 'required|string',
+      'email' => 'required|unique:users,email,' . auth()->user()->id,
+      'address' => 'required|string',
+      'country' => 'required|exists:countries,id',
+      'city' => 'required|exists:cities,id'
 
     ]);
     $user = User::find(auth()->user()->id);
@@ -51,27 +59,37 @@ class ProfileController extends Controller
     return redirect()->route('profile.index')->with('success', ['Данные профиля обновились']);
   }
 
-  public function photo (Request $request): RedirectResponse
+  /**
+   * @param Request $request
+   * @return RedirectResponse
+   * @throws BindingResolutionException
+   */
+  public function photo(Request $request): RedirectResponse
   {
     $user = auth()->user();
     $image = $request->file('photo');
 
-    $imageName = time().'.'.$image->getClientOriginalExtension();
+    $imageName = time() . '.' . $image->getClientOriginalExtension();
 
-    $destinationPath = public_path('storage/avatar');
+    $destinationPath = public_path(User::PHOTO_PATH);
 
     $img = Image::make($image->getRealPath());
     $img
       ->fit(200)
       ->save($destinationPath . '/' . $imageName);
-    if($user->avatar)
+    if ($user->avatar) {
       File::delete($destinationPath . '/' . $user->avatar);
+    }
 
     $user->avatar = $imageName;
     $user->save();
     return redirect()->route('profile.index')->with('success', ['Фотография обновлена']);
   }
 
+  /**
+   * @param Request $request
+   * @return RedirectResponse
+   */
   public function password(Request $request): RedirectResponse
   {
     $user = auth()->user();
