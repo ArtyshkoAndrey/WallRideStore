@@ -56,7 +56,7 @@ class ProfileController extends Controller
       ->associate($request->country);
     $user->save();
 
-    return redirect()->route('profile.index')->with('success', ['Данные профиля обновились']);
+    return redirect()->route('profile.index')->with('success', [__('success.data')]);
   }
 
   /**
@@ -83,7 +83,7 @@ class ProfileController extends Controller
 
     $user->avatar = $imageName;
     $user->save();
-    return redirect()->route('profile.index')->with('success', ['Фотография обновлена']);
+    return redirect()->route('profile.index')->with('success', [__('success.photo')]);
   }
 
   /**
@@ -98,7 +98,7 @@ class ProfileController extends Controller
     ]);
     $user->password = Hash::make($request->password);
     $user->save();
-    return redirect()->route('profile.index')->with('success', ['Пароль изменён']);
+    return redirect()->route('profile.index')->with('success', [__('success.password')]);
   }
 
 }
