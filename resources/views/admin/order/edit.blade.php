@@ -61,7 +61,7 @@
               <div class="card p-0 m-0 bg-dark-dm">
                 <div class="row p-20">
                   <div class="col-12">
-                    <p class="m-0"><span class="font-weight-bold">Доставка:</span> {{ \App\Models\Order::$transferMethodsMap[$order->transfer] }}</p>
+                    <p class="m-0"><span class="font-weight-bold">Доставка:</span> {{ $order->transfer === 'pickup' || $order->transfer === 'ems' ? \App\Models\Order::$transferMethodsMap[$order->transfer] : $order->transfer }}</p>
                   </div>
                   <div class="col-12">
                     <p class="m-0"><span class="font-weight-bold">Оплата:</span> {{ \App\Models\Order::$paymentMethodsMap[$order->payment_method] }}</p >
