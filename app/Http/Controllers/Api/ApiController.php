@@ -12,10 +12,12 @@ use App\Models\ExpressZone;
 use App\Models\Product;
 use App\Models\User;
 use App\Services\ParserEmsService;
+use App\Services\ProductService;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use RuntimeException;
 use Validator;
 
@@ -272,5 +274,23 @@ class ApiController extends Controller
 //      }
     }
     return response()->json(['companies' => $express_companies]);
+  }
+
+  /**
+   * @param Request $request
+   */
+  public function parser(Request $request): void
+  {
+    $page = $request->get('page', null);
+    if ($page === null) {
+      throw new RuntimeException('Ошибка страницы');
+    }
+
+    $response = Http::get('https://wallridestore.com/api/get/products?page=' . $page);
+    $products = $response->json()['products']['data'];
+//    dd($products);
+//    foreach ($products as $product) {
+//      (new \App\Services\ProductService)->create($product);
+//    }
   }
 }
