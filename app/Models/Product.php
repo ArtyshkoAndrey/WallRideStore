@@ -16,10 +16,11 @@ class Product extends Model
     'meta', 'on_top', 'on_new'
   ];
   protected $casts = [
-    'on_sale' => 'boolean',
-    'on_new'  => 'boolean',
-    'on_top'  => 'boolean',
-    'meta'    => 'object'
+    'on_sale'                => 'boolean',
+    'on_new'                 => 'boolean',
+    'on_top'                 => 'boolean',
+    'on_block_free_transfer' => 'boolean',
+    'meta'                   => 'object'
   ];
 
   protected $with  = ['photos', 'promotions', 'skus'];

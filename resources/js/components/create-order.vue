@@ -71,6 +71,15 @@
       getCost () {
         return this.order.express_company !== null ? this.cost + this.company.costedTransfer : this.cost
       },
+      getBlockFreeTransfer () {
+        if (this.cartItems.length > 0) {
+          return this.cartItems.every(function (a) {
+            return a.productSku.product.on_block_free_transfer;
+          });
+        } else {
+          return false;
+        }
+      },
       getCompanies () {
         if (this.city === null || this.country === null) {
           return []
@@ -80,7 +89,11 @@
           companies.forEach(com => {
             if ( com.costedTransfer !== null && com.costedTransfer >= 0 && Number(com.min_cost) <= Number(this.cost) && com.enabled && (com.enabled_cash || com.enabled_card) ) {
               console.log(com.enabled_cash || com.enabled_card)
-              this.companies.push(com)
+              if (this.getBlockFreeTransfer && com.costedTransfer === 0) {
+                return;
+              } else {
+                this.companies.push(com)
+              }
             }
           })
           return this.companies
