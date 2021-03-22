@@ -125,7 +125,7 @@
               @endif
 
               <div class="row" style="margin-top: 30px">
-                <div class="col-md-6 mb-3 mx-0">
+                <div class="col-md-6 mx-0" :class="!getBlockFreeTransfer ? 'mb-3' : ''">
                   <h5 class="font-weight-bold" size="ma" style="margin-bottom: 10px">Методы доставки</h5>
                   <div class="btn-group">
                     <div v-for="(company) in getCompanies" class="btn p-0 rounded-0 border-0 mr-2">
@@ -134,6 +134,9 @@
                       </label>
                     </div>
                   </div>
+                </div>
+                <div class="col-12 mt-3 mb-3" v-if="getBlockFreeTransfer">
+                  <p class="small text-danger">У вас в корзине имеется товар на который не распространяется бесплатная доставка</p>
                 </div>
 
                 <div class="col-md-8 mt-3" style="margin-top: 30px">
@@ -157,8 +160,6 @@
                   </div>
                 </div>
               </div>
-
-
             </div>
           </div>
 

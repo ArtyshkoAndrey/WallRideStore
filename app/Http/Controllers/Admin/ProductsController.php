@@ -104,6 +104,7 @@ class ProductsController extends Controller {
     $product->on_new      = isset($request->on_new) ? 1 : 0;
     $product->on_sale     = isset($request->on_sale) ? 1 : 0;
     $product->on_top      = isset($request->on_top) ? 1 : 0;
+    $product->on_block_free_transfer      = isset($request->on_block_free_transfer) ? 1 : 0;
     $product->meta        = $request->meta;
     $product->save();
     $product->categories()->sync($request->category);
@@ -180,6 +181,7 @@ class ProductsController extends Controller {
     $product->on_new      = isset($request->on_new) ? 1 : 0;
     $product->on_sale     = isset($request->on_sale) ? 1 : 0;
     $product->on_top      = isset($request->on_top) ? 1 : 0;
+    $product->on_block_free_transfer      = isset($request->on_block_free_transfer) ? 1 : 0;
     $product->meta        = $request->meta;
     $product->brands()->sync($request->brands);
     $product->categories()->sync($request->category);

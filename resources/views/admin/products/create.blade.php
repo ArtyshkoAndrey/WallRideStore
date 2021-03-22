@@ -119,6 +119,11 @@
                       <input type="checkbox" name="on_top" id="top">
                       Хит продаж
                     </label>
+
+                    <label class="ml-3">
+                      <input type="checkbox" name="on_block_free_transfer" id="on_block_free_transfer" {{ old('on_block_free_transfer', false) ? 'checked' : null }}>
+                      Блокировать бесплатные доставки
+                    </label>
                   </div>
                   <div class="col-md-11 offset-md-1 mt-4">
                     <h4 class="font-weight-bold">Атрибуты</h4>
@@ -350,6 +355,11 @@
         radioClass: 'iradio_minimal',
       });
       $('#top').iCheck({
+        checkboxClass: 'icheckbox_minimal',
+        radioClass: 'iradio_minimal',
+      });
+
+      $('#on_block_free_transfer').iCheck({
         checkboxClass: 'icheckbox_minimal',
         radioClass: 'iradio_minimal',
       });
