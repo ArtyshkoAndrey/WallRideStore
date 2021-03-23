@@ -88,7 +88,8 @@ class Product extends Model
   {
     $products   = [];
     $promotions = [];
-    if (count($ids) > 0 && $ids[0] !== '') {
+//    dump($ids);
+    if (count($ids) > 0 && reset($ids) !== '') {
       foreach ($ids as $k => $id) {
         $productSku = ProductSku::with('product', 'skus')->find((int)$id);
         if (!Auth::check()) {
