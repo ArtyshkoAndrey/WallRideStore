@@ -123,20 +123,20 @@
                 <div class="row">
                   <div class="col-md-8">
                     <label for="description">Описание</label>
-                    <input name="description" id="description" class="w-100 px-2 form-control rounded-0 {{ $errors->has('description') ? ' is-invalid' : '' }}" value="{{ old('description') ? old('description') : $st->description }}">
+                    <input name="description" id="description" class="w-100 px-2 form-control rounded-0 {{ $errors->has('description') ? ' is-invalid' : '' }}" value="{{ old('description', $st->description) }}">
                     <span id="descriptio-error" class="error invalid-feedback">{{ $errors->first('descriptio') }}</span>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-md-4">
                     <label for="link">Ссылка</label>
-                    <input name="link" id="link" class="w-100 px-2 form-control rounded-0 {{ $errors->has('link') ? ' is-invalid' : '' }}" value="{{ old('link') ? old('link') : $st->link }}">
+                    <input name="link" id="link" class="w-100 px-2 form-control rounded-0 {{ $errors->has('link') ? ' is-invalid' : '' }}" value="{{ old('link', $st->link) }}">
                     <span id="link-error" class="error invalid-feedback">{{ $errors->first('link') }}</span>
                     <small class="form-text text-muted">"/notification/subscribe/auth" - для подписки на рассылку</small>
                   </div>
                   <div class="col-md-4">
                     <label for="text_to_link">Текст ссылки</label>
-                    <input name="text_to_link" id="text_to_link" class="w-100 px-2 form-control rounded-0 {{ $errors->has('text_to_link') ? ' is-invalid' : '' }}" value="{{ old('text_to_link') ? old('text_to_link') : $st->text_to_link }}">
+                    <input name="text_to_link" id="text_to_link" class="w-100 px-2 form-control rounded-0 {{ $errors->has('text_to_link') ? ' is-invalid' : '' }}" value="{{ old('text_to_link', $st->text_to_link) }}">
                     <span id="text_to_link-error" class="error invalid-feedback">{{ $errors->first('text_to_link') }}</span>
                   </div>
                 </div>
@@ -158,13 +158,13 @@
                   <div class="col-md-8" id="checker_images">
 
                     <ul>
-                      <li><input type="radio" name="view" value="1" id="cb1" {{ old('view') === 1 ? 'checked' :  $st->view === 1 ? 'checked' : ''  }}/>
+                      <li><input type="radio" name="view" value="1" id="cb1" {{ (old('view', $st->view) === 1 ? 'checked' : ''  }}/>
                         <label for="cb1"><img src="{{ asset('images/modal_1.png') }}" /></label>
                       </li>
-                      <li><input type="radio" name="view" value="2" id="cb2" {{ old('view') === 2 ? 'checked' :  $st->view === 2 ? 'checked' : ''  }} />
+                      <li><input type="radio" name="view" value="2" id="cb2" {{ old('view', $st->view) === 2  ? 'checked' : ''  }} />
                         <label for="cb2"><img src="{{ asset('images/modal_2.png') }}" /></label>
                       </li>
-                      <li><input type="radio" name="view" value="3" id="cb3" {{ old('view') === 3 ? 'checked' :  $st->view === 3 ? 'checked' : ''  }} />
+                      <li><input type="radio" name="view" value="3" id="cb3" {{ old('view', $st->view) === 3 ? 'checked' : ''  }} />
                         <label for="cb3"><img src="{{ asset('images/modal_3.png') }}" /></label>
                       </li>
                     </ul>
