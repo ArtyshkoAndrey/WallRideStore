@@ -15,7 +15,7 @@ class FooterCategoriesWidget implements ContractWidget
   {
 
     $categories = Cache::remember('categories-menu', config('app.cache.bd'), function () {
-      return Category::withTranslation()->whereDoesntHave('parents')->with('child')->get();
+      return Category::orderByTranslation('name')->withTranslation()->whereDoesntHave('parents')->with('child')->get();
     });
 
     return view('Widget::footer-categories', [

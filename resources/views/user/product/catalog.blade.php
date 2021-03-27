@@ -22,7 +22,7 @@
             <span class="{{ count($filter['category']) > 0 ? 'font-weight-bolder' : null }}">{{ __('Категории') }}</span>
           </a>
           <div class="dropdown-menu dropdown-shadow rounded-0 border-0 py-3 px-4 overflow-auto" aria-labelledby="dropdownCategoryLink">
-            @foreach(\App\Models\Category::all() as $category)
+            @foreach(\App\Models\Category::orderByTranslation('name')->get() as $category)
               <div class="checkbox">
                 <div class="row">
                   <div class="col-auto pr-0">
@@ -117,20 +117,20 @@
         <div class="col-12 col-md-auto dropdown ms-auto px-0 mt-4 mt-md-0">
           <a href="#" class="text-dark dropdown-toggle text-decoration-none" role="button" id="dropdownOrderLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             @if($filter['order'] === 'sort-old')
-              <i class="fas fa-sort-amount-down"></i> {{ __('С начало старые') }}
+              <i class="fas fa-sort-amount-down"></i> {{ __('Сначала старые') }}
             @elseif($filter['order'] === 'sort-new')
-              <i class="fas fa-sort-amount-up"></i> {{ __('С начало новые') }}
+              <i class="fas fa-sort-amount-up"></i> {{ __('Сначала новые') }}
             @elseif($filter['order'] === 'sort-expensive')
-              <i class="fas fa-sort-amount-up"></i> {{ __('С начало дорогие') }}
+              <i class="fas fa-sort-amount-up"></i> {{ __('Сначала дорогие') }}
             @elseif($filter['order'] === 'sort-cheap')
-              <i class="fas fa-sort-amount-down"></i> {{ __('С начало дешёвые') }}
+              <i class="fas fa-sort-amount-down"></i> {{ __('Сначала дешёвые') }}
             @endif
           </a>
           <div class="dropdown-menu dropdown-menu-right dropdown-shadow rounded-0 border-0 py-3 px-4" aria-labelledby="dropdownOrderLink">
-            <a href="#" role="button" onclick="orderSort('sort-old')" class="dropdown-item bg-transparent {{ $filter['order'] === 'sort-old' ? 'active' : '' }}"><i class="fas fa-sort-amount-down"></i> {{ __('С начало старые') }}</a>
-            <a href="#" role="button" onclick="orderSort('sort-new')" class="dropdown-item bg-transparent {{ $filter['order'] === 'sort-new' ? 'active' : '' }}"><i class="fas fa-sort-amount-up"></i> {{ __('С начало новые') }}</a>
-            <a href="#" role="button" onclick="orderSort('sort-expensive')" class="dropdown-item bg-transparent {{ $filter['order'] === 'sort-expensive' ? 'active' : '' }}"><i class="fas fa-sort-amount-up"></i> {{ __('С начало дорогие') }}</a>
-            <a href="#" role="button" onclick="orderSort('sort-cheap')" class="dropdown-item bg-transparent {{ $filter['order'] === 'sort-cheap' ? 'active' : '' }}"><i class="fas fa-sort-amount-down"></i> {{ __('С начало дешёвые')}}</a>
+            <a href="#" role="button" onclick="orderSort('sort-old')" class="dropdown-item bg-transparent {{ $filter['order'] === 'sort-old' ? 'active' : '' }}"><i class="fas fa-sort-amount-down"></i> {{ __('Сначала старые') }}</a>
+            <a href="#" role="button" onclick="orderSort('sort-new')" class="dropdown-item bg-transparent {{ $filter['order'] === 'sort-new' ? 'active' : '' }}"><i class="fas fa-sort-amount-up"></i> {{ __('Сначала новые') }}</a>
+            <a href="#" role="button" onclick="orderSort('sort-expensive')" class="dropdown-item bg-transparent {{ $filter['order'] === 'sort-expensive' ? 'active' : '' }}"><i class="fas fa-sort-amount-up"></i> {{ __('Сначала дорогие') }}</a>
+            <a href="#" role="button" onclick="orderSort('sort-cheap')" class="dropdown-item bg-transparent {{ $filter['order'] === 'sort-cheap' ? 'active' : '' }}"><i class="fas fa-sort-amount-down"></i> {{ __('Сначала дешёвые')}}</a>
           </div>
         </div>
       </div>

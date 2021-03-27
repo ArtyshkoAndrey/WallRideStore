@@ -16,7 +16,7 @@
                 @if($loop->last)
                   {{ $skus->title }}
                 @else
-                  {{ $skus->title }} /
+                  {{ $skus->title }},
                 @endif
               @endforeach
             </p>
