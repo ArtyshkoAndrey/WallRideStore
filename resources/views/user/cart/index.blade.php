@@ -72,7 +72,7 @@
       <div class="col-md-4 mt-md-0 mt-4">
         <div class="row">
           <div class="col-12 justify-content-end d-flex" v-if="!$store.state.auth">
-            <a href="{{ route('login') }}" class="text-decoration-none" style="font-size: .9em;">{{ __('Войдите в аккаунт, чтобы оплачивать быстрее') }}</a>
+            <a href="{{ route('login') }}" class="text-decoration-none" style="font-size: .9em;">{{ __('Для более удобного оформления заказа, советуем войти в ваш аккаунт') }}</a>
           </div>
           <div class="col-12">
             <a href="{{ route('order.create') }}" class="btn btn-dark d-block w-100 mt-2 py-3 promocode-button" :class="$store.state.cart.items.length < 1 ? 'disabled' : null">{{ __('Перейти к оплате') }}</a>

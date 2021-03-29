@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Category;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -49,14 +50,23 @@ class RegisterPassword extends Notification
    */
   public function toMail($notifiable): MailMessage
   {
+//    return (new MailMessage)
+//      ->subject('Новый аккаунт')
+//      ->greeting('Здраствуйте')
+//      ->line('Вы успешно зарегестрировались')
+//      ->line('Ваш логин: ' . $this->email)
+//      ->line('Ваш пароль: ' . $this->password)
+//      ->action('Просмотреть новые товары', route('product.all'))
+//      ->success();
+    $category = Category::whereDoesntHave('parents')->get();
+
     return (new MailMessage)
-      ->subject('Новый аккаунт')
-      ->greeting('Здраствуйте')
-      ->line('Вы успешно зарегестрировались')
-      ->line('Ваш логин: ' . $this->email)
-      ->line('Ваш пароль: ' . $this->password)
-      ->action('Просмотреть новые товары', route('product.all'))
-      ->success();
+      ->subject('Вы успешно создали аккаунт')
+      ->view('emails.user.register', [
+        'email' => $this->email,
+        'category' => $category,
+        'password' => $this->password
+      ]);
   }
 
   /**

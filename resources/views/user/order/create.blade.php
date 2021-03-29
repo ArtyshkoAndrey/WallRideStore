@@ -246,8 +246,7 @@
           <div class="col-12 col-md-5">
             <div class="row">
               <div class="col-12 justify-content-end d-flex mb-3 mt-4">
-                <a href="{{ route('login') }}" class="text-decoration-none" v-if="!$store.state.auth" style="font-size: .9em;">{{ __('Войдите в аккаунт,
-                  чтобы оплачивать быстрее') }}</a>
+                <a href="{{ route('login') }}" class="text-decoration-none" v-if="!$store.state.auth" style="font-size: .9em;">{{ __('Для более удобного оформления заказа, советуем войти в ваш аккаунт') }}</a>
               </div>
               <div class="col-12 mb-2" :class="$store.state.auth ? 'mt-3' : null">
                 <div class="order-results">

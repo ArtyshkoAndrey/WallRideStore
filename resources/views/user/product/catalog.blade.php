@@ -17,7 +17,7 @@
       <input type="hidden" name="order" id="order" value="{{ $filter['order'] }}">
       <div class="row m-0 w-100 align-items-center">
 
-        <div class="col-12 col-md-auto ps-md-0 px-0 px-md-1 dropdown">
+        <div class="col-12 col-md-auto ps-md-0 px-0 px-md-3 dropdown">
           <a href="#" class="text-dark dropdown-toggle border-hover text-decoration-none" role="button" id="dropdownCategoryLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="{{ count($filter['category']) > 0 ? 'font-weight-bolder' : null }}">{{ __('Категории') }}</span>
           </a>
@@ -38,7 +38,7 @@
         </div>
         <hr class="mt-2 mb-1 d-md-none d-block">
 
-        <div class="col-12 col-md-auto dropdown px-0 px-md-1 hiddable-filter">
+        <div class="col-12 col-md-auto dropdown px-0 px-md-3 hiddable-filter">
           <a href="#" class="text-dark dropdown-toggle border-hover text-decoration-none" role="button" id="dropdownBrandLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="{{ count($filter['brand']) > 0 ? 'font-weight-bolder' : null }}">{{ __('Бренды') }}</span>
           </a>
@@ -60,7 +60,7 @@
 
         <hr class="mt-2 mb-1 d-md-none d-block">
 
-        <div class="col-12 col-md-auto px-0 px-md-1 dropdown">
+        <div class="col-12 col-md-auto px-0 px-md-3 dropdown">
           <a href="#" class="text-dark dropdown-toggle border-hover text-decoration-none" role="button" id="dropdownBrandLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="{{ count($filter['size']) > 0 ? 'font-weight-bolder' : null }}">{{ __('Размеры') }}</span>
           </a>

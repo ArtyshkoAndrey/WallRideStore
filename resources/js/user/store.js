@@ -29,7 +29,19 @@ const store = new Vuex.Store({
         if (item.amount + amount === 0) {
           store.commit('removeItem', item.id)
         } else {
-          item.amount += amount
+          if (amount > 0) {
+            let product = state.cart.products.find(product => product.product_skuses.find(el => el.id === id))
+            let product_skus = product.product_skuses.find(el => el.id === id)
+            if (product_skus) {
+              console.log(product_skus)
+              console.log(id)
+              if (product_skus.stock > (item.amount + amount)) {
+                item.amount += amount
+              }
+            }
+          } else {
+            item.amount += amount
+          }
         }
       } else {
         state.cart.items.push({id: id, amount: amount})
