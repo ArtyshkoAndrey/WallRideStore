@@ -1,4 +1,4 @@
-@extends('user_1.layouts.app')
+@extends('user.layouts.app')
 
 @section('title', 'Подтверждение пароля')
 

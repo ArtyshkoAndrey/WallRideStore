@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\ExpressCompany;
+use Exception;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -44,11 +46,12 @@ class ExpressController extends Controller
   {
     $request->validate([
       'name' => 'required|unique:express_companies,name',
+      'description' => 'required',
       'min_cost' => 'required|min:0'
     ]);
 
-    $express = new ExpressCompany();
-    $express = $express->create($request->all());
+    $express = new ExpressCompany($request->all());
+    $express->save();
 
     return redirect()->route('admin.express.edit', $express->id)->with('success', ['Компания успешно создана']);
   }
@@ -69,6 +72,7 @@ class ExpressController extends Controller
    *
    * @param int $id
    * @return Application|Factory|View
+   * @throws BindingResolutionException
    */
   public function edit(int $id)
   {
@@ -87,6 +91,7 @@ class ExpressController extends Controller
   {
     $request->validate([
       'name' => 'required|unique:express_companies,name,' . $id,
+      'description' => 'required',
       'min_cost' => 'required|min:0'
     ]);
 
@@ -100,6 +105,7 @@ class ExpressController extends Controller
    *
    * @param int $id
    * @return RedirectResponse
+   * @throws Exception
    */
   public function destroy(int $id): RedirectResponse
   {

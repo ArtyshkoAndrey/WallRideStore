@@ -11,3 +11,22 @@
   }
 }
 
+
+.form-check-input[type=radio]:checked {
+  &:after {
+    border-color: $danger;
+    background-color: $danger;
+  }
+}
+
+.form-check-input {
+  &:checked {
+    border-color: $danger;
+    &:focus {
+      border-color: $danger;
+      &:before {
+        box-shadow: 0 0 0 13px $danger;
+      }
+    }
+  }
+}

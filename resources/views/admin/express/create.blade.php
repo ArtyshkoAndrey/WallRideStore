@@ -49,7 +49,13 @@
                   <div class="col-sm-12">
                     <div class="form-group">
                       <label for="name" class="required">Наименование</label>
-                      <input type="text" class="form-control" name="name" id="name" placeholder="Код" value="{{ old('name') }}" required>
+                      <input type="text" class="form-control" name="name" id="name" placeholder="Наименование" value="{{ old('name') }}" required>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label for="description" class="required">Краткое описание</label>
+                      <input type="text" class="form-control" name="description" id="description" placeholder="Описание" value="{{ old('description') }}" required>
                     </div>
                   </div>
 
