@@ -22,10 +22,17 @@ class SubHeaderWidget
       return Brand::orderBy('name', 'ASC')->get();
     });
 
+    $saleCategories = Cache::remember('sale-categories', config('app.cache.db'), function () {
+      return Category::whereHas('products', function($q) {
+        $q->where('on_sale', true);
+      })->withTranslation()->get();
+    });
+
 
     return view('Widget::sub-header', [
       'categories' => $categories,
-      'brands' => $brands
+      'brands' => $brands,
+      'saleCategories' => $saleCategories
     ]);
   }
 }
