@@ -107,7 +107,7 @@
                 @foreach($saleCategories as $category)
 
                   <div class="col-md-4 py-2">
-                    <a href="{{ route('product.all', ['category' => $category->id]) }}"
+                    <a href="{{ route('product.all', ['category' => $category->id, 'sale' => true]) }}"
                        class="text-gray-2">
                       {{ $category->name }}
                     </a>
