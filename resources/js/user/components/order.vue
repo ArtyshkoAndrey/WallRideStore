@@ -167,7 +167,6 @@ export default {
           onSuccess: (options) => { // success
             //действие при успешной оплате
             !this.$root.test ? this.$store.commit('clearCart') : null
-            console.log(options)
             this.windowsLoader = true
             window.axios.post('/order/update/status', {
               order: this.order.id,
@@ -188,7 +187,6 @@ export default {
           },
           onFail: (reason, options) => { // fail
             //действие при неуспешной оплате
-            console.log(reason, options)
             this.loaderButton = true
             window.Swal.fire({
               title: 'Вы не оплатили заказ!',
@@ -217,12 +215,11 @@ export default {
     cashPay () {
       this.createOrder()
         .then(response => {
-          console.log(response)
           !this.$root.test ? this.$store.commit('clearCart') : null
 
           window.Swal.fire({
             title: 'Успешно',
-            text: 'Заказ усмешно создан',
+            text: 'Заказ успешно создан',
             icon: 'success',
             confirmButtonText: 'Отследить'
           })
@@ -234,7 +231,6 @@ export default {
         .catch(error => {
           let errors = Object.values(error.response.data.errors)
           errors = errors.flat()
-          console.log(errors)
           let txt = ''
           errors.forEach(value => {
             txt += ('<p>' + value + '</p>')
@@ -260,10 +256,8 @@ export default {
           this.pay()
         })
         .catch(error => {
-          console.log(error)
           let errors = Object.values(error.response.data.errors)
           errors = errors.flat()
-          console.log(errors)
           let txt = ''
           errors.forEach(value => {
             txt += ('<p>' + value + '</p>')
@@ -289,6 +283,9 @@ export default {
       this.errors.ems = null
       this.ems.price = null
       this.ems.error = true
+
+      this.getCustomCompanies()
+
       window.axios.post('/api/cost-ems', {
         country_code: this.info.country.code,
         post_code: this.info.post_code,
@@ -301,8 +298,6 @@ export default {
         .catch(error => {
           this.errors.ems = error.response.data
         })
-
-      this.getCustomCompanies()
     },
     getCustomCompanies () {
       window.axios.post('/api/companies', {
@@ -310,7 +305,7 @@ export default {
         weight: this.$store.getters.weight,
       })
         .then(response => {
-         this.customCompanies = response.data.companies;
+         this.customCompanies = Object.values(response.data.companies);
         })
         .catch(error => {
           this.errors.ems = error.response.data
@@ -318,6 +313,13 @@ export default {
     }
   },
   computed: {
+    checkTransferZero () {
+      let ch = []
+      ch.push(this.info.city ? this.info.city.pickup : false)
+      ch.push(!this.ems.error && this.ems.price !== null)
+      ch.push( this.customCompanies.length >= 0)
+      return !ch.includes(true);
+    },
     price () {
       return this.$store.getters.priceAmount + (-this.price_with_sale + this.transfer.price) * this.$store.state.currency.ratio
     },
@@ -341,7 +343,6 @@ export default {
     disabled () {
       let disabled = false
       for (let key in this.info) {
-        console.log(!this.info[key] || this.info[key] === '')
         if (!this.info[key] || this.info[key] === '')
           disabled = true
       }
@@ -393,6 +394,16 @@ export default {
       handler: function (after, before) {
         this.resetTransfer()
         this.method_pay = null
+
+        if (after.name !== null && after.name !== '' && this.info.post_code !== null && this.info.post_code !== '') {
+          if(this.info.post_code.length >= 4)
+            this.getEmsCost()
+          else {
+            this.resetTransfer()
+            this.errors.ems = 'Почтовый индекс должен иметь 4 символа'
+            this.ems.error = true
+          }
+        }
       },
       deep: true
     },

@@ -19,7 +19,7 @@
 
   <title>{{ config('app.name') }} | @yield('title', '')</title>
 
-  @if (config('app.metrika', false))
+  @if (config('app.metrics'))
     <!— Global site tag (gtag.js) - Google Analytics —>
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-167190105-1"></script>
     <script>

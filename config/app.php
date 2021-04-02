@@ -31,7 +31,7 @@ return [
     'delay' => env('DELAY_CART_NOTIFY')
   ],
 
-  'metrika' => env('METRIKA', false),
+  'metrics' => env('METRICS', false),
 
   'cache' => [
     'db' => 600,

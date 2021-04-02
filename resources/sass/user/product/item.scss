@@ -1,3 +1,4 @@
+@import "../variables";
 .product {
   .card-body {
     .title {
@@ -52,7 +53,9 @@
 
       &:hover {
         .info {
-          opacity: 1;
+          @include respond-to(lg) {
+            opacity: 1;
+          }
         }
       }
     }

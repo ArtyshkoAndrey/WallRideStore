@@ -30,7 +30,7 @@
                 <city :id="'city'"
                       :name="'city'"
                       v-on:set="setCity"
-                      :city_props="{{ json_encode(auth()->user()->city ?? null) }}"
+                      :city_props="{{ json_encode(auth()->user()->city ?? null, JSON_THROW_ON_ERROR) }}"
                       ref="city"></city>
               </div>
 
@@ -123,105 +123,82 @@
               </div>
 
               <transition name="slide-fade" mode="out-in" appear>
-
-                <div class="col-12 mb-3"  v-if="info.city ? info.city.pickup : false" key="1">
-                  <div class="form-check d-flex ms-1 align-items-center">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="flexRadioDefault"
-                      id="flexRadioDefault0"
-                      :checked="transfer.name === 'pickup'"
-                      @click="setPickupTransfer"
-                    />
-                    <label class="form-check-label d-block ps-2" for="flexRadioDefault0">
-                      <strong>{{ __('Самовывоз из магазина') }} - 0 @{{ $store.state.currency.symbol }}</strong>
-                      <br>
+                <div class="col-12 mb-3" v-if="info.city ? info.city.pickup : false" key="1">
+                  <div class="row align-items-center">
+                    <div class="col-auto">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault0"
+                        :checked="transfer.name === 'pickup'"
+                        @click="setPickupTransfer"
+                      />
+                    </div>
+                    <div class="col ps-0">
+                      <label class="form-check-label d-block ps-2" for="flexRadioDefault0">
+                        <strong>{{ __('Самовывоз из магазина') }} - 0 @{{ $store.state.currency.symbol }}</strong>
+                        <br>
                         <span class="text-muted">{{ __('Закажите онлайн и заберите в нашем магазине') }}</span>
-                    </label>
-                  </div>
-                </div>
-
-                <div class="col-12 mb-3" v-else key="2">
-                  <div class="form-check d-flex ms-1 align-items-center">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="flexRadioDefault"
-                      id="flexRadioDefault0"
-                      disabled
-                    />
-                    <label class="form-check-label d-block ps-2" for="flexRadioDefault0">
-                      <strong>@{{ info.city.pickup !== null ? 'В вашем городе нет самовывоза' : 'Вы не выбрали город' }}</strong>
-                      <br>
-                      <span class="text-muted">Упс...</span>
-                    </label>
+                      </label>
+                    </div>
                   </div>
                 </div>
               </transition>
 
               <transition name="slide-fade" mode="out-in" appear>
-
-                <div class="col-12 mb-3" v-if="errors.ems !== null" :key="1">
-                  <div class="form-check d-flex ms-1 align-items-center">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="flexRadioDefault"
-                      id="flexRadioDefault1"
-                      disabled
-                    />
-                    <label class="form-check-label d-block ps-2" style="opacity: 1" for="flexRadioDefault1">
-                      <strong style="opacity: .5">{{ __('Стандартная доставка') }}</strong>
-                      <br>
-{{--                      <span class="text-muted"> <i class="far fa-shopping-bag"></i> Из магазина Алматы Мкр. Самал-3,1 </span>--}}
-                      <span class="text-danger">@{{ errors.ems }}</span>
-                      <br>
-                      <a target="_blank" href="https://wa.me/+77475562383?text=Здравствуйте!%20На%20вашем%20сайте%20нет%20моего%20города%20для%20доставки">{{ __('Написать в поддержку') }}</a>
-                    </label>
+                <div class="col-12 mb-3" v-if="!ems.error && ems.price !== null" :key="1">
+                  <div class="row align-items-center">
+                    <div class="col-auto">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault2"
+                        :checked="transfer.name === 'ems'"
+                        @click="setEmsTransfer"
+                      />
+                    </div>
+                    <div class="col ps-0">
+                      <label class="form-check-label d-block ps-2" for="flexRadioDefault2">
+                        <strong>{{ __('Стандартная доставка') }} - @{{ $cost(ems.price * $store.state.currency.ratio) }} @{{ $store.state.currency.symbol }}</strong>
+                        <br>
+                        <span class="text-muted">{{ __('Доставка осуществляется от 4 до 7 дней сервисом Kaz Post') }}</span>
+                      </label>
+                    </div>
                   </div>
                 </div>
-
-                <div class="col-12 mb-3" v-if="!ems.error && ems.price !== null" :key="2">
-                  <div class="form-check d-flex ms-1 align-items-center">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="flexRadioDefault"
-                      id="flexRadioDefault2"
-                      :checked="transfer.name === 'ems'"
-                      @click="setEmsTransfer"
-                    />
-                    <label class="form-check-label d-block ps-2" for="flexRadioDefault2">
-                      <strong>{{ __('Стандартная доставка') }} - @{{ $cost(ems.price * $store.state.currency.ratio) }} @{{ $store.state.currency.symbol }}</strong>
-                      <br>
-                      <span class="text-muted">{{ __('Доставка осуществляется от 4 до 7 дней сервисом Kaz Post') }}</span>
-                    </label>
-                  </div>
-                </div>
-
               </transition>
               <transition-group>
-
                 <div class="col-12 mb-3" v-for="company in customCompanies" :key="company.id">
-                  <div class="form-check ms-1 d-flex align-items-center">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="flexRadioDefault"
-                      :id="'flexRadioDefault-' + company.name"
-                      :checked="transfer.name === company.name"
-                      @click="setCompanyTransfer(company)"
-                    />
-                    <label class="form-check-label d-block ps-2" :for="'flexRadioDefault-' + company.name">
-                      <strong>@{{ company.name }} - @{{ $cost(company.price * $store.state.currency.ratio) }} @{{ $store.state.currency.symbol }}</strong>
-                      <br>
-                      <span class="text-muted">@{{ company.description }}</span>
-                    </label>
+                  <div class="row align-items-center">
+                    <div class="col-auto">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        :id="'flexRadioDefault-' + company.name"
+                        :checked="transfer.name === company.name"
+                        @click="setCompanyTransfer(company)"
+                      />
+                    </div>
+                    <div class="col ps-0">
+                      <label class="form-check-label d-block ps-2" :for="'flexRadioDefault-' + company.name">
+                        <strong>@{{ company.name }} - @{{ $cost(company.price * $store.state.currency.ratio) }} @{{ $store.state.currency.symbol }}</strong>
+                        <br>
+                        <span class="text-muted">@{{ company.description }}</span>
+                      </label>
+                    </div>
                   </div>
                 </div>
-
               </transition-group>
+
+              <transition name="slide-fade" mode="out-in" appear>
+                <div v-if="checkTransferZero" key="1">
+                  <p class="text-danger">{{ __('В ваш город нету ни одной доставки') }}</p>
+                  <a target="_blank" href="https://wa.me/+77475562383?text=Здравствуйте!%20На%20вашем%20сайте%20нет%20моего%20города%20для%20доставки">{{ __('Написать в поддержку') }}</a>
+                </div>
+              </transition>
 
               <transition name="slide-fade" mode="out-in" appear>
                 <div class="col-12" v-if="transfer.name !== null">
@@ -230,54 +207,49 @@
                       <p class="h4 title">{{ __('Оплата') }}</p>
                     </div>
                     @if($cash  &&  $cash->data === '1')
-{{--                      <div class="col-12 mb-3" v-if="transfer.name !== 'ems' && transfer.enabled_cash || transfer.name === 'pickup'">--}}
-{{--                        <div class="choosable-field"--}}
-{{--                             :class="method_pay === 'cash' ? 'active' : null"--}}
-{{--                             @click="setCashMethod">--}}
-{{--                          <div class="row">--}}
-{{--                            <div class="col-8 d-flex flex-column">--}}
-{{--                              <span class="title">{{ __('Оплата при получении') }}</span>--}}
-{{--                              <span class="description">{{ __('Оплатите курьеру или в магазине после получения') }}</span>--}}
-{{--                            </div>--}}
-{{--                          </div>--}}
-{{--                        </div>--}}
-{{--                      </div>--}}
-
                       <div class="col-12 mb-3" v-if="transfer.name !== 'ems' && transfer.enabled_cash || transfer.name === 'pickup'">
-                        <div class="form-check choosable-field d-flex align-items-center">
-                          <input
-                            class="form-check-input ms-1"
-                            type="radio"
-                            name="cash"
-                            id='cash'
-                            :checked="method_pay === 'cash'"
-                            @click="setCashMethod"
-                          />
-                          <label class="form-check-label d-block ps-2" for="cash">
-                            <strong>{{ __('Оплата при получении') }}</strong>
-                            <br>
-                            <span class="text-muted">{{ __('Оплатите курьеру или в магазине после получения') }}</span>
-                          </label>
+                        <div class="row choosable-field align-items-center">
+                          <div class="col-auto">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              name="cash"
+                              id='cash'
+                              :checked="method_pay === 'cash'"
+                              @click="setCashMethod"
+                            />
+                          </div>
+                          <div class="col">
+                            <label class="form-check-label d-block ps-2" for="cash">
+                              <strong>{{ __('Оплата при получении') }}</strong>
+                              <br>
+                              <span class="text-muted">{{ __('Оплатите курьеру или в магазине после получения') }}</span>
+                            </label>
+                          </div>
                         </div>
                       </div>
                     @endif
 
                     @if($cloudPayment  &&  $cloudPayment->data === '1')
                       <div class="col-12 mb-3" v-if="!isNaN(transfer.enabled_card) ? transfer.enabled_card : true">
-                        <div class="form-check choosable-field d-flex align-items-center">
-                          <input
-                            class="form-check-input ms-1"
-                            type="radio"
-                            name="cloudPay"
-                            id='cloudPayment'
-                            :checked="method_pay === 'cloudPayment'"
-                            @click="setCloudPaymentMethod"
-                          />
-                          <label class="form-check-label d-block ps-2" for="cloudPayment">
-                            <strong>{{ __('Оплатить онлайн') }}</strong>
-                            <br>
-                            <span class="text-muted">{{ __('Оплатите онлайн любым удобным способом через сервис cloud payments') }}</span>
-                          </label>
+                        <div class="row choosable-field align-items-center">
+                          <div class="col-auto">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              name="cloudPay"
+                              id='cloudPayment'
+                              :checked="method_pay === 'cloudPayment'"
+                              @click="setCloudPaymentMethod"
+                            />
+                          </div>
+                          <div class="col">
+                            <label class="form-check-label d-block ps-2" for="cloudPayment">
+                              <strong>{{ __('Оплатить онлайн') }}</strong>
+                              <br>
+                              <span class="text-muted">{{ __('Оплатите онлайн любым удобным способом через сервис cloud payments') }}</span>
+                            </label>
+                          </div>
                         </div>
                       </div>
                     @endif
@@ -411,40 +383,6 @@
 
 @section('js')
   <script src="https://widget.cloudpayments.ru/bundles/cloudpayments"></script>
-
-  <script>
-
-    pay = function () {
-      let widget = new cp.CloudPayments();
-      widget.pay('auth', // или 'charge'
-        { //options
-          publicId: 'test_api_00000000000000000000001', //id из личного кабинета
-          description: 'Оплата товаров в example.com', //назначение
-          amount: 100, //сумма
-          currency: 'RUB', //валюта
-          invoiceId: '1234567', //номер заказа  (необязательно)
-          accountId: 'user@example.com', //идентификатор плательщика (необязательно)
-          skin: "mini", //дизайн виджета (необязательно)
-          data: {
-            myProp: 'myProp value'
-          }
-        },
-        {
-          onSuccess: function (options) { // success
-            //действие при успешной оплате
-          },
-          onFail: function (reason, options) { // fail
-            //действие при неуспешной оплате
-          },
-          onComplete: function (paymentResult, options) { //Вызывается как только виджет получает от api.cloudpayments ответ с результатом транзакции.
-            //например вызов вашей аналитики Facebook Pixel
-          }
-        }
-      )
-    };
-
-    // $('#checkout').click(pay);
-  </script>
   <script>
     $('#phone').mask('+7 (000) 000-00-00')
   </script>

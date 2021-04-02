@@ -235,6 +235,7 @@ class ApiController extends Controller
    *
    * @param Request $request
    * @return JsonResponse
+   * @throws \Illuminate\Contracts\Container\BindingResolutionException
    */
   public function companies(Request $request): JsonResponse
   {

@@ -14,9 +14,9 @@
             <p class="py-2 mb-0 text-white px-3">
               @foreach($product->skuses as $skus)
                 @if($loop->last)
-                  {{ $skus->title }}
+                  <span style="white-space: nowrap">{{ $skus->title }}</span>
                 @else
-                  {{ $skus->title }},
+                  <span style="white-space: nowrap">{{ $skus->title }},</span>
                 @endif
               @endforeach
             </p>

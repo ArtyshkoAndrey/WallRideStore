@@ -102,7 +102,12 @@
                 <div class="col-6">
                   <p class="h5 text-muted">{{ __('Sale') }}</p>
                 </div>
-                <div class="col-6"></div>
+                <div class="col-2"></div>
+                <div class="col-4">
+                  <a href="{{ route('product.all', ['sale' => true]) }}" class="text-dark h6 text-decoration-underline">
+                    Все товары
+                  </a>
+                </div>
 
                 @foreach($saleCategories as $category)
 
