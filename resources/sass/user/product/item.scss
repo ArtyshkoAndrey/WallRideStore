@@ -36,6 +36,7 @@
       }
 
       .info {
+        font-size: 12px;
         position: absolute;
         bottom: 0;
         left: 0;
@@ -44,11 +45,11 @@
         background: rgba(0, 0, 0, 0.3);
         backdrop-filter: blur(6px);
         transition: opacity .3s ease-out;
-        -webkit-line-clamp: 2;
-        display: -webkit-box;
-        overflow: hidden;
-        -webkit-box-orient: vertical;
-        height: 4.1rem;
+        //-webkit-line-clamp: 3;
+        //display: -webkit-box;
+        //overflow: hidden;
+        //-webkit-box-orient: vertical;
+        //height: 4.4rem;
       }
 
       &:hover {

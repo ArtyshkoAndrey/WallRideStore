@@ -19,6 +19,15 @@
                   <span style="white-space: nowrap">{{ $skus->title }},</span>
                 @endif
               @endforeach
+{{--              <span style="white-space: nowrap">US 8.5/EUR 41,</span>--}}
+{{--              <span style="white-space: nowrap">US 9.5/EUR 42.5,</span>--}}
+{{--              <span style="white-space: nowrap">US 10/EUR 43,</span>--}}
+{{--              <span style="white-space: nowrap">US 7.5/EUR 40,</span>--}}
+{{--              <span style="white-space: nowrap">US 5.5/EUR 37,</span>--}}
+{{--              <span style="white-space: nowrap">US 10.5/EUR 44,</span>--}}
+{{--              <span style="white-space: nowrap">US 9/EUR 42,</span>--}}
+{{--              <span style="white-space: nowrap">US 7/EUR 39</span>--}}
+{{----}}
             </p>
           </div>
         </a>
