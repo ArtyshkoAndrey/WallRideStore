@@ -34,4 +34,4 @@
 
   Route::post('cost-ems', [ApiController::class, 'getCostEms']);
   Route::post('companies', [ApiController::class, 'companies']);
-  //Route::get('get/products', [ApiController::class, 'parser']);
+//  Route::get('get/products', [ApiController::class, 'parser']);

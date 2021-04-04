@@ -287,11 +287,13 @@ class ApiController extends Controller
       throw new RuntimeException('Ошибка страницы');
     }
 
-    $response = Http::get('https://wallridestore.com/api/get/products?page=' . $page);
-    $products = $response->json()['products']['data'];
+    for($i = 4; $i >= 1; $i--) {
+      $response = Http::get('https://wallridestore.com/api/get/products?page=' . $i);
+      $products = $response->json()['products']['data'];
 //    dd($products);
-//    foreach ($products as $product) {
-//      (new \App\Services\ProductService)->create($product);
-//    }
+      foreach ($products as $product) {
+        (new \App\Services\ProductService)->create($product);
+      }
+    }
   }
 }
