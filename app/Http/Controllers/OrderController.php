@@ -13,7 +13,6 @@ use App\Models\Order;
 use App\Models\Setting;
 use App\Models\User;
 use App\Notifications\AdminPaidOrderNotification;
-use App\Notifications\ChangeOrderUser;
 use App\Notifications\CreateOrderNotification;
 use App\Notifications\PaymentOrderNotification;
 use App\Notifications\RegisterPassword;

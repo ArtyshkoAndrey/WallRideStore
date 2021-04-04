@@ -2,13 +2,14 @@
 
 namespace App\Notifications;
 
+use App\Models\Category;
 use App\Models\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ChangeOrderUser extends Notification
+class TrackCodeOrder extends Notification
 {
   use Queueable;
 
@@ -44,13 +45,14 @@ class ChangeOrderUser extends Notification
    */
   public function toMail($notifiable): MailMessage
   {
+    $category = Category::whereDoesntHave('parents')->get();
+
     return (new MailMessage)
-      ->greeting('Здраствуйте')
-      ->subject('Ваш заказ был обновлён')
-      ->line('Статус вашего заказ был изменён. Зайдите в прочиль что бы узать подробнее.')
-      ->action('Профиль', route('order.index'))
-//      TODO: Изменить ссылку
-      ->line('Спасибо что покупаете у нас!');
+      ->subject('Номер отслеживания в заказе № ' . $this->order->no . ' успешно изменён')
+      ->view('emails.order.track-code', [
+        'order' => $this->order,
+        'category' => $category
+      ]);
   }
 
   /**
