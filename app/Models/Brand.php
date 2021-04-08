@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\BrandFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -54,6 +55,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Brand whereLogo($value)
  * @method static Builder|Brand wherePhoto($value)
  * @method static Builder|Brand whereToIndex($value)
+ * @method static BrandFactory factory(...$parameters)
  */
 class Brand extends Model implements TranslatableContract
 {

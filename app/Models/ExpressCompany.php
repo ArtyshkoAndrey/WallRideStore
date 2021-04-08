@@ -40,6 +40,8 @@ use Illuminate\Support\Carbon;
  * @method static Builder|ExpressCompany whereTrackUrl($value)
  * @method static Builder|ExpressCompany whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property string|null $description
+ * @method static Builder|ExpressCompany whereDescription($value)
  */
 class ExpressCompany extends Model
 {

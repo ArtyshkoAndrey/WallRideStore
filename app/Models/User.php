@@ -73,6 +73,7 @@ use Illuminate\Support\Carbon;
  * @property int|null $city_id
  * @method static Builder|User whereCityId($value)
  * @method static Builder|User whereCountryId($value)
+ * @method static \Database\Factories\UserFactory factory(...$parameters)
  */
 class User extends Authenticatable
 {

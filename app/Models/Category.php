@@ -51,6 +51,7 @@ use Illuminate\Support\Carbon;
  * @property-read Collection|Product[] $products
  * @property-read int|null $products_count
  * @method static Builder|Category wherePhoto($value)
+ * @method static \Database\Factories\CategoryFactory factory(...$parameters)
  */
 class Category extends Model implements TranslatableContract
 {

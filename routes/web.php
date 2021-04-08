@@ -2,7 +2,8 @@
 
   use App\Http\Controllers\Admin\FAQController;
   use App\Http\Controllers\Admin\HomeController;
-  use App\Http\Controllers\Admin\PickupController;
+use App\Http\Controllers\Admin\ModalController;
+use App\Http\Controllers\Admin\PickupController;
   use App\Http\Controllers\Admin\PostController;
   use App\Http\Controllers\Admin\SettingController;
   use App\Http\Controllers\Admin\SliderController;
@@ -56,6 +57,7 @@
 
   Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('index');
+
     Route::get('/redirect', [HomeController::class, 'redirect'])->name('redirect');
 
     Route::resource('order', App\Http\Controllers\Admin\OrderController::class)->except([
@@ -77,17 +79,21 @@
     Route::resource('express-zone', App\Http\Controllers\Admin\ExpressZoneController::class)->except([
       'show'
     ]);
+
     Route::post('/express-zone/{id}/destroy', [App\Http\Controllers\Admin\ExpressZoneController::class, 'destroyCity'])->name('express-zone.destroyCity');
 
     Route::resource('skus-category', App\Http\Controllers\Admin\SkusCategoryController::class)->only([
       'store', 'destroy'
     ]);
+
     Route::resource('brand', App\Http\Controllers\Admin\BrandController::class)->except([
       'create', 'show', 'edit'
     ]);
+
     Route::resource('category', App\Http\Controllers\Admin\CategoryController::class)->except([
       'create', 'show', 'edit'
     ]);
+
     Route::resource('coupon', App\Http\Controllers\Admin\CouponController::class)->except([
       'show'
     ]);
@@ -95,6 +101,13 @@
     Route::resource('post', PostController::class)->except([
       'show'
     ]);
+
+    Route::resource('modal', ModalController::class)->except([
+      'show'
+    ]);
+    Route::post('modal/photo/store', [ModalController::class, 'photo_store'])->name('modal.photo.store');
+    Route::post('modal/photo/delete', [ModalController::class, 'photo_delete'])->name('modal.photo.delete');
+
     Route::post('post/content-image', [PostController::class, 'content_mage'])->name('post.content-image');
     Route::post('post/photo/store', [PostController::class, 'photo_store'])->name('post.photo.store');
     Route::post('post/photo/delete', [PostController::class, 'photo_delete'])->name('post.photo.delete');

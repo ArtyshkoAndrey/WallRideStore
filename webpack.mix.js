@@ -15,5 +15,5 @@ if (mix.inProduction()) {
   mix.version();
 }
 
-mix.browserSync('http://wallridestore/');
+mix.browserSync('http://wallridestore:8080/');
 mix.disableNotifications();

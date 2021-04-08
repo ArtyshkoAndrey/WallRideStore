@@ -73,7 +73,7 @@ class Faqs extends Model implements TranslatableContract
   public function getPhotoStorageJpgAttribute(): string
   {
     if ($this->image) {
-      return asset(Faqs::PHOTO_PATH . $this->image . '.jpg');
+      return asset(self::PHOTO_PATH . $this->image . '.jpg');
     }
     return asset('images/user-o.jpg');
   }
@@ -81,7 +81,7 @@ class Faqs extends Model implements TranslatableContract
   public function getPhotoStorageWebpAttribute(): string
   {
     if ($this->image) {
-      return asset(Faqs::PHOTO_PATH . $this->image . '.webp');
+      return asset(self::PHOTO_PATH . $this->image . '.webp');
     }
     return asset('images/user-o.jpg');
   }
