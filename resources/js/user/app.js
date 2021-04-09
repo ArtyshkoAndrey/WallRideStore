@@ -9,11 +9,13 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+import Cookies from "js-cookie";
 require('./bootstrap.js')
 require('./header.js')
 require('./root.js')
 import Alert from './Alert';
 import store from "./store";
+import Modals from "./Modals";
 window.Vue = require('vue')
 
 
@@ -51,7 +53,8 @@ const app = new Vue({
     return {
       test: !process.env.NODE_ENV || process.env.NODE_ENV === 'development',
       cartLoader: true,
-      selectSkus: null
+      selectSkus: null,
+      modal: []
     }
   },
   async created () {
@@ -118,7 +121,14 @@ const app = new Vue({
         // alert(error.response.data)
       })
 
+    // Cookies.set('modals', JSON.stringify([1, 2, 3, 4]));
+    // console.log(JSON.parse(Cookies.get('modals')))
+
     this.cartLoader = false
+  },
+  mounted() {
+    this.$store.dispatch('deleteModals')
+    this.modal = new Modals(this.$store, this)
   },
   computed: {
     productsCart() {

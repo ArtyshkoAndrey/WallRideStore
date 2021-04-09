@@ -20,6 +20,7 @@ const store = new Vuex.Store({
     currency_id: 1,
     auth: false,
     user: null,
+    modals: [],
     version: '1.2',
   },
   mutations: {
@@ -93,6 +94,14 @@ const store = new Vuex.Store({
       state.currency_id = user ? user.currency_id ?? state.currency_id : state.currency_id
       store.dispatch('getCartItems')
     },
+    addModal: (state, id) => {
+      if (state.modals[id] === null || state.modals[id] === undefined) {
+        state.modals.push({
+          id: id,
+          date: new Date(1999,11,31)
+        })
+      }
+    }
   },
   getters: {
     productFavor: state => id => {
@@ -223,6 +232,14 @@ const store = new Vuex.Store({
           }
           // alert(error.response.data)
         })
+    },
+    deleteModals: ({commit, state}) => {
+      state.modals.forEach(modal => {
+        if ((new Date().getTime() - new Date(modal.date).getTime()) / (24*3600*1000*7) > 1) {
+          console.log('delete modal')
+          state.modals = state.modals.filter( e => e.id !== modal.id )
+        }
+      })
     }
   },
   plugins: [createPersistedState()],

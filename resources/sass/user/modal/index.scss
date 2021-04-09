@@ -1,0 +1,30 @@
+.modal-user {
+  .modal-dialog {
+    min-width: 600px
+  }
+  .modal-content {
+    border-radius: 0;
+    position: relative;
+
+    #modal-photo {
+      min-height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    h4 {
+      line-height: 1.5em;
+      font-weight: 800;
+    }
+    .modal-description-text > * {
+      font-size: 0.9em!important;
+      color: $gray-1;
+    }
+
+    .btn-close {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+    }
+  }
+}

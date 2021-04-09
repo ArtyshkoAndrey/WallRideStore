@@ -1,7 +1,8 @@
 <?php
 
   use App\Http\Controllers\Api\ApiController;
-  use Illuminate\Http\Request;
+use App\Http\Controllers\Api\ModalController;
+use Illuminate\Http\Request;
   use Illuminate\Support\Facades\Route;
 
   /*
@@ -34,4 +35,5 @@
 
   Route::post('cost-ems', [ApiController::class, 'getCostEms']);
   Route::post('companies', [ApiController::class, 'companies']);
+  Route::get('modals', [ModalController::class, 'index']);
 //  Route::get('get/products', [ApiController::class, 'parser']);

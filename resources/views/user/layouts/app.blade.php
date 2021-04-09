@@ -58,7 +58,7 @@
   </div>
 
   <div class="wrapper">
-    <div id="app">
+    <div id="app" ref="app">
 
       @include('user.layouts.header.alerts')
 

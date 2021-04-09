@@ -83,6 +83,10 @@ class Modal extends Model implements TranslatableContract
     'text_to_link'
   ];
 
+  public $appends = [
+    'photo_jpg_storage'
+  ];
+
   public const PHOTO_PATH = 'storage/modals/photo/';
 
   /**
