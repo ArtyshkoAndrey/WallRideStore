@@ -1,6 +1,6 @@
 import Alert from "./Alert";
 import Cookies from 'js-cookie';
-import Modal1 from './components/modal-1'
+import Modal1 from './components/modal-3'
 import Vue from 'vue'
 export default class Modals {
 
