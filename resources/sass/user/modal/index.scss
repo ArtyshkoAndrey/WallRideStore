@@ -1,6 +1,12 @@
+.modal {
+  padding-right: 0!important;
+}
+
 .modal-user {
   .modal-dialog {
-    min-width: 600px
+    @media screen and (min-width: 650px) {
+      min-width: 600px;
+    }
   }
   .modal-content {
     border-radius: 0;

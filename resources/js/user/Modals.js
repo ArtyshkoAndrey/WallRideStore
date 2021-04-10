@@ -1,7 +1,10 @@
 import Alert from "./Alert";
 import Cookies from 'js-cookie';
-import Modal1 from './components/modal-3'
+import Modal1 from './components/modal-1'
+import Modal2 from './components/modal-2'
+import Modal3 from './components/modal-3'
 import Vue from 'vue'
+import brand from "../admin/components/brand";
 export default class Modals {
 
   constructor(store, vue) {
@@ -13,13 +16,19 @@ export default class Modals {
       .then(r => {
         this.modals = r.data.modals
         console.log(this.modals)
-        this.modals.forEach(modal => {
-          let m = this.store.state.modals.find(el => el.id === modal.id)
+
+        for (let key in this.modals) {
+          let m = this.store.state.modals.find(el => el.id === this.modals[key].id)
           if(m === undefined) {
-            this.store.commit('addModal', modal.id)
-            this.openModal(modal)
+            if (this.modals[key].on_auth && this.store.state.auth || this.modals[key].on_auth === false) {
+              console.log(this.modals[key].on_auth && this.store.state.auth || this.modals[key].on_auth === false)
+              console.log(this.modals[key].on_auth && this.store.state.auth)
+              this.store.commit('addModal', this.modals[key].id)
+              this.openModal(this.modals[key])
+              break
+            }
           }
-        })
+        }
 
       })
       .catch(e => {
@@ -32,13 +41,24 @@ export default class Modals {
   }
 
   openModal(modal) {
-    let modal1 = Vue.extend(Modal1)
-    let instance = new modal1({
-      propsData: {modal: modal}
-    })
-    instance.$mount()
-    console.log(this.vue.$refs)
-    this.vue.$refs.app.appendChild(instance.$el)
+    setTimeout(() => {
+      let modalVue
+      if (modal.type === 1) {
+        modalVue = Vue.extend(Modal1)
+      } else if (modal.type === 2) {
+        modalVue = Vue.extend(Modal2)
+      } else {
+        modalVue = Vue.extend(Modal3)
+      }
+
+      let instance = new modalVue({
+        propsData: {modal: modal}
+      })
+      instance.$mount()
+      // TODO: Подумать как сделать что бы окно было после прелоадера
+
+      this.vue.$refs.app.appendChild(instance.$el)
+    }, 2000)
   }
 
 }

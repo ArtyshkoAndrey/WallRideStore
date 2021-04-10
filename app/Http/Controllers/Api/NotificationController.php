@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Notifications\UserSubscribeNotification;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -28,6 +29,7 @@ class NotificationController extends Controller
         $user->notification = true;
         if (!$user->old_notification) {
           $user->old_notification = true;
+          $user->notify(new UserSubscribeNotification($user));
 //          TODO: Рассылка о том что первый раз подпислись
         }
         $user->save();

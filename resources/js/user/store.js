@@ -99,6 +99,7 @@ const store = new Vuex.Store({
         state.modals.push({
           id: id,
           date: new Date(1999,11,31)
+          // date: new Date()
         })
       }
     }

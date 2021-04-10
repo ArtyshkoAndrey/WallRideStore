@@ -40802,8 +40802,14 @@ img.dark-image-75 {
   filter: brightness(25%);
 }
 
-.modal-user .modal-dialog {
-  min-width: 600px;
+.modal {
+  padding-right: 0 !important;
+}
+
+@media screen and (min-width: 650px) {
+  .modal-user .modal-dialog {
+    min-width: 600px;
+  }
 }
 .modal-user .modal-content {
   border-radius: 0;
