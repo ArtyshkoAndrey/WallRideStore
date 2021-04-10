@@ -30,7 +30,7 @@
                   <p class="text-success" v-for="s in success">{{ s }}</p>
                 </div>
                 <div class="form-outline mx-5">
-                  <input type="email" v-model="email" id="email" class="form-control text-danger" />
+                  <input type="email" v-model="email" id="email" class="form-control" />
                   <label class="form-label" for="email">Email</label>
                 </div>
                 <div class="mt-4 mb-4">
@@ -97,12 +97,16 @@ export default {
         })
         .then(r => {
           this.success = []
-          this.success.push('Почта успешно добавлена к рассылки')
+          this.success.push(r.data)
           this.disable = true
           this.loader = false
         })
         .catch(e => {
-          this.errors.push('Произошла ошибка. Повторите попытку позже')
+          if (e.response.data.message) {
+            this.errors.push(e.response.data.message)
+          } else {
+            this.errors.push('Произошла ошибка. Повторите попытку позже')
+          }
           this.loader = false
         })
 

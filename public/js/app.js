@@ -2488,12 +2488,16 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function (r) {
           _this2.success = [];
 
-          _this2.success.push('Почта успешно добавлена к рассылки');
+          _this2.success.push(r.data);
 
           _this2.disable = true;
           _this2.loader = false;
         })["catch"](function (e) {
-          _this2.errors.push('Произошла ошибка. Повторите попытку позже');
+          if (e.response.data.message) {
+            _this2.errors.push(e.response.data.message);
+          } else {
+            _this2.errors.push('Произошла ошибка. Повторите попытку позже');
+          }
 
           _this2.loader = false;
         });
@@ -44409,7 +44413,7 @@ var render = function() {
                               expression: "email"
                             }
                           ],
-                          staticClass: "form-control text-danger",
+                          staticClass: "form-control",
                           attrs: { type: "email", id: "email" },
                           domProps: { value: _vm.email },
                           on: {
