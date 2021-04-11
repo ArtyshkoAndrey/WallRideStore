@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Notifications\UserSubscribeNotification;
@@ -20,9 +21,12 @@ class NotificationController extends Controller
   public function updateUserNotification(Request $request): JsonResponse
   {
     $request->validate([
-      'email' => 'required|email'
+      'email' => 'required|email',
+      'language' => 'required|string'
     ]);
     $email = $request->get('email');
+    $language = $request->get('language', 'ru');
+    App::setLocale($language);
     $user = User::whereEmail($email)->first();
     if ($user) {
       if (!$user->notification) {
@@ -30,13 +34,12 @@ class NotificationController extends Controller
         if (!$user->old_notification) {
           $user->old_notification = true;
           $user->notify(new UserSubscribeNotification($user));
-//          TODO: Рассылка о том что первый раз подпислись
         }
         $user->save();
-        return response()->json('Вы успешно подписали. Вым был выслан промокод на скидку при следующей покупке');
+        return response()->json(__('email.subscribe'));
       }
-      return response()->json('Данная почта уже участвует в рассылке');
+      return response()->json(__('email.subscribe-already'));
     }
-    return response()->json(['message' => 'Данной почты не существует'], 500);
+    return response()->json(['message' => __('email.error')], 500);
   }
 }

@@ -150,6 +150,15 @@
       Компании доставки
     </a>
 
+    <a href="{{ route('admin.modal.index') }}"
+       class="sidebar-link sidebar-link-with-icon {{ Route::currentRouteNamed('admin.modal.*') ? 'active' : '' }}">
+      <span class="sidebar-icon bg-transparent justify-content-start mr-0">
+        <i class="bx bxs-news"
+           aria-hidden="true"></i>
+      </span>
+      Модальные окна
+    </a>
+
     <br />
     <h5 class="sidebar-title">
       Товары

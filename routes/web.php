@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\PickupController;
   Route::get('policy', [\App\Http\Controllers\HomeController::class, 'policy'])->name('policy');
   Route::post('auth/check', [App\Http\Controllers\ApiController::class, 'check']);
 
+
   Route::prefix('product')->name('product.')->group(function () {
     Route::get('/search', [ProductController::class, 'search'])->name('search');
     Route::get('/all', [ProductController::class, 'all'])->name('all');
@@ -43,7 +44,10 @@ use App\Http\Controllers\Admin\PickupController;
       Route::put('password', [ProfileController::class, 'password'])->name('password');
     });
     Route::get('/', [ProfileController::class, 'index'])->name('index');
+    Route::get('notification/subscribe', [ProfileController::class, 'subscribe'])->name('notification.subscribe');
+    Route::get('notification/unsubscribe', [ProfileController::class, 'unsubscribe'])->name('notification.unsubscribe');
   });
+  Route::get('notification/unsubscribe-email', [ProfileController::class, 'unsubscribeEmail'])->name('profile.notification.unsubscribe.email');
 
   Route::prefix('order')->name('order.')->group(function () {
     Route::get('/', [OrderController::class, 'index'])->middleware('auth')->name('index');

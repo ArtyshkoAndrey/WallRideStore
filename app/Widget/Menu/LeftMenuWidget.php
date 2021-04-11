@@ -16,7 +16,7 @@ class LeftMenuWidget implements ContractWidget
       return Brand::orderBy('name', 'ASC')->get();
     });
 
-    $categories = Cache::remember('categories-menu', config('app.cache.bd'), function () {
+    $categories = Cache::remember('categories-menu-' . \App::getLocale(), config('app.cache.bd'), function () {
       return Category::orderByTranslation('name')->withTranslation()->whereDoesntHave('parents')->with('child')->get();
     });
 

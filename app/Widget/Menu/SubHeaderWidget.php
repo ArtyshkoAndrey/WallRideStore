@@ -14,7 +14,7 @@ class SubHeaderWidget
    */
   public function execute()
   {
-    $categories = Cache::remember('categories-menu', config('app.cache.bd'), function () {
+    $categories = Cache::remember('categories-menu-' . \App::getLocale(), config('app.cache.bd'), function () {
       return Category::orderByTranslation('name')->withTranslation()->whereDoesntHave('parents')->with('child')->get();
     });
 
@@ -22,7 +22,7 @@ class SubHeaderWidget
       return Brand::orderBy('name', 'ASC')->get();
     });
 
-    $saleCategories = Cache::remember('sale-categories', config('app.cache.db'), function () {
+    $saleCategories = Cache::remember('sale-categories-' . \App::getLocale(), config('app.cache.db'), function () {
       return Category::whereHas('products', function($q) {
         $q->where('on_sale', true);
       })->withTranslation()->get();

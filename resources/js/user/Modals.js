@@ -4,7 +4,6 @@ import Modal1 from './components/modal-1'
 import Modal2 from './components/modal-2'
 import Modal3 from './components/modal-3'
 import Vue from 'vue'
-import brand from "../admin/components/brand";
 export default class Modals {
 
   constructor(store, vue) {
@@ -33,10 +32,10 @@ export default class Modals {
       })
       .catch(e => {
         console.log(e)
-        // for (let key in e.response.data) {
-        //   Alert.warning(e.response.data[key])
-        //   break;
-        // }
+        for (let key in e.response.data) {
+          Alert.warning(e.response.data[key])
+          break;
+        }
       })
   }
 

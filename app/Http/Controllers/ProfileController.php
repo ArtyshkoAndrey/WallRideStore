@@ -8,6 +8,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\User;
+use App\Notifications\UserSubscribeNotification;
 use File;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Foundation\Application;
@@ -92,13 +93,63 @@ class ProfileController extends Controller
    */
   public function password(Request $request): RedirectResponse
   {
-    $user = auth()->user();
+    $userId = auth()->id();
+    $user = User::find($userId);
+    if ($user) {
+      $request->validate([
+        'password' => 'required|confirmed'
+      ]);
+      $user->password = Hash::make($request->get('password'));
+      $user->save();
+      return redirect()->route('profile.index')->with('success', [__('success.password')]);
+    }
+
+    return redirect()->route('index')->with('error', ['Error Auth']);
+  }
+
+  public function subscribe (): RedirectResponse
+  {
+    $user = User::find(auth()->id());
+
+    if ($user) {
+      if (!$user->notification) {
+        $user->notification = true;
+        if (!$user->old_notification) {
+          $user->old_notification = true;
+          $user->notify(new UserSubscribeNotification($user));
+        }
+        $user->save();
+        return redirect()->back()->with('success', [__('email.subscribe')]);
+      }
+      return redirect()->back()->with('success', [__('email.subscribe-already')]);
+    }
+    return redirect()->back()->with('error', [__('email.error')]);
+  }
+
+  public function unsubscribe (): RedirectResponse
+  {
+    $userId = auth()->id();
+    $user = User::find($userId);
+    if ($user) {
+      $user->notification = false;
+      $user->save();
+      return redirect()->back()->with('success', [__('email.unsubscribe')]);
+    }
+    return redirect()->back()->with('error',[__('email.error')]);
+  }
+
+  public function unsubscribeEmail (Request $request): RedirectResponse
+  {
     $request->validate([
-      'password' => 'required|confirmed'
+      'email' => 'required|exists:users,email'
     ]);
-    $user->password = Hash::make($request->password);
-    $user->save();
-    return redirect()->route('profile.index')->with('success', [__('success.password')]);
+    $user = User::whereEmail($request->get('email'))->first();
+    if ($user) {
+      $user->notification = false;
+      $user->save();
+      return redirect()->route('index')->with('success', [__('email.unsubscribe')]);
+    }
+    return redirect()->route('index')->with('error',[__('email.error')]);
   }
 
 }

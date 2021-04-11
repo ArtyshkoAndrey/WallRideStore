@@ -15,8 +15,12 @@
 
 ## Cache
  - `brands-menu` - Бренды в меню
- - `caegories-menu` - Категории в меню
+ - `categories-menu-ru` - Категории в меню Rus
+ - `categories-menu-en` - Категории в меню 
+ - `sale-categories-ru/en` - Категории где есть скидка товары
  - `brands-to-index` - Бренды 6 штук на главном экране
+ - `similar-products-($id)` - Продукты в категории
+ - `all-categories-id` - id категории
  - `currencies` - Валюта
 
 

@@ -61,6 +61,13 @@
                       <button type="submit" class="btn btn-dark m-0 rounded-0">{{ __('Сохранить') }}</button>
                     </form>
                   </div>
+                  <div class="col-12 mt-5">
+                    @if(auth()->user()->notification)
+                      <a href="{{ route('profile.notification.unsubscribe') }}" class="btn btn-dark">{{ __('Отписаться от новостной рассылки') }}</a>
+                    @else
+                      <a href="{{ route('profile.notification.subscribe') }}" class="btn btn-dark">{{ __('Подписаться на новостную рассылку') }}</a>
+                    @endif
+                  </div>
                 </div>
               </div>
               <div class="col-md-8 px-3 px-md-2 mt-4 mt-md-0">

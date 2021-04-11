@@ -23,7 +23,8 @@
                 method="post"
               >
                 <div v-if="errors.length">
-                  <b>Пожалуйста исправьте указанные ошибки:</b>
+                  <b v-if="language === 'ru'">Пожалуйста исправьте указанные ошибки:</b>
+                  <b v-else>Please correct the indicated errors:</b>
                   <p class="text-danger" v-for="error in errors">{{ error }}</p>
                 </div>
                 <div v-if="success.length">
@@ -54,6 +55,7 @@
 
 <script>
 import * as mdb from 'mdb-ui-kit'; // lib
+import Cookie from 'js-cookie';
 export default {
   name: "modal-3",
   props: {
@@ -65,7 +67,8 @@ export default {
       errors: [],
       success: [],
       disable: false,
-      loader: false
+      loader: false,
+      language: Cookie.get('language')
     }
   },
   created () {
@@ -83,17 +86,24 @@ export default {
       this.errors = [];
 
       if (!this.email) {
-        this.errors.push('Укажите электронную почту.');
+        if (this.language === 'ru')
+          this.errors.push('Укажите электронную почту.');
+        else
+          this.errors.push('Enter your email.');
         this.loader = false
       } else if (!this.validEmail(this.email)) {
-        this.errors.push('Укажите корректный адрес электронной почты.');
+        if (this.language === 'ru')
+          this.errors.push('Укажите корректный адрес электронной почты.');
+        else
+          this.errors.push('Please enter a valid email address.');
       }
 
       this.loader = true
 
       if (this.errors.length === 0) {
         window.axios.put('/api/notification', {
-          email: this.email
+          email: this.email,
+          language: this.language ?? 'ru'
         })
         .then(r => {
           this.success = []
@@ -105,7 +115,10 @@ export default {
           if (e.response.data.message) {
             this.errors.push(e.response.data.message)
           } else {
-            this.errors.push('Произошла ошибка. Повторите попытку позже')
+            if (this.language === 'ru')
+              this.errors.push('Произошла ошибка. Повторите попытку позже')
+            else
+              this.errors.push('An error has occurred. Please try again later')
           }
           this.loader = false
         })
