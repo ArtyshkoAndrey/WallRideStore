@@ -98,8 +98,8 @@ const store = new Vuex.Store({
       if (state.modals[id] === null || state.modals[id] === undefined) {
         state.modals.push({
           id: id,
-          date: new Date(1999,11,31)
-          // date: new Date()
+          // date: new Date(1999,11,31)
+          date: new Date()
         })
       }
     }
