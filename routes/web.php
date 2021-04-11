@@ -129,6 +129,9 @@ use App\Http\Controllers\Admin\PickupController;
     Route::post('faq/photo/store', [FAQController::class, 'photo_store'])->name('faq.photo.store');
     Route::post('faq/photo/delete', [FAQController::class, 'photo_delete'])->name('faq.photo.delete');
 
+    Route::resource('notification', App\Http\Controllers\Admin\NotificationController::class)->only([
+      'index', 'store'
+    ]);
 
     Route::post('product/photo/store', [\App\Http\Controllers\Admin\ProductController::class, 'photoStore'])->name('product.store.photo');
     Route::post('product/photo/{id}', [\App\Http\Controllers\Admin\ProductController::class, 'photo'])->name('product.photo');
