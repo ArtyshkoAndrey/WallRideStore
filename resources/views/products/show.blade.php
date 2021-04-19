@@ -97,7 +97,7 @@
         </div>
       </div>
 
-      <div id="wrapper-big-slider" style="top: 0; left: 0; width: 100vw; height: 100vh; position: absolute; opacity: 0">
+      <div id="wrapper-big-slider" style="top: 0; left: 0; width: 100vw; height: 100vh; position: fixed; opacity: 0">
         <button id="close-big-slider" class="btn rounded-circle position-absolute text-black" style="right: 10px; top: 10px; z-index: 1000"><i class="far fa-times h1"></i></button>
         <div class="slider-for-big">
 

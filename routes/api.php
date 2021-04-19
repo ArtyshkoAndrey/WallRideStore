@@ -25,3 +25,10 @@ Route::post('brand/{brand}', ['as' => 'api.brand', 'uses' => 'ApiController@bran
 Route::post('companies', ['as' => 'api.companies', 'uses' => 'ApiController@companies']);
 
 Route::post('check/email', 'ApiController@checkEmail')->name('api.check.email');
+
+
+Route::get('get/products', function (Request $request) {
+  $products = \App\Models\Product::orderBy('id', 'desc')->with(['photos', 'skus', 'categories', 'brands'])->paginate(5);
+
+  return response()->json(['products' => $products]);
+});

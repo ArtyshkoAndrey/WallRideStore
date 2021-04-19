@@ -12,7 +12,7 @@
           <select name="order" class="form-control js-example-basic" placeholder="Сортировать">
             <option value="new_desc">Сначала новые</option>
             <option value="price_asc">Сначала дешевые</option>
-            <option value="price_desc">Сначало дорогие</option>
+            <option value="price_desc">Сначала дорогие</option>
             <option value="sold_count_desc">По убыванию продаж</option>
             <option value="sold_count_asc">По возрастанию продаж</option>
           </select>
