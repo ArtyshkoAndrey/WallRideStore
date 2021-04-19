@@ -6,7 +6,7 @@
 export default {
   name: "list-cost",
   props: {
-    methodCost: {
+    method_cost: {
       type: String,
     },
     step_counter: {

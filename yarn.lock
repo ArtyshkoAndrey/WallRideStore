@@ -4735,10 +4735,10 @@
     "crypt" "0.0.2"
     "is-buffer" "~1.1.6"
 
-"mdb-ui-kit@^3.3.0":
-  "integrity" "sha512-hl8NTS8wb788Lo2ni9WIRJsnuGroVYGMI17nYAVTapRIFshx06yJtCEAfFvPjf6d6pM1K4k/wuWKQ4CE6CTUfw=="
-  "resolved" "https://registry.npmjs.org/mdb-ui-kit/-/mdb-ui-kit-3.3.0.tgz"
-  "version" "3.3.0"
+"mdb-ui-kit@^3.4.0":
+  "integrity" "sha512-GaglzMQf4RN+HlCeh5WD5vLrCLaeirAMn6vzwyCbljhQ20tqn1v4ZccDlI9eDQFO5XB0i1crJb86wL1kza7VPQ=="
+  "resolved" "https://registry.npmjs.org/mdb-ui-kit/-/mdb-ui-kit-3.4.0.tgz"
+  "version" "3.4.0"
 
 "mdn-data@2.0.14":
   "integrity" "sha512-dn6wd0uw5GsdswPFfsgMp5NSB0/aDe6fK94YJV/AJDYXL6HVLWBsxeq7js7Ad+mU2K9LAlwpk6kN2D5mwCPVow=="
@@ -7103,10 +7103,10 @@
     "unquote" "~1.1.1"
     "util.promisify" "~1.0.0"
 
-"sweetalert2@^10.15.5":
-  "integrity" "sha512-zHZqVpsEyfBVy/O25D7RMYyh+/h0jbmHXGK9DWEDnkPvsl4JlMueJRSEidAFS+mtYDLI8fFkGKltgHRvDPRV1g=="
-  "resolved" "https://registry.npmjs.org/sweetalert2/-/sweetalert2-10.15.5.tgz"
-  "version" "10.15.5"
+"sweetalert2@^10.16.0":
+  "integrity" "sha512-qJp4nIpx0MPDnAdY6MurwH/mAovfCzWo07hFoQ41C46XGLpNkxiqBbJDNdhGfMFwbDY1e9jfttNFxe5IsrkEtA=="
+  "resolved" "https://registry.npmjs.org/sweetalert2/-/sweetalert2-10.16.0.tgz"
+  "version" "10.16.0"
 
 "symbol-observable@1.0.1":
   "integrity" "sha1-g0D8RwLDEi310iKI+IKD9RPT/dQ="

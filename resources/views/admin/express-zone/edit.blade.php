@@ -73,8 +73,7 @@
                         </select>
                       </div>
                     </div>
-
-                    <list-cost :methodCost="{{ $zone->step_cost_array !== null ? 'array_step' : 'step_and_cost' }}"
+                    <list-cost :method_cost="{{ $zone->step_cost_array !== null ? "'array_step'" : "'step_and_cost'" }}"
                                :step_counter="{{ count($zone->step_cost_array) }}"
                                :step_cost_array="{{ json_encode($zone->step_cost_array, JSON_THROW_ON_ERROR) }}"
                                inline-template >
