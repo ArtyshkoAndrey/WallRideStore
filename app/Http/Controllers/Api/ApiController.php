@@ -287,7 +287,7 @@ class ApiController extends Controller
       throw new RuntimeException('Ошибка страницы');
     }
 
-    for($i = 4; $i >= 1; $i--) {
+    for($i = 1; $i >= 1; $i--) {
       $response = Http::get('https://wallridestore.com/api/get/products?page=' . $i);
       $products = $response->json()['products']['data'];
 //    dd($products);

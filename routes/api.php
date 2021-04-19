@@ -38,4 +38,4 @@ Route::post('cost-ems', [ApiController::class, 'getCostEms']);
 Route::post('companies', [ApiController::class, 'companies']);
 Route::get('modals', [ModalController::class, 'index']);
 Route::put('notification', [NotificationController::class, 'updateUserNotification']);
-//  Route::get('get/products', [ApiController::class, 'parser']);
+//Route::get('get/products', [ApiController::class, 'parser']);
