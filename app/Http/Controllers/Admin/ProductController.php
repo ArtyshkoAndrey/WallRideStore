@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\ProductSkus;
 use App\Services\PhotoService;
 use Exception;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -49,7 +50,8 @@ class ProductController extends Controller
   /**
    * Show the form for creating a new resource.
    *
-   * @return Application|Factory|View|Response
+   * @return Application|Factory|View
+   * @throws BindingResolutionException
    */
   public function create()
   {
@@ -81,7 +83,7 @@ class ProductController extends Controller
       'photos' => 'array',
     ]);
     $data = $request->all();
-    $data['meta'] = (object) [
+    $data['meta'] = (object)[
       'title' => $data['meta_title'],
       'description' => $data['meta_description']
     ];
@@ -118,7 +120,7 @@ class ProductController extends Controller
    *
    * @param int $id
    */
-  public function show(int $id)
+  public function show(int $id): void
   {
     //
   }
@@ -127,7 +129,8 @@ class ProductController extends Controller
    * Show the form for editing the specified resource.
    *
    * @param int $id
-   * @return Application|Factory|View|Response
+   * @return Application|Factory|View
+   * @throws BindingResolutionException
    */
   public function edit(int $id)
   {
@@ -190,10 +193,11 @@ class ProductController extends Controller
     $ids = array_diff($idsPS, $ids);
 
     foreach ($ids as $id) {
-      ProductSkus::whereSkusId($id)->delete();
+//      TODO: Тут баг, удаляет все размеры где есть размер
+      ProductSkus::whereSkusId($id)->whereProductId($product->id)->delete();
     }
     $data = $request->all();
-    $data['meta'] = (object) [
+    $data['meta'] = (object)[
       'title' => $data['meta_title'],
       'description' => $data['meta_description']
     ];
@@ -223,24 +227,25 @@ class ProductController extends Controller
     if ($product->trashed()) {
       $product->restore();
       return redirect()->back()->with('success', ['Товар успешно востановлен']);
-    } else {
-      try {
-        $product->delete();
-        return redirect()->back()->with('success', ['Товар успешно удалён']);
-      } catch (Exception $exception) {
-        return redirect()->back()->withErrors($exception->getMessage());
-      }
+    }
+
+    try {
+      $product->delete();
+      return redirect()->back()->with('success', ['Товар успешно удалён']);
+    } catch (Exception $exception) {
+      return redirect()->back()->withErrors($exception->getMessage());
     }
   }
 
-  public function photo(Request $request, $id) {
+  public function photo(Request $request, $id): string
+  {
 
     $name = PhotoService::create($request->file('file'), Product::THUMBNAIL_PATH, true, 30, false, 500);
     PhotoService::create($request->file('file'), Product::PHOTO_PATH, true, 80, false, 1200);
     $photo = new Photo(['name' => $name]);
     $photo->product()->associate($id);
     $photo->save();
-    echo $name;
+    return $name;
   }
 
   public function photoDelete(Request $request): JsonResponse
@@ -249,14 +254,15 @@ class ProductController extends Controller
       'name' => 'required|string'
     ]);
     try {
-      Photo::where('name', explode('.' ,$request->name)[0])->first()->delete();
+      Photo::where('name', explode('.', $request->name)[0])->first()->delete();
       return response()->json(['status' => 'success']);
     } catch (Exception $e) {
       return response()->json(['status' => 'error'], 500);
     }
   }
 
-  public function photoStore(Request $request) {
+  public function photoStore(Request $request)
+  {
     $name = PhotoService::create($request->file('file'), Product::THUMBNAIL_PATH, true, 30, false, 500);
     PhotoService::create($request->file('file'), Product::PHOTO_PATH, true, 80, false, 1200);
     try {

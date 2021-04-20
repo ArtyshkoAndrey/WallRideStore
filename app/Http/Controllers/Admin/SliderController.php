@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Slider;
 use App\Services\PhotoService;
 use Exception;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -20,6 +21,7 @@ class SliderController extends Controller
    * Display a listing of the resource.
    *
    * @return Application|Factory|View
+   * @throws BindingResolutionException
    */
   public function index()
   {
@@ -32,6 +34,7 @@ class SliderController extends Controller
    * Show the form for creating a new resource.
    *
    * @return View
+   * @throws BindingResolutionException
    */
   public function create(): View
   {
@@ -80,6 +83,7 @@ class SliderController extends Controller
    *
    * @param Slider $slider
    * @return View
+   * @throws BindingResolutionException
    */
   public function edit(Slider $slider): View
   {
@@ -149,12 +153,11 @@ class SliderController extends Controller
     }
     if ($data['type'] === 'desktop') {
       $storage = Slider::PHOTO_PATH;
-    }
-    else {
+    } else {
       $storage = Slider::PHOTO_PATH_MOBILE;
     }
 
-    return PhotoService::create($request->file('file'), $storage, true, 60, false, 1200);
+    return PhotoService::create($request->file('file'), $storage, false, 60, false, 1920);
   }
 
   /**
@@ -162,6 +165,7 @@ class SliderController extends Controller
    *
    * @param Request $request
    * @return JsonResponse
+   * @throws BindingResolutionException
    */
   public function photo_delete(Request $request): JsonResponse
   {
@@ -176,8 +180,7 @@ class SliderController extends Controller
     }
     if ($data['type'] === 'desktop') {
       $storage = Slider::PHOTO_PATH;
-    }
-    else {
+    } else {
       $storage = Slider::PHOTO_PATH_MOBILE;
     }
 

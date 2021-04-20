@@ -13,56 +13,53 @@ use App\Http\Controllers\Admin\PickupController;
   use App\Http\Controllers\ProfileController;
   use Illuminate\Support\Facades\Route;
 
-//  Route::get('/{any}', function ($any) {
-//    return view('errors.500');
-//  })->where('any', '.*');
 
-  Route::get('{path}', function () {
-    return view('user.layouts.error');
-  })->where('path', '(.*)');
+//  Route::get('{path}', function () {
+//    return view('user.layouts.error');
+//  })->where('path', '(.*)');
 
-//  Auth::routes();
-//
-//  Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('index');
-//  Route::get('language/change/{locale}', [\App\Http\Controllers\HomeController::class, 'language']);
-//  Route::get('policy', [\App\Http\Controllers\HomeController::class, 'policy'])->name('policy');
-//  Route::post('auth/check', [App\Http\Controllers\ApiController::class, 'check']);
-//
-//
-//  Route::prefix('product')->name('product.')->group(function () {
-//    Route::get('/search', [ProductController::class, 'search'])->name('search');
-//    Route::get('/all', [ProductController::class, 'all'])->name('all');
-//    Route::get('/favor', [ProductController::class, 'favor'])->name('favor');
-//    Route::get('/{id}', [ProductController::class, 'show'])->name('show');
-//  });
-//
-//  Route::resource('brand', App\Http\Controllers\BrandController::class)->only(['show']);
-//
-//  Route::prefix('cart')->name('cart.')->group(function () {
-//    Route::get('/', [CartController::class, 'index'])->name('index');
-//  });
-//
-//  Route::resource('post', App\Http\Controllers\PostController::class)->only(['show', 'index']);
-//  Route::resource('faq', App\Http\Controllers\FaqController::class)->only(['show', 'index']);
-//
-//  Route::middleware(['auth'])->prefix('profile')->name('profile.')->group(function () {
-//    Route::name('update.')->prefix('update')->group(function () {
-//      Route::put('data', [ProfileController::class, 'data'])->name('data');
-//      Route::put('photo', [ProfileController::class, 'photo'])->name('photo');
-//      Route::put('password', [ProfileController::class, 'password'])->name('password');
-//    });
-//    Route::get('/', [ProfileController::class, 'index'])->name('index');
-//    Route::get('notification/subscribe', [ProfileController::class, 'subscribe'])->name('notification.subscribe');
-//    Route::get('notification/unsubscribe', [ProfileController::class, 'unsubscribe'])->name('notification.unsubscribe');
-//  });
-//  Route::get('notification/unsubscribe-email', [ProfileController::class, 'unsubscribeEmail'])->name('profile.notification.unsubscribe.email');
-//
-//  Route::prefix('order')->name('order.')->group(function () {
-//    Route::get('/', [OrderController::class, 'index'])->middleware('auth')->name('index');
-//    Route::get('/create', [OrderController::class, 'create'])->name('create');
-//    Route::post('/store', [OrderController::class, 'store'])->name('store');
-//    Route::post('/update/status', [OrderController::class, 'updateStatus'])->name('update.status');
-//  });
+  Auth::routes();
+
+  Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('index');
+  Route::get('language/change/{locale}', [\App\Http\Controllers\HomeController::class, 'language']);
+  Route::get('policy', [\App\Http\Controllers\HomeController::class, 'policy'])->name('policy');
+  Route::post('auth/check', [App\Http\Controllers\ApiController::class, 'check']);
+
+
+  Route::prefix('product')->name('product.')->group(function () {
+    Route::get('/search', [ProductController::class, 'search'])->name('search');
+    Route::get('/all', [ProductController::class, 'all'])->name('all');
+    Route::get('/favor', [ProductController::class, 'favor'])->name('favor');
+    Route::get('/{id}', [ProductController::class, 'show'])->name('show');
+  });
+
+  Route::resource('brand', App\Http\Controllers\BrandController::class)->only(['show']);
+
+  Route::prefix('cart')->name('cart.')->group(function () {
+    Route::get('/', [CartController::class, 'index'])->name('index');
+  });
+
+  Route::resource('post', App\Http\Controllers\PostController::class)->only(['show', 'index']);
+  Route::resource('faq', App\Http\Controllers\FaqController::class)->only(['show', 'index']);
+
+  Route::middleware(['auth'])->prefix('profile')->name('profile.')->group(function () {
+    Route::name('update.')->prefix('update')->group(function () {
+      Route::put('data', [ProfileController::class, 'data'])->name('data');
+      Route::put('photo', [ProfileController::class, 'photo'])->name('photo');
+      Route::put('password', [ProfileController::class, 'password'])->name('password');
+    });
+    Route::get('/', [ProfileController::class, 'index'])->name('index');
+    Route::get('notification/subscribe', [ProfileController::class, 'subscribe'])->name('notification.subscribe');
+    Route::get('notification/unsubscribe', [ProfileController::class, 'unsubscribe'])->name('notification.unsubscribe');
+  });
+  Route::get('notification/unsubscribe-email', [ProfileController::class, 'unsubscribeEmail'])->name('profile.notification.unsubscribe.email');
+
+  Route::prefix('order')->name('order.')->group(function () {
+    Route::get('/', [OrderController::class, 'index'])->middleware('auth')->name('index');
+    Route::get('/create', [OrderController::class, 'create'])->name('create');
+    Route::post('/store', [OrderController::class, 'store'])->name('store');
+    Route::post('/update/status', [OrderController::class, 'updateStatus'])->name('update.status');
+  });
 
 
 // Admin Controllers

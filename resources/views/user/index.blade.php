@@ -18,9 +18,9 @@
 
             <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
               <div class="image">
-                <img src="{{ $slider->photo_url_jpg }}" class="d-block d-lg-none w-100" alt="...">
+                <img src="{{ $slider->photo_url_jpg }}" class="d-none d-lg-block w-100" alt="...">
 
-                <img src="{{ $slider->photo_mobile_url_jpg }}" class="d-lg-block d-none w-100" alt="...">
+                <img src="{{ $slider->photo_mobile_url_jpg }}" class="d-lg-none d-block w-100" alt="...">
               </div>
               <div class="carousel-caption">
                 <h2 class="text-uppercase">{{ $slider->h1 }}</h2>
