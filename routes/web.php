@@ -110,7 +110,7 @@ Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function ()
   });
 });
 
-if (config('app.unstable')) {
+if (config('app.unstable', false)) {
   Route::get('{path}', function () {
     return view('user.layouts.error');
   })->where('path', '(.*)');
