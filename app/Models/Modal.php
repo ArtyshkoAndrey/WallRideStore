@@ -47,6 +47,8 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Modal whereUpdatedAt($value)
  * @method static Builder|Modal withTranslation()
  * @mixin Eloquent
+ * @property-read string $photo_jpg_storage
+ * @property-read string $photo_webp_storage
  */
 class Modal extends Model implements TranslatableContract
 {
