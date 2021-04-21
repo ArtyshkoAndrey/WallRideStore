@@ -67,8 +67,13 @@
       <div class="col-lg-4 col-md-6 col-12 bg-white py-4 px-5 mb-3 mb-md-0">
         <div class="row align-self-end h-100">
           <div class="col-12">
-            <h4 class="h3 font-weight-bolder">Заголовок про <br/> бренды</h4>
-            <p class="text-gray-1 d-block mt-4">Наш скейтшоп находится в чудесном городе Алма-Ата, на высоте 900 метров над уровнем моря. Иногда мы сравниваем ландшафт города </p>
+            <h4 class="h3 font-weight-bolder">Бренды</h4>
+            <p class="text-gray-1 d-block mt-4">
+              В бренд листе магазина представлены такие бренды, как Butter Goods, Dime, Polar Skate Co, Helas, Sour Solution, Vans, Nike SB - и это далеко не всё.
+            </p>
+            <p class="text-gray-1 d-block mt-2">
+              Чтобы ознакомиться с полным списком, перейдите по ссылке ниже.
+            </p>
           </div>
           <div class="col-12 mt-auto">
             <a href="{{ route('product.all') }}" class="btn btn-dark d-block py-3 my-auto mb-0">{{ __('Смотреть все бренды') }}</a>
