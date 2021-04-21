@@ -193,7 +193,6 @@ class ProductController extends Controller
     $ids = array_diff($idsPS, $ids);
 
     foreach ($ids as $id) {
-//      TODO: Тут баг, удаляет все размеры где есть размер
       ProductSkus::whereSkusId($id)->whereProductId($product->id)->delete();
     }
     $data = $request->all();
