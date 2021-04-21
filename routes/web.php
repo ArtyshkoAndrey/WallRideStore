@@ -14,8 +14,6 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 
-
-
 Auth::routes();
 
 // Admin Controllers
@@ -112,9 +110,9 @@ Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function ()
   });
 });
 
-Route::get('{path}', function () {
-  return view('user.layouts.error');
-})->where('path', '(.*)');
+//Route::get('{path}', function () {
+//  return view('user.layouts.error');
+//})->where('path', '(.*)');
 
 
 // User
