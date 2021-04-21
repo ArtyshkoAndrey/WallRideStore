@@ -110,10 +110,11 @@ Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function ()
   });
 });
 
-//Route::get('{path}', function () {
-//  return view('user.layouts.error');
-//})->where('path', '(.*)');
-
+if (config('app.unstable')) {
+  Route::get('{path}', function () {
+    return view('user.layouts.error');
+  })->where('path', '(.*)');
+}
 
 // User
 
