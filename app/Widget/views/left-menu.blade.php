@@ -66,7 +66,7 @@
 
         <div class="content">
           <ul>
-            @foreach($category->child as $ct)
+            @forelse($category->child as $ct)
               <li>
                 <span>
                   <a href="{{ route('product.all', ['category' => $ct->id]) }}">
@@ -74,7 +74,20 @@
                   </a>
                 </span>
               </li>
-            @endforeach
+
+            @empty
+
+              @foreach(App\Models\Brand::whereHas('products.category', function($q) use ($category) {$q->where('id', $category->id);})->get() as $brand)
+                <li>
+                  <span>
+                    <a href="{{ route('product.all', ['brand' => $brand->id]) }}">
+                      {{ $brand->name }}
+                    </a>
+                  </span>
+                </li>
+              @endforeach
+
+            @endforelse
           </ul>
         </div>
       </div>

@@ -29,7 +29,7 @@
                   </a>
                 </div>
 
-                @foreach($category->child as $category)
+                @forelse($category->child as $category)
 
                   <div class="col-md-4 py-2">
                     <a href="{{ route('product.all', ['category'=>$category->id]) }}"
@@ -37,8 +37,16 @@
                       {{ $category->name }}
                     </a>
                   </div>
-
-                @endforeach
+                @empty
+                  @foreach(App\Models\Brand::whereHas('products.category', function($q) use ($category) {$q->where('id', $category->id);})->get() as $brand)
+                    <div class="col-md-4 py-2">
+                      <a href="{{ route('product.all', ['brand'=>$brand->id]) }}"
+                         class="text-gray-2">
+                        {{ $brand->name }}
+                      </a>
+                    </div>
+                  @endforeach
+                @endforelse
               </div>
             </div>
           </li>
