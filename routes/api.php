@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ApiController;
+use App\Http\Controllers\Api\FaceBookController;
 use App\Http\Controllers\Api\ModalController;
 use App\Http\Controllers\Api\NotificationController;
 use Illuminate\Http\Request;
@@ -39,3 +40,5 @@ Route::post('companies', [ApiController::class, 'companies']);
 Route::get('modals', [ModalController::class, 'index']);
 Route::put('notification', [NotificationController::class, 'updateUserNotification']);
 //Route::get('get/products', [ApiController::class, 'parser']);
+
+Route::get('/facebook/items', [FaceBookController::class, 'items']);

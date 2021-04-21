@@ -41,9 +41,9 @@ Vue.prototype.$cost = function (number) {
  */
 
 
-Vue.config.productionTip = false
+Vue.config.productionTip = true
 
-Vue.config.devtools = true;
+Vue.config.devtools = false;
 Vue.config.performance = true;
 
 const app = new Vue({
