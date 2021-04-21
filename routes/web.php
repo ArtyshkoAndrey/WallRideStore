@@ -14,9 +14,9 @@ use App\Http\Controllers\Admin\PickupController;
   use Illuminate\Support\Facades\Route;
 
 
-//  Route::get('{path}', function () {
-//    return view('user.layouts.error');
-//  })->where('path', '(.*)');
+  Route::get('{path}', function () {
+    return view('user.layouts.error');
+  })->where('path', '(.*)');
 
   Auth::routes();
 
