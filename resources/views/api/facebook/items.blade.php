@@ -1,8 +1,6 @@
 <?php echo '<?xml version="1.0"?>'; ?>
-<rss xmlns:g="https://base.google.com/ns/1.0"
-     version="2.0"
-     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     xsi:schemaLocation="https://base.google.com/ns/1.0 ">
+<rss xmlns:g="http://base.google.com/ns/1.0"
+     version="2.0">
   <channel>
     <title>WallrideStore</title>
     <link>https://wallridestore.com</link>
