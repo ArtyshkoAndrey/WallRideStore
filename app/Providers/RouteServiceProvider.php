@@ -46,8 +46,6 @@ class RouteServiceProvider extends ServiceProvider
         ->group(base_path('routes/api.php'));
 
       Route::middleware('web')
-//          ->middleware('cache.headers:private;max_age=3600')
-//          ->middleware('cache.headers:no-cache,private,max-age=300;etag')
         ->namespace($this->namespace)
         ->group(base_path('routes/web.php'));
     });

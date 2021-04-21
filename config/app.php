@@ -50,6 +50,8 @@ return [
 
   'env' => env('APP_ENV', 'production'),
 
+  'unstable' => env('APP_UNSTABLE', false),
+
   /*
   |--------------------------------------------------------------------------
   | Application Debug Mode
