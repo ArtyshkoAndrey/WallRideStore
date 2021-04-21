@@ -47,7 +47,7 @@
                   </div>
 
                   <div class="col-12">
-                    <p class="m-0"><span class="font-weight-bold">Телефон:</span> {{ $order->user->phone }}</p >
+                    <p class="m-0"><span class="font-weight-bold">Телефон:</span> {{ $order->user->phone ?? $order->address->contact_phone }}</p >
                   </div>
 
                   <div class="col-12">
