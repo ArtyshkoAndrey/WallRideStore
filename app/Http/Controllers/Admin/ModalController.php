@@ -9,6 +9,7 @@ use App\Services\PhotoService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -92,6 +93,13 @@ class ModalController extends Controller
         'en.description'  => 'required',
         'ru.text_to_link' => 'required',
         'en.text_to_link' => 'required',
+      ]);
+      $modal = new Modal($request->all());
+      $modal->save();
+    } if ((int) $request->get('type') === 4) {
+      $request->validate([
+        'ru.description'  => 'required',
+        'en.description'  => 'required',
       ]);
       $modal = new Modal($request->all());
       $modal->save();
@@ -187,11 +195,16 @@ class ModalController extends Controller
    * Remove the specified resource from storage.
    *
    * @param int $id
-   * @return Response
+   * @return RedirectResponse
    */
-  public function destroy(int $id)
+  public function destroy(int $id): RedirectResponse
   {
-    //
+    $modal = Modal::find($id);
+    if ($modal) {
+      $modal->delete();
+    }
+
+    return redirect()->route('admin.modal.index')->with('success', ['Модальное окноуспешно удалено']);
   }
 
 

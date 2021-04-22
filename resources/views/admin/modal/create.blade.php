@@ -157,6 +157,10 @@
                         <input type="radio" name="type" value="3" id="cb3" {{ old('type') === 3 ? 'checked' : '' }} />
                         <label for="cb3"><img src="{{ asset('images/modals/modal_3.png') }}" alt=""/></label>
                       </li>
+                      <li class="col-md-12 col-lg-6 col-xl-4 col-12">
+                        <input type="radio" name="type" value="4" id="cb4" {{ old('type') === 4 ? 'checked' : '' }} />
+                        <label for="cb4"><img src="{{ asset('images/modals/modal_4.png') }}" alt=""/></label>
+                      </li>
                     </ul>
 
                   </div>

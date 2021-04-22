@@ -3,6 +3,7 @@ import Cookies from 'js-cookie';
 import Modal1 from './components/modal-1'
 import Modal2 from './components/modal-2'
 import Modal3 from './components/modal-3'
+import Modal4 from './components/modal-4'
 import Vue from 'vue'
 export default class Modals {
 
@@ -22,7 +23,7 @@ export default class Modals {
             if (this.modals[key].on_auth && this.store.state.auth || this.modals[key].on_auth === false) {
               console.log(this.modals[key].on_auth && this.store.state.auth || this.modals[key].on_auth === false)
               console.log(this.modals[key].on_auth && this.store.state.auth)
-              this.store.commit('addModal', this.modals[key].id)
+              // this.store.commit('addModal', this.modals[key].id)
               this.openModal(this.modals[key])
               break
             }
@@ -39,24 +40,38 @@ export default class Modals {
       })
   }
 
-  openModal(modal) {
-    setTimeout(() => {
+  async openModal(modal) {
+    setTimeout(async () => {
       let modalVue
+      let flag = true;
       if (modal.type === 1) {
         modalVue = Vue.extend(Modal1)
       } else if (modal.type === 2) {
         modalVue = Vue.extend(Modal2)
-      } else {
+      } else if (modal.type === 3) {
         modalVue = Vue.extend(Modal3)
+      } else {
+        modalVue = Vue.extend(Modal4)
+        await axios.get('api/modals/code')
+          .then(r => {
+            modal.coupon_code = r.data.code
+            console.log('code', r.data.code)
+          })
+          .catch(e => {
+            console.log(e.response.data)
+            flag = false;
+          })
       }
 
-      let instance = new modalVue({
-        propsData: {modal: modal}
-      })
-      instance.$mount()
-      // TODO: Подумать как сделать что бы окно было после прелоадера
+      if (flag) {
+        let instance = new modalVue({
+          propsData: {modal: modal}
+        })
+        instance.$mount()
+        // TODO: Подумать как сделать что бы окно было после прелоадера
 
-      this.vue.$refs.app.appendChild(instance.$el)
+        this.vue.$refs.app.appendChild(instance.$el)
+      }
     }, 2000)
   }
 
