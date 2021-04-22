@@ -23,6 +23,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Swift_TransportException;
+use Throwable;
 
 class OrderController extends Controller
 {
@@ -34,13 +35,13 @@ class OrderController extends Controller
     $this->orderService = $orderService;
   }
 
-  public function index ()
+  public function index()
   {
     $orders = auth()->user()->orders()->orderBy('id', 'desc')->get();
     return view('user.order.index', compact('orders'));
   }
 
-  public function create ()
+  public function create()
   {
     $cash = Setting::whereName('cash')->first();
     $cloudPayment = Setting::whereName('cloudPayment')->first();
@@ -50,13 +51,13 @@ class OrderController extends Controller
   /**
    * @param OrderStoreRequest $request
    * @return JsonResponse
-   * @throws \Throwable
+   * @throws Throwable
    */
-  public function store (OrderStoreRequest $request): JsonResponse
+  public function store(OrderStoreRequest $request): JsonResponse
   {
     $data = $request->all();
     $info = $data['info'];
-    $user = User::firstOrNew(['email' =>  $info['email']]);
+    $user = User::firstOrNew(['email' => $info['email']]);
 
     $user->phone = $info['phone'];
     $user->post_code = $info['post_code'];
@@ -93,8 +94,10 @@ class OrderController extends Controller
     } catch (Swift_TransportException $e) {
 
     }
-
-    Auth::login($user);
+    if (!$user->is_admin) {
+      Auth::login($user);
+    }
+    
     $delay = config('app.order.test') ?
       now()->addMinutes(config('app.order.delay.minutes')) :
       now()->addHours(config('app.order.delay.hours'));
@@ -107,7 +110,7 @@ class OrderController extends Controller
     ]);
   }
 
-  public function updateStatus (Request $request): void
+  public function updateStatus(Request $request): void
   {
     $request->validate([
       'order' => 'required|exists:orders,id'
