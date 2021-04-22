@@ -132,13 +132,10 @@ class OrderController extends Controller
     }
     $order = Order::find($id);
     $order->ship_status = $data['ship_status'];
+    $trackFlag = false;
     if (isset($data['track'])) {
       if (isset($order->ship_data) && $data['track'] !== $order->ship_data->track) {
-        try {
-          $order->user->notify(new TrackCodeOrder($order));
-        } catch (Swift_TransportException $exception) {
-          $errors = $exception->getMessage();
-        }
+        $trackFlag = true;
       }
       $order->ship_data = (object) ['track' => $data['track']];
     } else {
@@ -146,6 +143,14 @@ class OrderController extends Controller
     }
 
     $order->save();
+
+    if ($trackFlag) {
+      try {
+        $order->user->notify(new TrackCodeOrder($order));
+      } catch (Swift_TransportException $exception) {
+        $errors = $exception->getMessage();
+      }
+    }
 
     if ($data['ship_status'] === Order::SHIP_STATUS_CANCEL) {
       $this->orderService->canceled($order);
