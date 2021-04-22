@@ -96,6 +96,15 @@
 
     <div class="sidebar-divider"></div>
 
+    <a href="{{ route('admin.index') }}"
+       class="sidebar-link sidebar-link-with-icon {{ Route::currentRouteNamed('admin.index') ? 'active' : '' }}">
+      <span class="sidebar-icon bg-transparent justify-content-start mr-0">
+        <i class="bx bxs-dashboard"
+           aria-hidden="true"></i>
+      </span>
+      Главная
+    </a>
+
     <a href="{{ route('admin.order.index') }}"
        class="sidebar-link sidebar-link-with-icon {{ Route::currentRouteNamed('admin.order.*') ? 'active' : '' }}">
       <span class="sidebar-icon bg-transparent justify-content-start mr-0">
