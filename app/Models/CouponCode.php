@@ -61,6 +61,8 @@ use App\Exceptions\CouponCodeUnavailableException;
  * @property-read int|null $products_disabled_count
  * @property-read Collection|Product[] $productsEnabled
  * @property-read int|null $products_enabled_count
+ * @property bool $random
+ * @method static Builder|CouponCode whereRandom($value)
  */
 class CouponCode extends Model
 {
@@ -83,7 +85,8 @@ class CouponCode extends Model
     'not_before',
     'not_after',
     'enabled',
-    'notification'
+    'notification',
+    'random'
   ];
 
   /**
@@ -94,7 +97,8 @@ class CouponCode extends Model
   protected $casts = [
     'enabled'               => 'boolean',
     'disabled_other_sales'  => 'boolean',
-    'notification'          => 'boolean'
+    'notification'          => 'boolean',
+    'random'                => 'boolean',
   ];
 
   /**
@@ -175,7 +179,7 @@ class CouponCode extends Model
    * @param int|null $price
    * @throws CouponCodeUnavailableException
    */
-  public function checkAvailable (int $price = null)
+  public function checkAvailable (int $price = null): void
   {
     if (!$this->enabled) {
       throw new CouponCodeUnavailableException('Купон не существует');
@@ -196,6 +200,17 @@ class CouponCode extends Model
     if (!is_null($price) && $price < $this->min_amount) {
       throw new CouponCodeUnavailableException('Сумма заказа не соответствует минимальной сумме купона');
     }
+  }
+
+  /**
+   * Order where use coupon
+   *
+   */
+  public function order (): \Illuminate\Database\Eloquent\Relations\HasOne
+  {
+    return $this->hasOne(
+      Order::class
+    );
   }
 
   /**
