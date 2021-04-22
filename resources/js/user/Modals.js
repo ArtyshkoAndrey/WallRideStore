@@ -23,7 +23,7 @@ export default class Modals {
             if (this.modals[key].on_auth && this.store.state.auth || this.modals[key].on_auth === false) {
               console.log(this.modals[key].on_auth && this.store.state.auth || this.modals[key].on_auth === false)
               console.log(this.modals[key].on_auth && this.store.state.auth)
-              // this.store.commit('addModal', this.modals[key].id)
+              this.store.commit('addModal', this.modals[key].id)
               this.openModal(this.modals[key])
               break
             }
