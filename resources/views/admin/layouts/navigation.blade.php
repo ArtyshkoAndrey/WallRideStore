@@ -35,6 +35,12 @@
         Товары
       </a>
     </li>
+    <li class="nav-item {{ Route::currentRouteNamed('admin.order.*') ? 'active' : '' }}">
+      <a href="{{ route('admin.order.index') }}"
+         class="nav-link">
+        Заказы
+      </a>
+    </li>
   </ul>
 
   <!-- Navbar content (with the dropdown menu) -->
