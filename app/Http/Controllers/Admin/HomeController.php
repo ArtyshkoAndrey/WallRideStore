@@ -3,16 +3,32 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use File;
+use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\View\View;
+use JsonException;
 
-class HomeController extends Controller {
+class HomeController extends Controller
+{
 
-  public function index (): View
+  /**
+   * Index Page
+   *
+   * @return View
+   * @throws BindingResolutionException
+   * @throws JsonException
+   * @throws FileNotFoundException
+   */
+  public function index(): View
   {
-    return view('admin.index');
+    $change = File::get('public/change.json');
+    $change = json_decode($change, true, 512, JSON_THROW_ON_ERROR);
+    $change = $change['admin'];
+    return view('admin.index', compact('change'));
   }
 
-  public function redirect ()
+  public function redirect()
   {
     return redirect()->route('admin.index')->withSuccess(['Это новые тестовые уведомления, Добро пожаловать'])->withErrors(['Это новые тестовые уведомления, Добро пожаловать']);
   }
