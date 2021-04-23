@@ -152,7 +152,7 @@ export default {
       let widget = new cp.CloudPayments({ language: language} );
       widget.pay('auth', // или 'charge'
         { //options
-          publicId: 'pk_4180963d51ddacba2982452f72f00', //id из личного кабинета
+          publicId: ' ', //id из личного кабинета
           description: '', //назначение
           amount: this.price, //сумма
           currency: this.$store.state.currency.short_name, //валюта
