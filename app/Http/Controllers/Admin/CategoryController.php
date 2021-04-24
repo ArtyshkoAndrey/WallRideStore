@@ -19,7 +19,8 @@ class CategoryController extends Controller
    * Display a listing of the resource.
    *
    * @param Request $request
-   * @return Application|Factory|View|RedirectResponse|Response
+   * @return Application|Factory|RedirectResponse|View
+   * @throws \Illuminate\Contracts\Container\BindingResolutionException
    */
   public function index(Request $request)
   {

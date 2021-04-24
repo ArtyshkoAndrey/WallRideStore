@@ -44,11 +44,13 @@ class BrandObserver
    */
   public function deleted(Brand $brand): void
   {
-    if ($brand->photo)
+    if ($brand->photo) {
       PhotoService::delete($brand->photo, Brand::PHOTO_PATH, true);
+    }
 
-    if ($brand->logo)
+    if ($brand->logo) {
       PhotoService::delete($brand->photo, Brand::LOGO_PATH, true);
+    }
 
     Cache::delete('brands-to-index');
     Cache::delete('brands-menu');
