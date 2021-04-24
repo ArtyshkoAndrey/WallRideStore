@@ -363,7 +363,7 @@
         <div v-else key="loaderWindow" class="mt-5">
           <div class="row">
             <div class="col-12 text-center">
-              <h3><strong>{{ __('Не закрывайте браузер.') }}</strong> {{ __('Ожидаем подтверждения оплаты') }}</h3>
+              <h3><strong>{{ __('Не закрывайте браузер.') }}</strong> {{ __('Ожидаем подтверждения оплаты') }}. {{ __('Иначе он будет отменён') }}</h3>
             </div>
           </div>
           <div class="row justify-content-center my-5">
