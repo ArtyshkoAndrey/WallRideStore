@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Jobs\RandomCouponCode;
 use App\Models\CouponCode;
 use App\Models\Modal;
-use http\Env\Response;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -20,7 +19,7 @@ class ModalController extends Controller
    */
   public function index(Request $request): JsonResponse
   {
-    $modals = Modal::translatedIn($request->get('language'))->get();
+    $modals = Modal::translatedIn($request->get('language'))->whereStatus(true)->get();
     return response()->json(['modals' => $modals]);
   }
 
