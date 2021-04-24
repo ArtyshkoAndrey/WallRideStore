@@ -189,7 +189,7 @@
           <div class="col-12 h-50">
             <div class="card shadow-0 h-100">
               <div class="card-body p-0 h-100">
-                <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A6358423497b39c18edf3d1526a35662c1cb50b361ebf554585d2d0b14456a080&amp;source=constructor" width="100%" height="350px" frameborder="0"></iframe>
+                <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A6358423497b39c18edf3d1526a35662c1cb50b361ebf554585d2d0b14456a080&amp;source=constructor" width="100%" height="500" frameborder="0"></iframe>
               </div>
             </div>
           </div>

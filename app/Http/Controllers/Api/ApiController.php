@@ -258,7 +258,6 @@ class ApiController extends Controller
                 $express_companies[$i]['price'] = $item['cost'];
               }
             }
-//            $express_companies[$i]['costedTransfer'] = $z->step_cost_array;
           } else {
             $iterations = (int) $weight / $z->step;
             $express_companies[$i]['price'] = $iterations * $z->cost_step;
@@ -268,11 +267,6 @@ class ApiController extends Controller
       if (!isset($express_companies[$i]['price'])) {
         unset($express_companies[$i]);
       }
-//        $express_companies[$i]['price'] = null;
-//        $express_companies[$i]['costedTransfer'] = null;
-//        $express_companies[$i]['step_unlim'] = null;
-//        $express_companies[$i]['step_cost_unlim'] = null;
-//      }
     }
     return response()->json(['companies' => $express_companies]);
   }
@@ -290,7 +284,6 @@ class ApiController extends Controller
     for($i = 1; $i >= 1; $i--) {
       $response = Http::get('https://wallridestore.com/api/get/products?page=' . $i);
       $products = $response->json()['products']['data'];
-//    dd($products);
       foreach ($products as $product) {
         (new \App\Services\ProductService)->create($product);
       }
