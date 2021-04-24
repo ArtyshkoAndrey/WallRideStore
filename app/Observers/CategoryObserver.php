@@ -18,7 +18,8 @@ class CategoryObserver
    */
   public function created(Category $category): void
   {
-    Cache::delete('categories-menu');
+    Cache::delete('categories-menu-en');
+    Cache::delete('categories-menu-ru');
     Cache::delete('all-categories-id');
   }
 
@@ -31,7 +32,8 @@ class CategoryObserver
    */
   public function updated(Category $category): void
   {
-    Cache::delete('categories-menu');
+    Cache::delete('categories-menu-en');
+    Cache::delete('categories-menu-ru');
     Cache::delete('all-categories-id');
   }
 
@@ -44,10 +46,12 @@ class CategoryObserver
    */
   public function deleted(Category $category): void
   {
-    if ($category->photo)
+    if ($category->photo) {
       PhotoService::delete($category->photo, Category::PHOTO_PATH, false);
+    }
 
-    Cache::delete('categories-menu');
+    Cache::delete('categories-menu-en');
+    Cache::delete('categories-menu-ru');
     Cache::delete('all-categories-id');
   }
 
