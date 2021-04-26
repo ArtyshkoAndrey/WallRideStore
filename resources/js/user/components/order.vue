@@ -150,12 +150,12 @@ export default {
     pay () {
       let language = Cookies.get('language') === 'en' ? 'en-US' : 'ru-RU';
       let widget = new cp.CloudPayments({ language: language} );
-      widget.pay('auth', // или 'charge'
+      widget.pay('charge', // или 'charge'
         { //options
           publicId: 'pk_4180963d51ddacba2982452f72f00', //id из личного кабинета
           description: '', //назначение
-          amount: this.price, //сумма
-          currency: this.$store.state.currency.short_name, //валюта
+          amount: this.priceWithoutCurrency, //сумма
+          currency: 'KZT', //валюта
           invoiceId: this.order.no, //номер заказа  (необязательно)
           accountId: this.info.email, //идентификатор плательщика (необязательно)
           skin: "modern", //дизайн виджета (необязательно)
