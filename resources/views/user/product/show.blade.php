@@ -96,12 +96,13 @@
 
             <div class="row">
               <div class="col-md-6 mt-2">
-                <button class="btn w-100 btn-dark btn-to-cart-show mt-2 mt-md-0"
-                        :disabled="selectSkus === null"
-                        @click="$store.commit('addItem', {id: selectSkus, amount: 1})">
-                  <span>{{ __('Добавить в корзину') }}</span>
-                  <i class="ms-2 far fa-shopping-bag"></i>
-                </button>
+{{--                <button class="btn w-100 btn-dark btn-to-cart-show mt-2 mt-md-0"--}}
+{{--                        :disabled="selectSkus === null"--}}
+{{--                        @click="$store.commit('addItem', {id: selectSkus, amount: 1})">--}}
+{{--                  <span>{{ __('Добавить в корзину') }}</span>--}}
+{{--                  <i class="ms-2 far fa-shopping-bag"></i>--}}
+{{--                </button>--}}
+                <btn-product :id="selectSkus" :label="'{{ __('Добавить в корзину') }}'" :disabled="selectSkus === null"></btn-product>
               </div>
 
               <div class="col-md-6 mt-2">
