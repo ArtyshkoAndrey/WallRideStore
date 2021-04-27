@@ -18,7 +18,6 @@ import store from "./store";
 import Modals from "./Modals";
 window.Vue = require('vue')
 
-
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -41,9 +40,9 @@ Vue.prototype.$cost = function (number) {
  */
 
 
-Vue.config.productionTip = true
+Vue.config.productionTip = false
 
-Vue.config.devtools = false;
+Vue.config.devtools = true;
 Vue.config.performance = true;
 
 const app = new Vue({
