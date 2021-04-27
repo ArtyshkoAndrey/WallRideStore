@@ -86,7 +86,7 @@
           <div class="col-md-12 mb-2">
             <select name="skus" class="form-control rounded-0" id="skus" v-model.number="selectSkus">
               <option value="null" selected disabled>{{ __('Размер') }}</option>
-              @foreach($product->skuses as $skus)
+              @foreach($product->skuses()->orderBy('weight')->get() as $skus)
                 <option value="{{ $skus->pivot->id }}" {{ $skus->pivot->stock === 0 ? 'disabled' : null }}>{{ $skus->title }}</option>
               @endforeach
             </select>
@@ -96,12 +96,13 @@
 
             <div class="row">
               <div class="col-md-6 mt-2">
-                <button class="btn w-100 btn-dark btn-to-cart-show mt-2 mt-md-0"
-                        :disabled="selectSkus === null"
-                        @click="$store.commit('addItem', {id: selectSkus, amount: 1})">
-                  <span>{{ __('Добавить в корзину') }}</span>
-                  <i class="ms-2 far fa-shopping-bag"></i>
-                </button>
+{{--                <button class="btn w-100 btn-dark btn-to-cart-show mt-2 mt-md-0"--}}
+{{--                        :disabled="selectSkus === null"--}}
+{{--                        @click="$store.commit('addItem', {id: selectSkus, amount: 1})">--}}
+{{--                  <span>{{ __('Добавить в корзину') }}</span>--}}
+{{--                  <i class="ms-2 far fa-shopping-bag"></i>--}}
+{{--                </button>--}}
+                <btn-product :id="selectSkus" :label="'{{ __('Добавить в корзину') }}'" :disabled="selectSkus === null"></btn-product>
               </div>
 
               <div class="col-md-6 mt-2">

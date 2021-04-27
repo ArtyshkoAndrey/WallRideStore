@@ -19,6 +19,9 @@ use App\Notifications\RegisterPassword;
 use App\Services\OrderService;
 use Auth;
 use Carbon\Carbon;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -97,7 +100,7 @@ class OrderController extends Controller
     if (!$user->is_admin) {
       Auth::login($user);
     }
-    
+
     $delay = config('app.order.test') ?
       now()->addMinutes(config('app.order.delay.minutes')) :
       now()->addHours(config('app.order.delay.hours'));
@@ -129,6 +132,21 @@ class OrderController extends Controller
       $admin->notify(new AdminPaidOrderNotification($order));
     }
 
+  }
+
+  /**
+   * @param int $id
+   * @return Application|Factory|View
+   */
+  public function show(int $id)
+  {
+    $order = Order::find($id);
+
+    if (!$order || $order->user->id !== auth()->id() || $order->ship_status !== Order::SHIP_STATUS_PAID) {
+      abort('404');
+    }
+
+    return view('user.order.show', compact('order'));
   }
 
 }

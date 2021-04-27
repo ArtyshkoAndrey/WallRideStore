@@ -9,7 +9,7 @@
       <div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-mdb-ride="carousel">
         <ol class="carousel-indicators">
           @foreach($sliders as $il)
-            <li data-target="#carouselExampleCaptions" class="{{ $loop->index === 0 ? 'active' : '' }}" :data-slide-to="{{ $loop->index }}"></li>
+            <li data-mdb-target="#carouselExampleCaptions" class="{{ $loop->index === 0 ? 'active' : '' }}" data-mdb-slide-to="{{ $loop->index }}"></li>
           @endforeach
         </ol>
         <div class="carousel-inner">
@@ -32,6 +32,24 @@
           @endforeach
 
         </div>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-mdb-target="#carouselExampleCaptions"
+          data-mdb-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-mdb-target="#carouselExampleCaptions"
+          data-mdb-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
     </div>
   @else

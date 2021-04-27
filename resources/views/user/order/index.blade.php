@@ -53,7 +53,11 @@
                         @forelse($orders->where('ship_status', '!=', \App\Models\Order::SHIP_STATUS_RECEIVED) as $order)
                             <tr>
                               <th scope="row">{{ $order->no }}</th>
-                              <td>{{ \App\Models\Order::$shipStatusMap[$order->ship_status] }}</td>
+                              <td>{{ \App\Models\Order::$shipStatusMap[$order->ship_status] }}
+                                @if($order->ship_status === App\Models\Order::SHIP_STATUS_PAID)
+                                  <a href="{{ route('order.show', $order->id) }}" class="text-danger">{{ __('Оплатить') }}</a>
+                                @endif
+                              </td>
                               <td>{{ \App\Models\Order::$paymentMethodsMap[$order->payment_method] }}</td>
                               <td>{{ $order->transfer === 'pickup' || $order->transfer === 'ems' ? \App\Models\Order::$transferMethodsMap[$order->transfer] : $order->transfer }}</td>
                               <td>{{ $order->ship_data->track ?? 'Нет данных' }}</td>
