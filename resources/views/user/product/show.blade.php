@@ -86,7 +86,7 @@
           <div class="col-md-12 mb-2">
             <select name="skus" class="form-control rounded-0" id="skus" v-model.number="selectSkus">
               <option value="null" selected disabled>{{ __('Размер') }}</option>
-              @foreach($product->skuses as $skus)
+              @foreach($product->skuses()->orderBy('weight')->get() as $skus)
                 <option value="{{ $skus->pivot->id }}" {{ $skus->pivot->stock === 0 ? 'disabled' : null }}>{{ $skus->title }}</option>
               @endforeach
             </select>
