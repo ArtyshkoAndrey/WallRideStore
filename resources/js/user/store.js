@@ -116,7 +116,9 @@ const store = new Vuex.Store({
     },
     priceAmountWithoutCurrency: (state, getters) => {
       return getters.productsCart.reduce((sum, item) => {
-        return sum + (item.on_sale ? Number(item.price_sale) : Number(item.price)) * item.item.amount
+        console.log(item)
+        if (item)
+          return sum + (item.on_sale ? Number(item.price_sale) : Number(item.price)) * item.item.amount
       }, 0);
     },
     weight: (state, getters) => {
