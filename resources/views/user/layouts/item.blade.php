@@ -45,11 +45,12 @@
             <i class="far fa-shopping-bag"></i>
           </a>
         @elseif(count($product->skuses) === 1)
-          <button class="btn btn-dark h-100 w-100 d-block btn-to-cart"
-                  @click="$store.commit('addItem', {id: {{ $product->skuses()->first()->pivot->id }}, amount: 1})">
-            <span class="pe-2">{{ __('В корзину') }}</span>
-            <i class="far fa-shopping-bag"></i>
-          </button>
+{{--          <button class="btn btn-dark h-100 w-100 d-block btn-to-cart"--}}
+{{--                  @click="$store.commit('addItem', {id: {{ $product->skuses()->first()->pivot->id }}, amount: 1})">--}}
+{{--            <span class="pe-2">{{ __('В корзину') }}</span>--}}
+{{--            <i class="far fa-shopping-bag"></i>--}}
+{{--          </button>--}}
+          <btn-product :id="{{ $product->skuses()->first()->pivot->id }}" :label="'{{ __('В корзину') }}'"></btn-product>
 
         @else
           <button disabled="disabled" class="btn btn-dark h-100 w-100 d-block btn-to-cart">
