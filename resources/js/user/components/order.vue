@@ -35,6 +35,7 @@ export default {
       loaderButton: false,
       loaderButtonAfter: false,
       windowsLoader: false,
+      freeCompany: false,
       order: {
         no: null,
         id: null
@@ -305,7 +306,13 @@ export default {
         weight: this.$store.getters.weight,
       })
         .then(response => {
-         this.customCompanies = Object.values(response.data.companies);
+         let companies = Object.values(response.data.companies);
+          this.freeCompany = companies.some(el => el.price === 0);
+          if (this.freeCompany) {
+            this.customCompanies = [companies.find(el => el.price === 0)]
+          } else {
+            this.customCompanies = companies
+          }
         })
         .catch(error => {
           this.errors.ems = error.response.data

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand navbar-light bg-dark-transparent">
+<nav class="navbar navbar-expand navbar-light bg-dark-transparent" id="sub-menu">
   <div class="container-fluid overflow-x-auto">
     <div class="collapse navbar-collapse align-items-center justify-content-center" id="sub-header">
       <ul class="navbar-nav justify-content-center w-100 px-0 px-lg-4">

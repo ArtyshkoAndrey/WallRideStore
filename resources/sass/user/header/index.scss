@@ -86,10 +86,22 @@ header {
     }
   }
 
+  #sub-menu
+  {
+    padding-bottom: 0;
+    height: 100%;
+
+    .navbar-nav {
+      height: 100%;
+      .nav-item {
+        height: 100%;
+      }
+    }
+  }
   #sub-header {
 
     .dropdown-menu {
-      top: 65px;
+      top: 59px;
       border-radius: 0;
       width: 100vw;
       height: calc(100vh - 76px - 52px);
