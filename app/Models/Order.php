@@ -305,4 +305,12 @@ class Order extends Model
       CouponCode::class
     );
   }
+
+  public function company ()
+  {
+    if ($this->transfer === self::TRANSFER_METHODS_EMS) {
+      return (object)['track_url' => 'https://post.kz/services/postal/'];
+    }
+    return ExpressCompany::whereName($this->transfer)->first();
+  }
 }
