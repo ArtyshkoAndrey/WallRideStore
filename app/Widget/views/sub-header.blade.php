@@ -23,21 +23,28 @@
                 </div>
                 <div class="col-2"></div>
                 <div class="col-4">
-                  <a href="{{ route('product.all', ['category'=>$category->id]) }}"
+                  <a href="{{ route('product.all', ['category' => $category->id]) }}"
                      class="text-dark h6 text-decoration-underline">
                     {{ __('Все товары') }}
                   </a>
                 </div>
+                @if($category->child()->count() > 0)
+                  @php
+                    $countCategories = (int) ($category->child()->count() / 3);
 
-                @forelse($category->child as $category)
-
-                  <div class="col-md-4 py-2">
-                    <a href="{{ route('product.all', ['category'=>$category->id]) }}"
-                       class="text-gray-2">
-                      {{ $category->name }}
-                    </a>
-                  </div>
-                @empty
+                    $category->child()->orderByTranslation('name')->chunk($countCategories, function ($cts) {
+                      echo "<div class='col-md-4'>";
+                      echo "<div class='row'>";
+                      foreach ($cts as $ct) {
+                          echo "<div class='col-md-12 py-2'>";
+                          echo "<a class='text-gray-2' href='" . route('product.all', ["category" => $ct->id]) . "'>" . $ct->name . "</a>";
+                          echo '</div>';
+                      }
+                      echo "</div>";
+                      echo "</div>";
+                    });
+                  @endphp
+                @else
                   @foreach(App\Models\Brand::whereHas('products.category', function($q) use ($category) {$q->where('id', $category->id);})->get() as $brand)
                     <div class="col-md-4 py-2">
                       <a href="{{ route('product.all', ['brand'=>$brand->id]) }}"
@@ -46,7 +53,7 @@
                       </a>
                     </div>
                   @endforeach
-                @endforelse
+                @endif
               </div>
             </div>
           </li>
@@ -68,16 +75,21 @@
               </div>
               <div class="col-6"></div>
 
-              @foreach($brands as $brand)
+              @php
+                $countBrands = (int) (count($brands) / 3);
 
-                <div class="col-md-4 py-2">
-                  <a href="{{ route('brand.show', $brand->id) }}"
-                     class="text-gray-2">
-                    {{ $brand->name }}
-                  </a>
-                </div>
-
-              @endforeach
+                App\Models\Brand::orderBy('name')->chunk($countBrands, function ($brands) {
+                  echo "<div class='col-md-4'>";
+                  echo "<div class='row'>";
+                  foreach ($brands as $brand) {
+                      echo "<div class='col-md-12 py-2'>";
+                      echo "<a class='text-gray-2' href='" . route('product.all', ["brand" => $brand->id]) . "'>" . $brand->name . "</a>";
+                      echo '</div>';
+                  }
+                  echo "</div>";
+                  echo "</div>";
+                });
+              @endphp
             </div>
           </div>
         </li>
