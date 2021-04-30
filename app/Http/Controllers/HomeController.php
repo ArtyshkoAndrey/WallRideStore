@@ -60,4 +60,14 @@ class HomeController extends Controller
   {
     return view('user.page.policy');
   }
+
+  /**
+   * Page PAY
+   *
+   * @return View
+   */
+  public function pay(): View
+  {
+    return view('user.page.pay');
+  }
 }

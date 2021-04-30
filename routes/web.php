@@ -121,6 +121,7 @@ if (config('app.unstable', false)) {
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('index');
 Route::get('language/change/{locale}', [\App\Http\Controllers\HomeController::class, 'language']);
 Route::get('policy', [\App\Http\Controllers\HomeController::class, 'policy'])->name('policy');
+Route::get('pay', [\App\Http\Controllers\HomeController::class, 'pay'])->name('pay');
 Route::post('auth/check', [App\Http\Controllers\ApiController::class, 'check']);
 
 
