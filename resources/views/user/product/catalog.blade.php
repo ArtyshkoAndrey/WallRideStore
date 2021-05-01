@@ -84,11 +84,11 @@
 
         <div class="col-auto mt-2 mt-md-0 px-0 px-md-1 hiddable-filter">
           <div class="checkbox w-100 h-100 d-flex align-items-center">
-            <div class="row">
+            <div class="row align-items-start">
               <div class="col-auto pe-0 d-flex align-items-center">
                 <input type="checkbox" class="form-check-input" id="sale" name="sale" value="true" {{ $filter['sale'] ? 'checked' : null }}>
               </div>
-              <div class="col m-0">
+              <div class="col m-0 ps-0">
                 <label class="form-check-label" for="sale">Sale</label>
               </div>
             </div>
@@ -97,11 +97,11 @@
 
         <div class="col-auto mt-2 mt-md-0 hiddable-filter">
           <div class="checkbox w-100 h-100 d-flex align-items-center">
-            <div class="row">
+            <div class="row align-items-start">
               <div class="col-auto pe-0 d-flex align-items-center">
                 <input type="checkbox" class="form-check-input" id="new" name="new" value="true" {{ $filter['new'] ? 'checked' : null }}>
               </div>
-              <div class="col m-0">
+              <div class="col m-0 ps-0">
                 <label class="form-check-label" for="new">New</label>
               </div>
             </div>

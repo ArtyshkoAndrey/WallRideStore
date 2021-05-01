@@ -235,16 +235,16 @@ class ApiController extends Controller
    *
    * @param Request $request
    * @return JsonResponse
-   * @throws \Illuminate\Contracts\Container\BindingResolutionException
    */
   public function companies(Request $request): JsonResponse
   {
     $request->validate([
       'city' => 'required|exists:cities,id',
       'weight' => 'required|numeric',
+      'cost' => 'required|numeric'
     ]);
     $weight = $request->get('weight');
-    $express_companies = ExpressCompany::whereEnabled(true)->get();
+    $express_companies = ExpressCompany::whereEnabled(true)->where('min_cost', '<=', $request->get('cost', 0))->get();
     $zones = ExpressZone::with('company')->whereHas('cities', function ($qq) use ($request) {
       $qq->where('cities.id', $request->city);
     })->get();

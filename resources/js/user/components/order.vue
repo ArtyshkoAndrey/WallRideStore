@@ -304,6 +304,7 @@ export default {
       window.axios.post('/api/companies', {
         city: this.info.city.id,
         weight: this.$store.getters.weight,
+        cost: this.priceWithoutCurrency
       })
         .then(response => {
          let companies = Object.values(response.data.companies);
