@@ -1,7 +1,8 @@
 <template>
-  <button class="btn h-100 w-100 d-block btn-to-cart" :class="check ? 'btn-success' : 'btn-dark'"
+  <button class="btn h-100 w-100 d-block btn-to-cart btn-dark" :style="check ? 'background-color: #00913b!important' : null"
           @click="addItem">
-    <span class="pe-2">{{ label }}</span>
+    <span class="pe-2" v-if="check">Добавлено</span>
+    <span class="pe-2" v-else>{{ label }}</span>
     <i class="far fa-shopping-bag"></i>
   </button>
 </template>
@@ -24,7 +25,7 @@ export default {
       this.check = true;
       setTimeout(()=> {
         this.check = false
-      }, 500)
+      }, 1000)
     }
   }
 }

@@ -44,38 +44,31 @@
      */
     public function store(Request $request): RedirectResponse
     {
-      if ($request->method_cost === 'step_and_cost') {
-        $request->validate([
-          'name' => 'required|unique:express_zones,name',
-          'cost' => 'required|numeric|min:0',
-          'step' => 'required|numeric|min:0',
-          'cost_step' => 'required|numeric|min:0',
-          'company_id' => 'required|exists:express_companies,id',
-        ]);
+      $request->validate([
+        'name' => 'required|unique:express_zones,name',
+        'type' => 'required',
+        'company' => 'required|exists:express_companies,id',
+      ]);
 
-        $zone = new ExpressZone();
-        $zone = $zone->create($request->all());
-      } else if ($request->method_cost === 'array_step') {
-        $request->validate([
-          'name' => 'required|unique:express_zones,name',
-          'company_id' => 'required|exists:express_companies,id',
-          'weight_to' => 'required',
-          'weight_from' => 'required',
-          'cost' => 'required'
-        ]);
-        $zone = new ExpressZone();
-        $zone->name = $request->name;
-        $zone->company()->associate($request->company_id);
-        $step_cost_array = array();
-        for ($i = 1, $iMax = count($request->cost); $i <= $iMax; $i++) {
-          $step_cost_array[$i - 1] = (object)array();
-          $step_cost_array[$i - 1]->cost = (double)$request->cost[$i];
-          $step_cost_array[$i - 1]->weight_to = (double)$request->weight_to[$i];
-          $step_cost_array[$i - 1]->weight_from = (double)$request->weight_from[$i];
+      $zone = new ExpressZone();
+      $zone->name = $request->get('name');
+      $zone->company()->associate($request->get('company'));
+      $company = ExpressCompany::find($request->get('company'));
+      if ($request->get('type') === 'cost_step') {
+        if ($company->zones()->whereNull('cost')->count() > 0) {
+          return redirect()->back()->withInput()->withErrors(['В выбранной компании другой тип стоимости']);
         }
-        $zone->step_cost_array = $step_cost_array;
-        $zone->save();
+
+        $zone->cost = 0;
+        $zone->cost_step = 0;
+        $zone->step = 0;
+      } else if ($request->get('type') === 'step_cost_array') {
+        if ($company->zones()->whereNull('step_cost_array')->count() > 0) {
+          return redirect()->back()->withInput()->withErrors(['В выбранной компании другой тип стоимости']);
+        }
+        $zone->step_cost_array = [];
       }
+      $zone->save();
 
       return redirect()->route('admin.express-zone.edit', $zone->id);
     }

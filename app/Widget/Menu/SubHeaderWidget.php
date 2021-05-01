@@ -25,7 +25,7 @@ class SubHeaderWidget
     $saleCategories = Cache::remember('sale-categories-' . \App::getLocale(), config('app.cache.db'), function () {
       return Category::whereHas('products', function($q) {
         $q->where('on_sale', true);
-      })->withTranslation()->get();
+      })->withTranslation()->orderByTranslation('name')->get();
     });
 
 
