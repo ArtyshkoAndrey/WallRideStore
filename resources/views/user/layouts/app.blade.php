@@ -45,7 +45,6 @@
     <!— /Yandex.Metrika counter —>
   @endif
 
-
 </head>
 <body id="{{ str_replace('.', '-', Route::currentRouteName()) . '-page' }}">
 

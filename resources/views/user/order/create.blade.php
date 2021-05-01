@@ -147,7 +147,7 @@
               </transition>
 
               <transition name="slide-fade" mode="out-in" appear>
-                <div class="col-12 mb-3" v-if="!ems.error && ems.price !== null" :key="1">
+                <div class="col-12 mb-3" v-if="!ems.error && ems.price !== null && freeCompany === false" :key="1">
                   <div class="row align-items-center">
                     <div class="col-auto">
                       <input

@@ -60,7 +60,13 @@
                               </td>
                               <td>{{ \App\Models\Order::$paymentMethodsMap[$order->payment_method] }}</td>
                               <td>{{ $order->transfer === 'pickup' || $order->transfer === 'ems' ? \App\Models\Order::$transferMethodsMap[$order->transfer] : $order->transfer }}</td>
-                              <td>{{ $order->ship_data->track ?? 'Нет данных' }}</td>
+                              <td>
+                                @if($order->ship_data && $order->ship_data->track && $order->company())
+                                  <a href="{{ $order->company()->track_url . $order->ship_data->track }}" target="_blank">Отследить</a>
+                                @else
+                                  {{ $order->ship_data->track ?? 'Нет данных' }}
+                                @endif
+                              </td>
                               <td>{{ number_format($order->price + $order->ship_price - $order->sale, 0,',', ' ') }} ₸</td>
                             </tr>
                         @empty

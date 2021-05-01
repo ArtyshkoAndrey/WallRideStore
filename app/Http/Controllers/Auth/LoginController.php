@@ -8,6 +8,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -38,5 +39,18 @@ class LoginController extends Controller
   public function showLoginForm()
   {
     return view('user.auth.login');
+  }
+
+  /**
+   * Attempt to log the user into the application.
+   *
+   * @param Request $request
+   * @return bool
+   */
+  protected function attemptLogin(Request $request): bool
+  {
+    return $this->guard()->attempt(
+      $this->credentials($request), true
+    );
   }
 }

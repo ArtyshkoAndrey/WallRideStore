@@ -244,7 +244,7 @@ class ApiController extends Controller
       'weight' => 'required|numeric',
     ]);
     $weight = $request->get('weight');
-    $express_companies = ExpressCompany::get();
+    $express_companies = ExpressCompany::whereEnabled(true)->get();
     $zones = ExpressZone::with('company')->whereHas('cities', function ($qq) use ($request) {
       $qq->where('cities.id', $request->city);
     })->get();
