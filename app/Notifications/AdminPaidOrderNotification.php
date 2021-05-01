@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Category;
 use App\Models\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -43,11 +44,14 @@ class AdminPaidOrderNotification extends Notification
    */
   public function toMail($notifiable): MailMessage
   {
+    $category = Category::whereDoesntHave('parents')->get();
+
     return (new MailMessage)
-      ->greeting('Здраствуйте')
-      ->subject('Заказ №' . $this->order->no . ' был оплачен')
-      ->line('Заказ от ' . $this->order->user->name . ' был оплачен. Зайдите в админ панель что бы узать подробнее.')
-      ->action('Подробнее', route('admin.order.edit', $this->order->id));
+      ->subject('Заказ № ' . $this->order->no . ' успешно оплачен')
+      ->view('emails.order.admin', [
+        'order' => $this->order,
+        'category' => $category
+      ]);
   }
 
   /**
