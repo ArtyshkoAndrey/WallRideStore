@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Exceptions\RedirectWithErrorsException;
+use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Skus;
 use Validator;
@@ -146,13 +147,22 @@ trait FilterProductTrait
         }
       }
     }
+    if ($categories !== []) {
+      $brandsCollection = Brand::whereHas('products.category', function ($q) use($categories) {
+        $q->whereIn('products.category_id', $categories);
+      })->get();
+    } else {
+      $brandsCollection = Brand::all();
+    }
+
 
     return [
       'items' => $items,
       'filter' => $filter,
       'counter' => $counter,
       'itemsCount' => $itemsCount,
-      'attributes' => $attributes
+      'attributes' => $attributes,
+      'brands' => $brandsCollection
     ];
   }
 }

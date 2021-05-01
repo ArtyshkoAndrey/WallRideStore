@@ -43,11 +43,11 @@
             <span class="{{ count($filter['brand']) > 0 ? 'font-weight-bolder' : null }}">{{ __('Бренды') }}</span>
           </a>
           <div class="dropdown-menu dropdown-shadow rounded-0 border-0 py-3 px-4 overflow-auto" aria-labelledby="dropdownBrandLink">
-            @foreach($brands = \App\Models\Brand::all() as $brand)
+            @foreach($brands as $brand)
               <div class="checkbox">
                 <div class="row">
                   <div class="col-auto pr-0">
-                    <input type="checkbox" class="form-check-input" id="brand-{{$brand->id}}" name="brand[]" value="{{ $brand->id }}" {{ in_array($brand->id, $filter['brand']) ? 'checked' : null }}>
+                    <input type="checkbox" class="form-check-input" id="brand-{{$brand->id}}" name="brand[]" value="{{ $brand->id }}" {{ in_array($brand->id, $filter['brand'], true) ? 'checked' : null }}>
                   </div>
                   <div class="col m-0">
                     <label class="form-check-label" for="brand-{{$brand->id}}">{{ $brand->name }} <span class="text-muted pl-1">{{ $brand->products()->count() }}</span> </label>

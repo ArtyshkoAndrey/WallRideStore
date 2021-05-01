@@ -12,6 +12,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use JsonException;
 
 class ProductController extends Controller
 {
@@ -22,7 +23,7 @@ class ProductController extends Controller
    *
    * @param Request $request
    * @return View
-   * @throws RedirectWithErrorsException|BindingResolutionException
+   * @throws RedirectWithErrorsException
    */
   public function search(Request $request): View
   {
@@ -41,7 +42,7 @@ class ProductController extends Controller
    *
    * @param Request $request
    * @return Application|Factory|View
-   * @throws RedirectWithErrorsException|BindingResolutionException
+   * @throws RedirectWithErrorsException
    */
   public function all(Request $request): View
   {
@@ -69,8 +70,9 @@ class ProductController extends Controller
     $attributes = $data['attributes'];
     $itemsCount = $data['itemsCount'];
     $counter = $data['counter'];
+    $brands = $data['brands'];
 
-    return view('user.product.catalog', compact('items', 'filter', 'itemsCount', 'attributes', 'counter'));
+    return view('user.product.catalog', compact('items', 'filter', 'itemsCount', 'attributes', 'counter', 'brands'));
   }
 
   /**
@@ -78,7 +80,7 @@ class ProductController extends Controller
    *
    * @param int $id
    * @return View|void
-   * @throws RedirectWithErrorsException|BindingResolutionException
+   * @throws RedirectWithErrorsException
    */
   public function show(int $id): View
   {
@@ -110,12 +112,12 @@ class ProductController extends Controller
    * Display Favor products
    *
    * @return Application|Factory|View
-   * @throws BindingResolutionException
+   * @throws JsonException
    */
   public function favor()
   {
     if (isset($_COOKIE['favor'])) {
-      $ids = json_decode($_COOKIE['favor']);
+      $ids = json_decode($_COOKIE['favor'], true, 512, JSON_THROW_ON_ERROR);
       $products = Product::findMany($ids);
     } else {
       $products = [];
