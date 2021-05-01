@@ -124,6 +124,10 @@ Route::get('policy', [\App\Http\Controllers\HomeController::class, 'policy'])->n
 Route::get('pay', [\App\Http\Controllers\HomeController::class, 'pay'])->name('pay');
 Route::post('auth/check', [App\Http\Controllers\ApiController::class, 'check']);
 
+Route::get('redirect/vk', [App\Http\Controllers\Auth\SocialController::class, 'vk'])->name('redirect.vk');
+Route::get('redirect/google', [App\Http\Controllers\Auth\SocialController::class, 'google'])->name('redirect.google');
+Route::get('auth/vk', [App\Http\Controllers\Auth\SocialController::class, 'auth_vk'])->name('auth.vk');
+Route::get('auth/google', [App\Http\Controllers\Auth\SocialController::class, 'auth_google'])->name('auth.google');
 
 Route::prefix('product')->name('product.')->group(function () {
   Route::get('/search', [ProductController::class, 'search'])->name('search');

@@ -7,7 +7,7 @@
     <div class="row w-100 mt-5 d-flex justify-content-center">
       <div class="col-lg-4 col-md-5 col-sm-8 col-12">
         <div class="row justify-content-center">
-          <div class="col-md-5 col-6">
+          <div class="col-2 col-md-3 col-xl-2">
             <img src="{{ asset('images/logo-dark.svg') }}" alt="logo" class="img-fluid mb-5 mx-auto d-block logo">
           </div>
         </div>
@@ -26,26 +26,26 @@
           </div>
           <div class="card-body p-4">
             <div class="row">
-              <div class="col-12 d-none">
+              <div class="col-12">
                 <h5 class="text-center font-weight-light w-100">{{ __('Вход через соц. сеть') }}</h5>
               </div>
-              <div class="col-12 d-none">
-                <div class="row p-0 m-0">
-                  <div class="col-4 p-0 pr-1">
-                    <a href="#" class="btn social-signin" id="google">
-                      <i class="bx bxl-google mr-md-1"></i>
+              <div class="col-12">
+                <div class="row m-0 flex-fill justify-content-center">
+                  <div class="col-auto mt-2">
+                    <a href="{{ route('redirect.google') }}" class="btn social-signin" id="google">
+                      <i class="fab fa-google me-md-1"></i>
                       <span class="d-none d-md-block">Google</span>
                     </a>
                   </div>
-                  <div class="col-4 p-0 px-1">
+                  <div class="col-4 p-0 d-none">
                     <a href="#" class="btn social-signin" id="fb">
                       <i class="bx bxl-facebook mr-md-1"></i>
                       <span class="d-none d-md-block">Facebook</span>
                     </a>
                   </div>
-                  <div class="col-4 p-0 pl-1">
-                    <a href="#" class="btn social-signin" id="vk">
-                      <i class="bx bxl-vk mr-md-1"></i>
+                  <div class="col-auto mt-2">
+                    <a href="{{ route('redirect.vk') }}" class="btn social-signin" id="vk">
+                      <i class="fab fa-vk me-md-1"></i>
                       <span class="d-none d-md-block">VKontakte</span>
                     </a>
                   </div>
