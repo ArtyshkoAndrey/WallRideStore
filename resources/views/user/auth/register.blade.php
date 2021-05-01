@@ -7,7 +7,7 @@
     <div class="row w-100 mt-5 d-flex justify-content-center">
       <div class="col-lg-4 col-md-5 col-sm-8 col-12">
         <div class="row justify-content-center">
-          <div class="col-md-5 col-6">
+          <div class="col-2 col-md-3 col-xl-2">
             <img src="{{ asset('images/logo-dark.svg') }}" alt="logo" class="img-fluid mb-5 mx-auto d-block">
           </div>
         </div>
