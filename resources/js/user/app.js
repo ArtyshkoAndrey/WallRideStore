@@ -16,6 +16,7 @@ require('./root.js')
 import Alert from './Alert';
 import store from "./store";
 import Modals from "./Modals";
+import Vue from "vue";
 window.Vue = require('vue')
 
 /**
@@ -40,9 +41,9 @@ Vue.prototype.$cost = function (number) {
  */
 
 
-Vue.config.productionTip = false
+Vue.config.productionTip = true
 
-Vue.config.devtools = true;
+Vue.config.devtools = false;
 Vue.config.performance = true;
 
 const app = new Vue({
