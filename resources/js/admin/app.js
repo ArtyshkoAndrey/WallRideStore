@@ -1,4 +1,5 @@
 window.Vue = require('vue')
+import Vue from 'vue'
 
 window.halfmoon = require("halfmoon");
 window.$ = window.jQuery = require('jquery');
