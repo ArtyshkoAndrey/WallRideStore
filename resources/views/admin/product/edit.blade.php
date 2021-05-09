@@ -173,7 +173,7 @@
                       <div class="form-group">
                         <label for="skus-{{ $skus->id }}" class="font-weight-bolder">{{ $skus->skus->category->name }}: {{ $skus->skus->title }}</label>
                         <div class="input-group">
-                          <input type="number" min="0" step="1" name="skus[{{ $skus->skus->id }}]" id="skus-{{ $skus->id }}" class="form-control" value="{{ $skus->stock ?? null }}">
+                          <input type="number" min="0" step="1" name="skus[{{ $skus->skus->id }}]" id="skus-{{ $skus->id }}" class="form-control" value="{{ $skus->stock ?? null }}" required>
                           <div class="input-group-append">
                             <button class="btn btn-danger" type="button" onclick="deleteSkus({{ $skus->skus->id }})"><i class="bx bx-x"></i></button>
                           </div>
@@ -329,7 +329,7 @@
       // input.step = '1'
       // input.name = 'skus[' + id + ']'
 
-      let input = '<input class="form-control" value="0" min="0" step="1" name="skus[' + id + ']">'
+      let input = '<input class="form-control" value="0" min="0" step="1" required name="skus[' + id + ']">'
 
       let input_group = document.createElement('div')
       input_group.classList.add('input-group')

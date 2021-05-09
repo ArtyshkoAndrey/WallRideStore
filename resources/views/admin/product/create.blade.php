@@ -336,7 +336,7 @@
       // input.step = '1'
       // input.name = 'skus[' + id + ']'
 
-      let input = '<input class="form-control" value="0" min="0" step="1" name="skus[' + id + ']">'
+      let input = '<input class="form-control" value="0" min="0" step="1" required name="skus[' + id + ']">'
 
       let input_group = document.createElement('div')
       input_group.classList.add('input-group')
