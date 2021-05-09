@@ -104,7 +104,7 @@
 
               <div class="col-12 col-md-6 mb-5">
                 <div class="form-outline">
-                  <input type="text"
+                  <input type="tel"
                          id="phone"
                          name="phone"
                          class="form-control {{ (auth()->user()->phone ?? null) ? 'active' : '' }}"
@@ -383,7 +383,17 @@
 
 @section('js')
   <script src="https://widget.cloudpayments.ru/bundles/cloudpayments"></script>
+{{--  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>--}}
+  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/inputmask.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/inputmask.extensions.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/inputmask.numeric.extensions.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/inputmask.date.extensions.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/inputmask.phone.extensions.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/jquery.inputmask.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/phone-codes/phone.js"></script>
+
   <script>
-    $('#phone').mask('+7 (000) 000-00-00')
+    // $('#phone').mask('+7 (000) 000-00-00')
+    $('#phone').inputmask({ alias: "phone"});
   </script>
 @endsection
