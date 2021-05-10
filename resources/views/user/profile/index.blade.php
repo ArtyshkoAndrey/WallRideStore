@@ -98,11 +98,12 @@
 
                         <div class="col-md-6 col-12">
                           <div class="form-outline mb-4">
-                            <input type="text"
-                                   id="phone"
+                            <input id="phone"
+                                   type="tel"
                                    name="phone"
                                    class="form-control active"
                                    value="{{ auth()->user()->phone }}"
+                                   placeholder="+7 (999) 999-99-99"
                                    required />
                             <label class="form-label"
                                    for="phone">
@@ -225,16 +226,16 @@
 
     // $('#phone').mask('+7 (000) 000-00-00');
   </script>
-  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/inputmask.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/inputmask.extensions.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/inputmask.numeric.extensions.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/inputmask.date.extensions.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/inputmask.phone.extensions.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/jquery.inputmask.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/phone-codes/phone.js"></script>
+{{--  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/inputmask.js"></script>--}}
+{{--  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/inputmask.extensions.js"></script>--}}
+{{--  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/inputmask.numeric.extensions.js"></script>--}}
+{{--  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/inputmask.date.extensions.js"></script>--}}
+{{--  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/inputmask.phone.extensions.js"></script>--}}
+{{--  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/jquery.inputmask.js"></script>--}}
+{{--  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/phone-codes/phone.js"></script>--}}
 
   <script>
     // $('#phone').mask('+7 (000) 000-00-00')
-    $('#phone').inputmask({ alias: "phone"});
+    // $('#phone').inputmask({ alias: "phone"});
   </script>
 @endsection
