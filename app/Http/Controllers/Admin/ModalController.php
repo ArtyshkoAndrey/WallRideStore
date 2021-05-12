@@ -184,6 +184,14 @@ class ModalController extends Controller
       $data['image'] = $data['image'] ?? null;
       $modal->update($data);
       $modal->save();
+    } else if ((int) $request->get('type') === 4) {
+      $request->validate([
+        'ru.description'  => 'required',
+        'en.description'  => 'required',
+      ]);
+      $modal->update($data);
+      $modal->save();
+
     } else {
       return redirect()->back()->withInput()->with('error', ['Ошибка при сохранении']);
     }

@@ -600,9 +600,13 @@
                                   Номер отслеживание</p></td>
                             </tr>
                             <tr style="border-collapse:collapse">
-                              <td align="left" style="padding:0;Margin:0;padding-bottom:5px"><p
+                              <td align="left" style="padding:0;Margin:0;padding-bottom:5px">
+                                <p
                                   style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
                                   {{ $order->ship_data->track ?? ' ' }}</p>
+                                @if($order->ship_data && $order->ship_data->track && $order->company())
+                                  <a href="{{ $order->company()->track_url . $order->ship_data->track }}" style="color: #ff0000;font-size:14px;Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;" target="_blank">Отследить</a>
+                                @endif
                               </td>
                             </tr>
                           </table>
