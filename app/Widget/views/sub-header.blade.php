@@ -83,7 +83,7 @@
                   echo "<div class='row'>";
                   foreach ($brands as $brand) {
                       echo "<div class='col-md-12 py-2'>";
-                      echo "<a class='text-gray-2' href='" . route('product.all', ["brand" => $brand->id]) . "'>" . $brand->name . "</a>";
+                      echo "<a class='text-gray-2' href='" . route('brand.show', $brand->id) . "'>" . $brand->name . "</a>";
                       echo '</div>';
                   }
                   echo "</div>";

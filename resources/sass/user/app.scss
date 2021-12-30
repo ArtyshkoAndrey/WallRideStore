@@ -30,3 +30,36 @@
     }
   }
 }
+
+#modal-description {
+
+}
+#modal-description h4 {
+  color:#fff;
+  text-align:center;
+  font-size:24px;
+  width:207px;
+  margin:0 auto;
+  font-family: "Open Sans";
+  font-weight:600;
+  text-transform: uppercase;
+}
+
+#modal-description .modal-description-text > * {
+  color:#fff;
+
+  text-align:left;
+  font-size:18px;
+  font-family: "Open Sans" !important;
+  //margin-top:50px;
+}
+#modal-coupon {
+  border: solid 1px #fff;
+  margin-top:20px !important;
+  height:49px !important;
+  line-height:49px !important;
+}
+
+#code {
+
+}

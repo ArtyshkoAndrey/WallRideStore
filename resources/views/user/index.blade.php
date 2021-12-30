@@ -57,7 +57,16 @@
       <div class="row"></div>
     </div>
   @endif
-
+  <section class="container-fluid p-0">
+    <div class="container_delievery">
+      <div class="align-content-center delievery" v-if="$store.state.currency.name == 'Тенге'" style="">
+        <img src="/svg/carbon_delivery.svg" /><span style="padding-left:10px">Бесплатная доставка по Казахстану. <a href="{{ url('/delievery') }}">Подробнее</a></span>
+      </div>
+      <div class="align-content-center delievery" v-if="$store.state.currency.name !== 'Тенге'" style="">
+        <img src="/svg/carbon_delivery.svg" /><span style="padding-left:10px">Бесплатная доставка по России. <a href="{{ url('/delievery') }}">Подробнее</a></span>
+      </div>
+    </div>
+  </section>
   @if(count($newProducts) > 0)
     <section class="container mt-5 mb-5">
       <div class="row">

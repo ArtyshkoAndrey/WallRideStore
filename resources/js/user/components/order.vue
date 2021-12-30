@@ -57,7 +57,9 @@ export default {
       this.info.name      = $('#name').val()
       this.info.address   = $('#address').val()
       this.info.post_code = $('#post_code').val()
+
     })
+
   },
   methods: {
     setCountry (country) {
@@ -295,6 +297,15 @@ export default {
         .then(response => {
           this.ems.price = Number(response.data)
           this.ems.error = false
+
+
+          if(this.freeCompany === false ) {
+            if(!this.ems.error) {
+              this.setEmsTransfer();
+            }
+          }
+          console.log("FRREC" + this.freeCompany)
+          console.log("FRREC" + this.ems.price)
         })
         .catch(error => {
           this.errors.ems = error.response.data
@@ -310,7 +321,9 @@ export default {
          let companies = Object.values(response.data.companies);
           this.freeCompany = companies.some(el => el.price === 0);
           if (this.freeCompany) {
+            this.setCompanyTransfer(companies.find(el => el.price === 0))
             this.customCompanies = [companies.find(el => el.price === 0)]
+
           } else {
             this.customCompanies = companies
           }

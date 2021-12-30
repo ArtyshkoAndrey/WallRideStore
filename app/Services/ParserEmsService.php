@@ -93,7 +93,8 @@ class ParserEmsService
    */
   private function createXML(): DOMDocument
   {
-    $productData = $this->product[$this->country_code] ?? 'P203';
+    $productData = $this->product[$this->country_code] ?? 'P104';
+   // $productData = 'P104';
     $xml = new DOMDocument();
 
     $Envelope = $xml->createElement('soapenv:Envelope');
@@ -111,13 +112,14 @@ class ParserEmsService
     $SndrCtg = $xml->createElement('pos:SndrCtg', 1);
     $Contract = $xml->createElement('pos:Contract');
     $Product = $xml->createElement('pos:Product', $productData);
-    $MailCat = $xml->createElement('pos:MailCat', 3);
+    $MailCat = $xml->createElement('pos:MailCat', 1);
     $SendMethod = $xml->createElement('pos:SendMethod', 1);
     $Weight = $xml->createElement('pos:Weight', $this->weight * 1000);
     $Dimension = $xml->createElement('pos:Dimension', 'L');
     $Value = $xml->createElement('pos:Value', 0);
     $From = $xml->createElement('pos:From', $this->send_post_code);
     $To = $xml->createElement('pos:To', $this->post_code);
+    //$To = $xml->createElement('pos:To', '010001');
     $ToCountry = $xml->createElement('pos:ToCountry', $this->country_code);
     $PostMark = $xml->createElement('pos:PostMark',);
 

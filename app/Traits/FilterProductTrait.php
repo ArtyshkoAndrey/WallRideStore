@@ -88,9 +88,11 @@ trait FilterProductTrait
         });
       } else {
         $items = $items->orWhereHas('brand', function ($query) use ($brand) {
-          return $query->where('brands.id', '=', $brand);
+          return $query->where('brands.id', '=', $brand)->with('productSkuses')->orderBy('weight');
         });
+
       }
+
     }
 
 //    TODO: Когданить исправить на нормальный запросы
@@ -123,8 +125,9 @@ trait FilterProductTrait
     }
     if (!empty($sizes)) {
       $items = $items->whereHas('skuses', function ($query) use ($sizes) {
-        return $query->whereIn('skus_id', $sizes);
+        return $query->whereIn('skus_id', $sizes)->with('productSkuses')->orderBy('weight');
       });
+
     }
 
     $itemsCount = $items->count();
@@ -139,7 +142,7 @@ trait FilterProductTrait
     ];
     $counter = 0;
     foreach ($filter as $name => $f) {
-      if ($name !== 'sale' && $name !== 'new' && $name !== 'order'){
+      if ($name !== 'sale' && $name !== 'new' && $name !== 'order') {
         $counter += count($f);
       } else {
         if ($f && $name !== 'order') {
@@ -148,7 +151,7 @@ trait FilterProductTrait
       }
     }
     if ($categories !== []) {
-      $brandsCollection = Brand::whereHas('products.category', function ($q) use($categories) {
+      $brandsCollection = Brand::whereHas('products.category', function ($q) use ($categories) {
         $q->whereIn('products.category_id', $categories);
       })->get();
     } else {

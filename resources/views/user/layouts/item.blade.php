@@ -1,4 +1,3 @@
-
 <div class="card product sale bg-transparent shadow-0 h-100">
 
   <div class="card-body d-flex flex-column">
@@ -12,13 +11,19 @@
           </picture>
           <div class="info">
             <p class="py-2 mb-0 text-white px-3">
-              @foreach($product->skuses as $skus)
-                @if($loop->last)
-                  <span style="white-space: nowrap">{{ $skus->title }}</span>
-                @else
-                  <span style="white-space: nowrap">{{ $skus->title }},</span>
-                @endif
-              @endforeach
+              @if(isset($product->skusesnew))
+                @for($i=0;$i<count($product->skusesnew[0]);$i++)
+                  @if($product->skusesnew[2][$i]> 0)
+                    @if($loop->last)
+                      <span style="white-space: nowrap">{{ $product->skusesnew[1][$i] }}</span>
+                    @else
+
+                      <span style="white-space: nowrap">{{ $product->skusesnew[1][$i] }}</span>
+
+                    @endif
+                  @endif
+                @endfor
+              @endif
             </p>
           </div>
         </a>
@@ -45,12 +50,13 @@
             <i class="far fa-shopping-bag"></i>
           </a>
         @elseif(count($product->skuses) === 1)
-{{--          <button class="btn btn-dark h-100 w-100 d-block btn-to-cart"--}}
-{{--                  @click="$store.commit('addItem', {id: {{ $product->skuses()->first()->pivot->id }}, amount: 1})">--}}
-{{--            <span class="pe-2">{{ __('В корзину') }}</span>--}}
-{{--            <i class="far fa-shopping-bag"></i>--}}
-{{--          </button>--}}
-          <btn-product :id="{{ $product->skuses()->first()->pivot->id }}" :label="'{{ __('В корзину') }}'"></btn-product>
+          {{--          <button class="btn btn-dark h-100 w-100 d-block btn-to-cart"--}}
+          {{--                  @click="$store.commit('addItem', {id: {{ $product->skuses()->first()->pivot->id }}, amount: 1})">--}}
+          {{--            <span class="pe-2">{{ __('В корзину') }}</span>--}}
+          {{--            <i class="far fa-shopping-bag"></i>--}}
+          {{--          </button>--}}
+          <btn-product :id="{{ $product->skuses()->first()->pivot->id }}"
+                       :label="'{{ __('В корзину') }}'"></btn-product>
 
         @else
           <button disabled="disabled" class="btn btn-dark h-100 w-100 d-block btn-to-cart">

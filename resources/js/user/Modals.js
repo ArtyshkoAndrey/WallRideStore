@@ -55,7 +55,7 @@ export default class Modals {
         await axios.get('api/modals/code')
           .then(r => {
             modal.coupon_code = r.data.code
-            console.log('code', r.data.code)
+            console.log('code', r.data.code.code)
           })
           .catch(e => {
             console.log(e.response.data)

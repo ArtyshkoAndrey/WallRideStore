@@ -123,7 +123,7 @@ Route::get('language/change/{locale}', [\App\Http\Controllers\HomeController::cl
 Route::get('policy', [\App\Http\Controllers\HomeController::class, 'policy'])->name('policy');
 Route::get('pay', [\App\Http\Controllers\HomeController::class, 'pay'])->name('pay');
 Route::post('auth/check', [App\Http\Controllers\ApiController::class, 'check']);
-
+Route::get('/delievery', [\App\Http\Controllers\HomeController::class, 'delievery'])->name('delievery');
 Route::get('redirect/vk', [App\Http\Controllers\Auth\SocialController::class, 'vk'])->name('redirect.vk');
 Route::get('redirect/google', [App\Http\Controllers\Auth\SocialController::class, 'google'])->name('redirect.google');
 Route::get('auth/vk', [App\Http\Controllers\Auth\SocialController::class, 'auth_vk'])->name('auth.vk');
@@ -164,3 +164,4 @@ Route::prefix('order')->name('order.')->group(function () {
   Route::post('/update/status', [OrderController::class, 'updateStatus'])->name('update.status');
   Route::get('/show/{id}', [OrderController::class, 'show'])->middleware('auth')->name('show');
 });
+Route::get('cost-ems-test', [ApiController::class, 'getCostEmsTest']);

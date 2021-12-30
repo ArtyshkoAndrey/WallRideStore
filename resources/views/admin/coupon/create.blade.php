@@ -193,7 +193,6 @@
 @section('script')
   <script>
     $(document).ready(() => {
-
       $('.js-example-basic-multiple').select2({
         width: '100%'
       })

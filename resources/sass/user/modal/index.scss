@@ -5,13 +5,21 @@
 .modal-user {
   .modal-dialog {
     @media screen and (min-width: 650px) {
-      min-width: 600px;
+      width: 279px;
+      height: 472px;
     }
+  }
+  h4 {
+    font-size:18px !important;
   }
   .modal-content {
     border-radius: 0;
     position: relative;
-
+    height: 407px;
+    @media screen and (max-width: 650px) {
+      margin: 0 auto;
+      width:279px;
+    }
     #modal-photo {
       min-height: 100%;
       width: 100%;
@@ -23,7 +31,6 @@
       font-weight: 800;
     }
     .modal-description-text > * {
-      font-size: 0.9em!important;
       color: $gray-1;
     }
 

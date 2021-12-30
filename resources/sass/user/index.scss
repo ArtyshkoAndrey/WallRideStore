@@ -5,6 +5,41 @@
 @import "colors";
 @import "modal";
 
+iframe {
+  //width:1295px;
+  //height:726px;
+}
+@media (max-width: 450px) {
+  iframe {
+    width: 400px;
+    height:249px;
+  }
+}
+
+.delievery {
+  @media screen and (max-width: 440px) {
+    height:70px;
+    padding-top:12px;
+    padding-left:10px;
+    padding-right:10px;
+  }
+  font-size:18px;
+  text-align:center;
+  height:50px;
+  padding-top:20px;
+  font-size:18px;
+  &:before {
+    content:url('images/delievery.png');
+    width:100px;
+  }
+
+  img {
+    width:32px;
+    height:32px;
+  }
+
+}
+
 *:active, *:hover {
   outline: none;
 }
@@ -20,7 +55,7 @@ a {
 @include respond-to(md) {
   *::-webkit-scrollbar {
     width: 10px;
-    background: rgba(255,255,255,.7);
+    background: rgba(255, 255, 255, .7);
     border-radius: 16px;
   }
   *::-webkit-scrollbar-thumb {
@@ -32,6 +67,7 @@ a {
     width: 3px;
   }
 }
+
 html {
   height: 100%
 }
@@ -39,7 +75,7 @@ html {
 body {
   font-family: "OpenSans", sans-serif;
   background: $body-bg;
-  color: $dark!important;
+  color: $dark !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
@@ -52,6 +88,7 @@ body {
     > #app {
       flex: 1 0 auto;
     }
+
     footer {
       flex: 0 0 auto;
     }
@@ -60,8 +97,8 @@ body {
 
 .not-after {
   &:after {
-    content: none!important;
-    display: none!important;
+    content: none !important;
+    display: none !important;
   }
 }
 
@@ -93,9 +130,11 @@ body {
 .slide-fade-enter-active {
   transition: all .3s ease;
 }
+
 .slide-fade-leave-active {
   transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
+
 .slide-fade-enter, .slide-fade-leave-to {
   transform: translateX(10px);
   opacity: 0;
@@ -119,4 +158,40 @@ select#skus {
   background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png) no-repeat right #ddd;
   -webkit-appearance: none;
   background-position-x: calc(100% - 10px);
+}
+
+.delievery_container {
+  margin-top:100px;
+  h3 {
+    font-family:"Open Sans";
+    font-size:24pt;
+    font-weight:bold;
+  }
+
+  h4 {
+    font-family: "Open Sans";
+    font-weight: bold;
+    font-size:18pt;
+  }
+  p {
+    margin-bottom:20px;
+  }
+}
+.banner_delievery {
+  background:#ffffff;
+  border-radius: 40px;
+}
+
+.inner {
+  padding-left:45px;
+  padding-top:30px;
+  @media screen and (min-width: 850px) {
+    position:relative;
+    top: 30%;
+    padding-top:0px;
+  }
+}
+.container_delievery {
+  background:#ffffff;
+  padding-bottom:20px;
 }

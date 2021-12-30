@@ -49,6 +49,7 @@ Vue.config.performance = true;
 const app = new Vue({
   el: '#app',
   store: store,
+
   data() {
     return {
       test: !process.env.NODE_ENV || process.env.NODE_ENV === 'development',

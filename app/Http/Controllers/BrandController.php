@@ -74,7 +74,35 @@ class BrandController extends Controller
     $items = $data['items'];
     $filter = $data['filter'];
     $attributes = $data['attributes'];
+    foreach ($items as $i) {
+      $Product = Product::with('productSkuses')->find($i->id);
 
+      foreach ($Product->productSkuses as $productSkus) {
+        $count[] = $productSkus->stock;
+      }
+      foreach ($i->skuses as $s) {
+
+        $weights[] = $s->weight;
+        $titles[] = $s->title;
+
+      }
+      array_multisort($weights, SORT_ASC, SORT_NUMERIC,
+        $titles, SORT_ASC, SORT_REGULAR,
+      );
+      array_multisort($weights, SORT_ASC, SORT_NUMERIC,
+        $count, SORT_ASC, SORT_REGULAR,
+      );
+      $skuses = array($weights, $titles, $count);
+
+
+      $i->skusesnew = $skuses;
+//      dump($i->skusesnew);
+      $skuses = [];
+      $weights = [];
+      $titles = [];
+      $count = [];
+
+    }
     return view('user.brand.index', compact('items', 'filter', 'attributes', 'brand'));
   }
 

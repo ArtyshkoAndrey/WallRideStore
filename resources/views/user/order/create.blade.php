@@ -132,7 +132,7 @@
                         type="radio"
                         name="flexRadioDefault"
                         id="flexRadioDefault0"
-                        :checked="transfer.name === 'pickup'"
+                        checked = "true"
                         @click="setPickupTransfer"
                       />
                     </div>
@@ -156,7 +156,7 @@
                         type="radio"
                         name="flexRadioDefault"
                         id="flexRadioDefault2"
-                        :checked="transfer.name === 'ems'"
+                        checked="true"
                         @click="setEmsTransfer"
                       />
                     </div>
@@ -232,7 +232,8 @@
                     @endif
 
                     @if($cloudPayment  &&  $cloudPayment->data === '1')
-                      <div class="col-12 mb-3" v-if="!isNaN(transfer.enabled_card) ? transfer.enabled_card : true">
+                      <div class="col-12 mb-3">
+                        {{--                      <div class="col-12 mb-3" v-if="!isNaN(transfer.enabled_card) ? transfer.enabled_card : true">--}}
                         <div class="row choosable-field align-items-center">
                           <div class="col-auto">
                             <input
@@ -248,7 +249,7 @@
                             <label class="form-check-label d-block ps-2" for="cloudPayment">
                               <strong>{{ __('Оплатить онлайн') }}</strong>
                               <br>
-                              <span class="text-muted">{{ __('Оплатите онлайн любым удобным способом через сервис cloud payments') }}</span>
+                              {{--                              <span class="text-muted">{{ __('Оплатите онлайн любым удобным способом через сервис cloud payments') }}</span>--}}
                             </label>
                           </div>
                         </div>
@@ -384,14 +385,14 @@
 
 @section('js')
   <script src="https://widget.cloudpayments.ru/bundles/cloudpayments"></script>
-{{--  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>--}}
-{{--  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/inputmask.js"></script>--}}
-{{--  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/inputmask.extensions.js"></script>--}}
-{{--  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/inputmask.numeric.extensions.js"></script>--}}
-{{--  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/inputmask.date.extensions.js"></script>--}}
-{{--  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/inputmask.phone.extensions.js"></script>--}}
-{{--  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/jquery.inputmask.js"></script>--}}
-{{--  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/phone-codes/phone.js"></script>--}}
+  {{--  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>--}}
+  {{--  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/inputmask.js"></script>--}}
+  {{--  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/inputmask.extensions.js"></script>--}}
+  {{--  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/inputmask.numeric.extensions.js"></script>--}}
+  {{--  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/inputmask.date.extensions.js"></script>--}}
+  {{--  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/inputmask.phone.extensions.js"></script>--}}
+  {{--  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/jquery.inputmask.js"></script>--}}
+  {{--  <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/Inputmask@3.3.7/dist/inputmask/phone-codes/phone.js"></script>--}}
 
   <script>
     // $('#phone').mask('+7 (000) 000-00-00')
