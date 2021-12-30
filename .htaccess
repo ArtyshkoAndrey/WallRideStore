@@ -6,9 +6,9 @@ php_value error_log /home/a0418497/domains/wallridestore.com/public_html/php_err
     </IfModule>
 
     RewriteEngine On
-    RewriteCond %{HTTP:X-Forwarded-Proto} !https
-    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]
-    SetOutputFilter DEFLATE
+#    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+#    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]
+#    SetOutputFilter DEFLATE
     RewriteCond %{HTTP:Authorization} ^(.*)
     RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
     RewriteCond %{REQUEST_FILENAME} -d [OR]
