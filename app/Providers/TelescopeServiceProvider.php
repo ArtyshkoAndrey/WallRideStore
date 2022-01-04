@@ -28,6 +28,7 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
       return $entry->isReportableException() ||
         $entry->isFailedJob() ||
         $entry->isScheduledTask() ||
+        $entry->isSlowQuery() ||
         $entry->hasMonitoredTag();
     });
   }
@@ -64,6 +65,7 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
     Gate::define('viewTelescope', function ($user) {
       return in_array($user->email, [
         'e.rezonov@yandex.ru',
+        'artyshko.andrey@gmail.com'
       ]);
     });
   }
