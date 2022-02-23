@@ -110,6 +110,13 @@ class Order extends Model
   const SHIP_STATUS_DELIVERED = 'delivered';
 
   /**
+   * The order status is Ready for delivery
+   *
+   * @var string
+   */
+  const SHIP_STATUS_READY_DELIVERY = 'ready_delivery';
+
+  /**
    * Order Status Received
    *
    * @var string
@@ -132,6 +139,7 @@ class Order extends Model
     self::SHIP_STATUS_PENDING,
     self::SHIP_STATUS_PAID,
     self::SHIP_STATUS_DELIVERED,
+    self::SHIP_STATUS_READY_DELIVERY,
     self::SHIP_STATUS_RECEIVED,
     self::SHIP_STATUS_CANCEL
   ];
@@ -190,11 +198,12 @@ class Order extends Model
    * @var array|string[]
    */
   public static array $shipStatusMap = [
-    self::SHIP_STATUS_PAID      => 'Не оплачен',
-    self::SHIP_STATUS_PENDING   => 'В обработке',
-    self::SHIP_STATUS_DELIVERED => 'Отправлен',
-    self::SHIP_STATUS_RECEIVED  => 'Получен',
-    self::SHIP_STATUS_CANCEL    => 'Отменён',
+    self::SHIP_STATUS_PAID            => 'Не оплачен',
+    self::SHIP_STATUS_PENDING         => 'В обработке',
+    self::SHIP_STATUS_DELIVERED       => 'Отправлен',
+    self::SHIP_STATUS_READY_DELIVERY  => 'Готов к выдаче',
+    self::SHIP_STATUS_RECEIVED        => 'Получен',
+    self::SHIP_STATUS_CANCEL          => 'Отменён',
   ];
 
   /**
@@ -284,7 +293,7 @@ class Order extends Model
     if ($status === Order::SHIP_STATUS_CANCEL) {
       return 'table-danger';
     }
-    else if ($status === Order::SHIP_STATUS_DELIVERED || $status === Order::SHIP_STATUS_PENDING) {
+    else if ($status === Order::SHIP_STATUS_DELIVERED || $status === Order::SHIP_STATUS_PENDING || Order::SHIP_STATUS_READY_DELIVERY) {
       return 'table-primary';
     }
     else if ($status === Order::SHIP_STATUS_RECEIVED) {
