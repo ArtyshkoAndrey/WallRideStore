@@ -192,7 +192,7 @@
     </div>
   </section>
 
-  <section class="container my-5">
+  <section class="container my-5 d-none">
     <div class="row">
       <div class="col-lg-5 col-md-6 col-12">
         <img src="{{ asset('images/shop_photo.jpg') }}" id="shop-image" class="w-100 object-fit-cover" alt="WallrideStore shop Kazhstan">
@@ -226,7 +226,7 @@
   </section>
 
   @if(count($bestseller) > 0)
-    <section class="container mt-5 mb-5">
+    <section class="container my-5">
       <div class="row">
         <div class="col-6">
           <h3 class="font-weight-bolder">{{ __('Хит продаж') }}</h3>

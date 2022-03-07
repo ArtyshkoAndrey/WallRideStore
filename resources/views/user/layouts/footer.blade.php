@@ -32,7 +32,7 @@
 
       </div>
 
-      <div class="col-md-3 col-sm-6 col-12 mt-3">
+      <div class="col-md-3 col-sm-6 col-12 mt-3 d-none">
         <h5>{{ __('Как нас найти') }}</h5>
 
         <p class="text-gray-1 d-block">{{ __('РК, Алматы Мкр. Самал-3,1 050059') }}</p>
