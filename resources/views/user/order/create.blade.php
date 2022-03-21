@@ -256,6 +256,27 @@
                       </div>
                     @endif
 
+                    <div class="col-12 mb-3">
+                      <div class="row choosable-field align-items-center">
+                        <div class="col-auto">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="qr"
+                            id='qr'
+                            :checked="method_pay === 'qr'"
+                            @click="method_pay = 'qr'"
+                          />
+                        </div>
+                        <div class="col">
+                          <label class="form-check-label d-block ps-2" for="qr">
+                            <strong>{{ __('Оплатить онлайн') }}</strong>
+                            <br>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
               </transition>
@@ -342,22 +363,33 @@
           <div class="col-12 col-md-7">
             <div class="row">
               <div class="col-md-6 d-flex">
-                <button class="btn btn-dark complete" id="checkout" @click="orderedNow" :disabled="disabledButton">
+                <button class="btn btn-dark complete" id="checkout" @click="cashQr" :disabled="disabledButton">
                   <span v-if="!loaderButton">{{ __('Завершить и перейти к оплате') }}</span>
                   <div v-else class="spinner-border text-light" role="status">
                     <span class="visually-hidden">Loading...</span>
                   </div>
                 </button>
+{{--                TODO: Востановить ниже код потом--}}
+{{--                <button class="btn btn-dark complete" id="checkout" @click="orderedNow" :disabled="disabledButton">--}}
+{{--                  <span v-if="!loaderButton">{{ __('Завершить и перейти к оплате') }}</span>--}}
+{{--                  <div v-else class="spinner-border text-light" role="status">--}}
+{{--                    <span class="visually-hidden">Loading...</span>--}}
+{{--                  </div>--}}
+{{--                </button>--}}
               </div>
-              <div class="col-md-6 d-flex">
-                <button class="btn btn-outline-dark complete" @click="orderAfter" data-mdb-ripple-color="dark" id="checkout" :disabled="disabledButtonAfter">
-                  <span v-if="!loaderButtonAfter">{{ __('Завершить и оплатить позже') }}</span>
 
-                  <div v-else class="spinner-border text-dark" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-                </button>
-              </div>
+{{--              TODO: Убрано завершить попозже--}}
+{{--              <div class="col-md-6 d-flex">--}}
+{{--                <button class="btn btn-outline-dark complete" @click="orderAfter" data-mdb-ripple-color="dark" id="checkout" :disabled="disabledButtonAfter">--}}
+{{--                  <span v-if="!loaderButtonAfter">{{ __('Завершить и оплатить позже') }}</span>--}}
+
+{{--                  <div v-else class="spinner-border text-dark" role="status">--}}
+{{--                    <span class="visually-hidden">Loading...</span>--}}
+{{--                  </div>--}}
+{{--                </button>--}}
+{{--              </div>--}}
+
+{{--              TODO: востановить выше код что бы можно было оплатить потом--}}
             </div>
           </div>
         </div>
@@ -365,17 +397,52 @@
         <div v-else key="loaderWindow" class="mt-5">
           <div class="row">
             <div class="col-12 text-center">
-              <h3><strong>{{ __('Не закрывайте браузер.') }}</strong> {{ __('Ожидаем подтверждения оплаты') }}. {{ __('Иначе он будет отменён') }}</h3>
+              <h3>
+                Необходимо оплатить заказ через сервис KaspiBank
+                <br>
+                Отсканируйте QR код или перейдите по ссылке
+              </h3>
+              <span class="text-muted">Оплатите заказ через KaspiBank, а после подвердите нажав на кнопку "Подвердить"</span>
             </div>
           </div>
-          <div class="row justify-content-center my-5">
-            <div class="col-auto">
-              <div class="spinner-border" role="status">
-                <span class="visually-hidden">Loading...</span>
-              </div>
+          <div class="row justify-content-center">
+            <div class="col-12 mt-3 col-md-6 col-lg-3">
+              <img src="{{ asset('images/qr_kispibank.jpg') }}" class="img-fluid" alt="qr">
+            </div>
+          </div>
+          <div class="row mt-3 justify-content-center">
+            <div class="col-12 col-md-6 col-lg-3">
+              <a class="btn btn-black d-block" target="_blank" href="https://pay.kaspi.kz/pay/t7w6tcen">Оплатить заказ</a>
+            </div>
+          </div>
+          <div class="row mt-5 justify-content-center">
+            <div class="col-10 col-md-6 col-lg-5">
+              <span class="text-muted">В случае не оплаты, Ваш заказ отменят. В нелёгкое время, администраторы проверяют оплату и заказ в ручную. Но скоро всё наладится</span>
+            </div>
+          </div>
+
+          <div class="row mt-3 justify-content-center">
+            <div class="col-12 col-md-6 col-lg-3">
+              <button class="btn btn-dark d-block w-100" @click="payQr">Подвердить</button>
             </div>
           </div>
         </div>
+
+{{--        TODO: Востановить код ниже что бы показывать об проверки оплаты заказа--}}
+{{--        <div v-else key="loaderWindow" class="mt-5">--}}
+{{--          <div class="row">--}}
+{{--            <div class="col-12 text-center">--}}
+{{--              <h3><strong>{{ __('Не закрывайте браузер.') }}</strong> {{ __('Ожидаем подтверждения оплаты') }}. {{ __('Иначе он будет отменён') }}</h3>--}}
+{{--            </div>--}}
+{{--          </div>--}}
+{{--          <div class="row justify-content-center my-5">--}}
+{{--            <div class="col-auto">--}}
+{{--              <div class="spinner-border" role="status">--}}
+{{--                <span class="visually-hidden">Loading...</span>--}}
+{{--              </div>--}}
+{{--            </div>--}}
+{{--          </div>--}}
+{{--        </div>--}}
       </transition>
 
     </order>
