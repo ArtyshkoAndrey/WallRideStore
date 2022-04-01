@@ -27,11 +27,11 @@ class OrderService
   public function store(User $user, array $items, string $method_pay, array $transfer, string $price, string $sale, string $code = null)
   {
 
-    return DB::transaction(function () use ($user, $items, $method_pay, $transfer, $price, $sale, $code) {
+    return DB::transaction(static function () use ($user, $items, $method_pay, $transfer, $price, $sale, $code) {
 
       $order = new Order([
         'address' => [
-          'address' => $user->full_Address,
+          'address' => $user->full_address,
           'contact_name' => $user->name,
           'contact_phone' => $user->phone,
         ],
@@ -63,7 +63,7 @@ class OrderService
 
         $pss = ProductSkus::where('product_id', $item['id'])->get();
         if ($pss->pluck('stock')->sum() < 1) {
-          Product::find($item['id'])->delete();
+          optional(Product::find($item['id']))->delete();
         }
       }
 
