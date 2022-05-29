@@ -410,14 +410,9 @@
               <img src="{{ asset('images/qr_kispibank.jpg') }}" class="img-fluid" alt="qr">
             </div>
           </div>
-          <div class="row mt-3 d-flex d-md-none justify-content-center">
+          <div class="row mt-3 justify-content-center">
             <div class="col-12 col-md-6 col-lg-3">
-              <a class="btn btn-black d-block" target="_blank" @click="payQr" href="https://pay.kaspi.kz/pay/t7w6tcen">Оплатить заказ</a>
-            </div>
-          </div>
-          <div class="row mt-3 d-none d-md-flex justify-content-center">
-            <div class="col-12 col-md-6 col-lg-3">
-              <a class="btn btn-black d-block" target="_blank"  href="https://pay.kaspi.kz/pay/t7w6tcen">Оплатить заказ</a>
+              <a class="btn btn-black d-block" target="_blank" href="https://pay.kaspi.kz/pay/t7w6tcen">Оплатить заказ</a>
             </div>
           </div>
           <div class="row mt-5 justify-content-center">
@@ -426,7 +421,7 @@
             </div>
           </div>
 
-          <div class="row mt-3 d-none d-md-flex justify-content-center">
+          <div class="row mt-3 justify-content-center">
             <div class="col-12 col-md-6 col-lg-3">
               <button class="btn btn-dark d-block w-100" @click="payQr">Подвердить</button>
             </div>
