@@ -82,12 +82,6 @@ class OrderController extends Controller
     $user->city()->associate($info['city']['id']);
     $user->save();
 
-    // Временный код пока не подключать Эквайринг
-    // TODO: УБрать потом этот код
-    $data['method_pay'] = Order::PAYMENT_METHODS_CASH;
-
-    // Конец кода
-
     $order = $this->orderService
       ->store(
         $user,
