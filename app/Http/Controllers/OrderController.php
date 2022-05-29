@@ -7,26 +7,26 @@
 namespace App\Http\Controllers;
 
 
-use Auth;
-use Throwable;
-use Carbon\Carbon;
-use App\Models\User;
+use App\Http\Requests\OrderStoreRequest;
+use App\Jobs\CloseOrder;
 use App\Models\Order;
 use App\Models\Setting;
-use App\Jobs\CloseOrder;
-use Illuminate\Http\Request;
-use Swift_TransportException;
-use App\Services\OrderService;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Contracts\View\Factory;
-use App\Notifications\RegisterPassword;
-use App\Http\Requests\OrderStoreRequest;
+use App\Models\User;
+use App\Notifications\AdminPaidOrderNotification;
 use App\Notifications\CreateOrderNotification;
 use App\Notifications\PaymentOrderNotification;
+use App\Notifications\RegisterPassword;
+use App\Services\OrderService;
+use Auth;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
-use App\Notifications\AdminPaidOrderNotification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Swift_TransportException;
+use Throwable;
 
 class OrderController extends Controller
 {
@@ -53,7 +53,6 @@ class OrderController extends Controller
 
   /**
    * @param OrderStoreRequest $request
-   *
    * @return JsonResponse
    * @throws Throwable
    */
@@ -101,12 +100,6 @@ class OrderController extends Controller
       );
     try {
       $user->notify(new CreateOrderNotification($order));
-//    TODO: Временный код, отправить админам письмо о сорзданном заказке, раньбше заказ создавался а потом менялся
-//    статус опласты и уведомляло админов
-      $admins = User::whereIsAdmin(true)->get();
-      foreach ($admins as $admin) {
-        $admin->notify(new AdminPaidOrderNotification($order));
-      }
     } catch (Swift_TransportException $e) {
 
     }
@@ -129,10 +122,10 @@ class OrderController extends Controller
   public function updateStatus(Request $request): void
   {
     $request->validate([
-      'order' => 'required|exists:orders,id',
+      'order' => 'required|exists:orders,id'
     ]);
 
-    $order = Order::find($request->get('order'));
+    $order = Order::find($request->order);
 
     $order->ship_status = Order::SHIP_STATUS_PENDING;
     $order->paid_at = Carbon::now();
@@ -149,7 +142,6 @@ class OrderController extends Controller
 
   /**
    * @param int $id
-   *
    * @return Application|Factory|View
    */
   public function show(int $id)
