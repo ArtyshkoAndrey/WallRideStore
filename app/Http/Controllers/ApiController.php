@@ -57,7 +57,7 @@
     public function cities(Request $request): JsonResponse
     {
       if ($name = $request->get('name')) {
-        $cities = City::where('name', 'like', '%' . $name . '%')->limit(5)->get();
+        $cities = City::where('name', 'like', $name . '%')->limit(5)->get();
       } else {
         $cities = City::limit(5)->get();
       }
